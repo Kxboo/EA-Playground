@@ -180,6 +180,7 @@ def main():
         "blockers": blk,
         "history": hist,
         "lift_run": bool(lift),
+        "lift_tested": len(lift),
     }
     os.makedirs(SITE, exist_ok=True)
     with open(os.path.join(SITE, "data.js"), "w") as fh:

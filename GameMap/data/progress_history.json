@@ -1,0 +1,46 @@
+[
+ {
+  "label": "Mapped only",
+  "date": "2026-09-29T00:00:00Z",
+  "n": 6786,
+  "s": 1261272,
+  "fc": {
+   "reviewed": 0,
+   "proven": 0,
+   "partial": 0,
+   "decompiled": 0,
+   "flagged": 0,
+   "mapped": 6786
+  },
+  "bc": {
+   "reviewed": 0,
+   "proven": 0,
+   "partial": 0,
+   "decompiled": 0,
+   "flagged": 0,
+   "mapped": 1261272
+  }
+ },
+ {
+  "label": "Ghidra + lifter",
+  "date": "2026-09-29T21:56:39Z",
+  "n": 6786,
+  "s": 1261272,
+  "fc": {
+   "reviewed": 23,
+   "proven": 2893,
+   "partial": 482,
+   "decompiled": 2885,
+   "flagged": 457,
+   "mapped": 46
+  },
+  "bc": {
+   "reviewed": 4724,
+   "proven": 184332,
+   "partial": 80484,
+   "decompiled": 659032,
+   "flagged": 310324,
+   "mapped": 22376
+  }
+ }
+]
