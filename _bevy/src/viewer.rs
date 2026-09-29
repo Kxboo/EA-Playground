@@ -137,7 +137,7 @@ pub fn ui(mut contexts:EguiContexts,mut v:ResMut<Viewer>,bridge:Res<Bridge>,mut 
     let mut root=egui::Ui::new(ctx.clone(),"workbench".into(),egui::UiBuilder::new().layer_id(egui::LayerId::background()).max_rect(ctx.viewport_rect()));
     let mut reload=false;let mut selected=None;
     egui::Panel::top("header").show(&mut root,|ui|{ui.horizontal(|ui|{
-        if ui.button("← Menu").clicked(){*mode=AppMode::Menu;}
+        if ui.button("< Menu").clicked(){*mode=AppMode::Menu;}
         ui.heading("EA Playground");ui.label(egui::RichText::new("ASSET WORKBENCH").small().color(egui::Color32::from_rgb(104,200,170)));
         ui.separator();ui.label("Bevy • local files");
         if v.busy{ui.spinner();} ui.label(&v.status);

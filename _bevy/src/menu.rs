@@ -38,7 +38,7 @@ pub fn ui(mut contexts:EguiContexts,mut mode:ResMut<AppMode>,mut proof:ResMut<Pr
         if state.as_deref().is_some_and(|s|s!="running")&&proof.loaded{ if let Some(s)=state.as_deref(){if s.starts_with("done")||s.starts_with("finished"){load_report(&mut proof);*proof.running.lock().unwrap()=Some(format!("last run: {s}"));}}}
         egui::CentralPanel::default().show(&mut root,|ui|{
             ui.horizontal(|ui|{
-                if ui.button("← Menu").clicked(){*mode=AppMode::Menu;}
+                if ui.button("< Menu").clicked(){*mode=AppMode::Menu;}
                 ui.heading("Proof of decode");
                 let running=proof.running.lock().unwrap().as_deref()==Some("running");
                 if ui.add_enabled(!running,egui::Button::new("Run verification")).clicked(){run_prove(&proof);}

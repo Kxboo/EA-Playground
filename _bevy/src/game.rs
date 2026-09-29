@@ -417,8 +417,10 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
     }
 }
 
+impl Game{pub fn is_playing(&self)->bool{self.phase==Phase::Playing}}
+
 /// Leave game mode: drop the loader and all game entities.
 pub fn teardown(commands:&mut Commands,entities:&Query<Entity,With<GameEntity>>){
-    for e in entities{commands.entity(e).despawn();}
+    for e in entities{commands.entity(e).try_despawn();}
     commands.remove_resource::<Game>();
 }
