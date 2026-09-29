@@ -19,6 +19,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import elfmap  # noqa: E402
 import lift as L  # noqa: E402
+import pseudo as PS  # noqa: E402
 from unicorn import (UC_ARCH_PPC, UC_HOOK_CODE, UC_HOOK_MEM_WRITE, UC_MODE_BIG_ENDIAN, UC_MODE_PPC32, Uc,  # noqa: E402
                      UcError)
 from unicorn.ppc_const import *  # noqa: E402,F401,F403
@@ -328,7 +329,7 @@ class LiftVerifier:
         E = self.E
         code = E.rd(fn["addr"], fn["size"])
         instrs = L.decode(E.md, fn["addr"], code)
-        lifted = L.lift(instrs, self.image_read)
+        lifted = PS.clean(L.lift(instrs, self.image_read))  # verification runs on the cleaned IR
         self._consts = _harvest_consts(instrs)
         # call sites for the hook
         sites = {}
