@@ -1,0 +1,43 @@
+{
+  "animation_players": 0,
+  "animation_time": 0.0,
+  "loaded": true,
+  "mesh_entities": 1,
+  "preview": {
+    "animation": "",
+    "asset": "generated/1d845aa335e8200a8fdac556/asset.glb",
+    "bones": 0,
+    "bounds": [
+      [
+        0.00029279536101967096,
+        -15.99970720463898,
+        0.0
+      ],
+      [
+        15.99970720463898,
+        -0.00029279536101967096,
+        0.0
+      ]
+    ],
+    "cache_hit": false,
+    "decode_ms": 2.65,
+    "decoder_version": "native-4-elf-models",
+    "duration": 0,
+    "frontend": true,
+    "kind": "model",
+    "materials": 1,
+    "meshes": 1,
+    "name": "HelpEditor.o",
+    "shape": "2",
+    "shape_count": 1,
+    "skinned": false,
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\editors\\helpeditor.big::HelpEditor.o",
+    "textures": 1,
+    "triangles": 2,
+    "warnings": [
+      "APT Q15 positions, model scale/offset and pixel-coordinate texture matrices decoded from executable-confirmed fields.",
+      "APT timeline placement, masking and dynamic color transforms remain separate from shape geometry."
+    ]
+  },
+  "status": "HelpEditor.o • 3 ms"
+}

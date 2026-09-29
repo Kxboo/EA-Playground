@@ -1,0 +1,40 @@
+# Only the two maintained projects and repository documentation belong here.
+/*
+!/.gitignore
+!/.gitattributes
+!/README.md
+!/docs/
+!/Remaster/
+!/_bevy/
+
+# Local runtimes, game inputs, exports and machine state.
+**/_cli_internal/
+**/_internal/
+**/_decoder_internal/
+**/reference/
+**/coverage.json
+**/__pycache__/
+*.pyc
+*.exe
+*.dll
+*.pyd
+*.log
+*.elf
+*.dol
+*.iso
+*.wbfs
+*.big
+*.viv
+*.gsh
+*.ske
+*.anm
+*.o
+*.glb
+*.obj
+**/settings.json
+
+# Redundant local inventory snapshots and extracted texture contact sheet.
+/Remaster/research/corpus-*.json
+/Remaster/research/coverage-*.json
+/Remaster/research/texture-contact.png
+/Remaster/research/deps/

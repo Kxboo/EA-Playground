@@ -1,0 +1,4199 @@
+{
+  "archives": {
+    "count": 732,
+    "entries": 3087,
+    "refpack_decoded": 394,
+    "exact_old_file_matches": 221,
+    "entry_extensions": {
+      ".dat": 8,
+      ".hdr": 8,
+      ".viv": 42,
+      ".mkr": 49,
+      ".o": 821,
+      ".ske": 4,
+      ".anm": 4,
+      ".csv": 48,
+      ".con": 32,
+      ".apt": 655,
+      ".const": 655,
+      ".gsh": 741,
+      ".cpt": 10,
+      ".hkx": 10
+    }
+  },
+  "animations": {
+    "bones": 68,
+    "clips": [
+      {
+        "index": 0,
+        "name": "S_AI_Frustration",
+        "samples": 22,
+        "bytes": 50712,
+        "status": "ok"
+      },
+      {
+        "index": 1,
+        "name": "S_AI_LeanWall",
+        "samples": 481,
+        "bytes": 393348,
+        "status": "ok"
+      },
+      {
+        "index": 2,
+        "name": "S_AI_Spin",
+        "samples": 261,
+        "bytes": 257244,
+        "status": "ok"
+      },
+      {
+        "index": 3,
+        "name": "S_AI_StoryListen",
+        "samples": 601,
+        "bytes": 538028,
+        "status": "ok"
+      },
+      {
+        "index": 4,
+        "name": "S_AI_StoryTeller",
+        "samples": 751,
+        "bytes": 585872,
+        "status": "ok"
+      },
+      {
+        "index": 5,
+        "name": "S_Alicia_Celebration",
+        "samples": 75,
+        "bytes": 99200,
+        "status": "ok"
+      },
+      {
+        "index": 6,
+        "name": "S_BBall_Run",
+        "samples": 13,
+        "bytes": 36012,
+        "status": "ok"
+      },
+      {
+        "index": 7,
+        "name": "S_BBall_StandDribble",
+        "samples": 136,
+        "bytes": 163500,
+        "status": "ok"
+      },
+      {
+        "index": 8,
+        "name": "S_BH_BurningNet",
+        "samples": 72,
+        "bytes": 64424,
+        "status": "ok"
+      },
+      {
+        "index": 9,
+        "name": "S_BH_Idle",
+        "samples": 48,
+        "bytes": 63736,
+        "status": "ok"
+      },
+      {
+        "index": 10,
+        "name": "S_BH_MegaSwipe",
+        "samples": 90,
+        "bytes": 73676,
+        "status": "ok"
+      },
+      {
+        "index": 11,
+        "name": "S_BH_Run",
+        "samples": 10,
+        "bytes": 27060,
+        "status": "ok"
+      },
+      {
+        "index": 12,
+        "name": "S_BH_RunMale",
+        "samples": 13,
+        "bytes": 29368,
+        "status": "ok"
+      },
+      {
+        "index": 13,
+        "name": "S_BH_RunSwing",
+        "samples": 20,
+        "bytes": 30584,
+        "status": "ok"
+      },
+      {
+        "index": 14,
+        "name": "S_BH_RunSwingMale",
+        "samples": 25,
+        "bytes": 51452,
+        "status": "ok"
+      },
+      {
+        "index": 15,
+        "name": "S_BH_RunSwingMissMale",
+        "samples": 28,
+        "bytes": 54360,
+        "status": "ok"
+      },
+      {
+        "index": 16,
+        "name": "S_BH_StandSwing",
+        "samples": 19,
+        "bytes": 35836,
+        "status": "ok"
+      },
+      {
+        "index": 17,
+        "name": "S_BH_Stun",
+        "samples": 29,
+        "bytes": 42348,
+        "status": "ok"
+      },
+      {
+        "index": 18,
+        "name": "S_Conversation_01",
+        "samples": 64,
+        "bytes": 70336,
+        "status": "ok"
+      },
+      {
+        "index": 19,
+        "name": "S_Conversation_02",
+        "samples": 97,
+        "bytes": 97156,
+        "status": "ok"
+      },
+      {
+        "index": 20,
+        "name": "S_Conversation_03",
+        "samples": 97,
+        "bytes": 119656,
+        "status": "ok"
+      },
+      {
+        "index": 21,
+        "name": "S_Conversation_04",
+        "samples": 121,
+        "bytes": 108732,
+        "status": "ok"
+      },
+      {
+        "index": 22,
+        "name": "S_DB_Block",
+        "samples": 19,
+        "bytes": 42812,
+        "status": "ok"
+      },
+      {
+        "index": 23,
+        "name": "S_DB_Boss_idle",
+        "samples": 321,
+        "bytes": 323456,
+        "status": "ok"
+      },
+      {
+        "index": 24,
+        "name": "S_DB_Catch",
+        "samples": 19,
+        "bytes": 42816,
+        "status": "ok"
+      },
+      {
+        "index": 25,
+        "name": "S_DB_Catch_Slide",
+        "samples": 19,
+        "bytes": 53312,
+        "status": "ok"
+      },
+      {
+        "index": 26,
+        "name": "S_DB_Celebrate_DS",
+        "samples": 25,
+        "bytes": 57800,
+        "status": "ok"
+      },
+      {
+        "index": 27,
+        "name": "S_DB_DodgeLeft",
+        "samples": 21,
+        "bytes": 55052,
+        "status": "ok"
+      },
+      {
+        "index": 28,
+        "name": "S_DB_DodgeRight",
+        "samples": 21,
+        "bytes": 43388,
+        "status": "ok"
+      },
+      {
+        "index": 29,
+        "name": "S_DB_DodgeWithBallLeft",
+        "samples": 21,
+        "bytes": 55084,
+        "status": "ok"
+      },
+      {
+        "index": 30,
+        "name": "S_DB_DodgeWithBallRight",
+        "samples": 21,
+        "bytes": 49240,
+        "status": "ok"
+      },
+      {
+        "index": 31,
+        "name": "S_DB_Hit",
+        "samples": 50,
+        "bytes": 80552,
+        "status": "ok"
+      },
+      {
+        "index": 32,
+        "name": "S_DB_HitQuick",
+        "samples": 25,
+        "bytes": 58548,
+        "status": "ok"
+      },
+      {
+        "index": 33,
+        "name": "S_DB_Idle",
+        "samples": 49,
+        "bytes": 72624,
+        "status": "ok"
+      },
+      {
+        "index": 34,
+        "name": "S_DB_IdleWithBall",
+        "samples": 49,
+        "bytes": 49108,
+        "status": "ok"
+      },
+      {
+        "index": 35,
+        "name": "S_DB_Idle_DS",
+        "samples": 25,
+        "bytes": 53812,
+        "status": "ok"
+      },
+      {
+        "index": 36,
+        "name": "S_DB_RollLeft",
+        "samples": 37,
+        "bytes": 69920,
+        "status": "ok"
+      },
+      {
+        "index": 37,
+        "name": "S_DB_RollRight",
+        "samples": 40,
+        "bytes": 72564,
+        "status": "ok"
+      },
+      {
+        "index": 38,
+        "name": "S_DB_RollWithBallLeft",
+        "samples": 20,
+        "bytes": 54836,
+        "status": "ok"
+      },
+      {
+        "index": 39,
+        "name": "S_DB_RollWithBallRight",
+        "samples": 20,
+        "bytes": 54808,
+        "status": "ok"
+      },
+      {
+        "index": 40,
+        "name": "S_DB_RunReady",
+        "samples": 20,
+        "bytes": 48508,
+        "status": "ok"
+      },
+      {
+        "index": 41,
+        "name": "S_DB_RunStumble",
+        "samples": 25,
+        "bytes": 29328,
+        "status": "ok"
+      },
+      {
+        "index": 42,
+        "name": "S_DB_RunWithBall",
+        "samples": 13,
+        "bytes": 29344,
+        "status": "ok"
+      },
+      {
+        "index": 43,
+        "name": "S_DB_SelectFlip",
+        "samples": 44,
+        "bytes": 71832,
+        "status": "ok"
+      },
+      {
+        "index": 44,
+        "name": "S_DB_SelectHandSlap",
+        "samples": 25,
+        "bytes": 58588,
+        "status": "ok"
+      },
+      {
+        "index": 45,
+        "name": "S_DB_SelectKick",
+        "samples": 25,
+        "bytes": 59224,
+        "status": "ok"
+      },
+      {
+        "index": 46,
+        "name": "S_DB_SelectKick1",
+        "samples": 25,
+        "bytes": 59236,
+        "status": "ok"
+      },
+      {
+        "index": 47,
+        "name": "S_DB_SelectPunch",
+        "samples": 25,
+        "bytes": 47340,
+        "status": "ok"
+      },
+      {
+        "index": 48,
+        "name": "S_DB_Sprint",
+        "samples": 7,
+        "bytes": 27016,
+        "status": "ok"
+      },
+      {
+        "index": 49,
+        "name": "S_DB_StrafeBack",
+        "samples": 11,
+        "bytes": 33164,
+        "status": "ok"
+      },
+      {
+        "index": 50,
+        "name": "S_DB_StrafeLeft",
+        "samples": 14,
+        "bytes": 34692,
+        "status": "ok"
+      },
+      {
+        "index": 51,
+        "name": "S_DB_StrafeRight",
+        "samples": 14,
+        "bytes": 34696,
+        "status": "ok"
+      },
+      {
+        "index": 52,
+        "name": "S_DB_StrafeWithBallBack",
+        "samples": 11,
+        "bytes": 33180,
+        "status": "ok"
+      },
+      {
+        "index": 53,
+        "name": "S_DB_StrafeWithBallLeft",
+        "samples": 14,
+        "bytes": 34716,
+        "status": "ok"
+      },
+      {
+        "index": 54,
+        "name": "S_DB_StrafeWithBallRight",
+        "samples": 14,
+        "bytes": 34720,
+        "status": "ok"
+      },
+      {
+        "index": 55,
+        "name": "S_DB_Throw",
+        "samples": 30,
+        "bytes": 49868,
+        "status": "ok"
+      },
+      {
+        "index": 56,
+        "name": "S_DB_ThrowPower",
+        "samples": 36,
+        "bytes": 68256,
+        "status": "ok"
+      },
+      {
+        "index": 57,
+        "name": "S_DB_ThrowPowerHero",
+        "samples": 32,
+        "bytes": 57512,
+        "status": "ok"
+      },
+      {
+        "index": 58,
+        "name": "S_DB_Throw_DS",
+        "samples": 13,
+        "bytes": 38952,
+        "status": "ok"
+      },
+      {
+        "index": 59,
+        "name": "S_DB_WinHero",
+        "samples": 101,
+        "bytes": 125560,
+        "status": "ok"
+      },
+      {
+        "index": 60,
+        "name": "S_DB_Wobble",
+        "samples": 25,
+        "bytes": 60024,
+        "status": "ok"
+      },
+      {
+        "index": 61,
+        "name": "S_DB_WobbleCatch",
+        "samples": 20,
+        "bytes": 55504,
+        "status": "ok"
+      },
+      {
+        "index": 62,
+        "name": "S_DB_WobbleMiss",
+        "samples": 20,
+        "bytes": 53440,
+        "status": "ok"
+      },
+      {
+        "index": 63,
+        "name": "S_Dart_BossDeath",
+        "samples": 126,
+        "bytes": 130700,
+        "status": "ok"
+      },
+      {
+        "index": 64,
+        "name": "S_Dart_Idle",
+        "samples": 24,
+        "bytes": 31372,
+        "status": "ok"
+      },
+      {
+        "index": 65,
+        "name": "S_Dart_Run_Shoot_Left2Right",
+        "samples": 12,
+        "bytes": 28520,
+        "status": "ok"
+      },
+      {
+        "index": 66,
+        "name": "S_Dart_Run_Shoot_Right2Left",
+        "samples": 12,
+        "bytes": 28512,
+        "status": "ok"
+      },
+      {
+        "index": 67,
+        "name": "S_DrawIdle",
+        "samples": 24,
+        "bytes": 47628,
+        "status": "ok"
+      },
+      {
+        "index": 68,
+        "name": "S_DrawLeft",
+        "samples": 34,
+        "bytes": 63720,
+        "status": "ok"
+      },
+      {
+        "index": 69,
+        "name": "S_FemaleIdle1",
+        "samples": 23,
+        "bytes": 52316,
+        "status": "ok"
+      },
+      {
+        "index": 70,
+        "name": "S_FemaleIdle2",
+        "samples": 74,
+        "bytes": 70592,
+        "status": "ok"
+      },
+      {
+        "index": 71,
+        "name": "S_Generic_Celebration01",
+        "samples": 41,
+        "bytes": 71508,
+        "status": "ok"
+      },
+      {
+        "index": 72,
+        "name": "S_Generic_Celebration02",
+        "samples": 49,
+        "bytes": 61844,
+        "status": "ok"
+      },
+      {
+        "index": 73,
+        "name": "S_Generic_Celebration03",
+        "samples": 49,
+        "bytes": 77136,
+        "status": "ok"
+      },
+      {
+        "index": 74,
+        "name": "S_Generic_Celebration04",
+        "samples": 49,
+        "bytes": 77168,
+        "status": "ok"
+      },
+      {
+        "index": 75,
+        "name": "S_HS_POI",
+        "samples": 49,
+        "bytes": 79472,
+        "status": "ok"
+      },
+      {
+        "index": 76,
+        "name": "S_Happy",
+        "samples": 41,
+        "bytes": 71640,
+        "status": "ok"
+      },
+      {
+        "index": 77,
+        "name": "S_HighFive",
+        "samples": 85,
+        "bytes": 112780,
+        "status": "ok"
+      },
+      {
+        "index": 78,
+        "name": "S_HighFive2",
+        "samples": 85,
+        "bytes": 112792,
+        "status": "ok"
+      },
+      {
+        "index": 79,
+        "name": "S_IdleWithball",
+        "samples": 40,
+        "bytes": 42864,
+        "status": "ok"
+      },
+      {
+        "index": 80,
+        "name": "S_Jazz_Celebration",
+        "samples": 94,
+        "bytes": 109464,
+        "status": "ok"
+      },
+      {
+        "index": 81,
+        "name": "S_Josun_Celebration",
+        "samples": 81,
+        "bytes": 79136,
+        "status": "ok"
+      },
+      {
+        "index": 82,
+        "name": "S_Kalia_Celebration",
+        "samples": 145,
+        "bytes": 155596,
+        "status": "ok"
+      },
+      {
+        "index": 83,
+        "name": "S_Ken_Celebration",
+        "samples": 81,
+        "bytes": 107576,
+        "status": "ok"
+      },
+      {
+        "index": 84,
+        "name": "S_MaleIdle1",
+        "samples": 33,
+        "bytes": 49056,
+        "status": "ok"
+      },
+      {
+        "index": 85,
+        "name": "S_MaleIdle2",
+        "samples": 73,
+        "bytes": 97856,
+        "status": "ok"
+      },
+      {
+        "index": 86,
+        "name": "S_MaleRun",
+        "samples": 13,
+        "bytes": 29328,
+        "status": "ok"
+      },
+      {
+        "index": 87,
+        "name": "S_MaleWalk",
+        "samples": 15,
+        "bytes": 30144,
+        "status": "ok"
+      },
+      {
+        "index": 88,
+        "name": "S_MissReaction",
+        "samples": 73,
+        "bytes": 102164,
+        "status": "ok"
+      },
+      {
+        "index": 89,
+        "name": "S_Nerdy_Celebration",
+        "samples": 60,
+        "bytes": 81016,
+        "status": "ok"
+      },
+      {
+        "index": 90,
+        "name": "S_PA_Idle",
+        "samples": 49,
+        "bytes": 54028,
+        "status": "ok"
+      },
+      {
+        "index": 91,
+        "name": "S_PA_World_Idle",
+        "samples": 169,
+        "bytes": 190900,
+        "status": "ok"
+      },
+      {
+        "index": 92,
+        "name": "S_PA_conversation",
+        "samples": 121,
+        "bytes": 124052,
+        "status": "ok"
+      },
+      {
+        "index": 93,
+        "name": "S_PA_throw",
+        "samples": 24,
+        "bytes": 56968,
+        "status": "ok"
+      },
+      {
+        "index": 94,
+        "name": "S_POI_Conversation_03",
+        "samples": 97,
+        "bytes": 79624,
+        "status": "ok"
+      },
+      {
+        "index": 95,
+        "name": "S_POI_Conversation_04",
+        "samples": 97,
+        "bytes": 79652,
+        "status": "ok"
+      },
+      {
+        "index": 96,
+        "name": "S_POI_Conversation_05",
+        "samples": 97,
+        "bytes": 114720,
+        "status": "ok"
+      },
+      {
+        "index": 97,
+        "name": "S_POI_Conversation_06",
+        "samples": 97,
+        "bytes": 79616,
+        "status": "ok"
+      },
+      {
+        "index": 98,
+        "name": "S_POI_point_laugh",
+        "samples": 97,
+        "bytes": 117704,
+        "status": "ok"
+      },
+      {
+        "index": 99,
+        "name": "S_POI_poo",
+        "samples": 112,
+        "bytes": 136052,
+        "status": "ok"
+      },
+      {
+        "index": 100,
+        "name": "S_PickMe_01",
+        "samples": 54,
+        "bytes": 76892,
+        "status": "ok"
+      },
+      {
+        "index": 101,
+        "name": "S_PickMe_02",
+        "samples": 93,
+        "bytes": 115836,
+        "status": "ok"
+      },
+      {
+        "index": 102,
+        "name": "S_PickMe_03",
+        "samples": 81,
+        "bytes": 103248,
+        "status": "ok"
+      },
+      {
+        "index": 103,
+        "name": "S_PickMe_04",
+        "samples": 34,
+        "bytes": 65404,
+        "status": "ok"
+      },
+      {
+        "index": 104,
+        "name": "S_RC_World_CharacterIdle",
+        "samples": 32,
+        "bytes": 49580,
+        "status": "ok"
+      },
+      {
+        "index": 105,
+        "name": "S_SC_180",
+        "samples": 13,
+        "bytes": 35252,
+        "status": "ok"
+      },
+      {
+        "index": 106,
+        "name": "S_SC_BicycleKick",
+        "samples": 37,
+        "bytes": 70936,
+        "status": "ok"
+      },
+      {
+        "index": 107,
+        "name": "S_SC_Boss_Idle",
+        "samples": 141,
+        "bytes": 146956,
+        "status": "ok"
+      },
+      {
+        "index": 108,
+        "name": "S_SC_Bump",
+        "samples": 19,
+        "bytes": 52704,
+        "status": "ok"
+      },
+      {
+        "index": 109,
+        "name": "S_SC_BumpIdle",
+        "samples": 10,
+        "bytes": 32624,
+        "status": "ok"
+      },
+      {
+        "index": 110,
+        "name": "S_SC_Bump_Mirrored",
+        "samples": 19,
+        "bytes": 53428,
+        "status": "ok"
+      },
+      {
+        "index": 111,
+        "name": "S_SC_Celebration",
+        "samples": 97,
+        "bytes": 67916,
+        "status": "ok"
+      },
+      {
+        "index": 112,
+        "name": "S_SC_ChestEnd",
+        "samples": 8,
+        "bytes": 38816,
+        "status": "ok"
+      },
+      {
+        "index": 113,
+        "name": "S_SC_ChestEnd_Mirrored",
+        "samples": 9,
+        "bytes": 40624,
+        "status": "ok"
+      },
+      {
+        "index": 114,
+        "name": "S_SC_ChestStart",
+        "samples": 18,
+        "bytes": 53676,
+        "status": "ok"
+      },
+      {
+        "index": 115,
+        "name": "S_SC_ChestStart_Mirrored",
+        "samples": 16,
+        "bytes": 49968,
+        "status": "ok"
+      },
+      {
+        "index": 116,
+        "name": "S_SC_GoalCelebration",
+        "samples": 72,
+        "bytes": 102508,
+        "status": "ok"
+      },
+      {
+        "index": 117,
+        "name": "S_SC_GoalieDiveCatch_Left",
+        "samples": 25,
+        "bytes": 57032,
+        "status": "ok"
+      },
+      {
+        "index": 118,
+        "name": "S_SC_GoalieDiveCatch_Right",
+        "samples": 25,
+        "bytes": 54500,
+        "status": "ok"
+      },
+      {
+        "index": 119,
+        "name": "S_SC_GoalieDive_Left",
+        "samples": 25,
+        "bytes": 57816,
+        "status": "ok"
+      },
+      {
+        "index": 120,
+        "name": "S_SC_GoalieDive_Right",
+        "samples": 25,
+        "bytes": 56092,
+        "status": "ok"
+      },
+      {
+        "index": 121,
+        "name": "S_SC_GoaliePickUp",
+        "samples": 18,
+        "bytes": 42236,
+        "status": "ok"
+      },
+      {
+        "index": 122,
+        "name": "S_SC_Goalie_BlockCenter",
+        "samples": 25,
+        "bytes": 49712,
+        "status": "ok"
+      },
+      {
+        "index": 123,
+        "name": "S_SC_Header",
+        "samples": 17,
+        "bytes": 53896,
+        "status": "ok"
+      },
+      {
+        "index": 124,
+        "name": "S_SC_Idle",
+        "samples": 22,
+        "bytes": 38168,
+        "status": "ok"
+      },
+      {
+        "index": 125,
+        "name": "S_SC_Jostled",
+        "samples": 13,
+        "bytes": 31676,
+        "status": "ok"
+      },
+      {
+        "index": 126,
+        "name": "S_SC_JumpAir",
+        "samples": 18,
+        "bytes": 39456,
+        "status": "ok"
+      },
+      {
+        "index": 127,
+        "name": "S_SC_JumpAir_Mirrored",
+        "samples": 18,
+        "bytes": 40168,
+        "status": "ok"
+      },
+      {
+        "index": 128,
+        "name": "S_SC_JumpEnd",
+        "samples": 14,
+        "bytes": 40264,
+        "status": "ok"
+      },
+      {
+        "index": 129,
+        "name": "S_SC_JumpEnd_Mirrored",
+        "samples": 13,
+        "bytes": 29884,
+        "status": "ok"
+      },
+      {
+        "index": 130,
+        "name": "S_SC_JumpFall",
+        "samples": 13,
+        "bytes": 40616,
+        "status": "ok"
+      },
+      {
+        "index": 131,
+        "name": "S_SC_JumpFall_Mirrored",
+        "samples": 13,
+        "bytes": 40568,
+        "status": "ok"
+      },
+      {
+        "index": 132,
+        "name": "S_SC_JumpRise",
+        "samples": 13,
+        "bytes": 44392,
+        "status": "ok"
+      },
+      {
+        "index": 133,
+        "name": "S_SC_JumpStart",
+        "samples": 7,
+        "bytes": 36000,
+        "status": "ok"
+      },
+      {
+        "index": 134,
+        "name": "S_SC_JumpStart_Mirrored",
+        "samples": 7,
+        "bytes": 35536,
+        "status": "ok"
+      },
+      {
+        "index": 135,
+        "name": "S_SC_MegaKick",
+        "samples": 43,
+        "bytes": 76348,
+        "status": "ok"
+      },
+      {
+        "index": 136,
+        "name": "S_SC_MegaKick2",
+        "samples": 34,
+        "bytes": 46628,
+        "status": "ok"
+      },
+      {
+        "index": 137,
+        "name": "S_SC_MegaKickMirrored",
+        "samples": 34,
+        "bytes": 66696,
+        "status": "ok"
+      },
+      {
+        "index": 138,
+        "name": "S_SC_New_BicycleKickEnd",
+        "samples": 8,
+        "bytes": 29424,
+        "status": "ok"
+      },
+      {
+        "index": 139,
+        "name": "S_SC_New_BicycleKickStart",
+        "samples": 16,
+        "bytes": 42736,
+        "status": "ok"
+      },
+      {
+        "index": 140,
+        "name": "S_SC_New_KickEnd",
+        "samples": 8,
+        "bytes": 36712,
+        "status": "ok"
+      },
+      {
+        "index": 141,
+        "name": "S_SC_New_KickEnd_Mirrored",
+        "samples": 9,
+        "bytes": 36340,
+        "status": "ok"
+      },
+      {
+        "index": 142,
+        "name": "S_SC_New_KickStart",
+        "samples": 19,
+        "bytes": 42920,
+        "status": "ok"
+      },
+      {
+        "index": 143,
+        "name": "S_SC_New_KickStart_Mirrored",
+        "samples": 17,
+        "bytes": 41688,
+        "status": "ok"
+      },
+      {
+        "index": 144,
+        "name": "S_SC_Pass",
+        "samples": 22,
+        "bytes": 49088,
+        "status": "ok"
+      },
+      {
+        "index": 145,
+        "name": "S_SC_RunWithBall",
+        "samples": 13,
+        "bytes": 29956,
+        "status": "ok"
+      },
+      {
+        "index": 146,
+        "name": "S_SC_ScoreGoal",
+        "samples": 21,
+        "bytes": 55080,
+        "status": "ok"
+      },
+      {
+        "index": 147,
+        "name": "S_SC_Serve",
+        "samples": 45,
+        "bytes": 78372,
+        "status": "ok"
+      },
+      {
+        "index": 148,
+        "name": "S_SC_ServeIdle",
+        "samples": 22,
+        "bytes": 32936,
+        "status": "ok"
+      },
+      {
+        "index": 149,
+        "name": "S_SC_Slide",
+        "samples": 26,
+        "bytes": 55344,
+        "status": "ok"
+      },
+      {
+        "index": 150,
+        "name": "S_SC_SlideFall",
+        "samples": 73,
+        "bytes": 77456,
+        "status": "ok"
+      },
+      {
+        "index": 151,
+        "name": "S_SC_SpikeHeaderEnd",
+        "samples": 9,
+        "bytes": 37416,
+        "status": "ok"
+      },
+      {
+        "index": 152,
+        "name": "S_SC_SpikeHeaderEnd_Mirrored",
+        "samples": 10,
+        "bytes": 37560,
+        "status": "ok"
+      },
+      {
+        "index": 153,
+        "name": "S_SC_SpikeHeaderStart",
+        "samples": 16,
+        "bytes": 48584,
+        "status": "ok"
+      },
+      {
+        "index": 154,
+        "name": "S_SC_SpikeHeaderStart_Mirrored",
+        "samples": 16,
+        "bytes": 50612,
+        "status": "ok"
+      },
+      {
+        "index": 155,
+        "name": "S_SC_StrafeBack",
+        "samples": 11,
+        "bytes": 33164,
+        "status": "ok"
+      },
+      {
+        "index": 156,
+        "name": "S_SC_StrafeLeft",
+        "samples": 14,
+        "bytes": 34680,
+        "status": "ok"
+      },
+      {
+        "index": 157,
+        "name": "S_SC_StrafeRight",
+        "samples": 14,
+        "bytes": 29760,
+        "status": "ok"
+      },
+      {
+        "index": 158,
+        "name": "S_SC_kick",
+        "samples": 25,
+        "bytes": 48084,
+        "status": "ok"
+      },
+      {
+        "index": 159,
+        "name": "S_SC_superkick",
+        "samples": 30,
+        "bytes": 50612,
+        "status": "ok"
+      },
+      {
+        "index": 160,
+        "name": "S_SC_superkick2",
+        "samples": 37,
+        "bytes": 56112,
+        "status": "ok"
+      },
+      {
+        "index": 161,
+        "name": "S_SC_superkick3",
+        "samples": 37,
+        "bytes": 70896,
+        "status": "ok"
+      },
+      {
+        "index": 162,
+        "name": "S_SC_superkick4",
+        "samples": 33,
+        "bytes": 67360,
+        "status": "ok"
+      },
+      {
+        "index": 163,
+        "name": "S_SerenaRunBall",
+        "samples": 10,
+        "bytes": 31516,
+        "status": "ok"
+      },
+      {
+        "index": 164,
+        "name": "S_SkaterKid_Celebration",
+        "samples": 136,
+        "bytes": 142936,
+        "status": "ok"
+      },
+      {
+        "index": 165,
+        "name": "S_Spitball",
+        "samples": 73,
+        "bytes": 85248,
+        "status": "ok"
+      },
+      {
+        "index": 166,
+        "name": "S_StickerKing_Celebration",
+        "samples": 64,
+        "bytes": 87348,
+        "status": "ok"
+      },
+      {
+        "index": 167,
+        "name": "S_TB_HeroWin",
+        "samples": 104,
+        "bytes": 113364,
+        "status": "ok"
+      },
+      {
+        "index": 168,
+        "name": "S_TB_Hero_HitLowPowerEnd",
+        "samples": 18,
+        "bytes": 52456,
+        "status": "ok"
+      },
+      {
+        "index": 169,
+        "name": "S_TB_Hero_HitLowPowerEnd_Mir",
+        "samples": 18,
+        "bytes": 48928,
+        "status": "ok"
+      },
+      {
+        "index": 170,
+        "name": "S_TB_Hero_HitLowPowerIdle",
+        "samples": 7,
+        "bytes": 25036,
+        "status": "ok"
+      },
+      {
+        "index": 171,
+        "name": "S_TB_Hero_HitLowPowerIdle_Mir",
+        "samples": 7,
+        "bytes": 28640,
+        "status": "ok"
+      },
+      {
+        "index": 172,
+        "name": "S_TB_Hero_HitLowPowerStart",
+        "samples": 25,
+        "bytes": 45104,
+        "status": "ok"
+      },
+      {
+        "index": 173,
+        "name": "S_TB_Hero_HitLowPowerStart_Mir",
+        "samples": 25,
+        "bytes": 57820,
+        "status": "ok"
+      },
+      {
+        "index": 174,
+        "name": "S_TB_Hero_Idle",
+        "samples": 32,
+        "bytes": 33960,
+        "status": "ok"
+      },
+      {
+        "index": 175,
+        "name": "S_TB_Hero_Idle_Mir",
+        "samples": 32,
+        "bytes": 50704,
+        "status": "ok"
+      },
+      {
+        "index": 176,
+        "name": "S_TB_HitHighNormalEnd",
+        "samples": 22,
+        "bytes": 49244,
+        "status": "ok"
+      },
+      {
+        "index": 177,
+        "name": "S_TB_HitHighNormalEnd_Mir",
+        "samples": 23,
+        "bytes": 56724,
+        "status": "ok"
+      },
+      {
+        "index": 178,
+        "name": "S_TB_HitHighNormalIdle",
+        "samples": 27,
+        "bytes": 27344,
+        "status": "ok"
+      },
+      {
+        "index": 179,
+        "name": "S_TB_HitHighNormalIdle_Mir",
+        "samples": 27,
+        "bytes": 40424,
+        "status": "ok"
+      },
+      {
+        "index": 180,
+        "name": "S_TB_HitHighNormalStart",
+        "samples": 6,
+        "bytes": 29568,
+        "status": "ok"
+      },
+      {
+        "index": 181,
+        "name": "S_TB_HitHighNormalStart_Mir",
+        "samples": 6,
+        "bytes": 30504,
+        "status": "ok"
+      },
+      {
+        "index": 182,
+        "name": "S_TB_HitHighPowerEnd",
+        "samples": 35,
+        "bytes": 68160,
+        "status": "ok"
+      },
+      {
+        "index": 183,
+        "name": "S_TB_HitHighPowerEnd_Mir",
+        "samples": 35,
+        "bytes": 68196,
+        "status": "ok"
+      },
+      {
+        "index": 184,
+        "name": "S_TB_HitHighPowerIdle",
+        "samples": 23,
+        "bytes": 32452,
+        "status": "ok"
+      },
+      {
+        "index": 185,
+        "name": "S_TB_HitHighPowerIdle_Mir",
+        "samples": 23,
+        "bytes": 46664,
+        "status": "ok"
+      },
+      {
+        "index": 186,
+        "name": "S_TB_HitHighPowerStart",
+        "samples": 13,
+        "bytes": 48004,
+        "status": "ok"
+      },
+      {
+        "index": 187,
+        "name": "S_TB_HitHighPowerStart_Mir",
+        "samples": 13,
+        "bytes": 47236,
+        "status": "ok"
+      },
+      {
+        "index": 188,
+        "name": "S_TB_HitLowNormalEnd",
+        "samples": 15,
+        "bytes": 43436,
+        "status": "ok"
+      },
+      {
+        "index": 189,
+        "name": "S_TB_HitLowNormalEnd_mirror",
+        "samples": 15,
+        "bytes": 38932,
+        "status": "ok"
+      },
+      {
+        "index": 190,
+        "name": "S_TB_HitLowNormalIdle",
+        "samples": 37,
+        "bytes": 55336,
+        "status": "ok"
+      },
+      {
+        "index": 191,
+        "name": "S_TB_HitLowNormalIdle_mirror",
+        "samples": 37,
+        "bytes": 47304,
+        "status": "ok"
+      },
+      {
+        "index": 192,
+        "name": "S_TB_HitLowNormalStart",
+        "samples": 21,
+        "bytes": 43380,
+        "status": "ok"
+      },
+      {
+        "index": 193,
+        "name": "S_TB_HitLowNormalStart_mirror",
+        "samples": 21,
+        "bytes": 42592,
+        "status": "ok"
+      },
+      {
+        "index": 194,
+        "name": "S_TB_HitLowPowerEnd",
+        "samples": 14,
+        "bytes": 48264,
+        "status": "ok"
+      },
+      {
+        "index": 195,
+        "name": "S_TB_HitLowPowerEnd_Mir",
+        "samples": 14,
+        "bytes": 48896,
+        "status": "ok"
+      },
+      {
+        "index": 196,
+        "name": "S_TB_HitLowPowerIdle",
+        "samples": 74,
+        "bytes": 100192,
+        "status": "ok"
+      },
+      {
+        "index": 197,
+        "name": "S_TB_HitLowPowerIdle_Mir",
+        "samples": 74,
+        "bytes": 80912,
+        "status": "ok"
+      },
+      {
+        "index": 198,
+        "name": "S_TB_HitLowPowerStart",
+        "samples": 29,
+        "bytes": 62152,
+        "status": "ok"
+      },
+      {
+        "index": 199,
+        "name": "S_TB_HitLowPowerStart_Mir",
+        "samples": 29,
+        "bytes": 61144,
+        "status": "ok"
+      },
+      {
+        "index": 200,
+        "name": "S_TB_Idle",
+        "samples": 49,
+        "bytes": 76148,
+        "status": "ok"
+      },
+      {
+        "index": 201,
+        "name": "S_TB_Idle_Mir",
+        "samples": 49,
+        "bytes": 72464,
+        "status": "ok"
+      },
+      {
+        "index": 202,
+        "name": "S_TB_ServeEnd",
+        "samples": 19,
+        "bytes": 44900,
+        "status": "ok"
+      },
+      {
+        "index": 203,
+        "name": "S_TB_ServeIdle",
+        "samples": 49,
+        "bytes": 62028,
+        "status": "ok"
+      },
+      {
+        "index": 204,
+        "name": "S_TB_ServeStart",
+        "samples": 37,
+        "bytes": 59272,
+        "status": "ok"
+      },
+      {
+        "index": 205,
+        "name": "S_TB_World_Idle",
+        "samples": 119,
+        "bytes": 141404,
+        "status": "ok"
+      },
+      {
+        "index": 206,
+        "name": "S_TB_loser",
+        "samples": 145,
+        "bytes": 142548,
+        "status": "ok"
+      },
+      {
+        "index": 207,
+        "name": "S_TB_winner",
+        "samples": 105,
+        "bytes": 129084,
+        "status": "ok"
+      },
+      {
+        "index": 208,
+        "name": "S_Timothy_Celebration",
+        "samples": 191,
+        "bytes": 172996,
+        "status": "ok"
+      },
+      {
+        "index": 209,
+        "name": "S_WB_Celebration",
+        "samples": 45,
+        "bytes": 77096,
+        "status": "ok"
+      },
+      {
+        "index": 210,
+        "name": "S_WB_DiveLeft",
+        "samples": 25,
+        "bytes": 58436,
+        "status": "ok"
+      },
+      {
+        "index": 211,
+        "name": "S_WB_DiveRight",
+        "samples": 25,
+        "bytes": 55232,
+        "status": "ok"
+      },
+      {
+        "index": 212,
+        "name": "S_WB_Hit_Right",
+        "samples": 17,
+        "bytes": 52724,
+        "status": "ok"
+      },
+      {
+        "index": 213,
+        "name": "S_WB_Serve",
+        "samples": 39,
+        "bytes": 59684,
+        "status": "ok"
+      },
+      {
+        "index": 214,
+        "name": "S_WB_ServeEnd",
+        "samples": 19,
+        "bytes": 39328,
+        "status": "ok"
+      },
+      {
+        "index": 215,
+        "name": "S_WB_ServeIdle",
+        "samples": 49,
+        "bytes": 60872,
+        "status": "ok"
+      },
+      {
+        "index": 216,
+        "name": "S_WB_ServeStart",
+        "samples": 37,
+        "bytes": 58284,
+        "status": "ok"
+      },
+      {
+        "index": 217,
+        "name": "S_WB_WorldIdle",
+        "samples": 126,
+        "bytes": 142236,
+        "status": "ok"
+      },
+      {
+        "index": 218,
+        "name": "S_WB_hit_left",
+        "samples": 18,
+        "bytes": 44104,
+        "status": "ok"
+      },
+      {
+        "index": 219,
+        "name": "S_WB_super_hit_right_end",
+        "samples": 33,
+        "bytes": 54428,
+        "status": "ok"
+      },
+      {
+        "index": 220,
+        "name": "S_WB_super_hit_right_start",
+        "samples": 25,
+        "bytes": 47368,
+        "status": "ok"
+      },
+      {
+        "index": 221,
+        "name": "S_bench_sit",
+        "samples": 661,
+        "bytes": 626732,
+        "status": "ok"
+      },
+      {
+        "index": 222,
+        "name": "S_cowboyWalk",
+        "samples": 31,
+        "bytes": 33616,
+        "status": "ok"
+      },
+      {
+        "index": 223,
+        "name": "S_dart_BossDrawGuns",
+        "samples": 18,
+        "bytes": 45512,
+        "status": "ok"
+      },
+      {
+        "index": 224,
+        "name": "S_dart_BossGunsIdle",
+        "samples": 25,
+        "bytes": 37012,
+        "status": "ok"
+      },
+      {
+        "index": 225,
+        "name": "S_dart_BossIdle",
+        "samples": 25,
+        "bytes": 41780,
+        "status": "ok"
+      },
+      {
+        "index": 226,
+        "name": "S_dart_Boss_world_Idle",
+        "samples": 181,
+        "bytes": 175492,
+        "status": "ok"
+      },
+      {
+        "index": 227,
+        "name": "S_dart_SuperMove",
+        "samples": 293,
+        "bytes": 217072,
+        "status": "ok"
+      },
+      {
+        "index": 228,
+        "name": "S_dart_SuperMoveLeft",
+        "samples": 293,
+        "bytes": 201856,
+        "status": "ok"
+      },
+      {
+        "index": 229,
+        "name": "S_dart_conversation",
+        "samples": 121,
+        "bytes": 142688,
+        "status": "ok"
+      },
+      {
+        "index": 230,
+        "name": "S_dart_hit",
+        "samples": 33,
+        "bytes": 65616,
+        "status": "ok"
+      },
+      {
+        "index": 231,
+        "name": "S_dart_jump",
+        "samples": 33,
+        "bytes": 67308,
+        "status": "ok"
+      },
+      {
+        "index": 232,
+        "name": "S_dart_shoot_right",
+        "samples": 25,
+        "bytes": 41284,
+        "status": "ok"
+      },
+      {
+        "index": 233,
+        "name": "S_dart_shot_left",
+        "samples": 25,
+        "bytes": 34096,
+        "status": "ok"
+      },
+      {
+        "index": 234,
+        "name": "S_dart_shot_left_end",
+        "samples": 17,
+        "bytes": 38216,
+        "status": "ok"
+      },
+      {
+        "index": 235,
+        "name": "S_dart_shot_left_start",
+        "samples": 13,
+        "bytes": 35384,
+        "status": "ok"
+      },
+      {
+        "index": 236,
+        "name": "S_dart_shot_right_end",
+        "samples": 15,
+        "bytes": 40952,
+        "status": "ok"
+      },
+      {
+        "index": 237,
+        "name": "S_dart_shot_right_start",
+        "samples": 13,
+        "bytes": 33584,
+        "status": "ok"
+      },
+      {
+        "index": 238,
+        "name": "S_dart_strafeLeft",
+        "samples": 37,
+        "bytes": 68948,
+        "status": "ok"
+      },
+      {
+        "index": 239,
+        "name": "S_dart_strafeRight",
+        "samples": 37,
+        "bytes": 66004,
+        "status": "ok"
+      },
+      {
+        "index": 240,
+        "name": "S_drawCenter",
+        "samples": 17,
+        "bytes": 49556,
+        "status": "ok"
+      },
+      {
+        "index": 241,
+        "name": "S_drawDeath",
+        "samples": 180,
+        "bytes": 188556,
+        "status": "ok"
+      },
+      {
+        "index": 242,
+        "name": "S_drawRight",
+        "samples": 21,
+        "bytes": 52880,
+        "status": "ok"
+      },
+      {
+        "index": 243,
+        "name": "S_eog_celebration01",
+        "samples": 40,
+        "bytes": 72668,
+        "status": "ok"
+      },
+      {
+        "index": 244,
+        "name": "S_eog_celebration02",
+        "samples": 49,
+        "bytes": 81628,
+        "status": "ok"
+      },
+      {
+        "index": 245,
+        "name": "S_eog_celebration03",
+        "samples": 47,
+        "bytes": 70904,
+        "status": "ok"
+      },
+      {
+        "index": 246,
+        "name": "S_eog_celebration04",
+        "samples": 49,
+        "bytes": 77152,
+        "status": "ok"
+      },
+      {
+        "index": 247,
+        "name": "S_eog_celebration05",
+        "samples": 14,
+        "bytes": 37232,
+        "status": "ok"
+      },
+      {
+        "index": 248,
+        "name": "S_head_scratch",
+        "samples": 97,
+        "bytes": 119668,
+        "status": "ok"
+      },
+      {
+        "index": 249,
+        "name": "S_holsterCenter",
+        "samples": 73,
+        "bytes": 99328,
+        "status": "ok"
+      },
+      {
+        "index": 250,
+        "name": "S_idle",
+        "samples": 23,
+        "bytes": 51536,
+        "status": "ok"
+      },
+      {
+        "index": 251,
+        "name": "S_look_overhead",
+        "samples": 145,
+        "bytes": 161004,
+        "status": "ok"
+      },
+      {
+        "index": 252,
+        "name": "S_nose_pick",
+        "samples": 201,
+        "bytes": 209160,
+        "status": "ok"
+      },
+      {
+        "index": 253,
+        "name": "S_run",
+        "samples": 11,
+        "bytes": 34252,
+        "status": "ok"
+      },
+      {
+        "index": 254,
+        "name": "S_shoe_tie",
+        "samples": 146,
+        "bytes": 167272,
+        "status": "ok"
+      },
+      {
+        "index": 255,
+        "name": "S_shot",
+        "samples": 49,
+        "bytes": 62032,
+        "status": "ok"
+      },
+      {
+        "index": 256,
+        "name": "S_sk_bag_reach",
+        "samples": 60,
+        "bytes": 92908,
+        "status": "ok"
+      },
+      {
+        "index": 257,
+        "name": "S_sk_conversation",
+        "samples": 121,
+        "bytes": 142688,
+        "status": "ok"
+      },
+      {
+        "index": 258,
+        "name": "S_sk_idle",
+        "samples": 157,
+        "bytes": 177108,
+        "status": "ok"
+      },
+      {
+        "index": 259,
+        "name": "S_skipping",
+        "samples": 28,
+        "bytes": 44388,
+        "status": "ok"
+      },
+      {
+        "index": 260,
+        "name": "S_sneaking",
+        "samples": 48,
+        "bytes": 75144,
+        "status": "ok"
+      },
+      {
+        "index": 261,
+        "name": "S_sneeze",
+        "samples": 211,
+        "bytes": 225284,
+        "status": "ok"
+      },
+      {
+        "index": 262,
+        "name": "S_squat",
+        "samples": 193,
+        "bytes": 205756,
+        "status": "ok"
+      },
+      {
+        "index": 263,
+        "name": "S_walk",
+        "samples": 15,
+        "bytes": 30132,
+        "status": "ok"
+      },
+      {
+        "index": 264,
+        "name": "S_waving",
+        "samples": 121,
+        "bytes": 140884,
+        "status": "ok"
+      }
+    ],
+    "passed": 265,
+    "assumed_fps": 30
+  },
+  "models": [
+    {
+      "file": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\OLD ATTEMPTS\\EA PLAYGROUND EXTRACTED\\WorldProps\\basketball.o",
+      "meshes": 1,
+      "triangles": 384,
+      "images": 1,
+      "status": "ok",
+      "notes": []
+    },
+    {
+      "file": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\OLD ATTEMPTS\\EA PLAYGROUND EXTRACTED\\WorldProps\\ds_lite.o",
+      "meshes": 3,
+      "triangles": 252,
+      "images": 3,
+      "status": "ok",
+      "notes": []
+    },
+    {
+      "file": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\OLD ATTEMPTS\\EA PLAYGROUND EXTRACTED\\WorldProps\\rc_controller.o",
+      "meshes": 1,
+      "triangles": 50,
+      "images": 0,
+      "status": "ok",
+      "notes": [
+        "Material dartguncolor: 3 texture matches; left untextured"
+      ]
+    },
+    {
+      "file": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\OLD ATTEMPTS\\EA PLAYGROUND EXTRACTED\\WorldProps\\paper_plane_big.o",
+      "meshes": 1,
+      "triangles": 41,
+      "images": 1,
+      "status": "ok",
+      "notes": []
+    },
+    {
+      "file": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\OLD ATTEMPTS\\EA PLAYGROUND EXTRACTED\\WorldProps\\footieball.o",
+      "meshes": 1,
+      "triangles": 116,
+      "images": 1,
+      "status": "ok",
+      "notes": []
+    },
+    {
+      "file": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\OLD ATTEMPTS\\EA PLAYGROUND EXTRACTED\\World\\world-low-all.o",
+      "meshes": 636,
+      "triangles": 105129,
+      "images": 0,
+      "status": "ok",
+      "notes": [
+        "Material ball: 0 texture matches; left untextured",
+        "Material basketball: 0 texture matches; left untextured",
+        "Material bball_brickwall: 0 texture matches; left untextured",
+        "Material bball_court_layout: 0 texture matches; left untextured",
+        "Material bench: 0 texture matches; left untextured",
+        "Material bench_nature: 0 texture matches; left untextured",
+        "Material brick_sidewall: 0 texture matches; left untextured",
+        "Material bush256: 0 texture matches; left untextured",
+        "Material bush_spikes: 0 texture matches; left untextured",
+        "Material card_bush: 0 texture matches; left untextured",
+        "Material crates: 0 texture matches; left untextured",
+        "Material crest: 0 texture matches; left untextured",
+        "Material csl_floor: 0 texture matches; left untextured",
+        "Material dartguncolor: 0 texture matches; left untextured",
+        "Material dodgeball: 0 texture matches; left untextured",
+        "Material dodgeball_court: 0 texture matches; left untextured",
+        "Material dodgeball_court_stadium: 0 texture matches; left untextured",
+        "Material ds_dart_v3: 0 texture matches; left untextured",
+        "Material ds_dart_v4: 0 texture matches; left untextured",
+        "Material field_grass: 0 texture matches; left untextured",
+        "Material flowers: 0 texture matches; left untextured",
+        "Material footieball: 0 texture matches; left untextured",
+        "Material footiemetal: 0 texture matches; left untextured",
+        "Material footvolley_ground_tile: 0 texture matches; left untextured",
+        "Material footy_grass: 0 texture matches; left untextured",
+        "Material footy_mesh: 0 texture matches; left untextured",
+        "Material footy_sand: 0 texture matches; left untextured",
+        "Material footy_sand_nature: 0 texture matches; left untextured",
+        "Material footy_stadium_wall: 0 texture matches; left untextured",
+        "Material fountain256: 0 texture matches; left untextured",
+        "Material garbage_can_02: 0 texture matches; left untextured",
+        "Material grass_nature_tame: 0 texture matches; left untextured",
+        "Material grass_nature_wild: 0 texture matches; left untextured",
+        "Material grasscard_01: 0 texture matches; left untextured",
+        "Material grassfringe2: 0 texture matches; left untextured",
+        "Material hoop_base01: 0 texture matches; left untextured",
+        "Material hoop_pole: 0 texture matches; left untextured",
+        "Material hoop_pole_updated: 0 texture matches; left untextured",
+        "Material horizontal_ivy: 0 texture matches; left untextured",
+        "Material lamp_post: 0 texture matches; left untextured",
+        "Material lamp_post_bulb: 0 texture matches; left untextured",
+        "Material leaf: 0 texture matches; left untextured",
+        "Material leaf_small: 0 texture matches; left untextured",
+        "Material lemonadestand256: 0 texture matches; left untextured",
+        "Material na_bigbrick: 0 texture matches; left untextured",
+        "Material na_bottomoftreehouse: 0 texture matches; left untextured",
+        "Material na_brick_side: 0 texture matches; left untextured",
+        "Material na_brick_side_green: 0 texture matches; left untextured",
+        "Material na_brick_wall_green: 0 texture matches; left untextured",
+        "Material na_sandbag: 0 texture matches; left untextured",
+        "Material na_wood_plank_dark: 0 texture matches; left untextured",
+        "Material nature_bush: 0 texture matches; left untextured",
+        "Material nature_circle: 0 texture matches; left untextured",
+        "Material nature_gate: 0 texture matches; left untextured",
+        "Material nature_rock: 0 texture matches; left untextured",
+        "Material naturegrass-07: 0 texture matches; left untextured",
+        "Material new_chalklines: 0 texture matches; left untextured",
+        "Material oldbrickwall: 0 texture matches; left untextured",
+        "Material orangetree-nofruits: 0 texture matches; left untextured",
+        "Material pap_plane: 0 texture matches; left untextured",
+        "Material park_bball_blue: 0 texture matches; left untextured",
+        "Material park_bball_green: 0 texture matches; left untextured",
+        "Material park_stairs: 0 texture matches; left untextured",
+        "Material parkbricktop: 0 texture matches; left untextured",
+        "Material parksand: 0 texture matches; left untextured",
+        "Material parksandcircle: 0 texture matches; left untextured",
+        "Material picnic: 0 texture matches; left untextured",
+        "Material plane_fighter: 0 texture matches; left untextured",
+        "Material playgroundplatforms: 0 texture matches; left untextured",
+        "Material playgroundplatformssteps: 0 texture matches; left untextured",
+        "Material rc_finishline: 0 texture matches; left untextured",
+        "Material rc_mainbody_orange: 0 texture matches; left untextured",
+        "Material rc_parts: 0 texture matches; left untextured",
+        "Material rc_startsign: 0 texture matches; left untextured",
+        "Material rc_track_asphalt: 0 texture matches; left untextured",
+        "Material rc_track_asphalt_02: 0 texture matches; left untextured",
+        "Material rc_wheel: 0 texture matches; left untextured",
+        "Material rope: 0 texture matches; left untextured",
+        "Material rope2: 0 texture matches; left untextured",
+        "Material rope_thin: 0 texture matches; left untextured",
+        "Material school_brick: 0 texture matches; left untextured",
+        "Material school_door: 0 texture matches; left untextured",
+        "Material school_flag: 0 texture matches; left untextured",
+        "Material school_gold: 0 texture matches; left untextured",
+        "Material school_goldrim: 0 texture matches; left untextured",
+        "Material school_grey_texture: 0 texture matches; left untextured",
+        "Material school_plaque_bc: 0 texture matches; left untextured",
+        "Material school_plaque_dc: 0 texture matches; left untextured",
+        "Material school_roof: 0 texture matches; left untextured",
+        "Material school_rooftop_piece: 0 texture matches; left untextured",
+        "Material school_window: 0 texture matches; left untextured",
+        "Material schoolyard_brick: 0 texture matches; left untextured",
+        "Material schoolyard_circle: 0 texture matches; left untextured",
+        "Material schoolyard_grass: 0 texture matches; left untextured",
+        "Material schoolyard_houses01: 0 texture matches; left untextured",
+        "Material schoolyard_houses02: 0 texture matches; left untextured",
+        "Material schoolyard_mosaic: 0 texture matches; left untextured",
+        "Material schoolyard_path_tile: 0 texture matches; left untextured",
+        "Material schoolyard_pillartoptga: 0 texture matches; left untextured",
+        "Material sign_wood_tree: 0 texture matches; left untextured",
+        "Material sign_wood_tree1: 0 texture matches; left untextured",
+        "Material slide: 0 texture matches; left untextured",
+        "Material slotcarkiosk: 0 texture matches; left untextured",
+        "Material stadium_crowd: 0 texture matches; left untextured",
+        "Material stadium_crowd_01: 0 texture matches; left untextured",
+        "Material stadium_entrance_brick: 0 texture matches; left untextured",
+        "Material stadium_entrance_metal: 0 texture matches; left untextured",
+        "Material stadium_entrance_tile: 0 texture matches; left untextured",
+        "Material stadium_exterior_window: 0 texture matches; left untextured",
+        "Material stadium_glassblocks: 0 texture matches; left untextured",
+        "Material stadium_grass_mow: 0 texture matches; left untextured",
+        "Material stadium_ground_circle_detail: 0 texture matches; left untextured",
+        "Material stadium_ground_side_detail: 0 texture matches; left untextured",
+        "Material stadium_ground_top_detail: 0 texture matches; left untextured",
+        "Material stadium_ground_walkway: 0 texture matches; left untextured",
+        "Material stadium_light_pod: 0 texture matches; left untextured",
+        "Material stadium_newpathway: 0 texture matches; left untextured",
+        "Material stadium_plaque_: 0 texture matches; left untextured",
+        "Material stadium_plaque_charters: 0 texture matches; left untextured",
+        "Material stadium_plaque_clint: 0 texture matches; left untextured",
+        "Material stadium_plaque_gus: 0 texture matches; left untextured",
+        "Material stadium_plaque_julia: 0 texture matches; left untextured",
+        "Material stadium_plaque_percy: 0 texture matches; left untextured",
+        "Material stadium_plaque_weir: 0 texture matches; left untextured",
+        "Material stadium_railing_tile: 0 texture matches; left untextured",
+        "Material stadium_roof_canvas_orange: 0 texture matches; left untextured",
+        "Material stadium_roof_canvas_purple: 0 texture matches; left untextured",
+        "Material stadium_roof_metal: 0 texture matches; left untextured",
+        "Material stadium_roof_tri_anchor: 0 texture matches; left untextured",
+        "Material stadium_seats: 0 texture matches; left untextured",
+        "Material stadium_stairs: 0 texture matches; left untextured",
+        "Material stadium_stands_exits: 0 texture matches; left untextured",
+        "Material stadium_tetherball_floor: 0 texture matches; left untextured",
+        "Material stadium_track: 0 texture matches; left untextured",
+        "Material stadium_trophy_base: 0 texture matches; left untextured",
+        "Material stadium_wall_dk_blue: 0 texture matches; left untextured",
+        "Material stadium_wall_orange: 0 texture matches; left untextured",
+        "Material stadium_wall_tile: 0 texture matches; left untextured",
+        "Material stadiumpathedge: 0 texture matches; left untextured",
+        "Material swingset256: 0 texture matches; left untextured",
+        "Material teatherball_brick: 0 texture matches; left untextured",
+        "Material teetertotchairblue: 0 texture matches; left untextured",
+        "Material teetertotchairred: 0 texture matches; left untextured",
+        "Material teetertothandlebolt: 0 texture matches; left untextured",
+        "Material teetertotmain: 0 texture matches; left untextured",
+        "Material th_alpha_grass_fringe01: 0 texture matches; left untextured",
+        "Material th_lamp: 0 texture matches; left untextured",
+        "Material th_wood_plank: 0 texture matches; left untextured",
+        "Material th_wood_plank_hball: 0 texture matches; left untextured",
+        "Material tree: 0 texture matches; left untextured",
+        "Material tree_alpha_big: 0 texture matches; left untextured",
+        "Material tree_bark_medium: 0 texture matches; left untextured",
+        "Material tree_trunk: 0 texture matches; left untextured",
+        "Material tree_with_bush: 0 texture matches; left untextured",
+        "Material treehouse_treetrunk: 0 texture matches; left untextured",
+        "Material treehousedirtpath: 0 texture matches; left untextured",
+        "Material wal_ball_dark: 0 texture matches; left untextured",
+        "Material wal_ball_light: 0 texture matches; left untextured",
+        "Material wal_ball_lines: 0 texture matches; left untextured",
+        "Material wallball: 0 texture matches; left untextured",
+        "Material workcrates: 0 texture matches; left untextured"
+      ]
+    },
+    {
+      "file": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\OLD ATTEMPTS\\EA PLAYGROUND EXTRACTED\\Characters\\new\\alicia\\alicia.o",
+      "meshes": 62,
+      "triangles": 2877,
+      "images": 3,
+      "status": "ok",
+      "notes": []
+    },
+    {
+      "file": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\OLD ATTEMPTS\\EA PLAYGROUND EXTRACTED\\Characters\\new\\timothy\\timothy.o",
+      "meshes": 61,
+      "triangles": 2902,
+      "images": 4,
+      "status": "ok",
+      "notes": []
+    }
+  ],
+  "textures": [
+    {
+      "file": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\OLD ATTEMPTS\\EA PLAYGROUND EXTRACTED\\WorldProps\\basketball.gsh",
+      "entries": [
+        {
+          "name": "basketball",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            128
+          ]
+        }
+      ],
+      "passed": 1
+    },
+    {
+      "file": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\OLD ATTEMPTS\\EA PLAYGROUND EXTRACTED\\World\\auto\\world-misc.gsh",
+      "entries": [
+        {
+          "name": "bubble_completed",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "bubble_king",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "bubble_locked",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "bubble_p1",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "bubble_p2",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "bubble_p3",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "bubble_p4",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "bubble_unlocked_0_progress_3",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "bubble_unlocked_0_progress_4",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "bubble_unlocked_1_progress_3",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "bubble_unlocked_1_progress_4",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "bubble_unlocked_2_progress_3",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "bubble_unlocked_2_progress_4",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "bubble_unlocked_3_progress_4",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "bubble_unlocked_inprogress",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "bubble_unlocked_new",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "characterfacespecmap",
+          "format": "RGBA8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "dribble_ball",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "dribble_ring",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "npc_indicator",
+          "format": "RGBA8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "purplespecmap",
+          "format": "RGBA8",
+          "status": "ok",
+          "size": [
+            32,
+            32
+          ]
+        },
+        {
+          "name": "redspecmap",
+          "format": "RGBA8",
+          "status": "ok",
+          "size": [
+            8,
+            8
+          ]
+        },
+        {
+          "name": "shadow",
+          "format": "RGBA8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "specmap",
+          "format": "RGBA8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        }
+      ],
+      "passed": 24
+    },
+    {
+      "file": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\OLD ATTEMPTS\\EA PLAYGROUND EXTRACTED\\World\\auto\\world.gsh",
+      "entries": [
+        {
+          "name": "bush_02",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            128
+          ]
+        },
+        {
+          "name": "brick_sidewall",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "school_grey_texture",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "schoolyard_grass",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "crest",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "field_grass",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "schoolyard_mosaic",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "bball_brickwall",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            128
+          ]
+        },
+        {
+          "name": "teatherball_brick",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "footy_mesh",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "footvolley_ground_tile",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "dodgeball_court",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "hoop_pole",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "footiemetal",
+          "format": "RGBA8",
+          "status": "ok",
+          "size": [
+            64,
+            32
+          ]
+        },
+        {
+          "name": "stadium_plexi",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            64
+          ]
+        },
+        {
+          "name": "schoolyard_pillartoptga",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "school_brick",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "grass_nature_tame",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            64
+          ]
+        },
+        {
+          "name": "wal_ball_lines",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            32
+          ]
+        },
+        {
+          "name": "school_gold",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "park_stairs",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            64
+          ]
+        },
+        {
+          "name": "rope",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            64
+          ]
+        },
+        {
+          "name": "school_door",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "net",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "footy_grass",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            512,
+            256
+          ]
+        },
+        {
+          "name": "nature_bush",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "leaf",
+          "format": "RGB5A3",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "tree_bark_medium",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "bench",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "garbage_can_02",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "tree_trunk",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "tree",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "flowers",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "school_roof",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "schoolyard_houses01",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            64
+          ]
+        },
+        {
+          "name": "schoolyard_houses02",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "csl_floor",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "picnic",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "school_window",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "school_rooftop_piece",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "schoolyard_circle",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "schoolyard_brick",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "schoolyard_path_tile",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "school_goldrim",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "rc_track_asphalt",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "rc_track_asphalt_02",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "wal_ball_light",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "school_shadow",
+          "format": "RGBA8",
+          "status": "ok",
+          "size": [
+            32,
+            64
+          ]
+        },
+        {
+          "name": "footy_mesh_shadow",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "footy_sand",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            128
+          ]
+        },
+        {
+          "name": "lamp_post_bulb",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            32,
+            32
+          ]
+        },
+        {
+          "name": "lamp_post",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "hoop_base02",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "bball_hoop",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            128
+          ]
+        },
+        {
+          "name": "hoop_base01",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "wal_ball_dark",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "school_flag",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "tree_with_bush",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            128
+          ]
+        },
+        {
+          "name": "horizontal_ivy",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            128
+          ]
+        },
+        {
+          "name": "slotcarkiosk",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            128
+          ]
+        },
+        {
+          "name": "rc_finishline",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            32
+          ]
+        },
+        {
+          "name": "swingset256",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "hoop_pole_updated",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "grass_nature_wild",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            64
+          ]
+        },
+        {
+          "name": "nature_rock",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "bball_court_layout",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "grasscard_01",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "new_chalklines",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "treehousedirtpath",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "nature_circle",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "treehouse_treetrunk",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "na_wood_floor",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "th_alpha_grass_fringe01",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "oldbrickwall",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            512,
+            256
+          ]
+        },
+        {
+          "name": "th_wood_plank_hball",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "ds_dart_v4",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "nature_gate",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "bench_nature",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "na_bigbrick",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "na_wood_plank_dark",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "na_brick_wall_green",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            128
+          ]
+        },
+        {
+          "name": "tree_alpha_big",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            64,
+            128
+          ]
+        },
+        {
+          "name": "bush_spikes",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "card_bush",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            64
+          ]
+        },
+        {
+          "name": "crates",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "lemonadestand256",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "dartguncolor",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            128
+          ]
+        },
+        {
+          "name": "workcrates",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "na_brick_side",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "na_brick_side_green",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "naturegrass-07",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "na_sandbag",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "na_dball_mesh",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "th_wood_plank",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "rope2",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "rope_thin",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "th_lamp",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "tent",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "orangetree-nofruits",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "na_bottomoftreehouse",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "na_god_rays",
+          "format": "RGBA8",
+          "status": "ok",
+          "size": [
+            32,
+            64
+          ]
+        },
+        {
+          "name": "nature_wood_door",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            256
+          ]
+        },
+        {
+          "name": "footy_sand_nature",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            512,
+            256
+          ]
+        },
+        {
+          "name": "pap_plane",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "plane_fighter",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "tent_fringe",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stadium_ground_side_detail",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            32
+          ]
+        },
+        {
+          "name": "stadium_ground_top_detail",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            64
+          ]
+        },
+        {
+          "name": "parksand",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "slide",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "fountain256",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "grassfringe2",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            256
+          ]
+        },
+        {
+          "name": "stadium_roof_tri_anchor",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stadium_banner_01",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "banner_slogan_05",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            256
+          ]
+        },
+        {
+          "name": "banner_slogan_03",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            256
+          ]
+        },
+        {
+          "name": "banner_slogan_04",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            256
+          ]
+        },
+        {
+          "name": "banner_slogan_02",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            256
+          ]
+        },
+        {
+          "name": "banner_slogan_01",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            256
+          ]
+        },
+        {
+          "name": "banner_slogan_06",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            256
+          ]
+        },
+        {
+          "name": "rc_wheel",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "stadium_newpathway",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "stadiumpathedge",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            256
+          ]
+        },
+        {
+          "name": "teetertotchairred",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "teetertothandlebolt",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "teetertotmain",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "teetertotchairblue",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "wallball",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "footieball",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "basketball",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "schoolyard_tree",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "parkbricktop",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            32
+          ]
+        },
+        {
+          "name": "stadium_ground_circle_detail",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "playgroundplatformssteps",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "playgroundplatforms",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "red_blue",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "rope2",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "parksandcircle",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "rc_parts",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "rc_mainbody_orange",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "park_bball_green",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "park_bball_blue",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "bush256",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "leaf_small",
+          "format": "RGB5A3",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "rc_startsign",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            64
+          ]
+        },
+        {
+          "name": "dodgeball",
+          "format": "RGBA8",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "ball",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "sign_wood_tree",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "sign_wood_tree1",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "ds_dart_v3",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "sign_wood_stadium",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "sign_wood_school",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "signwood",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "sign_wood_stadium1",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "sign_wood_school1",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stadium_track",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            128
+          ]
+        },
+        {
+          "name": "stadium_wall_orange",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            128
+          ]
+        },
+        {
+          "name": "stadium_exterior_window",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            256
+          ]
+        },
+        {
+          "name": "stadium_crowd",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            128
+          ]
+        },
+        {
+          "name": "stadium_crowd_01",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            128
+          ]
+        },
+        {
+          "name": "stadium_wall_dk_blue",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            16,
+            128
+          ]
+        },
+        {
+          "name": "stadium_wall_tile",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "stadium_light_pod",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stadium_entrance_brick",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "stadium_roof_metal",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            256
+          ]
+        },
+        {
+          "name": "stadium_plaque_clint",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stadium_trophy_base",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            32,
+            128
+          ]
+        },
+        {
+          "name": "stadium_plaque_percy",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stadium_plaque_weir",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stadium_plaque_gus",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stadium_plaque_julia",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stadium_plaque_charters",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stadium_roof_canvas_purple",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            256
+          ]
+        },
+        {
+          "name": "stadium_roof_canvas_orange",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            256
+          ]
+        },
+        {
+          "name": "stadium_railing_tile",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "stadium_stairs",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            64
+          ]
+        },
+        {
+          "name": "stadium_seats",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stadium_stands_exits",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stadium_glassblocks",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "stadium_entrance_metal",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            64
+          ]
+        },
+        {
+          "name": "footy_stadium_wall",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "wal_ball_blue_stadium",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stadium_wallball",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            512
+          ]
+        },
+        {
+          "name": "ball_part",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "wallball_banner",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "wallball_kid",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            64
+          ]
+        },
+        {
+          "name": "hoop_pole",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            64,
+            64
+          ]
+        },
+        {
+          "name": "tetherball_banner",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "tether_kid",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            64
+          ]
+        },
+        {
+          "name": "dodgeball_banner",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "dodgeball_kid",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            256,
+            64
+          ]
+        },
+        {
+          "name": "cardboardcrates",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stadium_plaque_",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stad_smallbanner_alicia",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stad_smallbanner_ds_male",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stad_smallbanner_hana",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stad_smallbanner_jace",
+          "format": "PAL8",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "stadium_tetherball_floor",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "dodgeball_court_stadium",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "stadium_entrance_tile",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "stadium_ground_walkway",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            128
+          ]
+        },
+        {
+          "name": "stadium_grass_mow",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            256,
+            256
+          ]
+        },
+        {
+          "name": "school_plaque_bc",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        },
+        {
+          "name": "school_plaque_dc",
+          "format": "N64 CMPR",
+          "status": "ok",
+          "size": [
+            128,
+            128
+          ]
+        }
+      ],
+      "passed": 204
+    }
+  ],
+  "errors": [],
+  "seconds": 8.84
+}

@@ -1,0 +1,11 @@
+{
+  "status": "ok",
+  "archive_open": true,
+  "model_glb": true,
+  "texture_png": true,
+  "animation_playback_and_export": true,
+  "skeleton_export": true,
+  "csv_inspection": true,
+  "unsupported_model_inspection": true,
+  "errors": []
+}

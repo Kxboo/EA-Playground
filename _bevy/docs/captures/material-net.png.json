@@ -1,0 +1,127 @@
+{
+  "animation_players": 0,
+  "animation_time": 0.0,
+  "loaded": true,
+  "mesh_entities": 2,
+  "preview": {
+    "animation": "",
+    "asset": "generated/fdc896121c33772c15465d55/asset.glb",
+    "bones": 0,
+    "bounds": [
+      [
+        -0.4977057278156281,
+        -0.24029208719730377,
+        -0.1794998198747635
+      ],
+      [
+        0.5034257769584656,
+        0.028173983097076416,
+        0.1819392889738083
+      ]
+    ],
+    "cache_hit": false,
+    "decode_ms": 195.53,
+    "decoder_version": "native-5-materials-4",
+    "duration": 0,
+    "kind": "model",
+    "material_bindings": [
+      {
+        "mesh": 0,
+        "shader": "PlaygroundToonShade",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "metal_yellow",
+            "pointer_offset": 60,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=3180;1=metal_yellow,1;22=1;23=1;"
+          }
+        ]
+      },
+      {
+        "mesh": 1,
+        "shader": "PlaygroundToonShade",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "net",
+            "pointer_offset": 60,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=3180;1=net,1;22=1;23=1;"
+          }
+        ]
+      }
+    ],
+    "material_report": [
+      {
+        "alpha_mode": "opaque",
+        "candidates": 1,
+        "distinct_images": 1,
+        "height": 64,
+        "match": "full_name",
+        "name": "metal_yellow",
+        "pixel_sha256": "775efcea28816d71007d735c9e6aad7b87025a83e7024111f9493a181d90583c",
+        "sources": [
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\microgames\\microgames.viv::net.gsh",
+            "entry": 0,
+            "name": "metal_yellow"
+          }
+        ],
+        "status": "resolved",
+        "width": 64
+      },
+      {
+        "alpha_mode": "mask",
+        "candidates": 2,
+        "distinct_images": 1,
+        "height": 128,
+        "match": "full_name",
+        "name": "net",
+        "pixel_sha256": "d2c57d00598da2034dc4bd00804f0f622fd5c5e2fd1c364b8710cd54fe80325f",
+        "sources": [
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\microgames\\microgames.viv::net.gsh",
+            "entry": 1,
+            "name": "net"
+          },
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\microgames\\microgames.viv::net.gsh",
+            "entry": 2,
+            "name": "net"
+          }
+        ],
+        "status": "resolved",
+        "width": 256
+      }
+    ],
+    "material_warnings": [],
+    "materials": 2,
+    "meshes": 1,
+    "name": "net.o",
+    "shader_families": [
+      "PlaygroundToonShade"
+    ],
+    "skinned": false,
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\microgames\\microgames.viv::net.o",
+    "texture_banks": [
+      "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\microgames\\microgames.viv::basketball.gsh",
+      "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\microgames\\microgames.viv::ds_object_can.gsh",
+      "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\microgames\\microgames.viv::net.gsh",
+      "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\microgames\\microgames.viv::target.gsh"
+    ],
+    "textures": 2,
+    "triangles": 235,
+    "warnings": [
+      "ELF OK  (5936 bytes)",
+      ".data @ 0x0040  size 0x11a0",
+      "Model: net_final  total materials: 2",
+      "Reloc entries: 44",
+      "Layout D scale mismatch: bbox-derived estimate=0.00001675 disagrees with expected 1/16384=0.00006104 (ratio=0.27x) -- worth inspecting this mesh by hand.",
+      "BBOX: ((-0.49770572781562805, -0.24029208719730377, -0.1794998198747635), (0.5034257769584656, 0.028173983097076416, 0.1819392889738083))  pos_scale=0.00006104",
+      "Inspector: confidence LOW — falling back to heuristic scan (predicted=None).",
+      "Scoring: 6 layouts  min_score=130  margin=30",
+      "Mesh descriptors: 2 at ['0x09a0(LB)', '0x0f40(LB)']",
+      "OK: 2/2 meshes  total tris: 235"
+    ]
+  },
+  "status": "net.o • 196 ms"
+}

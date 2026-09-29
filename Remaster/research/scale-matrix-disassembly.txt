@@ -1,0 +1,78 @@
+SetScaleMatrix__Q23Ren11CachedModelFv: 0x803bd664, 304 bytes
+803bd664: 9421ffc0  stwu r1, -0x40(r1)
+803bd668: 7c0802a6  mflr r0
+803bd66c: 3d008044  lis r8, -0x7fbc
+803bd670: 90010044  stw r0, 0x44(r1)
+803bd674: 93e1003c  stw r31, 0x3c(r1)
+803bd678: 7c7f1b78  mr r31, r3
+803bd67c: 84e82a40  lwzu r7, 0x2a40(r8)
+803bd680: 80830044  lwz r4, 0x44(r3)
+803bd684: 38610008  addi r3, r1, 8
+803bd688: 80c80004  lwz r6, 4(r8)
+803bd68c: 80a80008  lwz r5, 8(r8)
+803bd690: 8008000c  lwz r0, 0xc(r8)
+803bd694: 90e10028  stw r7, 0x28(r1)
+803bd698: 90c1002c  stw r6, 0x2c(r1)
+803bd69c: 90a10030  stw r5, 0x30(r1)
+803bd6a0: 90010034  stw r0, 0x34(r1)
+803bd6a4: 480254e5  bl 0x803e2b88 ; GetOffset__Q24EAGL5ModelFv
+803bd6a8: c022d038  lfs f1, -0x2fc8(r2)
+803bd6ac: c0010028  lfs f0, 0x28(r1)
+803bd6b0: 80a10008  lwz r5, 8(r1)
+803bd6b4: 8081000c  lwz r4, 0xc(r1)
+803bd6b8: fc010000  fcmpu cr0, f1, f0
+803bd6bc: 80610010  lwz r3, 0x10(r1)
+803bd6c0: 80010014  lwz r0, 0x14(r1)
+803bd6c4: 90a10018  stw r5, 0x18(r1)
+803bd6c8: 9081001c  stw r4, 0x1c(r1)
+803bd6cc: 90610020  stw r3, 0x20(r1)
+803bd6d0: 90010024  stw r0, 0x24(r1)
+803bd6d4: 40820044  bne 0x803bd718
+803bd6d8: c001002c  lfs f0, 0x2c(r1)
+803bd6dc: fc010000  fcmpu cr0, f1, f0
+803bd6e0: 40820038  bne 0x803bd718
+803bd6e4: c0010030  lfs f0, 0x30(r1)
+803bd6e8: fc010000  fcmpu cr0, f1, f0
+803bd6ec: 4082002c  bne 0x803bd718
+803bd6f0: c022d03c  lfs f1, -0x2fc4(r2)
+803bd6f4: c0010018  lfs f0, 0x18(r1)
+803bd6f8: fc010000  fcmpu cr0, f1, f0
+803bd6fc: 4082001c  bne 0x803bd718
+803bd700: c001001c  lfs f0, 0x1c(r1)
+803bd704: fc010000  fcmpu cr0, f1, f0
+803bd708: 40820010  bne 0x803bd718
+803bd70c: c0010020  lfs f0, 0x20(r1)
+803bd710: fc010000  fcmpu cr0, f1, f0
+803bd714: 4182006c  beq 0x803bd780
+803bd718: c0c2d03c  lfs f6, -0x2fc4(r2)
+803bd71c: 38000001  li r0, 1
+803bd720: c0e10028  lfs f7, 0x28(r1)
+803bd724: c0a1002c  lfs f5, 0x2c(r1)
+803bd728: c0810030  lfs f4, 0x30(r1)
+803bd72c: c0610018  lfs f3, 0x18(r1)
+803bd730: c041001c  lfs f2, 0x1c(r1)
+803bd734: c0210020  lfs f1, 0x20(r1)
+803bd738: c002d038  lfs f0, -0x2fc8(r2)
+803bd73c: 981f004b  stb r0, 0x4b(r31)
+803bd740: d0ff0000  stfs f7, 0(r31)
+803bd744: d0df0004  stfs f6, 4(r31)
+803bd748: d0df0008  stfs f6, 8(r31)
+803bd74c: d0df000c  stfs f6, 0xc(r31)
+803bd750: d0df0010  stfs f6, 0x10(r31)
+803bd754: d0bf0014  stfs f5, 0x14(r31)
+803bd758: d0df0018  stfs f6, 0x18(r31)
+803bd75c: d0df001c  stfs f6, 0x1c(r31)
+803bd760: d0df0020  stfs f6, 0x20(r31)
+803bd764: d0df0024  stfs f6, 0x24(r31)
+803bd768: d09f0028  stfs f4, 0x28(r31)
+803bd76c: d0df002c  stfs f6, 0x2c(r31)
+803bd770: d07f0030  stfs f3, 0x30(r31)
+803bd774: d05f0034  stfs f2, 0x34(r31)
+803bd778: d03f0038  stfs f1, 0x38(r31)
+803bd77c: d01f003c  stfs f0, 0x3c(r31)
+803bd780: 80010044  lwz r0, 0x44(r1)
+803bd784: 83e1003c  lwz r31, 0x3c(r1)
+803bd788: 7c0803a6  mtlr r0
+803bd78c: 38210040  addi r1, r1, 0x40
+803bd790: 4e800020  blr 
+

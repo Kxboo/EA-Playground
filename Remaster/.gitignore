@@ -1,0 +1,13 @@
+build/
+build-deps/
+_internal/
+*.exe
+*.log
+settings.json
+cache/
+exports/
+tests/tmp/
+__pycache__/
+*.pyc
+# Game assets stay local.
+reference/

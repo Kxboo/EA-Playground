@@ -1,0 +1,622 @@
+RenderTextureApt__FPQ24EAGL7GeoPrim: 0x8001cb54, 1384 bytes
+8001cb54: 9421ffd0  stwu r1, -0x30(r1)
+8001cb58: 7c0802a6  mflr r0
+8001cb5c: 38600009  li r3, 9
+8001cb60: 38a00006  li r5, 6
+8001cb64: 90010034  stw r0, 0x34(r1)
+8001cb68: 93e1002c  stw r31, 0x2c(r1)
+8001cb6c: 3fe08044  lis r31, -0x7fbc
+8001cb70: 809f4870  lwz r4, 0x4870(r31)
+8001cb74: 80840034  lwz r4, 0x34(r4)
+8001cb78: 483c9cb1  bl 0x803e6828 ; SetArray__Q24EAGL12RenderMethodF7_GXAttrPvUc
+8001cb7c: 807f4870  lwz r3, 0x4870(r31)
+8001cb80: 3be00000  li r31, 0
+8001cb84: 80630024  lwz r3, 0x24(r3)
+8001cb88: 483cbed5  bl 0x803e8a5c ; GetShape__Q24EAGL3TARCFv
+8001cb8c: 80030000  lwz r0, 0(r3)
+8001cb90: 5400463e  srwi r0, r0, 0x18
+8001cb94: 28000019  cmplwi r0, 0x19
+8001cb98: 4082001c  bne 0x8001cbb4
+8001cb9c: 483f428d  bl 0x80410e28 ; SHAPE_clut
+8001cba0: 80030000  lwz r0, 0(r3)
+8001cba4: 5400463e  srwi r0, r0, 0x18
+8001cba8: 28000033  cmplwi r0, 0x33
+8001cbac: 40820008  bne 0x8001cbb4
+8001cbb0: 3be00001  li r31, 1
+8001cbb4: 2c1f0000  cmpwi r31, 0
+8001cbb8: 418202a4  beq 0x8001ce5c
+8001cbbc: 38600001  li r3, 1
+8001cbc0: 483cb741  bl 0x803e8300 ; SetNumTexGens__Q24EAGL12TARExtensionFi
+8001cbc4: 38600000  li r3, 0
+8001cbc8: 38800001  li r4, 1
+8001cbcc: 38a00000  li r5, 0
+8001cbd0: 38c0001e  li r6, 0x1e
+8001cbd4: 38e00000  li r7, 0
+8001cbd8: 3900007d  li r8, 0x7d
+8001cbdc: 483cb6e9  bl 0x803e82c4 ; SetTexCoordGen__Q24EAGL12TARExtensionF13_GXTexCoordID13_GXTexGenType12_GXTexGenSrcUiUcUi
+8001cbe0: 38a00000  li r5, 0
+8001cbe4: 380000ff  li r0, 0xff
+8001cbe8: 98a1000d  stb r5, 0xd(r1)
+8001cbec: 38810013  addi r4, r1, 0x13
+8001cbf0: 38600000  li r3, 0
+8001cbf4: 98a1000c  stb r5, 0xc(r1)
+8001cbf8: 98a1000e  stb r5, 0xe(r1)
+8001cbfc: 98a1000f  stb r5, 0xf(r1)
+8001cc00: 98a10011  stb r5, 0x11(r1)
+8001cc04: 98a10012  stb r5, 0x12(r1)
+8001cc08: 9801000b  stb r0, 0xb(r1)
+8001cc0c: 98010010  stb r0, 0x10(r1)
+8001cc10: 98010013  stb r0, 0x13(r1)
+8001cc14: 98a10014  stb r5, 0x14(r1)
+8001cc18: 98a10015  stb r5, 0x15(r1)
+8001cc1c: 98a10016  stb r5, 0x16(r1)
+8001cc20: 480425d9  bl 0x8005f1f8 ; GXSetTevKColor
+8001cc24: 88e1000f  lbz r7, 0xf(r1)
+8001cc28: 38810017  addi r4, r1, 0x17
+8001cc2c: 88c10010  lbz r6, 0x10(r1)
+8001cc30: 38600001  li r3, 1
+8001cc34: 88a10011  lbz r5, 0x11(r1)
+8001cc38: 88010012  lbz r0, 0x12(r1)
+8001cc3c: 98e10017  stb r7, 0x17(r1)
+8001cc40: 98c10018  stb r6, 0x18(r1)
+8001cc44: 98a10019  stb r5, 0x19(r1)
+8001cc48: 9801001a  stb r0, 0x1a(r1)
+8001cc4c: 480425ad  bl 0x8005f1f8 ; GXSetTevKColor
+8001cc50: 38600004  li r3, 4
+8001cc54: 483ccf39  bl 0x803e9b8c ; SetNumActiveStages__Q24EAGL8TevStageFUc
+8001cc58: 3fe0805f  lis r31, -0x7fa1
+8001cc5c: 3880000d  li r4, 0xd
+8001cc60: 387fe858  addi r3, r31, -0x17a8
+8001cc64: 483cd161  bl 0x803e9dc4 ; SetKColourSel__Q24EAGL8TevStageF15_GXTevKColorSel
+8001cc68: 387fe858  addi r3, r31, -0x17a8
+8001cc6c: 38800000  li r4, 0
+8001cc70: 38a00000  li r5, 0
+8001cc74: 38c00000  li r6, 0
+8001cc78: 38e00001  li r7, 1
+8001cc7c: 39000000  li r8, 0
+8001cc80: 483cd155  bl 0x803e9dd4 ; SetColourOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+8001cc84: 387fe858  addi r3, r31, -0x17a8
+8001cc88: 38800008  li r4, 8
+8001cc8c: 38a00009  li r5, 9
+8001cc90: 38c0000e  li r6, 0xe
+8001cc94: 38e0000f  li r7, 0xf
+8001cc98: 483cd15d  bl 0x803e9df4 ; SetColourIn__Q24EAGL8TevStageF14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg
+8001cc9c: 387fe858  addi r3, r31, -0x17a8
+8001cca0: 38800000  li r4, 0
+8001cca4: 38a00000  li r5, 0
+8001cca8: 38c00000  li r6, 0
+8001ccac: 38e00001  li r7, 1
+8001ccb0: 39000000  li r8, 0
+8001ccb4: 483cd15d  bl 0x803e9e10 ; SetAlphaOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+8001ccb8: 387fe858  addi r3, r31, -0x17a8
+8001ccbc: 38800007  li r4, 7
+8001ccc0: 38a00007  li r5, 7
+8001ccc4: 38c00007  li r6, 7
+8001ccc8: 38e00007  li r7, 7
+8001cccc: 483cd165  bl 0x803e9e30 ; SetAlphaIn__Q24EAGL8TevStageF14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg
+8001ccd0: 387fe858  addi r3, r31, -0x17a8
+8001ccd4: 38800001  li r4, 1
+8001ccd8: 38a00000  li r5, 0
+8001ccdc: 483cd0c5  bl 0x803e9da0 ; SetTextureMapAndUVs__Q24EAGL8TevStageF11_GXTexMapID13_GXTexCoordID
+8001cce0: 3bffe858  addi r31, r31, -0x17a8
+8001cce4: 3880000c  li r4, 0xc
+8001cce8: 387f0064  addi r3, r31, 0x64
+8001ccec: 483cd0d9  bl 0x803e9dc4 ; SetKColourSel__Q24EAGL8TevStageF15_GXTevKColorSel
+8001ccf0: 387f0064  addi r3, r31, 0x64
+8001ccf4: 38800000  li r4, 0
+8001ccf8: 38a00000  li r5, 0
+8001ccfc: 38c00000  li r6, 0
+8001cd00: 38e00001  li r7, 1
+8001cd04: 39000000  li r8, 0
+8001cd08: 483cd0cd  bl 0x803e9dd4 ; SetColourOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+8001cd0c: 387f0064  addi r3, r31, 0x64
+8001cd10: 38800000  li r4, 0
+8001cd14: 38a00008  li r5, 8
+8001cd18: 38c0000e  li r6, 0xe
+8001cd1c: 38e0000f  li r7, 0xf
+8001cd20: 483cd0d5  bl 0x803e9df4 ; SetColourIn__Q24EAGL8TevStageF14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg
+8001cd24: 387f0064  addi r3, r31, 0x64
+8001cd28: 38800000  li r4, 0
+8001cd2c: 38a00000  li r5, 0
+8001cd30: 38c00000  li r6, 0
+8001cd34: 38e00001  li r7, 1
+8001cd38: 39000000  li r8, 0
+8001cd3c: 483cd0d5  bl 0x803e9e10 ; SetAlphaOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+8001cd40: 387f0064  addi r3, r31, 0x64
+8001cd44: 38800004  li r4, 4
+8001cd48: 38a00007  li r5, 7
+8001cd4c: 38c00007  li r6, 7
+8001cd50: 38e00007  li r7, 7
+8001cd54: 483cd0dd  bl 0x803e9e30 ; SetAlphaIn__Q24EAGL8TevStageF14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg
+8001cd58: 387f0064  addi r3, r31, 0x64
+8001cd5c: 38800000  li r4, 0
+8001cd60: 38a00000  li r5, 0
+8001cd64: 483cd03d  bl 0x803e9da0 ; SetTextureMapAndUVs__Q24EAGL8TevStageF11_GXTexMapID13_GXTexCoordID
+8001cd68: 387f00c8  addi r3, r31, 0xc8
+8001cd6c: 38800000  li r4, 0
+8001cd70: 38a00000  li r5, 0
+8001cd74: 38c00000  li r6, 0
+8001cd78: 38e00001  li r7, 1
+8001cd7c: 39000000  li r8, 0
+8001cd80: 483cd055  bl 0x803e9dd4 ; SetColourOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+8001cd84: 387f00c8  addi r3, r31, 0xc8
+8001cd88: 3880000f  li r4, 0xf
+8001cd8c: 38a00000  li r5, 0
+8001cd90: 38c00002  li r6, 2
+8001cd94: 38e0000f  li r7, 0xf
+8001cd98: 483cd05d  bl 0x803e9df4 ; SetColourIn__Q24EAGL8TevStageF14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg
+8001cd9c: 387f00c8  addi r3, r31, 0xc8
+8001cda0: 38800000  li r4, 0
+8001cda4: 38a00000  li r5, 0
+8001cda8: 38c00000  li r6, 0
+8001cdac: 38e00001  li r7, 1
+8001cdb0: 39000000  li r8, 0
+8001cdb4: 483cd05d  bl 0x803e9e10 ; SetAlphaOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+8001cdb8: 387f00c8  addi r3, r31, 0xc8
+8001cdbc: 38800007  li r4, 7
+8001cdc0: 38a00000  li r5, 0
+8001cdc4: 38c00001  li r6, 1
+8001cdc8: 38e00007  li r7, 7
+8001cdcc: 483cd065  bl 0x803e9e30 ; SetAlphaIn__Q24EAGL8TevStageF14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg
+8001cdd0: 387f00c8  addi r3, r31, 0xc8
+8001cdd4: 388000ff  li r4, 0xff
+8001cdd8: 38a000ff  li r5, 0xff
+8001cddc: 483ccfc5  bl 0x803e9da0 ; SetTextureMapAndUVs__Q24EAGL8TevStageF11_GXTexMapID13_GXTexCoordID
+8001cde0: 387f012c  addi r3, r31, 0x12c
+8001cde4: 38800000  li r4, 0
+8001cde8: 38a00000  li r5, 0
+8001cdec: 38c00000  li r6, 0
+8001cdf0: 38e00001  li r7, 1
+8001cdf4: 39000000  li r8, 0
+8001cdf8: 483ccfdd  bl 0x803e9dd4 ; SetColourOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+8001cdfc: 387f012c  addi r3, r31, 0x12c
+8001ce00: 3880000f  li r4, 0xf
+8001ce04: 38a00000  li r5, 0
+8001ce08: 38c00004  li r6, 4
+8001ce0c: 38e00006  li r7, 6
+8001ce10: 483ccfe5  bl 0x803e9df4 ; SetColourIn__Q24EAGL8TevStageF14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg
+8001ce14: 387f012c  addi r3, r31, 0x12c
+8001ce18: 38800000  li r4, 0
+8001ce1c: 38a00000  li r5, 0
+8001ce20: 38c00000  li r6, 0
+8001ce24: 38e00001  li r7, 1
+8001ce28: 39000000  li r8, 0
+8001ce2c: 483ccfe5  bl 0x803e9e10 ; SetAlphaOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+8001ce30: 387f012c  addi r3, r31, 0x12c
+8001ce34: 38800007  li r4, 7
+8001ce38: 38a00000  li r5, 0
+8001ce3c: 38c00002  li r6, 2
+8001ce40: 38e00007  li r7, 7
+8001ce44: 483ccfed  bl 0x803e9e30 ; SetAlphaIn__Q24EAGL8TevStageF14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg
+8001ce48: 387f012c  addi r3, r31, 0x12c
+8001ce4c: 388000ff  li r4, 0xff
+8001ce50: 38a000ff  li r5, 0xff
+8001ce54: 483ccf4d  bl 0x803e9da0 ; SetTextureMapAndUVs__Q24EAGL8TevStageF11_GXTexMapID13_GXTexCoordID
+8001ce58: 48000128  b 0x8001cf80 ; 
+8001ce5c: 38600001  li r3, 1
+8001ce60: 483cb4a1  bl 0x803e8300 ; SetNumTexGens__Q24EAGL12TARExtensionFi
+8001ce64: 38600000  li r3, 0
+8001ce68: 38800001  li r4, 1
+8001ce6c: 38a00000  li r5, 0
+8001ce70: 38c0001e  li r6, 0x1e
+8001ce74: 38e00000  li r7, 0
+8001ce78: 3900007d  li r8, 0x7d
+8001ce7c: 483cb449  bl 0x803e82c4 ; SetTexCoordGen__Q24EAGL12TARExtensionF13_GXTexCoordID13_GXTexGenType12_GXTexGenSrcUiUcUi
+8001ce80: 38600002  li r3, 2
+8001ce84: 483ccd09  bl 0x803e9b8c ; SetNumActiveStages__Q24EAGL8TevStageFUc
+8001ce88: 3fe0805f  lis r31, -0x7fa1
+8001ce8c: 38800000  li r4, 0
+8001ce90: 387fe858  addi r3, r31, -0x17a8
+8001ce94: 38a00000  li r5, 0
+8001ce98: 38c00000  li r6, 0
+8001ce9c: 38e00001  li r7, 1
+8001cea0: 39000000  li r8, 0
+8001cea4: 483ccf31  bl 0x803e9dd4 ; SetColourOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+8001cea8: 387fe858  addi r3, r31, -0x17a8
+8001ceac: 3880000f  li r4, 0xf
+8001ceb0: 38a00008  li r5, 8
+8001ceb4: 38c00002  li r6, 2
+8001ceb8: 38e0000f  li r7, 0xf
+8001cebc: 483ccf39  bl 0x803e9df4 ; SetColourIn__Q24EAGL8TevStageF14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg
+8001cec0: 387fe858  addi r3, r31, -0x17a8
+8001cec4: 38800000  li r4, 0
+8001cec8: 38a00000  li r5, 0
+8001cecc: 38c00000  li r6, 0
+8001ced0: 38e00001  li r7, 1
+8001ced4: 39000000  li r8, 0
+8001ced8: 483ccf39  bl 0x803e9e10 ; SetAlphaOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+8001cedc: 387fe858  addi r3, r31, -0x17a8
+8001cee0: 38800007  li r4, 7
+8001cee4: 38a00004  li r5, 4
+8001cee8: 38c00001  li r6, 1
+8001ceec: 38e00007  li r7, 7
+8001cef0: 483ccf41  bl 0x803e9e30 ; SetAlphaIn__Q24EAGL8TevStageF14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg
+8001cef4: 387fe858  addi r3, r31, -0x17a8
+8001cef8: 38800000  li r4, 0
+8001cefc: 38a00000  li r5, 0
+8001cf00: 483ccea1  bl 0x803e9da0 ; SetTextureMapAndUVs__Q24EAGL8TevStageF11_GXTexMapID13_GXTexCoordID
+8001cf04: 3bffe858  addi r31, r31, -0x17a8
+8001cf08: 38800000  li r4, 0
+8001cf0c: 387f0064  addi r3, r31, 0x64
+8001cf10: 38a00000  li r5, 0
+8001cf14: 38c00000  li r6, 0
+8001cf18: 38e00001  li r7, 1
+8001cf1c: 39000000  li r8, 0
+8001cf20: 483cceb5  bl 0x803e9dd4 ; SetColourOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+8001cf24: 387f0064  addi r3, r31, 0x64
+8001cf28: 3880000f  li r4, 0xf
+8001cf2c: 38a00000  li r5, 0
+8001cf30: 38c00004  li r6, 4
+8001cf34: 38e00006  li r7, 6
+8001cf38: 483ccebd  bl 0x803e9df4 ; SetColourIn__Q24EAGL8TevStageF14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg
+8001cf3c: 387f0064  addi r3, r31, 0x64
+8001cf40: 38800000  li r4, 0
+8001cf44: 38a00000  li r5, 0
+8001cf48: 38c00000  li r6, 0
+8001cf4c: 38e00001  li r7, 1
+8001cf50: 39000000  li r8, 0
+8001cf54: 483ccebd  bl 0x803e9e10 ; SetAlphaOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+8001cf58: 387f0064  addi r3, r31, 0x64
+8001cf5c: 38800007  li r4, 7
+8001cf60: 38a00000  li r5, 0
+8001cf64: 38c00002  li r6, 2
+8001cf68: 38e00007  li r7, 7
+8001cf6c: 483ccec5  bl 0x803e9e30 ; SetAlphaIn__Q24EAGL8TevStageF14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg
+8001cf70: 387f0064  addi r3, r31, 0x64
+8001cf74: 388000ff  li r4, 0xff
+8001cf78: 38a000ff  li r5, 0xff
+8001cf7c: 483cce25  bl 0x803e9da0 ; SetTextureMapAndUVs__Q24EAGL8TevStageF11_GXTexMapID13_GXTexCoordID
+8001cf80: 3fe08044  lis r31, -0x7fbc
+8001cf84: 3881001b  addi r4, r1, 0x1b
+8001cf88: 80bf4870  lwz r5, 0x4870(r31)
+8001cf8c: 38600002  li r3, 2
+8001cf90: 80a5004c  lwz r5, 0x4c(r5)
+8001cf94: 88050000  lbz r0, 0(r5)
+8001cf98: 9801001b  stb r0, 0x1b(r1)
+8001cf9c: 88050001  lbz r0, 1(r5)
+8001cfa0: 9801001c  stb r0, 0x1c(r1)
+8001cfa4: 88050002  lbz r0, 2(r5)
+8001cfa8: 9801001d  stb r0, 0x1d(r1)
+8001cfac: 88050003  lbz r0, 3(r5)
+8001cfb0: 9801001e  stb r0, 0x1e(r1)
+8001cfb4: 48042181  bl 0x8005f134 ; GXSetTevColor
+8001cfb8: 387f4870  addi r3, r31, 0x4870
+8001cfbc: 8803003c  lbz r0, 0x3c(r3)
+8001cfc0: 2c000000  cmpwi r0, 0
+8001cfc4: 41820028  beq 0x8001cfec
+8001cfc8: 807f4870  lwz r3, 0x4870(r31)
+8001cfcc: 38800000  li r4, 0
+8001cfd0: 38a00000  li r5, 0
+8001cfd4: 80630024  lwz r3, 0x24(r3)
+8001cfd8: 38630004  addi r3, r3, 4
+8001cfdc: 483cb905  bl 0x803e88e0 ; Use__Q24EAGL12TARExtensionF11_GXTexMapIDUi
+8001cfe0: 38610008  addi r3, r1, 8
+8001cfe4: 3880ffff  li r4, -1
+8001cfe8: 483cfc59  bl 0x803ecc40 ; __dt__Q212EAGLInternal16InternalProfilerFv
+8001cfec: 483ccbed  bl 0x803e9bd8 ; SetHardware__Q24EAGL8TevStageFv
+8001cff0: 3c608044  lis r3, -0x7fbc
+8001cff4: 38c34870  addi r6, r3, 0x4870
+8001cff8: 88060045  lbz r0, 0x45(r6)
+8001cffc: 2c000000  cmpwi r0, 0
+8001d000: 40820018  bne 0x8001d018
+8001d004: 80660028  lwz r3, 0x28(r6)
+8001d008: 8086002c  lwz r4, 0x2c(r6)
+8001d00c: 88a60044  lbz r5, 0x44(r6)
+8001d010: 483d21e5  bl 0x803ef1f4 ; CallDisplayList__12EAGLInternalFPCvUib
+8001d014: 48000020  b 0x8001d034 ; 
+8001d018: 80634870  lwz r3, 0x4870(r3)
+8001d01c: 80860038  lwz r4, 0x38(r6)
+8001d020: 80630004  lwz r3, 4(r3)
+8001d024: 80a60030  lwz r5, 0x30(r6)
+8001d028: 80630000  lwz r3, 0(r3)
+8001d02c: 80c60034  lwz r6, 0x34(r6)
+8001d030: 483d16f9  bl 0x803ee728 ; DrawHandBuilt__12EAGLInternalFiUiUiUi
+8001d034: 38610009  addi r3, r1, 9
+8001d038: 3880ffff  li r4, -1
+8001d03c: 483cfc05  bl 0x803ecc40 ; __dt__Q212EAGLInternal16InternalProfilerFv
+8001d040: 3cc08044  lis r6, -0x7fbc
+8001d044: 38a64870  addi r5, r6, 0x4870
+8001d048: 80050004  lwz r0, 4(r5)
+8001d04c: 2c000000  cmpwi r0, 0
+8001d050: 4182004c  beq 0x8001d09c
+8001d054: 48000038  b 0x8001d08c ; 
+8001d058: 80870002  lwz r4, 2(r7)
+8001d05c: 806de458  lwz r3, -0x1ba8(r13)
+8001d060: 88070001  lbz r0, 1(r7)
+8001d064: 7c8419d6  mullw r4, r4, r3
+8001d068: 80664870  lwz r3, 0x4870(r6)
+8001d06c: 54001838  slwi r0, r0, 3
+8001d070: 7c630214  add r3, r3, r0
+8001d074: 80030004  lwz r0, 4(r3)
+8001d078: 7c040050  subf r0, r4, r0
+8001d07c: 90030004  stw r0, 4(r3)
+8001d080: 80650004  lwz r3, 4(r5)
+8001d084: 38030006  addi r0, r3, 6
+8001d088: 90050004  stw r0, 4(r5)
+8001d08c: 80e50004  lwz r7, 4(r5)
+8001d090: 88070000  lbz r0, 0(r7)
+8001d094: 28000002  cmplwi r0, 2
+8001d098: 4182ffc0  beq 0x8001d058
+8001d09c: 3861000a  addi r3, r1, 0xa
+8001d0a0: 3880ffff  li r4, -1
+8001d0a4: 483cfb9d  bl 0x803ecc40 ; __dt__Q212EAGLInternal16InternalProfilerFv
+8001d0a8: 80010034  lwz r0, 0x34(r1)
+8001d0ac: 83e1002c  lwz r31, 0x2c(r1)
+8001d0b0: 7c0803a6  mtlr r0
+8001d0b4: 38210030  addi r1, r1, 0x30
+8001d0b8: 4e800020  blr 
+
+ModelRenderTextureApt__FPQ24EAGL7GeoPrim: 0x8001d0bc, 820 bytes
+8001d0bc: 542b06fe  clrlwi r11, r1, 0x1b
+8001d0c0: 7c2c0b78  mr r12, r1
+8001d0c4: 216bff20  subfic r11, r11, -0xe0
+8001d0c8: 7c21596e  stwux r1, r1, r11
+8001d0cc: 7c0802a6  mflr r0
+8001d0d0: 38600004  li r3, 4
+8001d0d4: 900c0004  stw r0, 4(r12)
+8001d0d8: 3881003c  addi r4, r1, 0x3c
+8001d0dc: 93ecfffc  stw r31, -4(r12)
+8001d0e0: 93ccfff8  stw r30, -8(r12)
+8001d0e4: 88e28100  lbz r7, -0x7f00(r2)
+8001d0e8: 88c28101  lbz r6, -0x7eff(r2)
+8001d0ec: 88a28102  lbz r5, -0x7efe(r2)
+8001d0f0: 88028103  lbz r0, -0x7efd(r2)
+8001d0f4: 98e10020  stb r7, 0x20(r1)
+8001d0f8: 98c10021  stb r6, 0x21(r1)
+8001d0fc: 98a10022  stb r5, 0x22(r1)
+8001d100: 98010023  stb r0, 0x23(r1)
+8001d104: 98e1003c  stb r7, 0x3c(r1)
+8001d108: 98c1003d  stb r6, 0x3d(r1)
+8001d10c: 98a1003e  stb r5, 0x3e(r1)
+8001d110: 9801003f  stb r0, 0x3f(r1)
+8001d114: 48040865  bl 0x8005d978 ; GXSetChanAmbColor
+8001d118: 88e10020  lbz r7, 0x20(r1)
+8001d11c: 38810038  addi r4, r1, 0x38
+8001d120: 88c10021  lbz r6, 0x21(r1)
+8001d124: 38600004  li r3, 4
+8001d128: 88a10022  lbz r5, 0x22(r1)
+8001d12c: 88010023  lbz r0, 0x23(r1)
+8001d130: 98e10038  stb r7, 0x38(r1)
+8001d134: 98c10039  stb r6, 0x39(r1)
+8001d138: 98a1003a  stb r5, 0x3a(r1)
+8001d13c: 9801003b  stb r0, 0x3b(r1)
+8001d140: 48040911  bl 0x8005da50 ; GXSetChanMatColor
+8001d144: 483cc78d  bl 0x803e98d0 ; ResetToDefault__Q24EAGL8TevStageFv
+8001d148: 483cb0e9  bl 0x803e8230 ; ResetTexCoordGens__Q24EAGL12TARExtensionFv
+8001d14c: 38600000  li r3, 0
+8001d150: 38800009  li r4, 9
+8001d154: 38a00001  li r5, 1
+8001d158: 38c00003  li r6, 3
+8001d15c: 38e0000f  li r7, 0xf
+8001d160: 483c9915  bl 0x803e6a74 ; SetAttributeFormat__Q24EAGL21GeoPrimStateExtensionFi7_GXAttr10_GXCompCnt11_GXCompTypeUc
+8001d164: 38600000  li r3, 0
+8001d168: 483cb199  bl 0x803e8300 ; SetNumTexGens__Q24EAGL12TARExtensionFi
+8001d16c: 38600000  li r3, 0
+8001d170: 480409b9  bl 0x8005db28 ; GXSetNumChans
+8001d174: 3fc08044  lis r30, -0x7fbc
+8001d178: 38600200  li r3, 0x200
+8001d17c: 3bfe4870  addi r31, r30, 0x4870
+8001d180: 38000001  li r0, 1
+8001d184: 907f0034  stw r3, 0x34(r31)
+8001d188: 38600200  li r3, 0x200
+8001d18c: 3880ffff  li r4, -1
+8001d190: 901f0030  stw r0, 0x30(r31)
+8001d194: 483c98f9  bl 0x803e6a8c ; SetCurrentVertex__Q24EAGL21GeoPrimStateExtensionFUiUi
+8001d198: 38000000  li r0, 0
+8001d19c: 80de4870  lwz r6, 0x4870(r30)
+8001d1a0: 981f0046  stb r0, 0x46(r31)
+8001d1a4: 38000008  li r0, 8
+8001d1a8: 38a1003c  addi r5, r1, 0x3c
+8001d1ac: 8066000c  lwz r3, 0xc(r6)
+8001d1b0: 3883fffc  addi r4, r3, -4
+8001d1b4: 7c0903a6  mtctr r0
+8001d1b8: 80640004  lwz r3, 4(r4)
+8001d1bc: 84040008  lwzu r0, 8(r4)
+8001d1c0: 90650004  stw r3, 4(r5)
+8001d1c4: 94050008  stwu r0, 8(r5)
+8001d1c8: 4200fff0  bdnz 0x8001d1b8
+8001d1cc: 80860014  lwz r4, 0x14(r6)
+8001d1d0: 38610040  addi r3, r1, 0x40
+8001d1d4: 483cd341  bl 0x803ea514 ; PrependMatrix__Q24EAGL9TransformFPC7MATRIX4
+8001d1d8: 38610040  addi r3, r1, 0x40
+8001d1dc: 7c641b78  mr r4, r3
+8001d1e0: 483cd9c5  bl 0x803eaba4 ; Transpose__Q24EAGL9TransformFRCQ24EAGL9TransformRQ24EAGL9Transform
+8001d1e4: 38610040  addi r3, r1, 0x40
+8001d1e8: 38800000  li r4, 0
+8001d1ec: 48042d11  bl 0x8005fefc ; GXLoadPosMtxImm
+8001d1f0: 38600000  li r3, 0
+8001d1f4: 48042db1  bl 0x8005ffa4 ; GXSetCurrentMtx
+8001d1f8: 3fe08044  lis r31, -0x7fbc
+8001d1fc: c0828104  lfs f4, -0x7efc(r2)
+8001d200: 80bf4870  lwz r5, 0x4870(r31)
+8001d204: 38810030  addi r4, r1, 0x30
+8001d208: 38600001  li r3, 1
+8001d20c: 80a5003c  lwz r5, 0x3c(r5)
+8001d210: c0050000  lfs f0, 0(r5)
+8001d214: c0450004  lfs f2, 4(r5)
+8001d218: ec640032  fmuls f3, f4, f0
+8001d21c: c0250008  lfs f1, 8(r5)
+8001d220: c005000c  lfs f0, 0xc(r5)
+8001d224: ec4400b2  fmuls f2, f4, f2
+8001d228: ec240072  fmuls f1, f4, f1
+8001d22c: ec040032  fmuls f0, f4, f0
+8001d230: fc60181e  fctiwz f3, f3
+8001d234: fc40101e  fctiwz f2, f2
+8001d238: fc20081e  fctiwz f1, f1
+8001d23c: fc00001e  fctiwz f0, f0
+8001d240: d8610080  stfd f3, 0x80(r1)
+8001d244: d8410088  stfd f2, 0x88(r1)
+8001d248: 80e10084  lwz r7, 0x84(r1)
+8001d24c: 80c1008c  lwz r6, 0x8c(r1)
+8001d250: d8210090  stfd f1, 0x90(r1)
+8001d254: 80a10094  lwz r5, 0x94(r1)
+8001d258: d8010098  stfd f0, 0x98(r1)
+8001d25c: 8001009c  lwz r0, 0x9c(r1)
+8001d260: 98e10024  stb r7, 0x24(r1)
+8001d264: 98c10025  stb r6, 0x25(r1)
+8001d268: 98a10026  stb r5, 0x26(r1)
+8001d26c: 98010027  stb r0, 0x27(r1)
+8001d270: 98e10030  stb r7, 0x30(r1)
+8001d274: 98c10031  stb r6, 0x31(r1)
+8001d278: 98a10032  stb r5, 0x32(r1)
+8001d27c: 98010033  stb r0, 0x33(r1)
+8001d280: 48041eb5  bl 0x8005f134 ; GXSetTevColor
+8001d284: 80bf4870  lwz r5, 0x4870(r31)
+8001d288: 38810034  addi r4, r1, 0x34
+8001d28c: c0828104  lfs f4, -0x7efc(r2)
+8001d290: 38600003  li r3, 3
+8001d294: 80a50044  lwz r5, 0x44(r5)
+8001d298: c0050000  lfs f0, 0(r5)
+8001d29c: c0450004  lfs f2, 4(r5)
+8001d2a0: ec640032  fmuls f3, f4, f0
+8001d2a4: c0250008  lfs f1, 8(r5)
+8001d2a8: c005000c  lfs f0, 0xc(r5)
+8001d2ac: ec4400b2  fmuls f2, f4, f2
+8001d2b0: ec240072  fmuls f1, f4, f1
+8001d2b4: ec040032  fmuls f0, f4, f0
+8001d2b8: fc60181e  fctiwz f3, f3
+8001d2bc: fc40101e  fctiwz f2, f2
+8001d2c0: fc20081e  fctiwz f1, f1
+8001d2c4: fc00001e  fctiwz f0, f0
+8001d2c8: d86100a0  stfd f3, 0xa0(r1)
+8001d2cc: d84100a8  stfd f2, 0xa8(r1)
+8001d2d0: 80e100a4  lwz r7, 0xa4(r1)
+8001d2d4: 80c100ac  lwz r6, 0xac(r1)
+8001d2d8: d82100b0  stfd f1, 0xb0(r1)
+8001d2dc: 80a100b4  lwz r5, 0xb4(r1)
+8001d2e0: d80100b8  stfd f0, 0xb8(r1)
+8001d2e4: 800100bc  lwz r0, 0xbc(r1)
+8001d2e8: 98e10028  stb r7, 0x28(r1)
+8001d2ec: 98c10029  stb r6, 0x29(r1)
+8001d2f0: 98a1002a  stb r5, 0x2a(r1)
+8001d2f4: 9801002b  stb r0, 0x2b(r1)
+8001d2f8: 98e10034  stb r7, 0x34(r1)
+8001d2fc: 98c10035  stb r6, 0x35(r1)
+8001d300: 98a10036  stb r5, 0x36(r1)
+8001d304: 98010037  stb r0, 0x37(r1)
+8001d308: 48041e2d  bl 0x8005f134 ; GXSetTevColor
+8001d30c: 387f4870  addi r3, r31, 0x4870
+8001d310: 88030046  lbz r0, 0x46(r3)
+8001d314: 2c000000  cmpwi r0, 0
+8001d318: 41820048  beq 0x8001d360
+8001d31c: 38600004  li r3, 4
+8001d320: 38800000  li r4, 0
+8001d324: 38a00001  li r5, 1
+8001d328: 38c00001  li r6, 1
+8001d32c: 38e00000  li r7, 0
+8001d330: 39000002  li r8, 2
+8001d334: 39200002  li r9, 2
+8001d338: 48040815  bl 0x8005db4c ; GXSetChanCtrl
+8001d33c: 38600005  li r3, 5
+8001d340: 38800000  li r4, 0
+8001d344: 38a00001  li r5, 1
+8001d348: 38c00001  li r6, 1
+8001d34c: 38e00000  li r7, 0
+8001d350: 39000000  li r8, 0
+8001d354: 39200002  li r9, 2
+8001d358: 480407f5  bl 0x8005db4c ; GXSetChanCtrl
+8001d35c: 4800004c  b 0x8001d3a8 ; 
+8001d360: 38600001  li r3, 1
+8001d364: 480407c5  bl 0x8005db28 ; GXSetNumChans
+8001d368: 38600004  li r3, 4
+8001d36c: 38800000  li r4, 0
+8001d370: 38a00000  li r5, 0
+8001d374: 38c00000  li r6, 0
+8001d378: 38e00000  li r7, 0
+8001d37c: 39000002  li r8, 2
+8001d380: 39200002  li r9, 2
+8001d384: 480407c9  bl 0x8005db4c ; GXSetChanCtrl
+8001d388: 38600005  li r3, 5
+8001d38c: 38800000  li r4, 0
+8001d390: 38a00000  li r5, 0
+8001d394: 38c00000  li r6, 0
+8001d398: 38e00000  li r7, 0
+8001d39c: 39000000  li r8, 0
+8001d3a0: 39200002  li r9, 2
+8001d3a4: 480407a9  bl 0x8005db4c ; GXSetChanCtrl
+8001d3a8: 3fe08044  lis r31, -0x7fbc
+8001d3ac: 3881002c  addi r4, r1, 0x2c
+8001d3b0: 807f4870  lwz r3, 0x4870(r31)
+8001d3b4: 8063001c  lwz r3, 0x1c(r3)
+8001d3b8: 483ca095  bl 0x803e744c ; GetPrimitiveType__Q24EAGL12GeoPrimStateCFRQ24EAGL13PrimitiveType
+8001d3bc: 8001002c  lwz r0, 0x2c(r1)
+8001d3c0: 389f4870  addi r4, r31, 0x4870
+8001d3c4: 807f4870  lwz r3, 0x4870(r31)
+8001d3c8: 90040038  stw r0, 0x38(r4)
+8001d3cc: 8063001c  lwz r3, 0x1c(r3)
+8001d3d0: 483c98d9  bl 0x803e6ca8 ; Use__Q24EAGL21GeoPrimStateExtensionCFv
+8001d3d4: 81410000  lwz r10, 0(r1)
+8001d3d8: 800a0004  lwz r0, 4(r10)
+8001d3dc: 83eafffc  lwz r31, -4(r10)
+8001d3e0: 83cafff8  lwz r30, -8(r10)
+8001d3e4: 7c0803a6  mtlr r0
+8001d3e8: 7d415378  mr r1, r10
+8001d3ec: 4e800020  blr 
+
+GeomRenderTextureApt__FPQ24EAGL7GeoPrim: 0x8001d3f0, 132 bytes
+8001d3f0: 542b06fe  clrlwi r11, r1, 0x1b
+8001d3f4: 7c2c0b78  mr r12, r1
+8001d3f8: 216bffa0  subfic r11, r11, -0x60
+8001d3fc: 7c21596e  stwux r1, r1, r11
+8001d400: 7c0802a6  mflr r0
+8001d404: 3c608044  lis r3, -0x7fbc
+8001d408: 900c0004  stw r0, 4(r12)
+8001d40c: 38000008  li r0, 8
+8001d410: 38a1001c  addi r5, r1, 0x1c
+8001d414: 80c34870  lwz r6, 0x4870(r3)
+8001d418: 8066002c  lwz r3, 0x2c(r6)
+8001d41c: 3883fffc  addi r4, r3, -4
+8001d420: 7c0903a6  mtctr r0
+8001d424: 80640004  lwz r3, 4(r4)
+8001d428: 84040008  lwzu r0, 8(r4)
+8001d42c: 90650004  stw r3, 4(r5)
+8001d430: 94050008  stwu r0, 8(r5)
+8001d434: 4200fff0  bdnz 0x8001d424
+8001d438: 80860014  lwz r4, 0x14(r6)
+8001d43c: 38610020  addi r3, r1, 0x20
+8001d440: 483cd0d5  bl 0x803ea514 ; PrependMatrix__Q24EAGL9TransformFPC7MATRIX4
+8001d444: 38610020  addi r3, r1, 0x20
+8001d448: 7c641b78  mr r4, r3
+8001d44c: 483cd759  bl 0x803eaba4 ; Transpose__Q24EAGL9TransformFRCQ24EAGL9TransformRQ24EAGL9Transform
+8001d450: 38610020  addi r3, r1, 0x20
+8001d454: 3880001e  li r4, 0x1e
+8001d458: 38a00000  li r5, 0
+8001d45c: 48042b69  bl 0x8005ffc4 ; GXLoadTexMtxImm
+8001d460: 81410000  lwz r10, 0(r1)
+8001d464: 800a0004  lwz r0, 4(r10)
+8001d468: 7c0803a6  mtlr r0
+8001d46c: 7d415378  mr r1, r10
+8001d470: 4e800020  blr 
+
+CleanupTextureApt__FPQ24EAGL7GeoPrim: 0x8001d474, 4 bytes
+8001d474: 4e800020  blr 
+
+__sinit_\TextureApt_cpp: 0x8001d478, 108 bytes
+8001d478: 9421fff0  stwu r1, -0x10(r1)
+8001d47c: 7c0802a6  mflr r0
+8001d480: 3d408044  lis r10, -0x7fbc
+8001d484: 3c60804f  lis r3, -0x7fb1
+8001d488: 90010014  stw r0, 0x14(r1)
+8001d48c: 394a47a8  addi r10, r10, 0x47a8
+8001d490: 3c808002  lis r4, -0x7ffe
+8001d494: 3ca08002  lis r5, -0x7ffe
+8001d498: 800dc1c8  lwz r0, -0x3e38(r13)
+8001d49c: 390a00c8  addi r8, r10, 0xc8
+8001d4a0: 3cc08002  lis r6, -0x7ffe
+8001d4a4: 3ce08002  lis r7, -0x7ffe
+8001d4a8: 90080018  stw r0, 0x18(r8)
+8001d4ac: 386312c0  addi r3, r3, 0x12c0
+8001d4b0: 3884cb54  addi r4, r4, -0x34ac
+8001d4b4: 38a5d3f0  addi r5, r5, -0x2c10
+8001d4b8: 91010008  stw r8, 8(r1)
+8001d4bc: 38c6d0bc  addi r6, r6, -0x2f44
+8001d4c0: 38e7d474  addi r7, r7, -0x2b8c
+8001d4c4: 390a0074  addi r8, r10, 0x74
+8001d4c8: 392a00a0  addi r9, r10, 0xa0
+8001d4cc: 394a0110  addi r10, r10, 0x110
+8001d4d0: 483c93b9  bl 0x803e6888 ; __ct__Q24EAGL12RenderMethodFPFPQ24EAGL7GeoPrim_vPFPQ24EAGL7GeoPrim_vPFPQ24EAGL7GeoPrim_vPFPQ24EAGL7GeoPrim_vPPcPiPcRQ212EAGLInternal9PCodeData
+8001d4d4: 80010014  lwz r0, 0x14(r1)
+8001d4d8: 7c0803a6  mtlr r0
+8001d4dc: 38210010  addi r1, r1, 0x10
+8001d4e0: 4e800020  blr 
+

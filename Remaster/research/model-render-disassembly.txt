@@ -1,0 +1,1045 @@
+CommonDraw__FPv28AptAuxEAGLREAL_RenderObjType22AptMaskRenderOperation: 0x801520e4, 1124 bytes
+801520e4: 542b06fe  clrlwi r11, r1, 0x1b
+801520e8: 7c2c0b78  mr r12, r1
+801520ec: 216bff00  subfic r11, r11, -0x100
+801520f0: 7c21596e  stwux r1, r1, r11
+801520f4: 7c0802a6  mflr r0
+801520f8: 900c0004  stw r0, 4(r12)
+801520fc: dbecfff0  stfd f31, -0x10(r12)
+80152100: f3ec0ff8  xxsel vs31, vs12, vs1, v31
+80152104: 396cfff0  addi r11, r12, -0x10
+80152108: 4bee357d  bl 0x80035684 ; _savegpr_28
+8015210c: 2c050001  cmpwi r5, 1
+80152110: 3fe08058  lis r31, -0x7fa8
+80152114: 3bff0870  addi r31, r31, 0x870
+80152118: 40820064  bne 0x8015217c
+8015211c: 800dce24  lwz r0, -0x31dc(r13)
+80152120: 2c040000  cmpwi r4, 0
+80152124: 38bf1a30  addi r5, r31, 0x1a30
+80152128: 1c000048  mulli r0, r0, 0x48
+8015212c: 7c85012e  stwx r4, r5, r0
+80152130: 40820034  bne 0x80152164
+80152134: 7ca50214  add r5, r5, r0
+80152138: 389f008c  addi r4, r31, 0x8c
+8015213c: 38000008  li r0, 8
+80152140: 94650004  stwu r3, 4(r5)
+80152144: 3884fffc  addi r4, r4, -4
+80152148: 7c0903a6  mtctr r0
+8015214c: 80640004  lwz r3, 4(r4)
+80152150: 84040008  lwzu r0, 8(r4)
+80152154: 90650004  stw r3, 4(r5)
+80152158: 94050008  stwu r0, 8(r5)
+8015215c: 4200fff0  bdnz 0x8015214c
+80152160: 4800000c  b 0x8015216c ; 
+80152164: 7c850214  add r4, r5, r0
+80152168: 90640004  stw r3, 4(r4)
+8015216c: 806dce24  lwz r3, -0x31dc(r13)
+80152170: 38030001  addi r0, r3, 1
+80152174: 900dce24  stw r0, -0x31dc(r13)
+80152178: 48000098  b 0x80152210 ; 
+8015217c: 800dce24  lwz r0, -0x31dc(r13)
+80152180: 38df1a30  addi r6, r31, 0x1a30
+80152184: 3ba00000  li r29, 0
+80152188: 38800000  li r4, 0
+8015218c: 7c0903a6  mtctr r0
+80152190: 2c000000  cmpwi r0, 0
+80152194: 40810044  ble 0x801521d8
+80152198: 7ca62214  add r5, r6, r4
+8015219c: 80050004  lwz r0, 4(r5)
+801521a0: 7c001840  cmplw r0, r3
+801521a4: 40820028  bne 0x801521cc
+801521a8: 800dce24  lwz r0, -0x31dc(r13)
+801521ac: 387d0001  addi r3, r29, 1
+801521b0: 1c830048  mulli r4, r3, 0x48
+801521b4: 7c1d0050  subf r0, r29, r0
+801521b8: 7ca32b78  mr r3, r5
+801521bc: 1ca00048  mulli r5, r0, 0x48
+801521c0: 7c862214  add r4, r6, r4
+801521c4: 4becf9dd  bl 0x80021ba0 ; memmove
+801521c8: 48000010  b 0x801521d8 ; 
+801521cc: 3bbd0001  addi r29, r29, 1
+801521d0: 38840048  addi r4, r4, 0x48
+801521d4: 4200ffc4  bdnz 0x80152198
+801521d8: 800dce24  lwz r0, -0x31dc(r13)
+801521dc: 7c1d0000  cmpw r29, r0
+801521e0: 41820008  beq 0x801521e8
+801521e4: 48000020  b 0x80152204 ; 
+801521e8: 3c608048  lis r3, -0x7fb8
+801521ec: 3c808048  lis r4, -0x7fb8
+801521f0: 3863c148  addi r3, r3, -0x3eb8
+801521f4: 38a00000  li r5, 0
+801521f8: 3884bf41  addi r4, r4, -0x40bf
+801521fc: 38c00a1d  li r6, 0xa1d
+80152200: 4bece2d5  bl 0x800204d4 ; __msl_assertion_failed
+80152204: 806dce24  lwz r3, -0x31dc(r13)
+80152208: 3803ffff  addi r0, r3, -1
+8015220c: 900dce24  stw r0, -0x31dc(r13)
+80152210: 2c000000  cmpwi r0, 0
+80152214: 408102f4  ble 0x80152508
+80152218: 3d80803e  lis r12, -0x7fc2
+8015221c: 38600000  li r3, 0
+80152220: 398c5838  addi r12, r12, 0x5838
+80152224: 7d8903a6  mtctr r12
+80152228: 4e800421  bctrl 
+8015222c: 806dcdec  lwz r3, -0x3214(r13)
+80152230: 38df000c  addi r6, r31, 0xc
+80152234: c0228d08  lfs f1, -0x72f8(r2)
+80152238: 38bf001c  addi r5, r31, 0x1c
+8015223c: c0028d24  lfs f0, -0x72dc(r2)
+80152240: 5464421e  rlwinm r4, r3, 8, 8, 0xf
+80152244: 5460c00e  slwi r0, r3, 0x18
+80152248: d03f000c  stfs f1, 0xc(r31)
+8015224c: 5064c42e  rlwimi r4, r3, 0x18, 0x10, 0x17
+80152250: c3ed8f64  lfs f31, -0x709c(r13)
+80152254: 5060463e  rlwimi r0, r3, 8, 0x18, 0x1f
+80152258: d0260004  stfs f1, 4(r6)
+8015225c: 7c9e0378  or r30, r4, r0
+80152260: 806dce08  lwz r3, -0x31f8(r13)
+80152264: d0260008  stfs f1, 8(r6)
+80152268: 38800000  li r4, 0
+8015226c: d026000c  stfs f1, 0xc(r6)
+80152270: d01f001c  stfs f0, 0x1c(r31)
+80152274: d0050004  stfs f0, 4(r5)
+80152278: d0050008  stfs f0, 8(r5)
+8015227c: d005000c  stfs f0, 0xc(r5)
+80152280: 48295145  bl 0x803e73c4 ; SetTextureEnable__Q24EAGL12GeoPrimStateFb
+80152284: 806dce08  lwz r3, -0x31f8(r13)
+80152288: 38800007  li r4, 7
+8015228c: 48295191  bl 0x803e741c ; SetDepthTestMethod__Q24EAGL12GeoPrimStateFQ24EAGL15DepthTestMethod
+80152290: 806dce08  lwz r3, -0x31f8(r13)
+80152294: 38800001  li r4, 1
+80152298: 48294ef5  bl 0x803e718c ; SetZWritesEnable__Q24EAGL21GeoPrimStateExtensionFb
+8015229c: 806dce00  lwz r3, -0x3200(r13)
+801522a0: 808dce08  lwz r4, -0x31f8(r13)
+801522a4: 4829dcb1  bl 0x803eff54 ; SetState__Q24EAGL11DrawGouraudFRCQ24EAGL12GeoPrimState
+801522a8: 806dcdf4  lwz r3, -0x320c(r13)
+801522ac: 4829a6e1  bl 0x803ec98c ; GetViewMatrix__Q24EAGL8ViewPortFv
+801522b0: 38000008  li r0, 8
+801522b4: 38a1009c  addi r5, r1, 0x9c
+801522b8: 3883fffc  addi r4, r3, -4
+801522bc: 7c0903a6  mtctr r0
+801522c0: 80640004  lwz r3, 4(r4)
+801522c4: 84040008  lwzu r0, 8(r4)
+801522c8: 90650004  stw r3, 4(r5)
+801522cc: 94050008  stwu r0, 8(r5)
+801522d0: 4200fff0  bdnz 0x801522c0
+801522d4: 38000008  li r0, 8
+801522d8: 38a1005c  addi r5, r1, 0x5c
+801522dc: 3881009c  addi r4, r1, 0x9c
+801522e0: 7c0903a6  mtctr r0
+801522e4: 80640004  lwz r3, 4(r4)
+801522e8: 84040008  lwzu r0, 8(r4)
+801522ec: 90650004  stw r3, 4(r5)
+801522f0: 94050008  stwu r0, 8(r5)
+801522f4: 4200fff0  bdnz 0x801522e4
+801522f8: 38610060  addi r3, r1, 0x60
+801522fc: 48298a45  bl 0x803ead40 ; Inverse__Q24EAGL9TransformFv
+80152300: c0028d24  lfs f0, -0x72dc(r2)
+80152304: 38810060  addi r4, r1, 0x60
+80152308: 806dce00  lwz r3, -0x3200(r13)
+8015230c: d0010098  stfs f0, 0x98(r1)
+80152310: 4829de41  bl 0x803f0150 ; SetModelMatrix__Q24EAGL11DrawGouraudFR7MATRIX4
+80152314: 806dce00  lwz r3, -0x3200(r13)
+80152318: 38800090  li r4, 0x90
+8015231c: 4829dd81  bl 0x803f009c ; Begin__Q24EAGL11DrawGouraudFQ24EAGL13PrimitiveType
+80152320: 3ce08042  lis r7, -0x7fbe
+80152324: 38810028  addi r4, r1, 0x28
+80152328: 38e716a4  addi r7, r7, 0x16a4
+8015232c: 806dcdf4  lwz r3, -0x320c(r13)
+80152330: 80070008  lwz r0, 8(r7)
+80152334: 7c852378  mr r5, r4
+80152338: 81670000  lwz r11, 0(r7)
+8015233c: 7c882378  mr r8, r4
+80152340: 9001004c  stw r0, 0x4c(r1)
+80152344: 7c892378  mr r9, r4
+80152348: 81470004  lwz r10, 4(r7)
+8015234c: 38c10020  addi r6, r1, 0x20
+80152350: 8007000c  lwz r0, 0xc(r7)
+80152354: 38e10024  addi r7, r1, 0x24
+80152358: 91610044  stw r11, 0x44(r1)
+8015235c: 91410048  stw r10, 0x48(r1)
+80152360: 90010050  stw r0, 0x50(r1)
+80152364: d3e1004c  stfs f31, 0x4c(r1)
+80152368: 4829a259  bl 0x803ec5c0 ; GetShape__Q24EAGL8ViewPortCFRfRfRfRfRfRf
+8015236c: c0028d24  lfs f0, -0x72dc(r2)
+80152370: 38a1002c  addi r5, r1, 0x2c
+80152374: 93c1002c  stw r30, 0x2c(r1)
+80152378: 38810044  addi r4, r1, 0x44
+8015237c: 806dce00  lwz r3, -0x3200(r13)
+80152380: d0010044  stfs f0, 0x44(r1)
+80152384: d0010048  stfs f0, 0x48(r1)
+80152388: 4829dc5d  bl 0x803effe4 ; AddVertex__Q24EAGL11DrawGouraudFRC6COORD4RCQ24EAGL6Colour
+8015238c: c0210020  lfs f1, 0x20(r1)
+80152390: 38a10030  addi r5, r1, 0x30
+80152394: c0028d24  lfs f0, -0x72dc(r2)
+80152398: 38810044  addi r4, r1, 0x44
+8015239c: d0210044  stfs f1, 0x44(r1)
+801523a0: 806dce00  lwz r3, -0x3200(r13)
+801523a4: d0010048  stfs f0, 0x48(r1)
+801523a8: 93c10030  stw r30, 0x30(r1)
+801523ac: 4829dc39  bl 0x803effe4 ; AddVertex__Q24EAGL11DrawGouraudFRC6COORD4RCQ24EAGL6Colour
+801523b0: c0210020  lfs f1, 0x20(r1)
+801523b4: 38a10034  addi r5, r1, 0x34
+801523b8: c0010024  lfs f0, 0x24(r1)
+801523bc: 38810044  addi r4, r1, 0x44
+801523c0: d0210044  stfs f1, 0x44(r1)
+801523c4: 806dce00  lwz r3, -0x3200(r13)
+801523c8: d0010048  stfs f0, 0x48(r1)
+801523cc: 93c10034  stw r30, 0x34(r1)
+801523d0: 4829dc15  bl 0x803effe4 ; AddVertex__Q24EAGL11DrawGouraudFRC6COORD4RCQ24EAGL6Colour
+801523d4: c0028d24  lfs f0, -0x72dc(r2)
+801523d8: 38a10038  addi r5, r1, 0x38
+801523dc: 93c10038  stw r30, 0x38(r1)
+801523e0: 38810044  addi r4, r1, 0x44
+801523e4: 806dce00  lwz r3, -0x3200(r13)
+801523e8: d0010044  stfs f0, 0x44(r1)
+801523ec: d0010048  stfs f0, 0x48(r1)
+801523f0: 4829dbf5  bl 0x803effe4 ; AddVertex__Q24EAGL11DrawGouraudFRC6COORD4RCQ24EAGL6Colour
+801523f4: c0210020  lfs f1, 0x20(r1)
+801523f8: 38a1003c  addi r5, r1, 0x3c
+801523fc: c0010024  lfs f0, 0x24(r1)
+80152400: 38810044  addi r4, r1, 0x44
+80152404: d0210044  stfs f1, 0x44(r1)
+80152408: 806dce00  lwz r3, -0x3200(r13)
+8015240c: d0010048  stfs f0, 0x48(r1)
+80152410: 93c1003c  stw r30, 0x3c(r1)
+80152414: 4829dbd1  bl 0x803effe4 ; AddVertex__Q24EAGL11DrawGouraudFRC6COORD4RCQ24EAGL6Colour
+80152418: c0228d24  lfs f1, -0x72dc(r2)
+8015241c: 38a10040  addi r5, r1, 0x40
+80152420: c0010024  lfs f0, 0x24(r1)
+80152424: 38810044  addi r4, r1, 0x44
+80152428: d0210044  stfs f1, 0x44(r1)
+8015242c: 806dce00  lwz r3, -0x3200(r13)
+80152430: d0010048  stfs f0, 0x48(r1)
+80152434: 93c10040  stw r30, 0x40(r1)
+80152438: 4829dbad  bl 0x803effe4 ; AddVertex__Q24EAGL11DrawGouraudFRC6COORD4RCQ24EAGL6Colour
+8015243c: 806dce00  lwz r3, -0x3200(r13)
+80152440: 4829dc59  bl 0x803f0098 ; End__Q24EAGL11DrawGouraudFv
+80152444: 3bff1a30  addi r31, r31, 0x1a30
+80152448: 3b800000  li r28, 0
+8015244c: 3bc00000  li r30, 0
+80152450: 48000094  b 0x801524e4 ; 
+80152454: 7c1ff02e  lwzx r0, r31, r30
+80152458: 2c000000  cmpwi r0, 0
+8015245c: 40820038  bne 0x80152494
+80152460: 7c7ff214  add r3, r31, r30
+80152464: 38800007  li r4, 7
+80152468: 83a30004  lwz r29, 4(r3)
+8015246c: 7fa3eb78  mr r3, r29
+80152470: 4bfffb51  bl 0x80151fc0 ; _setDepthMethod__FPQ24EAGL5ModelQ24EAGL15DepthTestMethod
+80152474: 7c9ff214  add r4, r31, r30
+80152478: 7fa3eb78  mr r3, r29
+8015247c: 38840008  addi r4, r4, 8
+80152480: 482907f9  bl 0x803e2c78 ; Draw__Q24EAGL5ModelFRC7MATRIX4
+80152484: 7fa3eb78  mr r3, r29
+80152488: 38800003  li r4, 3
+8015248c: 4bfffb35  bl 0x80151fc0 ; _setDepthMethod__FPQ24EAGL5ModelQ24EAGL15DepthTestMethod
+80152490: 4800004c  b 0x801524dc ; 
+80152494: 806dce08  lwz r3, -0x31f8(r13)
+80152498: 38800001  li r4, 1
+8015249c: 48294f29  bl 0x803e73c4 ; SetTextureEnable__Q24EAGL12GeoPrimStateFb
+801524a0: 806dce08  lwz r3, -0x31f8(r13)
+801524a4: 38800007  li r4, 7
+801524a8: 48294f75  bl 0x803e741c ; SetDepthTestMethod__Q24EAGL12GeoPrimStateFQ24EAGL15DepthTestMethod
+801524ac: 806dcdfc  lwz r3, -0x3204(r13)
+801524b0: 808dce08  lwz r4, -0x31f8(r13)
+801524b4: 4829d85d  bl 0x803efd10 ; SetState__Q24EAGL12DrawTexturedFRCQ24EAGL12GeoPrimState
+801524b8: 806dce08  lwz r3, -0x31f8(r13)
+801524bc: 38800003  li r4, 3
+801524c0: 48294f5d  bl 0x803e741c ; SetDepthTestMethod__Q24EAGL12GeoPrimStateFQ24EAGL15DepthTestMethod
+801524c4: 806dce08  lwz r3, -0x31f8(r13)
+801524c8: 38800000  li r4, 0
+801524cc: 48294ef9  bl 0x803e73c4 ; SetTextureEnable__Q24EAGL12GeoPrimStateFb
+801524d0: 806dcdfc  lwz r3, -0x3204(r13)
+801524d4: 808dce08  lwz r4, -0x31f8(r13)
+801524d8: 4829d839  bl 0x803efd10 ; SetState__Q24EAGL12DrawTexturedFRCQ24EAGL12GeoPrimState
+801524dc: 3b9c0001  addi r28, r28, 1
+801524e0: 3bde0048  addi r30, r30, 0x48
+801524e4: 800dce24  lwz r0, -0x31dc(r13)
+801524e8: 7c1c0000  cmpw r28, r0
+801524ec: 4180ff68  blt 0x80152454
+801524f0: 3d80803e  lis r12, -0x7fc2
+801524f4: 38600001  li r3, 1
+801524f8: 398c5838  addi r12, r12, 0x5838
+801524fc: 7d8903a6  mtctr r12
+80152500: 4e800421  bctrl 
+80152504: 4800001c  b 0x80152520 ; 
+80152508: 880dce14  lbz r0, -0x31ec(r13)
+8015250c: 2c000000  cmpwi r0, 0
+80152510: 40820010  bne 0x80152520
+80152514: 806dcdf4  lwz r3, -0x320c(r13)
+80152518: 38800002  li r4, 2
+8015251c: 482990c5  bl 0x803eb5e0 ; ClearViewPort__Q24EAGL8ViewPortFQ24EAGL10ClearFlags
+80152520: 81410000  lwz r10, 0(r1)
+80152524: 3800fff8  li r0, -8
+80152528: 13ea000c  vmrghb v31, v10, v0
+8015252c: 396afff0  addi r11, r10, -0x10
+80152530: cbeafff0  lfd f31, -0x10(r10)
+80152534: 4bee319d  bl 0x800356d0 ; _restgpr_28
+80152538: 800a0004  lwz r0, 4(r10)
+8015253c: 7c0803a6  mtlr r0
+80152540: 7d415378  mr r1, r10
+80152544: 4e800020  blr 
+
+GetGeometry__Q24EAGL5ModelFi: 0x8037a860, 40 bytes
+8037a860: 8003009c  lwz r0, 0x9c(r3)
+8037a864: 7c040000  cmpw r4, r0
+8037a868: 40800018  bge 0x8037a880
+8037a86c: 38040001  addi r0, r4, 1
+8037a870: 806300c4  lwz r3, 0xc4(r3)
+8037a874: 5400103a  slwi r0, r0, 2
+8037a878: 7c630214  add r3, r3, r0
+8037a87c: 4e800020  blr 
+8037a880: 38600000  li r3, 0
+8037a884: 4e800020  blr 
+
+GetBoundingBox__Q24EAGL5ModelCFR6COORD3R6COORD3: 0x803bd274, 52 bytes
+803bd274: c043006c  lfs f2, 0x6c(r3)
+803bd278: c0230070  lfs f1, 0x70(r3)
+803bd27c: c0030074  lfs f0, 0x74(r3)
+803bd280: d0440000  stfs f2, 0(r4)
+803bd284: c043007c  lfs f2, 0x7c(r3)
+803bd288: d0240004  stfs f1, 4(r4)
+803bd28c: c0230080  lfs f1, 0x80(r3)
+803bd290: d0040008  stfs f0, 8(r4)
+803bd294: c0030084  lfs f0, 0x84(r3)
+803bd298: d0450000  stfs f2, 0(r5)
+803bd29c: d0250004  stfs f1, 4(r5)
+803bd2a0: d0050008  stfs f0, 8(r5)
+803bd2a4: 4e800020  blr 
+
+GetOffset__Q24EAGL5ModelFv: 0x803e2b88, 36 bytes
+803e2b88: 80a4005c  lwz r5, 0x5c(r4)
+803e2b8c: 80040060  lwz r0, 0x60(r4)
+803e2b90: 90a30000  stw r5, 0(r3)
+803e2b94: 90030004  stw r0, 4(r3)
+803e2b98: 80a40064  lwz r5, 0x64(r4)
+803e2b9c: 80040068  lwz r0, 0x68(r4)
+803e2ba0: 90a30008  stw r5, 8(r3)
+803e2ba4: 9003000c  stw r0, 0xc(r3)
+803e2ba8: 4e800020  blr 
+
+Optimize__Q24EAGL5ModelFv: 0x803e2bac, 204 bytes
+803e2bac: 9421ffe0  stwu r1, -0x20(r1)
+803e2bb0: 7c0802a6  mflr r0
+803e2bb4: 90010024  stw r0, 0x24(r1)
+803e2bb8: 39610020  addi r11, r1, 0x20
+803e2bbc: 4bc52ac5  bl 0x80035680 ; _savegpr_27
+803e2bc0: 83e300cc  lwz r31, 0xcc(r3)
+803e2bc4: 7c7b1b78  mr r27, r3
+803e2bc8: 801f0000  lwz r0, 0(r31)
+803e2bcc: 3bff0004  addi r31, r31, 4
+803e2bd0: 2c000000  cmpwi r0, 0
+803e2bd4: 4082008c  bne 0x803e2c60
+803e2bd8: 8003009c  lwz r0, 0x9c(r3)
+803e2bdc: 2c000000  cmpwi r0, 0
+803e2be0: 40820038  bne 0x803e2c18
+803e2be4: 83bf0000  lwz r29, 0(r31)
+803e2be8: 3bc00000  li r30, 0
+803e2bec: 3bff0004  addi r31, r31, 4
+803e2bf0: 48000018  b 0x803e2c08 ; 
+803e2bf4: 807f0000  lwz r3, 0(r31)
+803e2bf8: 7fc4f378  mr r4, r30
+803e2bfc: 3bde0001  addi r30, r30, 1
+803e2c00: 3bff0004  addi r31, r31, 4
+803e2c04: 48003939  bl 0x803e653c ; Optimize__Q24EAGL7GeoPrimFi
+803e2c08: 2c1d0000  cmpwi r29, 0
+803e2c0c: 3bbdffff  addi r29, r29, -1
+803e2c10: 4082ffe4  bne 0x803e2bf4
+803e2c14: 4800004c  b 0x803e2c60 ; 
+803e2c18: 3ba00000  li r29, 0
+803e2c1c: 48000038  b 0x803e2c54 ; 
+803e2c20: 839f0000  lwz r28, 0(r31)
+803e2c24: 3bc00000  li r30, 0
+803e2c28: 3bff0004  addi r31, r31, 4
+803e2c2c: 48000018  b 0x803e2c44 ; 
+803e2c30: 807f0000  lwz r3, 0(r31)
+803e2c34: 7fc4f378  mr r4, r30
+803e2c38: 3bde0001  addi r30, r30, 1
+803e2c3c: 3bff0004  addi r31, r31, 4
+803e2c40: 480038fd  bl 0x803e653c ; Optimize__Q24EAGL7GeoPrimFi
+803e2c44: 2c1c0000  cmpwi r28, 0
+803e2c48: 3b9cffff  addi r28, r28, -1
+803e2c4c: 4082ffe4  bne 0x803e2c30
+803e2c50: 3bbd0001  addi r29, r29, 1
+803e2c54: 801b009c  lwz r0, 0x9c(r27)
+803e2c58: 7c1d0000  cmpw r29, r0
+803e2c5c: 4180ffc4  blt 0x803e2c20
+803e2c60: 39610020  addi r11, r1, 0x20
+803e2c64: 4bc52a69  bl 0x800356cc ; _restgpr_27
+803e2c68: 80010024  lwz r0, 0x24(r1)
+803e2c6c: 7c0803a6  mtlr r0
+803e2c70: 38210020  addi r1, r1, 0x20
+803e2c74: 4e800020  blr 
+
+Draw__Q24EAGL5ModelFRC7MATRIX4: 0x803e2c78, 1512 bytes
+803e2c78: 542b06fe  clrlwi r11, r1, 0x1b
+803e2c7c: 7c2c0b78  mr r12, r1
+803e2c80: 216bff40  subfic r11, r11, -0xc0
+803e2c84: 7c21596e  stwux r1, r1, r11
+803e2c88: 7c0802a6  mflr r0
+803e2c8c: 7d8b6378  mr r11, r12
+803e2c90: 900c0004  stw r0, 4(r12)
+803e2c94: 4bc529d5  bl 0x80035668 ; _savegpr_21
+803e2c98: 800300c8  lwz r0, 0xc8(r3)
+803e2c9c: 7c7b1b78  mr r27, r3
+803e2ca0: 7c9c2378  mr r28, r4
+803e2ca4: 2c000000  cmpwi r0, 0
+803e2ca8: 4182059c  beq 0x803e3244
+803e2cac: 48000e35  bl 0x803e3ae0 ; Get__Q24EAGL6DeviceFv
+803e2cb0: 48000e59  bl 0x803e3b08 ; GetCurrentContext__Q24EAGL6DeviceCFv
+803e2cb4: 48003741  bl 0x803e63f4 ; GetCurrentViewPort__Q24EAGL17RenderContextBaseCFv
+803e2cb8: 2c030000  cmpwi r3, 0
+803e2cbc: 7c751b78  mr r21, r3
+803e2cc0: 418200ac  beq 0x803e2d6c
+803e2cc4: 48009d75  bl 0x803eca38 ; GetEnableModelSphereCull__Q24EAGL8ViewPortFv
+803e2cc8: 2c030000  cmpwi r3, 0
+803e2ccc: 418200a0  beq 0x803e2d6c
+803e2cd0: c0fb0090  lfs f7, 0x90(r27)
+803e2cd4: 7ea3ab78  mr r3, r21
+803e2cd8: c05c0010  lfs f2, 0x10(r28)
+803e2cdc: 38810020  addi r4, r1, 0x20
+803e2ce0: c03c0014  lfs f1, 0x14(r28)
+803e2ce4: eca700b2  fmuls f5, f7, f2
+803e2ce8: c11b008c  lfs f8, 0x8c(r27)
+803e2cec: c09c0000  lfs f4, 0(r28)
+803e2cf0: ec670072  fmuls f3, f7, f1
+803e2cf4: c01c0018  lfs f0, 0x18(r28)
+803e2cf8: c05c0004  lfs f2, 4(r28)
+803e2cfc: ec270032  fmuls f1, f7, f0
+803e2d00: c01c0008  lfs f0, 8(r28)
+803e2d04: eca8293a  fmadds f5, f8, f4, f5
+803e2d08: c0db0094  lfs f6, 0x94(r27)
+803e2d0c: ec6818ba  fmadds f3, f8, f2, f3
+803e2d10: c09c0020  lfs f4, 0x20(r28)
+803e2d14: ec28083a  fmadds f1, f8, f0, f1
+803e2d18: c05c0024  lfs f2, 0x24(r28)
+803e2d1c: c01c0028  lfs f0, 0x28(r28)
+803e2d20: eca6293a  fmadds f5, f6, f4, f5
+803e2d24: ec6618ba  fmadds f3, f6, f2, f3
+803e2d28: c09c0030  lfs f4, 0x30(r28)
+803e2d2c: ec26083a  fmadds f1, f6, f0, f1
+803e2d30: c05c0034  lfs f2, 0x34(r28)
+803e2d34: c01c0038  lfs f0, 0x38(r28)
+803e2d38: ec84282a  fadds f4, f4, f5
+803e2d3c: ec42182a  fadds f2, f2, f3
+803e2d40: d101002c  stfs f8, 0x2c(r1)
+803e2d44: ec00082a  fadds f0, f0, f1
+803e2d48: d0810020  stfs f4, 0x20(r1)
+803e2d4c: d0410024  stfs f2, 0x24(r1)
+803e2d50: d0010028  stfs f0, 0x28(r1)
+803e2d54: d0e10030  stfs f7, 0x30(r1)
+803e2d58: c03b0098  lfs f1, 0x98(r27)
+803e2d5c: d0c10034  stfs f6, 0x34(r1)
+803e2d60: 48008701  bl 0x803eb460 ; IsSphereInView__Q24EAGL8ViewPortFRC6COORD3f
+803e2d64: 2c030000  cmpwi r3, 0
+803e2d68: 418204dc  beq 0x803e3244
+803e2d6c: 800de4c0  lwz r0, -0x1b40(r13)
+803e2d70: 3c80805f  lis r4, -0x7fa1
+803e2d74: 83bc0000  lwz r29, 0(r28)
+803e2d78: 3fe0805f  lis r31, -0x7fa1
+803e2d7c: 901b00dc  stw r0, 0xdc(r27)
+803e2d80: 38610040  addi r3, r1, 0x40
+803e2d84: 835c0004  lwz r26, 4(r28)
+803e2d88: 3884efa8  addi r4, r4, -0x1058
+803e2d8c: 97bfef28  stwu r29, -0x10d8(r31)
+803e2d90: 833c0008  lwz r25, 8(r28)
+803e2d94: 831c000c  lwz r24, 0xc(r28)
+803e2d98: 82fc0010  lwz r23, 0x10(r28)
+803e2d9c: 82dc0014  lwz r22, 0x14(r28)
+803e2da0: 82bc0018  lwz r21, 0x18(r28)
+803e2da4: 819c001c  lwz r12, 0x1c(r28)
+803e2da8: 817c0020  lwz r11, 0x20(r28)
+803e2dac: 815c0024  lwz r10, 0x24(r28)
+803e2db0: 813c0028  lwz r9, 0x28(r28)
+803e2db4: 811c002c  lwz r8, 0x2c(r28)
+803e2db8: 80fc0030  lwz r7, 0x30(r28)
+803e2dbc: 80dc0034  lwz r6, 0x34(r28)
+803e2dc0: 80bc0038  lwz r5, 0x38(r28)
+803e2dc4: 801c003c  lwz r0, 0x3c(r28)
+803e2dc8: 935f0004  stw r26, 4(r31)
+803e2dcc: 933f0008  stw r25, 8(r31)
+803e2dd0: 931f000c  stw r24, 0xc(r31)
+803e2dd4: 92ff0010  stw r23, 0x10(r31)
+803e2dd8: 92df0014  stw r22, 0x14(r31)
+803e2ddc: 92bf0018  stw r21, 0x18(r31)
+803e2de0: 919f001c  stw r12, 0x1c(r31)
+803e2de4: 917f0020  stw r11, 0x20(r31)
+803e2de8: 915f0024  stw r10, 0x24(r31)
+803e2dec: 913f0028  stw r9, 0x28(r31)
+803e2df0: 911f002c  stw r8, 0x2c(r31)
+803e2df4: 90ff0030  stw r7, 0x30(r31)
+803e2df8: 90df0034  stw r6, 0x34(r31)
+803e2dfc: 90bf0038  stw r5, 0x38(r31)
+803e2e00: 901f003c  stw r0, 0x3c(r31)
+803e2e04: 480082b5  bl 0x803eb0b8 ; BuildMatrix__Q24EAGL9TransformFPC7MATRIX4
+803e2e08: 7fe4fb78  mr r4, r31
+803e2e0c: 38610040  addi r3, r1, 0x40
+803e2e10: 48007705  bl 0x803ea514 ; PrependMatrix__Q24EAGL9TransformFPC7MATRIX4
+803e2e14: 82c10040  lwz r22, 0x40(r1)
+803e2e18: 3ea0805f  lis r21, -0x7fa1
+803e2e1c: 3c80805f  lis r4, -0x7fa1
+803e2e20: 82e10044  lwz r23, 0x44(r1)
+803e2e24: 96d5efe8  stwu r22, -0x1018(r21)
+803e2e28: 38610040  addi r3, r1, 0x40
+803e2e2c: 83c10048  lwz r30, 0x48(r1)
+803e2e30: 3884eee8  addi r4, r4, -0x1118
+803e2e34: 83a1004c  lwz r29, 0x4c(r1)
+803e2e38: 83410050  lwz r26, 0x50(r1)
+803e2e3c: 83210054  lwz r25, 0x54(r1)
+803e2e40: 83010058  lwz r24, 0x58(r1)
+803e2e44: 8181005c  lwz r12, 0x5c(r1)
+803e2e48: 81610060  lwz r11, 0x60(r1)
+803e2e4c: 81410064  lwz r10, 0x64(r1)
+803e2e50: 81210068  lwz r9, 0x68(r1)
+803e2e54: 8101006c  lwz r8, 0x6c(r1)
+803e2e58: 80e10070  lwz r7, 0x70(r1)
+803e2e5c: 80c10074  lwz r6, 0x74(r1)
+803e2e60: 80a10078  lwz r5, 0x78(r1)
+803e2e64: 8001007c  lwz r0, 0x7c(r1)
+803e2e68: 92f50004  stw r23, 4(r21)
+803e2e6c: 93d50008  stw r30, 8(r21)
+803e2e70: 93b5000c  stw r29, 0xc(r21)
+803e2e74: 93550010  stw r26, 0x10(r21)
+803e2e78: 93350014  stw r25, 0x14(r21)
+803e2e7c: 93150018  stw r24, 0x18(r21)
+803e2e80: 9195001c  stw r12, 0x1c(r21)
+803e2e84: 91750020  stw r11, 0x20(r21)
+803e2e88: 91550024  stw r10, 0x24(r21)
+803e2e8c: 91350028  stw r9, 0x28(r21)
+803e2e90: 9115002c  stw r8, 0x2c(r21)
+803e2e94: 90f50030  stw r7, 0x30(r21)
+803e2e98: 90d50034  stw r6, 0x34(r21)
+803e2e9c: 90b50038  stw r5, 0x38(r21)
+803e2ea0: 9015003c  stw r0, 0x3c(r21)
+803e2ea4: 48008215  bl 0x803eb0b8 ; BuildMatrix__Q24EAGL9TransformFPC7MATRIX4
+803e2ea8: 7fe4fb78  mr r4, r31
+803e2eac: 38610040  addi r3, r1, 0x40
+803e2eb0: 48007665  bl 0x803ea514 ; PrependMatrix__Q24EAGL9TransformFPC7MATRIX4
+803e2eb4: 83210040  lwz r25, 0x40(r1)
+803e2eb8: 3f00805f  lis r24, -0x7fa1
+803e2ebc: 83410044  lwz r26, 0x44(r1)
+803e2ec0: 9738ef68  stwu r25, -0x1098(r24)
+803e2ec4: 83e10048  lwz r31, 0x48(r1)
+803e2ec8: 83c1004c  lwz r30, 0x4c(r1)
+803e2ecc: 83a10050  lwz r29, 0x50(r1)
+803e2ed0: 81810054  lwz r12, 0x54(r1)
+803e2ed4: 81610058  lwz r11, 0x58(r1)
+803e2ed8: 8141005c  lwz r10, 0x5c(r1)
+803e2edc: 81210060  lwz r9, 0x60(r1)
+803e2ee0: 81010064  lwz r8, 0x64(r1)
+803e2ee4: 80e10068  lwz r7, 0x68(r1)
+803e2ee8: 80c1006c  lwz r6, 0x6c(r1)
+803e2eec: 80a10070  lwz r5, 0x70(r1)
+803e2ef0: 80810074  lwz r4, 0x74(r1)
+803e2ef4: 80610078  lwz r3, 0x78(r1)
+803e2ef8: 8001007c  lwz r0, 0x7c(r1)
+803e2efc: 93580004  stw r26, 4(r24)
+803e2f00: 93f80008  stw r31, 8(r24)
+803e2f04: 93d8000c  stw r30, 0xc(r24)
+803e2f08: 93b80010  stw r29, 0x10(r24)
+803e2f0c: 91980014  stw r12, 0x14(r24)
+803e2f10: 91780018  stw r11, 0x18(r24)
+803e2f14: 9158001c  stw r10, 0x1c(r24)
+803e2f18: 91380020  stw r9, 0x20(r24)
+803e2f1c: 91180024  stw r8, 0x24(r24)
+803e2f20: 90f80028  stw r7, 0x28(r24)
+803e2f24: 90d8002c  stw r6, 0x2c(r24)
+803e2f28: 90b80030  stw r5, 0x30(r24)
+803e2f2c: 90980034  stw r4, 0x34(r24)
+803e2f30: 90780038  stw r3, 0x38(r24)
+803e2f34: 9018003c  stw r0, 0x3c(r24)
+803e2f38: 807b00d0  lwz r3, 0xd0(r27)
+803e2f3c: 2c030000  cmpwi r3, 0
+803e2f40: 418200b0  beq 0x803e2ff0
+803e2f44: 418200ac  beq 0x803e2ff0
+803e2f48: 80a30000  lwz r5, 0(r3)
+803e2f4c: 2c050000  cmpwi r5, 0
+803e2f50: 408100a0  ble 0x803e2ff0
+803e2f54: 38830004  addi r4, r3, 4
+803e2f58: 41820098  beq 0x803e2ff0
+803e2f5c: 54a0e8ff  rlwinm. r0, r5, 0x1d, 3, 0x1f
+803e2f60: 7c0903a6  mtctr r0
+803e2f64: 41820074  beq 0x803e2fd8
+803e2f68: 80640000  lwz r3, 0(r4)
+803e2f6c: 80040004  lwz r0, 4(r4)
+803e2f70: 90030000  stw r0, 0(r3)
+803e2f74: 80640008  lwz r3, 8(r4)
+803e2f78: 8004000c  lwz r0, 0xc(r4)
+803e2f7c: 90030000  stw r0, 0(r3)
+803e2f80: 80640010  lwz r3, 0x10(r4)
+803e2f84: 80040014  lwz r0, 0x14(r4)
+803e2f88: 90030000  stw r0, 0(r3)
+803e2f8c: 80640018  lwz r3, 0x18(r4)
+803e2f90: 8004001c  lwz r0, 0x1c(r4)
+803e2f94: 90030000  stw r0, 0(r3)
+803e2f98: 80640020  lwz r3, 0x20(r4)
+803e2f9c: 80040024  lwz r0, 0x24(r4)
+803e2fa0: 90030000  stw r0, 0(r3)
+803e2fa4: 80640028  lwz r3, 0x28(r4)
+803e2fa8: 8004002c  lwz r0, 0x2c(r4)
+803e2fac: 90030000  stw r0, 0(r3)
+803e2fb0: 80640030  lwz r3, 0x30(r4)
+803e2fb4: 80040034  lwz r0, 0x34(r4)
+803e2fb8: 90030000  stw r0, 0(r3)
+803e2fbc: 80640038  lwz r3, 0x38(r4)
+803e2fc0: 8004003c  lwz r0, 0x3c(r4)
+803e2fc4: 38840040  addi r4, r4, 0x40
+803e2fc8: 90030000  stw r0, 0(r3)
+803e2fcc: 4200ff9c  bdnz 0x803e2f68
+803e2fd0: 70a50007  andi. r5, r5, 7
+803e2fd4: 4182001c  beq 0x803e2ff0
+803e2fd8: 7ca903a6  mtctr r5
+803e2fdc: 80640000  lwz r3, 0(r4)
+803e2fe0: 80040004  lwz r0, 4(r4)
+803e2fe4: 38840008  addi r4, r4, 8
+803e2fe8: 90030000  stw r0, 0(r3)
+803e2fec: 4200fff0  bdnz 0x803e2fdc
+803e2ff0: 801b00c0  lwz r0, 0xc0(r27)
+803e2ff4: 387b004c  addi r3, r27, 0x4c
+803e2ff8: 389b005c  addi r4, r27, 0x5c
+803e2ffc: 900de458  stw r0, -0x1ba8(r13)
+803e3000: 480038c5  bl 0x803e68c4 ; ModelSetScale__12EAGLInternalFRC6COORD4RC6COORD4
+803e3004: 807b00cc  lwz r3, 0xcc(r27)
+803e3008: 2c030000  cmpwi r3, 0
+803e300c: 41820138  beq 0x803e3144
+803e3010: 3bc30004  addi r30, r3, 4
+803e3014: 3ae00000  li r23, 0
+803e3018: 38600000  li r3, 0
+803e301c: 3be00000  li r31, 0
+803e3020: 3ba00000  li r29, 0
+803e3024: 480000fc  b 0x803e3120 ; 
+803e3028: 801b00c4  lwz r0, 0xc4(r27)
+803e302c: 82de0000  lwz r22, 0(r30)
+803e3030: 3bde0004  addi r30, r30, 4
+803e3034: 7c80ea14  add r4, r0, r29
+803e3038: a0040006  lhz r0, 6(r4)
+803e303c: 2c000000  cmpwi r0, 0
+803e3040: 418200d0  beq 0x803e3110
+803e3044: 3aa00001  li r21, 1
+803e3048: 480000b8  b 0x803e3100 ; 
+803e304c: 809e0000  lwz r4, 0(r30)
+803e3050: 80040000  lwz r0, 0(r4)
+803e3054: 7c170040  cmplw r23, r0
+803e3058: 41820060  beq 0x803e30b8
+803e305c: 2c030000  cmpwi r3, 0
+803e3060: 41820014  beq 0x803e3074
+803e3064: 80830000  lwz r4, 0(r3)
+803e3068: 8184000c  lwz r12, 0xc(r4)
+803e306c: 7d8903a6  mtctr r12
+803e3070: 4e800421  bctrl 
+803e3074: 807e0000  lwz r3, 0(r30)
+803e3078: 38800001  li r4, 1
+803e307c: 4800c1d1  bl 0x803ef24c ; ProcessPCode__12EAGLInternalFPQ24EAGL7GeoPrimQ212EAGLInternal24PCodeNewRenderMethodFlag
+803e3080: 807e0000  lwz r3, 0(r30)
+803e3084: 80830000  lwz r4, 0(r3)
+803e3088: 81840008  lwz r12, 8(r4)
+803e308c: 7d8903a6  mtctr r12
+803e3090: 4e800421  bctrl 
+803e3094: 807e0000  lwz r3, 0(r30)
+803e3098: 80830000  lwz r4, 0(r3)
+803e309c: 81840004  lwz r12, 4(r4)
+803e30a0: 7d8903a6  mtctr r12
+803e30a4: 4e800421  bctrl 
+803e30a8: 807e0000  lwz r3, 0(r30)
+803e30ac: 3aa00000  li r21, 0
+803e30b0: 82e30000  lwz r23, 0(r3)
+803e30b4: 48000030  b 0x803e30e4 ; 
+803e30b8: 7c832378  mr r3, r4
+803e30bc: 38800000  li r4, 0
+803e30c0: 4800c18d  bl 0x803ef24c ; ProcessPCode__12EAGLInternalFPQ24EAGL7GeoPrimQ212EAGLInternal24PCodeNewRenderMethodFlag
+803e30c4: 2c150000  cmpwi r21, 0
+803e30c8: 4182001c  beq 0x803e30e4
+803e30cc: 807e0000  lwz r3, 0(r30)
+803e30d0: 80830000  lwz r4, 0(r3)
+803e30d4: 81840004  lwz r12, 4(r4)
+803e30d8: 7d8903a6  mtctr r12
+803e30dc: 4e800421  bctrl 
+803e30e0: 3aa00000  li r21, 0
+803e30e4: 807e0000  lwz r3, 0(r30)
+803e30e8: 80830000  lwz r4, 0(r3)
+803e30ec: 81840000  lwz r12, 0(r4)
+803e30f0: 7d8903a6  mtctr r12
+803e30f4: 4e800421  bctrl 
+803e30f8: 807e0000  lwz r3, 0(r30)
+803e30fc: 3bde0004  addi r30, r30, 4
+803e3100: 2c160000  cmpwi r22, 0
+803e3104: 3ad6ffff  addi r22, r22, -1
+803e3108: 4082ff44  bne 0x803e304c
+803e310c: 4800000c  b 0x803e3118 ; 
+803e3110: 56c0103a  slwi r0, r22, 2
+803e3114: 7fde0214  add r30, r30, r0
+803e3118: 3bbd0004  addi r29, r29, 4
+803e311c: 3bff0001  addi r31, r31, 1
+803e3120: 801b009c  lwz r0, 0x9c(r27)
+803e3124: 7c1f0000  cmpw r31, r0
+803e3128: 4180ff00  blt 0x803e3028
+803e312c: 2c030000  cmpwi r3, 0
+803e3130: 41820014  beq 0x803e3144
+803e3134: 80830000  lwz r4, 0(r3)
+803e3138: 8184000c  lwz r12, 0xc(r4)
+803e313c: 7d8903a6  mtctr r12
+803e3140: 4e800421  bctrl 
+803e3144: 82bb00a4  lwz r21, 0xa4(r27)
+803e3148: 807b00ac  lwz r3, 0xac(r27)
+803e314c: 801b00a8  lwz r0, 0xa8(r27)
+803e3150: 7c63ab78  or r3, r3, r21
+803e3154: 7c600379  or. r0, r3, r0
+803e3158: 418200ec  beq 0x803e3244
+803e315c: 48000014  b 0x803e3170 ; 
+803e3160: 7ea3ab78  mr r3, r21
+803e3164: 7f84e378  mr r4, r28
+803e3168: 4bfffb11  bl 0x803e2c78 ; Draw__Q24EAGL5ModelFRC7MATRIX4
+803e316c: 82b500b0  lwz r21, 0xb0(r21)
+803e3170: 2c150000  cmpwi r21, 0
+803e3174: 4082ffec  bne 0x803e3160
+803e3178: 82bb00a8  lwz r21, 0xa8(r27)
+803e317c: 48000014  b 0x803e3190 ; 
+803e3180: 7ea3ab78  mr r3, r21
+803e3184: 3895000c  addi r4, r21, 0xc
+803e3188: 4bfffaf1  bl 0x803e2c78 ; Draw__Q24EAGL5ModelFRC7MATRIX4
+803e318c: 82b500b0  lwz r21, 0xb0(r21)
+803e3190: 2c150000  cmpwi r21, 0
+803e3194: 4082ffec  bne 0x803e3180
+803e3198: 83bb00ac  lwz r29, 0xac(r27)
+803e319c: 480000a0  b 0x803e323c ; 
+803e31a0: 80bd000c  lwz r5, 0xc(r29)
+803e31a4: 7f84e378  mr r4, r28
+803e31a8: 801d0010  lwz r0, 0x10(r29)
+803e31ac: 38610040  addi r3, r1, 0x40
+803e31b0: 90a10040  stw r5, 0x40(r1)
+803e31b4: 90010044  stw r0, 0x44(r1)
+803e31b8: 80bd0014  lwz r5, 0x14(r29)
+803e31bc: 801d0018  lwz r0, 0x18(r29)
+803e31c0: 90a10048  stw r5, 0x48(r1)
+803e31c4: 9001004c  stw r0, 0x4c(r1)
+803e31c8: 80bd001c  lwz r5, 0x1c(r29)
+803e31cc: 801d0020  lwz r0, 0x20(r29)
+803e31d0: 90a10050  stw r5, 0x50(r1)
+803e31d4: 90010054  stw r0, 0x54(r1)
+803e31d8: 80bd0024  lwz r5, 0x24(r29)
+803e31dc: 801d0028  lwz r0, 0x28(r29)
+803e31e0: 90a10058  stw r5, 0x58(r1)
+803e31e4: 9001005c  stw r0, 0x5c(r1)
+803e31e8: 80bd002c  lwz r5, 0x2c(r29)
+803e31ec: 801d0030  lwz r0, 0x30(r29)
+803e31f0: 90a10060  stw r5, 0x60(r1)
+803e31f4: 90010064  stw r0, 0x64(r1)
+803e31f8: 80bd0034  lwz r5, 0x34(r29)
+803e31fc: 801d0038  lwz r0, 0x38(r29)
+803e3200: 90a10068  stw r5, 0x68(r1)
+803e3204: 9001006c  stw r0, 0x6c(r1)
+803e3208: 80bd003c  lwz r5, 0x3c(r29)
+803e320c: 801d0040  lwz r0, 0x40(r29)
+803e3210: 90a10070  stw r5, 0x70(r1)
+803e3214: 90010074  stw r0, 0x74(r1)
+803e3218: 80bd0044  lwz r5, 0x44(r29)
+803e321c: 801d0048  lwz r0, 0x48(r29)
+803e3220: 90a10078  stw r5, 0x78(r1)
+803e3224: 9001007c  stw r0, 0x7c(r1)
+803e3228: 480072ed  bl 0x803ea514 ; PrependMatrix__Q24EAGL9TransformFPC7MATRIX4
+803e322c: 7fa3eb78  mr r3, r29
+803e3230: 38810040  addi r4, r1, 0x40
+803e3234: 4bfffa45  bl 0x803e2c78 ; Draw__Q24EAGL5ModelFRC7MATRIX4
+803e3238: 83bd00b0  lwz r29, 0xb0(r29)
+803e323c: 2c1d0000  cmpwi r29, 0
+803e3240: 4082ff60  bne 0x803e31a0
+803e3244: 81410000  lwz r10, 0(r1)
+803e3248: 7d4b5378  mr r11, r10
+803e324c: 4bc52469  bl 0x800356b4 ; _restgpr_21
+803e3250: 800a0004  lwz r0, 4(r10)
+803e3254: 7c0803a6  mtlr r0
+803e3258: 7d415378  mr r1, r10
+803e325c: 4e800020  blr 
+
+SetTexture__Q24EAGL5ModelFPCcP5SHAPE: 0x803e3260, 480 bytes
+803e3260: 9421ffb0  stwu r1, -0x50(r1)
+803e3264: 7c0802a6  mflr r0
+803e3268: 90010054  stw r0, 0x54(r1)
+803e326c: 39610050  addi r11, r1, 0x50
+803e3270: 4bc523fd  bl 0x8003566c ; _savegpr_22
+803e3274: 2c040000  cmpwi r4, 0
+803e3278: 7c761b78  mr r22, r3
+803e327c: 7c972378  mr r23, r4
+803e3280: 7cb82b78  mr r24, r5
+803e3284: 3b800000  li r28, 0
+803e3288: 3b600000  li r27, 0
+803e328c: 3b400000  li r26, 0
+803e3290: 3b200000  li r25, 0
+803e3294: 418200e0  beq 0x803e3374
+803e3298: 800300c0  lwz r0, 0xc0(r3)
+803e329c: 83a300bc  lwz r29, 0xbc(r3)
+803e32a0: 1fc00060  mulli r30, r0, 0x60
+803e32a4: 93a10010  stw r29, 0x10(r1)
+803e32a8: 7fbfeb78  mr r31, r29
+803e32ac: 801d0000  lwz r0, 0(r29)
+803e32b0: 93c10014  stw r30, 0x14(r1)
+803e32b4: 93a10018  stw r29, 0x18(r1)
+803e32b8: 93c1001c  stw r30, 0x1c(r1)
+803e32bc: 48000030  b 0x803e32ec ; 
+803e32c0: 801f0004  lwz r0, 4(r31)
+803e32c4: 3bff0008  addi r31, r31, 8
+803e32c8: 5400103a  slwi r0, r0, 2
+803e32cc: 7fff0214  add r31, r31, r0
+803e32d0: 7fe3fb78  mr r3, r31
+803e32d4: 480106dd  bl 0x803f39b0 ; GetMemoryImageSize__Q212EAGLInternal8BitFieldCFv
+803e32d8: 38030003  addi r0, r3, 3
+803e32dc: 7c001670  srawi r0, r0, 2
+803e32e0: 7c000194  addze r0, r0
+803e32e4: 5400103a  slwi r0, r0, 2
+803e32e8: 7c1f006e  lwzux r0, r31, r0
+803e32ec: 2c000000  cmpwi r0, 0
+803e32f0: 4082ffd0  bne 0x803e32c0
+803e32f4: 801600c0  lwz r0, 0xc0(r22)
+803e32f8: 93e10008  stw r31, 8(r1)
+803e32fc: 1c000060  mulli r0, r0, 0x60
+803e3300: 93e10020  stw r31, 0x20(r1)
+803e3304: 9001000c  stw r0, 0xc(r1)
+803e3308: 90010024  stw r0, 0x24(r1)
+803e330c: 48000060  b 0x803e336c ; 
+803e3310: 807d0000  lwz r3, 0(r29)
+803e3314: 7ee4bb78  mr r4, r23
+803e3318: 4bc42bfd  bl 0x80025f14 ; strcmp
+803e331c: 2c030000  cmpwi r3, 0
+803e3320: 40820020  bne 0x803e3340
+803e3324: 839d0004  lwz r28, 4(r29)
+803e3328: 7fdbf378  mr r27, r30
+803e332c: 3b5d0008  addi r26, r29, 8
+803e3330: 5780103a  slwi r0, r28, 2
+803e3334: 7c7d0214  add r3, r29, r0
+803e3338: 3b230008  addi r25, r3, 8
+803e333c: 48000038  b 0x803e3374 ; 
+803e3340: 801d0004  lwz r0, 4(r29)
+803e3344: 3bbd0008  addi r29, r29, 8
+803e3348: 5400103a  slwi r0, r0, 2
+803e334c: 7fbd0214  add r29, r29, r0
+803e3350: 7fa3eb78  mr r3, r29
+803e3354: 4801065d  bl 0x803f39b0 ; GetMemoryImageSize__Q212EAGLInternal8BitFieldCFv
+803e3358: 38030003  addi r0, r3, 3
+803e335c: 7c001670  srawi r0, r0, 2
+803e3360: 7c000194  addze r0, r0
+803e3364: 5400103a  slwi r0, r0, 2
+803e3368: 7fbd0214  add r29, r29, r0
+803e336c: 7c1df840  cmplw r29, r31
+803e3370: 4082ffa0  bne 0x803e3310
+803e3374: 7f5fd378  mr r31, r26
+803e3378: 3bc00000  li r30, 0
+803e337c: 48000038  b 0x803e33b4 ; 
+803e3380: 7f23cb78  mr r3, r25
+803e3384: 7fc4f378  mr r4, r30
+803e3388: 48010641  bl 0x803f39c8 ; GetBit__Q212EAGLInternal8BitFieldCFi
+803e338c: 7c8300d0  neg r4, r3
+803e3390: 801f0000  lwz r0, 0(r31)
+803e3394: 7c831b78  or r3, r4, r3
+803e3398: 7c63fe70  srawi r3, r3, 0x1f
+803e339c: 7f04c378  mr r4, r24
+803e33a0: 7f631838  and r3, r27, r3
+803e33a4: 7c601a14  add r3, r0, r3
+803e33a8: 480054cd  bl 0x803e8874 ; SwapShape__Q24EAGL3TARFPC5SHAPE
+803e33ac: 3bff0004  addi r31, r31, 4
+803e33b0: 3bde0001  addi r30, r30, 1
+803e33b4: 7c1ee000  cmpw r30, r28
+803e33b8: 4180000c  blt 0x803e33c4
+803e33bc: 7f56d378  mr r22, r26
+803e33c0: 48000028  b 0x803e33e8 ; 
+803e33c4: 7f23cb78  mr r3, r25
+803e33c8: 7fc4f378  mr r4, r30
+803e33cc: 480105fd  bl 0x803f39c8 ; GetBit__Q212EAGLInternal8BitFieldCFi
+803e33d0: 7c8300d0  neg r4, r3
+803e33d4: 801f0000  lwz r0, 0(r31)
+803e33d8: 7c831b78  or r3, r4, r3
+803e33dc: 7c63fe70  srawi r3, r3, 0x1f
+803e33e0: 7f631838  and r3, r27, r3
+803e33e4: 7ec01a14  add r22, r0, r3
+803e33e8: 7c1ce000  cmpw r28, r28
+803e33ec: 4180000c  blt 0x803e33f8
+803e33f0: 7f40d378  mr r0, r26
+803e33f4: 4800002c  b 0x803e3420 ; 
+803e33f8: 7f23cb78  mr r3, r25
+803e33fc: 7f84e378  mr r4, r28
+803e3400: 480105c9  bl 0x803f39c8 ; GetBit__Q212EAGLInternal8BitFieldCFi
+803e3404: 7c8300d0  neg r4, r3
+803e3408: 5780103a  slwi r0, r28, 2
+803e340c: 7c831b78  or r3, r4, r3
+803e3410: 7c1a002e  lwzx r0, r26, r0
+803e3414: 7c63fe70  srawi r3, r3, 0x1f
+803e3418: 7f631838  and r3, r27, r3
+803e341c: 7c001a14  add r0, r0, r3
+803e3420: 7c160040  cmplw r22, r0
+803e3424: 4082ff5c  bne 0x803e3380
+803e3428: 39610050  addi r11, r1, 0x50
+803e342c: 4bc5228d  bl 0x800356b8 ; _restgpr_22
+803e3430: 80010054  lwz r0, 0x54(r1)
+803e3434: 7c0803a6  mtlr r0
+803e3438: 38210050  addi r1, r1, 0x50
+803e343c: 4e800020  blr 
+
+SetTextures__Q24EAGL5ModelFPCc: 0x803e3440, 496 bytes
+803e3440: 9421ffa0  stwu r1, -0x60(r1)
+803e3444: 7c0802a6  mflr r0
+803e3448: 90010064  stw r0, 0x64(r1)
+803e344c: 39610060  addi r11, r1, 0x60
+803e3450: 4bc52211  bl 0x80035660 ; _savegpr_19
+803e3454: 800300c0  lwz r0, 0xc0(r3)
+803e3458: 7c731b78  mr r19, r3
+803e345c: 830300bc  lwz r24, 0xbc(r3)
+803e3460: 7c942378  mr r20, r4
+803e3464: 1fe00060  mulli r31, r0, 0x60
+803e3468: 93010010  stw r24, 0x10(r1)
+803e346c: 7f1ec378  mr r30, r24
+803e3470: 80180000  lwz r0, 0(r24)
+803e3474: 93e10014  stw r31, 0x14(r1)
+803e3478: 93010020  stw r24, 0x20(r1)
+803e347c: 93e10024  stw r31, 0x24(r1)
+803e3480: 48000030  b 0x803e34b0 ; 
+803e3484: 801e0004  lwz r0, 4(r30)
+803e3488: 3bde0008  addi r30, r30, 8
+803e348c: 5400103a  slwi r0, r0, 2
+803e3490: 7fde0214  add r30, r30, r0
+803e3494: 7fc3f378  mr r3, r30
+803e3498: 48010519  bl 0x803f39b0 ; GetMemoryImageSize__Q212EAGLInternal8BitFieldCFv
+803e349c: 38030003  addi r0, r3, 3
+803e34a0: 7c001670  srawi r0, r0, 2
+803e34a4: 7c000194  addze r0, r0
+803e34a8: 5400103a  slwi r0, r0, 2
+803e34ac: 7c1e006e  lwzux r0, r30, r0
+803e34b0: 2c000000  cmpwi r0, 0
+803e34b4: 4082ffd0  bne 0x803e3484
+803e34b8: 801300c0  lwz r0, 0xc0(r19)
+803e34bc: 93c10008  stw r30, 8(r1)
+803e34c0: 1c000060  mulli r0, r0, 0x60
+803e34c4: 93c10018  stw r30, 0x18(r1)
+803e34c8: 9001000c  stw r0, 0xc(r1)
+803e34cc: 9001001c  stw r0, 0x1c(r1)
+803e34d0: 48000140  b 0x803e3610 ; 
+803e34d4: 2c140000  cmpwi r20, 0
+803e34d8: 80980000  lwz r4, 0(r24)
+803e34dc: 3aa00000  li r21, 0
+803e34e0: 41820010  beq 0x803e34f0
+803e34e4: 7e83a378  mr r3, r20
+803e34e8: 48000149  bl 0x803e3630 ; RobustShapeLocate__4EAGLFPCcPCc
+803e34ec: 7c751b78  mr r21, r3
+803e34f0: 82f80004  lwz r23, 4(r24)
+803e34f4: 3b980008  addi r28, r24, 8
+803e34f8: 7f99e378  mr r25, r28
+803e34fc: 3b600000  li r27, 0
+803e3500: 56e0103a  slwi r0, r23, 2
+803e3504: 7c780214  add r3, r24, r0
+803e3508: 3b430008  addi r26, r3, 8
+803e350c: 48000054  b 0x803e3560 ; 
+803e3510: 7f43d378  mr r3, r26
+803e3514: 7f64db78  mr r4, r27
+803e3518: 480104b1  bl 0x803f39c8 ; GetBit__Q212EAGLInternal8BitFieldCFi
+803e351c: 7c0300d0  neg r0, r3
+803e3520: 2c150000  cmpwi r21, 0
+803e3524: 7c031b78  or r3, r0, r3
+803e3528: 80190000  lwz r0, 0(r25)
+803e352c: 7c63fe70  srawi r3, r3, 0x1f
+803e3530: 7fe31838  and r3, r31, r3
+803e3534: 7c601a14  add r3, r0, r3
+803e3538: 41820010  beq 0x803e3548
+803e353c: 7ea4ab78  mr r4, r21
+803e3540: 48005335  bl 0x803e8874 ; SwapShape__Q24EAGL3TARFPC5SHAPE
+803e3544: 48000014  b 0x803e3558 ; 
+803e3548: 2c140000  cmpwi r20, 0
+803e354c: 4082000c  bne 0x803e3558
+803e3550: 7ea4ab78  mr r4, r21
+803e3554: 48005321  bl 0x803e8874 ; SwapShape__Q24EAGL3TARFPC5SHAPE
+803e3558: 3b390004  addi r25, r25, 4
+803e355c: 3b7b0001  addi r27, r27, 1
+803e3560: 82d80004  lwz r22, 4(r24)
+803e3564: 7c1bb800  cmpw r27, r23
+803e3568: 56c0103a  slwi r0, r22, 2
+803e356c: 7c780214  add r3, r24, r0
+803e3570: 3a630008  addi r19, r3, 8
+803e3574: 4180000c  blt 0x803e3580
+803e3578: 7f9de378  mr r29, r28
+803e357c: 48000028  b 0x803e35a4 ; 
+803e3580: 7f43d378  mr r3, r26
+803e3584: 7f64db78  mr r4, r27
+803e3588: 48010441  bl 0x803f39c8 ; GetBit__Q212EAGLInternal8BitFieldCFi
+803e358c: 7c8300d0  neg r4, r3
+803e3590: 80190000  lwz r0, 0(r25)
+803e3594: 7c831b78  or r3, r4, r3
+803e3598: 7c63fe70  srawi r3, r3, 0x1f
+803e359c: 7fe31838  and r3, r31, r3
+803e35a0: 7fa01a14  add r29, r0, r3
+803e35a4: 7c16b000  cmpw r22, r22
+803e35a8: 4180000c  blt 0x803e35b4
+803e35ac: 7f80e378  mr r0, r28
+803e35b0: 4800002c  b 0x803e35dc ; 
+803e35b4: 7e639b78  mr r3, r19
+803e35b8: 7ec4b378  mr r4, r22
+803e35bc: 4801040d  bl 0x803f39c8 ; GetBit__Q212EAGLInternal8BitFieldCFi
+803e35c0: 7c8300d0  neg r4, r3
+803e35c4: 56c0103a  slwi r0, r22, 2
+803e35c8: 7c831b78  or r3, r4, r3
+803e35cc: 7c1c002e  lwzx r0, r28, r0
+803e35d0: 7c63fe70  srawi r3, r3, 0x1f
+803e35d4: 7fe31838  and r3, r31, r3
+803e35d8: 7c001a14  add r0, r0, r3
+803e35dc: 7c1d0040  cmplw r29, r0
+803e35e0: 4082ff30  bne 0x803e3510
+803e35e4: 80180004  lwz r0, 4(r24)
+803e35e8: 3b180008  addi r24, r24, 8
+803e35ec: 5400103a  slwi r0, r0, 2
+803e35f0: 7f180214  add r24, r24, r0
+803e35f4: 7f03c378  mr r3, r24
+803e35f8: 480103b9  bl 0x803f39b0 ; GetMemoryImageSize__Q212EAGLInternal8BitFieldCFv
+803e35fc: 38030003  addi r0, r3, 3
+803e3600: 7c001670  srawi r0, r0, 2
+803e3604: 7c000194  addze r0, r0
+803e3608: 5400103a  slwi r0, r0, 2
+803e360c: 7f180214  add r24, r24, r0
+803e3610: 7c18f040  cmplw r24, r30
+803e3614: 4082fec0  bne 0x803e34d4
+803e3618: 39610060  addi r11, r1, 0x60
+803e361c: 4bc52091  bl 0x800356ac ; _restgpr_19
+803e3620: 80010064  lwz r0, 0x64(r1)
+803e3624: 7c0803a6  mtlr r0
+803e3628: 38210060  addi r1, r1, 0x60
+803e362c: 4e800020  blr 
+
+GetGeometry__Q24EAGL5ModelFPCc: 0x803e36f0, 132 bytes
+803e36f0: 9421ffe0  stwu r1, -0x20(r1)
+803e36f4: 7c0802a6  mflr r0
+803e36f8: 90010024  stw r0, 0x24(r1)
+803e36fc: 39610020  addi r11, r1, 0x20
+803e3700: 4bc51f81  bl 0x80035680 ; _savegpr_27
+803e3704: 83c3009c  lwz r30, 0x9c(r3)
+803e3708: 7c7b1b78  mr r27, r3
+803e370c: 7c9c2378  mr r28, r4
+803e3710: 3ba00000  li r29, 0
+803e3714: 3be00000  li r31, 0
+803e3718: 48000038  b 0x803e3750 ; 
+803e371c: 809b00a0  lwz r4, 0xa0(r27)
+803e3720: 7f83e378  mr r3, r28
+803e3724: 7c84f82e  lwzx r4, r4, r31
+803e3728: 4bc427ed  bl 0x80025f14 ; strcmp
+803e372c: 2c030000  cmpwi r3, 0
+803e3730: 40820018  bne 0x803e3748
+803e3734: 381d0001  addi r0, r29, 1
+803e3738: 807b00c4  lwz r3, 0xc4(r27)
+803e373c: 5400103a  slwi r0, r0, 2
+803e3740: 7c630214  add r3, r3, r0
+803e3744: 48000018  b 0x803e375c ; 
+803e3748: 3bff0004  addi r31, r31, 4
+803e374c: 3bbd0001  addi r29, r29, 1
+803e3750: 7c1df000  cmpw r29, r30
+803e3754: 4180ffc8  blt 0x803e371c
+803e3758: 38600000  li r3, 0
+803e375c: 39610020  addi r11, r1, 0x20
+803e3760: 4bc51f6d  bl 0x800356cc ; _restgpr_27
+803e3764: 80010024  lwz r0, 0x24(r1)
+803e3768: 7c0803a6  mtlr r0
+803e376c: 38210020  addi r1, r1, 0x20
+803e3770: 4e800020  blr 
+
+CheckIfSafeToDelete__Q24EAGL5ModelFv: 0x803e37a8, 28 bytes
+803e37a8: 806300dc  lwz r3, 0xdc(r3)
+803e37ac: 800de4c0  lwz r0, -0x1b40(r13)
+803e37b0: 7c030050  subf r0, r3, r0
+803e37b4: 28000002  cmplwi r0, 2
+803e37b8: 4c800020  bgelr 
+803e37bc: 48002050  b 0x803e580c ; WaitForDrawsToComplete__Q24EAGL22RenderContextExtensionFv
+803e37c0: 4e800020  blr 

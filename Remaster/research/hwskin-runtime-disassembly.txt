@@ -1,0 +1,557 @@
+RenderPlaygroundLitPlaceable_HWSkin__FPQ24EAGL7GeoPrim: 0x80015e34, 392 bytes
+80015e34: 9421ffe0  stwu r1, -0x20(r1)
+80015e38: 7c0802a6  mflr r0
+80015e3c: 38600009  li r3, 9
+80015e40: 38a00006  li r5, 6
+80015e44: 90010024  stw r0, 0x24(r1)
+80015e48: 93e1001c  stw r31, 0x1c(r1)
+80015e4c: 93c10018  stw r30, 0x18(r1)
+80015e50: 3fc08044  lis r30, -0x7fbc
+80015e54: 809e3500  lwz r4, 0x3500(r30)
+80015e58: 8084002c  lwz r4, 0x2c(r4)
+80015e5c: 483d09cd  bl 0x803e6828 ; SetArray__Q24EAGL12RenderMethodF7_GXAttrPvUc
+80015e60: 809e3500  lwz r4, 0x3500(r30)
+80015e64: 3860000a  li r3, 0xa
+80015e68: 38a00006  li r5, 6
+80015e6c: 80840034  lwz r4, 0x34(r4)
+80015e70: 483d09b9  bl 0x803e6828 ; SetArray__Q24EAGL12RenderMethodF7_GXAttrPvUc
+80015e74: 809e3500  lwz r4, 0x3500(r30)
+80015e78: 3860000d  li r3, 0xd
+80015e7c: 38a00008  li r5, 8
+80015e80: 8084003c  lwz r4, 0x3c(r4)
+80015e84: 483d09a5  bl 0x803e6828 ; SetArray__Q24EAGL12RenderMethodF7_GXAttrPvUc
+80015e88: 80de3500  lwz r6, 0x3500(r30)
+80015e8c: 80a6000c  lwz r5, 0xc(r6)
+80015e90: 80660014  lwz r3, 0x14(r6)
+80015e94: 80860010  lwz r4, 0x10(r6)
+80015e98: 80a50000  lwz r5, 0(r5)
+80015e9c: 80c6001c  lwz r6, 0x1c(r6)
+80015ea0: 483ddec1  bl 0x803f3d60 ; SkinGeneratePosNormalAndSphereMapMatrices
+80015ea4: 38610008  addi r3, r1, 8
+80015ea8: 3880ffff  li r4, -1
+80015eac: 483d6d95  bl 0x803ecc40 ; __dt__Q212EAGLInternal16InternalProfilerFv
+80015eb0: 807e3500  lwz r3, 0x3500(r30)
+80015eb4: 3881000c  addi r4, r1, 0xc
+80015eb8: 80630064  lwz r3, 0x64(r3)
+80015ebc: 483d1591  bl 0x803e744c ; GetPrimitiveType__Q24EAGL12GeoPrimStateCFRQ24EAGL13PrimitiveType
+80015ec0: 8001000c  lwz r0, 0xc(r1)
+80015ec4: 3bfe3500  addi r31, r30, 0x3500
+80015ec8: 807e3500  lwz r3, 0x3500(r30)
+80015ecc: 901f0038  stw r0, 0x38(r31)
+80015ed0: 80630064  lwz r3, 0x64(r3)
+80015ed4: 483d0dd5  bl 0x803e6ca8 ; Use__Q24EAGL21GeoPrimStateExtensionCFv
+80015ed8: 881f003c  lbz r0, 0x3c(r31)
+80015edc: 2c000000  cmpwi r0, 0
+80015ee0: 41820028  beq 0x80015f08
+80015ee4: 807e3500  lwz r3, 0x3500(r30)
+80015ee8: 38800000  li r4, 0
+80015eec: 38a00000  li r5, 0
+80015ef0: 80630044  lwz r3, 0x44(r3)
+80015ef4: 38630004  addi r3, r3, 4
+80015ef8: 483d29e9  bl 0x803e88e0 ; Use__Q24EAGL12TARExtensionF11_GXTexMapIDUi
+80015efc: 38610009  addi r3, r1, 9
+80015f00: 3880ffff  li r4, -1
+80015f04: 483d6d3d  bl 0x803ecc40 ; __dt__Q212EAGLInternal16InternalProfilerFv
+80015f08: 483d3cd1  bl 0x803e9bd8 ; SetHardware__Q24EAGL8TevStageFv
+80015f0c: 3ca08044  lis r5, -0x7fbc
+80015f10: 38a53500  addi r5, r5, 0x3500
+80015f14: 88050045  lbz r0, 0x45(r5)
+80015f18: 2c000000  cmpwi r0, 0
+80015f1c: 40820014  bne 0x80015f30
+80015f20: 80650028  lwz r3, 0x28(r5)
+80015f24: 8085002c  lwz r4, 0x2c(r5)
+80015f28: 88a50044  lbz r5, 0x44(r5)
+80015f2c: 483d92c9  bl 0x803ef1f4 ; CallDisplayList__12EAGLInternalFPCvUib
+80015f30: 3861000a  addi r3, r1, 0xa
+80015f34: 3880ffff  li r4, -1
+80015f38: 483d6d09  bl 0x803ecc40 ; __dt__Q212EAGLInternal16InternalProfilerFv
+80015f3c: 3cc08044  lis r6, -0x7fbc
+80015f40: 38a63500  addi r5, r6, 0x3500
+80015f44: 80050004  lwz r0, 4(r5)
+80015f48: 2c000000  cmpwi r0, 0
+80015f4c: 4182004c  beq 0x80015f98
+80015f50: 48000038  b 0x80015f88 ; 
+80015f54: 80870002  lwz r4, 2(r7)
+80015f58: 806de458  lwz r3, -0x1ba8(r13)
+80015f5c: 88070001  lbz r0, 1(r7)
+80015f60: 7c8419d6  mullw r4, r4, r3
+80015f64: 80663500  lwz r3, 0x3500(r6)
+80015f68: 54001838  slwi r0, r0, 3
+80015f6c: 7c630214  add r3, r3, r0
+80015f70: 80030004  lwz r0, 4(r3)
+80015f74: 7c040050  subf r0, r4, r0
+80015f78: 90030004  stw r0, 4(r3)
+80015f7c: 80650004  lwz r3, 4(r5)
+80015f80: 38030006  addi r0, r3, 6
+80015f84: 90050004  stw r0, 4(r5)
+80015f88: 80e50004  lwz r7, 4(r5)
+80015f8c: 88070000  lbz r0, 0(r7)
+80015f90: 28000002  cmplwi r0, 2
+80015f94: 4182ffc0  beq 0x80015f54
+80015f98: 3861000b  addi r3, r1, 0xb
+80015f9c: 3880ffff  li r4, -1
+80015fa0: 483d6ca1  bl 0x803ecc40 ; __dt__Q212EAGLInternal16InternalProfilerFv
+80015fa4: 80010024  lwz r0, 0x24(r1)
+80015fa8: 83e1001c  lwz r31, 0x1c(r1)
+80015fac: 83c10018  lwz r30, 0x18(r1)
+80015fb0: 7c0803a6  mtlr r0
+80015fb4: 38210020  addi r1, r1, 0x20
+80015fb8: 4e800020  blr 
+
+ModelRenderPlaygroundLitPlaceable_HWSkin__FPQ24EAGL7GeoPrim: 0x80015fbc, 704 bytes
+80015fbc: 9421ffd0  stwu r1, -0x30(r1)
+80015fc0: 7c0802a6  mflr r0
+80015fc4: 38600004  li r3, 4
+80015fc8: 90010034  stw r0, 0x34(r1)
+80015fcc: 38810019  addi r4, r1, 0x19
+80015fd0: 93e1002c  stw r31, 0x2c(r1)
+80015fd4: 93c10028  stw r30, 0x28(r1)
+80015fd8: 88e28038  lbz r7, -0x7fc8(r2)
+80015fdc: 88c28039  lbz r6, -0x7fc7(r2)
+80015fe0: 88a2803a  lbz r5, -0x7fc6(r2)
+80015fe4: 8802803b  lbz r0, -0x7fc5(r2)
+80015fe8: 98e10009  stb r7, 9(r1)
+80015fec: 98c1000a  stb r6, 0xa(r1)
+80015ff0: 98a1000b  stb r5, 0xb(r1)
+80015ff4: 9801000c  stb r0, 0xc(r1)
+80015ff8: 98e10019  stb r7, 0x19(r1)
+80015ffc: 98c1001a  stb r6, 0x1a(r1)
+80016000: 98a1001b  stb r5, 0x1b(r1)
+80016004: 9801001c  stb r0, 0x1c(r1)
+80016008: 48047971  bl 0x8005d978 ; GXSetChanAmbColor
+8001600c: 88e10009  lbz r7, 9(r1)
+80016010: 38810015  addi r4, r1, 0x15
+80016014: 88c1000a  lbz r6, 0xa(r1)
+80016018: 38600004  li r3, 4
+8001601c: 88a1000b  lbz r5, 0xb(r1)
+80016020: 8801000c  lbz r0, 0xc(r1)
+80016024: 98e10015  stb r7, 0x15(r1)
+80016028: 98c10016  stb r6, 0x16(r1)
+8001602c: 98a10017  stb r5, 0x17(r1)
+80016030: 98010018  stb r0, 0x18(r1)
+80016034: 48047a1d  bl 0x8005da50 ; GXSetChanMatColor
+80016038: 483d3899  bl 0x803e98d0 ; ResetToDefault__Q24EAGL8TevStageFv
+8001603c: 483d21f5  bl 0x803e8230 ; ResetTexCoordGens__Q24EAGL12TARExtensionFv
+80016040: 38600000  li r3, 0
+80016044: 3880000a  li r4, 0xa
+80016048: 38a00000  li r5, 0
+8001604c: 38c00003  li r6, 3
+80016050: 38e0000e  li r7, 0xe
+80016054: 483d0a21  bl 0x803e6a74 ; SetAttributeFormat__Q24EAGL21GeoPrimStateExtensionFi7_GXAttr10_GXCompCnt11_GXCompTypeUc
+80016058: 38600000  li r3, 0
+8001605c: 3880000d  li r4, 0xd
+80016060: 38a00001  li r5, 1
+80016064: 38c00004  li r6, 4
+80016068: 38e00000  li r7, 0
+8001606c: 483d0a09  bl 0x803e6a74 ; SetAttributeFormat__Q24EAGL21GeoPrimStateExtensionFi7_GXAttr10_GXCompCnt11_GXCompTypeUc
+80016070: 38600000  li r3, 0
+80016074: 38800001  li r4, 1
+80016078: 38a00004  li r5, 4
+8001607c: 38c0003c  li r6, 0x3c
+80016080: 38e00000  li r7, 0
+80016084: 3900007d  li r8, 0x7d
+80016088: 483d223d  bl 0x803e82c4 ; SetTexCoordGen__Q24EAGL12TARExtensionF13_GXTexCoordID13_GXTexGenType12_GXTexGenSrcUiUcUi
+8001608c: 38600001  li r3, 1
+80016090: 483d2271  bl 0x803e8300 ; SetNumTexGens__Q24EAGL12TARExtensionFi
+80016094: 38600000  li r3, 0
+80016098: 48047a91  bl 0x8005db28 ; GXSetNumChans
+8001609c: 3fc08044  lis r30, -0x7fbc
+800160a0: 38604605  li r3, 0x4605
+800160a4: 3bfe3500  addi r31, r30, 0x3500
+800160a8: 38000003  li r0, 3
+800160ac: 907f0034  stw r3, 0x34(r31)
+800160b0: 38604605  li r3, 0x4605
+800160b4: 3880ffff  li r4, -1
+800160b8: 901f0030  stw r0, 0x30(r31)
+800160bc: 483d09d1  bl 0x803e6a8c ; SetCurrentVertex__Q24EAGL21GeoPrimStateExtensionFUiUi
+800160c0: 38000000  li r0, 0
+800160c4: 809e3500  lwz r4, 0x3500(r30)
+800160c8: 981f0046  stb r0, 0x46(r31)
+800160cc: 80640054  lwz r3, 0x54(r4)
+800160d0: 80840024  lwz r4, 0x24(r4)
+800160d4: 483d95cd  bl 0x803ef6a0 ; Use__Q24EAGL20PositionalLightBlockFPC7MATRIX4
+800160d8: 881f003d  lbz r0, 0x3d(r31)
+800160dc: 2c000000  cmpwi r0, 0
+800160e0: 4182002c  beq 0x8001610c
+800160e4: 807e3500  lwz r3, 0x3500(r30)
+800160e8: 38800001  li r4, 1
+800160ec: 38a00001  li r5, 1
+800160f0: 8063004c  lwz r3, 0x4c(r3)
+800160f4: 80630000  lwz r3, 0(r3)
+800160f8: 38630004  addi r3, r3, 4
+800160fc: 483d27e5  bl 0x803e88e0 ; Use__Q24EAGL12TARExtensionF11_GXTexMapIDUi
+80016100: 38610008  addi r3, r1, 8
+80016104: 3880ffff  li r4, -1
+80016108: 483d6b39  bl 0x803ecc40 ; __dt__Q212EAGLInternal16InternalProfilerFv
+8001610c: 3c608044  lis r3, -0x7fbc
+80016110: 80833500  lwz r4, 0x3500(r3)
+80016114: 8064005c  lwz r3, 0x5c(r4)
+80016118: 83c40064  lwz r30, 0x64(r4)
+8001611c: 83e30000  lwz r31, 0(r3)
+80016120: 2c1f00ff  cmpwi r31, 0xff
+80016124: 40820020  bne 0x80016144
+80016128: 7fc3f378  mr r3, r30
+8001612c: 38800000  li r4, 0
+80016130: 483d1269  bl 0x803e7398 ; SetTransparencyMethod__Q24EAGL12GeoPrimStateFQ24EAGL18TransparencyMethod
+80016134: 7fc3f378  mr r3, r30
+80016138: 38800000  li r4, 0
+8001613c: 483d12cd  bl 0x803e7408 ; SetAlphaBlendMode__Q24EAGL12GeoPrimStateFQ24EAGL14AlphaBlendMode
+80016140: 48000028  b 0x80016168 ; 
+80016144: 7fc3f378  mr r3, r30
+80016148: 38800001  li r4, 1
+8001614c: 483d124d  bl 0x803e7398 ; SetTransparencyMethod__Q24EAGL12GeoPrimStateFQ24EAGL18TransparencyMethod
+80016150: 7fc3f378  mr r3, r30
+80016154: 38800001  li r4, 1
+80016158: 483d12b1  bl 0x803e7408 ; SetAlphaBlendMode__Q24EAGL12GeoPrimStateFQ24EAGL14AlphaBlendMode
+8001615c: 7fc3f378  mr r3, r30
+80016160: 38800004  li r4, 4
+80016164: 483d127d  bl 0x803e73e0 ; SetAlphaCompareValue__Q24EAGL12GeoPrimStateFi
+80016168: 88c1000d  lbz r6, 0xd(r1)
+8001616c: 38810011  addi r4, r1, 0x11
+80016170: 88a1000e  lbz r5, 0xe(r1)
+80016174: 38600003  li r3, 3
+80016178: 8801000f  lbz r0, 0xf(r1)
+8001617c: 9be10010  stb r31, 0x10(r1)
+80016180: 98c10011  stb r6, 0x11(r1)
+80016184: 98a10012  stb r5, 0x12(r1)
+80016188: 98010013  stb r0, 0x13(r1)
+8001618c: 9be10014  stb r31, 0x14(r1)
+80016190: 48049069  bl 0x8005f1f8 ; GXSetTevKColor
+80016194: 3c608044  lis r3, -0x7fbc
+80016198: 38800000  li r4, 0
+8001619c: 80633500  lwz r3, 0x3500(r3)
+800161a0: 8063004c  lwz r3, 0x4c(r3)
+800161a4: 80630000  lwz r3, 0(r3)
+800161a8: 483d2851  bl 0x803e89f8 ; SetClampMode__Q24EAGL3TARFQ24EAGL9ClampMode
+800161ac: 38600002  li r3, 2
+800161b0: 483d2151  bl 0x803e8300 ; SetNumTexGens__Q24EAGL12TARExtensionFi
+800161b4: 38600001  li r3, 1
+800161b8: 38800001  li r4, 1
+800161bc: 38a00001  li r5, 1
+800161c0: 38c0001e  li r6, 0x1e
+800161c4: 38e00000  li r7, 0
+800161c8: 3900007d  li r8, 0x7d
+800161cc: 483d20f9  bl 0x803e82c4 ; SetTexCoordGen__Q24EAGL12TARExtensionF13_GXTexCoordID13_GXTexGenType12_GXTexGenSrcUiUcUi
+800161d0: 38600002  li r3, 2
+800161d4: 483d39b9  bl 0x803e9b8c ; SetNumActiveStages__Q24EAGL8TevStageFUc
+800161d8: 3fe0805f  lis r31, -0x7fa1
+800161dc: 38800000  li r4, 0
+800161e0: 3bffe858  addi r31, r31, -0x17a8
+800161e4: 38a00000  li r5, 0
+800161e8: 387f0064  addi r3, r31, 0x64
+800161ec: 38c00000  li r6, 0
+800161f0: 38e00001  li r7, 1
+800161f4: 39000000  li r8, 0
+800161f8: 483d3bdd  bl 0x803e9dd4 ; SetColourOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+800161fc: 387f0064  addi r3, r31, 0x64
+80016200: 3880000f  li r4, 0xf
+80016204: 38a00000  li r5, 0
+80016208: 38c00009  li r6, 9
+8001620c: 38e00008  li r7, 8
+80016210: 483d3be5  bl 0x803e9df4 ; SetColourIn__Q24EAGL8TevStageF14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg
+80016214: 387f0064  addi r3, r31, 0x64
+80016218: 3880001f  li r4, 0x1f
+8001621c: 483d3b99  bl 0x803e9db4 ; SetKAlphaSel__Q24EAGL8TevStageF15_GXTevKAlphaSel
+80016220: 387f0064  addi r3, r31, 0x64
+80016224: 38800000  li r4, 0
+80016228: 38a00000  li r5, 0
+8001622c: 38c00000  li r6, 0
+80016230: 38e00001  li r7, 1
+80016234: 39000000  li r8, 0
+80016238: 483d3bd9  bl 0x803e9e10 ; SetAlphaOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+8001623c: 387f0064  addi r3, r31, 0x64
+80016240: 38800007  li r4, 7
+80016244: 38a00000  li r5, 0
+80016248: 38c00006  li r6, 6
+8001624c: 38e00007  li r7, 7
+80016250: 483d3be1  bl 0x803e9e30 ; SetAlphaIn__Q24EAGL8TevStageF14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg
+80016254: 387f0064  addi r3, r31, 0x64
+80016258: 38800001  li r4, 1
+8001625c: 38a00001  li r5, 1
+80016260: 483d3b41  bl 0x803e9da0 ; SetTextureMapAndUVs__Q24EAGL8TevStageF11_GXTexMapID13_GXTexCoordID
+80016264: 80010034  lwz r0, 0x34(r1)
+80016268: 83e1002c  lwz r31, 0x2c(r1)
+8001626c: 83c10028  lwz r30, 0x28(r1)
+80016270: 7c0803a6  mtlr r0
+80016274: 38210030  addi r1, r1, 0x30
+80016278: 4e800020  blr 
+
+GeomRenderPlaygroundLitPlaceable_HWSkin__FPQ24EAGL7GeoPrim: 0x8001627c, 4 bytes
+8001627c: 4e800020  blr 
+
+RenderPlaygroundTexture_HWSkin__FPQ24EAGL7GeoPrim: 0x8001b364, 428 bytes
+8001b364: 9421ffe0  stwu r1, -0x20(r1)
+8001b368: 7c0802a6  mflr r0
+8001b36c: 38600009  li r3, 9
+8001b370: 38a00006  li r5, 6
+8001b374: 90010024  stw r0, 0x24(r1)
+8001b378: 93e1001c  stw r31, 0x1c(r1)
+8001b37c: 93c10018  stw r30, 0x18(r1)
+8001b380: 3fc08044  lis r30, -0x7fbc
+8001b384: 809e43a8  lwz r4, 0x43a8(r30)
+8001b388: 8084001c  lwz r4, 0x1c(r4)
+8001b38c: 483cb49d  bl 0x803e6828 ; SetArray__Q24EAGL12RenderMethodF7_GXAttrPvUc
+8001b390: 809e43a8  lwz r4, 0x43a8(r30)
+8001b394: 3860000b  li r3, 0xb
+8001b398: 38a00004  li r5, 4
+8001b39c: 80840024  lwz r4, 0x24(r4)
+8001b3a0: 483cb489  bl 0x803e6828 ; SetArray__Q24EAGL12RenderMethodF7_GXAttrPvUc
+8001b3a4: 809e43a8  lwz r4, 0x43a8(r30)
+8001b3a8: 3860000d  li r3, 0xd
+8001b3ac: 38a00008  li r5, 8
+8001b3b0: 8084002c  lwz r4, 0x2c(r4)
+8001b3b4: 483cb475  bl 0x803e6828 ; SetArray__Q24EAGL12RenderMethodF7_GXAttrPvUc
+8001b3b8: 80de43a8  lwz r6, 0x43a8(r30)
+8001b3bc: 80a60004  lwz r5, 4(r6)
+8001b3c0: 8066000c  lwz r3, 0xc(r6)
+8001b3c4: 80860008  lwz r4, 8(r6)
+8001b3c8: 80a50000  lwz r5, 0(r5)
+8001b3cc: 80c60014  lwz r6, 0x14(r6)
+8001b3d0: 483d88d5  bl 0x803f3ca4 ; SkinGeneratePosMatrices
+8001b3d4: 38610008  addi r3, r1, 8
+8001b3d8: 3880ffff  li r4, -1
+8001b3dc: 483d1865  bl 0x803ecc40 ; __dt__Q212EAGLInternal16InternalProfilerFv
+8001b3e0: 807e43a8  lwz r3, 0x43a8(r30)
+8001b3e4: 3881000c  addi r4, r1, 0xc
+8001b3e8: 80630044  lwz r3, 0x44(r3)
+8001b3ec: 483cc061  bl 0x803e744c ; GetPrimitiveType__Q24EAGL12GeoPrimStateCFRQ24EAGL13PrimitiveType
+8001b3f0: 8001000c  lwz r0, 0xc(r1)
+8001b3f4: 3bfe43a8  addi r31, r30, 0x43a8
+8001b3f8: 807e43a8  lwz r3, 0x43a8(r30)
+8001b3fc: 901f0038  stw r0, 0x38(r31)
+8001b400: 80630044  lwz r3, 0x44(r3)
+8001b404: 483cb8a5  bl 0x803e6ca8 ; Use__Q24EAGL21GeoPrimStateExtensionCFv
+8001b408: 38600001  li r3, 1
+8001b40c: 38800000  li r4, 0
+8001b410: 483ce965  bl 0x803e9d74 ; SetPS2StyleOverBright__Q24EAGL8TevStageFbb
+8001b414: 881f003c  lbz r0, 0x3c(r31)
+8001b418: 2c000000  cmpwi r0, 0
+8001b41c: 41820034  beq 0x8001b450
+8001b420: 807e43a8  lwz r3, 0x43a8(r30)
+8001b424: 38800001  li r4, 1
+8001b428: 83c30034  lwz r30, 0x34(r3)
+8001b42c: 7fc3f378  mr r3, r30
+8001b430: 483cd5c9  bl 0x803e89f8 ; SetClampMode__Q24EAGL3TARFQ24EAGL9ClampMode
+8001b434: 387e0004  addi r3, r30, 4
+8001b438: 38800000  li r4, 0
+8001b43c: 38a00000  li r5, 0
+8001b440: 483cd4a1  bl 0x803e88e0 ; Use__Q24EAGL12TARExtensionF11_GXTexMapIDUi
+8001b444: 38610009  addi r3, r1, 9
+8001b448: 3880ffff  li r4, -1
+8001b44c: 483d17f5  bl 0x803ecc40 ; __dt__Q212EAGLInternal16InternalProfilerFv
+8001b450: 483ce789  bl 0x803e9bd8 ; SetHardware__Q24EAGL8TevStageFv
+8001b454: 3ca08044  lis r5, -0x7fbc
+8001b458: 38a543a8  addi r5, r5, 0x43a8
+8001b45c: 88050045  lbz r0, 0x45(r5)
+8001b460: 2c000000  cmpwi r0, 0
+8001b464: 40820014  bne 0x8001b478
+8001b468: 80650028  lwz r3, 0x28(r5)
+8001b46c: 8085002c  lwz r4, 0x2c(r5)
+8001b470: 88a50044  lbz r5, 0x44(r5)
+8001b474: 483d3d81  bl 0x803ef1f4 ; CallDisplayList__12EAGLInternalFPCvUib
+8001b478: 3861000a  addi r3, r1, 0xa
+8001b47c: 3880ffff  li r4, -1
+8001b480: 483d17c1  bl 0x803ecc40 ; __dt__Q212EAGLInternal16InternalProfilerFv
+8001b484: 38600000  li r3, 0
+8001b488: 38800000  li r4, 0
+8001b48c: 483ce8e9  bl 0x803e9d74 ; SetPS2StyleOverBright__Q24EAGL8TevStageFbb
+8001b490: 3cc08044  lis r6, -0x7fbc
+8001b494: 38a643a8  addi r5, r6, 0x43a8
+8001b498: 80050004  lwz r0, 4(r5)
+8001b49c: 2c000000  cmpwi r0, 0
+8001b4a0: 4182004c  beq 0x8001b4ec
+8001b4a4: 48000038  b 0x8001b4dc ; 
+8001b4a8: 80870002  lwz r4, 2(r7)
+8001b4ac: 806de458  lwz r3, -0x1ba8(r13)
+8001b4b0: 88070001  lbz r0, 1(r7)
+8001b4b4: 7c8419d6  mullw r4, r4, r3
+8001b4b8: 806643a8  lwz r3, 0x43a8(r6)
+8001b4bc: 54001838  slwi r0, r0, 3
+8001b4c0: 7c630214  add r3, r3, r0
+8001b4c4: 80030004  lwz r0, 4(r3)
+8001b4c8: 7c040050  subf r0, r4, r0
+8001b4cc: 90030004  stw r0, 4(r3)
+8001b4d0: 80650004  lwz r3, 4(r5)
+8001b4d4: 38030006  addi r0, r3, 6
+8001b4d8: 90050004  stw r0, 4(r5)
+8001b4dc: 80e50004  lwz r7, 4(r5)
+8001b4e0: 88070000  lbz r0, 0(r7)
+8001b4e4: 28000002  cmplwi r0, 2
+8001b4e8: 4182ffc0  beq 0x8001b4a8
+8001b4ec: 3861000b  addi r3, r1, 0xb
+8001b4f0: 3880ffff  li r4, -1
+8001b4f4: 483d174d  bl 0x803ecc40 ; __dt__Q212EAGLInternal16InternalProfilerFv
+8001b4f8: 80010024  lwz r0, 0x24(r1)
+8001b4fc: 83e1001c  lwz r31, 0x1c(r1)
+8001b500: 83c10018  lwz r30, 0x18(r1)
+8001b504: 7c0803a6  mtlr r0
+8001b508: 38210020  addi r1, r1, 0x20
+8001b50c: 4e800020  blr 
+
+ModelRenderPlaygroundTexture_HWSkin__FPQ24EAGL7GeoPrim: 0x8001b510, 652 bytes
+8001b510: 9421ffd0  stwu r1, -0x30(r1)
+8001b514: 7c0802a6  mflr r0
+8001b518: 38600004  li r3, 4
+8001b51c: 90010034  stw r0, 0x34(r1)
+8001b520: 38810018  addi r4, r1, 0x18
+8001b524: 93e1002c  stw r31, 0x2c(r1)
+8001b528: 93c10028  stw r30, 0x28(r1)
+8001b52c: 88e280d0  lbz r7, -0x7f30(r2)
+8001b530: 88c280d1  lbz r6, -0x7f2f(r2)
+8001b534: 88a280d2  lbz r5, -0x7f2e(r2)
+8001b538: 880280d3  lbz r0, -0x7f2d(r2)
+8001b53c: 98e10008  stb r7, 8(r1)
+8001b540: 98c10009  stb r6, 9(r1)
+8001b544: 98a1000a  stb r5, 0xa(r1)
+8001b548: 9801000b  stb r0, 0xb(r1)
+8001b54c: 98e10018  stb r7, 0x18(r1)
+8001b550: 98c10019  stb r6, 0x19(r1)
+8001b554: 98a1001a  stb r5, 0x1a(r1)
+8001b558: 9801001b  stb r0, 0x1b(r1)
+8001b55c: 4804241d  bl 0x8005d978 ; GXSetChanAmbColor
+8001b560: 88e10008  lbz r7, 8(r1)
+8001b564: 38810014  addi r4, r1, 0x14
+8001b568: 88c10009  lbz r6, 9(r1)
+8001b56c: 38600004  li r3, 4
+8001b570: 88a1000a  lbz r5, 0xa(r1)
+8001b574: 8801000b  lbz r0, 0xb(r1)
+8001b578: 98e10014  stb r7, 0x14(r1)
+8001b57c: 98c10015  stb r6, 0x15(r1)
+8001b580: 98a10016  stb r5, 0x16(r1)
+8001b584: 98010017  stb r0, 0x17(r1)
+8001b588: 480424c9  bl 0x8005da50 ; GXSetChanMatColor
+8001b58c: 483ce345  bl 0x803e98d0 ; ResetToDefault__Q24EAGL8TevStageFv
+8001b590: 483ccca1  bl 0x803e8230 ; ResetTexCoordGens__Q24EAGL12TARExtensionFv
+8001b594: 38600000  li r3, 0
+8001b598: 3880000b  li r4, 0xb
+8001b59c: 38a00001  li r5, 1
+8001b5a0: 38c00005  li r6, 5
+8001b5a4: 38e00000  li r7, 0
+8001b5a8: 483cb4cd  bl 0x803e6a74 ; SetAttributeFormat__Q24EAGL21GeoPrimStateExtensionFi7_GXAttr10_GXCompCnt11_GXCompTypeUc
+8001b5ac: 38600000  li r3, 0
+8001b5b0: 3880000d  li r4, 0xd
+8001b5b4: 38a00001  li r5, 1
+8001b5b8: 38c00004  li r6, 4
+8001b5bc: 38e00000  li r7, 0
+8001b5c0: 483cb4b5  bl 0x803e6a74 ; SetAttributeFormat__Q24EAGL21GeoPrimStateExtensionFi7_GXAttr10_GXCompCnt11_GXCompTypeUc
+8001b5c4: 38600000  li r3, 0
+8001b5c8: 38800001  li r4, 1
+8001b5cc: 38a00004  li r5, 4
+8001b5d0: 38c0003c  li r6, 0x3c
+8001b5d4: 38e00000  li r7, 0
+8001b5d8: 3900007d  li r8, 0x7d
+8001b5dc: 483ccce9  bl 0x803e82c4 ; SetTexCoordGen__Q24EAGL12TARExtensionF13_GXTexCoordID13_GXTexGenType12_GXTexGenSrcUiUcUi
+8001b5e0: 38600001  li r3, 1
+8001b5e4: 483ccd1d  bl 0x803e8300 ; SetNumTexGens__Q24EAGL12TARExtensionFi
+8001b5e8: 38600001  li r3, 1
+8001b5ec: 4804253d  bl 0x8005db28 ; GXSetNumChans
+8001b5f0: 3fc08044  lis r30, -0x7fbc
+8001b5f4: 38605201  li r3, 0x5201
+8001b5f8: 3bfe43a8  addi r31, r30, 0x43a8
+8001b5fc: 38000003  li r0, 3
+8001b600: 907f0034  stw r3, 0x34(r31)
+8001b604: 38605201  li r3, 0x5201
+8001b608: 3880ffff  li r4, -1
+8001b60c: 901f0030  stw r0, 0x30(r31)
+8001b610: 483cb47d  bl 0x803e6a8c ; SetCurrentVertex__Q24EAGL21GeoPrimStateExtensionFUiUi
+8001b614: 38000001  li r0, 1
+8001b618: 809e43a8  lwz r4, 0x43a8(r30)
+8001b61c: 981f0046  stb r0, 0x46(r31)
+8001b620: 8064003c  lwz r3, 0x3c(r4)
+8001b624: 83c40044  lwz r30, 0x44(r4)
+8001b628: 83e30000  lwz r31, 0(r3)
+8001b62c: 2c1f00ff  cmpwi r31, 0xff
+8001b630: 40820020  bne 0x8001b650
+8001b634: 7fc3f378  mr r3, r30
+8001b638: 38800000  li r4, 0
+8001b63c: 483cbd5d  bl 0x803e7398 ; SetTransparencyMethod__Q24EAGL12GeoPrimStateFQ24EAGL18TransparencyMethod
+8001b640: 7fc3f378  mr r3, r30
+8001b644: 38800000  li r4, 0
+8001b648: 483cbdc1  bl 0x803e7408 ; SetAlphaBlendMode__Q24EAGL12GeoPrimStateFQ24EAGL14AlphaBlendMode
+8001b64c: 48000028  b 0x8001b674 ; 
+8001b650: 7fc3f378  mr r3, r30
+8001b654: 38800001  li r4, 1
+8001b658: 483cbd41  bl 0x803e7398 ; SetTransparencyMethod__Q24EAGL12GeoPrimStateFQ24EAGL18TransparencyMethod
+8001b65c: 7fc3f378  mr r3, r30
+8001b660: 38800001  li r4, 1
+8001b664: 483cbda5  bl 0x803e7408 ; SetAlphaBlendMode__Q24EAGL12GeoPrimStateFQ24EAGL14AlphaBlendMode
+8001b668: 7fc3f378  mr r3, r30
+8001b66c: 38800004  li r4, 4
+8001b670: 483cbd71  bl 0x803e73e0 ; SetAlphaCompareValue__Q24EAGL12GeoPrimStateFi
+8001b674: 88c1000c  lbz r6, 0xc(r1)
+8001b678: 38810010  addi r4, r1, 0x10
+8001b67c: 88a1000d  lbz r5, 0xd(r1)
+8001b680: 38600003  li r3, 3
+8001b684: 8801000e  lbz r0, 0xe(r1)
+8001b688: 9be1000f  stb r31, 0xf(r1)
+8001b68c: 98c10010  stb r6, 0x10(r1)
+8001b690: 98a10011  stb r5, 0x11(r1)
+8001b694: 98010012  stb r0, 0x12(r1)
+8001b698: 9be10013  stb r31, 0x13(r1)
+8001b69c: 48043b5d  bl 0x8005f1f8 ; GXSetTevKColor
+8001b6a0: 3fe0805f  lis r31, -0x7fa1
+8001b6a4: 3880001f  li r4, 0x1f
+8001b6a8: 387fe858  addi r3, r31, -0x17a8
+8001b6ac: 483ce709  bl 0x803e9db4 ; SetKAlphaSel__Q24EAGL8TevStageF15_GXTevKAlphaSel
+8001b6b0: 387fe858  addi r3, r31, -0x17a8
+8001b6b4: 38800000  li r4, 0
+8001b6b8: 38a00000  li r5, 0
+8001b6bc: 38c00000  li r6, 0
+8001b6c0: 38e00001  li r7, 1
+8001b6c4: 39000000  li r8, 0
+8001b6c8: 483ce749  bl 0x803e9e10 ; SetAlphaOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+8001b6cc: 387fe858  addi r3, r31, -0x17a8
+8001b6d0: 38800007  li r4, 7
+8001b6d4: 38a00004  li r5, 4
+8001b6d8: 38c00006  li r6, 6
+8001b6dc: 38e00007  li r7, 7
+8001b6e0: 483ce751  bl 0x803e9e30 ; SetAlphaIn__Q24EAGL8TevStageF14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg
+8001b6e4: 3c608044  lis r3, -0x7fbc
+8001b6e8: 386343a8  addi r3, r3, 0x43a8
+8001b6ec: 88030046  lbz r0, 0x46(r3)
+8001b6f0: 2c000000  cmpwi r0, 0
+8001b6f4: 41820048  beq 0x8001b73c
+8001b6f8: 38600004  li r3, 4
+8001b6fc: 38800000  li r4, 0
+8001b700: 38a00001  li r5, 1
+8001b704: 38c00001  li r6, 1
+8001b708: 38e00000  li r7, 0
+8001b70c: 39000002  li r8, 2
+8001b710: 39200002  li r9, 2
+8001b714: 48042439  bl 0x8005db4c ; GXSetChanCtrl
+8001b718: 38600005  li r3, 5
+8001b71c: 38800000  li r4, 0
+8001b720: 38a00001  li r5, 1
+8001b724: 38c00001  li r6, 1
+8001b728: 38e00000  li r7, 0
+8001b72c: 39000000  li r8, 0
+8001b730: 39200002  li r9, 2
+8001b734: 48042419  bl 0x8005db4c ; GXSetChanCtrl
+8001b738: 4800004c  b 0x8001b784 ; 
+8001b73c: 38600001  li r3, 1
+8001b740: 480423e9  bl 0x8005db28 ; GXSetNumChans
+8001b744: 38600004  li r3, 4
+8001b748: 38800000  li r4, 0
+8001b74c: 38a00000  li r5, 0
+8001b750: 38c00000  li r6, 0
+8001b754: 38e00000  li r7, 0
+8001b758: 39000002  li r8, 2
+8001b75c: 39200002  li r9, 2
+8001b760: 480423ed  bl 0x8005db4c ; GXSetChanCtrl
+8001b764: 38600005  li r3, 5
+8001b768: 38800000  li r4, 0
+8001b76c: 38a00000  li r5, 0
+8001b770: 38c00000  li r6, 0
+8001b774: 38e00000  li r7, 0
+8001b778: 39000000  li r8, 0
+8001b77c: 39200002  li r9, 2
+8001b780: 480423cd  bl 0x8005db4c ; GXSetChanCtrl
+8001b784: 80010034  lwz r0, 0x34(r1)
+8001b788: 83e1002c  lwz r31, 0x2c(r1)
+8001b78c: 83c10028  lwz r30, 0x28(r1)
+8001b790: 7c0803a6  mtlr r0
+8001b794: 38210030  addi r1, r1, 0x30
+8001b798: 4e800020  blr 
+
+GeomRenderPlaygroundTexture_HWSkin__FPQ24EAGL7GeoPrim: 0x8001b79c, 4 bytes
+8001b79c: 4e800020  blr 

@@ -1,0 +1,437 @@
+{
+  "shadows": [
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\microgames\\microgames.viv::basketball_shadow.o",
+      "triangles": 384,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\microgames\\microgames.viv::ds_object_can_shadow.o",
+      "triangles": 64,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\microgames\\microgames.viv::net_shadow.o",
+      "triangles": 235,
+      "meshes": 2
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_course00_propset.viv::ds_course00_propset_shadow.o",
+      "triangles": 662,
+      "meshes": 2
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_course01_propset.viv::ds_course01_propset_shadow.o",
+      "triangles": 144,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_course02_propset.viv::ds_course02_propset_shadow.o",
+      "triangles": 72,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_dart.viv::ds_dart_shadow.o",
+      "triangles": 100,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_dart_hostile.viv::ds_dart_hostile_shadow.o",
+      "triangles": 150,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_dartgun_high.viv::ds_dartgun_high_shadow.o",
+      "triangles": 240,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_dartgun_low.viv::ds_dartgun_low_shadow.o",
+      "triangles": 329,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_largedart.viv::ds_largedart_shadow.o",
+      "triangles": 290,
+      "meshes": 2
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_largeshield.viv::ds_largeshield_shadow.o",
+      "triangles": 73,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_object_can.viv::ds_object_can_shadow.o",
+      "triangles": 64,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_object_health.viv::ds_object_health_shadow.o",
+      "triangles": 60,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_school_propset.viv::ds_school_propset_shadow.o",
+      "triangles": 240,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_shield.viv::ds_shield_shadow.o",
+      "triangles": 50,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_target_pinup_health.viv::ds_target_pinup_health_shadow.o",
+      "triangles": 12,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_target_pinup_hostile.viv::ds_target_pinup_hostile_shadow.o",
+      "triangles": 48,
+      "meshes": 2
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_target_pinup_hostile_dead.viv::ds_target_pinup_hostile_dead_shadow.o",
+      "triangles": 48,
+      "meshes": 2
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_target_pinup_innocent.viv::ds_target_pinup_innocent_shadow.o",
+      "triangles": 48,
+      "meshes": 2
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dartshootout\\ds_target_pinup_innocent_dead.viv::ds_target_pinup_innocent_dead_shadow.o",
+      "triangles": 48,
+      "meshes": 2
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\dodgeball\\mgdodgeball.viv::dodgeball_shadow.o",
+      "triangles": 384,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\footie\\mgfootie.viv::footieball_shadow.o",
+      "triangles": 116,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\paperairplane\\mgpaperairplane.viv::kite_shadow.o",
+      "triangles": 44,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\paperairplane\\mgpaperairplane.viv::pa_plane_fighter_shadow.o",
+      "triangles": 198,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\paperairplane\\mgpaperairplane.viv::pa_plane_glider_shadow.o",
+      "triangles": 212,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\paperairplane\\mgpaperairplane.viv::pa_plane_red_shadow.o",
+      "triangles": 436,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\paperairplane\\mgpaperairplane.viv::pa_plane_shadow.o",
+      "triangles": 128,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\paperairplane\\mgpaperairplane.viv::pa_plane_stealth_shadow.o",
+      "triangles": 107,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\paperairplane\\mgpaperairplane.viv::pa_sprinkler_shadow.o",
+      "triangles": 673,
+      "meshes": 4
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::garbagecan_shadow.o",
+      "triangles": 64,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_buggybody_shadow.o",
+      "triangles": 1482,
+      "meshes": 6
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_buggywheel_shadow.o",
+      "triangles": 416,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_firecracker_shadow.o",
+      "triangles": 55,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_powerup_shadow.o",
+      "triangles": 12,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_thumb_tac_shadow.o",
+      "triangles": 290,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_touringbody_shadow.o",
+      "triangles": 1484,
+      "meshes": 4
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_touringwheel_shadow.o",
+      "triangles": 218,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\tetherball\\mgtetherball.viv::teatherball_rope_shadow.o",
+      "triangles": 60,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\tetherball\\mgtetherball.viv::teatherball_shadow.o",
+      "triangles": 192,
+      "meshes": 2
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\wallball\\mgwallball.viv::wallball_shadow.o",
+      "triangles": 480,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\worldprops\\worldprops.viv::basketball_shadow.o",
+      "triangles": 384,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\worldprops\\worldprops.viv::wallball_shadow.o",
+      "triangles": 480,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\worldprops\\worldprops.viv::footieball_shadow.o",
+      "triangles": 116,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\worldprops\\worldprops.viv::straw_shadow.o",
+      "triangles": 20,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\worldprops\\worldprops.viv::ds_dartgun_low_shadow.o",
+      "triangles": 329,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\worldprops\\worldprops.viv::paper_plane_big_shadow.o",
+      "triangles": 41,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\worldprops\\worldprops.viv::rc_controller_shadow.o",
+      "triangles": 50,
+      "meshes": 1
+    },
+    {
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\worldprops\\worldprops.viv::ds_lite_shadow.o",
+      "triangles": 252,
+      "meshes": 3
+    }
+  ],
+  "shadow_failures": [],
+  "previews": [
+    {
+      "kind": "model",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\microgames\\microgames.viv::basketball.o",
+      "name": "basketball.o",
+      "warnings": [
+        "ELF OK  (8608 bytes)",
+        ".data @ 0x0040  size 0x1cc0",
+        "Model: basketball_final  total materials: 1",
+        "Reloc entries: 27",
+        "Layout D scale mismatch: bbox-derived estimate=0.00000621 disagrees with expected 1/16384=0.00006104 (ratio=0.10x) -- worth inspecting this mesh by hand.",
+        "BBOX: ((-0.11708562821149826, -0.11762381345033646, -0.11762381345033646), (0.11708562821149826, 0.11762381345033646, 0.11762381345033646))  pos_scale=0.00006104",
+        "Inspector: confidence LOW \u2014 falling back to heuristic scan (predicted=None).",
+        "Scoring: 6 layouts  min_score=130  margin=30",
+        "Mesh descriptors: 1 at ['0x1a80(LB)']",
+        "OK: 1/1 meshes  total tris: 384"
+      ],
+      "cache_hit": false,
+      "asset": "generated/a15e4aa9436fe2ecbd09b423/asset.glb",
+      "triangles": 384,
+      "meshes": 1,
+      "materials": 1,
+      "textures": 1,
+      "bones": 0,
+      "bounds": [
+        [
+          -0.11708562821149826,
+          -0.11762381345033646,
+          -0.11762381345033646
+        ],
+        [
+          0.11708562821149826,
+          0.11762381345033646,
+          0.11762381345033646
+        ]
+      ],
+      "duration": 0,
+      "animation": "",
+      "skinned": false,
+      "decode_ms": 11.46,
+      "decoder_version": "native-2"
+    },
+    {
+      "kind": "model",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\characters\\models\\characters.viv::alicia.viv::alicia.o",
+      "name": "alicia.o",
+      "warnings": [
+        "ELF OK  (103184 bytes)",
+        ".data @ 0x0040  size 0x16720",
+        "Model: alicia_final.variation1  total materials: 3",
+        "Reloc entries: 1205",
+        "Layout D scale mismatch: bbox-derived estimate=0.00002328 disagrees with expected 1/16384=0.00006104 (ratio=0.38x) -- worth inspecting this mesh by hand.",
+        "BBOX: ((-0.4954085052013397, -0.0038146229926496744, -0.2027244120836258), (0.4954088628292084, 1.0670762062072754, 0.24431146681308746))  pos_scale=0.00006104",
+        "Inspector: confidence LOW \u2014 falling back to heuristic scan (predicted=None).",
+        "Scoring: 6 layouts  min_score=130  margin=30",
+        "Mesh descriptors: 62 at ['0x0e00(LD)', '0x4e60(LD)', '0x5540(LD)', '0x5c00(LD)', '0x6260(LD)', '0x6500(LD)', '0x6740(LD)', '0x69a0(LD)', '0x6d80(LD)', '0x7200(LD)', '0x7520(LD)', '0x7880(LD)', '0x7b20(LD)', '0x7e80(LD)', '0x8140(LD)', '0x83e0(LD)', '0x8660(LD)', '0x8960(LD)', '0x8be0(LD)', '0x8ee0(LD)', '0x9280(LD)', '0x94e0(LD)', '0x97c0(LD)', '0x9a60(LD)', '0x9d20(LD)', '0x9f80(LD)', '0xa260(LD)', '0xa460(LD)', '0xac00(LD2)', '0xafe0(LD2)', '0xb880(LD2)', '0xbcc0(LD2)', '0xc040(LD2)', '0xc740(LD2)', '0xcbe0(LD2)', '0xd0c0(LD2)', '0xd720(LD2)', '0xdb00(LD2)', '0xdf00(LD2)', '0xe3a0(LD2)', '0xe7e0(LD2)', '0xed40(LD2)', '0xf000(LD2)', '0xf2a0(LD2)', '0xf880(LD2)', '0xff00(LD2)', '0x10440(LD2)', '0x107e0(LD2)', '0x10a80(LD2)', '0x10da0(LD2)', '0x11100(LD2)', '0x116c0(LD2)', '0x11c60(LD2)', '0x11ec0(LD2)', '0x12940(LD2)', '0x136e0(LD2)', '0x13e00(LD2)', '0x14260(LD2)', '0x14620(LD2)', '0x151c0(LD2)', '0x157e0(LD2)', '0x15fa0(LD2)']",
+        "OK: 62/62 meshes  total tris: 2877"
+      ],
+      "cache_hit": true,
+      "asset": "generated/7a10c7c22a3c9ea5076ba6fa/asset.glb",
+      "triangles": 2877,
+      "meshes": 1,
+      "materials": 3,
+      "textures": 3,
+      "bones": 68,
+      "bounds": [
+        [
+          -0.495361328125,
+          -0.0037841796875,
+          -0.20269775390625
+        ],
+        [
+          0.495361328125,
+          1.0670166015625,
+          0.2442626953125
+        ]
+      ],
+      "duration": 0.7,
+      "animation": "S_AI_Frustration",
+      "skinned": true,
+      "decode_ms": 91.78,
+      "decoder_version": "native-2"
+    },
+    {
+      "kind": "skeleton",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\characters\\player_anims.viv::player_anims.anm",
+      "name": "player_anims.anm",
+      "warnings": [],
+      "cache_hit": false,
+      "asset": "generated/4998bb8f33acdf718ad5223d/asset.glb",
+      "bones": 68,
+      "bounds": [
+        [
+          -0.4394657334374572,
+          0.014491381666841278,
+          -0.020753605291247288
+        ],
+        [
+          0.4386018842788784,
+          0.8995100369236128,
+          0.22645877565634404
+        ]
+      ],
+      "duration": 0.7,
+      "animation": "S_AI_Frustration",
+      "decode_ms": 27.73,
+      "decoder_version": "native-2"
+    },
+    {
+      "kind": "image",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\main.big::Main.gsh",
+      "name": "Main.gsh",
+      "warnings": [],
+      "cache_hit": false,
+      "image_name": "3   ",
+      "asset": "generated/88fb6b506e3ce36dd9f38632/image.png",
+      "width": 4,
+      "height": 8,
+      "decode_ms": 1.12,
+      "decoder_version": "native-2"
+    },
+    {
+      "kind": "inspection",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\home\\home.csv",
+      "name": "home.csv",
+      "warnings": [],
+      "cache_hit": false,
+      "inspection": {
+        "format": "Delimited table",
+        "status": "decoded_text",
+        "encoding": "utf-16 BOM",
+        "delimiter": "\t",
+        "rows": [
+          [
+            "\u63a5\u7d9a\u3059\u308b\u9806\u756a\u306b\r\n\u2460\u30dc\u30bf\u30f3\u3068\u2461\u30dc\u30bf\u30f3\u3092\r\n\u540c\u6642\u306b\u62bc\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+            "Simultaneously press \u2460 and \u2461\r\non each Wii Remote in the\r\ndesired player order.",
+            "Bitte gleichzeitig \u2460 und \u2461\r\njeder Wii-FB in der gew\u00fcnschten\r\nSpieler-Reihenfolge dr\u00fccken.",
+            "Appuyez simultan\u00e9ment sur\r\n\u2460 et \u2461 sur chaque\r\nt\u00e9l\u00e9commande Wii pour les\r\nconnecter dans l'ordre de\r\nvotre choix.",
+            "Para realizar una nueva\r\nconexi\u00f3n, se deber\u00e1n pulsar\r\na la vez los Botones \u2460 y \u2461\r\nde cada mando de Wii en el\r\norden de jugadores deseado.",
+            "Per reimpostare il collegamento\r\nbisogna premere\r\ncontemporaneamente \u2460 e \u2461\r\nsu ciascun telecomando Wii\r\nnell'ordine dei giocatori\r\ndesiderato.",
+            "Druk tegelijk op \u2460 en \u2461 op\r\niedere Wii-afstandsbediening,\r\nin de gewenste spelervolgorde."
+          ],
+          [
+            "\u5207\u65ad\u4e2d\u30fb\u30fb\u30fb",
+            "Disconnecting...",
+            "Verbindung wird getrennt...",
+            "Interruption des connexions...",
+            "Desconectando...",
+            "Interruzione collegamento\r\nin corso...",
+            "Bezig met het verbreken\r\nvan de verbinding..."
+          ],
+          [
+            "Wii\u30e1\u30cb\u30e5\u30fc\u306b\u3082\u3069\u308a\u307e\u3059\u304b\uff1f\r\n\uff08\u4fdd\u5b58\u3057\u3066\u3044\u306a\u3044\u5185\u5bb9\u306f\u5931\u308f\u308c\u307e\u3059\uff09",
+            "Return to the Wii Menu?\r\n(Anything not saved will be lost.)",
+            "Zur\u00fcck zum Wii-Men\u00fc? (Nicht\r\ngespeicherte Daten gehen verloren.)",
+            "Voulez-vous retourner au menu Wii?\r\n(Tout ce qui n'a pas \u00e9t\u00e9\r\nsauvegard\u00e9 sera perdu.)",
+            "\u00bfDeseas volver al men\u00fa de Wii?\r\nSe perder\u00e1n los datos no guardados.",
+            "Vuoi tornare al menu Wii?\r\nI dati non salvati andranno perduti.",
+            "Wil je terug naar het\r\nWii-menu? Niet opgeslagen\r\ngegevens gaan verloren."
+          ],
+          [
+            "\u30ea\u30bb\u30c3\u30c8\u3057\u307e\u3059\u304b\uff1f\r\n\uff08\u4fdd\u5b58\u3057\u3066\u3044\u306a\u3044\u5185\u5bb9\u306f\u5931\u308f\u308c\u307e\u3059\uff09",
+            "Reset the software?\r\n(Anything not saved will be lost.)",
+            "Zur\u00fccksetzen? (Nicht gespeicherte\r\nDaten gehen verloren.)",
+            "Voulez-vous r\u00e9initialiser?\r\n(Tout ce qui n'a pas \u00e9t\u00e9\r\nsauvegard\u00e9 sera perdu.)",
+            "\u00bfDeseas reiniciar?\r\nSe perder\u00e1n los datos\r\nno guardados.",
+            "Vuoi riavviare il software?\r\nI dati non salvati andranno perduti.",
+            "Wil je terug naar het\r\ntitelscherm? Niet opgeslagen\r\ngegevens gaan verloren."
+          ]
+        ],
+        "row_count": 4,
+        "column_counts": {
+          "7": 4
+        },
+        "schema": "tabular_text",
+        "asset_references": [],
+        "caveats": [
+          "Cells retained as strings; header roles are identified only for known schemas. Ragged rows are retained."
+        ],
+        "size": 3610,
+        "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\home\\home.csv",
+        "sha256": "8a0bc17e6dd252a623b9ba5d89ab32e56c795d6f49fea29e2da65f2fd6b0af9c"
+      },
+      "decode_ms": 0.66,
+      "decoder_version": "native-2"
+    }
+  ]
+}

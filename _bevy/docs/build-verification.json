@@ -1,0 +1,113 @@
+{
+  "built": "2026-09-29T14:31:15.843803-05:00",
+  "decoder_version": "native-5-materials-4",
+  "sha256": {
+    "src\\bridge.rs": "1c0446433a708e5f793c53dbc11c1578a83ce9ad2de811bd611fc6e7a02a4e00",
+    "src\\game.rs": "2a7e6e592b2575c15faedb448ed7f703312f4f61a3583a0bbbc9d3ca4c555cac",
+    "src\\main.rs": "09ae1de376c16e321432c54b5912480b97e3d5455612319a8d594e95b05f38e3",
+    "src\\viewer.rs": "61a174069017c8a86ecdc9e6a02d22c1fbf89ee04795e8c98e260b63086a749c",
+    "tools\\decoder_bridge.py": "3643db012d4a887a93403c6466b3d2f85d548bd49cc3eea76d828dbfc9c2c64a",
+    "tools\\probe_shadow_variants.py": "e39f4843a225888952b56644efcced0ea803dc0a5577d502c55148991a7a1e9f",
+    "tools\\verify_decoders.py": "267798ba0144266b74ffb5864863a05c60665a75d7f1117340135e9c99979d2f",
+    "tools\\verify_material_viewer.py": "f313be3106181bb82c909b7f442e71eaa29f0717d461ac0d28514d64486b0e46",
+    "tools\\verify_packaged.py": "e17c0331f41c43421a375a109a0fd7effdd7e01d9a16dbae0c37287c55c3bb98",
+    "tools\\verify_viewer.py": "0b522717cc788d5de9a18d043723aba14f75828ee0d7c05bd125656fc9a86065",
+    "Cargo.toml": "3d344b8dea35cc58ac73a701974f34c3dba2baa10bc2ea7ac9936283fbc8f811",
+    "Cargo.lock": "e44594f21a13e6bc066fc905b5416e848297264cdb192855678f25acca6e21d9",
+    "build.ps1": "7f50174ffa900557d69755db9e7b9e8e5bb6d6e3feca20d7700615d1a2bd9ed5",
+    "EAGL-Workbench.exe": "d93492e8a5cd07f3e903f5f3279042884e840f38aab1b89b78f626b84b462c44",
+    "EAGL-Decoder.exe": "7ac3e9edc6bfbe328d3d20bdd0b732e34cdea7e7ee9d0030af58680fb350342d"
+  },
+  "native_exe_bytes": 79649792,
+  "headless_checks": 17,
+  "source_unit_tests": 32,
+  "model_geometry_verified": 828,
+  "model_empty_drawlists": 8,
+  "model_failures": 0,
+  "frontend_files": 619,
+  "frontend_shapes": 2361,
+  "source_corpus_player_clips_verified": 265,
+  "material_lookup_warning_models": 0,
+  "diffuse_bindings_resolved": 3480,
+  "previous_renderer_checks": [
+    {
+      "name": "basketball",
+      "loaded": true,
+      "meshes": 1,
+      "animation_players": 0
+    },
+    {
+      "name": "alicia-animated",
+      "loaded": true,
+      "meshes": 62,
+      "animation_players": 1
+    },
+    {
+      "name": "warning-texture",
+      "loaded": true,
+      "meshes": 0,
+      "animation_players": 0
+    },
+    {
+      "name": "frontend-help",
+      "loaded": true,
+      "meshes": 1,
+      "animation_players": 0
+    },
+    {
+      "name": "rc-car-animated",
+      "loaded": true,
+      "meshes": 5,
+      "animation_players": 1
+    },
+    {
+      "name": "teeter-totter",
+      "loaded": true,
+      "meshes": 38,
+      "animation_players": 0
+    },
+    {
+      "name": "frontend-nunchuck",
+      "loaded": true,
+      "meshes": 1,
+      "animation_players": 0
+    }
+  ],
+  "packaged_renderer_checks": [
+    {
+      "name": "net.o",
+      "capture": "D:\\_eagl\\_bevy\\docs\\captures\\material-net.png",
+      "textures": 2,
+      "mesh_entities": 2,
+      "decoder_version": "native-5-materials-4"
+    },
+    {
+      "name": "rc_buggybody.o",
+      "capture": "D:\\_eagl\\_bevy\\docs\\captures\\material-buggy.png",
+      "textures": 5,
+      "mesh_entities": 6,
+      "decoder_version": "native-5-materials-4"
+    },
+    {
+      "name": "world-low-all.o",
+      "capture": "D:\\_eagl\\_bevy\\docs\\captures\\material-world.png",
+      "textures": 161,
+      "mesh_entities": 636,
+      "decoder_version": "native-5-materials-4"
+    },
+    {
+      "name": "alicia.o",
+      "capture": "D:\\_eagl\\_bevy\\docs\\captures\\material-character.png",
+      "textures": 3,
+      "mesh_entities": 62,
+      "decoder_version": "native-5-materials-4"
+    },
+    {
+      "name": "HelpEditor.o",
+      "capture": "D:\\_eagl\\_bevy\\docs\\captures\\material-frontend.png",
+      "textures": 1,
+      "mesh_entities": 1,
+      "decoder_version": "native-5-materials-4"
+    }
+  ]
+}

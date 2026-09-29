@@ -1,0 +1,117 @@
+[
+  {
+    "file": "src\\legacy\\decoder\\__init__.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\decoder\\__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "src\\legacy\\decoder\\bone_mask.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\decoder\\bone_mask.py",
+    "sha256": "3d2a3876a1349d773631e1e33e01e54acce5ebdc422d2f1d0ee578b6346cd34e"
+  },
+  {
+    "file": "src\\legacy\\decoder\\eagl_anm_decoder.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\decoder\\eagl_anm_decoder.py",
+    "sha256": "53c472a481f5d5b3935aa7438e1f71f97bff35b86bc1061ab11fc20a95611b4c"
+  },
+  {
+    "file": "src\\legacy\\decoder\\eagl_skeleton.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\decoder\\eagl_skeleton.py",
+    "sha256": "072c08c2f31aa11e06b8cafc00aaaa7e652c005fb5b7e38503c59ff626c4c99b"
+  },
+  {
+    "file": "src\\legacy\\decoder\\fn_delta_f1.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\decoder\\fn_delta_f1.py",
+    "sha256": "e2ecfdf045c6c0819fd67e6253ff1a40f77752ab99a0c37aea79de68712f9e48"
+  },
+  {
+    "file": "src\\legacy\\decoder\\fn_delta_f3.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\decoder\\fn_delta_f3.py",
+    "sha256": "4b0f3d3be7da7d7e778b4321079f96c8fce898600cbe9be7fb97bad0c8b7aaae"
+  },
+  {
+    "file": "src\\legacy\\decoder\\fn_delta_qfast.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\decoder\\fn_delta_qfast.py",
+    "sha256": "aa90ff9f29534a54cf6c6a8830cc1f53ba1c6c0369a36027e35bc57374447a88"
+  },
+  {
+    "file": "src\\legacy\\decoder\\fn_delta_singleq.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\decoder\\fn_delta_singleq.py",
+    "sha256": "11f58e39903fd65dd297adf610c8932bbf7834e461653704a7db40fed23593ea"
+  },
+  {
+    "file": "src\\legacy\\decoder\\fn_stateless_f3.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\decoder\\fn_stateless_f3.py",
+    "sha256": "328d9ae9d5d20f9b98cec12927008cd34707172ec189f63af8a4434c996ee525"
+  },
+  {
+    "file": "src\\legacy\\decoder\\fn_stateless_q.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\decoder\\fn_stateless_q.py",
+    "sha256": "767798a603644963e2b4d0d49fc7c71a6c9d58ff366033b8f4a128644d4faa8c"
+  },
+  {
+    "file": "src\\legacy\\decoder\\paths.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\decoder\\paths.py",
+    "sha256": "9f11cffa6b9f94c5c228cac1f50f7762af10ed51066bd875ec93b766877c46cb"
+  },
+  {
+    "file": "src\\legacy\\eagl_anm_decoder.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\eagl_anm_decoder.py",
+    "sha256": "0511a6cb9a7889a222bcadba164376ef619e53ecdd13d24d8bfcd2be6299b9c8"
+  },
+  {
+    "file": "src\\legacy\\eagl_batch_export.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\eagl_batch_export.py",
+    "sha256": "8c82719170b32f7e59fe9610bdec65c9d622102e6a09cb547d3d183e3afd9e90"
+  },
+  {
+    "file": "src\\legacy\\eagl_exporter.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\eagl_exporter.py",
+    "sha256": "535f6f100add4d2ade9f104ea764459e871ca3dafb355ab0f9584ef700b7110c"
+  },
+  {
+    "file": "src\\legacy\\eagl_inspect.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\eagl_inspect.py",
+    "sha256": "de8e48e706cb0f5df7062ac355d8a1e1c26eb370776d9a2fe078a3139b597342"
+  },
+  {
+    "file": "src\\legacy\\eagl_layouts.json",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\eagl_layouts.json",
+    "sha256": "80ca8016bff29d17db1cbeb11b81b13c240097c87b6c5b7441f465047513726b"
+  },
+  {
+    "file": "src\\legacy\\eagl_mesh_material_map.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\eagl_mesh_material_map.py",
+    "sha256": "65896fe4b0d65a15855d73b7c637fe9e428c8421a11af0515305bb83b03f937d"
+  },
+  {
+    "file": "src\\legacy\\eagl_skeleton.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\eagl_skeleton.py",
+    "sha256": "072c08c2f31aa11e06b8cafc00aaaa7e652c005fb5b7e38503c59ff626c4c99b"
+  },
+  {
+    "file": "src\\legacy\\exporter\\__init__.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\exporter\\__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "src\\legacy\\exporter\\anm_exporter.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\exporter\\anm_exporter.py",
+    "sha256": "7a7c99b73c8972331be2a2329c4a9a4aa84132425ca7b4b0013ae02f68e94204"
+  },
+  {
+    "file": "src\\legacy\\exporter\\gltf_writer.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\exporter\\gltf_writer.py",
+    "sha256": "364ed6e4a5e0d94cfbd8024adce68063a4dacbee620e1cc215b98056c61642e5"
+  },
+  {
+    "file": "src\\legacy\\gsh_parser.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\gsh_parser.py",
+    "sha256": "02372485aada006c1defcb2e7dc3e2e5510a1044bb5085ef3bebec71a0ddb7fa"
+  },
+  {
+    "file": "src\\legacy\\parser.py",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\eagl_anm_adapter\\eagl_anm_adapter\\parser.py",
+    "sha256": "08e5d780f537c73836d6adcb94f0370d38ca2e57115c0256d92568da1ad6ba33"
+  }
+]

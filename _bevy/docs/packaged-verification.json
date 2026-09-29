@@ -1,0 +1,103 @@
+{
+  "checks": [
+    {
+      "command": "catalog",
+      "source": null,
+      "milliseconds": 6996,
+      "status": "passed"
+    },
+    {
+      "command": "preview",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\microgames\\microgames.viv::basketball.o",
+      "milliseconds": 226,
+      "status": "passed"
+    },
+    {
+      "command": "preview",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\characters\\models\\characters.viv::alicia.viv::alicia.o",
+      "milliseconds": 564,
+      "status": "passed"
+    },
+    {
+      "command": "preview",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_buggybody_shadow.o",
+      "milliseconds": 291,
+      "status": "passed"
+    },
+    {
+      "command": "preview",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\microgames\\microgames.viv::net.o",
+      "milliseconds": 264,
+      "status": "passed"
+    },
+    {
+      "command": "preview",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_buggybody.o",
+      "milliseconds": 318,
+      "status": "passed"
+    },
+    {
+      "command": "preview",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\world\\world.big::world-low-all.o",
+      "milliseconds": 2776,
+      "status": "passed"
+    },
+    {
+      "command": "preview",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\editors\\helpeditor.big::HelpEditor.o",
+      "milliseconds": 196,
+      "status": "passed"
+    },
+    {
+      "command": "metadata",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\editors\\helpeditor.big::HelpEditor.o",
+      "milliseconds": 199,
+      "status": "passed"
+    },
+    {
+      "command": "preview",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\placeables\\rc_track_car.viv::rc_track_car.o",
+      "milliseconds": 226,
+      "status": "passed"
+    },
+    {
+      "command": "preview",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\placeables\\rc_track_car.viv::rc_track_car_shadow.o",
+      "milliseconds": 210,
+      "status": "passed"
+    },
+    {
+      "command": "preview",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\boot\\strapwarn_standard_english.gsh",
+      "milliseconds": 202,
+      "status": "passed"
+    },
+    {
+      "command": "inspect",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\home\\home.csv",
+      "milliseconds": 241,
+      "status": "passed"
+    },
+    {
+      "command": "metadata",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\characters\\player_anims.viv::player_anims.anm",
+      "milliseconds": 199,
+      "status": "passed"
+    },
+    {
+      "command": "extract",
+      "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\empty.big",
+      "milliseconds": 211,
+      "status": "passed"
+    },
+    {
+      "command": "isolated-packaged-worker",
+      "status": "passed"
+    },
+    {
+      "command": "missing-source-error",
+      "status": "passed"
+    }
+  ],
+  "assets": 3685
+}

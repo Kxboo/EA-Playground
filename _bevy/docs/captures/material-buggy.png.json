@@ -1,0 +1,248 @@
+{
+  "animation_players": 0,
+  "animation_time": 0.0,
+  "loaded": true,
+  "mesh_entities": 6,
+  "preview": {
+    "animation": "",
+    "asset": "generated/5287d5506fbf3e0fad13ff60/asset.glb",
+    "bones": 0,
+    "bounds": [
+      [
+        -0.10755492001771928,
+        0.01514015905559063,
+        -0.09117331355810164
+      ],
+      [
+        0.1116098091006279,
+        0.15790897607803345,
+        0.08873758465051651
+      ]
+    ],
+    "cache_hit": false,
+    "decode_ms": 72.52,
+    "decoder_version": "native-5-materials-4",
+    "duration": 0,
+    "kind": "model",
+    "material_bindings": [
+      {
+        "mesh": 0,
+        "shader": "PlaygroundToonShade",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "rc_bodyTextures_P1",
+            "pointer_offset": 60,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1625;1=rc_bodyTextures_P1,5;22=1;23=1;"
+          }
+        ]
+      },
+      {
+        "mesh": 1,
+        "shader": "PlaygroundToonShade",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "spoiler_blue",
+            "pointer_offset": 60,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1625;1=spoiler_blue,5;22=1;23=1;"
+          }
+        ]
+      },
+      {
+        "mesh": 2,
+        "shader": "PlaygroundToonShade",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "rc_BuggieWheel",
+            "pointer_offset": 60,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1625;1=rc_BuggieWheel,5;22=1;23=1;"
+          }
+        ]
+      },
+      {
+        "mesh": 3,
+        "shader": "PlaygroundToonShade",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "rc_bodyTextures_P1",
+            "pointer_offset": 60,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1625;1=rc_bodyTextures_P1,5;22=1;23=1;"
+          }
+        ]
+      },
+      {
+        "mesh": 4,
+        "shader": "PlaygroundToonShade",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "rc_chrome",
+            "pointer_offset": 60,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1625;1=rc_chrome,5;22=1;23=1;"
+          }
+        ]
+      },
+      {
+        "mesh": 5,
+        "shader": "PlaygroundToonShade",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "rc_shocks",
+            "pointer_offset": 60,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1625;1=rc_shocks,5;22=1;23=1;"
+          }
+        ]
+      }
+    ],
+    "material_report": [
+      {
+        "alpha_mode": "mask",
+        "candidates": 2,
+        "distinct_images": 1,
+        "height": 128,
+        "match": "full_name",
+        "name": "rc_BuggieWheel",
+        "pixel_sha256": "77bf6a1195abe0617bc25e879495ccf8b1d8fac434f0dc9cebf908f193f9a5bc",
+        "sources": [
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rccar.gsh",
+            "entry": 24,
+            "name": "rc_BuggieWheel"
+          },
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_buggywheel.gsh",
+            "entry": 0,
+            "name": "rc_BuggieWheel"
+          }
+        ],
+        "status": "resolved",
+        "width": 256
+      },
+      {
+        "alpha_mode": "opaque",
+        "candidates": 1,
+        "distinct_images": 1,
+        "height": 128,
+        "match": "full_name",
+        "name": "rc_bodyTextures_P1",
+        "pixel_sha256": "f965412a5acbc69121bd301763c45114f75bbd38677c127826036e61593f4c91",
+        "sources": [
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rccar.gsh",
+            "entry": 18,
+            "name": "rc_bodyTextures_P1"
+          }
+        ],
+        "status": "resolved",
+        "width": 128
+      },
+      {
+        "alpha_mode": "opaque",
+        "candidates": 2,
+        "distinct_images": 1,
+        "height": 128,
+        "match": "full_name",
+        "name": "rc_chrome",
+        "pixel_sha256": "2e84fc61ece59352a18bf752a97df5d171bc93c8757c30d674a6d8049032f7ec",
+        "sources": [
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rccar.gsh",
+            "entry": 22,
+            "name": "rc_chrome"
+          },
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rccar.gsh",
+            "entry": 23,
+            "name": "rc_chrome"
+          }
+        ],
+        "status": "resolved",
+        "width": 64
+      },
+      {
+        "alpha_mode": "mask",
+        "candidates": 2,
+        "distinct_images": 1,
+        "height": 128,
+        "match": "full_name",
+        "name": "rc_shocks",
+        "pixel_sha256": "cfff99e198e0c3a6b913306411c9dbe3860e29d9c45d8a10c1c01ca3db3524c5",
+        "sources": [
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rccar.gsh",
+            "entry": 20,
+            "name": "rc_shocks"
+          },
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rccar.gsh",
+            "entry": 21,
+            "name": "rc_shocks"
+          }
+        ],
+        "status": "resolved",
+        "width": 64
+      },
+      {
+        "alpha_mode": "opaque",
+        "candidates": 2,
+        "distinct_images": 1,
+        "height": 128,
+        "match": "full_name",
+        "name": "spoiler_blue",
+        "pixel_sha256": "6619271f625d32755662ed7379b45146cd8f403139f1e7dd21efaed48082339c",
+        "sources": [
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rccar.gsh",
+            "entry": 17,
+            "name": "spoiler_blue"
+          },
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rccar.gsh",
+            "entry": 19,
+            "name": "spoiler_blue"
+          }
+        ],
+        "status": "resolved",
+        "width": 128
+      }
+    ],
+    "material_warnings": [],
+    "materials": 5,
+    "meshes": 1,
+    "name": "rc_buggybody.o",
+    "shader_families": [
+      "PlaygroundToonShade"
+    ],
+    "skinned": false,
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_buggybody.o",
+    "texture_banks": [
+      "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::garbagecan.gsh",
+      "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rccar.gsh",
+      "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rccarindicators.gsh",
+      "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_buggywheel.gsh",
+      "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_firecracker.gsh",
+      "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_powerup.gsh",
+      "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_thumb_tac.gsh",
+      "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\minigames\\rccars\\rccars.viv::rc_touringwheel.gsh"
+    ],
+    "textures": 5,
+    "triangles": 1482,
+    "warnings": [
+      "ELF OK  (45248 bytes)",
+      ".data @ 0x0040  size 0xa4e0",
+      "Model: rc_buggybodyProcessed  total materials: 5",
+      "Reloc entries: 180",
+      "Layout D scale mismatch: bbox-derived estimate=0.00000484 disagrees with expected 1/16384=0.00006104 (ratio=0.08x) -- worth inspecting this mesh by hand.",
+      "BBOX: ((-0.10755492001771927, 0.01514015905559063, -0.09117331355810165), (0.1116098091006279, 0.15790897607803345, 0.08873758465051651))  pos_scale=0.00006104",
+      "Inspector: confidence LOW — falling back to heuristic scan (predicted=None).",
+      "Scoring: 6 layouts  min_score=130  margin=30",
+      "Mesh descriptors: 6 at ['0x02c8(LA)', '0x11e8(LA)', '0x1428(LA)', '0x2b68(LA)', '0x8fa8(LA)', '0x9a28(LA)']",
+      "OK: 6/6 meshes  total tris: 1482"
+    ]
+  },
+  "status": "rc_buggybody.o • 73 ms"
+}

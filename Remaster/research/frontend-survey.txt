@@ -1,0 +1,959 @@
+Counter({'TextureApt': 2509, 'pcode:0400': 2509, 'GouraudApt': 2})
+[
+  {
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\artwork\\backgrounds\\default.big::default.o",
+    "anchor": 688,
+    "models": [
+      {
+        "name": "__Model:::4",
+        "offset": 1348,
+        "scale": [
+          528.0,
+          299.20001220703125,
+          0.0
+        ],
+        "center": [
+          240.0,
+          136.0,
+          0.0
+        ]
+      }
+    ],
+    "texture": "__EAGL::TAR:::RUNTIME_ALLOC::0=2448;1=1,1;22=0;23=0;",
+    "matrix": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      -266.0,
+      -102.0,
+      0.0,
+      1.0
+    ],
+    "positions": [
+      [
+        1613,
+        -3723,
+        0
+      ],
+      [
+        1613,
+        5694,
+        0
+      ],
+      [
+        13963,
+        -3723,
+        0
+      ],
+      [
+        13963,
+        5694,
+        0
+      ]
+    ]
+  },
+  {
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\artwork\\backgrounds\\default.big::default.o",
+    "anchor": 432,
+    "models": [
+      {
+        "name": "__Model:::4",
+        "offset": 1348,
+        "scale": [
+          528.0,
+          299.20001220703125,
+          0.0
+        ],
+        "center": [
+          240.0,
+          136.0,
+          0.0
+        ]
+      }
+    ],
+    "texture": "__EAGL::TAR:::RUNTIME_ALLOC::0=2448;1=2,1;22=0;23=0;",
+    "matrix": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      -4.349999904632568,
+      -207.0,
+      0.0,
+      1.0
+    ],
+    "positions": [
+      [
+        -14624,
+        7775,
+        0
+      ],
+      [
+        -14624,
+        13032,
+        0
+      ],
+      [
+        -7301,
+        7775,
+        0
+      ],
+      [
+        -7301,
+        13032,
+        0
+      ]
+    ]
+  },
+  {
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\artwork\\backgrounds\\default.big::default.o",
+    "anchor": 176,
+    "models": [
+      {
+        "name": "__Model:::4",
+        "offset": 1348,
+        "scale": [
+          528.0,
+          299.20001220703125,
+          0.0
+        ],
+        "center": [
+          240.0,
+          136.0,
+          0.0
+        ]
+      }
+    ],
+    "texture": "__EAGL::TAR:::RUNTIME_ALLOC::0=2448;1=3,1;22=0;23=0;",
+    "matrix": [
+      0.016666999086737633,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "positions": [
+      [
+        -14894,
+        -14894,
+        0
+      ],
+      [
+        -14894,
+        14894,
+        0
+      ],
+      [
+        14894,
+        -14894,
+        0
+      ],
+      [
+        14894,
+        14894,
+        0
+      ]
+    ]
+  },
+  {
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\artwork\\stdart.big::StdArt.o",
+    "anchor": 176,
+    "models": [
+      {
+        "name": "__Model:::17",
+        "offset": 2248,
+        "scale": [
+          8.800000190734863,
+          352.0,
+          0.0
+        ],
+        "center": [
+          4.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::20",
+        "offset": 3912,
+        "scale": [
+          24.200000762939453,
+          352.0,
+          0.0
+        ],
+        "center": [
+          11.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::2",
+        "offset": 3080,
+        "scale": [
+          2.200000047683716,
+          27.5,
+          0.0
+        ],
+        "center": [
+          1.0,
+          12.5,
+          0.0
+        ]
+      }
+    ],
+    "texture": "__EAGL::TAR:::RUNTIME_ALLOC::0=1939;1=10,1;22=0;23=0;",
+    "matrix": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "positions": [
+      [
+        -14894,
+        -14894,
+        0
+      ],
+      [
+        -14894,
+        14894,
+        0
+      ],
+      [
+        14894,
+        -14894,
+        0
+      ],
+      [
+        14894,
+        14894,
+        0
+      ]
+    ]
+  },
+  {
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\artwork\\stdart.big::StdArt.o",
+    "anchor": 1008,
+    "models": [
+      {
+        "name": "__Model:::17",
+        "offset": 2248,
+        "scale": [
+          8.800000190734863,
+          352.0,
+          0.0
+        ],
+        "center": [
+          4.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::20",
+        "offset": 3912,
+        "scale": [
+          24.200000762939453,
+          352.0,
+          0.0
+        ],
+        "center": [
+          11.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::2",
+        "offset": 3080,
+        "scale": [
+          2.200000047683716,
+          27.5,
+          0.0
+        ],
+        "center": [
+          1.0,
+          12.5,
+          0.0
+        ]
+      }
+    ],
+    "texture": "__EAGL::TAR:::RUNTIME_ALLOC::0=2500;1=13,1;22=0;23=0;",
+    "matrix": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "positions": [
+      [
+        -14894,
+        -14894,
+        0
+      ],
+      [
+        -14894,
+        14894,
+        0
+      ],
+      [
+        14894,
+        -14894,
+        0
+      ],
+      [
+        14894,
+        14894,
+        0
+      ]
+    ]
+  },
+  {
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\artwork\\stdart.big::StdArt.o",
+    "anchor": 1840,
+    "models": [
+      {
+        "name": "__Model:::17",
+        "offset": 2248,
+        "scale": [
+          8.800000190734863,
+          352.0,
+          0.0
+        ],
+        "center": [
+          4.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::20",
+        "offset": 3912,
+        "scale": [
+          24.200000762939453,
+          352.0,
+          0.0
+        ],
+        "center": [
+          11.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::2",
+        "offset": 3080,
+        "scale": [
+          2.200000047683716,
+          27.5,
+          0.0
+        ],
+        "center": [
+          1.0,
+          12.5,
+          0.0
+        ]
+      }
+    ],
+    "texture": "__EAGL::TAR:::RUNTIME_ALLOC::0=3010;1=16,1;22=0;23=0;",
+    "matrix": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "positions": [
+      [
+        -14894,
+        -14894,
+        0
+      ],
+      [
+        -14894,
+        14894,
+        0
+      ],
+      [
+        14894,
+        -14894,
+        0
+      ],
+      [
+        14894,
+        14894,
+        0
+      ]
+    ]
+  },
+  {
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\artwork\\stdart.big::StdArt.o",
+    "anchor": 2672,
+    "models": [
+      {
+        "name": "__Model:::17",
+        "offset": 2248,
+        "scale": [
+          8.800000190734863,
+          352.0,
+          0.0
+        ],
+        "center": [
+          4.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::20",
+        "offset": 3912,
+        "scale": [
+          24.200000762939453,
+          352.0,
+          0.0
+        ],
+        "center": [
+          11.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::2",
+        "offset": 3080,
+        "scale": [
+          2.200000047683716,
+          27.5,
+          0.0
+        ],
+        "center": [
+          1.0,
+          12.5,
+          0.0
+        ]
+      }
+    ],
+    "texture": "__EAGL::TAR:::RUNTIME_ALLOC::0=257;1=1,1;22=0;23=0;",
+    "matrix": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "positions": [
+      [
+        -14894,
+        -14894,
+        0
+      ],
+      [
+        -14894,
+        14894,
+        0
+      ],
+      [
+        14894,
+        -14894,
+        0
+      ],
+      [
+        14894,
+        14894,
+        0
+      ]
+    ]
+  },
+  {
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\artwork\\stdart.big::StdArt.o",
+    "anchor": 3504,
+    "models": [
+      {
+        "name": "__Model:::17",
+        "offset": 2248,
+        "scale": [
+          8.800000190734863,
+          352.0,
+          0.0
+        ],
+        "center": [
+          4.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::20",
+        "offset": 3912,
+        "scale": [
+          24.200000762939453,
+          352.0,
+          0.0
+        ],
+        "center": [
+          11.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::2",
+        "offset": 3080,
+        "scale": [
+          2.200000047683716,
+          27.5,
+          0.0
+        ],
+        "center": [
+          1.0,
+          12.5,
+          0.0
+        ]
+      }
+    ],
+    "texture": "__EAGL::TAR:::RUNTIME_ALLOC::0=714;1=19,1;22=0;23=0;",
+    "matrix": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "positions": [
+      [
+        -14894,
+        -14894,
+        0
+      ],
+      [
+        -14894,
+        14894,
+        0
+      ],
+      [
+        14894,
+        -14894,
+        0
+      ],
+      [
+        14894,
+        14894,
+        0
+      ]
+    ]
+  },
+  {
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\artwork\\stdart.big::StdArt.o",
+    "anchor": 4336,
+    "models": [
+      {
+        "name": "__Model:::17",
+        "offset": 2248,
+        "scale": [
+          8.800000190734863,
+          352.0,
+          0.0
+        ],
+        "center": [
+          4.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::20",
+        "offset": 3912,
+        "scale": [
+          24.200000762939453,
+          352.0,
+          0.0
+        ],
+        "center": [
+          11.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::2",
+        "offset": 3080,
+        "scale": [
+          2.200000047683716,
+          27.5,
+          0.0
+        ],
+        "center": [
+          1.0,
+          12.5,
+          0.0
+        ]
+      }
+    ],
+    "texture": "__EAGL::TAR:::RUNTIME_ALLOC::0=1224;1=22,1;22=0;23=0;",
+    "matrix": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "positions": [
+      [
+        -14894,
+        -14894,
+        0
+      ],
+      [
+        -14894,
+        14894,
+        0
+      ],
+      [
+        14894,
+        -14894,
+        0
+      ],
+      [
+        14894,
+        14894,
+        0
+      ]
+    ]
+  },
+  {
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\artwork\\stdart.big::StdArt.o",
+    "anchor": 5168,
+    "models": [
+      {
+        "name": "__Model:::17",
+        "offset": 2248,
+        "scale": [
+          8.800000190734863,
+          352.0,
+          0.0
+        ],
+        "center": [
+          4.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::20",
+        "offset": 3912,
+        "scale": [
+          24.200000762939453,
+          352.0,
+          0.0
+        ],
+        "center": [
+          11.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::2",
+        "offset": 3080,
+        "scale": [
+          2.200000047683716,
+          27.5,
+          0.0
+        ],
+        "center": [
+          1.0,
+          12.5,
+          0.0
+        ]
+      }
+    ],
+    "texture": "__EAGL::TAR:::RUNTIME_ALLOC::0=1736;1=4,1;22=0;23=0;",
+    "matrix": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "positions": [
+      [
+        -14894,
+        -14894,
+        0
+      ],
+      [
+        -14894,
+        14894,
+        0
+      ],
+      [
+        14894,
+        -14894,
+        0
+      ],
+      [
+        14894,
+        14894,
+        0
+      ]
+    ]
+  },
+  {
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\artwork\\stdart.big::StdArt.o",
+    "anchor": 6000,
+    "models": [
+      {
+        "name": "__Model:::17",
+        "offset": 2248,
+        "scale": [
+          8.800000190734863,
+          352.0,
+          0.0
+        ],
+        "center": [
+          4.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::20",
+        "offset": 3912,
+        "scale": [
+          24.200000762939453,
+          352.0,
+          0.0
+        ],
+        "center": [
+          11.0,
+          160.0,
+          0.0
+        ]
+      },
+      {
+        "name": "__Model:::2",
+        "offset": 3080,
+        "scale": [
+          2.200000047683716,
+          27.5,
+          0.0
+        ],
+        "center": [
+          1.0,
+          12.5,
+          0.0
+        ]
+      }
+    ],
+    "texture": "__EAGL::TAR:::RUNTIME_ALLOC::0=2298;1=7,1;22=0;23=0;",
+    "matrix": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "positions": [
+      [
+        -14894,
+        -14894,
+        0
+      ],
+      [
+        -14894,
+        14894,
+        0
+      ],
+      [
+        14894,
+        -14894,
+        0
+      ],
+      [
+        14894,
+        14894,
+        0
+      ]
+    ]
+  },
+  {
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\controls\\buttons.big::Buttons.o",
+    "anchor": 176,
+    "models": [
+      {
+        "name": "__Model:::2",
+        "offset": 584,
+        "scale": [
+          17.600000381469727,
+          17.600000381469727,
+          0.0
+        ],
+        "center": [
+          8.0,
+          8.0,
+          0.0
+        ]
+      }
+    ],
+    "texture": "__EAGL::TAR:::RUNTIME_ALLOC::0=306;1=1,1;22=0;23=0;",
+    "matrix": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "positions": [
+      [
+        -14894,
+        -14894,
+        0
+      ],
+      [
+        -14894,
+        14894,
+        0
+      ],
+      [
+        14894,
+        -14894,
+        0
+      ],
+      [
+        14894,
+        14894,
+        0
+      ]
+    ]
+  }
+]

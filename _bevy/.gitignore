@@ -1,0 +1,13 @@
+/target/
+/assets/generated/
+/logs/
+/EAGL-Workbench.exe
+/.cargo-home/
+/build/
+/_decoder_internal/
+/EAGL-Decoder.exe
+/reference/
+/cache/
+/exports/
+/research/coverage.json
+__pycache__/

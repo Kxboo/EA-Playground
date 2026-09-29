@@ -1,0 +1,14 @@
+{
+  "model_exports_checked": 828,
+  "empty_models": 8,
+  "diffuse_bindings_resolved": 3480,
+  "material_lookup_warnings_before": 80,
+  "material_lookup_warnings_after": 0,
+  "geometry_failures": 0,
+  "regression_tests_passed": 32,
+  "decoder_version": "native-5-materials-4",
+  "limitations": [
+    "Wii TEV/shadow/specular effects are not fully reconstructed.",
+    "Only base texture images are exported; filtering/LOD and exact alpha-state semantics remain incomplete."
+  ]
+}

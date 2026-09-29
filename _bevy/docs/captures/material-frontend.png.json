@@ -1,0 +1,84 @@
+{
+  "animation_players": 0,
+  "animation_time": 0.0,
+  "loaded": true,
+  "mesh_entities": 1,
+  "preview": {
+    "animation": "",
+    "asset": "generated/8a5bcccaa3123d9eae3fd0dc/asset.glb",
+    "bones": 0,
+    "bounds": [
+      [
+        0.00029279536101967096,
+        -15.99970720463898,
+        0.0
+      ],
+      [
+        15.99970720463898,
+        -0.00029279536101967096,
+        0.0
+      ]
+    ],
+    "cache_hit": false,
+    "decode_ms": 3.65,
+    "decoder_version": "native-5-materials-4",
+    "duration": 0,
+    "frontend": true,
+    "kind": "model",
+    "material_bindings": [
+      {
+        "mesh": 0,
+        "shader": "TextureApt",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "1",
+            "pointer_offset": 44,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=48;1=1,1;22=0;23=0;"
+          }
+        ]
+      }
+    ],
+    "material_report": [
+      {
+        "alpha_mode": "opaque",
+        "candidates": 1,
+        "distinct_images": 1,
+        "height": 30,
+        "match": "unnamed_directory_alias",
+        "name": "1",
+        "pixel_sha256": "c6f8482cb754e865e6c16b4be59fd1f9040d9a03be52b314f4226db1700e43bf",
+        "sources": [
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\editors\\helpeditor.big::HelpEditor.gsh",
+            "entry": 0,
+            "name": "1   "
+          }
+        ],
+        "status": "resolved",
+        "width": 30
+      }
+    ],
+    "material_warnings": [],
+    "materials": 1,
+    "meshes": 1,
+    "name": "HelpEditor.o",
+    "shader_families": [
+      "TextureApt"
+    ],
+    "shape": "2",
+    "shape_count": 1,
+    "skinned": false,
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\editors\\helpeditor.big::HelpEditor.o",
+    "texture_banks": [
+      "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\components\\editors\\helpeditor.big::HelpEditor.gsh"
+    ],
+    "textures": 1,
+    "triangles": 2,
+    "warnings": [
+      "APT Q15 positions, model scale/offset and pixel-coordinate texture matrices decoded from executable-confirmed fields.",
+      "APT timeline placement, masking and dynamic color transforms remain separate from shape geometry."
+    ]
+  },
+  "status": "HelpEditor.o • 4 ms"
+}

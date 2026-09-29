@@ -1,0 +1,575 @@
+{
+  "_comment": "EAGL mesh descriptor layout definitions. Scoring replaces magic-byte dict lookup: every layout is scored against every candidate descriptor offset, and the winner is chosen if it clears MIN_SCORE (130) and leads by at least MARGIN (30).",
+  "_scoring": {
+    "MIN_SCORE": 130,
+    "MARGIN": 30,
+    "check_types": {
+      "magic": "desc[offset] == value. Strongest single signal.",
+      "reloc_exists": "relocs table contains an entry at (desc_off + offset).",
+      "reloc_nonzero": "relocs table contains an entry at (desc_off + offset) AND its value is > 0. Filters null-pointer relocs.",
+      "reloc_order": "reloc values at offsets[0] < offsets[1] (< offsets[2] if present). All must be > 0.",
+      "count_range": "Big-endian u32 at offset is in [min, max]. Validates stored array counts (A/B only).",
+      "reloc_absent": "relocs table does NOT contain an entry at (desc_off + offset)."
+    }
+  },
+  "layouts": [
+    {
+      "magic": 7,
+      "magic_hex": "0x07",
+      "name": "A",
+      "description": "Complex / multi-mesh files (e.g. rc_buggybody). norm_stride=6, GX start derived from uv_end (32-byte aligned).",
+      "off_cpos": 48,
+      "off_ppos": 52,
+      "off_cnorm": 56,
+      "off_pnorm": 60,
+      "off_cuv": 64,
+      "off_puv": 68,
+      "norm_stride": 6,
+      "gx_from_reloc": false,
+      "off_pgx": null,
+      "off_attr": 8,
+      "signature_checks": [
+        {
+          "type": "magic",
+          "offset": 0,
+          "value": 7,
+          "score": 50,
+          "_note": "Magic byte 0x07."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 52,
+          "score": 20,
+          "_note": "ptr_pos at +0x34 non-null."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 60,
+          "score": 20,
+          "_note": "ptr_norm at +0x3c non-null."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 68,
+          "score": 20,
+          "_note": "ptr_uv at +0x44 non-null."
+        },
+        {
+          "type": "reloc_order",
+          "offsets": [
+            52,
+            60,
+            68
+          ],
+          "score": 20,
+          "_note": "pos < norm < uv in memory."
+        },
+        {
+          "type": "count_range",
+          "offset": 48,
+          "min": 1,
+          "max": 8000,
+          "score": 10,
+          "_note": "count_pos in range."
+        },
+        {
+          "type": "count_range",
+          "offset": 56,
+          "min": 1,
+          "max": 8000,
+          "score": 10,
+          "_note": "count_norm in range."
+        },
+        {
+          "type": "count_range",
+          "offset": 64,
+          "min": 1,
+          "max": 8000,
+          "score": 10,
+          "_note": "count_uv in range."
+        },
+        {
+          "type": "reloc_absent",
+          "offset": 9,
+          "score": 5,
+          "_note": "No non-aligned GX reloc at +0x09 (Layout C marker)."
+        }
+      ]
+    },
+    {
+      "magic": 4,
+      "magic_hex": "0x04",
+      "name": "B",
+      "description": "Simple / single-mesh files (e.g. basketball, rc_controller). norm_stride=6, GX start derived from uv_end (32-byte aligned). Attr list at +0x0c (not +0x08).",
+      "off_cpos": 52,
+      "off_ppos": 56,
+      "off_cnorm": 60,
+      "off_pnorm": 64,
+      "off_cuv": 68,
+      "off_puv": 72,
+      "norm_stride": 6,
+      "gx_from_reloc": false,
+      "off_pgx": null,
+      "off_attr": 12,
+      "signature_checks": [
+        {
+          "type": "magic",
+          "offset": 0,
+          "value": 4,
+          "score": 50,
+          "_note": "Magic byte 0x04."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 56,
+          "score": 20,
+          "_note": "ptr_pos at +0x38 non-null."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 64,
+          "score": 20,
+          "_note": "ptr_norm at +0x40 non-null."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 72,
+          "score": 20,
+          "_note": "ptr_uv at +0x48 non-null."
+        },
+        {
+          "type": "reloc_order",
+          "offsets": [
+            56,
+            64,
+            72
+          ],
+          "score": 20,
+          "_note": "pos < norm < uv in memory."
+        },
+        {
+          "type": "count_range",
+          "offset": 52,
+          "min": 1,
+          "max": 8000,
+          "score": 10,
+          "_note": "count_pos in range."
+        },
+        {
+          "type": "count_range",
+          "offset": 60,
+          "min": 1,
+          "max": 8000,
+          "score": 10,
+          "_note": "count_norm in range."
+        },
+        {
+          "type": "count_range",
+          "offset": 68,
+          "min": 1,
+          "max": 8000,
+          "score": 10,
+          "_note": "count_uv in range."
+        },
+        {
+          "type": "reloc_absent",
+          "offset": 9,
+          "score": 5,
+          "_note": "No non-aligned GX reloc at +0x09 (Layout C marker)."
+        }
+      ]
+    },
+    {
+      "magic": 2,
+      "magic_hex": "0x02",
+      "name": "C",
+      "description": "Track / terrain geometry (e.g. TestTrackforTodd). norm_stride=4 (s8x3 + 1 pad byte). Counts derived from pointer gaps. GX start from non-aligned reloc at desc+0x09.",
+      "off_cpos": null,
+      "off_ppos": 52,
+      "off_cnorm": null,
+      "off_pnorm": 60,
+      "off_cuv": null,
+      "off_puv": 68,
+      "norm_stride": 4,
+      "gx_from_reloc": true,
+      "off_pgx": 9,
+      "off_attr": 8,
+      "signature_checks": [
+        {
+          "type": "magic",
+          "offset": 0,
+          "value": 2,
+          "score": 50,
+          "_note": "Magic byte 0x02."
+        },
+        {
+          "type": "reloc_exists",
+          "offset": 9,
+          "score": 25,
+          "_note": "Non-aligned GX reloc at +0x09 \u2014 unique to Layout C."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 52,
+          "score": 10,
+          "_note": "ptr_pos at +0x34 non-null."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 60,
+          "score": 10,
+          "_note": "ptr_norm at +0x3c non-null."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 68,
+          "score": 10,
+          "_note": "ptr_uv at +0x44 non-null."
+        },
+        {
+          "type": "reloc_order",
+          "offsets": [
+            52,
+            60,
+            68
+          ],
+          "score": 20,
+          "_note": "pos < norm < uv in memory."
+        },
+        {
+          "type": "reloc_order",
+          "offsets": [
+            68,
+            9
+          ],
+          "score": 15,
+          "_note": "GX ptr at +0x09 must point past uv array."
+        }
+      ]
+    },
+    {
+      "magic": 4,
+      "magic_hex": "0x04",
+      "name": "B2",
+      "description": "Layout B variant missing the leading null-pointer placeholder field. All array offsets shift 8 bytes earlier: off_ppos=48 (not 56), off_pnorm=56 (not 64), off_puv=64 (not 72). Discovered in world-low-all.o: 446 of these were silently dropped because the standard-B field offsets resolved ptr_uv to a null reloc. Discriminated from standard B by: standard B's reloc at +0x30 resolves to value 0 (null placeholder), whereas B2 has no such null at +0x30 -- instead +0x30 holds the real ptr_pos.",
+      "off_cpos": 44,
+      "off_ppos": 48,
+      "off_cnorm": 52,
+      "off_pnorm": 56,
+      "off_cuv": 60,
+      "off_puv": 64,
+      "norm_stride": 4,
+      "gx_from_reloc": false,
+      "off_pgx": null,
+      "off_attr": 12,
+      "signature_checks": [
+        {
+          "type": "magic",
+          "offset": 0,
+          "value": 4,
+          "score": 50,
+          "_note": "Magic byte 0x04 (shared with standard B)."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 48,
+          "score": 25,
+          "_note": "ptr_pos slot at +0x30 is non-null in B2 (it's null/placeholder in standard B)."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 56,
+          "score": 20,
+          "_note": "ptr_norm at +0x38 non-null."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 64,
+          "score": 20,
+          "_note": "ptr_uv at +0x40 non-null."
+        },
+        {
+          "type": "reloc_order",
+          "offsets": [
+            48,
+            56,
+            64
+          ],
+          "score": 20,
+          "_note": "pos < norm < uv in memory."
+        },
+        {
+          "type": "count_range",
+          "offset": 44,
+          "min": 1,
+          "max": 8000,
+          "score": 10,
+          "_note": "count_pos in range."
+        },
+        {
+          "type": "count_range",
+          "offset": 52,
+          "min": 1,
+          "max": 8000,
+          "score": 10,
+          "_note": "count_norm in range."
+        },
+        {
+          "type": "count_range",
+          "offset": 60,
+          "min": 1,
+          "max": 8000,
+          "score": 10,
+          "_note": "count_uv in range."
+        },
+        {
+          "type": "reloc_absent",
+          "offset": 9,
+          "score": 5,
+          "_note": "No non-aligned GX reloc at +0x09 (Layout C marker)."
+        }
+      ],
+      "min_score": 130
+    },
+    {
+      "_comment_D": "Layout D \u2014 HWSkin / skinned character meshes (e.g. alicia_final, PlaygroundCompressToonShade_HWSkin). Positions and normals are stored as s16\u00d73 (stride 6). UVs remain f32\u00d72 (stride 8). A bone-weight table of f32 pairs lives at +0x44. The GX display-list pointer is embedded as a non-aligned reloc at an VARIABLE byte offset in the first 0x28 bytes of the descriptor; it must be found by scanning for non-aligned relocs within that window rather than a fixed off_pgx. The unique structural anchor is a self-pointer at desc+0x2c whose resolved value equals desc_base. There is no reliable magic-byte discriminator distinct from Layout C (both use 0x02), so the self-ptr check carries the heaviest score weight.",
+      "magic": 2,
+      "magic_hex": "0x02",
+      "name": "D",
+      "description": "HWSkin skinned characters (e.g. alicia_final). s16\u00d73 positions (stride 6), s16\u00d73 normals (stride 6), f32\u00d72 UVs (stride 8). Bone-weight table at desc+0x44. GX ptr via non-aligned reloc in first 0x28 bytes (variable offset). Self-ptr at desc+0x2c.",
+      "off_cpos": 88,
+      "off_ppos": 92,
+      "off_cnorm": 96,
+      "off_pnorm": 100,
+      "off_cuv": 104,
+      "off_puv": 108,
+      "off_cweight": 64,
+      "off_pweight": 68,
+      "off_self": 44,
+      "norm_stride": 6,
+      "pos_stride": 6,
+      "pos_format": "s16",
+      "norm_format": "s16",
+      "gx_from_reloc": true,
+      "off_pgx": null,
+      "off_pgx_scan": [
+        0,
+        40
+      ],
+      "off_attr": 8,
+      "signature_checks": [
+        {
+          "type": "magic",
+          "offset": 0,
+          "value": 2,
+          "score": 20,
+          "_note": "Magic byte 0x02 (shared with Layout C; lower weight here)."
+        },
+        {
+          "type": "reloc_self",
+          "offset": 44,
+          "score": 60,
+          "_note": "Self-pointer at desc+0x2c: reloc[desc+44] == desc_base. Unique to Layout D."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 68,
+          "score": 15,
+          "_note": "Bone-weight-table ptr at +0x44 is non-null."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 92,
+          "score": 15,
+          "_note": "ptr_pos at +0x5c is non-null."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 100,
+          "score": 15,
+          "_note": "ptr_norm at +0x64 is non-null."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 108,
+          "score": 15,
+          "_note": "ptr_uv at +0x6c is non-null."
+        },
+        {
+          "type": "reloc_order",
+          "offsets": [
+            92,
+            100,
+            108
+          ],
+          "score": 20,
+          "_note": "pos < norm < uv in memory."
+        },
+        {
+          "type": "reloc_absent",
+          "offset": 9,
+          "score": 10,
+          "_note": "No non-aligned reloc at +0x09 (Layout C marker offset)."
+        },
+        {
+          "type": "reloc_nonaligned_in_window",
+          "window_start": 0,
+          "window_end": 40,
+          "score": 20,
+          "_note": "At least one non-aligned reloc exists in desc+0x00..+0x27 (the embedded GX ptr)."
+        },
+        {
+          "type": "count_range",
+          "offset": 88,
+          "min": 2,
+          "max": 8000,
+          "score": 5,
+          "_note": "count_pos in valid range (>=2 excludes V1 false-match where byte[0x58]=1)."
+        },
+        {
+          "type": "count_range",
+          "offset": 96,
+          "min": 2,
+          "max": 8000,
+          "score": 5,
+          "_note": "count_norm in valid range."
+        },
+        {
+          "type": "count_range",
+          "offset": 104,
+          "min": 2,
+          "max": 8000,
+          "score": 5,
+          "_note": "count_uv in valid range."
+        },
+        {
+          "type": "byte_value",
+          "offset": 1,
+          "value": 8,
+          "score": 15,
+          "_note": "byte[1]=0x08 distinguishes V2 (body) from V1 (face, byte[1]=0x09)."
+        }
+      ]
+    },
+    {
+      "_comment_D2": "Layout D2 \u2014 HWSkin face/accessory sub-meshes (alicia_final meshes 0\u201333). Same character as Layout D but the descriptor packs an EXTRA (count=1, ptr=null) placeholder pair at +0x50/+0x54 and +0x58/+0x5c, shifting the real pos/norm/uv arrays up to +0x60/+0x64, +0x68/+0x6c, +0x70/+0x74. Distinguished from D by byte[1]=0x09 (vs 0x08 for D) and the real count_pos being at offset 96 (not 88). The GX ptr is always at a non-aligned reloc at desc+0x13.",
+      "magic": 2,
+      "magic_hex": "0x02",
+      "name": "D2",
+      "description": "HWSkin face/accessory sub-meshes (e.g. alicia_final meshes 0-33). Same s16 pos/norm + f32 UV as D, but arrays shifted to +0x60/+0x68/+0x70. byte[1]=0x09. GX ptr at non-aligned reloc +0x13.",
+      "off_cpos": 96,
+      "off_ppos": 100,
+      "off_cnorm": 104,
+      "off_pnorm": 108,
+      "off_cuv": 112,
+      "off_puv": 116,
+      "off_cweight": 64,
+      "off_pweight": 68,
+      "off_self": 44,
+      "norm_stride": 6,
+      "pos_stride": 6,
+      "pos_format": "s16",
+      "norm_format": "s16",
+      "gx_from_reloc": true,
+      "off_pgx": null,
+      "off_pgx_scan": [
+        0,
+        40
+      ],
+      "off_attr": 8,
+      "signature_checks": [
+        {
+          "type": "magic",
+          "offset": 0,
+          "value": 2,
+          "score": 20,
+          "_note": "Magic byte 0x02."
+        },
+        {
+          "type": "byte_value",
+          "offset": 1,
+          "value": 9,
+          "score": 30,
+          "_note": "byte[1]=0x09 is the primary D2 discriminator."
+        },
+        {
+          "type": "reloc_self",
+          "offset": 44,
+          "score": 60,
+          "_note": "Self-pointer at desc+0x2c."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 68,
+          "score": 15,
+          "_note": "Bone-weight-table ptr at +0x44 non-null."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 100,
+          "score": 15,
+          "_note": "ptr_pos at +0x64 non-null."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 108,
+          "score": 15,
+          "_note": "ptr_norm at +0x6c non-null."
+        },
+        {
+          "type": "reloc_nonzero",
+          "offset": 116,
+          "score": 15,
+          "_note": "ptr_uv at +0x74 non-null."
+        },
+        {
+          "type": "reloc_order",
+          "offsets": [
+            100,
+            108,
+            116
+          ],
+          "score": 20,
+          "_note": "pos < norm < uv in memory."
+        },
+        {
+          "type": "reloc_absent",
+          "offset": 9,
+          "score": 10,
+          "_note": "No non-aligned reloc at +0x09 (Layout C marker)."
+        },
+        {
+          "type": "reloc_nonaligned_in_window",
+          "window_start": 0,
+          "window_end": 40,
+          "score": 20,
+          "_note": "Non-aligned GX ptr reloc in first 0x28 bytes."
+        },
+        {
+          "type": "count_range",
+          "offset": 96,
+          "min": 2,
+          "max": 8000,
+          "score": 10,
+          "_note": "count_pos at +0x60 in valid range."
+        },
+        {
+          "type": "count_range",
+          "offset": 104,
+          "min": 2,
+          "max": 8000,
+          "score": 10,
+          "_note": "count_norm at +0x68 in valid range."
+        },
+        {
+          "type": "count_range",
+          "offset": 112,
+          "min": 2,
+          "max": 8000,
+          "score": 10,
+          "_note": "count_uv at +0x70 in valid range."
+        }
+      ]
+    }
+  ]
+}

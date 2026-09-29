@@ -1,0 +1,37 @@
+[
+  {
+    "name": "net.o",
+    "capture": "D:\\_eagl\\_bevy\\docs\\captures\\material-net.png",
+    "textures": 2,
+    "mesh_entities": 2,
+    "decoder_version": "native-5-materials-4"
+  },
+  {
+    "name": "rc_buggybody.o",
+    "capture": "D:\\_eagl\\_bevy\\docs\\captures\\material-buggy.png",
+    "textures": 5,
+    "mesh_entities": 6,
+    "decoder_version": "native-5-materials-4"
+  },
+  {
+    "name": "world-low-all.o",
+    "capture": "D:\\_eagl\\_bevy\\docs\\captures\\material-world.png",
+    "textures": 161,
+    "mesh_entities": 636,
+    "decoder_version": "native-5-materials-4"
+  },
+  {
+    "name": "alicia.o",
+    "capture": "D:\\_eagl\\_bevy\\docs\\captures\\material-character.png",
+    "textures": 3,
+    "mesh_entities": 62,
+    "decoder_version": "native-5-materials-4"
+  },
+  {
+    "name": "HelpEditor.o",
+    "capture": "D:\\_eagl\\_bevy\\docs\\captures\\material-frontend.png",
+    "textures": 1,
+    "mesh_entities": 1,
+    "decoder_version": "native-5-materials-4"
+  }
+]

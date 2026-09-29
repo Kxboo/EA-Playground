@@ -1,0 +1,48 @@
+{
+  "animation_players": 0,
+  "animation_time": 0.0,
+  "loaded": true,
+  "mesh_entities": 1,
+  "preview": {
+    "animation": "",
+    "asset": "generated/abd5e6df8d56245c2e1640cb/asset.glb",
+    "bones": 0,
+    "bounds": [
+      [
+        -0.11708562821149826,
+        -0.11762381345033646,
+        -0.11762381345033646
+      ],
+      [
+        0.11708562821149826,
+        0.11762381345033646,
+        0.11762381345033646
+      ]
+    ],
+    "cache_hit": false,
+    "decode_ms": 10.76,
+    "decoder_version": "native-4-elf-models",
+    "duration": 0,
+    "kind": "model",
+    "materials": 1,
+    "meshes": 1,
+    "name": "basketball.o",
+    "skinned": false,
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\microgames\\microgames.viv::basketball.o",
+    "textures": 1,
+    "triangles": 384,
+    "warnings": [
+      "ELF OK  (8608 bytes)",
+      ".data @ 0x0040  size 0x1cc0",
+      "Model: basketball_final  total materials: 1",
+      "Reloc entries: 27",
+      "Layout D scale mismatch: bbox-derived estimate=0.00000621 disagrees with expected 1/16384=0.00006104 (ratio=0.10x) -- worth inspecting this mesh by hand.",
+      "BBOX: ((-0.11708562821149826, -0.11762381345033646, -0.11762381345033646), (0.11708562821149826, 0.11762381345033646, 0.11762381345033646))  pos_scale=0.00006104",
+      "Inspector: confidence LOW — falling back to heuristic scan (predicted=None).",
+      "Scoring: 6 layouts  min_score=130  margin=30",
+      "Mesh descriptors: 1 at ['0x1a80(LB)']",
+      "OK: 1/1 meshes  total tris: 384"
+    ]
+  },
+  "status": "basketball.o • 11 ms"
+}

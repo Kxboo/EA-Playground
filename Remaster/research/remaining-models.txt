@@ -1,0 +1,898 @@
+
+FILE shadow_shadow.o
+SHADER PlaygroundCompressShadow_HWSkin 0x55dc PROGRAM 0x55c0 05 00 01 00 00 00 00 07 40 43 00 00 00 00 12 80 0a 00 0b 0e 09 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 14 0x375c 3f 80 00 01 00 00 00 00 00 00 00 00 00 00 00 00 3f 80 00 02 00 00 00 00 00 00 00 00 00 00 00 00 3f 80 00 03 00 00 00 00 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 466 0x383c 06 5b 22 47 02 f3 06 32 22 5b fe 46 06 5a 20 b3 01 16 05 f8 20 87 fe 8b 07 2c 1d 16 00 de 06 36 1d 4d fe 92 08 32 19 f6 00 b0 07 12 1a 1c fd d8
+Colours 1 0x4328 ff ff ff ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x4340 98 00 16 09 00 00 00 06 00 01 00 00 00 02 00 00 00 03 00 00 00 04 00 00 00 05 00 21 00 06 00 21 00 07 00 21 00 08 00 21 00 09 00 21 00 0a 00 21 00 0b 00 21 00 0c 00 21 00 0d 00 21 00 0e 00 21 00 0f 00 21 00 10 00 21 00 11 00 21 00 12 00 27 00 13 00 21 00 14 00 27 00 15 00 98 00 20 0f 00
+SHADER PlaygroundCompressShadow_HWSkin 0x371c PROGRAM 0x3700 05 00 01 00 00 00 00 07 60 30 00 00 00 00 06 a0 0a 00 0b 0e 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 9 0x2a7c 3f 80 00 38 00 00 00 00 00 00 00 00 00 00 00 00 3f 80 00 39 00 00 00 00 00 00 00 00 00 00 00 00 3f 80 00 3a 00 00 00 00 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 223 0x2b0c fc 08 02 c0 fd 60 fc 1c 01 88 fd 0f fc 85 02 c8 00 73 fc a0 01 7f 00 01 fc 7a 03 1a 03 6e fc 77 01 53 03 8a fc 70 03 16 04 51 fd 31 01 19 07 16
+Colours 1 0x3048 ff ff ff ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x3060 98 00 19 12 00 00 15 01 00 15 02 00 15 03 00 18 04 00 18 05 00 18 06 00 18 07 00 18 08 00 18 09 00 18 0a 00 18 0b 00 18 0c 00 18 0d 00 18 0e 00 18 0f 00 18 10 00 18 11 00 18 12 00 18 13 00 18 14 00 18 15 00 18 16 00 12 17 00 12 18 00 98 00 0d 12 00 00 15 02 00 15 19 00 18 04 00 12 1a 00
+SHADER PlaygroundCompressShadow_HWSkin 0x2a3c PROGRAM 0x2a20 05 00 01 00 00 00 00 07 40 11 00 00 00 00 18 e0 0a 00 0b 0e 09 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 3 0x0 3f 80 00 1f 00 00 00 00 00 00 00 00 00 00 00 00 3f 80 00 20 00 00 00 00 00 00 00 00 00 00 00 00 3f 80 00 21 00 00 00 00 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 723 0x30 09 b0 36 20 08 ec 09 2f 36 0e 09 fd 09 43 36 a6 09 c0 08 9a 36 55 0a d3 08 9a 36 e2 0a 9e 07 bb 36 b2 0b 7c 07 a4 37 2f 0b 49 06 ad 36 dd 0b e6
+Colours 1 0x1124 ff ff ff ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x1140 98 00 0e 06 00 00 00 06 00 01 00 06 00 02 00 06 00 03 00 06 00 04 00 06 00 05 00 06 00 06 00 06 00 07 00 06 00 08 00 06 00 09 00 06 00 0a 00 06 00 0b 00 06 00 0c 00 06 00 0d 00 98 00 0e 06 00 0e 00 06 00 0f 00 06 00 10 00 06 00 11 00 06 00 12 00 06 00 13 00 06 00 14 00 06 00 15 00 06 00
+
+FILE rc_track_car.o
+SHADER PlaygroundTexture_HWSkin 0x4a80 PROGRAM 0x4a60 05 00 01 00 00 00 00 04 00 07 60 49 00 00 00 00 01 00 0a 00 0b 0d 08 09 08 0b 08 0d 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 1 0x4790 3f 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 42 0x47a0 1b 89 00 8d 09 ec 1d c8 01 32 09 ed 19 69 01 35 14 32 1b 87 01 a9 14 d8 13 88 02 e9 1c 59 15 1c 03 6c 1e 4a f5 b0 03 46 22 95 00 2d 03 82 24 55
+Colours 12 0x489c 88 88 80 ff 89 89 81 ff 88 88 81 ff 8d 8d 85 ff 8e 8e 86 ff 8b 8b 83 ff 8c 8c 85 ff 8c 8c 84 ff 8b 8b 84 ff 8d 8d 86 ff 88 86 81 ff 88 85 81 ff
+UVs 17 0x48cc 3f 7f ac be bf 89 70 4c 3f 52 7a f4 bf 87 35 16 3f 7f ac bf bf f6 8f b4 3f 58 ba 57 bf f6 8f b4 3f 51 96 78 bf fb c9 26 3f 58 ba 57 bf 84 36 da
+Texture 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x4960 98 00 04 00 00 00 00 00 01 00 01 00 02 01 02 00 03 01 03 98 00 04 00 04 02 02 00 02 01 00 00 05 02 04 00 03 01 05 98 00 04 00 06 03 02 00 07 04 00 00 08 03 03 00 09 04 06 98 00 04 00 0a 05 02 00 06 03 00 00 0b 05 03 00 08 03 06 98 00 04 00 0c 06 02 00 0d 06 00 00 0e 06 03 00 0f 06 06 98
+SHADER PlaygroundTexture_HWSkin 0x4740 PROGRAM 0x4720 05 00 01 00 00 00 00 04 00 07 80 3e 00 00 00 00 08 a0 0a 00 0b 0d 08 09 08 0b 08 0d 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 1 0x3650 3f 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 170 0x3660 e3 40 16 f1 33 b2 dc 21 18 ef 30 03 e2 94 1b 38 33 f0 e5 f8 09 9a 33 83 e5 3a 09 8b 33 25 e4 41 1b 60 34 d6 12 1a fc 13 41 c1 10 91 fb 0c 41 b9
+Colours 84 0x3a5c 80 67 83 ff 80 69 83 ff 94 87 91 ff 94 87 90 ff 77 5f 7a ff 79 62 7c ff 78 5d 7d ff 7d 67 7f ff 79 5c 7e ff 83 6d 84 ff 72 58 77 ff 9d 9d 95 ff
+UVs 90 0x3bac 3e d1 3f 2f 3e 29 be 28 3e e7 e9 b8 3e 98 3c d2 3e f6 8d 8a 3e 2b ea 58 3f 00 d4 f0 3d 6f c3 f0 3e fa 8d 52 3d 6f c4 00 3f 03 3c 7a 3e b4 5c 20
+Texture 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x3e80 98 00 03 00 00 00 00 00 01 00 01 00 02 00 02 98 00 04 00 03 01 03 00 04 01 04 00 05 01 05 00 02 01 06 98 00 03 00 02 02 02 00 01 02 01 00 00 02 00 98 00 04 00 02 03 06 00 04 03 04 00 05 03 05 00 03 03 03 98 00 04 00 06 04 07 00 07 04 08 00 08 04 09 00 09 04 0a 98 00 04 00 0a 05 09 00 0b
+SHADER PlaygroundTexture_HWSkin 0x3600 PROGRAM 0x35e0 05 00 01 00 00 00 00 04 00 07 c0 2d 00 00 00 00 08 20 0a 00 0b 0d 08 09 08 0b 08 0d 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 1 0x28d0 3f 80 00 01 00 00 00 00 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 160 0x28e0 fc 31 08 6c d3 78 fc 75 08 8d d3 83 fc 31 08 2b d4 3c fc 75 08 4b d4 47 fb fb 08 39 d3 66 fb fb 07 f7 d4 2b fb d8 07 f8 d3 51 fb d8 07 b7 d4 15
+Colours 19 0x2ca0 91 91 91 ff 19 19 19 ff 90 90 90 ff 18 18 18 ff 8d 8d 8d ff 8a 8a 8a ff 15 15 15 ff 16 16 16 ff 13 13 13 ff 92 92 92 ff 17 17 17 ff 93 93 93 ff
+UVs 25 0x2cec 3d 43 fc f6 3e 48 a3 18 3d 43 fc f6 3c 3f 31 00 3f 75 fc 57 3e 48 a3 18 3f 75 fc 58 3c 3f 31 00 3f 32 fa b6 3f 1e 75 32 3f 2e f6 3c 3f 05 17 93
+Texture 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x2dc0 98 00 04 00 00 00 00 00 01 00 01 00 02 01 02 00 03 01 03 98 00 04 00 04 02 00 00 00 00 01 00 05 03 02 00 02 01 03 98 00 04 00 06 04 00 00 04 02 01 00 07 01 02 00 05 03 03 98 00 04 00 08 05 00 00 06 04 01 00 09 06 02 00 07 01 03 98 00 04 00 0a 05 00 00 08 05 01 00 0b 07 02 00 09 06 03 98
+SHADER PlaygroundTexture_HWSkin 0x2880 PROGRAM 0x2860 05 00 01 00 00 00 00 04 00 07 40 26 00 00 00 00 02 20 0a 00 0b 0d 08 09 08 0b 08 0d 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 1 0x22d0 3f 80 00 01 00 00 00 00 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 70 0x22e0 00 67 09 64 d3 20 00 69 09 35 d3 37 00 14 09 86 d3 10 ff 46 09 06 d3 44 ff bf 09 94 d3 09 ff 4a 09 9e d3 00 fe 52 08 dc d3 42 fe 80 09 81 d2 fa
+Colours 31 0x2484 e6 e6 e6 ff dd dd dd ff ee ee ee ff eb eb eb ff f1 f1 f1 ff bd bd bd ff f0 f0 f0 ff d6 d6 d6 ff ed ed ed ff e0 e0 e0 ff df df df ff e8 e8 e8 ff
+UVs 37 0x2500 3f 6d d5 49 3e 02 8b 20 3f 57 bf 69 3d 69 e6 10 3f 1d f3 21 3e 36 28 84 3f 41 43 44 3c c0 ba 80 3f 22 cf 73 3c 0f 8a 00 3e c2 b1 64 3e 54 8d 34
+Texture 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x2640 98 00 06 00 00 00 00 00 01 01 00 00 02 02 01 00 03 00 02 00 04 03 03 00 05 04 04 98 00 05 00 06 05 05 00 07 06 06 00 03 00 02 00 08 04 07 00 05 04 04 98 00 04 00 01 07 08 00 09 08 09 00 03 00 02 00 06 05 05 98 00 03 00 0a 09 0a 00 07 06 06 00 06 05 05 98 00 06 00 0b 0a 00 00 0c 0b 00 00
+SHADER PlaygroundTexture_HWSkin 0x2280 PROGRAM 0x2260 05 00 01 00 00 00 00 04 00 07 a0 11 00 00 00 00 10 c0 0a 00 0b 0d 09 09 08 0b 09 0d 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 1 0x0 3f 80 00 01 00 00 00 00 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 284 0x10 05 39 0a af d1 f0 05 3c 09 8a d4 c9 03 e0 0a 56 d1 d2 03 cd 09 51 d4 b6 05 3c 0a 82 d1 e1 05 3c 0b 7a ce f9 03 cd 0b 41 ce e6 03 49 07 12 d2 a9
+Colours 173 0x6b8 ff ff ff ff bf bf bf ff c2 c2 c2 ff 00 00 00 ff b5 b5 b5 ff b3 b3 b3 ff e8 e8 e8 ff 04 04 04 ff ce ce ce ff 99 99 99 ff 16 16 16 ff 49 49 49 ff
+UVs 260 0x96c 3f 73 6c 93 3f 00 00 0e 3f 73 f6 96 3f 40 6d 6e 3f 7c 95 b4 3f 00 00 a5 3f 7c 95 b2 3f 40 6d 6e 3d f8 b8 20 3e 88 73 8a 3c da 14 00 3e 7c f5 98
+Texture 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x11a0 98 00 04 00 00 00 00 00 00 00 00 01 01 00 01 00 00 02 00 00 02 00 00 03 02 00 03 98 00 04 00 00 01 03 00 01 00 00 00 04 00 00 00 00 04 05 00 00 00 00 05 03 00 01 98 00 04 00 00 03 03 00 00 00 00 01 03 00 00 00 00 02 06 00 01 00 00 04 07 00 01 98 00 04 00 00 06 08 00 03 00 00 05 09 00 01
+
+FILE swingset_shadow.o
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0xd39c PROGRAM 0xd380 05 00 01 00 00 00 00 07 c0 cf 00 00 00 00 03 c0 0a 00 0b 0d 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 1 0xcbfc 3f 80 00 1c 00 00 00 00 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 116 0xcc0c 1b 8a 35 01 e6 0f 1b a0 31 08 d9 e2 1b df 35 64 e5 f0 1b f7 31 69 d9 c4 1c 38 35 03 e6 0d 1c 4d 31 08 d9 e2 1b a0 38 34 f0 a7 1b f5 38 97 f0 88
+Colours 57 0xcec4 01 00 01 ff 1e 1e 1d ff 88 88 81 ff 8d 8d 86 ff 07 07 06 ff 22 22 20 ff 87 87 80 ff 07 07 07 ff 88 88 80 ff 1e 0b 24 ff 1f 0c 25 ff 3c 2b 3f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xcfc0 98 00 06 00 00 00 00 01 01 00 02 02 00 03 03 00 04 04 00 05 05 98 00 06 00 06 00 00 00 00 00 07 06 00 02 02 00 08 07 00 04 04 98 00 06 00 09 00 00 06 00 00 0a 08 00 07 06 00 0b 07 00 08 07 98 00 06 00 06 00 00 09 00 00 0c 09 00 0d 09 00 08 07 00 0b 07 98 00 06 00 00 00 00 06 00 00 0e 0a
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0xcbbc PROGRAM 0xcba0 05 00 01 00 00 00 00 07 e0 c7 00 00 00 00 03 c0 0a 00 0b 0d 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 1 0xc3fc 3f 80 00 01 00 00 00 00 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 116 0xc40c f2 b5 23 02 f9 f7 f2 b5 15 d1 f6 e0 f3 0c 23 19 f9 93 f3 0c 16 2c f6 2d f3 63 23 02 f9 f7 f3 62 15 d1 f6 e0 f2 b5 30 d8 fd 34 f3 0c 30 ef fc d1
+Colours 70 0xc6c4 05 04 05 ff 1e 1e 1c ff 8a 8a 83 ff 99 99 90 ff 08 08 07 ff 21 21 1f ff 01 00 01 ff 8a 8a 82 ff 05 05 04 ff 71 6c 6c ff 79 79 72 ff 1d 1d 1b ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xc7e0 98 00 06 00 00 00 00 01 01 00 02 02 00 03 03 00 04 04 00 05 05 98 00 06 00 06 06 00 00 00 00 07 07 00 02 02 00 08 08 00 04 04 98 00 06 00 09 06 00 06 06 00 0a 07 00 07 07 00 0b 08 00 08 08 98 00 06 00 06 06 00 09 06 00 0c 09 00 0d 09 00 08 08 00 0b 08 98 00 06 00 00 00 00 06 06 00 0e 09
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0xc3bc PROGRAM 0xc3a0 05 00 01 00 00 00 00 07 20 c3 00 00 00 00 00 80 0a 00 0b 0d 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 14 0xc1bc 3f 19 99 04 3e 4c cc 03 3e 4c cc 05 00 00 00 00 3f 19 99 05 3e 4c cc 06 3e 4c cc 0a 00 00 00 00 3f 19 99 0e 3e 4c cc 05 3e 4c cc 0f 00 00 00 00
+MVMatrix 1 external 
+Coordinates 20 0xc29c e9 ad 19 b4 f1 b1 ea 15 19 9f f2 2e e9 a4 19 b9 f3 05 ea 32 19 24 f3 31 ea 32 19 00 f3 be eb 13 18 cd f3 ab eb 13 18 54 f3 f4 eb f4 19 25 f3 33
+Colours 1 0xc314 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xc320 98 00 09 24 00 00 18 01 00 1b 02 00 18 03 00 06 04 00 12 05 00 12 06 00 06 07 00 0c 08 00 98 00 06 0f 09 00 06 04 00 03 0a 00 12 06 00 0c 0b 00 0c 08 00 98 00 06 00 0c 00 0f 09 00 09 0d 00 03 0a 00 00 0e 00 0c 0b 00 98 00 06 0f 0f 00 21 10 00 24 00 00 1e 11 00 18 01 00 27 12 00 98 00 03
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0xc17c PROGRAM 0xc160 05 00 01 00 00 00 00 07 40 be 00 00 00 00 03 20 0a 00 0b 0d 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0xb9fc 3f 19 99 06 3e cc cc 07 00 00 00 00 00 00 00 00 3f 19 99 07 3e cc cc 08 00 00 00 00 00 00 00 00 3f 19 99 08 3e cc cc 09 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 128 0xbb3c e7 ef 19 6b f3 cd e7 e7 18 9d f3 b8 e6 e5 19 21 f3 9b e7 2e 18 47 f3 95 e5 cb 18 4e f3 40 e6 4d 17 35 f3 53 e5 cc 18 23 f3 26 e6 26 17 6f f3 27
+Colours 1 0xbe3c 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xbe40 98 00 12 09 00 00 09 01 00 21 02 00 36 03 00 36 04 00 36 05 00 36 06 00 36 07 00 36 08 00 24 09 00 0c 0a 00 0c 0b 00 39 0c 00 27 0d 00 2a 0e 00 39 0f 00 0f 10 00 0f 11 00 98 00 12 09 12 00 09 00 00 21 13 00 21 02 00 36 14 00 36 04 00 36 15 00 36 06 00 24 16 00 36 08 00 0c 17 00 0c 0a 00
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0xb9bc PROGRAM 0xb9a0 05 00 01 00 00 00 00 07 60 ad 00 00 00 00 0c 40 0a 00 0b 0d 09 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0xa47c 3f 19 99 04 3e 4c cc 03 3e 4c cc 05 00 00 00 00 3f 19 99 0e 3e 4c cc 05 3e 4c cc 0f 00 00 00 00 3f 19 99 02 3e cc cc 03 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 321 0xa5bc f3 8e 17 fe f7 96 f3 56 18 d0 f7 88 f3 3d 17 ec f8 05 f2 fb 18 9e f7 c8 f2 db 17 77 f6 f6 f2 89 18 48 f6 cf f2 7e 17 c5 f6 be f3 d6 17 20 f7 7d
+Colours 1 0xad44 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xad60 98 00 07 18 00 00 00 18 00 01 00 18 00 02 00 18 00 03 00 18 00 04 00 18 00 05 00 18 00 06 00 98 00 07 18 00 07 00 18 00 00 00 18 00 08 00 18 00 09 00 18 00 0a 00 18 00 0b 00 18 00 0c 00 98 00 27 18 00 0d 00 18 00 0e 00 18 00 0f 00 18 00 10 00 18 00 11 00 18 00 12 00 18 00 13 00 18 00 14
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0xa43c PROGRAM 0xa420 05 00 01 00 00 00 00 07 60 9f 00 00 00 00 04 c0 0a 00 0b 0d 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0x99dc 3f 19 99 19 3e 4c cc 18 3e 4c cc 1a 00 00 00 00 3f 19 99 12 3e cc cc 13 00 00 00 00 00 00 00 00 3f 19 99 13 3e cc cc 14 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 181 0x9b1c e9 c9 10 f6 f7 b8 ea 2f 10 e7 f5 c3 ea b2 0e ae f2 a8 ea 8c 10 db f5 cf eb 09 0e b0 f2 c7 eb be 11 31 f5 ae eb 61 0e b6 f2 ad eb ff 11 62 f7 bb
+Colours 1 0x9f5c 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x9f60 98 00 15 09 00 00 36 01 00 2d 02 00 36 03 00 2d 04 00 30 05 00 2d 06 00 03 07 00 15 08 00 03 09 00 15 0a 00 03 0b 00 03 0c 00 03 0d 00 33 0e 00 33 0f 00 33 10 00 33 11 00 33 12 00 1b 13 00 1b 14 00 98 00 21 09 00 00 2d 02 00 09 15 00 2d 16 00 09 17 00 2d 18 00 09 19 00 1e 1a 00 09 1b 00
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x999c PROGRAM 0x9980 05 00 01 00 00 00 00 07 a0 95 00 00 00 00 03 e0 0a 00 0b 0d 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0x911c 3f 19 99 14 3e 4c cc 13 3e 4c cc 15 00 00 00 00 3f 19 99 15 3e 4c cc 14 3e 4c cc 16 00 00 00 00 3f 19 99 19 3e 4c cc 18 3e 4c cc 1a 00 00 00 00
+MVMatrix 1 external 
+Coordinates 138 0x925c ec df 0c d3 fc 4a ec e4 0b da fc 19 ec ba 0d 3e fd 73 ec ab 0c 0b fd bc ec f3 0d 67 fe f6 ec b9 0c 70 ff 5a ed ea 0d 75 ff c9 ed ed 0c d4 00 3f
+Colours 1 0x9598 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x95a0 98 00 23 0f 00 00 0f 00 00 0f 01 00 0f 02 00 0f 03 00 15 04 00 15 05 00 15 06 00 15 07 00 15 08 00 15 09 00 33 0a 00 33 0b 00 0f 0c 00 12 0d 00 0f 0e 00 0f 0f 00 2d 10 00 2a 11 00 0c 12 00 0c 13 00 0c 14 00 0c 15 00 0c 16 00 0c 17 00 0c 18 00 2a 19 00 0c 1a 00 0f 01 00 2d 1b 00 0f 00 00
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x90dc PROGRAM 0x90c0 05 00 01 00 00 00 00 07 40 76 00 00 00 00 1a 80 0a 00 0b 0d 09 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 7 0x637c 3f 19 99 0e 3e 4c cc 05 3e 4c cc 0f 00 00 00 00 3f 19 99 05 3e cc cc 0e 00 00 00 00 00 00 00 00 3f 19 99 0a 3e cc cc 0b 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 780 0x63ec e5 dd 1c b1 fa 3d e6 49 1c 9d fa 3a e6 0c 1c af f9 d9 e6 c1 1c af fa 15 e6 6d 1c ce f9 7e e6 34 1c a5 fb 23 e6 b9 1c 81 fa f1 e6 6d 1c 81 fa 7d
+Colours 1 0x7634 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x7640 98 00 05 12 00 00 00 12 00 01 00 12 00 02 00 12 00 03 00 12 00 04 00 98 00 05 12 00 05 00 12 00 06 00 12 00 07 00 12 00 08 00 12 00 03 00 98 00 0e 12 00 09 00 12 00 0a 00 12 00 0b 00 12 00 0c 00 12 00 0d 00 12 00 0e 00 12 00 0f 00 12 00 10 00 12 00 11 00 12 00 12 00 12 00 13 00 12 00 14
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x633c PROGRAM 0x6320 05 00 01 00 00 00 00 07 40 61 00 00 00 00 01 e0 0a 00 0b 0d 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0x5e1c 3f 19 99 1f 3e 4c cc 1e 3e 4c cc 20 00 00 00 00 3f 19 99 20 3e 4c cc 21 3e 4c cc 25 00 00 00 00 3f 19 99 29 3e 4c cc 20 3e 4c cc 2a 00 00 00 00
+MVMatrix 1 external 
+Coordinates 75 0x5f5c 11 36 36 58 da 6f 11 c9 35 ff da 5a 11 4a 35 98 d9 fb 11 ce 34 17 d7 4c 11 9c 34 d9 d8 ab 11 6d 36 a7 d8 14 12 af 38 17 d9 30 13 24 37 a3 d9 8c
+Colours 1 0x6120 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x6140 98 00 05 12 00 00 12 01 00 15 02 00 00 03 00 12 04 00 98 00 03 12 04 00 1e 05 00 15 02 00 98 00 04 30 06 00 39 07 00 1e 08 00 2d 09 00 98 00 12 12 00 00 15 02 00 12 0a 00 21 0b 00 21 0c 00 33 0d 00 33 0e 00 33 0f 00 33 10 00 33 11 00 33 12 00 24 13 00 18 14 00 18 15 00 27 16 00 27 17 00
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x5ddc PROGRAM 0x5dc0 05 00 01 00 00 00 00 07 c0 5b 00 00 00 00 02 00 0a 00 0b 0d 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0x587c 3f 19 99 29 3e 4c cc 20 3e 4c cc 2a 00 00 00 00 3f 19 99 20 3e cc cc 21 00 00 00 00 00 00 00 00 3f 19 99 20 3e cc cc 25 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 81 0x59bc 1c 43 32 6b d9 86 1c ba 32 b5 d9 71 1c 32 32 b5 d9 66 1c ba 32 ee d9 44 1b 9f 32 c2 d8 b9 1c 4d 33 29 d8 a0 1a 94 33 5c d7 60 1b 24 33 d7 d7 1d
+Colours 1 0x5ba4 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x5bc0 98 00 14 0f 00 00 0f 01 00 21 02 00 0f 03 00 30 04 00 30 05 00 0c 06 00 0c 07 00 0c 08 00 0c 09 00 0c 0a 00 0c 0b 00 2d 0c 00 2d 0d 00 1b 0e 00 1b 0f 00 2d 10 00 2d 11 00 09 12 00 09 13 00 98 00 12 0f 03 00 0f 14 00 30 05 00 21 15 00 0c 07 00 0c 16 00 0c 09 00 0c 17 00 0c 0b 00 0c 18 00
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x583c PROGRAM 0x5820 05 00 01 00 00 00 00 07 20 4c 00 00 00 00 0c 00 0a 00 0b 0d 09 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0x435c 3f 19 99 1e 3e 4c cc 1d 3e 4c cc 1f 00 00 00 00 3f 19 99 1f 3e 4c cc 1e 3e 4c cc 20 00 00 00 00 3f 19 99 1e 3e cc cc 1f 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 319 0x449c 1c e9 31 d6 dc 36 1c c9 32 7c dc d7 1c 9a 31 77 dc 8d 1c 66 32 2a dc fa 1c 0e 31 f0 db a1 1b d1 32 a9 dc 38 1b b2 32 55 db d2 1d 15 31 40 db 71
+Colours 1 0x4c18 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x4c20 98 00 07 15 00 00 00 15 00 01 00 15 00 02 00 15 00 03 00 15 00 04 00 15 00 05 00 15 00 06 00 98 00 07 15 00 07 00 15 00 00 00 15 00 08 00 15 00 09 00 15 00 0a 00 15 00 0b 00 15 00 0c 00 98 00 27 15 00 0d 00 15 00 0e 00 15 00 0f 00 15 00 10 00 15 00 11 00 15 00 12 00 15 00 13 00 15 00 14
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x431c PROGRAM 0x4300 05 00 01 00 00 00 00 07 c0 41 00 00 00 00 01 40 0a 00 0b 0d 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 16 0x3f7c 3f 19 99 30 3e 4c cc 2f 3e 4c cc 31 00 00 00 00 3f 19 99 2c 3e cc cc 32 00 00 00 00 00 00 00 00 3f 19 99 2e 3e cc cc 2f 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 50 0x407c 10 00 2d 6c d8 a7 10 9d 30 3f d7 65 0e 7c 2d 7a d6 4e 0f c6 2f eb d5 0f 10 15 2c e5 d4 27 10 bf 2f 97 d3 3c 12 52 2c 90 d4 48 12 ae 2f 23 d3 07
+Colours 1 0x41a8 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x41c0 98 00 0c 0f 00 00 0f 00 00 2d 01 00 0f 02 00 1b 03 00 0f 04 00 03 05 00 0f 06 00 03 07 00 1e 08 00 27 09 00 24 0a 00 98 00 0a 21 0b 00 0f 0c 00 21 0d 00 0f 06 00 21 0e 00 0f 04 00 21 0f 00 0f 02 00 0f 10 00 0f 00 00 98 00 0a 0f 11 00 21 0b 00 0f 12 00 21 0d 00 0f 13 00 21 0e 00 0f 14 00
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x3f3c PROGRAM 0x3f20 05 00 01 00 00 00 00 07 80 3b 00 00 00 00 03 a0 0a 00 0b 0d 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0x36dc 3f 19 99 2c 3e cc cc 2d 00 00 00 00 00 00 00 00 3f 19 99 2d 3e cc cc 2e 00 00 00 00 00 00 00 00 3f 19 99 2d 3e cc cc 32 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 144 0x381c 0f fc 2b 12 d7 87 10 87 2b 0c d8 09 10 07 2b a7 d7 d1 10 6f 2b aa d8 3f 10 6c 2b d3 d7 ea 10 98 2b d2 d8 15 10 af 2c a3 d8 17 11 26 2b d0 d8 47
+Colours 1 0x3b7c 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x3b80 98 00 0e 39 00 00 39 00 00 2a 01 00 2a 02 00 15 03 00 2a 04 00 2a 05 00 12 06 00 12 07 00 12 08 00 12 09 00 12 0a 00 39 0b 00 12 0c 00 98 00 06 2a 01 00 15 03 00 2a 0d 00 12 0e 00 2a 0f 00 2a 10 00 98 00 08 15 03 00 2a 05 00 12 0e 00 12 07 00 2a 10 00 12 09 00 39 11 00 39 0b 00 98 00 0c
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x369c PROGRAM 0x3680 05 00 01 00 00 00 00 07 80 31 00 00 00 00 05 00 0a 00 0b 0d 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0x2bdc 3f 19 99 30 3e 4c cc 2f 3e 4c cc 31 00 00 00 00 3f 19 99 35 3e 4c cc 34 3e 4c cc 36 00 00 00 00 3f 19 99 2e 3e cc cc 2f 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 185 0x2d1c 18 e4 2a 08 d8 64 18 61 27 b9 d7 4a 18 05 2a 1d d8 ed 17 78 27 e6 d7 ec 17 05 2a 31 d9 12 16 9d 27 bc d7 f1 11 10 2a 40 d8 f1 11 78 28 2e d7 f2
+Colours 1 0x3174 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x3180 98 00 06 33 00 00 1b 01 00 33 02 00 06 03 00 33 04 00 06 05 00 98 00 06 36 06 00 24 07 00 21 08 00 12 09 00 21 0a 00 12 0b 00 98 00 22 2a 0c 00 2a 0d 00 15 0e 00 15 0f 00 18 10 00 18 11 00 18 12 00 18 13 00 18 14 00 18 15 00 30 16 00 18 17 00 15 18 00 03 19 00 15 1a 00 15 1b 00 2a 1c 00
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x2b9c PROGRAM 0x2b80 05 00 01 00 00 00 00 07 e0 11 00 00 00 00 19 a0 0a 00 0b 0d 09 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 6 0x0 3f 19 99 29 3e 4c cc 20 3e 4c cc 2a 00 00 00 00 3f 19 99 20 3e cc cc 29 00 00 00 00 00 00 00 00 3f 19 99 25 3e cc cc 26 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 745 0x60 18 da 31 7e e1 27 18 ee 31 78 e0 a2 18 62 31 09 e1 4e 18 53 31 01 e0 9e 17 c9 30 b8 e1 62 17 c2 30 ac e0 a5 17 1a 30 81 e1 6e 17 28 30 80 e0 9f
+Colours 1 0x11d8 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x11e0 98 00 0c 0f 00 00 00 0f 00 01 00 0f 00 02 00 0f 00 03 00 0f 00 04 00 0f 00 05 00 0f 00 06 00 0f 00 07 00 0f 00 08 00 0f 00 09 00 0f 00 0a 00 0f 00 0b 00 98 00 0e 0f 00 0c 00 0f 00 0d 00 0f 00 0e 00 0f 00 0f 00 0f 00 10 00 0f 00 11 00 0f 00 12 00 0f 00 13 00 0f 00 14 00 0f 00 15 00 0f 00
+
+FILE teeter_totter.o
+SHADER PlaygroundTexture_HWSkin 0x1f3e0 PROGRAM 0x1f3c0 05 00 01 00 00 00 00 04 00 07 00 f1 01 00 00 00 02 c0 0a 00 0b 0e 08 09 08 0b 08 0d 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 2 0x1ec50 3f 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 3f 80 00 37 00 00 00 00 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 56 0x1ec70 3e 12 10 92 09 99 3b 59 0c 0b 08 a9 1b c1 11 55 07 f7 1b 98 0d 6b 07 97 00 13 12 49 08 18 ff f4 0f 2f 08 18 e4 6c 13 b9 08 94 e4 3f 0f 57 08 26
+Colours 42 0x1edc0 79 72 75 ff 77 73 73 ff 76 74 71 ff 78 73 73 ff 79 73 75 ff 8e 8e 86 ff 8d 8d 86 ff 7a 72 76 ff 78 73 74 ff 77 74 71 ff 46 19 54 ff 3c 16 48 ff
+UVs 80 0x1ee68 3f 6c 80 29 3e 5d 2e e0 3f 67 a0 7d 3e 81 44 16 3f 30 49 17 3e 67 9d 4c 3f 30 52 2d 3e 80 e7 c0 3e ff ec ba 3e 69 96 a8 3e ff ec ba 3e 7f b5 dc
+Texture 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x1f100 98 00 0a 03 00 00 00 03 01 00 01 03 02 01 02 03 03 01 03 03 04 02 04 03 05 02 05 03 06 03 06 03 07 03 07 03 08 04 08 03 09 04 09 98 00 0a 03 0a 05 0a 03 00 05 00 03 0b 05 0b 03 02 05 0c 03 0c 06 0d 03 04 06 0e 03 0d 06 0f 03 06 06 10 03 0e 06 11 03 08 06 08 98 00 0a 03 0f 07 01 03 0a 07
+SHADER PlaygroundTexture_HWSkin 0x1ec00 PROGRAM 0x1ebe0 05 00 01 00 00 00 00 04 00 07 60 e4 01 00 00 00 07 80 0a 00 0b 0e 08 09 08 0b 08 0d 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 8 0x1dd30 3f 19 99 09 3e cc cc 0d 00 00 00 00 00 00 00 00 3f 19 99 24 3e cc cc 28 00 00 00 00 00 00 00 00 3f 80 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 146 0x1ddb0 de 79 12 c0 f7 d3 de 15 12 6e f7 e8 de a8 12 c6 f5 86 dd a3 11 ff f5 a0 de e7 12 7f f7 ed df 96 12 26 f5 9d de c8 12 06 f8 14 df 4b 10 fe f5 e1
+Colours 93 0x1e11c 82 76 80 ff 88 7e 85 ff 56 32 60 ff 53 2b 5e ff 51 29 5d ff 79 71 76 ff 87 87 80 ff 51 33 59 ff 58 30 64 ff 5c 31 68 ff 75 60 78 ff 7a 6f 78 ff
+UVs 55 0x1e290 3e a2 85 95 3f 07 4d ee 3e 8f be 0d 3f 04 bf ba 3e 97 42 4e 3f 34 75 8d 3e 52 12 5e 3f 2c 2c bb 3e db c0 00 3f 46 88 0c 3e de 63 cd 3f 3c e1 20
+Texture 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x1e460 98 00 04 15 00 00 00 15 01 00 01 15 02 00 02 15 03 00 03 98 00 04 15 04 01 04 15 00 01 05 15 05 01 06 15 02 01 02 98 00 04 15 06 02 07 15 04 02 08 15 07 02 09 15 05 02 06 98 00 04 15 08 03 0a 15 06 03 0b 15 09 03 0c 15 07 03 09 98 00 04 15 01 04 0d 15 08 04 0e 15 03 04 03 15 09 04 0c 98
+SHADER PlaygroundTexture_HWSkin 0x1dce0 PROGRAM 0x1dcc0 05 00 01 00 00 00 00 04 00 07 80 db 01 00 00 00 01 40 0a 00 0b 0e 08 09 08 0b 08 0d 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 1 0x1d8d0 3f 80 00 37 00 00 00 00 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 33 0x1d8e0 d8 38 16 d1 09 61 d8 1e 14 51 09 61 c9 a5 17 d9 0a 5b cd d2 15 2b 0a 5d c8 b3 15 85 0a c1 ce 76 12 f1 0a 23 c7 e1 13 1a 0a 8c cc ae 10 87 09 e2
+Colours 37 0x1d9a8 7f 7c 79 ff 87 86 80 ff 7c 79 76 ff 7e 7c 78 ff 79 73 75 ff 79 71 75 ff 85 85 7e ff 8c 8c 84 ff 99 8f 95 ff 9b 95 96 ff 83 74 82 ff 7e 70 7d ff
+UVs 38 0x1da3c 3f 72 12 22 3f 49 c6 92 3f 72 12 22 3f 5a bb 7b 3f 1e f2 69 3f 39 28 dc 3f 38 bf 9c 3f 57 6a a0 3f 1c 2a 76 3f 56 81 60 3f 3b ec 6c 3f 66 be 57
+Texture 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x1db80 98 00 09 00 00 00 00 00 01 00 01 00 02 01 02 00 03 02 03 00 04 03 04 00 05 04 05 00 06 04 06 00 07 05 07 00 08 05 08 98 00 06 00 04 03 04 00 09 06 09 00 02 01 02 00 0a 07 0a 00 0b 08 0b 00 0c 09 0c 98 00 06 00 0b 08 0d 00 0c 09 0e 00 0d 0a 0f 00 0e 0b 10 00 0f 0c 11 00 10 0d 12 98 00 06
+SHADER PlaygroundTexture_HWSkin 0x1d880 PROGRAM 0x1d860 05 00 01 00 00 00 00 04 00 07 20 d7 01 00 00 00 01 40 0a 00 0b 0e 08 09 08 0b 08 0d 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 1 0x1d470 3f 80 00 37 00 00 00 00 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 33 0x1d480 28 28 13 c5 f6 81 28 0f 11 44 f6 6f 36 f1 15 cc f5 9b 32 64 11 51 f5 5c 37 87 11 44 f5 16 31 93 0f 25 f5 ae 38 27 0e c9 f5 45 33 29 0c 98 f5 ce
+Colours 37 0x1d548 81 80 7b ff 87 87 80 ff 7b 79 75 ff 7b 7a 75 ff 79 73 75 ff 82 82 7b ff 8f 8f 87 ff 95 8f 90 ff 9d 94 97 ff 84 79 81 ff 7e 6c 7f ff 96 8f 90 ff
+UVs 38 0x1d5dc 3f 72 12 22 3f 49 c6 92 3f 72 12 22 3f 5a bb 7b 3f 1e f2 69 3f 39 28 dc 3f 38 bf 9c 3f 57 6a a0 3f 1c 2a 76 3f 56 81 60 3f 3b ec 6c 3f 66 be 57
+Texture 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x1d720 98 00 09 00 00 00 00 00 01 00 01 00 02 01 02 00 03 02 03 00 04 03 04 00 05 04 05 00 06 04 06 00 07 04 07 00 08 04 08 98 00 06 00 04 03 04 00 09 05 09 00 02 01 02 00 0a 06 0a 00 0b 07 0b 00 0c 08 0c 98 00 06 00 0b 07 0d 00 0c 08 0e 00 0d 09 0f 00 0e 0a 10 00 0f 0b 11 00 10 0c 12 98 00 06
+SHADER PlaygroundLitPlaceable_HWSkin 0x1d400 PROGRAM 0x1d3e0 05 00 01 00 00 01 00 00 00 00 07 00 d2 01 00 00 00 01 e0 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x1cdb0 00 00 00 56 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 9 0x1cdc0 3f 19 99 08 3e 4c cc 07 3e 4c cc 09 00 00 00 00 3f 19 99 06 3e cc cc 07 00 00 00 00 00 00 00 00 3f 19 99 07 3e cc cc 08 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 46 0x1ce50 d4 6a 25 9a fc 0e d5 1c 26 fb fc 24 d4 71 23 ef fb 7f d5 c0 25 0a fb 70 d4 8e 21 61 fa 61 d6 83 22 af fa 6b d2 b1 24 40 f8 c8 d3 15 21 c6 f7 b3
+Normals 46 0x1cf64 17 99 c7 6b 12 5d 3d 28 04 6f 12 55 ec 9c e6 69 37 5d 29 fe fd a9 30 3e 0d 27 c4 ab 14 10 2d da d8 38 14 44 c0 85 f8 83 fc e0 f2 43 c9 9f e1 2f
+UVs 49 0x1d078 3e 22 d1 c6 3e af b6 80 3d af c0 e0 3e 7f d6 e8 3e 43 ff 2c 3e b1 0e 16 3e 31 c2 0e 3e 83 ce e4 3e 6e 86 f3 3e af c3 f0 3e 59 6a be 3e 85 2a 82
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x1d200 98 00 06 03 21 00 00 00 03 21 01 01 01 15 33 02 02 02 09 27 03 03 03 15 33 04 04 04 15 33 05 05 05 98 00 0e 15 33 06 06 06 15 33 02 02 02 0c 2a 07 07 07 15 33 04 04 04 0c 2a 08 08 08 15 33 09 09 04 06 24 0a 0a 09 0c 2a 0b 0b 0a 06 24 0c 0c 0b 0f 2d 0d 0d 0c 06 24 0e 0e 0d 0f 2d 0f 0f 0e
+SHADER PlaygroundLitPlaceable_HWSkin 0x1cd40 PROGRAM 0x1cd20 05 00 01 00 00 01 00 00 00 00 07 c0 cc 01 00 00 00 00 60 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x1cad0 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x1cae0 3f 19 99 0e 3e 4c cc 05 3e 4c cc 0f 00 00 00 00 3f 19 99 04 3e cc cc 05 00 00 00 00 00 00 00 00 3f 19 99 05 3e cc cc 06 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 16 0x1cb80 cf f8 28 ef fe 01 ce e7 25 b0 00 95 d2 5a 29 66 fa ee cf bf 25 15 fd 50 d1 59 2a 6f 02 e6 d1 4e 29 f9 05 0e d0 bc 2a 3a 00 d7 d0 40 29 e8 00 ce
+Normals 16 0x1cbe0 c7 bf 14 cd e9 ad c0 f7 0a a9 fd 11 db 14 22 ec d9 1b c9 1d 07 ff e0 15 ee 76 3b ec 0e 0e e5 33 38 21 0f 12 dc 1b 34 fa 00 b8 d5 d5 30 24 00 23
+UVs 16 0x1cc40 3e 50 f7 dc 3e f9 75 3c 3e 8a 3f e5 3f 29 e9 92 3d ee 1e 43 3e e9 1d ce 3e 27 5e 5c 3f 29 79 51 3e a9 fc b5 3e de e5 be 3e be 67 b8 3e e4 af ac
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x1ccc0 98 00 04 06 24 00 00 00 03 21 01 01 01 09 27 02 02 02 06 24 03 03 03 98 00 06 0c 2a 04 04 04 18 36 05 05 05 1b 39 06 06 06 15 33 07 07 07 00 1e 08 08 08 0f 2d 09 09 09 98 00 06 12 30 0a 0a 0a 09 27 0b 0b 0b 12 30 0c 0c 0c 09 27 0d 0d 0d 12 30 0e 0e 0e 09 27 0f 0f 0f 00 00 00 00 00 00 00
+SHADER PlaygroundLitPlaceable_HWSkin 0x1ca60 PROGRAM 0x1ca40 05 00 01 00 00 01 00 00 00 00 07 c0 c9 01 00 00 00 00 80 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x1c7f0 00 00 00 13 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x1c800 3f 19 99 04 3e cc cc 05 00 00 00 00 00 00 00 00 3f 19 99 05 3e cc cc 06 00 00 00 00 00 00 00 00 3f 19 99 05 3e cc cc 0a 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 13 0x1c8a0 ce 8d 21 b3 03 bb ce 8c 21 ea 00 8b cf 89 25 e2 04 c8 ce e7 25 b0 00 95 d2 44 29 a8 07 37 cf ec 28 fc 03 ba d1 4e 29 f9 05 0e cf 5f 28 bb 00 d8
+Normals 13 0x1c8f0 c3 b8 0d b3 10 8f c1 61 0c 9d fc 23 c8 eb 06 fd 1f d3 c0 f7 0a a9 fd 11 d9 d2 27 1f 21 48 c8 06 19 b0 11 65 e5 33 38 21 0f 12 c6 26 1b 5d ff 79
+UVs 13 0x1c940 3e b8 fa f6 3f 40 85 69 3e 8d 21 b8 3f 3d a0 0f 3e b7 91 5d 3f 23 70 b7 3e 8a 3f e5 3f 29 e9 92 3e d6 b0 ca 3e e8 6b d8 3e ae 72 92 3e fb 0b d0
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x1c9c0 98 00 0b 0c 2a 00 00 00 15 33 01 01 01 06 24 02 02 02 00 1e 03 03 03 09 27 04 04 04 06 24 05 05 05 1b 39 06 06 06 18 36 07 07 07 12 30 08 08 08 03 21 09 09 09 0f 2d 0a 0a 0a 98 00 04 0c 2a 0b 0b 0b 03 21 0c 0c 0c 15 33 01 01 01 00 1e 03 03 03 98 00 04 06 24 05 05 05 00 1e 03 03 03 18 36
+SHADER PlaygroundLitPlaceable_HWSkin 0x1c780 PROGRAM 0x1c760 05 00 01 00 00 01 00 00 00 00 07 c0 c6 01 00 00 00 00 a0 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x1c490 00 00 00 1b 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x1c4a0 3f 19 99 05 3e 4c cc 06 3e 4c cc 0a 00 00 00 00 3f 19 99 0e 3e 4c cc 05 3e 4c cc 0f 00 00 00 00 3f 19 99 05 3e cc cc 06 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 18 0x1c540 d5 79 27 89 03 fa d5 8a 27 b6 02 39 d3 9a 29 c9 04 34 d4 7b 2a 55 02 d6 d3 76 2a 5d 02 ca d5 4a 28 f7 01 1e d4 89 29 c0 01 14 d4 8a 29 7e ff 0d
+Normals 18 0x1c5ac 3d 32 12 5b 03 c1 3b 11 12 2a 10 a7 19 f6 39 1d 0c a6 27 f9 30 79 0c 30 0b f4 3e 3e 08 e2 2f 9b 2a 75 fa c8 22 3a 34 bc f4 04 2e ad 2a 91 f5 bb
+UVs 19 0x1c618 3f 13 77 a9 3f 18 99 de 3f 2b 34 5f 3f 18 a7 93 3f 1a e5 b1 3e ef 83 fe 3f 27 7d de 3f 03 1c 88 3f 2b d7 e1 3e e7 92 00 3f 3a e1 46 3f 07 36 d1
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x1c6c0 98 00 0d 12 30 00 00 00 12 30 00 00 00 09 27 01 01 01 1b 39 02 02 02 03 21 03 03 03 15 33 04 04 04 0c 2a 05 05 05 0c 2a 06 06 06 06 24 07 07 07 03 21 08 08 08 18 36 09 09 09 03 21 0a 0a 0a 18 36 0b 0b 0b 98 00 0b 09 27 01 01 01 03 21 03 03 03 00 1e 0c 0c 0c 0c 2a 05 05 05 06 24 0d 0d 0d
+SHADER PlaygroundLitPlaceable_HWSkin 0x1c420 PROGRAM 0x1c400 05 00 01 00 00 01 00 00 00 00 07 80 c3 01 00 00 00 00 80 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x1c190 00 00 00 12 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x1c1a0 3f 19 99 03 3e cc cc 04 00 00 00 00 00 00 00 00 3f 19 99 06 3e cc cc 07 00 00 00 00 00 00 00 00 3f 19 99 0a 3e cc cc 0b 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 16 0x1c240 ce 8d 21 b3 03 bb cd cc 1e 4a 03 cc ce 8c 21 ea 00 8b cd b7 1e a5 00 7e ce ff 21 bd fd 61 ce 21 1e 83 fd 88 d1 04 21 74 fa ce cf 36 1d 82 fb 65
+Normals 16 0x1c2a0 c3 b8 0d b3 10 8f c3 00 10 38 0a 8c c1 61 0c 9d fc 23 c2 29 10 13 fc 65 c6 d0 0c fb e6 61 c6 45 10 5a e9 c0 e9 7d 06 6a c4 70 dc 3f 0c d0 cc 7e
+UVs 15 0x1c300 3e b8 fa f6 3f 40 85 69 3e b4 90 5a 3f 5e 52 9e 3e 8d 21 b8 3f 3d a0 0f 3e 8c 47 fe 3f 5c 90 15 3e 3c f6 3f 3f 41 04 69 3e 49 5b 7a 3f 5c 99 fc
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x1c380 98 00 08 0f 2d 00 00 00 0c 2a 01 01 01 18 36 02 02 02 00 1e 03 03 03 0f 2d 04 04 04 00 1e 05 05 05 03 21 06 06 06 15 33 07 07 07 98 00 04 15 33 08 08 08 15 33 09 09 09 0c 2a 01 01 01 00 1e 03 03 03 98 00 06 06 24 0a 0a 0a 06 24 0b 0b 0a 12 30 0c 0c 0b 1b 39 0d 0d 0c 09 27 0e 0e 0d 09 27
+SHADER PlaygroundLitPlaceable_HWSkin 0x1c120 PROGRAM 0x1c100 05 00 01 00 00 01 00 00 00 00 07 60 c0 01 00 00 00 00 a0 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x1be10 00 00 00 19 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x1be20 3f 19 99 04 3e 4c cc 03 3e 4c cc 05 00 00 00 00 3f 19 99 05 3e cc cc 06 00 00 00 00 00 00 00 00 3f 19 99 05 3e cc cc 0a 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 19 0x1bec0 cc d0 19 3f 05 a9 cd 2f 1c 5e 03 6c ce 01 1d 52 05 35 cd cc 1e 4a 03 cc cf 68 21 72 06 5b ce 8d 21 b3 03 bb d1 b3 25 58 06 8d cf 89 25 e2 04 c8
+Normals 19 0x1bf34 ca 86 0c 52 20 ed c0 fe 09 87 05 e5 d3 9e 0e c7 2b ad c3 00 10 38 0a 8c e2 56 06 0b 38 63 c3 b8 0d b3 10 8f e9 82 ec cf 38 c2 c8 eb 06 fd 1f d3
+UVs 22 0x1bfa8 3e db f2 2f 3f 6e 44 75 3e ad 0c ab 3f 6e 2c df 3e dd 3d 71 3f 65 39 ab 3e b4 90 5a 3f 5e 52 9e 3e e0 15 89 3f 4c e9 6d 3e b8 fa f6 3f 40 85 69
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x1c060 98 00 0a 1b 39 00 00 00 1b 39 01 01 01 0f 2d 02 02 02 0f 2d 03 03 03 00 1e 04 04 04 12 30 05 05 05 0c 2a 06 06 06 06 24 07 07 07 18 36 08 08 08 0c 2a 09 09 09 98 00 06 1b 39 0a 0a 0a 1b 39 00 00 00 1b 39 0b 0b 0b 0f 2d 02 02 02 0c 2a 0c 0c 0c 00 1e 04 04 04 98 00 04 09 27 0d 0d 0d 15 33
+SHADER PlaygroundLitPlaceable_HWSkin 0x1bda0 PROGRAM 0x1bd80 05 00 01 00 00 01 00 00 00 00 07 20 bc 01 00 00 00 01 60 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x1b7d0 00 00 00 3e 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x1b7e0 3f 19 99 04 3e 4c cc 03 3e 4c cc 05 00 00 00 00 3f 19 99 05 3e 4c cc 06 3e 4c cc 0a 00 00 00 00 3f 19 99 08 3e 4c cc 07 3e 4c cc 09 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 45 0x1b880 d3 07 22 aa 05 35 d5 37 25 36 05 5e d5 7e 21 a3 05 b0 d5 79 27 89 03 fa d6 92 21 ac 03 3b d5 8a 27 b6 02 39 d7 00 21 9f 01 23 d5 f3 27 ad 00 ba
+Normals 45 0x1b990 06 d8 fd 31 3f 92 27 2b ec db 2e da 2a 60 07 89 2f 5e 3d 32 12 5b 03 c1 3d 64 04 bd 11 73 3b 11 12 2a 10 a7 3f ae 05 18 03 e2 3c 8d 14 8d 02 bc
+UVs 48 0x1baa0 3f 06 f1 31 3f 46 0d 72 3f 08 14 8d 3f 24 ac bc 3f 15 84 ff 3f 41 58 6c 3f 13 77 a9 3f 18 99 de 3f 29 0e 92 3f 3d bb 06 3f 2b 34 5f 3f 18 a7 93
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x1bc20 98 00 0d 18 36 00 00 00 18 36 01 01 01 00 1e 02 02 02 18 36 03 03 03 00 1e 04 04 04 0f 2d 05 05 05 09 27 06 06 06 03 21 07 07 07 00 1e 08 08 08 0c 2a 09 09 09 00 1e 0a 0a 0a 12 30 0b 0b 0b 12 30 0c 0c 0c 98 00 0e 12 30 0d 0d 0d 1b 39 0e 0e 0e 00 1e 0a 0a 0a 1b 39 0f 0f 0f 00 1e 08 08 08
+SHADER PlaygroundLitPlaceable_HWSkin 0x1b760 PROGRAM 0x1b740 05 00 01 00 00 01 00 00 00 00 07 20 b4 01 00 00 00 03 20 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x1ad34 00 00 00 96 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x1ad44 3f 19 99 0a 3e cc cc 0b 00 00 00 00 00 00 00 00 3f 19 99 0b 3e cc cc 0c 00 00 00 00 00 00 00 00 3f 19 99 0c 3e cc cc 0d 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 73 0x1ade4 d1 66 26 e9 06 c4 d2 44 29 a8 07 37 d1 f3 26 f2 07 4e d2 eb 29 1a 08 2c d2 62 26 a5 08 17 d3 51 28 6a 08 d8 d2 d6 25 7a 09 33 d4 18 26 f6 09 d0
+Normals 73 0x1af9c d1 d0 fc af 2c 2c d9 d2 27 1f 21 48 cd d0 fd e3 27 a7 eb 61 29 ab 2b fb c9 b4 02 87 21 c7 f0 33 24 73 32 2d cb 8a 07 ed 23 ca f9 5e 21 fb 35 d4
+UVs 88 0x1b154 3c 22 4a 7d 3d 98 46 a8 3c 98 ed 80 3d fb 1b 80 3d 67 35 56 3d 93 75 88 3d 21 cd 61 3d eb 0f c8 3d d4 87 d4 3d 7d 92 00 3d 81 1f fd 3d dc 2c 48
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x1b420 98 00 18 09 27 00 00 00 00 1e 01 01 01 00 1e 02 02 02 00 1e 03 03 03 00 1e 04 04 04 00 1e 05 05 05 18 36 06 06 06 0c 2a 07 07 07 0f 2d 08 08 08 0f 2d 09 09 09 18 36 0a 0a 0a 18 36 0b 0b 0b 03 21 0c 0c 0c 03 21 0d 0d 0d 03 21 0e 0e 0e 03 21 0f 0f 0f 03 21 10 10 10 03 21 11 11 11 1b 39 12
+SHADER PlaygroundLitPlaceable_HWSkin 0x1acc4 PROGRAM 0x1aca0 05 00 01 00 00 01 00 00 00 00 04 00 07 60 9a 01 00 00 00 12 40 0a 00 0a 02 0b 0e 09 09 09 0a 08 0d 00 00 00
+Parameters 1 0x18510 00 00 02 7f 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x18520 3f 19 99 08 3e 4c cc 07 3e 4c cc 09 00 00 00 00 3f 19 99 05 3e cc cc 06 00 00 00 00 00 00 00 00 3f 19 99 06 3e cc cc 07 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 291 0x185c0 de 22 19 0b fb c1 de 95 19 a9 fc f3 de 55 18 4a fc 4c de 74 18 fb fd 38 dc 87 18 da fb 3e dc cc 19 7f fc 72 dc 47 19 1c fb ca dd 82 18 a2 fa 5b
+Normals 302 0x18c94 c8 fc 1e c1 0b 1b e7 53 13 35 37 d7 da c5 db 7c da e8 ec 6d 2b b9 2a 71 ef b3 11 c9 c4 ba f0 f2 3d 25 0b 6c c4 35 15 0b 08 cf c7 e2 14 cf 16 a9
+UVs 214 0x193a8 3f 1c ad ec 3e 37 d3 28 3f 10 2e dd 3e 33 15 ac 3f 1c db 5b 3d d7 54 d8 3f 0e f9 0b 3d d1 bb d0 3f 19 b2 48 3c ae 9d 20 3f 0c 62 ed 3c dc e8 a0
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x19a60 98 00 07 18 36 00 00 00 00 00 18 36 00 01 00 01 01 18 36 00 02 00 02 02 18 36 00 03 00 03 03 18 36 00 04 00 04 04 18 36 00 05 00 05 05 18 36 00 06 00 06 06 98 00 07 18 36 00 07 00 07 07 18 36 00 00 00 00 00 18 36 00 08 00 08 08 18 36 00 09 00 09 02 18 36 00 0a 00 0a 09 18 36 00 0b 00 0b
+SHADER PlaygroundLitPlaceable_HWSkin 0x184a0 PROGRAM 0x18480 05 00 01 00 00 01 00 00 00 00 07 20 82 01 00 00 00 02 60 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x17cd0 00 00 00 72 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 8 0x17ce0 3f 19 99 14 3e 4c cc 13 3e 4c cc 15 00 00 00 00 3f 19 99 12 3e cc cc 13 00 00 00 00 00 00 00 00 3f 19 99 13 3e cc cc 14 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 61 0x17d60 d1 05 14 9d fd 9c d0 58 14 3b 00 0e d8 11 12 9f fa 03 db 05 17 6d fa 67 d8 72 15 f5 f8 8a d9 85 17 d8 f8 e0 d9 77 15 f0 f7 e3 da 71 17 9c f8 30
+Normals 61 0x17ed0 df 92 ca 2f f3 dd fe 7e c3 69 14 8b 18 f7 c6 d0 f1 cd 39 75 eb 26 12 f8 2a cc d1 76 f6 16 3b 7b e8 d4 04 99 08 8d cb c0 23 f3 22 02 f7 c0 35 96
+UVs 58 0x18040 3e 0a 95 11 3e a7 3d 3c 3d bf 68 80 3e ac 35 fc 3e 07 02 3a 3f 1e 76 66 3c c0 79 00 3f 1e ae ec 3c c5 b2 bb 3f 22 e0 fd 3e 08 2b ef 3f 24 86 82
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x18220 98 00 10 12 30 00 00 00 12 30 01 01 01 09 27 02 02 02 03 21 03 03 03 09 27 04 04 02 03 21 05 05 04 03 21 06 06 05 03 21 07 07 06 15 33 08 08 05 03 21 09 09 06 15 33 0a 0a 07 15 33 0b 0b 08 15 33 0c 0c 09 15 33 0d 0d 08 0f 2d 0e 0e 0a 0f 2d 0f 0f 0b 98 00 12 0f 2d 10 10 0c 0f 2d 11 11 0d
+SHADER PlaygroundLitPlaceable_HWSkin 0x17c60 PROGRAM 0x17c40 05 00 01 00 00 01 00 00 00 00 07 c0 7a 01 00 00 00 01 80 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x17670 00 00 00 46 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x17680 3f 19 99 19 3e 4c cc 18 3e 4c cc 1a 00 00 00 00 3f 19 99 1a 3e 4c cc 19 3e 4c cc 1b 00 00 00 00 3f 19 99 18 3e cc cc 19 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 48 0x17720 d9 ac 15 3b 12 1b d9 0d 15 df 11 72 dc 14 16 49 11 af da a9 17 1a 10 6e dc b9 16 c4 10 3d db 83 17 44 0f 5a dd b7 16 31 0e 7a dc 5b 17 35 0d d7
+Normals 48 0x17840 e3 6f 14 0b 35 a6 d5 fa 26 6a 1d 3a 0c 80 2b f0 2c d3 ef 26 3b 1f 11 c9 26 ca 2f 5b 12 ad ff 34 3f fb 01 5b 35 2e 21 73 f3 cd 0b 1b 36 e2 e1 03
+UVs 44 0x17960 3f 07 74 a8 3f 58 a0 e7 3f 07 74 a9 3f 51 17 81 3f 19 99 e7 3f 5a 08 80 3f 19 3d 23 3f 4f f0 0c 3f 24 e6 6d 3f 57 27 1c 3f 24 be 5e 3f 4e c3 40
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x17ac0 98 00 08 1b 39 00 00 00 1b 39 01 01 01 12 30 02 02 02 0f 2d 03 03 03 1b 39 04 04 04 0f 2d 05 05 05 12 30 06 06 06 1b 39 07 07 07 98 00 08 1b 39 08 08 07 1b 39 07 07 07 1b 39 09 09 08 0f 2d 05 05 05 1b 39 0a 0a 09 0f 2d 03 03 03 1b 39 0b 0b 0a 1b 39 01 01 01 98 00 05 12 30 0c 0c 0b 0c 2a
+SHADER PlaygroundLitPlaceable_HWSkin 0x17600 PROGRAM 0x175e0 05 00 01 00 00 01 00 00 00 00 07 20 71 01 00 00 00 04 c0 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x16850 00 00 00 e5 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x16860 3f 19 99 12 3e cc cc 13 00 00 00 00 00 00 00 00 3f 19 99 17 3e cc cc 18 00 00 00 00 00 00 00 00 3f 19 99 18 3e cc cc 17 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 117 0x16900 d9 2d 10 25 0f 38 da 35 10 6a 0d 51 d8 80 10 84 0e e6 d9 60 10 ed 0c a4 d8 90 11 03 0e 57 d8 01 11 7b 0e 53 d8 bf 12 7b 11 3e d8 3d 12 e3 11 30
+Normals 117 0x16bc0 e1 85 c7 c3 01 df f8 02 c5 e0 e6 73 cb ff db 05 fb 28 dd 1e d3 f0 e1 64 c8 7e e0 50 fc d4 ce 95 d7 62 fe 38 ce 39 f2 af 25 f4 d4 85 ea e5 29 f2
+UVs 83 0x16e80 3e 8e 57 e6 3f 64 58 7e 3e 54 7f 9d 3f 62 3d 4c 3e 90 b7 55 3f 5d da 9e 3e 56 fa 27 3f 55 45 ec 3e 8e 20 b0 3f 58 85 08 3e 8f c0 00 3f 53 96 20
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x17120 98 00 19 0f 2d 00 00 00 0f 2d 01 01 01 0f 2d 02 02 02 1b 39 03 03 03 1b 39 04 04 04 1b 39 05 05 05 1b 39 06 06 06 1b 39 07 07 07 1b 39 08 08 08 1b 39 09 09 09 1b 39 0a 0a 0a 1b 39 0b 0b 0b 1b 39 0c 0c 0c 06 24 0d 0d 0d 03 21 0e 0e 0e 03 21 0f 0f 0d 03 21 10 10 0e 03 21 11 11 0f 03 21 12
+SHADER PlaygroundLitPlaceable_HWSkin 0x167e0 PROGRAM 0x167c0 05 00 01 00 00 01 00 00 00 00 07 a0 64 01 00 00 00 03 20 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x15d34 00 00 00 95 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x15d44 3f 19 99 1a 3e 4c cc 19 3e 4c cc 1b 00 00 00 00 3f 19 99 13 3e cc cc 14 00 00 00 00 00 00 00 00 3f 19 99 18 3e cc cc 19 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 90 0x15de4 de c8 13 0d ee 52 dd a6 13 e2 ef 84 dd 9c 10 51 f0 78 dd 06 11 b0 f1 5d de 90 0f 5b f2 af dd ca 11 2e f3 54 e0 69 10 1e f4 67 df 38 11 b7 f4 db
+Normals 95 0x16000 cd 6e 05 df d9 3a cd 53 0a d9 da 74 c9 39 e4 06 ee 55 c4 b6 eb 2e f3 e5 d9 17 d2 d8 17 48 d2 1f df d3 1e e9 04 6c de ce 36 89 fa bc e9 39 3b 93
+UVs 76 0x1623c 3f 74 09 dd 3f 57 63 30 3f 6f 8f 19 3f 57 64 7a 3f 6e 58 ab 3f 75 2b be 3f 6a 85 d9 3f 6d 31 5e 3f 61 87 94 3f 75 f6 6d 3f 60 9c d0 3f 6e bc 7c
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x164a0 98 00 0c 03 21 00 00 00 03 21 01 01 01 03 21 02 02 02 12 30 03 03 03 03 21 04 04 04 12 30 05 05 05 03 21 06 06 06 12 30 07 07 07 03 21 08 08 08 12 30 09 09 09 15 33 0a 0a 0a 03 21 0b 0b 0b 98 00 1f 0f 2d 0c 0c 0c 0f 2d 0d 0d 0d 0f 2d 0e 0e 0e 0f 2d 0f 0f 0f 00 1e 10 10 10 0f 2d 11 11 11
+SHADER PlaygroundLitPlaceable_HWSkin 0x15cc4 PROGRAM 0x15ca0 05 00 01 00 00 01 00 00 00 00 04 00 07 c0 59 01 00 00 00 02 e0 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00 00 00
+Parameters 1 0x15414 00 00 00 8b 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x15424 3f 19 99 14 3e 4c cc 13 3e 4c cc 15 00 00 00 00 3f 19 99 15 3e 4c cc 14 3e 4c cc 16 00 00 00 00 3f 19 99 13 3e cc cc 14 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 64 0x154c4 e5 52 14 9b f1 24 e5 a2 12 d2 f0 56 e6 e3 16 7b f0 9f e8 18 14 ce ef 43 e8 9e 18 78 ef 0c ea 0b 17 3a ee 11 e8 7c 19 d9 ec ea e9 81 19 55 eb d8
+Normals 61 0x15644 25 90 f1 83 31 c0 1d c0 08 19 38 16 1c cc 13 d0 35 9d 14 b1 0b a2 3b 6f 1c 40 23 9e 2d 0c 17 28 1f b0 32 8d 10 8e 3c 6c 0d 15 0b 27 3c ce 10 93
+UVs 62 0x157b4 3f 4f 4c dd 3f 3e 17 c0 3f 4c df 78 3f 43 b0 1f 3f 52 13 c6 3f 2f 2b cc 3f 4c 9a e1 3f 2c 6d b8 3f 52 43 5c 3f 1f e3 0b 3f 4b e7 ae 3f 1c 89 c0
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x159c0 98 00 23 09 27 00 00 00 09 27 00 00 00 09 27 01 01 01 09 27 02 02 02 09 27 03 03 03 0f 2d 04 04 04 0f 2d 05 05 05 0f 2d 06 06 06 0f 2d 07 07 07 0f 2d 08 08 08 0f 2d 09 09 09 1b 39 0a 0a 0a 1b 39 0b 0b 0b 09 27 0c 0c 0c 0c 2a 0d 0d 0d 09 27 0e 0e 0e 09 27 0f 0f 0f 15 33 10 10 10 12 30 11
+SHADER PlaygroundLitPlaceable_HWSkin 0x153a4 PROGRAM 0x15380 05 00 01 00 00 01 00 00 00 00 04 00 07 00 20 01 00 00 00 33 80 0a 00 0a 02 0b 0e 09 09 09 0a 09 0d 00 00 00
+Parameters 1 0xedd0 00 00 06 3f 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 5 0xede0 3f 19 99 0e 3e 4c cc 05 3e 4c cc 0f 00 00 00 00 3f 19 99 05 3e cc cc 0e 00 00 00 00 00 00 00 00 3f 19 99 0e 3e cc cc 0f 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 781 0xee30 d8 25 3a d7 0a 88 d8 4f 3a a4 09 b6 d7 a3 3a 3f 0a 2c d8 15 3a 73 08 c6 d7 05 39 d8 09 66 d9 8a 3b fc 09 dc d9 8b 3b 6b 08 dd d8 dc 3a d5 09 75
+Normals 758 0x10080 28 32 d2 23 13 66 25 1e cd 14 0b 2b 21 1b c9 4c 02 a9 30 b4 dc 00 14 ad 2b bf d1 db 07 40 23 80 cb 2e f9 48 31 26 1b 96 e1 af 34 23 1d a8 e9 af
+UVs 439 0x11244 3f 12 9d 1d 3f 74 75 56 3f 0b 94 99 3f 71 3e 73 3f 0f 03 88 3f 6f e2 99 3f 06 e0 d8 3f 6c 25 ba 3f 0f ac 6d 3f 6a 50 75 3f 05 89 bc 3f 75 a8 35
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x12000 98 00 05 0c 2a 00 00 00 00 00 00 0c 2a 00 01 00 01 00 01 0c 2a 00 02 00 01 00 02 0c 2a 00 03 00 02 00 03 0c 2a 00 04 00 02 00 04 98 00 05 0c 2a 00 05 00 03 00 05 0c 2a 00 06 00 04 00 06 0c 2a 00 07 00 04 00 07 0c 2a 00 08 00 05 00 08 0c 2a 00 03 00 05 00 03 98 00 0e 0c 2a 00 09 00 06 00
+SHADER PlaygroundLitPlaceable_HWSkin 0xed60 PROGRAM 0xed40 05 00 01 00 00 01 00 00 00 00 07 c0 ec 00 00 00 00 00 80 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0xeb30 00 00 00 17 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 5 0xeb40 3f 19 99 26 3e cc cc 27 00 00 00 00 00 00 00 00 3f 19 99 27 3e cc cc 28 00 00 00 00 00 00 00 00 3f 4c cc 27 3e 4c cc 26 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 14 0xeb90 2c 2d 1c 2b f7 74 2b d7 1c 14 f5 ef 28 37 1b 6c f8 62 27 65 1b 67 f7 11 26 15 1b c6 f8 34 25 7f 1b f8 f7 42 24 f2 1c dd f6 e5 26 84 1c 6e f5 fe
+Normals 14 0xebe4 1c c1 db 88 2c 09 14 37 c9 6f e5 5f 01 d5 c8 fc 20 a4 f7 2a c3 ed eb cb 0a 0c c4 78 15 3b f1 8a c9 5c e1 fe df fb fe 2c c8 9f e6 e4 f2 ba c6 a7
+UVs 17 0xec38 3e c8 26 b2 3c f6 33 c0 3e c8 e8 5f 3d 4b e2 a0 3e ec 3e 1c 3c a2 65 20 3e ee 0c 28 3d d2 32 48 3f 0f 51 6e 3c 63 d3 c0 3f 0f b9 7a 3d e0 64 38
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xecc0 98 00 06 00 1e 00 00 00 00 1e 01 01 01 0c 2a 02 02 02 0c 2a 03 03 03 09 27 04 04 04 09 27 05 05 05 98 00 06 03 21 06 06 06 09 27 05 05 05 09 27 07 07 07 0c 2a 03 03 03 00 1e 08 08 08 00 1e 01 01 01 98 00 07 09 27 04 04 09 09 27 09 09 0a 0c 2a 02 02 0b 0c 2a 0a 0a 0c 00 1e 00 00 0d 09 27
+SHADER PlaygroundLitPlaceable_HWSkin 0xeac0 PROGRAM 0xeaa0 05 00 01 00 00 01 00 00 00 00 07 c0 e9 00 00 00 00 00 e0 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0xe6f0 00 00 00 26 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0xe700 3f 19 99 1e 3e 4c cc 2c 3e 4c cc 32 00 00 00 00 3f 19 99 1f 3e 4c cc 1e 3e 4c cc 20 00 00 00 00 3f 19 99 26 3e 4c cc 2c 3e 4c cc 32 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 25 0xe7a0 2d 02 21 d5 fb 45 2b 9a 20 14 fa 57 2f ab 1d f4 f9 16 2b 3e 1e 5b fa 17 30 c2 1b f1 f9 8a 2a d3 1a aa f9 98 31 72 1d fc fa 08 32 5e 1b 1d fb 51
+Normals 25 0xe838 f9 d4 fb ec c0 6f e1 9a 0a 14 c8 98 ec 8d ff b7 c3 08 db e4 0e 79 cd 30 ff f0 07 5c c0 6e e0 19 11 1d cb 3b 34 2d 1e ed 14 6f fb b0 23 0a 35 61
+UVs 27 0xe8d0 3f 04 7a 60 3f 46 01 2e 3f 15 84 ff 3f 41 58 6c 3e fb e9 62 3f 63 1d 76 3f 0f 5d 75 3f 63 81 4c 3e fc 20 04 3f 6e 20 4f 3f 0f a1 d0 3f 6e 8f 85
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xe9c0 98 00 06 0c 2a 00 00 00 03 21 01 01 01 06 24 02 02 02 09 27 03 03 03 0f 2d 04 04 04 18 36 05 05 05 98 00 0c 06 24 02 02 02 0f 2d 04 04 06 0f 2d 06 06 07 09 27 07 07 08 00 1e 08 08 09 09 27 09 09 0a 09 27 0a 0a 0b 12 30 0b 0b 0c 09 27 0c 0c 0d 12 30 0d 0d 0e 18 36 0e 0e 0f 18 36 0f 0f 10
+SHADER PlaygroundLitPlaceable_HWSkin 0xe680 PROGRAM 0xe660 05 00 01 00 00 01 00 00 00 00 07 00 e6 00 00 00 00 00 60 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0xe450 00 00 00 0e 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 9 0xe460 3f 19 99 29 3e 4c cc 20 3e 4c cc 2a 00 00 00 00 3f 19 99 25 3e cc cc 26 00 00 00 00 00 00 00 00 3f 19 99 26 3e cc cc 25 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 12 0xe4f0 2a 03 27 01 f9 ab 2c 0d 28 1d f8 b6 2a 84 27 42 fb 86 2c 77 28 9c fa e9 2a 66 27 9f fc c6 2b 60 28 52 fc 85 2d 02 28 dd fe c7 2c 73 28 ea fe b7
+Normals 12 0xe538 c9 91 21 29 05 b9 13 75 35 3d e2 4a d0 44 2a 2d 06 2a f4 ba 3e 84 f8 38 d2 e0 2c 9d 08 4e df eb 37 23 fa e3 06 bc 3f 9d fd f3 f8 8b 3f 86 fd b5
+UVs 13 0xe580 3f 0d c6 f3 3e ed 0d 4a 3f 1a e5 b1 3e ef 83 fe 3f 1d 78 3d 3e e3 90 9a 3f 2b d7 e1 3e e7 92 00 3f 29 cf 15 3e dc e1 44 3e be 67 b8 3e e4 af ac
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xe600 98 00 06 03 21 00 00 00 03 21 01 01 00 09 27 02 02 01 12 30 03 03 02 00 1e 04 04 03 18 36 05 05 04 98 00 04 12 30 03 03 05 0f 2d 06 06 06 18 36 05 05 07 15 33 07 07 08 98 00 04 06 24 08 08 09 09 27 09 09 0a 0c 2a 0a 0a 0b 03 21 0b 0b 0c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+SHADER PlaygroundLitPlaceable_HWSkin 0xe3e0 PROGRAM 0xe3c0 05 00 01 00 00 01 00 00 00 00 07 40 e3 00 00 00 00 00 80 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0xe130 00 00 00 14 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0xe140 3f 19 99 1f 3e cc cc 20 00 00 00 00 00 00 00 00 3f 19 99 20 3e cc cc 25 00 00 00 00 00 00 00 00 3f 19 99 23 3e cc cc 24 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 16 0xe1e0 25 1b 1c b5 06 83 25 97 1c af 06 db 25 ce 1c 1b 08 e8 26 26 1c 1c 09 12 26 37 1b 3c 08 e8 26 92 1b 62 09 22 26 72 1a ba 08 63 26 fb 1a ff 08 5e
+Normals 15 0xe240 06 bc 3f 9d fd f3 e9 28 3b c6 01 12 e6 99 1f ff 31 43 dc 0c 10 ba 32 3c f7 5e de 25 35 9e f7 4e d6 4a 2f c1 1f 6f c9 18 09 a3 16 1d c4 00 02 94
+UVs 18 0xe29c 3f 19 1c 00 3e 5d 8b 1c 3f 0a 4f 52 3e 51 6a fc 3f 1c ad ec 3e 37 d3 28 3f 0c c4 38 3e 3b d2 f4 3f 1c db 5b 3d d7 54 d8 3f 0f b9 7a 3d e0 64 38
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xe340 98 00 08 18 36 00 00 00 06 24 01 01 01 0f 2d 02 02 02 06 24 03 03 03 18 36 04 04 04 06 24 05 05 05 0f 2d 06 06 06 0c 2a 07 07 07 98 00 04 0c 2a 07 07 08 0c 2a 08 08 09 0f 2d 06 06 0a 18 36 09 09 0b 98 00 05 12 30 0a 00 0c 1b 39 0b 0a 0d 15 33 0c 0b 0e 03 21 0d 0c 0f 00 1e 0e 0d 10 98 00
+SHADER PlaygroundLitPlaceable_HWSkin 0xe0c0 PROGRAM 0xe0a0 05 00 01 00 00 01 00 00 00 00 07 40 de 00 00 00 00 02 60 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0xd890 00 00 00 72 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0xd8a0 3f 19 99 21 3e cc cc 22 00 00 00 00 00 00 00 00 3f 19 99 22 3e cc cc 23 00 00 00 00 00 00 00 00 3f 19 99 23 3e cc cc 24 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 61 0xd940 2d 04 25 07 04 e9 2a c9 23 ff 03 81 2c 91 25 40 05 88 2a b9 24 43 04 20 2d 02 24 2a 06 ae 2a c4 22 e6 04 f5 2e 5a 21 7e 08 69 2b 9f 20 d1 06 25
+Normals 61 0xdab0 18 83 f3 57 39 bf de bd cc da 13 4f 3d a6 f2 03 09 ff fb f6 c2 53 ef 6b 3b a2 09 07 ea 98 08 68 df dd c9 4e 22 6a cc 7b 10 09 f5 d2 c2 ee ef ce
+UVs 67 0xdc20 3d c0 a2 80 3e de a7 0a 3d 9a 59 00 3e a8 20 10 3e 30 51 a4 3e dc 8e 5e 3e 22 d1 c6 3e af b6 80 3e 59 2f 7f 3e de e5 be 3e 43 ff 2c 3e b1 0e 16
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xde40 98 00 16 00 1e 00 00 00 00 1e 01 01 01 00 1e 02 02 02 09 27 03 03 03 15 33 04 04 04 15 33 05 05 05 0c 2a 06 06 06 15 33 07 07 07 15 33 08 08 08 15 33 09 09 07 03 21 0a 0a 09 0c 2a 0b 0b 0a 03 21 0c 0c 0b 0f 2d 0d 0d 0c 03 21 0e 0e 0d 18 36 0f 0f 0e 18 36 10 10 0f 12 30 11 11 10 12 30 12
+SHADER PlaygroundLitPlaceable_HWSkin 0xd820 PROGRAM 0xd800 05 00 01 00 00 01 00 00 00 00 07 20 d7 00 00 00 00 00 e0 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0xd450 00 00 00 23 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0xd460 3f 19 99 1f 3e 4c cc 1e 3e 4c cc 20 00 00 00 00 3f 19 99 20 3e 4c cc 21 3e 4c cc 25 00 00 00 00 3f 19 99 29 3e 4c cc 20 3e 4c cc 2a 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 27 0xd500 2b 5f 1c da 03 ea 29 71 1f 04 01 44 2d 3b 22 55 03 9e 2a 2d 20 49 01 01 29 9c 25 75 02 8d 29 53 24 d2 00 5d 2a 17 20 47 fe e0 29 56 23 d9 fe da
+Normals 27 0xd5a4 db aa 1d ac 2b 88 c9 89 13 8a 1b 56 d5 20 f3 f4 2d f5 c6 5e 06 6e 1b 12 c1 88 f2 19 ff e3 c0 c2 00 90 09 c6 c1 b4 0d 9b fa 96 c0 61 00 c0 f9 21
+UVs 26 0xd648 3f 65 ad f2 3f 63 81 4c 3f 4f 72 77 3f 63 5b 55 3f 5f 9e 33 3f 41 58 6c 3f 48 a7 cc 3f 3c 62 e9 3f 63 18 bb 3f 18 1d 06 3f 4b 2f d7 3f 17 04 a6
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xd720 98 00 06 18 36 00 00 00 00 1e 01 01 01 12 30 02 02 02 00 1e 03 03 03 12 30 04 04 04 09 27 05 05 05 98 00 08 00 1e 03 03 03 00 1e 06 06 06 09 27 05 05 05 03 21 07 07 07 09 27 08 08 08 03 21 09 09 09 06 24 0a 0a 0a 0f 2d 0b 0b 0b 98 00 08 06 24 0c 0c 0c 0f 2d 0b 0b 0b 0c 2a 0d 0d 0d 03 21
+SHADER PlaygroundLitPlaceable_HWSkin 0xd3e0 PROGRAM 0xd3c0 05 00 01 00 00 01 00 00 00 00 07 40 d1 00 00 00 00 02 80 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0xcb70 00 00 00 75 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0xcb80 3f 19 99 25 3e cc cc 26 00 00 00 00 00 00 00 00 3f 19 99 26 3e cc cc 25 00 00 00 00 00 00 00 00 3f 19 99 26 3e cc cc 27 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 61 0xcc20 2a 58 23 40 fa df 2a 48 23 a6 fa 2a 29 30 24 b1 f9 b5 2a 40 22 87 f9 cb 29 0e 23 3e f8 c0 2b 3a 20 22 f9 85 29 88 20 e8 f8 05 2b 12 20 3c f8 f0
+Normals 61 0xcd90 df 1c d8 71 d9 f1 f0 1c c5 c9 15 4f c0 9f fa 3a 06 be f6 57 ef bb 3d 23 c2 dd f5 ad 0f da e8 bd cb 2b 1b 9f cf bf d5 fb 01 33 ea f2 c7 b9 16 05
+UVs 69 0xcf00 3d 9a 59 00 3e a8 20 10 3e 22 d1 c6 3e af b6 80 3d af c0 e0 3e 7f d6 e8 3e 43 ff 2c 3e b1 0e 16 3e 31 c2 0e 3e 83 ce e4 3e 6e 86 f3 3e af c3 f0
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xd140 98 00 15 03 21 00 00 00 0c 2a 01 01 01 00 1e 02 02 02 18 36 03 03 03 0c 2a 04 04 04 18 36 05 05 05 18 36 06 06 06 18 36 07 07 05 18 36 08 08 07 0f 2d 09 09 08 18 36 0a 0a 09 06 24 0b 0b 0a 06 24 0c 0c 0b 12 30 0d 0d 0c 12 30 0e 0e 0d 15 33 0f 0f 0e 15 33 10 10 0f 09 27 11 11 10 09 27 12
+SHADER PlaygroundLitPlaceable_HWSkin 0xcb00 PROGRAM 0xcae0 05 00 01 00 00 01 00 00 00 00 07 20 c9 00 00 00 00 01 c0 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0xc4b0 00 00 00 4d 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0xc4c0 3f 19 99 1f 3e 4c cc 1e 3e 4c cc 20 00 00 00 00 3f 19 99 1e 3e cc cc 1f 00 00 00 00 00 00 00 00 3f 19 99 1f 3e cc cc 20 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 44 0xc560 31 0b 21 46 02 a5 2f 9f 25 3e 02 de 31 78 21 7b ff 76 30 9e 25 95 ff 65 31 91 21 35 fc 4e 2f ce 25 d0 fb 00 30 e9 20 b2 f9 b2 2d a3 24 82 f9 65
+Normals 44 0xc668 39 3d 0d 95 19 36 2f 10 17 da 24 3a 3e b7 0b 9d 05 4e 36 59 21 99 03 af 3c 7b 0d f0 f0 65 32 e1 13 ec de ad 18 79 03 65 c4 f7 1d 98 ea 47 cb 95
+UVs 52 0xc770 3e 3c f6 3f 3f 41 04 69 3e 28 69 19 3f 2d 61 98 3e 8d f4 b4 3f 41 b6 ef 3e 8a 3f e5 3f 29 e9 92 3e b7 2d 90 3f 41 04 69 3e bc c2 3e 3f 2b aa 2d
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xc920 98 00 0a 1b 39 00 00 00 09 27 01 01 01 1b 39 02 02 02 06 24 03 03 03 00 1e 04 04 04 0c 2a 05 05 05 00 1e 06 06 06 15 33 07 07 07 0f 2d 08 08 08 12 30 09 09 09 98 00 06 1b 39 02 02 02 03 21 0a 0a 0a 1b 39 00 00 00 03 21 0b 0b 0b 18 36 0c 0c 0c 18 36 0d 0d 0d 98 00 07 0c 2a 0e 0e 0e 0c 2a
+SHADER PlaygroundLitPlaceable_HWSkin 0xc440 PROGRAM 0xc420 05 00 01 00 00 01 00 00 00 00 07 20 c3 00 00 00 00 01 00 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0xbfd4 00 00 00 2d 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0xbfe4 3f 19 99 29 3e 4c cc 20 3e 4c cc 2a 00 00 00 00 3f 19 99 1f 3e cc cc 20 00 00 00 00 00 00 00 00 3f 19 99 20 3e cc cc 21 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 30 0xc084 2b 15 27 aa 05 a3 2b 74 28 47 04 6e 2c 75 26 45 05 45 2c fd 26 46 04 bd 2d 04 25 07 04 e9 2f 9f 25 3e 02 de 30 9e 25 95 ff 65 2d c6 28 69 01 76
+Normals 30 0xc138 05 16 36 80 21 2a 12 54 36 3e 1c 99 2f 67 17 37 24 32 2a 73 16 08 2a 88 18 83 f3 57 39 bf 2f 10 17 da 24 3a 36 59 21 99 03 af 25 da 30 a8 11 33
+UVs 35 0xc1ec 3d 21 cd 61 3d eb 0f c8 3c 98 ed 80 3d fb 1b 80 3d 67 35 56 3d 93 75 88 3c 22 4a 7d 3d 98 46 a8 3c b3 c0 dc 3c 5e 6b c0 3d a9 24 dd 3f 2b fa 8e
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xc320 98 00 05 09 27 00 00 00 09 27 01 01 01 09 27 02 02 02 12 30 03 03 03 09 27 04 04 04 98 00 0b 09 27 04 04 05 12 30 03 03 06 06 24 05 05 07 09 27 01 01 08 03 21 06 06 09 06 24 07 07 0a 18 36 08 08 0b 0f 2d 09 09 0c 15 33 0a 0a 0d 00 1e 0b 0b 0e 1b 39 0c 0c 0f 98 00 03 0f 2d 09 09 0c 06 24
+SHADER PlaygroundLitPlaceable_HWSkin 0xbf64 PROGRAM 0xbf40 05 00 01 00 00 01 00 00 00 00 04 00 07 00 af 00 00 00 00 10 40 0a 00 0a 02 0b 0e 09 09 09 0a 08 0d 00 00 00
+Parameters 1 0x9cb0 00 00 02 39 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x9cc0 3f 19 99 20 3e cc cc 21 00 00 00 00 00 00 00 00 3f 19 99 21 3e cc cc 22 00 00 00 00 00 00 00 00 3f 19 99 2c 3e cc cc 32 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 257 0x9d60 22 70 1a 91 04 bc 22 20 1b 2c 03 88 22 1e 1a 03 04 03 22 1a 1a a5 03 14 25 3f 19 09 05 06 25 19 19 a9 03 ca 25 7c 19 43 04 65 22 eb 1a 06 06 2f
+Normals 258 0xa368 3b 3e 16 ec f8 2e 14 b2 21 df cd cd 01 7d db 02 34 34 1c 8c 30 59 e1 4a 1f 09 12 5d 34 df 23 48 34 f1 f9 0e 3e 15 0c 01 f6 1f 3c 4d 0c 85 ee 98
+UVs 176 0xa974 3f 1c ad ec 3e 37 d3 28 3f 10 2e dd 3e 33 15 ac 3f 1c db 5b 3d d7 54 d8 3f 0e f9 0b 3d d1 bb d0 3f 19 b2 48 3c ae 9d 20 3f 0c 62 ed 3c dc e8 a0
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xaf00 98 00 07 15 33 00 00 00 00 00 15 33 00 01 00 01 01 15 33 00 02 00 02 02 15 33 00 03 00 03 03 15 33 00 04 00 04 04 15 33 00 05 00 05 05 15 33 00 06 00 06 06 98 00 07 15 33 00 07 00 07 07 15 33 00 00 00 00 00 15 33 00 08 00 08 08 15 33 00 09 00 09 02 15 33 00 0a 00 0a 09 15 33 00 0b 00 0b
+SHADER PlaygroundLitPlaceable_HWSkin 0x9c40 PROGRAM 0x9c20 05 00 01 00 00 01 00 00 00 00 07 e0 9b 00 00 00 00 00 40 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x9ad0 00 00 00 0b 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 5 0x9ae0 3f 19 99 35 3e 4c cc 34 3e 4c cc 36 00 00 00 00 3f 19 99 34 3e cc cc 35 00 00 00 00 00 00 00 00 3f 19 99 35 3e cc cc 36 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 8 0x9b30 24 dc 07 38 f0 17 23 ad 05 a1 ee 12 26 81 06 7e ef 10 26 6c 05 83 ee 5a 27 a0 05 a8 ef 7c 26 cb 03 43 ee 01 28 4f 03 b0 ef 32 23 85 03 56 ee 00
+Normals 8 0x9b60 f4 bd 2d 50 d4 3b f7 b7 1e 2f c8 2e 17 c6 25 78 d1 e3 15 af 1a 6d c9 e6 27 77 19 d6 d4 c0 15 38 02 0d c3 a9 2a c6 0b 7a d1 cd f4 e8 fc e1 c1 0d
+UVs 8 0x9b90 3f 69 90 85 3f 22 e2 94 3f 6b 27 04 3f 10 2d d1 3f 72 b8 c5 3f 24 15 c6 3f 77 c7 0c 3f 1b dd e3 3f 76 ce 60 3f 24 26 8c 3f 7b 35 d3 3f 17 50 1e
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x9be0 98 00 07 09 27 00 00 00 06 24 01 01 01 00 1e 02 02 02 0c 2a 03 03 03 03 21 04 04 04 06 24 05 05 05 00 1e 06 06 06 98 00 04 06 24 05 05 05 0c 2a 03 03 03 06 24 07 07 07 06 24 01 01 01 00 00 00 05 00 01 00 00 01 00 00 00 00 07 e0 9b 00 00 00 00 00 40 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+SHADER PlaygroundLitPlaceable_HWSkin 0x9a60 PROGRAM 0x9a40 05 00 01 00 00 01 00 00 00 00 07 a0 99 00 00 00 00 00 a0 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x9770 00 00 00 19 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x9780 3f 19 99 35 3e 4c cc 34 3e 4c cc 36 00 00 00 00 3f 19 99 2c 3e cc cc 2d 00 00 00 00 00 00 00 00 3f 19 99 2d 3e cc cc 2e 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 18 0x9820 2d 98 15 20 0d 41 30 1d 17 2d 08 3e 2e 89 11 29 09 50 30 62 14 72 06 9b 2b c7 0f ed 05 f2 2f b3 12 9c 02 0e 2d 7f 12 99 00 9a 32 f2 16 be 02 5f
+Normals 18 0x988c 0b 24 e4 14 38 7f 33 de 24 4c 09 63 10 30 cd 6f 23 bb 3c 45 f2 ea 11 1a f8 fa c0 c9 07 14 29 34 cf 90 f8 d1 f9 7a c8 8c e0 bb 30 f4 d6 c9 ff 2e
+UVs 18 0x98f8 3e ed fe c6 3f 10 5a 31 3e cd f4 13 3e 90 40 b6 3e 87 5c 88 3f 09 35 76 3e 8a 0c 45 3e 85 d0 0e 3e 04 25 d0 3f 0c 38 e8 3e 36 71 0d 3e 8b 39 78
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x99a0 98 00 09 06 24 00 00 00 1b 39 01 01 01 06 24 02 02 02 18 36 03 03 03 06 24 04 04 04 03 21 05 05 05 09 27 06 06 06 18 36 07 07 07 18 36 08 08 08 98 00 04 18 36 03 03 03 18 36 09 09 09 03 21 05 05 05 18 36 07 07 07 98 00 07 00 1e 0a 0a 0a 00 1e 0a 0a 0a 15 33 0b 0b 0b 0c 2a 0c 0c 0c 15 33
+SHADER PlaygroundLitPlaceable_HWSkin 0x9700 PROGRAM 0x96e0 05 00 01 00 00 01 00 00 00 00 07 a0 95 00 00 00 00 01 40 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x9250 00 00 00 3a 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x9260 3f 19 99 2c 3e cc cc 32 00 00 00 00 00 00 00 00 3f 19 99 2d 3e cc cc 32 00 00 00 00 00 00 00 00 3f 19 99 32 3e cc cc 33 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 36 0x9300 29 73 16 57 fa 2a 27 12 14 62 f7 ad 2d 7d 12 f7 ff 5c 2b fb 11 12 fa 30 2f cc 13 e4 fc 6a 2e fc 11 08 f6 e8 31 37 14 f6 f9 2f 2e 78 13 3a f2 12
+Normals 36 0x93d8 c2 f0 f2 07 0d 17 cd 12 db 99 0d 48 fe da c1 a9 0e 6c fb 4e c0 2e 00 91 27 b4 ce 57 07 4b 0f 3c c4 6a ee 51 3a 2a ec 75 ed d1 0e d3 d5 1b d2 e2
+UVs 27 0x94b0 3c ce 2e d4 3e a7 95 e0 3c 6f 0d 95 3f 0e 1d a8 3e 07 15 ca 3e 8b 1e 98 3e 04 25 d0 3f 0c 38 e8 3e 36 71 0d 3e 8b 39 78 3e 87 5c 88 3f 09 35 76
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x95a0 98 00 11 1b 39 00 00 00 1b 39 00 00 00 06 24 01 01 01 0f 2d 02 02 02 06 24 03 03 03 00 1e 04 04 04 06 24 05 05 05 00 1e 06 06 06 06 24 07 07 07 0c 2a 08 08 08 06 24 09 09 09 1b 39 0a 0a 0a 06 24 0b 0b 0b 1b 39 0c 0c 0c 06 24 0d 0d 0d 1b 39 0e 0e 0e 1b 39 00 00 0f 98 00 0f 1b 39 0e 0e 0e
+SHADER PlaygroundLitPlaceable_HWSkin 0x91e0 PROGRAM 0x91c0 05 00 01 00 00 01 00 00 00 00 07 80 8e 00 00 00 00 03 40 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x8770 00 00 00 98 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x8780 3f 19 99 2d 3e cc cc 2e 00 00 00 00 00 00 00 00 3f 19 99 2d 3e cc cc 32 00 00 00 00 00 00 00 00 3f 19 99 2e 3e cc cc 2f 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 82 0x8820 2a 0a 0b d8 0f 67 2a d7 0f ff 0e 13 2b 62 0c 15 0d 36 2b e0 0e dc 0b 5c 2a 7e 0c 06 0b 54 2a d8 0e 81 09 eb 28 af 0c 10 0a 5f 29 5a 0e 64 08 fe
+Normals 82 0x8a0c 2c eb 07 9f 2c f2 27 1c 31 6c 0b 22 3e 9d f2 c1 00 55 31 38 25 79 ef 98 29 51 e1 cb d9 95 25 c6 18 85 d2 87 00 89 e2 4d c7 51 0b 15 1c 44 c7 aa
+UVs 79 0x8bf8 3e d6 92 6b 3f 72 33 98 3e dd 34 fb 3f 48 e4 7a 3e 86 c9 ed 3f 62 5e 7c 3e 8d ee f6 3f 45 68 05 3e 57 6b f0 3f 5e 2f 52 3e 60 48 3f 3f 43 eb 68
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x8e80 98 00 0a 06 24 00 00 00 18 36 01 01 01 0f 2d 02 02 02 18 36 03 03 03 0f 2d 04 04 04 18 36 05 05 05 0f 2d 06 06 06 18 36 07 07 07 0f 2d 08 08 08 18 36 09 09 09 98 00 15 18 36 0a 0a 0a 18 36 0a 0a 0a 18 36 0b 0b 0b 18 36 0c 0c 0c 0c 2a 0d 0d 0d 18 36 0e 0e 0c 0c 2a 0f 0f 0d 0c 2a 10 10 0e
+SHADER PlaygroundLitPlaceable_HWSkin 0x8700 PROGRAM 0x86e0 05 00 01 00 00 01 00 00 00 00 07 e0 84 00 00 00 00 02 00 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x8050 00 00 00 5b 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x8060 3f 19 99 30 3e 4c cc 2f 3e 4c cc 31 00 00 00 00 3f 19 99 2e 3e cc cc 2f 00 00 00 00 00 00 00 00 3f 19 99 2f 3e cc cc 2e 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 47 0x8100 25 ba 03 0a 14 c4 27 5d 03 d3 13 fe 24 ff 05 30 14 5d 26 62 05 a2 13 91 25 0b 06 35 13 b4 27 d4 07 33 11 d7 26 49 08 c2 11 63 28 45 07 bc 11 4e
+Normals 47 0x821c 05 36 02 72 3f be 19 a3 10 94 38 40 02 27 1a c7 3a 17 14 d3 1d cc 34 ac 03 36 25 b3 33 9e 12 5e 1d be 35 9c 0a 49 1b d4 38 b5 12 45 17 af 38 94
+UVs 53 0x8338 3f 7b 35 d3 3f 17 50 1e 3f 7b 21 8e 3f 21 f9 22 3f 77 c7 0c 3f 1b dd e3 3f 76 ce 60 3f 24 26 8c 3f 72 b8 c5 3f 24 15 c6 3f 73 25 f6 3f 33 73 2c
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x84e0 98 00 20 0f 2d 00 00 00 0f 2d 00 00 00 0c 2a 01 01 01 00 1e 02 02 02 09 27 03 03 03 1b 39 04 04 04 18 36 05 05 05 18 36 06 06 06 18 36 07 07 07 15 33 08 08 08 03 21 09 09 09 03 21 0a 0a 0a 03 21 0b 0b 0b 12 30 0c 0c 0c 03 21 0d 0d 0d 12 30 0e 0e 0e 03 21 0f 0f 0f 12 30 10 10 10 03 21 11
+SHADER PlaygroundLitPlaceable_HWSkin 0x7fe0 PROGRAM 0x7fc0 05 00 01 00 00 01 00 00 00 00 07 c0 7e 00 00 00 00 01 00 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x7b90 00 00 00 2d 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x7ba0 3f 19 99 35 3e 4c cc 34 3e 4c cc 36 00 00 00 00 3f 19 99 2e 3e cc cc 2f 00 00 00 00 00 00 00 00 3f 19 99 2f 3e cc cc 2e 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 33 0x7c40 26 fb 07 11 f9 4a 2c 06 05 9e f4 cc 25 56 05 6e f7 46 2a a2 04 5b f2 32 22 66 03 cd f5 a5 28 76 02 6c ef 4e 20 0f 02 a0 f2 8e 26 d7 01 ff ee 43
+Normals 33 0x7d08 e7 5d d3 fb 27 61 21 74 c9 72 ff 89 ea 88 df e2 33 05 33 36 da 80 f7 d4 e7 a5 dd 43 2f ea 2a 38 d3 67 ed fd d7 0a d2 b3 13 1d 10 ba cb 9b df 49
+UVs 30 0x7dd0 3f 6a 3c 2a 3e a7 68 76 3f 49 e3 a9 3e 9f fe fc 3f 66 f9 42 3e 7b 67 b0 3f 47 f8 5c 3e 76 e2 e8 3f 67 29 3a 3e 2b 84 68 3f 47 3f 69 3e 25 06 1c
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x7ec0 98 00 08 18 36 00 00 00 18 36 01 01 01 1b 39 02 02 02 0f 2d 03 03 03 0f 2d 04 04 04 00 1e 05 05 05 12 30 06 06 06 12 30 07 07 07 98 00 08 18 36 01 01 01 0c 2a 08 08 01 0f 2d 03 03 03 0f 2d 09 09 08 00 1e 05 05 05 00 1e 0a 0a 09 12 30 07 07 07 12 30 0b 0b 0a 98 00 08 09 27 0c 0c 0b 09 27
+SHADER PlaygroundLitPlaceable_HWSkin 0x7b20 PROGRAM 0x7b00 05 00 01 00 00 01 00 00 00 00 07 80 78 00 00 00 00 02 80 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00
+Parameters 1 0x72f4 00 00 00 72 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x7304 3f 19 99 32 3e cc cc 33 00 00 00 00 00 00 00 00 3f 19 99 33 3e cc cc 32 00 00 00 00 00 00 00 00 3f 19 99 33 3e cc cc 34 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 62 0x73a4 29 6f 0f fa f2 85 28 04 10 78 f2 ac 29 53 11 58 f2 33 28 3b 11 d4 f2 42 28 d2 11 dd f2 b3 28 5e 12 0b f2 bd 28 d9 13 a3 f3 05 27 68 12 5e f3 56
+Normals 61 0x7518 fb c8 d6 4e cf a3 e3 07 d9 12 d6 49 17 72 17 dd c9 71 f9 8c 1c df c7 40 17 70 21 a6 ce de 00 39 28 44 ce 42 fd 3d 07 5e c0 7d df 30 27 cc da 1e
+UVs 60 0x7688 3f 0d b7 23 3f 38 4e a6 3f 17 6f 7c 3f 37 34 f0 3f 0f 7b 60 3f 2d 8e a3 3f 16 25 05 3f 2b 4d 8d 3f 11 16 3a 3f 23 ca 74 3f 15 4e af 3f 23 95 0e
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x7880 98 00 0e 18 36 00 00 00 18 36 00 00 00 0c 2a 01 01 01 0c 2a 02 02 02 03 21 03 03 03 0c 2a 04 04 04 0c 2a 05 05 05 00 1e 06 06 06 00 1e 07 07 07 00 1e 08 08 08 00 1e 09 09 09 00 1e 0a 0a 0a 18 36 0b 0b 0b 00 1e 0c 0c 0c 98 00 06 0c 2a 01 01 01 03 21 03 03 03 0c 2a 0d 0d 0d 00 1e 0e 0e 0e
+SHADER PlaygroundLitPlaceable_HWSkin 0x7284 PROGRAM 0x7260 05 00 01 00 00 01 00 00 00 00 04 00 07 a0 6c 00 00 00 00 05 c0 0a 00 0a 02 0b 0e 08 09 08 0a 08 0d 00 00 00
+Parameters 1 0x6154 00 00 01 10 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 10 0x6164 3f 19 99 2e 3e cc cc 2f 00 00 00 00 00 00 00 00 3f 19 99 33 3e cc cc 34 00 00 00 00 00 00 00 00 3f 19 99 34 3e cc cc 35 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 146 0x6204 27 cf 11 0c 10 b3 27 44 0b 1c 10 d2 26 0a 11 71 0f be 25 5d 0b de 0f e2 24 b3 11 6c 0e 39 24 46 0b 7d 0e 94 25 85 0f ac f2 42 25 81 0b 91 f4 2c
+Normals 151 0x6570 e3 c9 04 4b 39 48 d8 b5 05 7a 32 37 cf 4c 06 6d 29 04 d3 83 ea af d7 3c da 0e e6 b0 d3 1e e1 4b e3 29 cf d4 f4 e8 fc e1 c1 0d f7 b7 1e 2f c8 2e
+UVs 115 0x68fc 3f 4b 0e 50 3e dd 40 68 3f 4c 2e 95 3f 08 ff c6 3f 53 32 7b 3e e4 79 4e 3f 55 96 9c 3f 07 c3 08 3f 5f cf 56 3e e1 24 b0 3f 5f 9e 9c 3f 07 06 6a
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x6ca0 98 00 06 18 36 00 00 00 0c 2a 01 00 01 18 36 02 01 02 00 1e 03 01 03 18 36 04 02 04 00 1e 05 02 05 98 00 06 1b 39 06 03 04 12 30 07 03 05 0f 2d 08 04 02 03 21 09 04 03 0f 2d 0a 05 00 03 21 0b 05 01 98 00 0a 09 27 0c 06 06 09 27 0d 07 07 09 27 0e 08 08 09 27 0f 09 09 09 27 10 0a 0a 09 27
+SHADER PlaygroundLitPlaceable_HWSkin 0x60e4 PROGRAM 0x60c0 05 00 01 00 00 01 00 00 00 00 04 00 07 e0 2e 00 00 00 00 31 e0 0a 00 0a 02 0b 0e 09 09 09 0a 09 0d 00 00 00
+Parameters 1 0x0 00 00 06 0a 00 00 00 00 00 00 00 00 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 5 0x10 3f 19 99 29 3e 4c cc 20 3e 4c cc 2a 00 00 00 00 3f 19 99 20 3e cc cc 29 00 00 00 00 00 00 00 00 3f 19 99 29 3e cc cc 2a 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+ViewMatrix 1 external 
+Coordinates 744 0x60 1e 92 36 e4 07 89 1e 85 35 e9 07 42 1d af 37 8a 06 ee 1d a2 36 63 06 48 1d 17 38 2e 06 01 1d 01 36 e7 05 60 1c b3 38 d7 04 e3 1c b1 37 5f 04 56
+Normals 731 0x11d0 d1 86 f0 6d 29 25 cc a1 f1 fa 23 7e c5 1b f7 1f 17 6a c2 74 fa 57 10 98 c1 94 f9 ee 0c bd c1 00 f9 d7 09 6a c8 42 09 12 1e 19 c4 a2 09 1e 16 18
+UVs 381 0x22f4 3f 7d b3 61 3d 28 7d 70 3f 7c 9e 7d 3d 8f 7d f0 3f 78 22 4b 3d 29 c9 60 3f 77 0a 9a 3d 8e da d8 3f 71 80 ae 3d 2a 96 f0 3f 70 2d 43 3d 8e 84 00
+Texture 1 external 
+SpecularMap 1 external 
+LightBlock 1 external 
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x2ee0 98 00 0c 0c 2a 00 00 00 00 00 00 0c 2a 00 01 00 00 00 01 0c 2a 00 02 00 01 00 02 0c 2a 00 03 00 01 00 03 0c 2a 00 04 00 02 00 04 0c 2a 00 05 00 02 00 05 0c 2a 00 06 00 03 00 06 0c 2a 00 07 00 03 00 07 0c 2a 00 08 00 04 00 08 0c 2a 00 09 00 04 00 09 0c 2a 00 0a 00 05 00 0a 0c 2a 00 0b 00
+
+FILE teeter_totter_shadow.o
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0xc41c PROGRAM 0xc400 05 00 01 00 00 00 00 07 60 c3 00 00 00 00 00 a0 0a 00 0b 0e 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 15 0xc1bc 3f 19 99 04 3e 4c cc 03 3e 4c cc 05 00 00 00 00 3f 19 99 05 3e 4c cc 06 3e 4c cc 0a 00 00 00 00 3f 19 99 0e 3e 4c cc 05 3e 4c cc 0f 00 00 00 00
+MVMatrix 1 external 
+Coordinates 26 0xc2ac d4 6f 29 80 05 dc d2 44 29 a8 07 37 d3 9a 29 c9 04 34 d1 4e 29 f9 05 0e d3 76 2a 5d 02 ca d1 59 2a 6f 02 e6 d5 79 27 89 03 fa d5 8a 27 b6 02 39
+Colours 1 0xc348 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xc360 98 00 06 15 00 00 15 01 00 1e 02 00 27 03 00 18 04 00 18 05 00 98 00 0d 15 06 00 15 06 00 0f 07 00 1e 02 00 06 08 00 18 04 00 12 09 00 12 0a 00 0c 0b 00 06 0c 00 1b 0d 00 06 0e 00 1b 0f 00 98 00 06 0f 07 00 06 08 00 03 10 00 12 09 00 0c 11 00 0c 0b 00 98 00 06 00 12 00 0f 07 00 09 13 00
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0xc17c PROGRAM 0xc160 05 00 01 00 00 00 00 07 60 be 00 00 00 00 03 00 0a 00 0b 0e 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0xba3c 3f 19 99 08 3e 4c cc 07 3e 4c cc 09 00 00 00 00 3f 19 99 05 3e cc cc 0a 00 00 00 00 00 00 00 00 3f 19 99 06 3e cc cc 07 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 119 0xbb7c d5 d8 27 35 05 88 d5 24 25 b1 05 2e d6 75 25 90 06 7b d5 3a 24 5e 05 cc d6 e1 23 13 07 7e d5 0c 21 b4 06 c4 d6 92 22 e4 07 a5 d5 4d 22 14 07 3e
+Colours 1 0xbe48 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xbe60 98 00 12 0c 00 00 0c 01 00 24 02 00 36 03 00 36 04 00 36 05 00 36 06 00 36 07 00 36 08 00 27 09 00 0f 0a 00 0f 0b 00 39 0c 00 2a 0d 00 2d 0e 00 39 0f 00 12 10 00 12 11 00 98 00 12 0c 12 00 0c 00 00 24 13 00 24 02 00 36 14 00 36 04 00 36 15 00 36 06 00 27 16 00 36 08 00 0f 17 00 0f 0a 00
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0xb9fc PROGRAM 0xb9e0 05 00 01 00 00 00 00 07 40 ad 00 00 00 00 0c a0 0a 00 0b 0e 09 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0xa43c 3f 19 99 04 3e 4c cc 03 3e 4c cc 05 00 00 00 00 3f 19 99 08 3e 4c cc 07 3e 4c cc 09 00 00 00 00 3f 19 99 03 3e cc cc 04 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 330 0xa57c de 22 19 0b fb c1 de 95 19 a9 fc f3 de 55 18 4a fc 4c de 74 18 fb fd 38 dc 87 18 da fb 3e dc cc 19 7f fc 72 dc 47 19 1c fb ca dd 82 18 a2 fa 5b
+Colours 1 0xad38 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0xad40 98 00 07 36 00 00 00 36 00 01 00 36 00 02 00 36 00 03 00 36 00 04 00 36 00 05 00 36 00 06 00 98 00 07 36 00 07 00 36 00 00 00 36 00 08 00 36 00 09 00 36 00 0a 00 36 00 0b 00 36 00 0c 00 98 00 27 03 00 0d 00 03 00 0e 00 36 00 0f 00 36 00 10 00 36 00 11 00 36 00 12 00 36 00 13 00 36 00 14
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0xa3fc PROGRAM 0xa3e0 05 00 01 00 00 00 00 07 20 9f 00 00 00 00 04 c0 0a 00 0b 0e 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0x999c 3f 19 99 19 3e 4c cc 18 3e 4c cc 1a 00 00 00 00 3f 19 99 12 3e cc cc 13 00 00 00 00 00 00 00 00 3f 19 99 13 3e cc cc 14 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 181 0x9adc d9 8d 19 16 09 45 d6 c3 19 71 06 1a d0 33 14 2c 01 6a d7 42 19 75 05 5f d0 7d 14 29 00 c1 d7 72 17 dd fc dc d0 58 14 3b 00 0e db 05 17 6d fa 67
+Colours 1 0x9f1c 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x9f20 98 00 15 09 00 00 36 01 00 2d 02 00 36 03 00 2d 04 00 30 05 00 2d 06 00 03 07 00 15 08 00 03 09 00 15 0a 00 03 0b 00 03 0c 00 03 0d 00 33 0e 00 33 0f 00 33 10 00 33 11 00 33 12 00 1b 13 00 1b 14 00 98 00 21 09 00 00 2d 02 00 09 15 00 2d 16 00 09 17 00 2d 18 00 09 19 00 1e 1a 00 09 1b 00
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x995c PROGRAM 0x9940 05 00 01 00 00 00 00 07 60 95 00 00 00 00 03 e0 0a 00 0b 0e 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0x90dc 3f 19 99 14 3e 4c cc 13 3e 4c cc 15 00 00 00 00 3f 19 99 15 3e 4c cc 14 3e 4c cc 16 00 00 00 00 3f 19 99 19 3e 4c cc 18 3e 4c cc 1a 00 00 00 00
+MVMatrix 1 external 
+Coordinates 138 0x921c e5 52 14 9b f1 24 e5 a2 12 d2 f0 56 e6 e3 16 7b f0 9f e8 18 14 ce ef 43 e8 9e 18 78 ef 0c ea 0b 17 3a ee 11 e8 7c 19 d9 ec ea e9 81 19 55 eb d8
+Colours 1 0x9558 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x9560 98 00 23 0f 00 00 0f 00 00 0f 01 00 0f 02 00 0f 03 00 15 04 00 15 05 00 15 06 00 15 07 00 15 08 00 15 09 00 33 0a 00 33 0b 00 0f 0c 00 12 0d 00 0f 0e 00 0f 0f 00 2d 10 00 2a 11 00 0c 12 00 0c 13 00 0c 14 00 0c 15 00 0c 16 00 0c 17 00 0c 18 00 2a 19 00 0c 1a 00 0f 01 00 2d 1b 00 0f 00 00
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x909c PROGRAM 0x9080 05 00 01 00 00 00 00 07 00 76 00 00 00 00 1a 80 0a 00 0b 0e 09 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 5 0x635c 3f 19 99 0e 3e 4c cc 05 3e 4c cc 0f 00 00 00 00 3f 19 99 05 3e cc cc 0e 00 00 00 00 00 00 00 00 3f 19 99 0e 3e cc cc 0f 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 781 0x63ac d8 25 3a d7 0a 88 d8 4f 3a a4 09 b6 d7 a3 3a 3f 0a 2c d8 15 3a 73 08 c6 d7 05 39 d8 09 66 d9 8a 3b fc 09 dc d9 8b 3b 6b 08 dd d8 dc 3a d5 09 75
+Colours 1 0x75fc 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x7600 98 00 05 0c 00 00 00 0c 00 01 00 0c 00 02 00 0c 00 03 00 0c 00 04 00 98 00 05 0c 00 05 00 0c 00 06 00 0c 00 07 00 0c 00 08 00 0c 00 03 00 98 00 0e 0c 00 09 00 0c 00 0a 00 0c 00 0b 00 0c 00 0c 00 0c 00 0d 00 0c 00 0e 00 0c 00 0f 00 0c 00 10 00 0c 00 11 00 0c 00 12 00 0c 00 13 00 0c 00 14
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x631c PROGRAM 0x6300 05 00 01 00 00 00 00 07 40 60 00 00 00 00 02 c0 0a 00 0b 0e 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 19 0x5c7c 3f 19 99 21 3e cc cc 22 00 00 00 00 00 00 00 00 3f 19 99 22 3e cc cc 23 00 00 00 00 00 00 00 00 3f 19 99 23 3e cc cc 24 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 109 0x5dac 2b 12 20 3c f8 f0 2d c0 20 5c f7 ca 2b 83 1e ae f8 1f 2d 9c 1e 56 f7 57 2b 4d 1e 51 f7 fe 2c f9 1c ea f7 36 2a ed 1e 1c f8 14 2c 2d 1c 2b f7 74
+Colours 1 0x603c 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x6040 98 00 0e 30 00 00 30 01 00 1e 02 00 09 03 00 09 04 00 09 05 00 21 06 00 09 07 00 24 08 00 33 09 00 0c 0a 00 24 0b 00 36 0c 00 36 0d 00 98 00 0c 30 0e 00 1e 02 00 09 0f 00 09 04 00 21 10 00 21 06 00 24 11 00 24 08 00 0c 12 00 0c 0a 00 36 13 00 36 0c 00 98 00 0c 1e 14 00 30 0e 00 09 15 00
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x5c3c PROGRAM 0x5c20 05 00 01 00 00 00 00 07 80 5a 00 00 00 00 01 a0 0a 00 0b 0e 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0x57bc 3f 19 99 1f 3e 4c cc 1e 3e 4c cc 20 00 00 00 00 3f 19 99 20 3e 4c cc 21 3e 4c cc 25 00 00 00 00 3f 19 99 29 3e 4c cc 20 3e 4c cc 2a 00 00 00 00
+MVMatrix 1 external 
+Coordinates 62 0x58fc 2c 0d 28 1d f8 b6 2e 02 28 50 fc 2c 2c 77 28 9c fa e9 2e 78 28 42 fe ec 2d 02 28 dd fe c7 2d c6 28 69 01 76 2c 39 28 e2 02 61 2b 74 28 47 04 6e
+Colours 1 0x5a70 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x5a80 98 00 08 18 00 00 0f 01 00 30 02 00 2d 03 00 2a 04 00 0c 05 00 1e 06 00 15 07 00 98 00 04 0f 01 00 09 08 00 2d 03 00 0c 05 00 98 00 06 39 09 00 30 02 00 36 0a 00 2a 04 00 06 0b 00 1e 06 00 98 00 05 18 0c 00 18 0d 00 1b 0e 00 00 0f 00 18 10 00 98 00 03 18 10 00 21 11 00 1b 0e 00 98 00 06
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x577c PROGRAM 0x5760 05 00 01 00 00 00 00 07 e0 4b 00 00 00 00 0b 80 0a 00 0b 0e 09 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0x437c 3f 19 99 1e 3e 4c cc 2c 3e 4c cc 32 00 00 00 00 3f 19 99 1f 3e 4c cc 1e 3e 4c cc 20 00 00 00 00 3f 19 99 26 3e 4c cc 2c 3e 4c cc 32 00 00 00 00
+MVMatrix 1 external 
+Coordinates 301 0x44bc 22 70 1a 91 04 bc 22 20 1b 2c 03 88 22 1e 1a 03 04 03 22 1a 1a a5 03 14 25 3f 19 09 05 06 25 19 19 a9 03 ca 25 7c 19 43 04 65 22 eb 1a 06 06 2f
+Colours 1 0x4bcc 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x4be0 98 00 07 33 00 00 00 33 00 01 00 33 00 02 00 33 00 03 00 33 00 04 00 33 00 05 00 33 00 06 00 98 00 07 33 00 07 00 33 00 00 00 33 00 08 00 33 00 09 00 33 00 0a 00 33 00 0b 00 33 00 0c 00 98 00 27 33 00 0d 00 33 00 0e 00 33 00 0f 00 33 00 10 00 33 00 11 00 33 00 12 00 33 00 13 00 33 00 14
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x433c PROGRAM 0x4320 05 00 01 00 00 00 00 07 00 42 00 00 00 00 01 20 0a 00 0b 0e 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 16 0x3fdc 3f 19 99 30 3e 4c cc 2f 3e 4c cc 31 00 00 00 00 3f 19 99 2c 3e cc cc 32 00 00 00 00 00 00 00 00 3f 19 99 2e 3e cc cc 2f 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 46 0x40dc 29 7f 15 44 f1 7a 2c 62 19 9b f5 89 2e 78 13 3a f2 12 2f f2 16 f0 f6 7c 2e fc 11 08 f6 e8 31 37 14 f6 f9 2f 2b fb 11 12 fa 30 2f cc 13 e4 fc 6a
+Colours 1 0x41f0 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x4200 98 00 0c 0f 00 00 0f 00 00 2d 01 00 0f 02 00 1b 03 00 0f 04 00 03 05 00 0f 06 00 03 07 00 1e 08 00 27 09 00 24 0a 00 98 00 0a 21 0b 00 0f 0c 00 21 0d 00 0f 06 00 21 0e 00 0f 04 00 21 0f 00 0f 02 00 0f 10 00 0f 00 00 98 00 0a 0f 11 00 21 0b 00 0f 12 00 21 0d 00 0f 13 00 21 0e 00 0f 14 00
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x3f9c PROGRAM 0x3f80 05 00 01 00 00 00 00 07 c0 3b 00 00 00 00 03 c0 0a 00 0b 0e 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0x36fc 3f 19 99 2c 3e cc cc 2d 00 00 00 00 00 00 00 00 3f 19 99 2d 3e cc cc 2e 00 00 00 00 00 00 00 00 3f 19 99 2d 3e cc cc 32 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 147 0x383c 29 6f 0f fa f2 85 28 04 10 78 f2 ac 29 53 11 58 f2 33 28 3b 11 d4 f2 42 28 d2 11 dd f2 b3 28 5e 12 0b f2 bd 28 d9 13 a3 f3 05 27 68 12 5e f3 56
+Colours 1 0x3bb0 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x3bc0 98 00 0e 39 00 00 39 00 00 2a 01 00 2a 02 00 15 03 00 2a 04 00 2a 05 00 12 06 00 12 07 00 12 08 00 12 09 00 12 0a 00 39 0b 00 12 0c 00 98 00 06 2a 01 00 15 03 00 2a 0d 00 12 0e 00 2a 0f 00 2a 10 00 98 00 08 15 03 00 2a 05 00 12 0e 00 12 07 00 2a 10 00 12 09 00 39 11 00 39 0b 00 98 00 0c
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x36bc PROGRAM 0x36a0 05 00 01 00 00 00 00 07 a0 31 00 00 00 00 05 00 0a 00 0b 0e 08 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 20 0x2bdc 3f 19 99 30 3e 4c cc 2f 3e 4c cc 31 00 00 00 00 3f 19 99 35 3e 4c cc 34 3e 4c cc 36 00 00 00 00 3f 19 99 2e 3e cc cc 2f 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 187 0x2d1c 27 cf 11 0c 10 b3 27 44 0b 1c 10 d2 26 0a 11 71 0f be 25 5d 0b de 0f e2 24 b3 11 6c 0e 39 24 46 0b 7d 0e 94 25 85 0f ac f2 42 25 81 0b 91 f4 2c
+Colours 1 0x3180 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x31a0 98 00 06 33 00 00 1b 01 00 33 02 00 06 03 00 33 04 00 06 05 00 98 00 06 36 06 00 24 07 00 21 08 00 12 09 00 21 0a 00 12 0b 00 98 00 22 2a 0c 00 2a 0d 00 15 0e 00 15 0f 00 18 10 00 18 11 00 18 12 00 18 13 00 18 14 00 18 15 00 30 16 00 18 17 00 15 18 00 03 19 00 15 1a 00 15 1b 00 2a 1c 00
+SHADER PlaygroundCompressPlaceableShadow_HWSkin 0x2b9c PROGRAM 0x2b80 05 00 01 00 00 00 00 07 e0 11 00 00 00 00 19 a0 0a 00 0b 0e 09 09 08 0b 00 00 00 00
+PalletMatrixPtr 1 external 
+Weights 5 0x0 3f 19 99 29 3e 4c cc 20 3e 4c cc 2a 00 00 00 00 3f 19 99 20 3e cc cc 29 00 00 00 00 00 00 00 00 3f 19 99 29 3e cc cc 2a 00 00 00 00 00 00 00 00
+MVMatrix 1 external 
+Coordinates 744 0x50 1e 92 36 e4 07 89 1e 85 35 e9 07 42 1d af 37 8a 06 ee 1d a2 36 63 06 48 1d 17 38 2e 06 01 1d 01 36 e7 05 60 1c b3 38 d7 04 e3 1c b1 37 5f 04 56
+Colours 1 0x11c0 7f 7f 7f ff
+AlphaScaleValue 1 external 
+State 1 external 
+GX 0x11e0 98 00 0c 0c 00 00 00 0c 00 01 00 0c 00 02 00 0c 00 03 00 0c 00 04 00 0c 00 05 00 0c 00 06 00 0c 00 07 00 0c 00 08 00 0c 00 09 00 0c 00 0a 00 0c 00 0b 00 98 00 0e 0c 00 0c 00 0c 00 0d 00 0c 00 0e 00 0c 00 0f 00 0c 00 10 00 0c 00 11 00 0c 00 12 00 0c 00 13 00 0c 00 14 00 0c 00 15 00 0c 00

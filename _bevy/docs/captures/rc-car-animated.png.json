@@ -1,0 +1,43 @@
+{
+  "animation_players": 1,
+  "animation_time": 0.6311611533164978,
+  "loaded": true,
+  "mesh_entities": 5,
+  "preview": {
+    "animation": "S_rc_track_car_idle",
+    "asset": "generated/7774ba312ec1975e7dc3f93d/asset.glb",
+    "bones": 2,
+    "bounds": [
+      [
+        -1.720458984375,
+        -0.212646484375,
+        -2.0482177734375
+      ],
+      [
+        1.6524658203125,
+        0.85693359375,
+        2.0548095703125
+      ]
+    ],
+    "cache_hit": false,
+    "decode_ms": 23.18,
+    "decoder_version": "native-4-elf-models",
+    "duration": 1.0666666666666669,
+    "kind": "model",
+    "materials": 5,
+    "meshes": 1,
+    "name": "rc_track_car.o",
+    "skinned": true,
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\placeables\\rc_track_car.viv::rc_track_car.o",
+    "textures": 5,
+    "triangles": 980,
+    "warnings": [
+      "PlaygroundTexture_HWSkin at 0x2280: Q13 positions, 1 palette entries, 427 triangles.",
+      "PlaygroundTexture_HWSkin at 0x2880: Q13 positions, 1 palette entries, 75 triangles.",
+      "PlaygroundTexture_HWSkin at 0x3600: Q13 positions, 1 palette entries, 232 triangles.",
+      "PlaygroundTexture_HWSkin at 0x4740: Q13 positions, 1 palette entries, 220 triangles.",
+      "PlaygroundTexture_HWSkin at 0x4a80: Q13 positions, 1 palette entries, 26 triangles."
+    ]
+  },
+  "status": "rc_track_car.o • 23 ms"
+}

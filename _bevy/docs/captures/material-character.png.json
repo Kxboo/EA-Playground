@@ -1,0 +1,858 @@
+{
+  "animation_players": 0,
+  "animation_time": 0.0,
+  "loaded": true,
+  "mesh_entities": 62,
+  "preview": {
+    "animation": "",
+    "asset": "generated/9f0b9815c8303d32fc41f721/asset.glb",
+    "bones": 68,
+    "bounds": [
+      [
+        -0.495361328125,
+        -0.0037841796875,
+        -0.20269775390625
+      ],
+      [
+        0.495361328125,
+        1.0670166015625,
+        0.2442626953125
+      ]
+    ],
+    "cache_hit": false,
+    "decode_ms": 90.37,
+    "decoder_version": "native-5-materials-4",
+    "duration": 0,
+    "kind": "model",
+    "material_bindings": [
+      {
+        "mesh": 0,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 1,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 2,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 3,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 4,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 5,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 6,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 7,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 8,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 9,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 10,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 11,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 12,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 13,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 14,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 15,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 16,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 17,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 18,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 19,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 20,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 21,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 22,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 23,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 24,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 25,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 26,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 27,
+        "shader": "PlaygroundCharFaceToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_hd_base",
+            "pointer_offset": 76,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_hd_base,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 28,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 29,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 30,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 31,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 32,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 33,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 34,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 35,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 36,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 37,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 38,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 39,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 40,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 41,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 42,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 43,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 44,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 45,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 46,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 47,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 48,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 49,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 50,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 51,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 52,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 53,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ub_tshirt",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ub_tshirt,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 54,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ubl_pants",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ubl_pants,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 55,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ubl_pants",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ubl_pants,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 56,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ubl_pants",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ubl_pants,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 57,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ubl_pants",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ubl_pants,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 58,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ubl_pants",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ubl_pants,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 59,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ubl_pants",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ubl_pants,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 60,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ubl_pants",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ubl_pants,4;22=1;23=1;;24=0"
+          }
+        ]
+      },
+      {
+        "mesh": 61,
+        "shader": "PlaygroundCompressToonShade_HWSkin",
+        "textureless": false,
+        "textures": [
+          {
+            "name": "Alicia_ubl_pants",
+            "pointer_offset": 84,
+            "symbol": "__EAGL::TAR:::RUNTIME_ALLOC::0=1041;1=Alicia_ubl_pants,4;22=1;23=1;;24=0"
+          }
+        ]
+      }
+    ],
+    "material_report": [
+      {
+        "alpha_mode": "opaque",
+        "candidates": 1,
+        "distinct_images": 1,
+        "height": 256,
+        "match": "full_name",
+        "name": "Alicia_hd_base",
+        "pixel_sha256": "e8ed014e05dd0ea66ffd08e978671b49ef33675fb27c4e3708a7d2453b8a6c2f",
+        "sources": [
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\characters\\models\\characters.viv::alicia.viv::alicia.gsh",
+            "entry": 0,
+            "name": "Alicia_hd_base"
+          }
+        ],
+        "status": "resolved",
+        "width": 256
+      },
+      {
+        "alpha_mode": "opaque",
+        "candidates": 1,
+        "distinct_images": 1,
+        "height": 256,
+        "match": "full_name",
+        "name": "Alicia_ub_tshirt",
+        "pixel_sha256": "23014f16c341e630a61e915b3c4fd879fe363c941cb41bcb307343198477dac5",
+        "sources": [
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\characters\\models\\characters.viv::alicia.viv::alicia.gsh",
+            "entry": 2,
+            "name": "Alicia_ub_tshirt"
+          }
+        ],
+        "status": "resolved",
+        "width": 256
+      },
+      {
+        "alpha_mode": "opaque",
+        "candidates": 1,
+        "distinct_images": 1,
+        "height": 256,
+        "match": "full_name",
+        "name": "Alicia_ubl_pants",
+        "pixel_sha256": "e823496bb9f574e91e9a78951e52c28aa7e588d6355d1e0c293d7fb4f107f5ac",
+        "sources": [
+          {
+            "bank": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\characters\\models\\characters.viv::alicia.viv::alicia.gsh",
+            "entry": 1,
+            "name": "Alicia_ubl_pants"
+          }
+        ],
+        "status": "resolved",
+        "width": 256
+      }
+    ],
+    "material_warnings": [],
+    "materials": 3,
+    "meshes": 1,
+    "name": "alicia.o",
+    "shader_families": [
+      "PlaygroundCharFaceToonShade_HWSkin",
+      "PlaygroundCompressToonShade_HWSkin"
+    ],
+    "skinned": true,
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\characters\\models\\characters.viv::alicia.viv::alicia.o",
+    "texture_banks": [
+      "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\characters\\models\\characters.viv::alicia.viv::alicia.gsh"
+    ],
+    "textures": 3,
+    "triangles": 2877,
+    "warnings": [
+      "ELF OK  (103184 bytes)",
+      ".data @ 0x0040  size 0x16720",
+      "Model: alicia_final.variation1  total materials: 3",
+      "Reloc entries: 1205",
+      "Layout D scale mismatch: bbox-derived estimate=0.00002328 disagrees with expected 1/16384=0.00006104 (ratio=0.38x) -- worth inspecting this mesh by hand.",
+      "BBOX: ((-0.4954085052013397, -0.0038146229926496744, -0.2027244120836258), (0.4954088628292084, 1.0670762062072754, 0.24431146681308746))  pos_scale=0.00006104",
+      "Inspector: confidence LOW — falling back to heuristic scan (predicted=None).",
+      "Scoring: 6 layouts  min_score=130  margin=30",
+      "Mesh descriptors: 62 at ['0x0e00(LD)', '0x4e60(LD)', '0x5540(LD)', '0x5c00(LD)', '0x6260(LD)', '0x6500(LD)', '0x6740(LD)', '0x69a0(LD)', '0x6d80(LD)', '0x7200(LD)', '0x7520(LD)', '0x7880(LD)', '0x7b20(LD)', '0x7e80(LD)', '0x8140(LD)', '0x83e0(LD)', '0x8660(LD)', '0x8960(LD)', '0x8be0(LD)', '0x8ee0(LD)', '0x9280(LD)', '0x94e0(LD)', '0x97c0(LD)', '0x9a60(LD)', '0x9d20(LD)', '0x9f80(LD)', '0xa260(LD)', '0xa460(LD)', '0xac00(LD2)', '0xafe0(LD2)', '0xb880(LD2)', '0xbcc0(LD2)', '0xc040(LD2)', '0xc740(LD2)', '0xcbe0(LD2)', '0xd0c0(LD2)', '0xd720(LD2)', '0xdb00(LD2)', '0xdf00(LD2)', '0xe3a0(LD2)', '0xe7e0(LD2)', '0xed40(LD2)', '0xf000(LD2)', '0xf2a0(LD2)', '0xf880(LD2)', '0xff00(LD2)', '0x10440(LD2)', '0x107e0(LD2)', '0x10a80(LD2)', '0x10da0(LD2)', '0x11100(LD2)', '0x116c0(LD2)', '0x11c60(LD2)', '0x11ec0(LD2)', '0x12940(LD2)', '0x136e0(LD2)', '0x13e00(LD2)', '0x14260(LD2)', '0x14620(LD2)', '0x151c0(LD2)', '0x157e0(LD2)', '0x15fa0(LD2)']",
+      "OK: 62/62 meshes  total tris: 2877"
+    ]
+  },
+  "status": "alicia.o • 90 ms"
+}

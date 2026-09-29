@@ -1,0 +1,279 @@
+ProcessPCode__12EAGLInternalFPQ24EAGL7GeoPrimQ212EAGLInternal24PCodeNewRenderMethodFlag: 0x803ef24c, 1108 bytes
+803ef24c: 9421feb0  stwu r1, -0x150(r1)
+803ef250: 7c0802a6  mflr r0
+803ef254: 90010154  stw r0, 0x154(r1)
+803ef258: 39610150  addi r11, r1, 0x150
+803ef25c: 4bc46405  bl 0x80035660 ; _savegpr_19
+803ef260: 80c30000  lwz r6, 0(r3)
+803ef264: 38030008  addi r0, r3, 8
+803ef268: 2c040001  cmpwi r4, 1
+803ef26c: 38a00000  li r5, 0
+803ef270: 82e6001c  lwz r23, 0x1c(r6)
+803ef274: 7c741b78  mr r20, r3
+803ef278: 7c932378  mr r19, r4
+803ef27c: 90170000  stw r0, 0(r23)
+803ef280: 98b70045  stb r5, 0x45(r23)
+803ef284: 40820030  bne 0x803ef2b4
+803ef288: 98b70044  stb r5, 0x44(r23)
+803ef28c: 38000001  li r0, 1
+803ef290: 9817003c  stb r0, 0x3c(r23)
+803ef294: 9817003d  stb r0, 0x3d(r23)
+803ef298: 9817003e  stb r0, 0x3e(r23)
+803ef29c: 9817003f  stb r0, 0x3f(r23)
+803ef2a0: 98170040  stb r0, 0x40(r23)
+803ef2a4: 98170041  stb r0, 0x41(r23)
+803ef2a8: 98170042  stb r0, 0x42(r23)
+803ef2ac: 98170043  stb r0, 0x43(r23)
+803ef2b0: 4800002c  b 0x803ef2dc ; 
+803ef2b4: 38000001  li r0, 1
+803ef2b8: 98170044  stb r0, 0x44(r23)
+803ef2bc: 98b7003c  stb r5, 0x3c(r23)
+803ef2c0: 98b7003d  stb r5, 0x3d(r23)
+803ef2c4: 98b7003e  stb r5, 0x3e(r23)
+803ef2c8: 98b7003f  stb r5, 0x3f(r23)
+803ef2cc: 98b70040  stb r5, 0x40(r23)
+803ef2d0: 98b70041  stb r5, 0x41(r23)
+803ef2d4: 98b70042  stb r5, 0x42(r23)
+803ef2d8: 98b70043  stb r5, 0x43(r23)
+803ef2dc: 4bff64bd  bl 0x803e5798 ; GetCurrentVolatileBuffer__Q24EAGL22RenderContextExtensionFv
+803ef2e0: 83140004  lwz r24, 4(r20)
+803ef2e4: 7c7b1b78  mr r27, r3
+803ef2e8: 3ac00000  li r22, 0
+803ef2ec: 2c180000  cmpwi r24, 0
+803ef2f0: 40820010  bne 0x803ef300
+803ef2f4: 83170024  lwz r24, 0x24(r23)
+803ef2f8: 38000001  li r0, 1
+803ef2fc: 98170045  stb r0, 0x45(r23)
+803ef300: 3b800000  li r28, 0
+803ef304: 93970004  stw r28, 4(r23)
+803ef308: 4bc6c2a1  bl 0x8005b5a8 ; GXClearVtxDesc
+803ef30c: 38600000  li r3, 0
+803ef310: 3880ffff  li r4, -1
+803ef314: 4bff7779  bl 0x803e6a8c ; SetCurrentVertex__Q24EAGL21GeoPrimStateExtensionFUiUi
+803ef318: 3fe0804f  lis r31, -0x7fb1
+803ef31c: 3fa0804f  lis r29, -0x7fb1
+803ef320: 3bffd6c8  addi r31, r31, -0x2938
+803ef324: 3bc00001  li r30, 1
+803ef328: 48000320  b 0x803ef648 ; 
+803ef32c: 2804000b  cmplwi r4, 0xb
+803ef330: 41810310  bgt 0x803ef640
+803ef334: 387dd6d8  addi r3, r29, -0x2928
+803ef338: 5480103a  slwi r0, r4, 2
+803ef33c: 7c63002e  lwzx r3, r3, r0
+803ef340: 7c6903a6  mtctr r3
+803ef344: 4e800420  bctr 
+803ef348: 80170004  lwz r0, 4(r23)
+803ef34c: 2c000000  cmpwi r0, 0
+803ef350: 40820008  bne 0x803ef358
+803ef354: 93170004  stw r24, 4(r23)
+803ef358: 80780002  lwz r3, 2(r24)
+803ef35c: 88980001  lbz r4, 1(r24)
+803ef360: 3b180006  addi r24, r24, 6
+803ef364: 800de458  lwz r0, -0x1ba8(r13)
+803ef368: 80b70000  lwz r5, 0(r23)
+803ef36c: 54841838  slwi r4, r4, 3
+803ef370: 7c0301d6  mullw r0, r3, r0
+803ef374: 7c852214  add r4, r5, r4
+803ef378: 80640004  lwz r3, 4(r4)
+803ef37c: 7c030214  add r0, r3, r0
+803ef380: 90040004  stw r0, 4(r4)
+803ef384: 480002c4  b 0x803ef648 ; 
+803ef388: 2c130001  cmpwi r19, 1
+803ef38c: 38600000  li r3, 0
+803ef390: 4082002c  bne 0x803ef3bc
+803ef394: 38a00000  li r5, 0
+803ef398: 48000014  b 0x803ef3ac ; 
+803ef39c: 80970014  lwz r4, 0x14(r23)
+803ef3a0: 54a015ba  rlwinm r0, r5, 2, 0x16, 0x1d
+803ef3a4: 38a50001  addi r5, r5, 1
+803ef3a8: 7f84012e  stwx r28, r4, r0
+803ef3ac: 80170018  lwz r0, 0x18(r23)
+803ef3b0: 54a4063e  clrlwi r4, r5, 0x18
+803ef3b4: 7c040000  cmpw r4, r0
+803ef3b8: 4180ffe4  blt 0x803ef39c
+803ef3bc: 3a980001  addi r20, r24, 1
+803ef3c0: 38c10010  addi r6, r1, 0x10
+803ef3c4: 7e84a378  mr r4, r20
+803ef3c8: 3aa00000  li r21, 0
+803ef3cc: 38a00000  li r5, 0
+803ef3d0: 48000080  b 0x803ef450 ; 
+803ef3d4: 81170000  lwz r8, 0(r23)
+803ef3d8: 54001d78  rlwinm r0, r0, 3, 0x15, 0x1c
+803ef3dc: 80f70014  lwz r7, 0x14(r23)
+803ef3e0: 7d280214  add r9, r8, r0
+803ef3e4: 7ce7282e  lwzx r7, r7, r5
+803ef3e8: 80090004  lwz r0, 4(r9)
+803ef3ec: 7c070040  cmplw r7, r0
+803ef3f0: 41820050  beq 0x803ef440
+803ef3f4: 89040001  lbz r8, 1(r4)
+803ef3f8: 2c030000  cmpwi r3, 0
+803ef3fc: 80090000  lwz r0, 0(r9)
+803ef400: 80fb0004  lwz r7, 4(r27)
+803ef404: 7d2801d6  mullw r9, r8, r0
+803ef408: 3807001f  addi r0, r7, 0x1f
+803ef40c: 54080034  rlwinm r8, r0, 0, 0, 0x1a
+803ef410: 911b0004  stw r8, 4(r27)
+803ef414: 3809001f  addi r0, r9, 0x1f
+803ef418: 54000034  rlwinm r0, r0, 0, 0, 0x1a
+803ef41c: 90060000  stw r0, 0(r6)
+803ef420: 7ed60214  add r22, r22, r0
+803ef424: 7c080214  add r0, r8, r0
+803ef428: 901b0004  stw r0, 4(r27)
+803ef42c: 80f70010  lwz r7, 0x10(r23)
+803ef430: 7d07292e  stwx r8, r7, r5
+803ef434: 4082000c  bne 0x803ef440
+803ef438: 80770010  lwz r3, 0x10(r23)
+803ef43c: 7c63282e  lwzx r3, r3, r5
+803ef440: 38840002  addi r4, r4, 2
+803ef444: 38a50004  addi r5, r5, 4
+803ef448: 38c60004  addi r6, r6, 4
+803ef44c: 3ab50001  addi r21, r21, 1
+803ef450: 88040000  lbz r0, 0(r4)
+803ef454: 280000ff  cmplwi r0, 0xff
+803ef458: 4082ff7c  bne 0x803ef3d4
+803ef45c: 2c160000  cmpwi r22, 0
+803ef460: 41820090  beq 0x803ef4f0
+803ef464: 7ec4b378  mr r4, r22
+803ef468: 4bff62e5  bl 0x803e574c ; StartDataStuffing__Q24EAGL22RenderContextExtensionFPvUi
+803ef46c: 7e9aa378  mr r26, r20
+803ef470: 3b010010  addi r24, r1, 0x10
+803ef474: 3aa00000  li r21, 0
+803ef478: 3b200000  li r25, 0
+803ef47c: 48000058  b 0x803ef4d4 ; 
+803ef480: 80770000  lwz r3, 0(r23)
+803ef484: 54001d78  rlwinm r0, r0, 3, 0x15, 0x1c
+803ef488: 80970014  lwz r4, 0x14(r23)
+803ef48c: 7c630214  add r3, r3, r0
+803ef490: 80630004  lwz r3, 4(r3)
+803ef494: 7c04c82e  lwzx r0, r4, r25
+803ef498: 7c001840  cmplw r0, r3
+803ef49c: 41820028  beq 0x803ef4c4
+803ef4a0: 80980000  lwz r4, 0(r24)
+803ef4a4: 4bff60b9  bl 0x803e555c ; StuffData__Q24EAGL22RenderContextExtensionFPCvUi
+803ef4a8: 881a0000  lbz r0, 0(r26)
+803ef4ac: 80970000  lwz r4, 0(r23)
+803ef4b0: 54001838  slwi r0, r0, 3
+803ef4b4: 80770014  lwz r3, 0x14(r23)
+803ef4b8: 7c840214  add r4, r4, r0
+803ef4bc: 80040004  lwz r0, 4(r4)
+803ef4c0: 7c03c92e  stwx r0, r3, r25
+803ef4c4: 3b5a0002  addi r26, r26, 2
+803ef4c8: 3b390004  addi r25, r25, 4
+803ef4cc: 3b180004  addi r24, r24, 4
+803ef4d0: 3ab50001  addi r21, r21, 1
+803ef4d4: 881a0000  lbz r0, 0(r26)
+803ef4d8: 280000ff  cmplwi r0, 0xff
+803ef4dc: 4082ffa4  bne 0x803ef480
+803ef4e0: 4bff6055  bl 0x803e5534 ; StopDataStuffing__Q24EAGL22RenderContextExtensionFv
+803ef4e4: 38610008  addi r3, r1, 8
+803ef4e8: 3880ffff  li r4, -1
+803ef4ec: 4bffd755  bl 0x803ecc40 ; __dt__Q212EAGLInternal16InternalProfilerFv
+803ef4f0: 38150001  addi r0, r21, 1
+803ef4f4: 5400083c  slwi r0, r0, 1
+803ef4f8: 7f140214  add r24, r20, r0
+803ef4fc: 4800014c  b 0x803ef648 ; 
+803ef500: 38f80001  addi r7, r24, 1
+803ef504: 38c00000  li r6, 0
+803ef508: 3b180004  addi r24, r24, 4
+803ef50c: 48000034  b 0x803ef540 ; 
+803ef510: 88070002  lbz r0, 2(r7)
+803ef514: 7f07c378  mr r7, r24
+803ef518: 807b0004  lwz r3, 4(r27)
+803ef51c: 3b180003  addi r24, r24, 3
+803ef520: 7ca401d6  mullw r5, r4, r0
+803ef524: 3803001f  addi r0, r3, 0x1f
+803ef528: 54040034  rlwinm r4, r0, 0, 0, 0x1a
+803ef52c: 7c042a14  add r0, r4, r5
+803ef530: 901b0004  stw r0, 4(r27)
+803ef534: 8077001c  lwz r3, 0x1c(r23)
+803ef538: 7c83312e  stwx r4, r3, r6
+803ef53c: 38c60004  addi r6, r6, 4
+803ef540: a0870000  lhz r4, 0(r7)
+803ef544: 2c040000  cmpwi r4, 0
+803ef548: 4082ffc8  bne 0x803ef510
+803ef54c: 480000fc  b 0x803ef648 ; 
+803ef550: 38f80001  addi r7, r24, 1
+803ef554: 38c00000  li r6, 0
+803ef558: 3b180003  addi r24, r24, 3
+803ef55c: 48000048  b 0x803ef5a4 ; 
+803ef560: 80770000  lwz r3, 0(r23)
+803ef564: 54001d78  rlwinm r0, r0, 3, 0x15, 0x1c
+803ef568: 88a70001  lbz r5, 1(r7)
+803ef56c: 7f07c378  mr r7, r24
+803ef570: 7c830214  add r4, r3, r0
+803ef574: 807b0004  lwz r3, 4(r27)
+803ef578: 80840004  lwz r4, 4(r4)
+803ef57c: 3b180002  addi r24, r24, 2
+803ef580: 3803001f  addi r0, r3, 0x1f
+803ef584: 80640004  lwz r3, 4(r4)
+803ef588: 54040034  rlwinm r4, r0, 0, 0, 0x1a
+803ef58c: 7c0329d6  mullw r0, r3, r5
+803ef590: 7c040214  add r0, r4, r0
+803ef594: 901b0004  stw r0, 4(r27)
+803ef598: 80770020  lwz r3, 0x20(r23)
+803ef59c: 7c83312e  stwx r4, r3, r6
+803ef5a0: 38c60004  addi r6, r6, 4
+803ef5a4: 88070000  lbz r0, 0(r7)
+803ef5a8: 280000ff  cmplwi r0, 0xff
+803ef5ac: 4082ffb4  bne 0x803ef560
+803ef5b0: 48000098  b 0x803ef648 ; 
+803ef5b4: 88180001  lbz r0, 1(r24)
+803ef5b8: 3b180002  addi r24, r24, 2
+803ef5bc: 7c770214  add r3, r23, r0
+803ef5c0: 9bc3003c  stb r30, 0x3c(r3)
+803ef5c4: 9b970044  stb r28, 0x44(r23)
+803ef5c8: 48000080  b 0x803ef648 ; 
+803ef5cc: 80180001  lwz r0, 1(r24)
+803ef5d0: 90170028  stw r0, 0x28(r23)
+803ef5d4: 80180005  lwz r0, 5(r24)
+803ef5d8: 3b180009  addi r24, r24, 9
+803ef5dc: 9017002c  stw r0, 0x2c(r23)
+803ef5e0: 48000068  b 0x803ef648 ; 
+803ef5e4: 88780001  lbz r3, 1(r24)
+803ef5e8: 38800002  li r4, 2
+803ef5ec: 4bc6b72d  bl 0x8005ad18 ; GXSetVtxDesc
+803ef5f0: 3b180002  addi r24, r24, 2
+803ef5f4: 48000054  b 0x803ef648 ; 
+803ef5f8: 88780001  lbz r3, 1(r24)
+803ef5fc: 38800003  li r4, 3
+803ef600: 4bc6b719  bl 0x8005ad18 ; GXSetVtxDesc
+803ef604: 3b180002  addi r24, r24, 2
+803ef608: 48000040  b 0x803ef648 ; 
+803ef60c: 88780001  lbz r3, 1(r24)
+803ef610: 38800001  li r4, 1
+803ef614: 4bc6b705  bl 0x8005ad18 ; GXSetVtxDesc
+803ef618: 3b180002  addi r24, r24, 2
+803ef61c: 4800002c  b 0x803ef648 ; 
+803ef620: 88f80001  lbz r7, 1(r24)
+803ef624: 38600000  li r3, 0
+803ef628: 38800009  li r4, 9
+803ef62c: 38a00001  li r5, 1
+803ef630: 38c00003  li r6, 3
+803ef634: 4bff7441  bl 0x803e6a74 ; SetAttributeFormat__Q24EAGL21GeoPrimStateExtensionFi7_GXAttr10_GXCompCnt11_GXCompTypeUc
+803ef638: 3b180002  addi r24, r24, 2
+803ef63c: 4800000c  b 0x803ef648 ; 
+803ef640: 7c1f20ae  lbzx r0, r31, r4
+803ef644: 7f180214  add r24, r24, r0
+803ef648: 88980000  lbz r4, 0(r24)
+803ef64c: 2c040000  cmpwi r4, 0
+803ef650: 4082fcdc  bne 0x803ef32c
+803ef654: 80170008  lwz r0, 8(r23)
+803ef658: 2c000000  cmpwi r0, 0
+803ef65c: 4180001c  blt 0x803ef678
+803ef660: 80770000  lwz r3, 0(r23)
+803ef664: 54001838  slwi r0, r0, 3
+803ef668: 7c630214  add r3, r3, r0
+803ef66c: 80630004  lwz r3, 4(r3)
+803ef670: a8030000  lha r0, 0(r3)
+803ef674: 9017000c  stw r0, 0xc(r23)
+803ef678: 38000000  li r0, 0
+803ef67c: 39610150  addi r11, r1, 0x150
+803ef680: 98170044  stb r0, 0x44(r23)
+803ef684: 8017000c  lwz r0, 0xc(r23)
+803ef688: 900dbde8  stw r0, -0x4218(r13)
+803ef68c: 4bc46021  bl 0x800356ac ; _restgpr_19
+803ef690: 80010154  lwz r0, 0x154(r1)
+803ef694: 7c0803a6  mtlr r0
+803ef698: 38210150  addi r1, r1, 0x150
+803ef69c: 4e800020  blr 
+

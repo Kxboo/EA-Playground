@@ -1,0 +1,11 @@
+{
+  "built": "2026-09-29T13:15:38.787718-05:00",
+  "executables": {
+    "EAGL-Remaster.exe": "bcd5d0ee3158c923b618dc966c4429bcc407cc23fec8e6a132547c1bc4751bab",
+    "EAGL-CLI.exe": "52ea7d3b48e3c6cb907b5a89604edf8f931a7e99c0f2567b1137b9e0829d29b8"
+  },
+  "packaged_cli_checks": 12,
+  "unit_tests": 13,
+  "native_viewer": "../_bevy/EAGL-Workbench.exe",
+  "note": "Native viewer and decoder integration verified separately under _bevy/docs."
+}

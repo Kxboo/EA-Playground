@@ -1,0 +1,43 @@
+{
+  "animation_players": 0,
+  "animation_time": 0.0,
+  "loaded": true,
+  "mesh_entities": 1,
+  "preview": {
+    "animation": "",
+    "asset": "generated/8815505dc41fcfbe4ea9c816/asset.glb",
+    "bones": 0,
+    "bounds": [
+      [
+        132.3986581005156,
+        -473.94338747859,
+        0.0
+      ],
+      [
+        742.1513296924531,
+        -112.00662472844124,
+        0.0
+      ]
+    ],
+    "cache_hit": false,
+    "decode_ms": 36.39,
+    "decoder_version": "native-4-elf-models",
+    "duration": 0,
+    "frontend": true,
+    "kind": "model",
+    "materials": 1,
+    "meshes": 1,
+    "name": "NunchuckRequired_English.o",
+    "shape": "1",
+    "shape_count": 1,
+    "skinned": false,
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\screens\\artwork\\nis\\16_9\\nunchuckrequired_english.big::NunchuckRequired_English.o",
+    "textures": 0,
+    "triangles": 4532,
+    "warnings": [
+      "APT Q15 positions, model scale/offset and pixel-coordinate texture matrices decoded from executable-confirmed fields.",
+      "APT timeline placement, masking and dynamic color transforms remain separate from shape geometry."
+    ]
+  },
+  "status": "NunchuckRequired_English.o • 36 ms"
+}

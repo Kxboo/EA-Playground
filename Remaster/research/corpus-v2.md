@@ -1,0 +1,59 @@
+# Format coverage
+
+All loose files; recursively expanded BIG/VIV and U8 containers. Identical container content expanded once.
+
+A recognized header or a successful export is not a complete decode.
+
+| Extension | Records | Formats | Statuses |
+|---|---:|---|---|
+| .abk | 21 | EA audio bank | recognized: 21 |
+| .anm | 4 | ELF32 / EA relocatable | structural: 4 |
+| .apt | 655 | unknown binary | unknown: 655 |
+| .arc | 10 | Nintendo U8 archive | structural: 10 |
+| .asf | 14 | EA audio stream | recognized: 14 |
+| .ast | 5 | EA audio stream | recognized: 5 |
+| .atd | 3 | unknown binary | unknown: 3 |
+| .bh | 1 | parse failure | error: 1 |
+| .big | 656 | EA BIG archive | structural: 656 |
+| .bin | 10 | unknown binary | unknown: 10 |
+| .bnk | 10 | EA audio bank | recognized: 10 |
+| .bnr | 1 | unknown binary | unknown: 1 |
+| .brfnt | 8 | Nintendo font | recognized: 8 |
+| .brlan | 367 | Nintendo layout animation | recognized: 367 |
+| .brlyt | 44 | Nintendo layout | recognized: 44 |
+| .brsar | 1 | Nintendo sound archive | recognized: 1 |
+| .bts | 1 | Text | decoded_text: 1 |
+| .bwav | 5 | unknown binary | unknown: 5 |
+| .con | 32 | unknown binary | unknown: 32 |
+| .const | 655 | unknown binary | unknown: 655 |
+| .cpt | 10 | unknown binary | unknown: 10 |
+| .csi | 2 | EA audio metadata | recognized: 2 |
+| .csv | 50 | Delimited table, parse failure | decoded_text: 48, error: 2 |
+| .dat | 8 | EA audio stream | recognized: 8 |
+| .dol | 2 | unknown binary | unknown: 2 |
+| .elf | 1 | ELF32 executable | structural: 1 |
+| .evt | 1 | unknown binary | unknown: 1 |
+| .gfn | 16 | EA font | recognized: 16 |
+| .gsh | 805 | EA GSH texture archive | partial: 805 |
+| .gsm | 1 | unknown binary | unknown: 1 |
+| .hdr | 8 | unknown binary | unknown: 8 |
+| .hkx | 74 | Havok packfile | structural: 74 |
+| .idx | 2 | EA localization index | partial: 2 |
+| .img | 1 | unknown binary | unknown: 1 |
+| .ini | 2 | Text | decoded_text: 2 |
+| .lef | 241 | LION effect tree | structural: 241 |
+| .loc | 10 | EA localization | partial: 10 |
+| .mkr | 49 | unknown binary | unknown: 49 |
+| .o | 863 | ELF32 / EA relocatable, parse failure | structural: 862, error: 1 |
+| .ske | 4 | ELF32 / EA relocatable | structural: 4 |
+| .tpl | 464 | Nintendo TPL | partial: 464 |
+| .txt | 5 | Text | decoded_text: 5 |
+| .viv | 118 | EA BIG archive | structural: 118 |
+| .vlt | 1 | EA VLT database | recognized: 1 |
+| .vp6 | 8 | EA video stream | recognized: 8 |
+| .znd | 9 | unknown binary | unknown: 9 |
+| .zsd | 9 | unknown binary | unknown: 9 |
+
+Full paths, signatures, hashes, payload checks and parser errors are in the JSON catalog.
+
+Traversal errors: 1.

@@ -1,0 +1,20 @@
+{
+  "animation_players": 0,
+  "animation_time": 0.0,
+  "loaded": true,
+  "mesh_entities": 0,
+  "preview": {
+    "asset": "generated/3b295df0689045a859ddafae/image.png",
+    "cache_hit": false,
+    "decode_ms": 11.15,
+    "decoder_version": "native-4-elf-models",
+    "height": 480,
+    "image_name": "strapA_screen",
+    "kind": "image",
+    "name": "strapwarn_standard_english.gsh",
+    "source": "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\boot\\strapwarn_standard_english.gsh",
+    "warnings": [],
+    "width": 640
+  },
+  "status": "strapwarn_standard_english.gsh • 11 ms"
+}

@@ -1,0 +1,113 @@
+{
+  "status": "ok",
+  "executable_sha256": "26891e58434e5e7c8cfadbb2cd9d0f32e0de4dbbb2b0f971247ec1ebc4a58e63",
+  "output": "D:\\_eagl\\Remaster\\exports\\cli-test-14284fd2",
+  "checks": [
+    {
+      "command": [
+        "inspect",
+        "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\main.big::Main.gsh",
+        "--deep"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "decode",
+        "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\main.big::Main.gsh",
+        "--out",
+        "D:\\_eagl\\Remaster\\exports\\cli-test-14284fd2\\textures"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "decode",
+        "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\OLD ATTEMPTS\\EA PLAYGROUND EXTRACTED\\WorldProps\\basketball.o",
+        "--out",
+        "D:\\_eagl\\Remaster\\exports\\cli-test-14284fd2\\model"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "decode",
+        "D:\\_eagl\\Remaster\\reference\\player_anims.anm",
+        "--skeleton",
+        "D:\\_eagl\\Remaster\\reference\\player_skel.ske",
+        "--clip",
+        "0",
+        "--out",
+        "D:\\_eagl\\Remaster\\exports\\cli-test-14284fd2\\clip"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "inspect",
+        "D:\\_eagl\\Remaster\\exports\\cli-test-14284fd2\\quoted.csv"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "decode",
+        "D:\\_eagl\\Remaster\\exports\\cli-test-14284fd2\\quoted.csv",
+        "--out",
+        "D:\\_eagl\\Remaster\\exports\\cli-test-14284fd2\\csv"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "hexdump",
+        "D:\\_eagl\\Remaster\\reference\\player_skel.ske",
+        "--length",
+        "0x20"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "strings",
+        "D:\\_eagl\\Remaster\\reference\\player_skel.ske"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "extract",
+        "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\main.big",
+        "--out",
+        "D:\\_eagl\\Remaster\\exports\\cli-test-14284fd2\\archive"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "extract",
+        "D:\\_eagl\\eagl EA PLAYGROUND\\extra\\more\\eaplayground files\\DATA\\files\\data\\fe\\main.big",
+        "--out",
+        "D:\\_eagl\\Remaster\\exports\\cli-test-14284fd2\\archive"
+      ],
+      "exit_code": 1
+    },
+    {
+      "command": [
+        "validate",
+        "D:\\_eagl\\Remaster\\exports\\cli-test-14284fd2\\bad.o",
+        "--deep"
+      ],
+      "exit_code": 2
+    },
+    {
+      "command": [
+        "decode",
+        "D:\\_eagl\\Remaster\\exports\\cli-test-14284fd2\\unsupported.apt",
+        "--out",
+        "D:\\_eagl\\Remaster\\exports\\cli-test-14284fd2\\unsupported"
+      ],
+      "exit_code": 1
+    }
+  ]
+}
