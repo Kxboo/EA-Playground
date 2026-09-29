@@ -1,0 +1,529 @@
+{
+"AddRoundResults__15MultiplayerModeFiiii": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Adds round points (players 2,3 only if != -1), re-ranks with previous-rank tie-break, counts the round.",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"AddWinResults__15MultiplayerModeFii": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Credits up to two winners, re-ranks by wins with tie-break, records last winners.",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"BootSequence__Fb": {
+"doc": "docs/01-executable-and-boot.md",
+"summary": "GameState::Init(), then SetNewState(BootFlow) and SetBootFlowState(1)."
+},
+"ClearScreenStack__9FEManagerFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "AptCallFunction(\"ClearScreenStack\", \"_root\")."
+},
+"CloseAptOverlay__9FEManagerFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "AptCallFunction(\"CloseOverlay\", \"_root\")."
+},
+"CloseAptScreen__9FEManagerFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "AptCallFunction(\"CloseScreen\", \"_root\")."
+},
+"ComputeHash__FPCc": {
+"doc": "docs/07-data-formats-and-hashes.md",
+"summary": "Locale key hash: h=0xFFFFFFFF; for each signed byte c: h = h*33 + c (mod 2^32).",
+"verified_by": "tools/verify_hashes.py (309 strings, emulated original) + real db.vlt resolves 303 strings"
+},
+"ConvertStringToActionEvent__F7CString": {
+"doc": "docs/03-input.md",
+"summary": "188-token if-chain: EVENT_* string -> EActionEvent (fallback 190)."
+},
+"ConvertStringToButton__F7CString": {
+"doc": "docs/03-input.md",
+"summary": "Button token (with optional ~) -> button id 0..13."
+},
+"ConvertStringToControllerEvent__F7CString": {
+"doc": "docs/03-input.md",
+"summary": "BUTTON_* string -> button-event kind 0..7 (fallback 9)."
+},
+"ConvertStringToControllerState__F7CString": {
+"doc": "docs/03-input.md",
+"summary": "STATE_* string -> EControllerState (fallback 31)."
+},
+"Create__15MultiplayerModeFv": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Allocates the 0x128-byte singleton (pool name 'MultiplayerMode') and stores it in the global.",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"Destroy__15MultiplayerModeFv": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Destroys the singleton.",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"DoJobFS__16GlobalFSHandlersFiRCQ23AIP13CmdDecomposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT fscommand job index -> native handler for GlobalFSHandlers (5 names)."
+},
+"DoJobFS__17ProfileFSHandlersFiRCQ23AIP13CmdDecomposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT fscommand job index -> native handler for ProfileFSHandlers (4 names)."
+},
+"DoJobFS__18MainMenuFSHandlersFiRCQ23AIP13CmdDecomposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT fscommand job index -> native handler for MainMenuFSHandlers (2 names)."
+},
+"DoJobFS__18MinigameFSHandlersFiRCQ23AIP13CmdDecomposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT fscommand job index -> native handler for MinigameFSHandlers (2 names)."
+},
+"DoJobFS__18PostGameFSHandlersFiRCQ23AIP13CmdDecomposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT fscommand job index -> native handler for PostGameFSHandlers (4 names)."
+},
+"DoJobFS__18WorldHudFSHandlersFiRCQ23AIP13CmdDecomposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT fscommand job index -> native handler for WorldHudFSHandlers (2 names)."
+},
+"DoJobFS__19PauseMenuFSHandlersFiRCQ23AIP13CmdDecomposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT fscommand job index -> native handler for PauseMenuFSHandlers (4 names)."
+},
+"DoJobFS__21BossEndGameFSHandlersFiRCQ23AIP13CmdDecomposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT fscommand job index -> native handler for BossEndGameFSHandlers (3 names)."
+},
+"DoJobFS__21MultiPlayerFSHandlersFiRCQ23AIP13CmdDecomposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT fscommand job index -> native handler for MultiPlayerFSHandlers (13 names)."
+},
+"DoJobFS__21StickerBookFSHandlersFiRCQ23AIP13CmdDecomposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT fscommand job index -> native handler for StickerBookFSHandlers (9 names)."
+},
+"DoJobFS__22StickerStoreFSHandlersFiRCQ23AIP13CmdDecomposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT fscommand job index -> native handler for StickerStoreFSHandlers (6 names)."
+},
+"DoJobLV__16GlobalLVHandlersFiRCQ23AIP13CmdDecomposerRQ23AIP11CmdComposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT loadVariables job index -> native handler for GlobalLVHandlers (5 names)."
+},
+"DoJobLV__17PreGameLVHandlersFiRCQ23AIP13CmdDecomposerRQ23AIP11CmdComposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT loadVariables job index -> native handler for PreGameLVHandlers (4 names)."
+},
+"DoJobLV__17ProfileLVHandlersFiRCQ23AIP13CmdDecomposerRQ23AIP11CmdComposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT loadVariables job index -> native handler for ProfileLVHandlers (3 names)."
+},
+"DoJobLV__18MinigameLVHandlersFiRCQ23AIP13CmdDecomposerRQ23AIP11CmdComposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT loadVariables job index -> native handler for MinigameLVHandlers (5 names)."
+},
+"DoJobLV__18PostGameLVHandlersFiRCQ23AIP13CmdDecomposerRQ23AIP11CmdComposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT loadVariables job index -> native handler for PostGameLVHandlers (11 names)."
+},
+"DoJobLV__21MultiPlayerLVHandlersFiRCQ23AIP13CmdDecomposerRQ23AIP11CmdComposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT loadVariables job index -> native handler for MultiPlayerLVHandlers (6 names)."
+},
+"DoJobLV__21StickerBookLVHandlersFiRCQ23AIP13CmdDecomposerRQ23AIP11CmdComposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT loadVariables job index -> native handler for StickerBookLVHandlers (7 names)."
+},
+"DoJobLV__22ConversationLVHandlersFiRCQ23AIP13CmdDecomposerRQ23AIP11CmdComposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT loadVariables job index -> native handler for ConversationLVHandlers (4 names)."
+},
+"DoJobLV__22StickerStoreLVHandlersFiRCQ23AIP13CmdDecomposerRQ23AIP11CmdComposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT loadVariables job index -> native handler for StickerStoreLVHandlers (3 names)."
+},
+"DoJobLV__23LoadingScreenLVHandlersFiRCQ23AIP13CmdDecomposerRQ23AIP11CmdComposer": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Dispatches APT loadVariables job index -> native handler for LoadingScreenLVHandlers (2 names)."
+},
+"EndMinigame__8WorldManFb": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Fade out, remove the minigame, restore area/audio/pose, CharacterProfile::EndMiniGame, back to local control; SetNewState(MP2FE)."
+},
+"EndMultiplayerGame__15MultiplayerModeFv": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Clears the active flag.",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"EnterFEGameState__9FEManagerF18eFrontEndGameState": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Entry work per menu state: opens APT screens (Title, Profile, ConfirmKid, MainMenu), spawns selectable kids, name keyboard, fade; -1 enters the world."
+},
+"EnterState__9FEManagerF14eFrontendState": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Creates the AIP handler families for the front-end state (0 loading, 1 menus, 3 world/HUD, 4 loading overlay)."
+},
+"FindStringIndex__6LocaleCFUi": {
+"doc": "docs/07-data-formats-and-hashes.md",
+"summary": "bsearch over the sorted 8-byte {hash,index} records of string.idx; returns index or -1."
+},
+"GetNumRoundsLeft__15MultiplayerModeFv": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Returns rounds_left.",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"GetPlayerNumByRank__15MultiplayerModeFi": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Player index with the given rank, or -1.",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"GetPlayerPointsInThisMatch__15MultiplayerModeFi": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Points added in the most recent round.",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"GetPlayerRank__15MultiplayerModeFi": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Rank from points in a point series, else from wins.",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"GetPointTotal__15MultiplayerModeFi": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Returns points[p].",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"GetStringField__10cCSVParserFPCcR7CString": {
+"doc": "docs/03-input.md",
+"summary": "Looks a column up by header name and returns the (left-trimmed) field."
+},
+"GetString__10cCSVParserFRPcRPcRUic": {
+"doc": "docs/03-input.md",
+"summary": "Reads the next comma-delimited token and trims leading whitespace."
+},
+"GetString__6LocaleCFPCc": {
+"doc": "docs/07-data-formats-and-hashes.md",
+"summary": "Localised string by id: ComputeHash(id) -> GetString(int); debug flag returns the id itself."
+},
+"GetString__6LocaleCFi": {
+"doc": "docs/07-data-formats-and-hashes.md",
+"summary": "FindStringIndex then LOCALE_getstr on the loaded .loc."
+},
+"GetWinTotal__15MultiplayerModeFi": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Returns wins[p].",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"HandleActions__9GameStateFi": {
+"doc": "docs/02-state-machine-and-timing.md",
+"summary": "World-level actions: free camera, opens sticker book cover and report card, debug menu; consults WorldMan::IsInMicrogame."
+},
+"HandleSelections__9GameStateFi": {
+"doc": "docs/02-state-machine-and-timing.md",
+"summary": "Front-end debug-menu input subset."
+},
+"InitAllModules__Fv": {
+"doc": "docs/01-executable-and-boot.md",
+"summary": "Module init order: OS/DVD/VI/PAD, MemMgr pools, EA base (thread/print/timer/filesys), renderer + fonts, TRC, disc.ini, pgIO/AssetManager, wrist-strap reminder loop, scene, ASYNCFILE, pgIDatabase, Audio, movie player."
+},
+"Init__9GameStateFv": {
+"doc": "docs/02-state-machine-and-timing.md",
+"summary": "Builds scenes, big file, Controller, light/shadow managers, sky dome, FEManager, PGConga, CharacterProfile, MultiplayerMode, debug menu; seeds RNG."
+},
+"Initialize__10ControllerF11ControlTypei": {
+"doc": "docs/03-input.md",
+"summary": "Loads controls*.csv for the ControlType and builds 100-byte rows (action event, state, transition, kind, modifiers, button)."
+},
+"MainThread__FiPv": {
+"doc": "docs/01-executable-and-boot.md",
+"summary": "InitAllModules(); BootSequence(false); loops `while (GameState::Update())`; then GameState::Shutdown and ShutdownAllModules. The `skipfe` argument comparison is dead code (result discarded)."
+},
+"OpenAptOverlay__9FEManagerFPc": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "AptCallFunction(\"OpenOverlay\", \"_root\", name)."
+},
+"OpenAptScreen__9FEManagerFPc": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "AptCallFunction(\"OpenScreen\", \"_root\", name)."
+},
+"OpenPostGameScreen__8MinigameFQ25Enums12MinigameTypeP12PostGameInfo": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Writes results into MultiplayerMode: 1v1 winner +50; team games +50 per member of the winning team; free-for-all 50/25/10; then opens the PostGame APT screen.",
+"verified_by": "tools/verify_postgame.py (3,000 randomized results vs reference/multiplayer_mode.py:post_game_awards)"
+},
+"ReplaceAptScreen__9FEManagerFPc": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "AptCallFunction(\"ReplaceScreen\", \"_root\", name)."
+},
+"STATEFN_UPDATE_Boot2FE__9GameStateFUl": {
+"doc": "docs/02-state-machine-and-timing.md",
+"summary": "One-off: builds memory pools, physics, AI manager, world and cameras, then enters FrontEnd."
+},
+"STATEFN_UPDATE_BootFlow__9GameStateFUl": {
+"doc": "docs/02-state-machine-and-timing.md",
+"summary": "Boot flow: intro movie(s), boot check, wrist-strap screen; then Boot2FE."
+},
+"STATEFN_UPDATE_FE2MP__9GameStateFUl": {
+"doc": "docs/02-state-machine-and-timing.md",
+"summary": "Front end -> minigame: WorldMan::StartMinigame(MGID, level, difficulty, Teams, rules), SetNewState(Playground)."
+},
+"STATEFN_UPDATE_FE2PG__9GameStateFUl": {
+"doc": "docs/02-state-machine-and-timing.md",
+"summary": "Front end -> playground: WorldMan::Initialize, camera reinit, SetNewState(Playground), music/ambience, remotes cleanup."
+},
+"STATEFN_UPDATE_FrontEnd__9GameStateFUl": {
+"doc": "docs/02-state-machine-and-timing.md",
+"summary": "Front-end frame: TRC checks, audio, selections, FEManager update, sky, world, cameras, APT (AIP::Update), draw x5."
+},
+"STATEFN_UPDATE_MP2FE__9GameStateFUl": {
+"doc": "docs/02-state-machine-and-timing.md",
+"summary": "Minigame -> front end: opens screens, SetNewState(FrontEnd), MultiplayerMode::EndMultiplayerGame."
+},
+"STATEFN_UPDATE_PG2FE__9GameStateFUl": {
+"doc": "docs/02-state-machine-and-timing.md",
+"summary": "Playground -> front end: WorldMan::UnInitialize, audio unload, camera reset, SetNewState(FrontEnd)."
+},
+"STATEFN_UPDATE_Playground__9GameStateFUl": {
+"doc": "docs/02-state-machine-and-timing.md",
+"summary": "Playground frame: FEManager, audio, PGConga, HandleActions, AI, sky, WorldMan::Update, particles, DB, cameras, APT HUD, draw x5."
+},
+"SetBootOptionsFromIni__FPCc": {
+"doc": "docs/01-executable-and-boot.md",
+"summary": "Reads disc.ini keys region (eu/us), productcode (SetProductCode) and parentallock (atoi -> SetParentalLock); defaults RET000000 / 0. `authserver` is never read."
+},
+"SetFEGameState__9FEManagerF18eFrontEndGameState": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Leave/enter eFrontEndGameState (+0x40)."
+},
+"SetLastPlacement__15MultiplayerModeFiiii": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Stores last placement; quirk: args c and d share one slot, 4th slot never written.",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"SetNewState__9GameStateFRCQ29GameState5StatePCc": {
+"doc": "docs/02-state-machine-and-timing.md",
+"summary": "Stores sCurrentGameState; entering FrontEnd(5)/Playground(6) sets Audio mode 0/1."
+},
+"SetParentalLock__FUi": {
+"doc": "docs/01-executable-and-boot.md",
+"summary": "Stores the parental-lock level and its 'set' flag."
+},
+"SetProductCode__FPCc": {
+"doc": "docs/01-executable-and-boot.md",
+"summary": "Copies the product code into the global productCode buffer and sets its 'set' flag."
+},
+"SetRules__15MultiplayerModeFPCi": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Copies 5 rule ints.",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"SetState__9FEManagerF14eFrontendState": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Leave/enter eFrontendState (+0x3c)."
+},
+"SetupMultiplayerGame__15MultiplayerModeFPC4MGIDPC5Teams": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Marks a session active, copies the MGID and the Teams block (skipping Teams word 1).",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"ShutdownAllModules__Fv": {
+"doc": "docs/01-executable-and-boot.md",
+"summary": "Reverse of InitAllModules for the game-level modules."
+},
+"Shutdown__9GameStateFv": {
+"doc": "docs/02-state-machine-and-timing.md",
+"summary": "Reverses Init."
+},
+"StartFreePlay__15MultiplayerModeFv": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Resets wins/ranks; not a point series.",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"StartMinigameFadeComplete__8WorldManFv": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Saves the player's conversation pose, unspawns the area, constructs the MG* subclass by type, calls SetUpTeams, adds it to the scene."
+},
+"StartMinigame__8WorldManF4MGIDiQ25Enums23MiniGameDifficultyLevelRC5TeamsQ25Enums16MiniGameDareType": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Begins a minigame: fade-in, unload audio; construction happens in StartMinigameFadeComplete."
+},
+"StartPointSeries__15MultiplayerModeFi": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Resets points and wins, sets point-series flag and rounds_left.",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"StringHash64__6AttribFPCc": {
+"doc": "docs/07-data-formats-and-hashes.md",
+"summary": "Attrib key: lookup8 hash (seed 0xABCDEF0011223344) of the string; 0 for null/empty.",
+"verified_by": "tools/verify_hashes.py (309 strings, emulated original) + real db.vlt resolves 303 strings"
+},
+"StringIndexEntryComparer__FPCvPCv": {
+"doc": "docs/07-data-formats-and-hashes.md",
+"summary": "bsearch comparator: unsigned compare of the first word of two {hash,index} records."
+},
+"StringToAssetID__6AttribFPCc": {
+"doc": "docs/07-data-formats-and-hashes.md",
+"summary": "Tail-jump to StringToKey."
+},
+"StringToKey__6AttribFPCc": {
+"doc": "docs/07-data-formats-and-hashes.md",
+"summary": "Tail-jump to StringHash64."
+},
+"StringToTypeID__6AttribFPCc": {
+"doc": "docs/07-data-formats-and-hashes.md",
+"summary": "Tail-jump to StringToKey."
+},
+"Update__14PhysicsManagerFi": {
+"doc": "docs/02-state-machine-and-timing.md",
+"summary": "Clamps dt to 200 ms, splits into ceil(dt/60) sub-steps (integer distribution) and calls hkWorld::stepDeltaTime(slice*mult/1000)."
+},
+"Update__9FEManagerFUi": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Ticks AIP; in eFrontendState 1 dispatches the per-eFrontEndGameState update through the jump table at 0x804d6e2c."
+},
+"Update__9GameStateFv": {
+"doc": "docs/02-state-machine-and-timing.md",
+"summary": "Per-frame driver: runs SYNCTASKs, computes integer-ms dt from the time base (cap gCappedMillisecondsPerFrame=60, fixed gSimFixedTimeAmt=16, pause), dispatches the current state through the jump table at 0x804e885c, then updates the Controller."
+},
+"WonLastGame__15MultiplayerModeFi": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "True if p is among last_winners.",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"__ct__15MultiplayerModeFv": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Zero-initialises the tournament state (active=0, MGID=-1, Teams ctor).",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"__ct__15PreGameHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 1 APT fscommand handlers with sequential job indexes: PreGame_OnPlay."
+},
+"__ct__16GlobalFSHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 5 APT fscommand handlers with sequential job indexes: PlayAEMSsfx, ActivateRumble, ScreenReady, ScreenLeaving, ReturnCursorVisibility."
+},
+"__ct__16GlobalLVHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 5 APT loadVariables handlers with sequential job indexes: GetStartScreenFromMain, GetLocale, GetLocaleFE, GetAspectRatio, PG_GetBuildType."
+},
+"__ct__16WorldHudHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 1 APT loadVariables handlers with sequential job indexes: InfoDialogue_GetText."
+},
+"__ct__17PreGameLVHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 4 APT loadVariables handlers with sequential job indexes: PreGame_OnLoad, PreGame_GetSinglePlayerInfo, PreGame_GetMultiPlayerInfo, PreGame_GetDareText."
+},
+"__ct__17ProfileFSHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 4 APT fscommand handlers with sequential job indexes: ProfileSelect_OnSelect, ProfileSelect_OnErase, SelectKid_OnFilterSelect, KidConfirm_OnResponse."
+},
+"__ct__17ProfileLVHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 3 APT loadVariables handlers with sequential job indexes: ProfileSelect_OnLoad, SelectKid_OnLoad, KidConfirm_GetDialogue."
+},
+"__ct__18EndTourneyHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 2 APT fscommand handlers with sequential job indexes: EndTourney_OnButtonClick, EndTourney_OnLoad."
+},
+"__ct__18MainMenuFSHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 2 APT fscommand handlers with sequential job indexes: MainMenu_OnSelect, Title_OnNextScreen."
+},
+"__ct__18MinigameFSHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 2 APT fscommand handlers with sequential job indexes: Hud_LoadComplete, GameStartAnim_Complete."
+},
+"__ct__18MinigameLVHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 5 APT loadVariables handlers with sequential job indexes: GetNumberOfHuds, GetGameRules, PaperAirPlanes_GetCheckPoints, Footie_IsSaveDare, Counter_GetText."
+},
+"__ct__18PostGameFSHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 4 APT fscommand handlers with sequential job indexes: PostGame_OnReplay, PostGame_OnDone, MultiPlayer_PostGameOnSelect, PostGame_OnButtonClick."
+},
+"__ct__18PostGameLVHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 11 APT loadVariables handlers with sequential job indexes: PostGame_OnLoad, PostGame_GetSPInfo, PostGame_GetStats, PostGame_GetMPInfo, PostGame_IsLastTourneyGame, PostGame_IsNextGameLastTourneyGame, PostGame_GetPointsWon, PostGame_GetTotalPoints\u2026."
+},
+"__ct__18ReportCardHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 2 APT fscommand handlers with sequential job indexes: ReportCard_OnClose, ReportCard_OnLoad."
+},
+"__ct__18WorldHudFSHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 2 APT fscommand handlers with sequential job indexes: WorldHud_LoadComplete, InfoDialogue_OnButtonClick."
+},
+"__ct__19BossEndGameHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 1 APT loadVariables handlers with sequential job indexes: EndGame_OnLoad."
+},
+"__ct__19PauseMenuFSHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 4 APT fscommand handlers with sequential job indexes: Pause_OnLoadComplete, Pause_OnKeepPlaying, Pause_OnRestart, Pause_OnQuit."
+},
+"__ct__20ConversationHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 1 APT fscommand handlers with sequential job indexes: ConversationOnButtonNext."
+},
+"__ct__20CreditScreenHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 1 APT loadVariables handlers with sequential job indexes: ScrCreditsInit."
+},
+"__ct__21BossEndGameFSHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 3 APT fscommand handlers with sequential job indexes: EndGame_OnStickerSelect, EndGame_QuitResponse, EndGame_OnFinished."
+},
+"__ct__21LoadingScreenHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 1 APT fscommand handlers with sequential job indexes: LoadingStartPressed."
+},
+"__ct__21MultiPlayerFSHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 13 APT fscommand handlers with sequential job indexes: MultiPlayer_SetNumberPlayers, MultiPlayer_NumPlayersBack, MultiPlayer_SetPlayerAvatars, PlayerSetup_Exit, PlayerSetup_OnNext, MultiPlayer_SetGameStyle, MultiPlayer_SetNumRounds, RoundSelect_OnBack\u2026."
+},
+"__ct__21MultiPlayerLVHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 6 APT loadVariables handlers with sequential job indexes: MultiPlayer_HowManyPlayersOnLoad, MultiPlayer_SetUpOnLoad, MultiPlayer_SelectGameOnLoad, MultiPlayer_GameRulesOnLoad, MultiPlayer_GetGameRule, MultiPlayer_TeamSelectOnLoad."
+},
+"__ct__21PaperAirplaneHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 2 APT fscommand handlers with sequential job indexes: SelectPlane_Exit, SelectPlane_OnLoad."
+},
+"__ct__21StickerBookFSHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 9 APT fscommand handlers with sequential job indexes: StickerBook_RewardSelected, StickerBook_LayoutSave, StickerBook_LaunchMiniGame, StickerBook_Exit, StickerBookCover_OnWorld, StickerBookCover_OnQuit, StickerBookCover_OnMusic, StickerBookCover_OnSave\u2026."
+},
+"__ct__21StickerBookLVHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 7 APT loadVariables handlers with sequential job indexes: StickerBook_RewardLoad, StickerBook_RewardGetStickers, StickerBook_GetSticker, StickerBook_LayoutLoad, StickerBook_GetPlayerName, StickerBookCover_LoadLayout, StickerBookCover_IsGameDirty."
+},
+"__ct__22ConversationLVHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 4 APT loadVariables handlers with sequential job indexes: Conversation_GetName, Conversation_GetDialogueText, Conversation_GetResponses, Conversation_OnPlayerSelect."
+},
+"__ct__22StickerStoreFSHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 6 APT fscommand handlers with sequential job indexes: StickerStoreCover_OnExit, StickerStoreCover_OnGameSelect, StickerStorePage_OnClick, StickerStorePage_OnBuy, StickerStore_SetMinigame, PurchaseConfirm_Answer."
+},
+"__ct__22StickerStoreLVHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 3 APT loadVariables handlers with sequential job indexes: StickerStoreCover_OnLoad, StickerStorePage_OnLoad, PurchaseConfirm_OnLoad."
+},
+"__ct__23LoadingScreenLVHandlersFv": {
+"doc": "docs/04-frontend-and-menus.md",
+"summary": "Registers 2 APT loadVariables handlers with sequential job indexes: LoadingGetBtnLabels, LoadingGetStartOrBack."
+},
+"__ct__6LocaleF9eLocaleDb11eLanguageId": {
+"doc": "docs/07-data-formats-and-hashes.md",
+"summary": "Loads data\\locale\\<LANG>.loc and (once) string.idx."
+},
+"__dt__15MultiplayerModeFv": {
+"doc": "docs/05-minigames-and-rules.md",
+"summary": "Destroys the tournament state.",
+"verified_by": "tools/verify_multiplayer.py (66,264 comparisons vs reference/multiplayer_mode.py)"
+},
+"hash64__6AttribFPCUcUiUx": {
+"doc": "docs/07-data-formats-and-hashes.md",
+"summary": "Bob Jenkins lookup8 hash() with 24-byte blocks and mix64.",
+"verified_by": "tools/verify_hashes.py (309 strings, emulated original) + real db.vlt resolves 303 strings"
+},
+"main": {
+"doc": "docs/01-executable-and-boot.md",
+"summary": "Entry point: calls MainThread and returns 0."
+}
+}
