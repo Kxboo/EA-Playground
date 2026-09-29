@@ -1,0 +1,181 @@
+{
+ "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
+ "constants": [
+  {
+   "rust": "TURN_RATE",
+   "kind": "f32",
+   "value": 1.0,
+   "symbol": "gTurnRate",
+   "address": 2153770072,
+   "doc": "LocalCharacterControl::Update turn step (analog, normal)"
+  },
+  {
+   "rust": "TURN_RATE_FAST",
+   "kind": "f32",
+   "value": 2.0,
+   "symbol": "gTurnRateFast",
+   "address": 2153770076,
+   "doc": "LocalCharacterControl::Update turn step (analog, large heading error)"
+  },
+  {
+   "rust": "TURN_RATE_DIGITAL",
+   "kind": "f32",
+   "value": 0.10000000149011612,
+   "symbol": "gTurnRateDigital",
+   "address": 2153770080,
+   "doc": "LocalCharacterControl::Update turn step (digital/dpad input)"
+  },
+  {
+   "rust": "STOP_TIME_BEFORE_ABSOLUTE_MOVEMENT_MS",
+   "kind": "i32",
+   "value": 100,
+   "symbol": "gLocalCharacterControlStopTimeBeforeAbsoluteMovement",
+   "address": 2153770084,
+   "doc": "idle time (ms) before movement becomes camera-absolute again"
+  },
+  {
+   "rust": "DIGITAL_TRANSITION_TIME_MS",
+   "kind": "i32",
+   "value": 150,
+   "symbol": "gDigitalTransitionTime",
+   "address": 2153770088,
+   "doc": "dpad-to-analog smoothing ramp time (ms)"
+  },
+  {
+   "rust": "ORBIT_CAMERA_DISTANCE",
+   "kind": "f32",
+   "value": 20.0,
+   "symbol": "gOrbitCameraDistance",
+   "address": 2153773648,
+   "doc": "orbit camera distance"
+  },
+  {
+   "rust": "ORBIT_CAMERA_HEIGHT",
+   "kind": "f32",
+   "value": 3.799999952316284,
+   "symbol": "gOrbitCameraHeight",
+   "address": 2153773652,
+   "doc": "orbit camera height"
+  },
+  {
+   "rust": "HINGE_CAMERA_DISTANCE",
+   "kind": "f32",
+   "value": 3.5999999046325684,
+   "symbol": "gHingeCameraDistance",
+   "address": 2153773616,
+   "doc": "hinge camera distance"
+  },
+  {
+   "rust": "HINGE_CAMERA_DISTANCE_FAR",
+   "kind": "f32",
+   "value": 3.799999952316284,
+   "symbol": "gHingeCameraDistanceFar",
+   "address": 2153773620,
+   "doc": "hinge camera far distance"
+  },
+  {
+   "rust": "FRAME_CAMERA_DISTANCE",
+   "kind": "f32",
+   "value": 2.9000000953674316,
+   "symbol": "gFrameCameraDistance",
+   "address": 2153773592,
+   "doc": "frame camera distance"
+  },
+  {
+   "rust": "FRAME_CAMERA_HEIGHT",
+   "kind": "f32",
+   "value": 1.100000023841858,
+   "symbol": "gFrameCameraHeight",
+   "address": 2153773600,
+   "doc": "frame camera height"
+  },
+  {
+   "rust": "CAMERA_SPEED_CAP",
+   "kind": "f32",
+   "value": 2.0,
+   "symbol": "gCameraSpeedCap",
+   "address": 2153773672,
+   "doc": "camera speed cap"
+  },
+  {
+   "rust": "CAMERA_TRANSITION_SPEED",
+   "kind": "f32",
+   "value": 1.0,
+   "symbol": "gTransitionSpeed",
+   "address": 2153773640,
+   "doc": "camera transition speed"
+  },
+  {
+   "rust": "STATE_FIELD_10",
+   "kind": "f32",
+   "value": 0.25,
+   "symbol": "__ct__14CharacterStateFv+field 0x10",
+   "address": 2150555532,
+   "doc": "CharacterState default at +0x10"
+  },
+  {
+   "rust": "STATE_FIELD_14",
+   "kind": "f32",
+   "value": 0.8999999761581421,
+   "symbol": "__ct__14CharacterStateFv+field 0x14",
+   "address": 2150555532,
+   "doc": "CharacterState default at +0x14"
+  },
+  {
+   "rust": "STATE_MAX_SPEED",
+   "kind": "f32",
+   "value": 5.0,
+   "symbol": "__ct__14CharacterStateFv+field 0x18",
+   "address": 2150555532,
+   "doc": "CharacterState default at +0x18"
+  },
+  {
+   "rust": "STATE_FIELD_1C",
+   "kind": "f32",
+   "value": 2.5,
+   "symbol": "__ct__14CharacterStateFv+field 0x1c",
+   "address": 2150555532,
+   "doc": "CharacterState default at +0x1c"
+  },
+  {
+   "rust": "STATE_FIELD_20",
+   "kind": "f32",
+   "value": 4.0,
+   "symbol": "__ct__14CharacterStateFv+field 0x20",
+   "address": 2150555532,
+   "doc": "CharacterState default at +0x20"
+  },
+  {
+   "rust": "STATE_FIELD_24",
+   "kind": "f32",
+   "value": 1.0,
+   "symbol": "__ct__14CharacterStateFv+field 0x24",
+   "address": 2150555532,
+   "doc": "CharacterState default at +0x24"
+  },
+  {
+   "rust": "STICK_DEAD_ZONE",
+   "kind": "f32",
+   "value": 0.10000000149011612,
+   "symbol": ".sdata2@0x80605834",
+   "address": 2153797684,
+   "doc": "LocalCharacterControl::Update: |axis| must exceed this (0x802ef1fc)"
+  },
+  {
+   "rust": "PI",
+   "kind": "f32",
+   "value": 3.1415927410125732,
+   "symbol": ".sdata2@0x8060583c",
+   "address": 2153797692,
+   "doc": "pi used by Update"
+  },
+  {
+   "rust": "DEG_PER_PI",
+   "kind": "f32",
+   "value": 180.0,
+   "symbol": ".sdata2@0x80605840",
+   "address": 2153797696,
+   "doc": "180.0 used to convert camera yaw"
+  }
+ ]
+}
