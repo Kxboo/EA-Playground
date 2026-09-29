@@ -1,0 +1,72 @@
+# addr	size	class	method	args	const	source_unit	mangled
+803293bc	64	VideoCapture::ScreenCapture	destructor			controller.cpp	__dt__Q212VideoCapture13ScreenCaptureFv
+803293fc	168	VideoCapture::ScreenCapture	constructor			controller.cpp	__ct__Q212VideoCapture13ScreenCaptureFv
+803294a4	328	VideoCapture::ScreenCapture	Init	const char*, const char*, unsigned int, unsigned int		controller.cpp	Init__Q212VideoCapture13ScreenCaptureFPCcPCcUiUi
+803295ec	60	VideoCapture::ScreenCapture	Release			controller.cpp	Release__Q212VideoCapture13ScreenCaptureFv
+80329628	80	VideoCapture::ScreenCapture	StartCapture			controller.cpp	StartCapture__Q212VideoCapture13ScreenCaptureFv
+80329678	84	VideoCapture::ScreenCapture	StopCapture			controller.cpp	StopCapture__Q212VideoCapture13ScreenCaptureFv
+803296cc	172	VideoCapture::ScreenCapture	CaptureFrame			controller.cpp	CaptureFrame__Q212VideoCapture13ScreenCaptureFv
+80329778	672	VideoCapture::ScreenCapture	MatrixTilePerspective	EAGL::ViewPort*		controller.cpp	MatrixTilePerspective__Q212VideoCapture13ScreenCaptureFPQ24EAGL8ViewPort
+80329a18	272	VideoCapture::ScreenCapture	TakeScreenShot			controller.cpp	TakeScreenShot__Q212VideoCapture13ScreenCaptureFv
+80329b28	288	VideoCapture::TargaWriter	SaveFile	const char*, const long*, unsigned int, unsigned int		controller.cpp	SaveFile__Q212VideoCapture11TargaWriterFPCcPClUiUi
+80329c48	56	VideoCapture	Init	const VideoCapture::TInitParams&		controller.cpp	Init__12VideoCaptureFRCQ212VideoCapture11TInitParams
+80329c80	20	VideoCapture	VideoCaptureMemAlloc	const char*, int, int		controller.cpp	VideoCaptureMemAlloc__12VideoCaptureFPCcii
+80329c94	20	VideoCapture	VideoCaptureMemFree	void*		controller.cpp	VideoCaptureMemFree__12VideoCaptureFPv
+80329ca8	12	VideoCapture	GetCapturePath			controller.cpp	GetCapturePath__12VideoCaptureFv
+80329cb4	1444	Controller	GetInput	int, int&, int&, int&, int		controller.cpp	GetInput__10ControllerFiRiRiRii
+8032a258	504	Controller	constructor			controller.cpp	__ct__10ControllerFv
+8032a450	112	Controller	destructor			controller.cpp	__dt__10ControllerFv
+8032a4c0	6068		ConvertStringToActionEvent	CString		controller.cpp	ConvertStringToActionEvent__F7CString
+8032bc74	980		ConvertStringToControllerState	CString		controller.cpp	ConvertStringToControllerState__F7CString
+8032c048	308		ConvertStringToControllerEvent	CString		controller.cpp	ConvertStringToControllerEvent__F7CString
+8032c17c	932		ConvertStringToButton	CString		controller.cpp	ConvertStringToButton__F7CString
+8032c520	136	Controller	Create	ControlType		controller.cpp	Create__10ControllerF11ControlType
+8032c5a8	96	Controller	Destroy			controller.cpp	Destroy__10ControllerFv
+8032c608	20	Controller	Get	int		controller.cpp	Get__10ControllerFi
+8032c61c	148	Controller	DisconnectAllUnusedRemotes			controller.cpp	DisconnectAllUnusedRemotes__10ControllerFv
+8032c6b0	20	Controller	GetCurrentControllerState		const	controller.cpp	GetCurrentControllerState__10ControllerCFv
+8032c6c4	964	Controller	Initialize	ControlType, int		controller.cpp	Initialize__10ControllerF11ControlTypei
+8032ca88	112	Controller	ReInitialize	ControlType		controller.cpp	ReInitialize__10ControllerF11ControlType
+8032caf8	96	Controller	Update	int		controller.cpp	Update__10ControllerFi
+8032cb58	3672	Controller	UpdateInput	int		controller.cpp	UpdateInput__10ControllerFi
+8032d9b0	16	Controller	GetEventState	EActionEvent	const	controller.cpp	GetEventState__10ControllerCF12EActionEvent
+8032d9c0	196	Controller	GetControllerAnalogScale	unsigned char	const	controller.cpp	GetControllerAnalogScale__10ControllerCFUc
+8032da84	40		rmfClamp	float, float, float		controller.cpp	rmfClamp__Ffff
+8032daac	192	Controller	GetControllerAnalogScaleNoDeadZone	unsigned char	const	controller.cpp	GetControllerAnalogScaleNoDeadZone__10ControllerCFUc
+8032db6c	180	Controller	GetControllerDPadDirectionScale	unsigned short	const	controller.cpp	GetControllerDPadDirectionScale__10ControllerCFUs
+8032dc20	24	Controller	PopState			controller.cpp	PopState__10ControllerFv
+8032dc38	28	Controller	SetCurrentControllerState	EControllerState		controller.cpp	SetCurrentControllerState__10ControllerF16EControllerState
+8032dc54	48	EA::Math	operator==	const EA::Math::Vector2&, const EA::Math::Vector2&		controller.cpp	__eq__Q22EA4MathFRCQ32EA4Math7Vector2RCQ32EA4Math7Vector2
+8032dc84	160		rmNormalize	const rmVector3&, float, rmVector3&		controller.cpp	rmNormalize__FRC9rmVector3fR9rmVector3
+8032dd24	660	Controller	GetWorldVectorFromDPDRotationallyCorrected	EAGL::ViewPort*, Camera*, int, rmVector3*		controller.cpp	GetWorldVectorFromDPDRotationallyCorrected__10ControllerFPQ24EAGL8ViewPortP6CameraiP9rmVector3
+8032dfb8	20	rmVector2	operator=	const rmVector2&		controller.cpp	__as__9rmVector2FRC9rmVector2
+8032dfcc	28	Controller	GetLastCoreAccelerometers		const	controller.cpp	GetLastCoreAccelerometers__10ControllerCFv
+8032dfe8	28	Controller	GetCoreAccelerometers		const	controller.cpp	GetCoreAccelerometers__10ControllerCFv
+8032e004	120	Controller	GetFilteredValue	EWiiMoteAxis, int		controller.cpp	GetFilteredValue__10ControllerF12EWiiMoteAxisi
+8032e07c	152	Controller	GetDPDMousePointRotationallyCorrected			controller.cpp	GetDPDMousePointRotationallyCorrected__10ControllerFv
+8032e114	180	EA::Conga::PrimaryControllerOutput	ConvertMousePointToScreenCoords	const EA::Conga::Math::Coordinate2<f>&, float, float, bool, float, float, float, float		controller.cpp	ConvertMousePointToScreenCoords__Q32EA5Conga23PrimaryControllerOutputFRCQ42EA5Conga4Math14Coordinate2<f>ffbffff
+8032e1c8	204	Controller	GetDPDMousePointInScreenCoordsRotationallyCorrected			controller.cpp	GetDPDMousePointInScreenCoordsRotationallyCorrected__10ControllerFv
+8032e294	96	Controller	GetMouseRotation			controller.cpp	GetMouseRotation__10ControllerFv
+8032e2f4	52	Controller	StartRumble	int, float		controller.cpp	StartRumble__10ControllerFif
+8032e328	36	Controller	StopRumble			controller.cpp	StopRumble__10ControllerFv
+8032e34c	12	Controller	EnableFrontEndInput	bool		controller.cpp	EnableFrontEndInput__10ControllerFb
+8032e358	116		__sinit_\controller_cpp			controller.cpp	__sinit_\controller_cpp
+8032e3cc	140	PGConga	constructor			pgconga.cpp	__ct__7PGCongaFv
+8032e458	64	InputAllocator	destructor			pgconga.cpp	__dt__14InputAllocatorFv
+8032e498	108	PGConga	destructor			pgconga.cpp	__dt__7PGCongaFv
+8032e504	4	PGConga	Update	int		pgconga.cpp	Update__7PGCongaFi
+8032e508	76	PGConga	Create			pgconga.cpp	Create__7PGCongaFv
+8032e554	72	PGConga	Destroy			pgconga.cpp	Destroy__7PGCongaFv
+8032e59c	4	PGCongaPlatform	PlatformAssert	bool, const char*		pgconga.cpp	PlatformAssert__15PGCongaPlatformFbPCc
+8032e5a0	32	PGCongaPlatform	Alloc	unsigned long		pgconga.cpp	Alloc__15PGCongaPlatformFUl
+8032e5c0	8	PGCongaPlatform	Free	void*		pgconga.cpp	Free__15PGCongaPlatformFPv
+8032e5c8	116	PGCongaPlatform	fopen	const char*, EA::Conga::IPlatform::OpenMode		pgconga.cpp	fopen__15PGCongaPlatformFPCcQ42EA5Conga9IPlatform8OpenMode
+8032e63c	12	PGCongaPlatform	fsize	int		pgconga.cpp	fsize__15PGCongaPlatformFi
+8032e648	16	PGCongaPlatform	fread	int, void*, unsigned long		pgconga.cpp	fread__15PGCongaPlatformFiPvUl
+8032e658	16	PGCongaPlatform	fwrite	int, void*, unsigned long		pgconga.cpp	fwrite__15PGCongaPlatformFiPvUl
+8032e668	12	PGCongaPlatform	fclose	int		pgconga.cpp	fclose__15PGCongaPlatformFi
+8032e674	8	InputAllocator	Release			pgconga.cpp	Release__14InputAllocatorFv
+8032e67c	8	InputAllocator	AddRef			pgconga.cpp	AddRef__14InputAllocatorFv
+8032e684	8	InputAllocator	Free	void*, unsigned long		pgconga.cpp	Free__14InputAllocatorFPvUl
+8032e68c	32	InputAllocator	Alloc	unsigned long, const EA::TagValuePair&		pgconga.cpp	Alloc__14InputAllocatorFUlRCQ22EA12TagValuePair
+8032e6ac	108		__sinit_\pgconga_cpp			pgconga.cpp	__sinit_\pgconga_cpp

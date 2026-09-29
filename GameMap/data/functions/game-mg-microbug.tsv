@@ -1,0 +1,62 @@
+# addr	size	class	method	args	const	source_unit	mangled
+8032e718	128	MicroBug	constructor	MicroBug::BugType, int, const rmVector3&		microbug.cpp	__ct__8MicroBugFQ28MicroBug7BugTypeiRC9rmVector3
+8032e798	92	MicroBug	destructor			microbug.cpp	__dt__8MicroBugFv
+8032e7f4	344	MicroBug	Initialize	Ren::CachedModel*		microbug.cpp	Initialize__8MicroBugFPQ23Ren11CachedModel
+8032e94c	156	MicroBug	UnInitialize			microbug.cpp	UnInitialize__8MicroBugFv
+8032e9e8	188	MicroBug	Draw			microbug.cpp	Draw__8MicroBugFv
+8032eaa4	896	MicroBug	Update	int		microbug.cpp	Update__8MicroBugFi
+8032ee24	128	EA::Math	Normalize	const EA::Math::Vector3&, EA::Math::Vector3&		microbug.cpp	Normalize__Q22EA4MathFRCQ32EA4Math7Vector3RQ32EA4Math7Vector3
+8032eea4	40	EA::Math	Mult	const EA::Math::Vector3&, float, EA::Math::Vector3&		microbug.cpp	Mult__Q22EA4MathFRCQ32EA4Math7Vector3fRQ32EA4Math7Vector3
+8032eecc	12	MicroBug	SetBugData	int, float		microbug.cpp	SetBugData__8MicroBugFif
+8032eed8	28	MicroBugShadowRenderEntity	constructor	EAGL::Model*		microbug.cpp	__ct__26MicroBugShadowRenderEntityFPQ24EAGL5Model
+8032eef4	88	MicroBugShadowRenderEntity	destructor			microbug.cpp	__dt__26MicroBugShadowRenderEntityFv
+8032ef4c	76	MicroBugShadowRenderEntity	Draw	Ren::SceneContext&		microbug.cpp	Draw__26MicroBugShadowRenderEntityFRQ23Ren12SceneContext
+8032ef98	24		__sinit_\microbug_cpp			microbug.cpp	__sinit_\microbug_cpp
+8032efb0	160	MicroBugHuntManager	constructor			microbughuntmanager.cpp	__ct__19MicroBugHuntManagerFv
+8032f050	96	MicroBugHuntManager	destructor			microbughuntmanager.cpp	__dt__19MicroBugHuntManagerFv
+8032f0b0	76	MicroBugHuntManager	Initialize			microbughuntmanager.cpp	Initialize__19MicroBugHuntManagerFv
+8032f0fc	108	MicroBugHuntManager	UnInitialize			microbughuntmanager.cpp	UnInitialize__19MicroBugHuntManagerFv
+8032f168	348	MicroBugHuntManager	ChangeArea	Enums::AreaType		microbughuntmanager.cpp	ChangeArea__19MicroBugHuntManagerFQ25Enums8AreaType
+8032f2c4	428	MicroBugHuntManager	StartUp	Character*		microbughuntmanager.cpp	StartUp__19MicroBugHuntManagerFP9Character
+8032f470	184	MicroBugHuntManager	ShutDown			microbughuntmanager.cpp	ShutDown__19MicroBugHuntManagerFv
+8032f528	300	MicroBugHuntManager	Restart			microbughuntmanager.cpp	Restart__19MicroBugHuntManagerFv
+8032f654	252	MicroBugHuntManager	LoadData			microbughuntmanager.cpp	LoadData__19MicroBugHuntManagerFv
+8032f750	236	MicroBugHuntManager	LoadBugs			microbughuntmanager.cpp	LoadBugs__19MicroBugHuntManagerFv
+8032f83c	288	MicroBugHuntManager	LoadAssets			microbughuntmanager.cpp	LoadAssets__19MicroBugHuntManagerFv
+8032f95c	136	MicroBugHuntManager	FreeAssets			microbughuntmanager.cpp	FreeAssets__19MicroBugHuntManagerFv
+8032f9e4	1152	MicroBugHuntManager	Update	int		microbughuntmanager.cpp	Update__19MicroBugHuntManagerFi
+8032fe64	328	MicroBugHuntManager	UpdateSwingInfo	int, MicroBugHuntSwingInfo&		microbughuntmanager.cpp	UpdateSwingInfo__19MicroBugHuntManagerFiR21MicroBugHuntSwingInfo
+8032ffac	840	MicroBugHuntManager	Draw	Ren::SceneContext&		microbughuntmanager.cpp	Draw__19MicroBugHuntManagerFRQ23Ren12SceneContext
+803302f4	132	MicroBugNetShadowRenderEntity	SetModelMatrix	const rmMatrix4&		microbughuntmanager.cpp	SetModelMatrix__29MicroBugNetShadowRenderEntityFRC9rmMatrix4
+80330378	16	MicroBugHuntManager	SwipeRegularCallback	const EA::Conga::CongaOutput*, void*		microbughuntmanager.cpp	SwipeRegularCallback__19MicroBugHuntManagerFPCQ32EA5Conga11CongaOutputPv
+80330388	16	MicroBugHuntManager	SwipeRegularReverseCallback	const EA::Conga::CongaOutput*, void*		microbughuntmanager.cpp	SwipeRegularReverseCallback__19MicroBugHuntManagerFPCQ32EA5Conga11CongaOutputPv
+80330398	188	MicroBugHuntManager	SwipeRegularProcess	const EA::Conga::CongaOutput*		microbughuntmanager.cpp	SwipeRegularProcess__19MicroBugHuntManagerFPCQ32EA5Conga11CongaOutput
+80330454	516	MicroBugHuntManager	StartSwing	MicroBugHuntManager::SwingType		microbughuntmanager.cpp	StartSwing__19MicroBugHuntManagerFQ219MicroBugHuntManager9SwingType
+80330658	1568	MicroBugHuntManager	DoSwingHitDetection	const rmVector3&, rmAngle, rmAngle, float, float		microbughuntmanager.cpp	DoSwingHitDetection__19MicroBugHuntManagerFRC9rmVector37rmAngle7rmAngleff
+80330c78	176	MicroBugHuntManager	StartIdleParticle			microbughuntmanager.cpp	StartIdleParticle__19MicroBugHuntManagerFv
+80330d28	72	MicroBugHuntManager	StopIdleParticle			microbughuntmanager.cpp	StopIdleParticle__19MicroBugHuntManagerFv
+80330d70	144	MicroBugHuntManager	OpenPauseMenu			microbughuntmanager.cpp	OpenPauseMenu__19MicroBugHuntManagerFv
+80330e00	96	MicroBugHuntManager	ClosePauseMenu			microbughuntmanager.cpp	ClosePauseMenu__19MicroBugHuntManagerFv
+80330e60	4	MicroBugHuntManager	OnPauseMenuLoaded			microbughuntmanager.cpp	OnPauseMenuLoaded__19MicroBugHuntManagerFv
+80330e64	4	MicroBugHuntManager	OnPauseContinue			microbughuntmanager.cpp	OnPauseContinue__19MicroBugHuntManagerFv
+80330e68	52	MicroBugHuntManager	OnPauseQuit			microbughuntmanager.cpp	OnPauseQuit__19MicroBugHuntManagerFv
+80330e9c	52	MicroBugHuntManager	OnPauseReset			microbughuntmanager.cpp	OnPauseReset__19MicroBugHuntManagerFv
+80330ed0	80	MicroBugNetShadowRenderEntity	constructor	EAGL::Model*		microbughuntmanager.cpp	__ct__29MicroBugNetShadowRenderEntityFPQ24EAGL5Model
+80330f20	88	MicroBugNetShadowRenderEntity	destructor			microbughuntmanager.cpp	__dt__29MicroBugNetShadowRenderEntityFv
+80330f78	88	MicroBugNetShadowRenderEntity	Draw	Ren::SceneContext&		microbughuntmanager.cpp	Draw__29MicroBugNetShadowRenderEntityFRQ23Ren12SceneContext
+80330fd0	196		__sinit_\microbughuntmanager_cpp			microbughuntmanager.cpp	__sinit_\microbughuntmanager_cpp
+80331094	112	rmMatrix4	constructor	float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float		microbugmanager.cpp	__ct__9rmMatrix4Fffffffffffffffff
+80331104	44	MicroBugManager	constructor			microbugmanager.cpp	__ct__15MicroBugManagerFv
+80331130	84	MicroBugManager	destructor			microbugmanager.cpp	__dt__15MicroBugManagerFv
+80331184	112	MicroBugManager	Initialize			microbugmanager.cpp	Initialize__15MicroBugManagerFv
+803311f4	108	MicroBugManager	UnInitialize			microbugmanager.cpp	UnInitialize__15MicroBugManagerFv
+80331260	116	MicroBugManager	LoadAssets			microbugmanager.cpp	LoadAssets__15MicroBugManagerFv
+803312d4	64	MicroBugManager	UnloadAssets			microbugmanager.cpp	UnloadAssets__15MicroBugManagerFv
+80331314	80	MicroBugManager	AddBug	const rmVector3&		microbugmanager.cpp	AddBug__15MicroBugManagerFRC9rmVector3
+80331364	168	MicroBugManager	AddBug	const rmVector3&, MicroBug::BugType		microbugmanager.cpp	AddBug__15MicroBugManagerFRC9rmVector3Q28MicroBug7BugType
+8033140c	160	MicroBugManager	RemoveBug	int		microbugmanager.cpp	RemoveBug__15MicroBugManagerFi
+803314ac	120	MicroBugManager	RemoveAllBugs			microbugmanager.cpp	RemoveAllBugs__15MicroBugManagerFv
+80331524	16	MicroBugManager	GetBug	int	const	microbugmanager.cpp	GetBug__15MicroBugManagerCFi
+80331534	120	MicroBugManager	Update	int		microbugmanager.cpp	Update__15MicroBugManagerFi
+803315ac	100	MicroBugManager	Draw	Ren::SceneContext&		microbugmanager.cpp	Draw__15MicroBugManagerFRQ23Ren12SceneContext
+80331610	24		__sinit_\microbugmanager_cpp			microbugmanager.cpp	__sinit_\microbugmanager_cpp

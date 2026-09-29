@@ -1,0 +1,31 @@
+# addr	size	class	method	args	const	source_unit	mangled
+803b2138	12	rmAngle	constructor			rmangle.cpp	__ct__7rmAngleFv
+803b2144	52	rmAngle	constructor	float		rmangle.cpp	__ct__7rmAngleFf
+803b2178	68	rmAngle	constructor	const rmVector3&		rmangle.cpp	__ct__7rmAngleFRC9rmVector3
+803b21bc	80	rmAngle	AsDir		const	rmangle.cpp	AsDir__7rmAngleCFv
+803b220c	64	rmAngle	Set	const rmVector3*		rmangle.cpp	Set__7rmAngleFPC9rmVector3
+803b224c	8	rmAngle	Set	float		rmangle.cpp	Set__7rmAngleFf
+803b2254	24		__sinit_\rmangle_cpp			rmangle.cpp	__sinit_\rmangle_cpp
+803b226c	36		rmSin	float		rMath.cpp	rmSin__Ff
+803b2290	36		rmASin	float		rMath.cpp	rmASin__Ff
+803b22b4	36		rmCos	float		rMath.cpp	rmCos__Ff
+803b22d8	36		rmACos	float		rMath.cpp	rmACos__Ff
+803b22fc	36		rmTan	float		rMath.cpp	rmTan__Ff
+803b2320	36		rmATan	float, float		rMath.cpp	rmATan__Fff
+803b2344	80		rmRandRange	int, int		rMath.cpp	rmRandRange__Fii
+803b2394	128		rmfRandRange	float, float		rMath.cpp	rmfRandRange__Fff
+803b2414	100		rmNormalizeXZ	const rmVector3&, rmVector3&		rMath.cpp	rmNormalizeXZ__FRC9rmVector3R9rmVector3
+803b2478	428	rmOBB	constructor	const rmVector3&, const rmVector3&, const rmMatrix4&		rMath.cpp	__ct__5rmOBBFRC9rmVector3RC9rmVector3RC9rmMatrix4
+803b2624	1708	rmOBB	Intersects	const rmOBB&	const	rMath.cpp	Intersects__5rmOBBCFRC5rmOBB
+803b2cd0	16		AsRmVector3	const hkVector4&		rMath.cpp	AsRmVector3__FRC9hkVector4
+803b2ce0	20		AsHkVector4	const rmVector3&		rMath.cpp	AsHkVector4__FRC9rmVector3
+803b2cf4	216		AsRmMatrix4	const hkTransform&		rMath.cpp	AsRmMatrix4__FRC11hkTransform
+803b2dcc	4		AsHkTransform	const rmMatrix4&		rMath.cpp	AsHkTransform__FRC9rmMatrix4
+803b2dd0	448		SimpleVectorPlaneIntersection	const rmVector3&, const rmVector3&, const rmVector4&, rmVector3*		rMath.cpp	SimpleVectorPlaneIntersection__FRC9rmVector3RC9rmVector3RC9rmVector4P9rmVector3
+803b2f90	52		rmDot	const rmVector4&, const rmVector4&		rMath.cpp	rmDot__FRC9rmVector4RC9rmVector4
+803b2fc4	412		IsLineIntersectingAABB	const rmVector3&, const rmVector3&, const rmAABB&		rMath.cpp	IsLineIntersectingAABB__FRC9rmVector3RC9rmVector3RC6rmAABB
+803b3160	332		ClosestPoint	const rmVector3&, const rmVector3&, const rmVector3&		rMath.cpp	ClosestPoint__FRC9rmVector3RC9rmVector3RC9rmVector3
+803b32ac	24		__sinit_\rMath_cpp			rMath.cpp	__sinit_\rMath_cpp
+803b32c4	28	rmTagPoint	SetPos	const rmVector3*		rmtagpoint.cpp	SetPos__10rmTagPointFPC9rmVector3
+803b32e0	356	rmTagPoint	AddOffset	const rmTagPoint&, const rmTagPoint&		rmtagpoint.cpp	AddOffset__10rmTagPointFRC10rmTagPointRC10rmTagPoint
+803b3444	24		__sinit_\rmtagpoint_cpp			rmtagpoint.cpp	__sinit_\rmtagpoint_cpp

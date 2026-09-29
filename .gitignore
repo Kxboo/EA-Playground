@@ -6,6 +6,7 @@
 !/docs/
 !/Remaster/
 !/_bevy/
+!/GameMap/
 
 # Local runtimes, game inputs, exports and machine state.
 **/_cli_internal/

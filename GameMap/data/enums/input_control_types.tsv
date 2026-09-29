@@ -1,0 +1,15 @@
+# value	token	notes  # Controller::ControlType -> controls*.csv file ; table ControlTypeFilenames @804d74d0
+0	controls.csv	
+1	controlsmg21.csv	
+2	controlsmgbughunt.csv	
+3	controlsmgdartshootout.csv	
+4	controlsmgdodgeball.csv	
+5	controlsmgdribbling.csv	
+6	controlsmgfootie.csv	
+7	controlsmgpaperairplanes.csv	
+8	controlsmgquickdraw.csv	
+9	controlsmgrccars.csv	
+10	controlsmgtemplate.csv	
+11	controlsmgtetherball.csv	
+12	controlsmgwallball.csv	
+13	controlsmgfreethrow.csv	

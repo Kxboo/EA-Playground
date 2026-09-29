@@ -1,0 +1,109 @@
+# addr	size	class	method	args	const	source_unit	mangled
+802f2b3c	208	cCSVParser	GetString	char*&, char*&, unsigned int&, char		csvparser.cpp	GetString__10cCSVParserFRPcRPcRUic
+802f2c0c	120	cCSVParser	GetInt	char*&, unsigned int&, int&, int, int, char		csvparser.cpp	GetInt__10cCSVParserFRPcRUiRiiic
+802f2c84	108	cCSVParser	constructor	char*, int		csvparser.cpp	__ct__10cCSVParserFPci
+802f2cf0	104	cCSVParser	destructor			csvparser.cpp	__dt__10cCSVParserFv
+802f2d58	168	cCSVParser	ParseHeader			csvparser.cpp	ParseHeader__10cCSVParserFv
+802f2e00	176	cCSVParser	NextRecord			csvparser.cpp	NextRecord__10cCSVParserFv
+802f2eb0	208	cCSVParser	GetStringField	const char*, CString&		csvparser.cpp	GetStringField__10cCSVParserFPCcR7CString
+802f2f80	212	cCSVParser	GetFloatField	const char*, float&		csvparser.cpp	GetFloatField__10cCSVParserFPCcRf
+802f3054	196	cCSVParser	GetIntField	const char*, int&		csvparser.cpp	GetIntField__10cCSVParserFPCcRi
+802f3118	212	cCSVParser	GetNextLine			csvparser.cpp	GetNextLine__10cCSVParserFv
+802f31ec	24		__sinit_\csvparser_cpp			csvparser.cpp	__sinit_\csvparser_cpp
+802f3204	212	cParser	GetToken	const char*, unsigned int, char*, unsigned int, char, unsigned int&		parser.cpp	GetToken__7cParserFPCcUiPcUicRUi
+802f32d8	148	cParser	TrimWhiteSpaceLeft	char*, unsigned int, unsigned int		parser.cpp	TrimWhiteSpaceLeft__7cParserFPcUiUi
+802f336c	96	cParser	TrimWhiteSpaceRight	char*, unsigned int, unsigned int		parser.cpp	TrimWhiteSpaceRight__7cParserFPcUiUi
+802f33cc	24		__sinit_\parser_cpp			parser.cpp	__sinit_\parser_cpp
+802f3ef0	24	VaultMap	constructor			db.cpp	__ct__8VaultMapFv
+802f3f08	92	std::__tree<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>	destructor			db.cpp	__dt__Q23std120__tree<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>Fv
+802f3f64	92	std::map<Ux,PQ26Attrib5Vault,Q23std8less<Ux>,Q23std45allocator<Q23std26pair<CUx,PQ26Attrib5Vault>>>	destructor			db.cpp	__dt__Q23std94map<Ux,PQ26Attrib5Vault,Q23std8less<Ux>,Q23std45allocator<Q23std26pair<CUx,PQ26Attrib5Vault>>>Fv
+802f3fc0	88	VaultMap	destructor			db.cpp	__dt__8VaultMapFv
+802f4018	24	FileMap	constructor			db.cpp	__ct__7FileMapFv
+802f4030	92	std::__tree<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>	destructor			db.cpp	__dt__Q23std216__tree<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>Fv
+802f408c	92	std::map<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>	destructor			db.cpp	__dt__Q23std86map<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>Fv
+802f40e8	88	FileMap	destructor			db.cpp	__dt__7FileMapFv
+802f4140	16	GarbageCollector	constructor			db.cpp	__ct__16GarbageCollectorFv
+802f4150	88	GarbageCollector	destructor			db.cpp	__dt__16GarbageCollectorFv
+802f41a8	128	GarbageCollector	ReleaseData	unsigned char, unsigned long long, void*, unsigned int		db.cpp	ReleaseData__16GarbageCollectorFUcUxPvUi
+802f4228	96	std::__tree_deleter<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>	destructor			db.cpp	__dt__Q23std224__tree_deleter<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>Fv
+802f4288	100	std::__tree_deleter<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>	destroy	std::__tree_deleter<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>::node*		db.cpp	destroy__Q23std224__tree_deleter<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>FPQ33std224__tree_deleter<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>4node
+802f42ec	96	std::__tree_deleter<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>	destructor			db.cpp	__dt__Q23std128__tree_deleter<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>Fv
+802f434c	100	std::__tree_deleter<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>	destroy	std::__tree_deleter<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>::node*		db.cpp	destroy__Q23std128__tree_deleter<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>FPQ33std128__tree_deleter<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>4node
+802f43b0	44		pgAttribAlloc	unsigned long, const char*		db.cpp	pgAttribAlloc__FUlPCc
+802f43dc	4		pgAttribFree	void*		db.cpp	pgAttribFree__FPv
+802f43e0	20	pgDBCollection	constructor			db.cpp	__ct__14pgDBCollectionFv
+802f43f4	108	pgDBCollection	destructor			db.cpp	__dt__14pgDBCollectionFv
+802f4460	248	pgIDatabase	OpenDatabase	const char*, const char*, const char*		db.cpp	OpenDatabase__11pgIDatabaseFPCcPCcPCc
+802f4558	20	pgIDatabase	InitialiseDatabase			db.cpp	InitialiseDatabase__11pgIDatabaseFv
+802f456c	60	pgIDatabase	Create			db.cpp	Create__11pgIDatabaseFv
+802f45a8	52	pgIDatabase	Destroy			db.cpp	Destroy__11pgIDatabaseFv
+802f45dc	8	pgIDatabase	Update	int		db.cpp	Update__11pgIDatabaseFi
+802f45e4	8	pgIDatabase	GetKey	const char*		db.cpp	GetKey__11pgIDatabaseFPCc
+802f45ec	8	pgIDatabase	GetClass	unsigned long long		db.cpp	GetClass__11pgIDatabaseFUx
+802f45f4	64	pgIDatabase	GetClass	const char*		db.cpp	GetClass__11pgIDatabaseFPCc
+802f4634	136	pgIDatabase	IsParent	Attrib::Class*, unsigned long long, const char*		db.cpp	IsParent__11pgIDatabaseFPQ26Attrib5ClassUxPCc
+802f46bc	112	pgIDatabase	GetCollection	const char*, const char*		db.cpp	GetCollection__11pgIDatabaseFPCcPCc
+802f472c	104	pgIDatabase	GetCollection	const char*, unsigned long long		db.cpp	GetCollection__11pgIDatabaseFPCcUx
+802f4794	84	pgIDatabase	GetCollection	unsigned long long, unsigned long long		db.cpp	GetCollection__11pgIDatabaseFUxUx
+802f47e8	4	pgIDatabase	GetCollection	Attrib::Class*, unsigned long long		db.cpp	GetCollection__11pgIDatabaseFPQ26Attrib5ClassUx
+802f47ec	80	pgIDatabase	GetCollection	Attrib::Class*, const char*		db.cpp	GetCollection__11pgIDatabaseFPQ26Attrib5ClassPCc
+802f483c	196	pgIDatabase	GetCollectionInternal	Attrib::Class*, unsigned long long		db.cpp	GetCollectionInternal__11pgIDatabaseFPQ26Attrib5ClassUx
+802f4900	68	pgIDatabase	DestroyCollection	pgDBCollection*		db.cpp	DestroyCollection__11pgIDatabaseFP14pgDBCollection
+802f4944	12	pgDBCollection	GetInternalIterator			db.cpp	GetInternalIterator__14pgDBCollectionFv
+802f4950	68	pgDBIterator	Release			db.cpp	Release__12pgDBIteratorFv
+802f4994	84	pgDBCollection	Get	unsigned long long		db.cpp	Get__14pgDBCollectionFUx
+802f49e8	44	Attrib::Attribute	GetElementPointer	unsigned int	const	db.cpp	GetElementPointer__Q26Attrib9AttributeCFUi
+802f4a14	64	pgDBCollection	Get	const char*		db.cpp	Get__14pgDBCollectionFPCc
+802f4a54	64	pgDBCollection	GetString	const char*		db.cpp	GetString__14pgDBCollectionFPCc
+802f4a94	100	pgDBCollection	GetString	unsigned long long		db.cpp	GetString__14pgDBCollectionFUx
+802f4af8	80	pgDBCollection	GetInt8FromArray	const char*, unsigned int		db.cpp	GetInt8FromArray__14pgDBCollectionFPCcUi
+802f4b48	176	pgDBCollection	GetInt8FromArray	unsigned long long, unsigned int		db.cpp	GetInt8FromArray__14pgDBCollectionFUxUi
+802f4bf8	80	pgDBCollection	GetInt16FromArray	const char*, unsigned int		db.cpp	GetInt16FromArray__14pgDBCollectionFPCcUi
+802f4c48	172	pgDBCollection	GetInt16FromArray	unsigned long long, unsigned int		db.cpp	GetInt16FromArray__14pgDBCollectionFUxUi
+802f4cf4	80	pgDBCollection	GetInt32FromArray	const char*, unsigned int		db.cpp	GetInt32FromArray__14pgDBCollectionFPCcUi
+802f4d44	172	pgDBCollection	GetInt32FromArray	unsigned long long, unsigned int		db.cpp	GetInt32FromArray__14pgDBCollectionFUxUi
+802f4df0	80	pgDBCollection	GetUInt8FromArray	const char*, unsigned int		db.cpp	GetUInt8FromArray__14pgDBCollectionFPCcUi
+802f4e40	172	pgDBCollection	GetUInt8FromArray	unsigned long long, unsigned int		db.cpp	GetUInt8FromArray__14pgDBCollectionFUxUi
+802f4eec	80	pgDBCollection	GetUInt16FromArray	const char*, unsigned int		db.cpp	GetUInt16FromArray__14pgDBCollectionFPCcUi
+802f4f3c	172	pgDBCollection	GetUInt16FromArray	unsigned long long, unsigned int		db.cpp	GetUInt16FromArray__14pgDBCollectionFUxUi
+802f4fe8	80	pgDBCollection	GetUInt32FromArray	const char*, unsigned int		db.cpp	GetUInt32FromArray__14pgDBCollectionFPCcUi
+802f5038	172	pgDBCollection	GetUInt32FromArray	unsigned long long, unsigned int		db.cpp	GetUInt32FromArray__14pgDBCollectionFUxUi
+802f50e4	80	pgDBCollection	GetFloatFromArray	const char*, unsigned int		db.cpp	GetFloatFromArray__14pgDBCollectionFPCcUi
+802f5134	192	pgDBCollection	GetFloatFromArray	unsigned long long, unsigned int		db.cpp	GetFloatFromArray__14pgDBCollectionFUxUi
+802f51f4	80	pgDBCollection	GetBoolFromArray	const char*, unsigned int		db.cpp	GetBoolFromArray__14pgDBCollectionFPCcUi
+802f5244	172	pgDBCollection	GetBoolFromArray	unsigned long long, unsigned int		db.cpp	GetBoolFromArray__14pgDBCollectionFUxUi
+802f52f0	88	pgDBCollection	GetVector3FromArray	const char*, unsigned int, rmVector3&		db.cpp	GetVector3FromArray__14pgDBCollectionFPCcUiR9rmVector3
+802f5348	220	pgDBCollection	GetVector3FromArray	unsigned long long, unsigned int, rmVector3&		db.cpp	GetVector3FromArray__14pgDBCollectionFUxUiR9rmVector3
+802f5424	88	pgDBCollection	GetVector4FromArray	const char*, unsigned int, rmVector4&		db.cpp	GetVector4FromArray__14pgDBCollectionFPCcUiR9rmVector4
+802f547c	236	pgDBCollection	GetVector4FromArray	unsigned long long, unsigned int, rmVector4&		db.cpp	GetVector4FromArray__14pgDBCollectionFUxUiR9rmVector4
+802f5568	88	pgDBCollection	GetMGPA_PowerupFromArray	const char*, unsigned int, Structs::MGPA_Powerup&		db.cpp	GetMGPA_PowerupFromArray__14pgDBCollectionFPCcUiRQ27Structs12MGPA_Powerup
+802f55c0	196	pgDBCollection	GetMGPA_PowerupFromArray	unsigned long long, unsigned int, Structs::MGPA_Powerup&		db.cpp	GetMGPA_PowerupFromArray__14pgDBCollectionFUxUiRQ27Structs12MGPA_Powerup
+802f5684	44	Structs::MGPA_Powerup	operator=	const Structs::MGPA_Powerup&		db.cpp	__as__Q27Structs12MGPA_PowerupFRCQ27Structs12MGPA_Powerup
+802f56b0	88	pgDBCollection	GetMGPA_ObstacleFromArray	const char*, unsigned int, Structs::MGPA_Obstacle&		db.cpp	GetMGPA_ObstacleFromArray__14pgDBCollectionFPCcUiRQ27Structs13MGPA_Obstacle
+802f5708	196	pgDBCollection	GetMGPA_ObstacleFromArray	unsigned long long, unsigned int, Structs::MGPA_Obstacle&		db.cpp	GetMGPA_ObstacleFromArray__14pgDBCollectionFUxUiRQ27Structs13MGPA_Obstacle
+802f57cc	44	Structs::MGPA_Obstacle	operator=	const Structs::MGPA_Obstacle&		db.cpp	__as__Q27Structs13MGPA_ObstacleFRCQ27Structs13MGPA_Obstacle
+802f57f8	88	pgDBCollection	GetMGDS_TargetDefFromArray	const char*, unsigned int, Structs::MGDS_TargetDef&		db.cpp	GetMGDS_TargetDefFromArray__14pgDBCollectionFPCcUiRQ27Structs14MGDS_TargetDef
+802f5850	196	pgDBCollection	GetMGDS_TargetDefFromArray	unsigned long long, unsigned int, Structs::MGDS_TargetDef&		db.cpp	GetMGDS_TargetDefFromArray__14pgDBCollectionFUxUiRQ27Structs14MGDS_TargetDef
+802f5914	36	Structs::MGDS_TargetDef	operator=	const Structs::MGDS_TargetDef&		db.cpp	__as__Q27Structs14MGDS_TargetDefFRCQ27Structs14MGDS_TargetDef
+802f5938	88	pgDBCollection	GetMGDS_SpawnPointFromArray	const char*, unsigned int, Structs::MGDS_SpawnPoint&		db.cpp	GetMGDS_SpawnPointFromArray__14pgDBCollectionFPCcUiRQ27Structs15MGDS_SpawnPoint
+802f5990	236	pgDBCollection	GetMGDS_SpawnPointFromArray	unsigned long long, unsigned int, Structs::MGDS_SpawnPoint&		db.cpp	GetMGDS_SpawnPointFromArray__14pgDBCollectionFUxUiRQ27Structs15MGDS_SpawnPoint
+802f5a7c	88	pgDBCollection	GetMGDS_ScoreRecordFromArray	const char*, unsigned int, Structs::MGDS_ScoreRecord&		db.cpp	GetMGDS_ScoreRecordFromArray__14pgDBCollectionFPCcUiRQ27Structs16MGDS_ScoreRecord
+802f5ad4	204	pgDBCollection	GetMGDS_ScoreRecordFromArray	unsigned long long, unsigned int, Structs::MGDS_ScoreRecord&		db.cpp	GetMGDS_ScoreRecordFromArray__14pgDBCollectionFUxUiRQ27Structs16MGDS_ScoreRecord
+802f5ba0	184	pgDBCollection	GetRefClassFromArray	unsigned long long, int		db.cpp	GetRefClassFromArray__14pgDBCollectionFUxi
+802f5c58	28	Attrib::RefSpec	constructor			db.cpp	__ct__Q26Attrib7RefSpecFv
+802f5c74	116	Attrib::RefSpec	destructor			db.cpp	__dt__Q26Attrib7RefSpecFv
+802f5ce8	76	Attrib::Attribute	Get<Q26Attrib7RefSpec>	?FUiRQ26Attrib7RefSpec_b	const	db.cpp	Get<Q26Attrib7RefSpec>__Q26Attrib9AttributeCFUiRQ26Attrib7RefSpec_b
+802f5d34	180	pgDBCollection	GetRefCollectionFromArray	unsigned long long, int		db.cpp	GetRefCollectionFromArray__14pgDBCollectionFUxi
+802f5de8	120	pgDBCollection	GetArrayCount	const char*		db.cpp	GetArrayCount__14pgDBCollectionFPCc
+802f5e60	104	pgDBCollection	GetArrayCount	unsigned long long		db.cpp	GetArrayCount__14pgDBCollectionFUx
+802f5ec8	116	pgDBCollection	GetArrayString	const char*, int		db.cpp	GetArrayString__14pgDBCollectionFPCci
+802f5f3c	88	pgDBCollection	GetPG_HighScore	const char*, unsigned int, Structs::PG_HighScore&		db.cpp	GetPG_HighScore__14pgDBCollectionFPCcUiRQ27Structs12PG_HighScore
+802f5f94	196	pgDBCollection	GetPG_HighScore	unsigned long long, unsigned int, Structs::PG_HighScore&		db.cpp	GetPG_HighScore__14pgDBCollectionFUxUiRQ27Structs12PG_HighScore
+802f6058	28	Structs::PG_HighScore	operator=	const Structs::PG_HighScore&		db.cpp	__as__Q27Structs12PG_HighScoreFRCQ27Structs12PG_HighScore
+802f6074	88	pgDBCollection	GetPG_AbilityFromArray	const char*, unsigned int, Structs::PG_Ability&		db.cpp	GetPG_AbilityFromArray__14pgDBCollectionFPCcUiRQ27Structs10PG_Ability
+802f60cc	196	pgDBCollection	GetPG_AbilityFromArray	unsigned long long, unsigned int, Structs::PG_Ability&		db.cpp	GetPG_AbilityFromArray__14pgDBCollectionFUxUiRQ27Structs10PG_Ability
+802f6190	28	Structs::PG_Ability	operator=	const Structs::PG_Ability&		db.cpp	__as__Q27Structs10PG_AbilityFRCQ27Structs10PG_Ability
+802f61ac	88	pgDBCollection	GetPG_AccessibilityPopupFromArray	const char*, unsigned int, Structs::PG_AccessibilityPopup&		db.cpp	GetPG_AccessibilityPopupFromArray__14pgDBCollectionFPCcUiRQ27Structs21PG_AccessibilityPopup
+802f6204	196	pgDBCollection	GetPG_AccessibilityPopupFromArray	unsigned long long, unsigned int, Structs::PG_AccessibilityPopup&		db.cpp	GetPG_AccessibilityPopupFromArray__14pgDBCollectionFUxUiRQ27Structs21PG_AccessibilityPopup
+802f62c8	28	Structs::PG_AccessibilityPopup	operator=	const Structs::PG_AccessibilityPopup&		db.cpp	__as__Q27Structs21PG_AccessibilityPopupFRCQ27Structs21PG_AccessibilityPopup
+802f62e4	24		__sinit_\db_cpp			db.cpp	__sinit_\db_cpp

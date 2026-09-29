@@ -1,0 +1,17 @@
+# call_site	in_function	state_value	state_name  # GameState::SetNewState(const State&) ; names from the Update() jump table @0x804e885c
+80317074	LoadingScreenLVHandlers::LoadingGetStartOrBack	6	Playground
+8031ab28	MultiPlayerFSHandlers::SetTeams	3	FE2MP
+8031aeb8	MultiPlayerFSHandlers::LaunchNonTeamMiniGame	3	FE2MP
+80322b90	StickerBookFSHandlers::StickerBookCoverOnQuit	0	PG2FE
+80322c90	StickerBookHandlers_SaveDoneCallBack	0	PG2FE
+80326bcc	FEManager::EnterFEGameState	1	FE2PG
+803ad288	GameState::STATEFN_UPDATE_BootFlow	2	Boot2FE
+803ad428	GameState::STATEFN_UPDATE_PG2FE	5	FrontEnd
+803ad8c8	GameState::STATEFN_UPDATE_FE2MP	6	Playground
+803ad9e0	GameState::STATEFN_UPDATE_MP2FE	5	FrontEnd
+803ada9c	GameState::STATEFN_UPDATE_FE2PG	6	Playground
+803adbcc	GameState::STATEFN_UPDATE_Boot2FE	5	FrontEnd
+803aedd0	BootSequence	7	BootFlow
+803aedf0	BootSequence	7	BootFlow
+803b3b94	TRC::ControllerDisconnectOptionsResult	4	MP2FE
+803e2360	WorldMan::EndMinigame	4	MP2FE

@@ -1,0 +1,1379 @@
+# addr	size	section	symbol	class	initial_value (bytes in the ELF image; .bss has none)
+805feaa0	8	.sdata	AMB_Nature_ForestId__4Csis	Csis	0x804cb413648933e9
+805fea90	8	.sdata	AMB_ParkId__4Csis	Csis	0x804cb3fe648912df
+805fea88	8	.sdata	AMB_SchoolyardId__4Csis	Csis	0x804cb3ef64892384
+805fea98	8	.sdata	AMB_StadiumId__4Csis	Csis	0x804cb40764894627
+80442bc0	14	.rodata	AnimBankType__Q24EAGL13DynamicLoader	EAGL::DynamicLoader	
+80602334	4	.sbss	Attrib_RefSpec_singleton__6Attrib	Attrib	
+805fec10	4	.sdata	CHARACTER_ASSET_BIG_FILE		0x804cc7e8
+805fec14	4	.sdata	CHARACTER_SHADOW_BIG_FILE		0x804cc80e
+804ed618	24	.data	CLUTConvTable__4EAGL	EAGL	
+805ff460	4	.sdata	CONGAFILENAME		0x804d88c8
+80605c00	4	.sdata2	CONTROLLER_OFFSCREEN_X		0xc2c80000 (float -100)
+80605c04	4	.sdata2	CONTROLLER_OFFSCREEN_Y		0xc2c80000 (float -100)
+805fead0	8	.sdata	ControlId__4Csis	Csis	0x805feac864896625
+804d74d0	56	.data	ControlTypeFilenames		
+80602338	4	.sbss	CurrentVariation__12EAGLInternal	EAGLInternal	
+805ff520	8	.sdata	DSObjectFilenames		0x804d9400804d940e
+805ff538	2	.sdata	DSObjectMarkerIDs		0x1
+805ffd3c	4	.sdata	EAGLFree__12EAGLInternal	EAGLInternal	0x803f1710
+805ffd38	4	.sdata	EAGLMalloc__12EAGLInternal	EAGLInternal	0x803f1714
+805ffd40	4	.sdata	EAGLTempMalloc__12EAGLInternal	EAGLInternal	0x803f1714
+804ed640	20	.data	EAGLdriver__4EAGL	EAGL	
+804ed654	28	.data	EAGLdriverext__4EAGL	EAGL	
+80441408	296	.rodata	FESFXLookupTable		
+805fea68	8	.sdata	FESFX_PreSelection_Anims_LPId__4Csis	Csis	0x804cb3c764897b92
+80602448	4	.sbss	FONTstand		
+80601298	4	.sbss	GUID_BAD		
+804589f4	60	.data	GXEurgb60Hz480IntDf		
+80458a30	60	.data	GXEurgb60Hz480Prog		
+80458940	60	.data	GXMpal480IntDf		
+8045897c	60	.data	GXMpal480Prog		
+804588c8	60	.data	GXNtsc480IntDf		
+80458904	60	.data	GXNtsc480Prog		
+804589b8	60	.data	GXPal528IntDf		
+805feb30	8	.sdata	Global_Ambience_VolId__4Csis	Csis	0x804cb548648902b1
+805feae8	8	.sdata	Global_SFX_MasterId__4Csis	Csis	0x804cb4666489075f
+805feb28	8	.sdata	Global_SFX_PaperAirp_WindEngineId__4Csis	Csis	0x804cb52864897351
+805feaf8	8	.sdata	Global_SFX_RC_Car_Engine_1Id__4Csis	Csis	0x804cb486648920c7
+805feb00	8	.sdata	Global_SFX_RC_Car_Engine_2Id__4Csis	Csis	0x804cb4a1648913c7
+805feb08	8	.sdata	Global_SFX_RC_Car_Engine_3Id__4Csis	Csis	0x804cb4bc648942c6
+805feb10	8	.sdata	Global_SFX_RC_Car_Engine_4Id__4Csis	Csis	0x804cb4d7648975c7
+805feb18	8	.sdata	Global_SFX_RC_Car_Engine_5Id__4Csis	Csis	0x804cb4f2648924c6
+805feb20	8	.sdata	Global_SFX_RC_Car_Engine_6Id__4Csis	Csis	0x804cb50d648917c6
+80442dd8	36	.data	GouraudApt_FieldNames		
+80442dfc	32	.data	GouraudApt_FieldSizes		
+80442d00	24	.data	Gouraud_FieldNames		
+80442d18	20	.data	Gouraud_FieldSizes		
+80600f7c	4	.sbss	HalfPi__Q32EA5Conga4Math	EA::Conga::Math	
+804ed630	16	.data	ITexConvTable__4EAGL	EAGL	
+805fe958	8	.sdata	MGSFX_CommonHUDId__4Csis	Csis	0x804cb10764896b7e
+805fe910	8	.sdata	MGSFX_DB_SetupAnimId__4Csis	Csis	0x804cb08464894923
+805fe8e8	8	.sdata	MGSFX_Damage_FemaleId__4Csis	Csis	0x804cb00e64891b48
+805fe8f0	8	.sdata	MGSFX_Damage_MaleId__4Csis	Csis	0x804cb022648940a7
+805fe9b8	8	.sdata	MGSFX_Darts_Boss_DeathId__4Csis	Csis	0x804cb22564890b8d
+805fe9b0	8	.sdata	MGSFX_Darts_Boss_SupermoveId__4Csis	Csis	0x804cb20a64894daf
+805fe9a8	8	.sdata	MGSFX_Darts_BulletTime_SFXId__4Csis	Csis	0x804cb1ef64896b51
+805fe9a0	8	.sdata	MGSFX_Darts_NPCId__4Csis	Csis	0x804cb1df6489534e
+805fe9c0	8	.sdata	MGSFX_Darts_PinupTarg_MoveId__4Csis	Csis	0x804cb23c648934f6
+805fe990	8	.sdata	MGSFX_Darts_Scrptd_TargetsId__4Csis	Csis	0x804cb1b064892b42
+805fe998	8	.sdata	MGSFX_Darts_WeaponsId__4Csis	Csis	0x804cb1cb648965cf
+805fe8b8	8	.sdata	MGSFX_Dodgeball_ActionsId__4Csis	Csis	0x804caf8d6489401e
+805fe8c0	8	.sdata	MGSFX_Dodgeball_BallId__4Csis	Csis	0x804cafa564891163
+805fe9d0	8	.sdata	MGSFX_Footie_ActionsId__4Csis	Csis	0x804cb26964890186
+805fe9c8	8	.sdata	MGSFX_Footie_BallId__4Csis	Csis	0x804cb25764890fce
+805fe9d8	8	.sdata	MGSFX_Footie_CollisionsId__4Csis	Csis	0x804cb27e648979af
+805fe8f8	8	.sdata	MGSFX_GENERIC_CelebrationsId__4Csis	Csis	0x804cb03464897ba7
+805fe8c8	8	.sdata	MGSFX_Grunts_FemaleId__4Csis	Csis	0x804cafba64893ba6
+805fe8d0	8	.sdata	MGSFX_Grunts_MaleId__4Csis	Csis	0x804cafce64893e31
+805fe908	8	.sdata	MGSFX_HERO_CelebrationsId__4Csis	Csis	0x804cb06c6489296e
+805fe960	8	.sdata	MGSFX_HUD_CommonLPId__4Csis	Csis	0x804cb11764890126
+805fe920	8	.sdata	MGSFX_HUD_DBId__4Csis	Csis	0x804cb0a8648915dd
+805fe938	8	.sdata	MGSFX_HUD_DSId__4Csis	Csis	0x804cb0cf6489298d
+805fe940	8	.sdata	MGSFX_HUD_FootieId__4Csis	Csis	0x804cb0dc64891691
+805fe930	8	.sdata	MGSFX_HUD_PAId__4Csis	Csis	0x804cb0c264890900
+805fe928	8	.sdata	MGSFX_HUD_RCId__4Csis	Csis	0x804cb0b5648912ba
+805fe950	8	.sdata	MGSFX_HUD_TBId__4Csis	Csis	0x804cb0fa64896a1c
+805fe948	8	.sdata	MGSFX_HUD_WBId__4Csis	Csis	0x804cb0ed64896e18
+805feab0	8	.sdata	MGSFX_Laughter_FId__4Csis	Csis	0x804cb43664894336
+805feaa8	8	.sdata	MGSFX_Laughter_MId__4Csis	Csis	0x804cb42564895635
+805fe8e0	8	.sdata	MGSFX_MEGAGrunts_FemaleId__4Csis	Csis	0x804caff6648922cb
+805fe8d8	8	.sdata	MGSFX_MEGAGrunts_MaleId__4Csis	Csis	0x804cafe0648962a1
+805fe968	8	.sdata	MGSFX_PaperAirp_WindEngineId__4Csis	Csis	0x804cb12a64893d91
+805fe978	8	.sdata	MGSFX_PaperAirpl_CollisionsId__4Csis	Csis	0x804cb15f648965c2
+805fe988	8	.sdata	MGSFX_PaperAirpl_Emitters_LPId__4Csis	Csis	0x804cb1936489699e
+805fe980	8	.sdata	MGSFX_PaperAirpl_LaunchId__4Csis	Csis	0x804cb17b64897289
+805fe970	8	.sdata	MGSFX_PaperAirpl_WindySFXId__4Csis	Csis	0x804cb145648923c1
+805fe898	8	.sdata	MGSFX_RCCars_CollisionId__4Csis	Csis	0x804caf3064897925
+805fe878	8	.sdata	MGSFX_RCCars_Engine_1Id__4Csis	Csis	0x804caed8648923fa
+805fe880	8	.sdata	MGSFX_RCCars_Engine_2Id__4Csis	Csis	0x804caeee64891f0a
+805fe888	8	.sdata	MGSFX_RCCars_Engine_3Id__4Csis	Csis	0x804caf0464894b5b
+805fe890	8	.sdata	MGSFX_RCCars_Engine_4Id__4Csis	Csis	0x804caf1a648966ea
+805fe8a8	8	.sdata	MGSFX_RCCars_FireCrkrWick_LPId__4Csis	Csis	0x804caf5a64891daf
+805fe8a0	8	.sdata	MGSFX_RCCars_MovesId__4Csis	Csis	0x804caf4764891a8d
+805fe900	8	.sdata	MGSFX_SIGNATURE_CelebrationsId__4Csis	Csis	0x804cb04f64896cb0
+805fe918	8	.sdata	MGSFX_TB_WindupsId__4Csis	Csis	0x804cb0976489693c
+805fe8b0	8	.sdata	MGSFX_Tetherball_HitsId__4Csis	Csis	0x804caf77648916bd
+805fe9e0	8	.sdata	MGSFX_WallBall_ActionsId__4Csis	Csis	0x804cb2966489717e
+805fe9e8	8	.sdata	MGSFX_WallBall_BallId__4Csis	Csis	0x804cb2ad64892e66
+805fea00	8	.sdata	MicroSFX_BBall_DribbleId__4Csis	Csis	0x804cb2e264894070
+805fe9f8	8	.sdata	MicroSFX_BugCatchId__4Csis	Csis	0x804cb2d064895c93
+805fea08	8	.sdata	MicroSFX_FreeThrowId__4Csis	Csis	0x804cb2f964891633
+805fe9f0	8	.sdata	MicroSFX_High5Id__4Csis	Csis	0x804cb2c164891603
+805a8ee0	36	.bss	MinigameIDs		
+805ee630	64	.bss	ModelScale__12EAGLInternal	EAGLInternal	
+80607b60	6	.sdata2	ModelType__Q24EAGL13DynamicLoader	EAGL::DynamicLoader	
+806075b4	4	.sdata2	OLD_SKINNING_MATRICES_SYMBOL__3Ren	Ren	0x804e97c3
+805ff648	8	.sdata	PAObstacleFilenames		0x805ff640804db728
+805feae0	8	.sdata	PauseId__4Csis	Csis	0x805fead864893f5e
+80600f78	4	.sbss	Pi__Q32EA5Conga4Math	EA::Conga::Math	
+80442eb8	40	.data	PlaygroundAnimatedTexture_FieldNames		
+80442ee0	36	.data	PlaygroundAnimatedTexture_FieldSizes		
+80442fd8	60	.data	PlaygroundCharFaceToonShade_HWSkin_FieldNames		
+80443014	56	.data	PlaygroundCharFaceToonShade_HWSkin_FieldSizes		
+80443100	32	.data	PlaygroundCompressPlaceableShadow_HWSkin_FieldNames		
+80443120	28	.data	PlaygroundCompressPlaceableShadow_HWSkin_FieldSizes		
+804431f8	32	.data	PlaygroundCompressShadow_HWSkin_FieldNames		
+80443218	28	.data	PlaygroundCompressShadow_HWSkin_FieldSizes		
+80443324	64	.data	PlaygroundCompressToonShade_HWSkin_FieldNames		
+80443364	60	.data	PlaygroundCompressToonShade_HWSkin_FieldSizes		
+80443484	56	.data	PlaygroundLitPlaceable_HWSkin_FieldNames		
+804434bc	52	.data	PlaygroundLitPlaceable_HWSkin_FieldSizes		
+80443598	28	.data	PlaygroundShadow_FieldNames		
+804435b4	24	.data	PlaygroundShadow_FieldSizes		
+80443660	32	.data	PlaygroundShadow_HWSkin_FieldNames		
+80443680	28	.data	PlaygroundShadow_HWSkin_FieldSizes		
+80443aa8	72	.data	PlaygroundTextureAlphaDXTBaseShadow_FieldNames		
+80443af0	68	.data	PlaygroundTextureAlphaDXTBaseShadow_FieldSizes		
+80443954	52	.data	PlaygroundTextureAlphaDXTBase_FieldNames		
+80443988	48	.data	PlaygroundTextureAlphaDXTBase_FieldSizes		
+80443c2c	64	.data	PlaygroundTextureAlphaDXTShadow_FieldNames		
+80443c6c	60	.data	PlaygroundTextureAlphaDXTShadow_FieldSizes		
+80443844	44	.data	PlaygroundTextureAlphaDXT_FieldNames		
+80443870	40	.data	PlaygroundTextureAlphaDXT_FieldSizes		
+80443f8c	56	.data	PlaygroundTextureBakedLightShadowDouble_FieldNames		
+80443fc4	52	.data	PlaygroundTextureBakedLightShadowDouble_FieldSizes		
+80443e4c	56	.data	PlaygroundTextureBakedLightShadow_FieldNames		
+80443e84	52	.data	PlaygroundTextureBakedLightShadow_FieldSizes		
+80443d40	36	.data	PlaygroundTextureBakedLight_FieldNames		
+80443d64	32	.data	PlaygroundTextureBakedLight_FieldSizes		
+804440dc	60	.data	PlaygroundTextureShadow_FieldNames		
+80444118	56	.data	PlaygroundTextureShadow_FieldSizes		
+8044422c	68	.data	PlaygroundTextureStaticShadow_FieldNames		
+80444270	64	.data	PlaygroundTextureStaticShadow_FieldSizes		
+8044374c	40	.data	PlaygroundTexture_FieldNames		
+80443774	36	.data	PlaygroundTexture_FieldSizes		
+80444350	40	.data	PlaygroundTexture_HWSkin_FieldNames		
+80444378	36	.data	PlaygroundTexture_HWSkin_FieldSizes		
+80444464	48	.data	PlaygroundToonShade_FieldNames		
+80444494	44	.data	PlaygroundToonShade_FieldSizes		
+80444584	56	.data	PlaygroundToonShade_HWSkin_FieldNames		
+804445bc	52	.data	PlaygroundToonShade_HWSkin_FieldSizes		
+804446c8	60	.data	PlaygroundWater2_FieldNames		
+80444704	56	.data	PlaygroundWater2_FieldSizes		
+805ef5b8	304	.bss	ProfileArrayDraw__4EAGL	EAGL	
+805ef478	304	.bss	ProfileCharDraw__4EAGL	EAGL	
+805ee3c0	304	.bss	ProfileDrawSetup		
+805ef6f8	304	.bss	ProfileEndDraw__4EAGL	EAGL	
+805e8560	304	.bss	ProfileEndFrame		
+805ee500	304	.bss	ProfileMemCopies		
+805edec0	304	.bss	ProfilePolySubmission		
+805ee680	304	.bss	ProfileSetState		
+805ee140	304	.bss	ProfileSkinning		
+805ef338	304	.bss	ProfileStartDraw__4EAGL	EAGL	
+805ee000	304	.bss	ProfileStateChanging		
+805ee280	304	.bss	ProfileUseTexture		
+805e86a0	304	.bss	ProfileWaitForGP		
+80600f80	4	.sbss	QuarterPi__Q32EA5Conga4Math	EA::Conga::Math	
+80601140	4	.sbss	RCMP_global_VP6_skipK		
+80601144	4	.sbss	RCMP_global_VP6_skipK_frameNo		
+805fea18	8	.sdata	RandomId__4Csis	Csis	0x805fea1064890a1a
+805ff73c	8	.sdata	RcCarModelFilenames		0x804dc5c0804dc5c9
+805ff744	8	.sdata	RcCarModelTexturenames		0x804dc5d4804dc5e7
+805ff770	4	.sdata	RcObstacleFilenames		0x804dc7f8
+804dc840	12	.data	RcPowerupModelFilenames		
+806075b0	4	.sdata2	SKINNING_MATRICES_SYMBOL__3Ren	Ren	0x804e97b0
+80607b68	6	.sdata2	ShapeType__Q24EAGL13DynamicLoader	EAGL::DynamicLoader	
+80600f68	4	.sbss	SimulatedError		
+805ab984	44	.bss	Singleton__22cParticleBucketManager	cParticleBucketManager	
+80442bd0	9	.rodata	SkeletonType__Q24EAGL13DynamicLoader	EAGL::DynamicLoader	
+805e39e0	9984	.bss	TempBuf__3TRC	TRC	
+804ed5d8	64	.data	TexConvTable__4EAGL	EAGL	
+8044481c	44	.data	TextureApt_FieldNames		
+80444848	40	.data	TextureApt_FieldSizes		
+80600f84	4	.sbss	TwoPi__Q32EA5Conga4Math	EA::Conga::Math	
+805fea80	8	.sdata	UI_Loop_SfxId__4Csis	Csis	0x804cb3e364893681
+805fea78	8	.sdata	UI_SfxId__4Csis	Csis	0x805fea70648904a5
+805feaf0	8	.sdata	UI_Sfx_VolumeId__4Csis	Csis	0x804cb47864897ce0
+805fea60	8	.sdata	WSFX_Amb_NatureForest_RndmElemId__4Csis	Csis	0x804cb3a8648974a1
+805fea50	8	.sdata	WSFX_Amb_Park_RndmElemId__4Csis	Csis	0x804cb3776489703a
+805fea48	8	.sdata	WSFX_Amb_SchoolYrd_RndmElemId__4Csis	Csis	0x804cb35b64894f7e
+805fea58	8	.sdata	WSFX_Amb_Stadium_RndmElemId__4Csis	Csis	0x804cb38e648939e8
+805fea38	8	.sdata	WSFX_Boss_Idles_LPId__4Csis	Csis	0x804cb335648911f4
+805fea40	8	.sdata	WSFX_Boss_Idles_OOId__4Csis	Csis	0x804cb34864892778
+805fea20	8	.sdata	WSFX_FootstepsId__4Csis	Csis	0x804cb30c64890e84
+805feab8	8	.sdata	WSFX_NISId__4Csis	Csis	0x804cb4476489183d
+805fea28	8	.sdata	WSFX_POIs_LPId__4Csis	Csis	0x804cb31b64890090
+805fea30	8	.sdata	WSFX_POIs_OOId__4Csis	Csis	0x804cb3286489361c
+805feac0	8	.sdata	WSFX_StickerBook_OpenId__4Csis	Csis	0x804cb45064894e90
+804448c8	320	.data	__files		
+806024a8	8	.sbss	_classicPadModeHandler		
+80602490	8	.sbss	_corePadModeHandler		
+80444d20	72	.data	_current_locale		
+806024a0	8	.sbss	_dpdexPadModeHandler		
+80602498	8	.sbss	_freeStylePadModeHandler		
+806024b0	8	.sbss	_futurePadModeHandler		
+80602484	8	.sbss	_gcPadModeHandler		
+806006a8	4	.sbss	_initialized		
+805f030c	16	.bss	_wiiPadDpdMode		
+805f02fc	16	.bss	_wiiPadHandlers		
+805f013c	64	.bss	_wiiPadInfo		
+8060247c	8	.sbss	_wiiPadOptions		
+805f017c	384	.bss	_wiiPadStatus		
+806024bd	4	.sbss	_wpadConnectedFlag		
+805f035c	96	.bss	_wpadInfo		
+806024b8	1	.sbss	_wpadInfoCallbackPending		
+806024b9	4	.sbss	_wpadInfoFlag		
+805ffdc4	4	.sdata	_wpadInfoPollTime		0x190
+805ffdc0	1	.sdata	_wpadInfoPollingEnabled		0x1
+805f03bc	16	.bss	_wpadInfoUpdate		
+80600f64	1	.sbss	bForceSimulatedError		
+805ff382	1	.sdata	bResetPanCamera$51211		0x1
+805e3890	256	.bss	buf$11700		
+805e61e0	128	.bss	buf$36190		
+805e27a0	256	.bss	buff$50592		
+8043ff28	1088	.rodata	csAninationFile__Q39textinput8keyboard6pctype	textinput::keyboard::pctype	
+8060224c	4	.sbss	emptystring__7CString	CString	
+804ed4c0	112	.data	failed_shape__12EAGLInternal	EAGLInternal	
+804ed100	64	.data	fidentity__12EAGLInternal	EAGLInternal	
+805ffd10	1	.sdata	first$9122		0x1
+804ccefc	24	.data	fixedResponses		
+80601728	8	.sbss	gAMB_Nature_ForestHandle__4Csis	Csis	
+80601718	8	.sbss	gAMB_ParkHandle__4Csis	Csis	
+80601710	8	.sbss	gAMB_SchoolyardHandle__4Csis	Csis	
+80601720	8	.sbss	gAMB_StadiumHandle__4Csis	Csis	
+80441fa0	64	.rodata	gAudioRcCarsEngineVolumeTable		
+8060236a	1	.sbss	gAutoVSyncOffEnable__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+805ff304	4	.sdata	gBaseDir		0x804d6e20
+80602358	4	.sbss	gBeginEndNestLevel__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+80602398	1	.sbss	gBreakSet__Q312EAGLInternal20RenderContextPrivate7GPBreak	EAGLInternal::RenderContextPrivate::GPBreak	
+8060149c	4	.sbss	gByValueBytes__6Attrib	Attrib	
+8060219c	4	.sbss	gCameraDampening		
+805ff800	4	.sdata	gCappedMillisecondsPerFrame		0x3c
+80601bf1	1	.sbss	gCheatUnlockAllMPCharacters		
+806020b8	1	.sbss	gCheckForUnUsedControllers__3TRC	TRC	
+806014c8	4	.sbss	gClassExportPolicy__6Attrib	Attrib	
+806014c0	8	.sbss	gClassType__6Attrib	Attrib	
+806023b1	1	.sbss	gCoPlanarZModeEnabled__Q24EAGL21GeoPrimStateExtension	EAGL::GeoPrimStateExtension	
+806014d8	4	.sbss	gCollectionExportPolicy__6Attrib	Attrib	
+806014d0	8	.sbss	gCollectionType__6Attrib	Attrib	
+805ffcd1	1	.sdata	gColourWritesEnable__Q24EAGL21GeoPrimStateExtension	EAGL::GeoPrimStateExtension	0x1
+805e2560	16	.bss	gConfirmAKidPosition		
+805ef870	40	.bss	gConsPool__Q24EAGL13DynamicLoader	EAGL::DynamicLoader	
+80601750	8	.sbss	gControlHandle__4Csis	Csis	
+805ff3c0	4	.sdata	gControllerDoubleDownThreshhold		0x1f4
+805ff3c8	4	.sdata	gControllerRumbleMSPerInterval		0x64
+806020bc	1	.sbss	gControllerVisibilityStored__3TRC	TRC	
+805febe8	4	.sdata	gConversationBigFileName		0x804cc6c0
+805ffa40	4	.sdata	gConversationCameraDistance		0x40a00000 (float 5)
+805ffa44	4	.sdata	gConversationCameraTransitionTime		0x3f19999a (float 0.6)
+806023b2	1	.sbss	gCullClockwise__Q24EAGL21GeoPrimStateExtension	EAGL::GeoPrimStateExtension	
+80601500	4	.sbss	gCurrMemory__6Attrib	Attrib	
+806023a8	8	.sbss	gCurrentCompactState__Q24EAGL21GeoPrimStateExtension	EAGL::GeoPrimStateExtension	
+806021a8	4	.sbss	gCurrentDistance		
+806020b4	4	.sbss	gCurrentFileHandler__3TRC	TRC	
+806023a0	4	.sbss	gCurrentFrameNumber__Q24EAGL13RenderContext	EAGL::RenderContext	
+805ffd0c	4	.sdata	gCurrentProfile__Q24EAGL8Profiler	EAGL::Profiler	0x805ef314
+80602380	4	.sbss	gCurrentVolatileBuffer__Q24EAGL22RenderContextExtension	EAGL::RenderContextExtension	
+804d9764	44	.data	gDSTargetPinupFilenames		
+806021a0	4	.sbss	gDampeningCap		
+805e2b80	16	.bss	gDartShootMegashotScatterOffset		
+804d94e0	20	.data	gDartShootoutBossCharacterHealthMultiplier		
+80441afc	20	.rodata	gDartShootoutBossMissPercentage		
+80441b10	20	.rodata	gDartShootoutCharacterHealthMultiplier		
+805ff560	4	.sdata	gDartShootoutDamageWithDamageUpgrade		0x3
+805e2b70	16	.bss	gDartShootoutDartGunBarrelPosOffset		
+805e2c10	16	.bss	gDartShootoutLeftGunRot		
+805ff4f0	4	.sdata	gDartShootoutMaxHittingStreak		0x5
+80441b24	20	.rodata	gDartShootoutMediumDartChance		
+80441ae8	20	.rodata	gDartShootoutMissPercentage		
+80601db4	1	.sbss	gDartShootoutRenderDebugInfo		
+805e2c00	16	.bss	gDartShootoutRightGunRot		
+805e2bf0	16	.bss	gDartShootoutTargetLeftBarrelPosOffset		
+805e2be0	16	.bss	gDartShootoutTargetRightBarrelPosOffset		
+80602388	1	.sbss	gDataStuffing__Q24EAGL22RenderContextExtension	EAGL::RenderContextExtension	
+806014b8	4	.sbss	gDatabaseExportPolicy__6Attrib	Attrib	
+806014a4	1	.sbss	gDatabaseSelfDestruct__6Attrib	Attrib	
+806014b0	8	.sbss	gDatabaseType__6Attrib	Attrib	
+805e8490	128	.bss	gDefaultDataArea$18043		
+80602274	4	.sbss	gDipSwitch		
+80601bf0	1	.sbss	gDisableAptRender		
+806022ec	1	.sbss	gDisableCurvedWorld		
+805ffca4	1	.sdata	gDoScreenClear__Q24EAGL22RenderContextExtension	EAGL::RenderContextExtension	0x1
+806023d4	4	.sbss	gDrawGouraud__Q24EAGL14ProfilerRegion	EAGL::ProfilerRegion	
+80602314	1	.sbss	gDrawSpawnRegions		
+8060235e	1	.sbss	gDrawsDone__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+80602040	4	.sbss	gEmbeddedFont		
+804dde20	43552	.data	gEmbeddedFontData		
+805febe0	1	.sdata	gEnableAI		0x1
+80601c39	1	.sbss	gEnableDebugCamera		
+80601c38	1	.sbss	gEnableDebugMenu		
+80602389	1	.sbss	gEnableDestinationAlpha__Q24EAGL26RenderContextExtensionBase	EAGL::RenderContextExtensionBase	
+80601c3a	1	.sbss	gEnableNunchuck		
+805ffa10	1	.sdata	gEnableVSync__3Ren	Ren	0x1
+805ffc98	1	.sdata	gEndFrameProcessed__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	0x1
+806014dc	4	.sbss	gExportPolicies__6Attrib	Attrib	
+806016f8	8	.sbss	gFESFX_PreSelection_Anims_LPHandle__4Csis	Csis	
+806020a4	4	.sbss	gFileEntryListSize__3TRC	TRC	
+805e39a0	36	.bss	gFileEntryList__3TRC	TRC	
+805a93ac	16	.bss	gFiles		
+806023e4	4	.sbss	gFirstRegion__Q24EAGL14ProfilerRegion	EAGL::ProfilerRegion	
+805ffc9c	4	.sdata	gFlipRate__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	0x1
+80602369	1	.sbss	gFrameBuffersInitialized__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+805ffa1c	4	.sdata	gFrameCameraAngle		0xbf051eb8 (float -0.52)
+805ffa18	4	.sdata	gFrameCameraDistance		0x4039999a (float 2.9)
+805ffa20	4	.sdata	gFrameCameraHeight		0x3f8ccccd (float 1.1)
+8060217c	4	.sbss	gFrameCameraTargetHeight		
+805ff804	1	.sdata	gFrameCapEnabled		0x1
+805ffca0	4	.sdata	gFrameCycles__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	0xffffffff
+80602390	4	.sbss	gGPBreakPointHead__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+80602394	4	.sbss	gGPBreakPointTail__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+805ed800	1536	.bss	gGPBreaklist__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+806018cc	4	.sbss	gGarbageCollector		
+80602068	1	.sbss	gGauntletAvailable		
+80601b18	1	.sbss	gGauntletWinAllGamesExcept1		
+805eef28	64	.bss	gGlobalModelMatrix__12EAGLInternal	EAGLInternal	
+805eef68	64	.bss	gGlobalModelViewMatrix__12EAGLInternal	EAGLInternal	
+805eefe8	64	.bss	gGlobalModelViewProjectionMatrix__12EAGLInternal	EAGLInternal	
+805eeea8	64	.bss	gGlobalProjectionMatrix__12EAGLInternal	EAGLInternal	
+805eeee8	64	.bss	gGlobalViewMatrix__12EAGLInternal	EAGLInternal	
+805ef028	64	.bss	gGlobalViewProjectionGuardbandMatrix__12EAGLInternal	EAGLInternal	
+805eefa8	64	.bss	gGlobalViewProjectionMatrix__12EAGLInternal	EAGLInternal	
+806017a8	8	.sbss	gGlobal_Ambience_VolHandle__4Csis	Csis	
+80601760	8	.sbss	gGlobal_SFX_MasterHandle__4Csis	Csis	
+806017a0	8	.sbss	gGlobal_SFX_PaperAirp_WindEngineHandle__4Csis	Csis	
+80601770	8	.sbss	gGlobal_SFX_RC_Car_Engine_1Handle__4Csis	Csis	
+80601778	8	.sbss	gGlobal_SFX_RC_Car_Engine_2Handle__4Csis	Csis	
+80601780	8	.sbss	gGlobal_SFX_RC_Car_Engine_3Handle__4Csis	Csis	
+80601788	8	.sbss	gGlobal_SFX_RC_Car_Engine_4Handle__4Csis	Csis	
+80601790	8	.sbss	gGlobal_SFX_RC_Car_Engine_5Handle__4Csis	Csis	
+80601798	8	.sbss	gGlobal_SFX_RC_Car_Engine_6Handle__4Csis	Csis	
+80602384	4	.sbss	gGpuHangRecoveryTimeout__Q24EAGL22RenderContextExtension	EAGL::RenderContextExtension	
+80602370	4	.sbss	gGpuHangVsyncCount__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+804d2cc0	96	.data	gGroperAlphaTestModeStrings__7GROPERS	GROPERS	
+80601a90	8	.sbss	gGroperAlphaTestModeTokenTable__7GROPERS	GROPERS	
+80601ae4	4	.sbss	gGroperBindGroupTokenTable__7GROPERS	GROPERS	
+804d3144	120	.data	gGroperBindGroupTokens__7GROPERS	GROPERS	
+80601ae8	4	.sbss	gGroperBindingTokenTable__7GROPERS	GROPERS	
+804d31e4	80	.data	gGroperBindingTokens__7GROPERS	GROPERS	
+804d2d20	312	.data	gGroperBlendModeStrings__7GROPERS	GROPERS	
+80601a98	8	.sbss	gGroperBlendModeTokenTable__7GROPERS	GROPERS	
+804d2e7c	48	.data	gGroperCullTypeStrings__7GROPERS	GROPERS	
+80601aa0	8	.sbss	gGroperCullTypeTokenTable__7GROPERS	GROPERS	
+804d2eac	36	.data	gGroperGropeTypeStrings__7GROPERS	GROPERS	
+80601aa8	8	.sbss	gGroperGropeTypeTokenTable__7GROPERS	GROPERS	
+80601aec	4	.sbss	gGroperPassTokenTable__7GROPERS	GROPERS	
+804d3490	1180	.data	gGroperPassTokens__7GROPERS	GROPERS	
+804d2ee8	48	.data	gGroperPassWaveStrings__7GROPERS	GROPERS	
+80601ab0	8	.sbss	gGroperPassWaveTokenTable__7GROPERS	GROPERS	
+80601af0	4	.sbss	gGroperStateTokenTable__7GROPERS	GROPERS	
+804d392c	40	.data	gGroperStateTokens__7GROPERS	GROPERS	
+804d2f18	24	.data	gGroperSurfaceStrings__7GROPERS	GROPERS	
+80601ab8	8	.sbss	gGroperSurfaceTokenTable__7GROPERS	GROPERS	
+804d2fcc	96	.data	gGroperTextureModeStrings__7GROPERS	GROPERS	
+80601ac0	8	.sbss	gGroperTextureModeTokenTable__7GROPERS	GROPERS	
+80601ae0	4	.sbss	gGroperTokenTable__7GROPERS	GROPERS	
+804d30d4	40	.data	gGroperTokens__7GROPERS	GROPERS	
+80601af4	4	.sbss	gGroperUVTokenTable__7GROPERS	GROPERS	
+804d3968	180	.data	gGroperUVTokens__7GROPERS	GROPERS	
+804d2c78	72	.data	gGroperUVTypeStrings__7GROPERS	GROPERS	
+80601ac8	8	.sbss	gGroperUVTypeTokenTable__7GROPERS	GROPERS	
+80601af8	4	.sbss	gGroperWaveTokenTable__7GROPERS	GROPERS	
+804d3a1c	280	.data	gGroperWaveTokens__7GROPERS	GROPERS	
+804d302c	96	.data	gGroperWaveTypeStrings__7GROPERS	GROPERS	
+80601ad0	8	.sbss	gGroperWaveTypeTokenTable__7GROPERS	GROPERS	
+804d308c	72	.data	gGroperZTestModeStrings__7GROPERS	GROPERS	
+80601ad8	8	.sbss	gGroperZTestModeTokenTable__7GROPERS	GROPERS	
+805ffa38	4	.sdata	gHingeCameraAngle		0x41280000 (float 10.5)
+805ffa30	4	.sdata	gHingeCameraDistance		0x40666666 (float 3.6)
+805ffa3c	4	.sdata	gHingeCameraTargetOffsetY		0xbd851eb8 (float -0.065)
+805ffa2c	4	.sdata	gHingeDistPercentage		0x3f400000 (float 0.75)
+806020b9	1	.sbss	gInControllerBypassDialog__3TRC	TRC	
+806020bb	1	.sbss	gInControllerDialog__3TRC	TRC	
+805e60e0	128	.bss	gKeyBoardBuffer__3TRC	TRC	
+805e6160	128	.bss	gKeyBoardInitialText__3TRC	TRC	
+80442340	302	.rodata	gKeyboardFilterList		
+804422b8	120	.rodata	gLanguage		
+80602364	4	.sbss	gLastCycleCount__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+8060235c	2	.sbss	gLastToken__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+804cd3ac	396	.data	gLionChunkTypeStrings		
+80601904	8	.sbss	gLionChunkTypeTable		
+804cd9e8	16	.data	gLionConvertBehToDes		
+804cda50	60	.data	gLionConvertBehWaveFlagStrings		
+8060192c	8	.sbss	gLionConvertBehWaveFlagTable		
+804cd9f8	60	.data	gLionConvertBehWaveStrings		
+80601924	8	.sbss	gLionConvertBehWaveTable		
+804cda98	72	.data	gLionConvertChunkStrings		
+8060191c	8	.sbss	gLionConvertChunkTable		
+804cd9b0	32	.data	gLionConvertDesToBeh		
+804d27f8	312	.data	gLionFlexibleTintBlendModeStrings		
+80601a7c	8	.sbss	gLionFlexibleTintBlendModeTokenTable		
+80601938	4	.sbss	gLionForceParserTokenTable		
+80601a10	4	.sbss	gLionGeomParserDesTokenTable		
+804d07ac	3540	.data	gLionGeomParserDesTokens		
+80601a14	4	.sbss	gLionGeomParserEffTokenTable		
+804cfbe8	40	.data	gLionGeomParserEffectTokens		
+804d15cc	132	.data	gLionGeomParserTokenKeys		
+80601a08	8	.sbss	gLionGeomParserTokenTable		
+805af27c	12	.bss	gLionGeomPluginCube		
+80601a1c	4	.sbss	gLionGeomPluginCubeTokenTable		
+804d1710	80	.data	gLionGeomPluginCubeTokens		
+805af288	12	.bss	gLionGeomPluginCylinder		
+80601a20	4	.sbss	gLionGeomPluginCylinderTokenTable		
+804d17b8	100	.data	gLionGeomPluginCylinderTokens		
+805af294	12	.bss	gLionGeomPluginQuad		
+80601a24	4	.sbss	gLionGeomPluginQuadTokenTable		
+804d1870	100	.data	gLionGeomPluginQuadTokens		
+805af2a0	12	.bss	gLionGeomPluginSphere		
+80601a2c	4	.sbss	gLionGeomPluginSphereTokenTable		
+804d19a4	160	.data	gLionGeomPluginSphereTokens		
+80601a28	4	.sbss	gLionGeomPluginSplineTokenTable		
+804d191c	80	.data	gLionGeomPluginSplineTokens		
+804cfb78	96	.data	gLionGeomWaveTypeStrings		
+80601a00	8	.sbss	gLionGeomWaveTypeTokenTable		
+80601a38	4	.sbss	gLionLightBehaviourTokenTable		
+804d1bd8	400	.data	gLionLightBehaviourTokens		
+804d1b6c	96	.data	gLionLightBehaviourWaveTypeStrings		
+80601a30	8	.sbss	gLionLightBehaviourWaveTypeTokenTable		
+80601a50	4	.sbss	gLionLightParserDesTokenTable		
+804d1ec0	160	.data	gLionLightParserDesTokens		
+804d1fb0	132	.data	gLionLightParserTokenKeys		
+80601a48	8	.sbss	gLionLightParserTokenTable		
+804d1e78	60	.data	gLionLightTypeTokenKeys		
+80601a40	8	.sbss	gLionLightTypeTokenTable		
+804cf428	192	.data	gLionMemberTypeNameStrings		
+806019b4	8	.sbss	gLionMemberTypeNameTable		
+806019ac	8	.sbss	gLionMemberTypeSizeTable		
+804cf4e8	128	.data	gLionMemberTypeSizes		
+804cdf64	96	.data	gLionParticleAlphaTestModeStrings		
+80601950	8	.sbss	gLionParticleAlphaTestModeTokenTable		
+80601978	8	.sbss	gLionParticleBehRgbaVarTokenTable		
+80601970	8	.sbss	gLionParticleBehWaveTokenTable		
+804ce128	312	.data	gLionParticleBlendModeStrings		
+80601958	8	.sbss	gLionParticleBlendModeTokenTable		
+8060193c	4	.sbss	gLionParticleEffectDesCount		
+80601984	4	.sbss	gLionParticleParserBehTokenTable		
+804ce8d0	1420	.data	gLionParticleParserBehTokens		
+804cded4	60	.data	gLionParticleParserBehWaveStrings		
+80601980	4	.sbss	gLionParticleParserDesTokenTable		
+804ce40c	360	.data	gLionParticleParserDesTokens		
+804cde04	40	.data	gLionParticleParserForceTokens		
+80601988	4	.sbss	gLionParticleParserMatTokenTable		
+804cef3c	420	.data	gLionParticleParserMatTokens		
+804cde98	60	.data	gLionParticleParserModeString		
+804cde74	36	.data	gLionParticleParserRGBVarStrings		
+80601940	8	.sbss	gLionParticleParserTokenTable		
+8060198c	4	.sbss	gLionParticleParserWaveTokenTable		
+804cf150	280	.data	gLionParticleParserWaveTokens		
+804cdf10	72	.data	gLionParticleShapeStrings		
+80601948	8	.sbss	gLionParticleShapeTokenTable		
+804ce2c0	96	.data	gLionParticleWaveTypeStrings		
+80601968	8	.sbss	gLionParticleWaveTypeTokenTable		
+804ce260	72	.data	gLionParticleZTestModeStrings		
+80601960	8	.sbss	gLionParticleZTestModeTokenTable		
+80601a64	4	.sbss	gLionPostProParserDesTokenTable		
+804d2244	240	.data	gLionPostProParserDesTokens		
+80601a68	4	.sbss	gLionPostProParserEffTokenTable		
+804d2204	40	.data	gLionPostProParserEffectTokens		
+804d238c	132	.data	gLionPostProParserTokenKeys		
+80601a5c	8	.sbss	gLionPostProParserTokenTable		
+805af7fc	32	.bss	gLionPostProPluginBloom		
+80601a70	4	.sbss	gLionPostProPluginBloomTokenTable		
+804d24b4	440	.data	gLionPostProPluginBloomTokens		
+805af89c	32	.bss	gLionPostProPluginBulge		
+80601a74	4	.sbss	gLionPostProPluginBulgeTokenTable		
+804d26bc	140	.data	gLionPostProPluginBulgeTokens		
+805af87c	32	.bss	gLionPostProPluginFastTint		
+80601a78	4	.sbss	gLionPostProPluginFastTintTokenTable		
+804d2784	40	.data	gLionPostProPluginFastTintTokens		
+805af81c	32	.bss	gLionPostProPluginFlexibleTint		
+80601a84	4	.sbss	gLionPostProPluginFlexibleTintTokenTable		
+804d293c	60	.data	gLionPostProPluginFlexibleTintTokens		
+805af83c	32	.bss	gLionPostProPluginGloom		
+80601a88	4	.sbss	gLionPostProPluginGloomTokenTable		
+804d29d0	440	.data	gLionPostProPluginGloomTokens		
+805af85c	32	.bss	gLionPostProPluginMotionBlur		
+80601a8c	4	.sbss	gLionPostProPluginMotionBlurTokenTable		
+804d2bd0	40	.data	gLionPostProPluginMotionBlurTokens		
+804cf38c	144	.data	gLionTextParserChunkStrings		
+806019a4	8	.sbss	gLionTextParserChunkTable		
+805aae98	256	.bss	gLionTokeniserCharMap		
+805aad98	256	.bss	gLionTokeniserCharTypeTable		
+806019bc	2	.sbss	gLionTokeniserCharTypeTableBuiltFlag		
+80602034	1	.sbss	gLocaleToggleStringId		
+806015f0	8	.sbss	gMGSFX_CommonHUDHandle__4Csis	Csis	
+806015a8	8	.sbss	gMGSFX_DB_SetupAnimHandle__4Csis	Csis	
+80601580	8	.sbss	gMGSFX_Damage_FemaleHandle__4Csis	Csis	
+80601588	8	.sbss	gMGSFX_Damage_MaleHandle__4Csis	Csis	
+80601650	8	.sbss	gMGSFX_Darts_Boss_DeathHandle__4Csis	Csis	
+80601648	8	.sbss	gMGSFX_Darts_Boss_SupermoveHandle__4Csis	Csis	
+80601640	8	.sbss	gMGSFX_Darts_BulletTime_SFXHandle__4Csis	Csis	
+80601638	8	.sbss	gMGSFX_Darts_NPCHandle__4Csis	Csis	
+80601658	8	.sbss	gMGSFX_Darts_PinupTarg_MoveHandle__4Csis	Csis	
+80601628	8	.sbss	gMGSFX_Darts_Scrptd_TargetsHandle__4Csis	Csis	
+80601630	8	.sbss	gMGSFX_Darts_WeaponsHandle__4Csis	Csis	
+80601550	8	.sbss	gMGSFX_Dodgeball_ActionsHandle__4Csis	Csis	
+80601558	8	.sbss	gMGSFX_Dodgeball_BallHandle__4Csis	Csis	
+80601668	8	.sbss	gMGSFX_Footie_ActionsHandle__4Csis	Csis	
+80601660	8	.sbss	gMGSFX_Footie_BallHandle__4Csis	Csis	
+80601670	8	.sbss	gMGSFX_Footie_CollisionsHandle__4Csis	Csis	
+80601590	8	.sbss	gMGSFX_GENERIC_CelebrationsHandle__4Csis	Csis	
+80601560	8	.sbss	gMGSFX_Grunts_FemaleHandle__4Csis	Csis	
+80601568	8	.sbss	gMGSFX_Grunts_MaleHandle__4Csis	Csis	
+806015a0	8	.sbss	gMGSFX_HERO_CelebrationsHandle__4Csis	Csis	
+806015f8	8	.sbss	gMGSFX_HUD_CommonLPHandle__4Csis	Csis	
+806015b8	8	.sbss	gMGSFX_HUD_DBHandle__4Csis	Csis	
+806015d0	8	.sbss	gMGSFX_HUD_DSHandle__4Csis	Csis	
+806015d8	8	.sbss	gMGSFX_HUD_FootieHandle__4Csis	Csis	
+806015c8	8	.sbss	gMGSFX_HUD_PAHandle__4Csis	Csis	
+806015c0	8	.sbss	gMGSFX_HUD_RCHandle__4Csis	Csis	
+806015e8	8	.sbss	gMGSFX_HUD_TBHandle__4Csis	Csis	
+806015e0	8	.sbss	gMGSFX_HUD_WBHandle__4Csis	Csis	
+80601738	8	.sbss	gMGSFX_Laughter_FHandle__4Csis	Csis	
+80601730	8	.sbss	gMGSFX_Laughter_MHandle__4Csis	Csis	
+80601578	8	.sbss	gMGSFX_MEGAGrunts_FemaleHandle__4Csis	Csis	
+80601570	8	.sbss	gMGSFX_MEGAGrunts_MaleHandle__4Csis	Csis	
+80601600	8	.sbss	gMGSFX_PaperAirp_WindEngineHandle__4Csis	Csis	
+80601610	8	.sbss	gMGSFX_PaperAirpl_CollisionsHandle__4Csis	Csis	
+80601620	8	.sbss	gMGSFX_PaperAirpl_Emitters_LPHandle__4Csis	Csis	
+80601618	8	.sbss	gMGSFX_PaperAirpl_LaunchHandle__4Csis	Csis	
+80601608	8	.sbss	gMGSFX_PaperAirpl_WindySFXHandle__4Csis	Csis	
+80601530	8	.sbss	gMGSFX_RCCars_CollisionHandle__4Csis	Csis	
+80601510	8	.sbss	gMGSFX_RCCars_Engine_1Handle__4Csis	Csis	
+80601518	8	.sbss	gMGSFX_RCCars_Engine_2Handle__4Csis	Csis	
+80601520	8	.sbss	gMGSFX_RCCars_Engine_3Handle__4Csis	Csis	
+80601528	8	.sbss	gMGSFX_RCCars_Engine_4Handle__4Csis	Csis	
+80601540	8	.sbss	gMGSFX_RCCars_FireCrkrWick_LPHandle__4Csis	Csis	
+80601538	8	.sbss	gMGSFX_RCCars_MovesHandle__4Csis	Csis	
+80601598	8	.sbss	gMGSFX_SIGNATURE_CelebrationsHandle__4Csis	Csis	
+806015b0	8	.sbss	gMGSFX_TB_WindupsHandle__4Csis	Csis	
+80601548	8	.sbss	gMGSFX_Tetherball_HitsHandle__4Csis	Csis	
+80601678	8	.sbss	gMGSFX_WallBall_ActionsHandle__4Csis	Csis	
+80601680	8	.sbss	gMGSFX_WallBall_BallHandle__4Csis	Csis	
+80602304	4	.sbss	gMGTestEffect		
+8060242c	4	.sbss	gMemoryManager__Q28EAGLAnim17MemoryPoolManager	EAGLAnim::MemoryPoolManager	
+805e87d0	32	.bss	gMessageQueue__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+805e87f0	16	.bss	gMessages__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+80601698	8	.sbss	gMicroSFX_BBall_DribbleHandle__4Csis	Csis	
+80601690	8	.sbss	gMicroSFX_BugCatchHandle__4Csis	Csis	
+806016a0	8	.sbss	gMicroSFX_FreeThrowHandle__4Csis	Csis	
+80601688	8	.sbss	gMicroSFX_High5Handle__4Csis	Csis	
+805ffce8	1	.sdata	gNumActiveStages__Q24EAGL8TevStage	EAGL::TevStage	0x1
+806019ec	4	.sbss	gNumParticlesRendered		
+805ffce0	4	.sdata	gNumTexGens__Q24EAGL12TARExtension	EAGL::TARExtension	0x1
+805ffe68	4	.sbss	gNumVolatiles__15GeoPrim_Gouraud	GeoPrim_Gouraud	
+805ffe80	4	.sbss	gNumVolatiles__18GeoPrim_GouraudApt	GeoPrim_GouraudApt	
+806000a8	4	.sbss	gNumVolatiles__18GeoPrim_TextureApt	GeoPrim_TextureApt	
+805fff28	4	.sbss	gNumVolatiles__24GeoPrim_PlaygroundShadow	GeoPrim_PlaygroundShadow	
+80600090	4	.sbss	gNumVolatiles__24GeoPrim_PlaygroundWater2	GeoPrim_PlaygroundWater2	
+805fff58	4	.sbss	gNumVolatiles__25GeoPrim_PlaygroundTexture	GeoPrim_PlaygroundTexture	
+80600060	4	.sbss	gNumVolatiles__27GeoPrim_PlaygroundToonShade	GeoPrim_PlaygroundToonShade	
+805fff40	4	.sbss	gNumVolatiles__31GeoPrim_PlaygroundShadow_HWSkin	GeoPrim_PlaygroundShadow_HWSkin	
+80600018	4	.sbss	gNumVolatiles__31GeoPrim_PlaygroundTextureShadow	GeoPrim_PlaygroundTextureShadow	
+80600048	4	.sbss	gNumVolatiles__32GeoPrim_PlaygroundTexture_HWSkin	GeoPrim_PlaygroundTexture_HWSkin	
+805ffe98	4	.sbss	gNumVolatiles__33GeoPrim_PlaygroundAnimatedTexture	GeoPrim_PlaygroundAnimatedTexture	
+805fff70	4	.sbss	gNumVolatiles__33GeoPrim_PlaygroundTextureAlphaDXT	GeoPrim_PlaygroundTextureAlphaDXT	
+80600078	4	.sbss	gNumVolatiles__34GeoPrim_PlaygroundToonShade_HWSkin	GeoPrim_PlaygroundToonShade_HWSkin	
+805fffd0	4	.sbss	gNumVolatiles__35GeoPrim_PlaygroundTextureBakedLight	GeoPrim_PlaygroundTextureBakedLight	
+805fff10	4	.sbss	gNumVolatiles__37GeoPrim_PlaygroundLitPlaceable_HWSkin	GeoPrim_PlaygroundLitPlaceable_HWSkin	
+805fff88	4	.sbss	gNumVolatiles__37GeoPrim_PlaygroundTextureAlphaDXTBase	GeoPrim_PlaygroundTextureAlphaDXTBase	
+80600030	4	.sbss	gNumVolatiles__37GeoPrim_PlaygroundTextureStaticShadow	GeoPrim_PlaygroundTextureStaticShadow	
+805ffee0	4	.sbss	gNumVolatiles__39GeoPrim_PlaygroundCompressShadow_HWSkin	GeoPrim_PlaygroundCompressShadow_HWSkin	
+805fffb8	4	.sbss	gNumVolatiles__39GeoPrim_PlaygroundTextureAlphaDXTShadow	GeoPrim_PlaygroundTextureAlphaDXTShadow	
+805fffe8	4	.sbss	gNumVolatiles__41GeoPrim_PlaygroundTextureBakedLightShadow	GeoPrim_PlaygroundTextureBakedLightShadow	
+805ffeb0	4	.sbss	gNumVolatiles__42GeoPrim_PlaygroundCharFaceToonShade_HWSkin	GeoPrim_PlaygroundCharFaceToonShade_HWSkin	
+805ffef8	4	.sbss	gNumVolatiles__42GeoPrim_PlaygroundCompressToonShade_HWSkin	GeoPrim_PlaygroundCompressToonShade_HWSkin	
+805fffa0	4	.sbss	gNumVolatiles__43GeoPrim_PlaygroundTextureAlphaDXTBaseShadow	GeoPrim_PlaygroundTextureAlphaDXTBaseShadow	
+80600000	4	.sbss	gNumVolatiles__47GeoPrim_PlaygroundTextureBakedLightShadowDouble	GeoPrim_PlaygroundTextureBakedLightShadowDouble	
+805ffec8	4	.sbss	gNumVolatiles__48GeoPrim_PlaygroundCompressPlaceableShadow_HWSkin	GeoPrim_PlaygroundCompressPlaceableShadow_HWSkin	
+806020ba	1	.sbss	gOpenDissmissDialog__3TRC	TRC	
+805ffa50	4	.sdata	gOrbitCameraDistance		0x41a00000 (float 20)
+805ffa54	4	.sdata	gOrbitCameraHeight		0x40733333 (float 3.8)
+805ffa64	4	.sdata	gOrbitCameraRestrictLeft		0x4035c28f (float 2.84)
+806021bc	4	.sbss	gOrbitCameraRestrictRight		
+805ffa58	4	.sdata	gOrbitCameraTargetX		0x4227999a (float 41.9)
+805ffa60	4	.sdata	gOrbitCameraTargetZ		0xc2a7999a (float -83.8)
+805ffcb0	4	.sdata	gOverrideAlphaWrites__Q24EAGL26RenderContextExtensionBase	EAGL::RenderContextExtensionBase	0xffffffff
+805ffcac	4	.sdata	gOverrideFilterMode__Q24EAGL26RenderContextExtensionBase	EAGL::RenderContextExtensionBase	0xffffffff
+805ffcb8	4	.sdata	gOverrideMaxAniso__Q24EAGL26RenderContextExtensionBase	EAGL::RenderContextExtensionBase	0x2
+805ffcb4	4	.sdata	gOverrideMipMapMode__Q24EAGL26RenderContextExtensionBase	EAGL::RenderContextExtensionBase	0xffffffff
+8060238c	4	.sbss	gOverrideMipmapLODBias__Q24EAGL26RenderContextExtensionBase	EAGL::RenderContextExtensionBase	
+806023c1	1	.sbss	gPS2StyleOverBrightAlpha__Q24EAGL8TevStage	EAGL::TevStage	
+806023c0	1	.sbss	gPS2StyleOverBrightColours__Q24EAGL8TevStage	EAGL::TevStage	
+80602008	4	.sbss	gPartFxManager		
+806019f0	4	.sbss	gPartFxOffsetX		
+806019f4	4	.sbss	gPartFxOffsetY		
+806019f8	4	.sbss	gPartFxOffsetZ		
+80602006	1	.sbss	gPartFxReloadEffects		
+806018f0	1	.sbss	gPartFxRenderDisable		
+805fef00	4	.sdata	gPartFxScale		0x3f800000 (float 1)
+806018ec	4	.sbss	gPartFxTestGuid0		
+806019e0	4	.sbss	gParticleDescriptorBehCount		
+80601758	8	.sbss	gPauseHandle__4Csis	Csis	
+806014fc	4	.sbss	gPeakMemory__6Attrib	Attrib	
+805e8800	8192	.bss	gPixPassedZTest__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+805ea800	8192	.bss	gPixSubmitted__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+805ffbe1	4	.sdata	gPlaceableTypeRequiresSorting		0x10101
+8060230a	1	.sbss	gPlayerAtAreaTarget		
+806023ec	1	.sbss	gProfileEAGL__Q24EAGL8Profiler	EAGL::Profiler	
+805ef098	304	.bss	gProfiler__Q24EAGL8Profiler	EAGL::Profiler	
+805af9e4	32	.bss	gQtrigAsinMults		
+805af9c4	32	.bss	gQtrigAtanMults		
+805af924	64	.bss	gQtrigCos2Mults		
+805af904	32	.bss	gQtrigCosMults		
+805afa04	16	.bss	gQtrigKevinPressman		
+805af964	32	.bss	gQtrigSinCosMults		
+805af984	32	.bss	gQtrigSinMults		
+805af9a4	32	.bss	gQtrigTanMults		
+805afa14	16	.bss	gQtrigTanPies		
+80601eec	1	.sbss	gRCCarsDisableMinigame		
+806016a8	8	.sbss	gRandomHandle__4Csis	Csis	
+8060211c	1	.sbss	gRcCarInputAutoReverse		
+805ff6cc	4	.sdata	gRcCarsInterestCamDuration		0x7d0
+805ff6c8	4	.sdata	gRcCarsInterestCameraID		0x1
+805ff734	4	.sdata	gRcCarsLaneSwitchDuration		0x12c
+805ff738	4	.sdata	gRcCarsMinLaneAdvance		0x3e4ccccd (float 0.2)
+805e3490	16	.bss	gRcCarsNitroBuggyOffset		
+805e3480	16	.bss	gRcCarsNitroOffset		
+805ff730	4	.sdata	gRcCarsPowerupExplosionDuration		0xbb8
+805e3440	16	.bss	gRcCarsPowerupFirecrackerBuggyFuseEndPos		
+805e3430	16	.bss	gRcCarsPowerupFirecrackerBuggyFuseStartPos		
+805e3420	16	.bss	gRcCarsPowerupFirecrackerBuggyPos		
+805e3410	16	.bss	gRcCarsPowerupFirecrackerFuseEndPos		
+805e3400	16	.bss	gRcCarsPowerupFirecrackerFuseStartPos		
+805e33f0	16	.bss	gRcCarsPowerupFirecrackerPos		
+805e3450	16	.bss	gRcCarsSparkBackPos		
+805e3460	16	.bss	gRcCarsSparkLeftPos		
+805e3470	16	.bss	gRcCarsSparkRightPos		
+805ff710	4	.sdata	gRcChaseCameraDefaultPosHeightWeight		0x3f266666 (float 0.65)
+805ff70c	4	.sdata	gRcChaseCameraDefaultTargetHeightWeight		0x3f666666 (float 0.9)
+805ff6e0	4	.sdata	gRcFullChaseCameraLaneSkew		0x3e051eb8 (float 0.13)
+805ff6dc	4	.sdata	gRcFullChaseCameraLookAhead		0x408d1eb8 (float 4.41)
+805ff6d0	4	.sdata	gRcFullChaseCameraPosHorizDist		0x40233333 (float 2.55)
+805ff6d4	4	.sdata	gRcFullChaseCameraPosVertDist		0x3fd33333 (float 1.65)
+804dbe38	20	.data	gRcFullChaseCameraSafePosHorizDist		
+804dbe4c	20	.data	gRcFullChaseCameraSafePosVertDist		
+804dbe60	20	.data	gRcFullChaseCameraSafeTargetVertDist		
+805ff6d8	4	.sdata	gRcFullChaseCameraTargetVertDist		0xc0000000 (float -2)
+805ff6f4	4	.sdata	gRcHalfChaseCameraLaneSkew		0x3e4ccccd (float 0.2)
+805ff6f0	4	.sdata	gRcHalfChaseCameraLookAhead		0x40400000 (float 3)
+805ff6e4	4	.sdata	gRcHalfChaseCameraPosHorizDist		0x3fe00000 (float 1.75)
+805ff6e8	4	.sdata	gRcHalfChaseCameraPosVertDist		0x3f0ccccd (float 0.55)
+804dbe74	20	.data	gRcHalfChaseCameraSafePosHorizDist		
+804dbe88	20	.data	gRcHalfChaseCameraSafePosVertDist		
+804dbe9c	20	.data	gRcHalfChaseCameraSafeTargetVertDist		
+805ff6ec	4	.sdata	gRcHalfChaseCameraTargetVertDist		0xbe99999a (float -0.3)
+805ff708	4	.sdata	gRcQuarterChaseCameraLaneSkew		0x3df5c28f (float 0.12)
+805ff704	4	.sdata	gRcQuarterChaseCameraLookAhead		0x40400000 (float 3)
+805ff6f8	4	.sdata	gRcQuarterChaseCameraPosHorizDist		0x3f866666 (float 1.05)
+805ff6fc	4	.sdata	gRcQuarterChaseCameraPosVertDist		0x3f0ccccd (float 0.55)
+804dbeb0	20	.data	gRcQuarterChaseCameraSafePosHorizDist		
+804dbec4	20	.data	gRcQuarterChaseCameraSafePosVertDist		
+804dbed8	20	.data	gRcQuarterChaseCameraSafeTargetVertDist		
+805ff700	4	.sdata	gRcQuarterChaseCameraTargetVertDist		0xbf333333 (float -0.7)
+80602158	4	.sbss	gRenAnimMatrices__3Ren	Ren	
+805e6260	8192	.bss	gRenOldAnimMatrices__3Ren	Ren	
+80602154	4	.sbss	gRenTextureMatrixPalette		
+805ffb80	1	.sdata	gRenderWorld		0x1
+805ef314	20	.bss	gRoot__Q24EAGL8Profiler	EAGL::Profiler	
+805ef8a8	40	.bss	gRuntimeAllocConsPool__Q24EAGL13DynamicLoader	EAGL::DynamicLoader	
+8060111c	4	.sbss	gSPCH_AddEvent		
+806020b0	4	.sbss	gSaveFileBody__3TRC	TRC	
+806020ac	4	.sbss	gSaveFileName__3TRC	TRC	
+805e28e0	256	.bss	gScreenCapture		
+806023c8	4	.sbss	gScreenColour__Q212EAGLInternal15ViewPortPrivate	EAGLInternal::ViewPortPrivate	
+805ff390	1	.sdata	gScreenShotFrameFinished__17HighResScreenShot	HighResScreenShot	0x1
+80601c08	4	.sbss	gScreenShotState__17HighResScreenShot	HighResScreenShot	
+805ff388	4	.sdata	gScreenShotTilesAcross__17HighResScreenShot	HighResScreenShot	0x3
+805ff38c	4	.sdata	gScreenShotTilesDown__17HighResScreenShot	HighResScreenShot	0x3
+806023e0	4	.sbss	gScreenWidth__Q24EAGL14ProfilerRegion	EAGL::ProfilerRegion	
+80601494	4	.sbss	gSearchCacheLines__6Attrib	Attrib	
+805e2530	16	.bss	gSelectAKidPosition		
+805e82a0	16	.bss	gShadowColour__3Ren	Ren	
+806077ac	4	.sdata2	gShadowHeight__3Ren	Ren	0x43e00000 (float 448)
+806021dc	8	.sbss	gShadowLightAngles__3Ren	Ren	
+805ff888	4	.sdata	gShadowLightDistance__9GameState	GameState	0x41400000 (float 12)
+805e8270	48	.bss	gShadowTransformMatrix		
+806077a8	4	.sdata2	gShadowWidth__3Ren	Ren	0x44000000 (float 512)
+805ff890	4	.sdata	gShadowWorldLength__9GameState	GameState	0x40d570a4 (float 6.67)
+805ff894	4	.sdata	gShadowWorldOffset__9GameState	GameState	0xc0551eb8 (float -3.33)
+805ff88c	4	.sdata	gShadowWorldWidth__9GameState	GameState	0x410547ae (float 8.33)
+80602005	1	.sbss	gSimFixedTime		
+805ff808	4	.sdata	gSimFixedTimeAmt		0x10
+80602004	1	.sbss	gSimPause		
+805ff96c	4	.sdata	gSimPhysicsSingleUpdateTimeCap		0x3c
+805ff968	4	.sdata	gSimPhysicsTimeMultiplier		0x3f800000 (float 1)
+8060230c	4	.sbss	gSinglePlayerStateTime		
+805e2e00	144	.bss	gSkyDome		
+806023f0	4	.sbss	gStartFrameCycleCount__Q24EAGL8Profiler	EAGL::Profiler	
+806023b0	1	.sbss	gStateInitialized__Q24EAGL21GeoPrimStateExtension	EAGL::GeoPrimStateExtension	
+80602308	1	.sbss	gStickerKidAtConversationPos		
+80602309	1	.sbss	gStickerKidAtFinalPos		
+805ef84c	20	.bss	gSymbolPool__Q24EAGL13DynamicLoader	EAGL::DynamicLoader	
+806020a0	4	.sbss	gTRCOperationDoneCallback__3TRC	TRC	
+805ff3bc	4	.sdata	gTapHoldPressThreshhold		0x78
+805ff3b8	4	.sdata	gTapPressThreshhold		0xb4
+80607e78	2	.sbss2	gTetherballAIOverride		
+805ffce9	1	.sdata	gTevStageDirtyFlag__Q24EAGL8TevStage	EAGL::TevStage	0x1
+805ee858	1600	.bss	gTevStages__Q24EAGL9TevStages	EAGL::TevStages	
+805ee7c0	136	.bss	gTexGens__Q24EAGL12TARExtension	EAGL::TARExtension	
+80601498	4	.sbss	gTotalAttribNodes__6Attrib	Attrib	
+805ffa48	4	.sdata	gTransitionSpeed		0x3f800000 (float 1)
+80601bf2	1	.sbss	gTriggerCelebration		
+80601708	8	.sbss	gUI_Loop_SfxHandle__4Csis	Csis	
+80601700	8	.sbss	gUI_SfxHandle__4Csis	Csis	
+80601768	8	.sbss	gUI_Sfx_VolumeHandle__4Csis	Csis	
+805ef1d8	304	.bss	gUnprofiled__Q24EAGL8Profiler	EAGL::Profiler	
+806021a4	1	.sbss	gUpdateDesiredRotation		
+8060235f	1	.sbss	gUseVSyncCallback__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+80602368	1	.sbss	gUserRenderMode__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+80602360	4	.sbss	gVSyncCallbackRefCount__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+8060236c	4	.sbss	gVSyncCount__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+805a9394	12	.bss	gVaults		
+805ede30	104	.bss	gVertexArrays__Q24EAGL12RenderMethod	EAGL::RenderMethod	
+806023b8	4	.sbss	gVertexDataType__Q24EAGL21GeoPrimStateExtension	EAGL::GeoPrimStateExtension	
+806023b4	4	.sbss	gVertexFormat__Q24EAGL21GeoPrimStateExtension	EAGL::GeoPrimStateExtension	
+805ede98	26	.bss	gVertexStrides__Q24EAGL12RenderMethod	EAGL::RenderMethod	
+806023e8	4	.sbss	gViewport__Q24EAGL14ProfilerRegion	EAGL::ProfilerRegion	
+805ec800	4096	.bss	gVisibilityValid__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
+805ffca8	4	.sdata	gVolatileBufferSize__Q24EAGL22RenderContextExtension	EAGL::RenderContextExtension	0x10000
+80602378	8	.sbss	gVolatileBuffers__Q24EAGL22RenderContextExtension	EAGL::RenderContextExtension	
+806016f0	8	.sbss	gWSFX_Amb_NatureForest_RndmElemHandle__4Csis	Csis	
+806016e0	8	.sbss	gWSFX_Amb_Park_RndmElemHandle__4Csis	Csis	
+806016d8	8	.sbss	gWSFX_Amb_SchoolYrd_RndmElemHandle__4Csis	Csis	
+806016e8	8	.sbss	gWSFX_Amb_Stadium_RndmElemHandle__4Csis	Csis	
+806016c8	8	.sbss	gWSFX_Boss_Idles_LPHandle__4Csis	Csis	
+806016d0	8	.sbss	gWSFX_Boss_Idles_OOHandle__4Csis	Csis	
+806016b0	8	.sbss	gWSFX_FootstepsHandle__4Csis	Csis	
+80601740	8	.sbss	gWSFX_NISHandle__4Csis	Csis	
+806016b8	8	.sbss	gWSFX_POIs_LPHandle__4Csis	Csis	
+806016c0	8	.sbss	gWSFX_POIs_OOHandle__4Csis	Csis	
+80601748	8	.sbss	gWSFX_StickerBook_OpenHandle__4Csis	Csis	
+805e8320	328	.bss	gWorld		
+805ffa70	4	.sdata	gWorldLightWaterCutoff		0x42240000 (float 41)
+805ffa74	4	.sdata	gWorldLightWaterScaler		0x42bc0000 (float 94)
+805ffd04	4	.sdata	gXPosition__Q24EAGL14ProfilerRegion	EAGL::ProfilerRegion	0x42200000 (float 40)
+805ffd08	4	.sdata	gYPosition__Q24EAGL14ProfilerRegion	EAGL::ProfilerRegion	0x43be0000 (float 380)
+805ffcd0	1	.sdata	gZWritesEnable__Q24EAGL21GeoPrimStateExtension	EAGL::GeoPrimStateExtension	0x1
+804421b8	256	.rodata	g_LocalizationRootDir		
+806020a8	1	.sbss	gbRestoreControllState__3TRC	TRC	
+80601c04	1	.sbss	gbScreenShotCapture		
+8060203c	4	.sbss	gnCurrentBuild		
+80602044	4	.sbss	gpBootDiscEjectLoadScene		
+8060234c	4	.sbss	gpCurrentContext__Q212EAGLInternal13DevicePrivate	EAGLInternal::DevicePrivate	
+80602340	4	.sbss	gpCurrentDevice__Q212EAGLInternal13DevicePrivate	EAGLInternal::DevicePrivate	
+80602344	4	.sbss	gpCurrentRenderContext__Q212EAGLInternal13DevicePrivate	EAGLInternal::DevicePrivate	
+80602348	4	.sbss	gpCurrentTextureRenderContext__Q212EAGLInternal13DevicePrivate	EAGLInternal::DevicePrivate	
+806023cc	4	.sbss	gpFirstViewPort__Q24EAGL17ViewPortExtension	EAGL::ViewPortExtension	
+80602098	4	.sbss	gpHomeBtnMgr		
+80602350	4	.sbss	gpRenderMethodList__12EAGLInternal	EAGLInternal	
+80602094	4	.sbss	gpTrcCorehandlers		
+805ff09c	1	.sdata	hack_GoToBackEnd		0x1
+80585d08	36	.bss	hkPhysicsDataClass		
+80586400	36	.bss	hkRootLevelContainerClass		
+805fd814	4	.sdata	hkSystemFree		0x801e4450
+805fd810	4	.sdata	hkSystemMalloc		0x801e43f8
+805ffcf8	4	.sdata	identity		0x804ed570
+805ffc88	4	.sdata	identity__12EAGLInternal	EAGLInternal	0x804ed100
+80442c40	64	.rodata	identitymatrix4		
+805e29e0	12	.bss	initParams__12VideoCapture	VideoCapture	
+80601c10	1	.sbss	isInitialised__12VideoCapture	VideoCapture	
+80602059	1	.sbss	isParentalLockSet		
+80602058	1	.sbss	isProductCodeSet		
+804cb758	84	.data	kAEMSBankFilenames		
+804cb808	84	.data	kAEMSStreamFilenames		
+80441954	20	.rodata	kAIDartShootoutBaseCharacterBarrageDelay		
+80441968	20	.rodata	kAIDartShootoutBaseCharacterBarrageROF		
+80441940	20	.rodata	kAIDartShootoutBaseCharacterBarrageSize		
+804419cc	20	.rodata	kAIDartShootoutBaseRunShootCharacterBarrageDelay		
+804419e0	20	.rodata	kAIDartShootoutBaseRunShootCharacterBarrageROF		
+804419b8	20	.rodata	kAIDartShootoutBaseRunShootCharacterBarrageSize		
+80441a44	20	.rodata	kAIDartShootoutBaseRunStopShootCharacterBarrageDelay		
+80441a58	20	.rodata	kAIDartShootoutBaseRunStopShootCharacterBarrageROF		
+80441a30	20	.rodata	kAIDartShootoutBaseRunStopShootCharacterBarrageSize		
+80441abc	20	.rodata	kAIDartShootoutBossCharacterBarrageDelay		
+80441ad0	20	.rodata	kAIDartShootoutBossCharacterBarrageROF		
+80441aa8	20	.rodata	kAIDartShootoutBossCharacterBarrageSize		
+80441990	20	.rodata	kAIDartShootoutMediumCharacterBarrageDelay		
+804419a4	20	.rodata	kAIDartShootoutMediumCharacterBarrageROF		
+8044197c	20	.rodata	kAIDartShootoutMediumCharacterBarrageSize		
+80441a08	20	.rodata	kAIDartShootoutMediumRunShootCharacterBarrageDelay		
+80441a1c	20	.rodata	kAIDartShootoutMediumRunShootCharacterBarrageROF		
+804419f4	20	.rodata	kAIDartShootoutMediumRunShootCharacterBarrageSize		
+80441a80	20	.rodata	kAIDartShootoutMediumRunStopShootCharacterBarrageDelay		
+80441a94	20	.rodata	kAIDartShootoutMediumRunStopShootCharacterBarrageROF		
+80441a6c	20	.rodata	kAIDartShootoutMediumRunStopShootCharacterBarrageSize		
+804420f8	24	.rodata	kAIWallballNormalDiveHitPercentage		
+804420e0	24	.rodata	kAIWallballNormalHitPercentage		
+805feba0	4	.sdata	kAudioAmbienceVolume		0x7d00
+805feba4	4	.sdata	kAudioFESFXVolume		0x7d00
+804cb5d8	16	.data	kAudioPaths		
+805feb9c	4	.sdata	kAudioSFXMasterVolume		0x7d00
+80605ca0	4	.sdata2	kBugHuntBugIconYSpeed		0x43070000 (float 135)
+805e37a0	16	.bss	kCameraPositionCloseHighOffset		
+805e3770	16	.bss	kCameraPositionCloseOffset		
+805e3780	16	.bss	kCameraPositionFarHighOffset		
+805e3750	16	.bss	kCameraPositionFarOffset		
+805e3790	16	.bss	kCameraPositionMediumHighOffset		
+805e3760	16	.bss	kCameraPositionMediumOffset		
+805e37c0	16	.bss	kCameraTargetHighOffset		
+805e37b0	16	.bss	kCameraTargetLowOffset		
+804cc7c0	20	.data	kCharacterHeadTrackingBones		
+805fec08	5	.sdata	kCharacterHeadTrackingBonesEnabled		
+805a8ec0	16	.bss	kCharacterHeadTrackingHorizontalAxis		
+805a8ed0	16	.bss	kCharacterHeadTrackingVerticalAxis		
+80441530	12	.rodata	kCharacterPropBoneMapping		
+804cc698	24	.data	kConversationEdictAnimations		
+80441c68	12	.rodata	kDartShootoutAreas		
+804d98cc	12	.data	kDartShootoutBossIds		
+80441b38	48	.rodata	kDartShootoutCourseIds		
+80441b68	256	.rodata	kDartShootoutScorePartFxName		
+80441c84	12	.rodata	kDodgeballArea		
+80441c90	16	.rodata	kDodgeballCelebrationGenericAnims		
+805e3870	16	.bss	kDodgeballCharacterGetHitEffectOffset		
+805ff5d4	4	.sdata	kDodgeballCourtCenterWallFilename		0x804da27a
+805ff5d0	4	.sdata	kDodgeballCourtFilename		0x804da268
+805e2d50	16	.bss	kDodgeballDefaultGravity		
+805ff5c0	4	.sdata	kDodgeballFilename		0x804d9f78
+805e2d60	48	.bss	kDodgeballOriginPosition		
+80441c78	12	.rodata	kDodgeballOriginRotation		
+805e2da0	16	.bss	kDodgeballOverrideVisibilityTestLineEnd		
+805e2d90	16	.bss	kDodgeballOverrideVisibilityTestLineStart		
+805e24e0	16	.bss	kFECameraDeltaPos		
+805e2510	16	.bss	kFECameraMainMenuDestPosition		
+805e2520	16	.bss	kFECameraMainMenuDestTarget		
+805e24c0	16	.bss	kFECameraPosition		
+805e24f0	16	.bss	kFECameraRange		
+805e2500	16	.bss	kFECameraRange2		
+805e24d0	16	.bss	kFECameraTarget		
+805e2790	16	.bss	kFEManagerFadeColour		
+804417e0	16	.rodata	kFTGoalsToWin		
+80605ba0	4	.sdata2	kFadeInDelay		0x43fa0000 (float 500)
+80441d7c	12	.rodata	kFootieAreas		
+805e2db0	16	.bss	kFootieBallDefaultGravity		
+805ff5e0	4	.sdata	kFootieBallFilename		0x804dab40
+80441da8	24	.rodata	kFootieCelebrationWeightings		
+80606538	8	.sdata2	kFootieCharacterMegaShotReleaseTime		0x2bc000002d5
+805ff5f0	4	.sdata	kFootieCharacterPosFeedbackEffectName		0x804daca0
+805ff5f8	4	.sdata	kFootieFieldFilename		0x804daec8
+80441cb0	24	.rodata	kFootieFieldPrimaryCelebrationLengthPercentage		
+80441d10	24	.rodata	kFootieFieldPrimaryCelebrationTargetX		
+80441d28	24	.rodata	kFootieFieldPrimaryCelebrationTargetZ		
+80441cc8	24	.rodata	kFootieFieldPrimaryCelebrationWidthPercentage		
+80441ce0	24	.rodata	kFootieFieldSecondaryCelebrationLengthPercentage		
+80441d40	24	.rodata	kFootieFieldSecondaryCelebrationTargetX		
+80441d58	24	.rodata	kFootieFieldSecondaryCelebrationTargetZ		
+80441cf8	24	.rodata	kFootieFieldSecondaryCelebrationWidthPercentage		
+805ff5fc	4	.sdata	kFootieGoalNetFilename		0x804daed7
+80441e18	24	.rodata	kFootieMaxPrimaryWinCelebrationWaitTime		
+80441e48	24	.rodata	kFootieMaxSecondaryWinCelebrationWaitTime		
+805ff600	4	.sdata	kFootieMiddleNetFilename		0x804daee2
+80441e00	24	.rodata	kFootieMinPrimaryWinCelebrationWaitTime		
+80441e30	24	.rodata	kFootieMinSecondaryWinCelebrationWaitTime		
+80441df0	16	.rodata	kFootieNeutralCelebrationAnimations		
+805e2dc0	48	.bss	kFootieOriginPosition		
+80441d70	12	.rodata	kFootieOriginRotation		
+805ff618	4	.sdata	kFootiePhysicsWorldFilename		0x804daf78
+805ff608	4	.sdata	kFootiePowerMeterFilenamePrefix		0x804daf50
+80441dc0	24	.rodata	kFootiePrimaryWinCelebrationAnimation		
+80441e60	24	.rodata	kFootiePrimaryWinCelebrationSlideDelay		
+80441e78	24	.rodata	kFootiePrimaryWinCelebrationSlideDuration		
+80441e90	24	.rodata	kFootiePrimaryWinCelebrationSlideMagnitude		
+80441dd8	24	.rodata	kFootieSecondaryWinCelebrationAnimation		
+80441ea8	24	.rodata	kFootieSecondaryWinCelebrationSlideDelay		
+80441ec0	24	.rodata	kFootieSecondaryWinCelebrationSlideDuration		
+80441ed8	24	.rodata	kFootieSecondaryWinCelebrationSlideMagnitude		
+80441d88	16	.rodata	kFootieServeBubbleXPosition		
+80441d98	16	.rodata	kFootieServeBubbleYPosition		
+805ff4a8	4	.sdata	kFreeThrowBallCourtFreeThrowLineDistance		0x40966666 (float 4.7)
+805ff498	4	.sdata	kFreeThrowBallFileName		0x804d8cc0
+805e2ac0	16	.bss	kFreeThrowCameraPosition		
+805e2ab0	16	.bss	kFreeThrowCameraTarget		
+804d8e0c	12	.data	kFreeThrowDatabaseNames		
+805e2ad0	16	.bss	kFreeThrowOffScreenBallPos		
+805e2a90	12	.bss	kFreeThrowParticles		
+805e2aa0	16	.bss	kFreeThrowPlayerPos		
+804d8e18	12	.data	kFreeThrowPointsToWin		
+805e2a60	48	.bss	kFreeThrowPosition		
+80441900	12	.rodata	kFreeThrowRotation		
+805fe820	4	.sdata	kFrustrationAnimation		0x1e
+80602028	1	.sbss	kGameStateLoadingMessageDiskEjected__9GameState	GameState	
+805e2770	16	.bss	kMPSelectAKidCameraPosition		
+805e2780	16	.bss	kMPSelectAKidCameraTarget		
+805e2670	256	.bss	kMPSelectCharacterPos		
+804d8978	12	.data	kMicroBugHuntBugEffectsNames		
+805e2a20	64	.bss	kMicroBugHuntNetTransform		
+805ff488	4	.sdata	kMicroBugHuntShadowModelFilename		0x804d8b20
+804d513c	36	.data	kMiniGameString		
+804cb9a0	40	.data	kMusicFilenames		
+804d5160	36	.data	kNumRules		
+804413d0	28	.rodata	kObstacleAvoidanceRayCastAngles		
+804413ec	28	.rodata	kObstacleAvoidanceRayCastDistances		
+804417b0	32	.rodata	kOptionDSDartTypesStringId		
+80605a38	8	.sdata2	kOptionDSDartTypesValue		0x1
+805ff13c	8	.sdata	kOptionDSShieldTypesStringId		0x804d5196805ff135
+80605a40	8	.sdata2	kOptionDSShieldTypesValue		0x1
+804415a0	48	.rodata	kOptionDifficultyStringId		
+804415d0	12	.rodata	kOptionDifficultyValue		
+80441550	64	.rodata	kOptionLocationStringId		
+80441590	16	.rodata	kOptionLocationValue		
+804415dc	352	.rodata	kOptionNumericStringId		
+8044173c	16	.rodata	kOptionPAModesStringId		
+80605a30	8	.sdata2	kOptionPAModesValue		0x1
+804d51b4	12	.data	kOptionSpeedStringId		
+804417f0	48	.rodata	kOptionVersusSetupStringId		
+80441820	12	.rodata	kOptionVersusSetupValue		
+805e2e90	16	.bss	kPACameraPositionOffset		
+805e2ea0	16	.bss	kPACameraTargetOffset		
+805e2eb0	16	.bss	kPALightOffset		
+805e2f60	16	.bss	kPAPlaneStartCameraPositionOffset		
+805e2f50	16	.bss	kPAPlaneStartCameraTargetOffset		
+805e2ed0	16	.bss	kPAPlayer1StartPos		
+805e2ee0	16	.bss	kPAPlayer2StartPos		
+805e2ef0	16	.bss	kPAPlayer3StartPos		
+805e2f00	16	.bss	kPAPlayer4StartPos		
+805e2f10	64	.bss	kPAPlayerStartPos		
+805e2ec0	16	.bss	kPASkyDomePos		
+80441ef0	12	.rodata	kPATargetFarX		
+80441efc	12	.rodata	kPATargetFarY		
+80441f08	12	.rodata	kPATargetFarZ		
+80441f14	140	.rodata	kPlaneProperties		
+805e8300	16	.bss	kPlaygroundWorldMinigameFadeColour		
+80441870	32	.rodata	kPrefixGameRulesText		
+80441850	32	.rodata	kPrefixGameRulesTitle		
+805ff25c	4	.sdata	kPrefixStickerDesc		0x804d63df
+805ff258	4	.sdata	kPrefixStickerName		0x804d63d0
+805e2570	256	.bss	kSPSelectCharacterPos		
+805e2540	16	.bss	kSelectAKidCameraPosition		
+805e2550	16	.bss	kSelectAKidCameraTarget		
+80441890	28	.rodata	kSelectableCharacterAltIdles		
+804418ac	16	.rodata	kSelectableCharacterIndicators		
+80442064	12	.rodata	kTetherballBallRadius		
+80442070	12	.rodata	kTetherballCameraDistance		
+804420a8	20	.rodata	kTetherballCharacterCelebrationAnims		
+80442088	12	.rodata	kTetherballGruntChance		
+80601f7c	4	.sbss	kTetherballHitOffset		
+80442094	20	.rodata	kTetherballMaxHitSpeed		
+80442058	12	.rodata	kTetherballPlayerDistance		
+805e37d0	16	.bss	kTetherballThumbOffset		
+80607040	8	.sdata2	kTetherballZoneHeights		0x3f0000003f666666 (double 3.051758533e-05)
+804420bc	32	.rodata	kTetherballZoneTable		
+805ffc70	4	.sdata	kTypeHandlerCount__6Attrib	Attrib	0x1
+804ed0d0	16	.data	kTypeHandlerIds__6Attrib	Attrib	
+805ffc74	8	.sdata	kTypeHandlers__6Attrib	Attrib	0x8060233400000000
+804417d0	16	.rodata	kWBPointsToWin		
+804ca718	20	.data	kWaitPoIAvailableIdles		
+805e3850	16	.bss	kWallballAlternateGravity		
+805e3860	16	.bss	kWallballAlternateGravity2		
+805ff7d4	4	.sdata	kWallballBallRadius		0x3def9db2 (float 0.117)
+80442128	24	.rodata	kWallballBallSpeedLevels		
+80442198	16	.rodata	kWallballCharacterCelebrationAnims		
+80607220	4	.sdata2	kWallballCharacterKnockdownTime		0x44af0000 (float 1400)
+80442140	24	.rodata	kWallballCharacterSpeedLevels		
+805ff7e4	4	.sdata	kWallballCharacterTargetingIndicatorNumPowerLevels		0x5
+805ff7ec	4	.sdata	kWallballCourtLength		0x40e00000 (float 7)
+805ff7f0	4	.sdata	kWallballCourtWallHeight		0x40400000 (float 3)
+805ff7e8	4	.sdata	kWallballCourtWidth		0x40a9999a (float 5.3)
+805e3840	16	.bss	kWallballDefaultGravity		
+805ff7d0	4	.sdata	kWallballFilename		0x804dda30
+80601fdc	4	.sbss	kWallballMegaBoostIncrement		
+80442110	12	.rodata	kWallballOriginDirection		
+805e37e0	48	.bss	kWallballOriginPosition		
+805e3810	48	.bss	kWallballPositionTweak		
+80442158	16	.rodata	kWallballThrowSpeedMinX		
+804cb8dc	76	.data	kWiimoteBankFilenames		
+80601914	4	.sbss	lFlag$14834		
+805dfc98	64	.bss	lapCounterText		
+804e9990	16	.data	lightManagerAmbientColour__3Ren	Ren	
+804e9a30	16	.data	lightManagerCameraXRot__3Ren	Ren	
+804e9a40	16	.data	lightManagerCameraYRot__3Ren	Ren	
+804e99e0	64	.data	lightManagerDirection__3Ren	Ren	
+804e9a20	16	.data	lightManagerTypes__3Ren	Ren	
+805a8f08	128	.bss	local_token		
+806021d4	4	.sbss	mActiveSceneContext__Q23Ren5Scene	Ren::Scene	
+805e2c30	288	.bss	mAssets__13DSTargetPinup	DSTargetPinup	
+805e3380	104	.bss	mAssets__5RcCar	RcCar	
+805e2bb0	32	.bss	mAssets__8DSObject	DSObject	
+805e2bd0	16	.bss	mAssets__9DSPropSet	DSPropSet	
+806017d0	4	.sbss	mAsyncLoadBuffer__17AuAEMSQueueLoader	AuAEMSQueueLoader	
+805feef8	4	.sdata	mBaseSeed__19cParticleRandomSeed	cParticleRandomSeed	0x12345678
+805ab104	2048	.bss	mBatchMats__15cParticleBucket	cParticleBucket	
+80602144	4	.sbss	mCameraDefaultNum__13CameraManager	CameraManager	
+80602148	4	.sbss	mCameraToAlignTo__13CameraManager	CameraManager	
+805e2a10	16	.bss	mController__10Controller	Controller	
+805febb0	4	.sdata	mCurrentAsyncHandle__17AuAEMSQueueLoader	AuAEMSQueueLoader	0xffffffff
+806017d4	4	.sbss	mCurrentFile__17AuAEMSQueueLoader	AuAEMSQueueLoader	
+805e2ae0	132	.bss	mDartAssets__6DSDart	DSDart	
+805e2c20	16	.bss	mDartGunAssets__17DSTargetCharacter	DSTargetCharacter	
+805e2b90	12	.bss	mDartGunAssets__9DSDartGun	DSDartGun	
+805feda0	1	.sdata	mEnabledFlag__7cLionFX	cLionFX	0x1
+8060199c	4	.sbss	mGrowthSize__14LionSmallAlloc	LionSmallAlloc	
+805e34a0	688	.bss	mInfo__16RcCarVehicleInfo	RcCarVehicleInfo	
+80601f04	1	.sbss	mInitialized__16RcCarVehicleInfo	RcCarVehicleInfo	
+806017dc	4	.sbss	mInstance__11AuAllocator	AuAllocator	
+806018d4	4	.sbss	mInstance__11pgIDatabase	pgIDatabase	
+806017c4	4	.sbss	mInstance__13AuAEMSManager	AuAEMSManager	
+806017fc	4	.sbss	mInstance__14AuMusicManager	AuMusicManager	
+8060180c	4	.sbss	mInstance__15AuSpeechManager	AuSpeechManager	
+8060204c	4	.sbss	mInstance__15MultiplayerMode	MultiplayerMode	
+8060181c	4	.sbss	mInstance__16AuWiimoteManager	AuWiimoteManager	
+80602064	4	.sbss	mInstance__16CharacterProfile	CharacterProfile	
+80601b4c	4	.sbss	mInstance__16MainMenuHandlers	MainMenuHandlers	
+805f03dc	60	.bss	mInstance__16WiiRumbleEffects	WiiRumbleEffects	
+806017cc	4	.sbss	mInstance__17AuAEMSQueueLoader	AuAEMSQueueLoader	
+80601b34	4	.sbss	mInstance__18EndTourneyHandlers	EndTourneyHandlers	
+80601bac	4	.sbss	mInstance__18ReportCardHandlers	ReportCardHandlers	
+80601b14	4	.sbss	mInstance__19BossEndGameHandlers	BossEndGameHandlers	
+80601b6c	4	.sbss	mInstance__19MultiPlayerHandlers	MultiPlayerHandlers	
+806022d4	4	.sbss	mInstance__20AccessibilityManager	AccessibilityManager	
+806017ec	4	.sbss	mInstance__20AuEnvironmentManager	AuEnvironmentManager	
+80601b2c	4	.sbss	mInstance__20CreditScreenHandlers	CreditScreenHandlers	
+80601bd4	4	.sbss	mInstance__20StickerStoreHandlers	StickerStoreHandlers	
+80601b7c	4	.sbss	mInstance__21PaperAirplaneHandlers	PaperAirplaneHandlers	
+806022ac	4	.sbss	mInstance__4pgIO	pgIO	
+806017e4	4	.sbss	mInstance__5Audio	Audio	
+8060215c	4	.sbss	mInstance__Q23Ren6Engine	Ren::Engine	
+8060229c	4	.sbss	mIsPlaying__11MoviePlayer	MoviePlayer	
+805a9d98	4096	.bss	mKeys__9LIONPROXY	LIONPROXY	
+805e336c	10	.bss	mLevelInfo__16RcDriverAIEntity	RcDriverAIEntity	
+80601d94	1	.sbss	mLoaded__13DSTargetPinup	DSTargetPinup	
+80601c88	1	.sbss	mLoaded__15MicroBugManager	MicroBugManager	
+80601d84	1	.sbss	mLoaded__17DSTargetCharacter	DSTargetCharacter	
+80601ef4	1	.sbss	mLoaded__5RcCar	RcCar	
+80601d14	1	.sbss	mLoaded__6DSDart	DSDart	
+80601d54	1	.sbss	mLoaded__8DSObject	DSObject	
+80601d24	1	.sbss	mLoaded__9DSDartGun	DSDartGun	
+80601d64	1	.sbss	mLoaded__9DSPropSet	DSPropSet	
+80601998	4	.sbss	mMainSize__14LionSmallAlloc	LionSmallAlloc	
+804e9618	64	.data	mMaterialStrings		
+80601c5c	4	.sbss	mMaxFlightTime__8MicroBug	MicroBug	
+806012b0	4	.sbss	mMaxSize__Q211AncientEvil19AIEntitySizeTracker	AncientEvil::AIEntitySizeTracker	
+806012b4	4	.sbss	mMaxSize__Q211AncientEvil21CompulsionSizeTracker	AncientEvil::CompulsionSizeTracker	
+80601810	4	.sbss	mNumBanks__15AuSpeechManager	AuSpeechManager	
+80602470	4	.sbss	mOldCallBack		
+805f0100	48	.bss	mPadStatus		
+805ab0c4	64	.bss	mParentMat__15cParticleBucket	cParticleBucket	
+806022d8	4	.sbss	mPopupClosedCallback__20AccessibilityManager	AccessibilityManager	
+806022dc	4	.sbss	mPopupClosedCaller__20AccessibilityManager	AccessibilityManager	
+805ff300	4	.sdata	mPrevState__9FEManager	FEManager	0xffffffff
+80601c84	4	.sbss	mShadowModel__15MicroBugManager	MicroBugManager	
+805e2b9c	16	.bss	mShieldAssets__9DSDartGun	DSDartGun	
+80601918	4	.sbss	mSingleton__12cLionConvert	cLionConvert	
+806019fc	4	.sbss	mSingleton__15cLionGeomParser	cLionGeomParser	
+80601a18	4	.sbss	mSingleton__15cLionGeomSystem	cLionGeomSystem	
+806019a0	4	.sbss	mSingleton__15cLionTextParser	cLionTextParser	
+805aecf4	1116	.bss	mSingleton__15cParticleRender	cParticleRender	
+805abcbc	12	.bss	mSingleton__15cParticleSystem	cParticleSystem	
+80601934	4	.sbss	mSingleton__16cLionForceParser	cLionForceParser	
+80601a3c	4	.sbss	mSingleton__16cLionLightParser	cLionLightParser	
+80601a54	4	.sbss	mSingleton__16cLionLightSystem	cLionLightSystem	
+8060190c	8	.sbss	mSingleton__17cLionChunkManager	cLionChunkManager	
+805a9c1c	12	.bss	mSingleton__17cLionForceManager	cLionForceManager	
+805a93c8	52	.bss	mSingleton__18cLionEffectManager	cLionEffectManager	
+80601a58	4	.sbss	mSingleton__18cLionPostProParser	cLionPostProParser	
+80601a6c	4	.sbss	mSingleton__18cLionPostProSystem	cLionPostProSystem	
+805a9d5c	12	.bss	mSingleton__19cLionParticleParser	cLionParticleParser	
+805aba44	632	.bss	mSingleton__21cParticleStatsManager	cParticleStatsManager	
+805af150	264	.bss	mSingleton__22cLionGeomEffectManager	cLionGeomEffectManager	
+805af270	12	.bss	mSingleton__22cLionGeomPluginManager	cLionGeomPluginManager	
+805aba18	32	.bss	mSingleton__22cParticleScalerManager	cParticleScalerManager	
+805abce8	12288	.bss	mSingleton__22cParticleWaveFormTable	cParticleWaveFormTable	
+805af2f4	12	.bss	mSingleton__23cLionLightEffectManager	cLionLightEffectManager	
+805ab9bc	44	.bss	mSingleton__23cParticleEmitterManager	cParticleEmitterManager	
+805ab9f4	36	.bss	mSingleton__23cParticleLocatorManager	cParticleLocatorManager	
+806019e8	4	.sbss	mSingleton__23cParticleRenderMaterial	cParticleRenderMaterial	
+805abcc8	32	.bss	mSingleton__23cParticleTriggerManager	cParticleTriggerManager	
+805af30c	1228	.bss	mSingleton__25cLionPostProEffectManager	cLionPostProEffectManager	
+805af7f0	12	.bss	mSingleton__25cLionPostProPluginManager	cLionPostProPluginManager	
+805a9c34	296	.bss	mSingleton__26cLionParticleEffectManager	cLionParticleEffectManager	
+805a9408	2068	.bss	mSingleton__8cLionFog	cLionFog	
+805a8e48	120	.bss	mSpeechBankList__15AuSpeechManager	AuSpeechManager	
+805febc8	4	.sdata	mStreamHandle__15AuSpeechManager	AuSpeechManager	0xffffffff
+80601c00	4	.sbss	mViewPort__17HighResScreenShot	HighResScreenShot	
+80601c60	4	.sbss	mWanderRadius__8MicroBug	MicroBug	
+80600f70	4	.sbss	m_pInstance__13TRCHomeButton	TRCHomeButton	
+805ab904	128	.bss	mapsMatrices__15cParticleBucket	cParticleBucket	
+805ab0a4	32	.bss	masIterators__15cParticleBucket	cParticleBucket	
+805ab024	128	.bss	masParticleSet__15cParticleBucket	cParticleBucket	
+805aaf98	128	.bss	masSeeds__15cParticleBucket	cParticleBucket	
+80602468	4	.sbss	memorylisterror		
+80602244	4	.sbss	mempool__7CString	CString	
+80601990	4	.sbss	mpAllocator__14LionSmallAlloc	LionSmallAlloc	
+80601afc	4	.sbss	mpAllocator__7GROPERS	GROPERS	
+80601b08	4	.sbss	mpBindGroups__7GROPERS	GROPERS	
+80601b04	4	.sbss	mpGropers__7GROPERS	GROPERS	
+80600f60	4	.sbss	mpInstance__15TRCCoreHandlers	TRCCoreHandlers	
+80601994	4	.sbss	mpPages__14LionSmallAlloc	LionSmallAlloc	
+80601b00	4	.sbss	mpRenderer__7GROPERS	GROPERS	
+806019d4	4	.sbss	mppsCurrMtx__15cParticleBucket	cParticleBucket	
+806019d0	4	.sbss	mpsCurrIterator__15cParticleBucket	cParticleBucket	
+806019cc	4	.sbss	mpsCurrSeed__15cParticleBucket	cParticleBucket	
+806019c4	4	.sbss	mpsIteratorEnd__15cParticleBucket	cParticleBucket	
+806019c8	4	.sbss	mpsMat__15cParticleBucket	cParticleBucket	
+806019c0	4	.sbss	mpsSeedEnd__15cParticleBucket	cParticleBucket	
+80596d28	12	.bss	msInitParams__15TRCCoreHandlers	TRCCoreHandlers	
+806022b4	4	.sbss	msInstance__13PGMoviePlayer	PGMoviePlayer	
+806019e4	4	.sbss	msNow__16cParticleEmitter	cParticleEmitter	
+805a631c	20	.bss	myalloc		
+804d72d0	16	.data	nControllers		
+80602024	4	.sbss	nLastCycles$47163		
+80607890	4	.sdata2	npos__7CString	CString	0xffffffff
+80602248	4	.sbss	numfreepools__7CString	CString	
+80602054	4	.sbss	parentalLock		
+805e3990	16	.bss	productCode		
+805a62fc	16	.bss	rcmp_sys__4RCMP	RCMP	
+806019d8	4	.sbss	retiredCount		
+804f0f00	36	.bss	rm_Gouraud		
+804f0f28	36	.bss	rm_GouraudApt		
+804f0f50	36	.bss	rm_PlaygroundAnimatedTexture		
+804f0f78	36	.bss	rm_PlaygroundCharFaceToonShade_HWSkin		
+804f0fa0	36	.bss	rm_PlaygroundCompressPlaceableShadow_HWSkin		
+804f0fc8	36	.bss	rm_PlaygroundCompressShadow_HWSkin		
+804f0ff0	36	.bss	rm_PlaygroundCompressToonShade_HWSkin		
+804f1018	36	.bss	rm_PlaygroundLitPlaceable_HWSkin		
+804f1040	36	.bss	rm_PlaygroundShadow		
+804f1068	36	.bss	rm_PlaygroundShadow_HWSkin		
+804f1090	36	.bss	rm_PlaygroundTexture		
+804f10b8	36	.bss	rm_PlaygroundTextureAlphaDXT		
+804f10e0	36	.bss	rm_PlaygroundTextureAlphaDXTBase		
+804f1108	36	.bss	rm_PlaygroundTextureAlphaDXTBaseShadow		
+804f1130	36	.bss	rm_PlaygroundTextureAlphaDXTShadow		
+804f1158	36	.bss	rm_PlaygroundTextureBakedLight		
+804f1180	36	.bss	rm_PlaygroundTextureBakedLightShadow		
+804f11a8	36	.bss	rm_PlaygroundTextureBakedLightShadowDouble		
+804f11d0	36	.bss	rm_PlaygroundTextureShadow		
+804f11f8	36	.bss	rm_PlaygroundTextureStaticShadow		
+804f1220	36	.bss	rm_PlaygroundTexture_HWSkin		
+804f1248	36	.bss	rm_PlaygroundToonShade		
+804f1270	36	.bss	rm_PlaygroundToonShade_HWSkin		
+804f1298	36	.bss	rm_PlaygroundWater2		
+804f12c0	36	.bss	rm_TextureApt		
+805fece0	1	.sdata	rotFirst		0x1
+80602000	4	.sbss	s2dScene		
+80601ffc	4	.sbss	s3dScene		
+804dbaa0	100	.data	sAICharacterNames__16RcDriverAIEntity	RcDriverAIEntity	
+804dbb68	180	.data	sAICompulsionNames__16RcDriverAIEntity	RcDriverAIEntity	
+804dbb04	100	.data	sAIStateNames__16RcDriverAIEntity	RcDriverAIEntity	
+806012c1	1	.sbss	sActionPoICompulsion		
+80602264	1	.sbss	sActive__9DebugMenu	DebugMenu	
+806012ac	4	.sbss	sAncientEvilInstance__11AncientEvil	AncientEvil	
+804eb124	984	.data	sAnimStateNames__19AnimationStateGraph	AnimationStateGraph	
+8060223c	4	.sbss	sAssetManagerInstance__12AssetManager	AssetManager	
+806012e8	8	.sbss	sAttributeKeyActive__3PoI	PoI	
+80601460	8	.sbss	sAttributeKeyAllowWait__8PoIGroup	PoIGroup	
+80601428	8	.sbss	sAttributeKeyAnimationChance__3PoI	PoI	
+80601420	8	.sbss	sAttributeKeyAnimationID__3PoI	PoI	
+806012f0	8	.sbss	sAttributeKeyArea__3PoI	PoI	
+80601440	8	.sbss	sAttributeKeyArea__8PoIGroup	PoIGroup	
+806013f8	8	.sbss	sAttributeKeyChainContinueChance__3PoI	PoI	
+806013f0	8	.sbss	sAttributeKeyChainPrevious__3PoI	PoI	
+806013e8	8	.sbss	sAttributeKeyChainType__3PoI	PoI	
+806013d0	8	.sbss	sAttributeKeyCharacterFilter__3PoI	PoI	
+80601300	8	.sbss	sAttributeKeyCritical__3PoI	PoI	
+80601308	8	.sbss	sAttributeKeyDefaultBehaviour__3PoI	PoI	
+80601318	8	.sbss	sAttributeKeyExpire__3PoI	PoI	
+80601468	8	.sbss	sAttributeKeyForceFinish__8PoIGroup	PoIGroup	
+806013e0	8	.sbss	sAttributeKeyGenderFilter__3PoI	PoI	
+80601310	8	.sbss	sAttributeKeyInfiniteDuration__3PoI	PoI	
+80601350	8	.sbss	sAttributeKeyInterestChance__3PoI	PoI	
+80601358	8	.sbss	sAttributeKeyInterestProximity__3PoI	PoI	
+80601378	8	.sbss	sAttributeKeyMaxBoredom__3PoI	PoI	
+80601368	8	.sbss	sAttributeKeyMaxDuration__3PoI	PoI	
+80601398	8	.sbss	sAttributeKeyMaxInitialRecharge__3PoI	PoI	
+80601388	8	.sbss	sAttributeKeyMaxRecharge__3PoI	PoI	
+806013c8	8	.sbss	sAttributeKeyMaxUninterruptibleUseTime__3PoI	PoI	
+806013b8	8	.sbss	sAttributeKeyMaxUninterruptibleWaitTime__3PoI	PoI	
+806013a8	8	.sbss	sAttributeKeyMaxWait__3PoI	PoI	
+80601370	8	.sbss	sAttributeKeyMinBoredom__3PoI	PoI	
+80601458	8	.sbss	sAttributeKeyMinCharacters__8PoIGroup	PoIGroup	
+80601360	8	.sbss	sAttributeKeyMinDuration__3PoI	PoI	
+80601390	8	.sbss	sAttributeKeyMinInitialRecharge__3PoI	PoI	
+80601380	8	.sbss	sAttributeKeyMinRecharge__3PoI	PoI	
+806013c0	8	.sbss	sAttributeKeyMinUninterruptibleUseTime__3PoI	PoI	
+806013b0	8	.sbss	sAttributeKeyMinUninterruptibleWaitTime__3PoI	PoI	
+806013a0	8	.sbss	sAttributeKeyMinWait__3PoI	PoI	
+80601348	8	.sbss	sAttributeKeyNumTagPoints__3PoI	PoI	
+80601418	8	.sbss	sAttributeKeyOnActionEndScript__3PoI	PoI	
+80601410	8	.sbss	sAttributeKeyOnActionStartScript__3PoI	PoI	
+80601400	8	.sbss	sAttributeKeyOnActivateScript__3PoI	PoI	
+80601408	8	.sbss	sAttributeKeyOnInterestedScript__3PoI	PoI	
+80601448	8	.sbss	sAttributeKeyPoIs__8PoIGroup	PoIGroup	
+80601340	8	.sbss	sAttributeKeyPositionType__3PoI	PoI	
+80601338	8	.sbss	sAttributeKeyPosition__3PoI	PoI	
+80601450	8	.sbss	sAttributeKeyRequired__8PoIGroup	PoIGroup	
+806013d8	8	.sbss	sAttributeKeySpawnTableFilter__3PoI	PoI	
+80601320	8	.sbss	sAttributeKeySpeed__3PoI	PoI	
+805a8e08	64	.bss	sAttributeKeyTagPoints__3PoI	PoI	
+80601330	8	.sbss	sAttributeKeyTargetKey__3PoI	PoI	
+80601328	8	.sbss	sAttributeKeyTarget__3PoI	PoI	
+806012f8	8	.sbss	sAttributeKeyType__3PoI	PoI	
+806012dc	1	.sbss	sAttributeKeysInitialized__3PoI	PoI	
+80601434	1	.sbss	sAttributeKeysInitialized__8PoIGroup	PoIGroup	
+8060209c	1	.sbss	sAutoSaveEnabled		
+805dfc78	28	.bss	sBeatenGames		
+804e9ea6	68	.data	sBoneMask		
+805ff810	4	.sdata	sBootFlowCurrentState__9GameState	GameState	0xffffffff
+805ff814	4	.sdata	sBootFlowPreviousState__9GameState	GameState	0xffffffff
+8060214c	4	.sbss	sCameraManagerInstance__13CameraManager	CameraManager	
+8044153c	16	.rodata	sCelebrationAnimations		
+80601b64	4	.sbss	sCheckPointsPositions		
+80601438	8	.sbss	sClassKeyPoIGroups__8PoIGroup	PoIGroup	
+806012e0	8	.sbss	sClassKeyPoIs__3PoI	PoI	
+80601b70	1	.sbss	sControllersNeedRegistering		
+805e2494	20	.bss	sCost		
+805ff918	4	.sdata	sCurrentCallBack__3TRC	TRC	0xffffffff
+805ff80c	4	.sdata	sCurrentGameState__9GameState	GameState	0xffffffff
+8060225c	4	.sbss	sCurrentMenu__9DebugMenu	DebugMenu	
+805ff220	4	.sdata	sCurrentProfileOperation		0xffffffff
+805ff148	4	.sdata	sCurrentScreen		0x6
+805ff260	4	.sdata	sCurrentStickerCost		0xffffffff
+804d9158	12	.data	sDartAssetNames		
+80601cfe	1	.sbss	sDartShootoutEnterCompulsion		
+80601cfc	1	.sbss	sDartShootoutHostileAIEntity		
+80601d02	1	.sbss	sDartShootoutIdleCompulsion		
+80601cfd	1	.sbss	sDartShootoutInnocentAIEntity		
+80601cff	1	.sbss	sDartShootoutMegashotCompulsion		
+80601d01	1	.sbss	sDartShootoutRunStopShootCompulsion		
+80601d00	1	.sbss	sDartShootoutShootCompulsion		
+805ffae4	4	.sdata	sDefaultPool__6MemMgr	MemMgr	0xffffffff
+805dfd80	20	.bss	sDefaultRules		
+80601dbc	1	.sbss	sDodgeballAIEntity		
+80601dbf	1	.sbss	sDodgeballBoostCompulsion		
+80601dc1	1	.sbss	sDodgeballIdleCompulsion		
+80601dbd	1	.sbss	sDodgeballReactCompulsion		
+80601dc0	1	.sbss	sDodgeballReactToFakeCompulsion		
+80601dbe	1	.sbss	sDodgeballThrowCompulsion		
+80602014	4	.sbss	sElapsedSinceLastRender__9GameState	GameState	
+80602010	4	.sbss	sElapsedTimeFrame__9GameState	GameState	
+805ff264	1	.sdata	sEnableCoverButton		0x1
+80602194	4	.sbss	sFSEffectInstance__Q23Ren24FullScreenEffectsManager	Ren::FullScreenEffectsManager	
+806012be	1	.sbss	sFidgetCompulsion		
+80601e1c	1	.sbss	sFootieAIEntity		
+80601e1f	1	.sbss	sFootieBlockCompulsion		
+80601e20	1	.sbss	sFootieBlockShotCompulsion		
+80601e1e	1	.sbss	sFootieDiveSaveCompulsion		
+80601e21	1	.sbss	sFootieJuggleCompulsion		
+80601e23	1	.sbss	sFootieJumpCompulsion		
+80601e1d	1	.sbss	sFootiePositionCompulsion		
+80601e22	1	.sbss	sFootieServeCompulsion		
+80601e24	1	.sbss	sFootieShotCompulsion		
+80601b71	1	.sbss	sGotHighScore		
+8060239c	4	.sbss	sHighWater__Q34EAGL14VolatileBuffer12SuperPrivate	EAGL::VolatileBuffer::SuperPrivate	
+8060227c	4	.sbss	sIniFileManagerInstance__14IniFileManager	IniFileManager	
+80601ba4	1	.sbss	sInitialLoadComplete		
+80602020	1	.sbss	sInitialized__9GameState	GameState	
+806020e4	4	.sbss	sInstance__13PhysicsMemory	PhysicsMemory	
+80601b8c	4	.sbss	sInstance__16PostGameHandlers	PostGameHandlers	
+8060189c	4	.sbss	sInstance__19ConversationManager	ConversationManager	
+805ff228	1	.sdata	sIsBootFlow		0x1
+805ff058	4	.sdata	sLastBeatenGameId		0xffffffff
+80601ba5	1	.sbss	sLastOperationIsDelete		
+806021b4	4	.sbss	sLightManagerInstance__Q23Ren12LightManager	Ren::LightManager	
+805a8f88	1024	.bss	sLineBuffer__10cCSVParser	cCSVParser	
+806021e8	4	.sbss	sLineColour__3Ren	Ren	
+80442a90	60	.rodata	sLinePoints__3Ren	Ren	
+80601e2c	1	.sbss	sLoaded__10FootieBall	FootieBall	
+80601cac	1	.sbss	sLoaded__13FreeThrowBall	FreeThrowBall	
+80601dcc	1	.sbss	sLoaded__9Dodgeball	Dodgeball	
+806012bc	1	.sbss	sLookAtCharacterCompulsion		
+806012bd	1	.sbss	sLookAtPointCompulsion		
+805e82d0	48	.bss	sMemoryPoolArray__6MemMgr	MemMgr	
+806012cc	1	.sbss	sMetaWorldPlayAIEntitySizeTracker		
+806012d4	1	.sbss	sMetaWorldStaticAIEntitySizeTracker		
+805ff144	4	.sdata	sMinigameType		0xffffffff
+806012c4	1	.sbss	sMoveToPointCompulsion		
+805dfce8	136	.bss	sMultiPlayerTeamInfo		
+80601850	4	.sbss	sNPCAnimationEventHandler		
+80602258	4	.sbss	sNewestMenu__9DebugMenu	DebugMenu	
+80601b60	4	.sbss	sNumCheckPoints		
+80442d2c	72	.data	sPCodeData		
+80601c54	4	.sbss	sPGCongaInstance__7PGConga	PGConga	
+805ff5ec	4	.sdata	sPhysicsHandle__10FootieBall	FootieBall	0xffffffff
+805ff4a4	4	.sdata	sPhysicsHandle__13FreeThrowBall	FreeThrowBall	0xffffffff
+805ff5cc	4	.sdata	sPhysicsHandle__9Dodgeball	Dodgeball	0xffffffff
+806022f4	4	.sbss	sPlaceableAnimationEventHandler		
+805dfd70	16	.bss	sPlayerAvatarIds		
+8060184c	4	.sbss	sPlayerCharacterAnimationEventHandler		
+806012c0	1	.sbss	sPoICompulsion		
+804eb87c	384	.data	sPoolParameters		
+804dc84c	192	.data	sPowerupProbs__16RcPowerupManager	RcPowerupManager	
+804ed478	28	.data	sPrimTypeXlate		
+805e2fe8	900	.bss	sProbablityTable__16RcDriverAIEntity	RcDriverAIEntity	
+805dfd98	9960	.bss	sProfileBuffer		
+80601ba3	1	.sbss	sProfileScreenIsLoaded		
+80601ba0	3	.sbss	sProfileSlotsOccupied		
+805e2480	20	.bss	sPurchased		
+80442acc	48	.rodata	sQuadPoints$31118		
+80442afc	32	.rodata	sQuadUVs$31119		
+80601ed3	1	.sbss	sRcByPassCompulsion		
+80601ed4	1	.sbss	sRcChangeLaneCompulsion		
+80601ed1	1	.sbss	sRcCollisionCourseCompulsion		
+80601ecc	1	.sbss	sRcDriverAIEntitySizeTracker		
+80601ecd	1	.sbss	sRcDrivingCompulsion		
+80601ed2	1	.sbss	sRcPushBackCompulsion		
+80601ed6	1	.sbss	sRcQuickBoostCompulsion		
+80601ecf	1	.sbss	sRcSlowDownCompulsion		
+80601ece	1	.sbss	sRcSpeedUpCompulsion		
+80601ed0	1	.sbss	sRcUsePowerupCompulsion		
+80601ed5	1	.sbss	sRcUseShieldCompulsion		
+80602260	4	.sbss	sRenderer__9DebugMenu	DebugMenu	
+80602254	4	.sbss	sRootMenu__9DebugMenu	DebugMenu	
+806023f8	8	.sbss	sSaveState__Q24EAGL8EAGLFont	EAGL::EAGLFont	
+805ff224	4	.sdata	sSelectedProfileIndex		0xffffffff
+806021e4	4	.sbss	sShadowManagerInstance__Q23Ren13ShadowManager	Ren::ShadowManager	
+80601484	1	.sbss	sSimpleMovementAIEntity		
+80601e94	4	.sbss	sSkyDomeScene		
+805ff818	4	.sdata	sStateTimeElapsed__9GameState	GameState	0x4b0
+805e2f70	20	.bss	sStateTimes__16RcDriverAIEntity	RcDriverAIEntity	
+806012c3	1	.sbss	sStaticAnimCompulsion		
+805ff2c0	4	.sdata	sStickerId		0xffffffff
+805e24a8	20	.bss	sStickerIds		
+80601bbc	4	.sbss	sStickerReward		
+8060208c	4	.sbss	sStrapWarningInstance__18StrapWarningScreen	StrapWarningScreen	
+806012c2	1	.sbss	sTalkPoICompulsion		
+80601f5c	1	.sbss	sTetherballAIEntitySizeTracker		
+80601f5e	1	.sbss	sTetherballHitCompulsion		
+80601f5d	1	.sbss	sTetherballMoveCompulsion		
+806014a8	4	.sbss	sThis__Q26Attrib8Database	Attrib::Database	
+8060200c	4	.sbss	sTotalElapsedTime__9GameState	GameState	
+80601bdc	4	.sbss	sTotalStickers		
+805e2f84	100	.bss	sTransitionProbs__16RcDriverAIEntity	RcDriverAIEntity	
+805ee848	12	.bss	sVerbosityControl__Q24EAGL12TARExtension	EAGL::TARExtension	
+805ede24	12	.bss	sVerbosityControl__Q24EAGL13RenderContext	EAGL::RenderContext	
+805e8530	12	.bss	sVerbosityControl__Q24EAGL15DeviceExtension	EAGL::DeviceExtension	
+805ede18	12	.bss	sVerbosityControl__Q24EAGL17RenderContextBase	EAGL::RenderContextBase	
+805ef068	12	.bss	sVerbosityControl__Q24EAGL17ViewPortExtension	EAGL::ViewPortExtension	
+805ee7b0	12	.bss	sVerbosityControl__Q24EAGL21GeoPrimStateExtension	EAGL::GeoPrimStateExtension	
+805ede0c	12	.bss	sVerbosityControl__Q24EAGL22RenderContextExtension	EAGL::RenderContextExtension	
+805ede00	12	.bss	sVerbosityControl__Q24EAGL26RenderContextExtensionBase	EAGL::RenderContextExtensionBase	
+805eee98	12	.bss	sVerbosityControl__Q24EAGL29TextureRenderContextExtension	EAGL::TextureRenderContextExtension	
+805e8520	12	.bss	sVerbosityControl__Q24EAGL5Model	EAGL::Model	
+805e8540	12	.bss	sVerbosityControl__Q24EAGL6Device	EAGL::Device	
+805ef078	12	.bss	sVerbosityControl__Q24EAGL8ViewPort	EAGL::ViewPort	
+80601f84	1	.sbss	sWallballAIEntity		
+80601f86	1	.sbss	sWallballHitBallCompulsion		
+80601f87	1	.sbss	sWallballIdleCompulsion		
+80601f85	1	.sbss	sWallballServeCompulsion		
+806012bf	1	.sbss	sWanderCompulsion		
+80602214	4	.sbss	sWorldLightManagerInstance__Q23Ren17WorldLightManager	Ren::WorldLightManager	
+805e8260	16	.bss	sZeroVector__11OrbitCamera	OrbitCamera	
+8060228c	1	.sbss	s_Initialized__6MemMgr	MemMgr	
+80602290	4	.sbss	s_MEM2Class__6MemMgr	MemMgr	
+80601b5c	1	.sbss	s_bMinigameIsLoaded		
+80601bb8	4	.sbss	s_iCurrentMiniGamePage		
+80601b58	4	.sbss	s_iCurrentMinigame		
+80601bc0	4	.sbss	s_iSticker1		
+80601bc4	4	.sbss	s_iSticker2		
+80601bc8	4	.sbss	s_iSticker3		
+80600e30	4	.sbss	s_instance__36hkSingleton<21hkBuiltinTypeRegistry>	hkSingleton<21hkBuiltinTypeRegistry>	
+80601b3c	4	.sbss	s_pInstance__14GlobalHandlers	GlobalHandlers	
+80601b94	4	.sbss	s_pInstance__15PreGameHandlers	PreGameHandlers	
+80601b9c	4	.sbss	s_pInstance__15ProfileHandlers	ProfileHandlers	
+80601b54	4	.sbss	s_pInstance__16MinigameHandlers	MinigameHandlers	
+80601be4	4	.sbss	s_pInstance__16WorldHudHandlers	WorldHudHandlers	
+80601b84	4	.sbss	s_pInstance__17PauseMenuHandlers	PauseMenuHandlers	
+80601bb4	4	.sbss	s_pInstance__19StickerBookHandlers	StickerBookHandlers	
+80601b24	4	.sbss	s_pInstance__20ConversationHandlers	ConversationHandlers	
+80601b44	4	.sbss	s_pInstance__21LoadingScreenHandlers	LoadingScreenHandlers	
+80601bec	4	.sbss	s_pInstance__9FEManager	FEManager	
+805ffae0	4	.sdata	s_pMemoryPools__6MemMgr	MemMgr	0x805e82d0
+80600dc0	4	.sbss	s_threadMemoryInstance__14hkThreadMemory	hkThreadMemory	
+80602294	4	.sbss	sce_newlib_heap_kb_size		
+8060201c	4	.sbss	sfFrameMilliseconds__9GameState	GameState	
+80602018	4	.sbss	snViewerFrameCycles__9GameState	GameState	
+806019dc	4	.sbss	stillActiveCount		
+805f00d0	48	.bss	vmPadStatus		
+804e9cd0	16	.data	worldLightManagerAmbientColour__3Ren	Ren	
+804e9ce0	64	.data	worldLightManagerColours__3Ren	Ren	
+804e9d20	64	.data	worldLightManagerDirection__3Ren	Ren	
+805e82c0	16	.bss	worldLightManagerTypes__3Ren	Ren	

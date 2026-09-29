@@ -1,0 +1,259 @@
+# addr	size	class	method	args	const	source_unit	mangled
+803ab210	68	Teams	constructor			minigame.cpp	__ct__5TeamsFv
+803ab254	64	Teams	destructor			minigame.cpp	__dt__5TeamsFv
+803ab294	236	Minigame	constructor	Ren::Scene*		minigame.cpp	__ct__8MinigameFPQ23Ren5Scene
+803ab380	8	Minigame	SetDifficulty	Enums::MiniGameDifficultyLevel		minigame.cpp	SetDifficulty__8MinigameFQ25Enums23MiniGameDifficultyLevel
+803ab388	96	Minigame	destructor			minigame.cpp	__dt__8MinigameFv
+803ab3e8	8	Minigame	SetLevel	int		minigame.cpp	SetLevel__8MinigameFi
+803ab3f0	48	Minigame	SetUpTeams	const Teams&		minigame.cpp	SetUpTeams__8MinigameFRC5Teams
+803ab420	8	Minigame	SetDareType	Enums::MiniGameDareType		minigame.cpp	SetDareType__8MinigameFQ25Enums16MiniGameDareType
+803ab428	8	Minigame	SetRules	const int*		minigame.cpp	SetRules__8MinigameFPCi
+803ab430	64	Minigame	Initialize	const World*		minigame.cpp	Initialize__8MinigameFPC5World
+803ab470	128	Minigame	Initialize			minigame.cpp	Initialize__8MinigameFv
+803ab4f0	48	Minigame	Update	int		minigame.cpp	Update__8MinigameFi
+803ab520	4	Minigame	Draw	Ren::SceneContext&		minigame.cpp	Draw__8MinigameFRQ23Ren12SceneContext
+803ab524	92	Minigame	UnInitialize			minigame.cpp	UnInitialize__8MinigameFv
+803ab580	180	Minigame	OpenPreGameScreen	Enums::MinigameType		minigame.cpp	OpenPreGameScreen__8MinigameFQ25Enums12MinigameType
+803ab634	80	PreGameInfo	constructor			minigame.cpp	__ct__11PreGameInfoFv
+803ab684	120	Minigame	ClosePreGameScreen	bool		minigame.cpp	ClosePreGameScreen__8MinigameFb
+803ab6fc	884	Minigame	OpenPostGameScreen	Enums::MinigameType, PostGameInfo*		minigame.cpp	OpenPostGameScreen__8MinigameFQ25Enums12MinigameTypeP12PostGameInfo
+803aba70	84	Minigame	ClosePostGameScreen	bool		minigame.cpp	ClosePostGameScreen__8MinigameFb
+803abac4	240	Minigame	OpenPauseMenu	Enums::MinigameType, int		minigame.cpp	OpenPauseMenu__8MinigameFQ25Enums12MinigameTypei
+803abbb4	84	Minigame	ClosePauseMenu			minigame.cpp	ClosePauseMenu__8MinigameFv
+803abc08	12	Minigame	OnReplay			minigame.cpp	OnReplay__8MinigameFv
+803abc14	12	Minigame	OnDone			minigame.cpp	OnDone__8MinigameFv
+803abc20	12	Minigame	OnPlay			minigame.cpp	OnPlay__8MinigameFv
+803abc2c	4	Minigame	OnPauseMenuLoaded			minigame.cpp	OnPauseMenuLoaded__8MinigameFv
+803abc30	4	Minigame	OnPauseContinue			minigame.cpp	OnPauseContinue__8MinigameFv
+803abc34	72	Minigame	OnPauseQuit			minigame.cpp	OnPauseQuit__8MinigameFv
+803abc7c	4	Minigame	OnPauseReset			minigame.cpp	OnPauseReset__8MinigameFv
+803abc80	32	Minigame	BuildPlacementList1vs1	int, int*		minigame.cpp	BuildPlacementList1vs1__8MinigameFiPi
+803abca0	364	Minigame	BuildPlacementListFFA	int, int*, int*, bool		minigame.cpp	BuildPlacementListFFA__8MinigameFiPiPib
+803abe0c	20	PlayerScoreRec	operator=	const PlayerScoreRec&		minigame.cpp	__as__14PlayerScoreRecFRC14PlayerScoreRec
+803abe20	136	Minigame	BuildPlacementListTeamVsTeam	?FiPiPA4_iPi		minigame.cpp	BuildPlacementListTeamVsTeam__8MinigameFiPiPA4_iPi
+803abea8	84	Minigame	GetArrayIndexFromDiffLevel	Enums::MiniGameDifficultyLevel		minigame.cpp	GetArrayIndexFromDiffLevel__8MinigameFQ25Enums23MiniGameDifficultyLevel
+803abefc	16	Minigame	SetArea	Enums::AreaType		minigame.cpp	SetArea__8MinigameFQ25Enums8AreaType
+803abf0c	16	Minigame	RestoreArea			minigame.cpp	RestoreArea__8MinigameFv
+803abf1c	24		__sinit_\minigame_cpp			minigame.cpp	__sinit_\minigame_cpp
+803abf34	12	GameState	StartPauseDelay			GameState.cpp	StartPauseDelay__9GameStateFv
+803abf40	688	GameState	Init			GameState.cpp	Init__9GameStateFv
+803ac1f0	96	GameState	InitPostStrapScreen			GameState.cpp	InitPostStrapScreen__9GameStateFv
+803ac250	280	GameState	Shutdown			GameState.cpp	Shutdown__9GameStateFv
+803ac368	16	GameState	_drawFPS			GameState.cpp	_drawFPS__9GameStateFv
+803ac378	2028	GameState	HandleActions	int		GameState.cpp	HandleActions__9GameStateFi
+803acb64	112	WorldMan	IsInMicrogame			GameState.cpp	IsInMicrogame__8WorldManFv
+803acbd4	496	GameState	HandleSelections	int		GameState.cpp	HandleSelections__9GameStateFi
+803acdc4	500	GameState	Update			GameState.cpp	Update__9GameStateFv
+803acfb8	80	GameState	SetNewState	const GameState::State&, const char*		GameState.cpp	SetNewState__9GameStateFRCQ29GameState5StatePCc
+803ad008	28	GameState	SetBootFlowState	const GameState::BootFlowState&, bool, const char*		GameState.cpp	SetBootFlowState__9GameStateFRCQ29GameState13BootFlowStatebPCc
+803ad024	8	GameState	CurrentState			GameState.cpp	CurrentState__9GameStateFv
+803ad02c	824	GameState	STATEFN_UPDATE_BootFlow	unsigned long		GameState.cpp	STATEFN_UPDATE_BootFlow__9GameStateFUl
+803ad364	256	GameState	STATEFN_UPDATE_PG2FE	unsigned long		GameState.cpp	STATEFN_UPDATE_PG2FE__9GameStateFUl
+803ad464	184	GameState	UpdateHomeMenuIconAndApt	int, int		GameState.cpp	UpdateHomeMenuIconAndApt__9GameStateFii
+803ad51c	620	GameState	DrawEmbeddedFontString			GameState.cpp	DrawEmbeddedFontString__9GameStateFv
+803ad788	8	GameState	UpdateHomeMenuIconSetDiscEjectRecoverState	bool		GameState.cpp	UpdateHomeMenuIconSetDiscEjectRecoverState__9GameStateFb
+803ad790	12	GameState	UpdateHomeMenuIconResetState			GameState.cpp	UpdateHomeMenuIconResetState__9GameStateFv
+803ad79c	152	GameState	UpdateHomeMenuIcon	int, int		GameState.cpp	UpdateHomeMenuIcon__9GameStateFii
+803ad834	220	GameState	STATEFN_UPDATE_FE2MP	unsigned long		GameState.cpp	STATEFN_UPDATE_FE2MP__9GameStateFUl
+803ad910	280	GameState	STATEFN_UPDATE_MP2FE	unsigned long		GameState.cpp	STATEFN_UPDATE_MP2FE__9GameStateFUl
+803ada28	248	GameState	STATEFN_UPDATE_FE2PG	unsigned long		GameState.cpp	STATEFN_UPDATE_FE2PG__9GameStateFUl
+803adb20	248	GameState	STATEFN_UPDATE_Boot2FE	unsigned long		GameState.cpp	STATEFN_UPDATE_Boot2FE__9GameStateFUl
+803adc18	856	GameState	STATEFN_UPDATE_Playground	unsigned long		GameState.cpp	STATEFN_UPDATE_Playground__9GameStateFUl
+803adf70	920	GameState	STATEFN_UPDATE_FrontEnd	unsigned long		GameState.cpp	STATEFN_UPDATE_FrontEnd__9GameStateFUl
+803ae308	264	GameState	UpdateShadows			GameState.cpp	UpdateShadows__9GameStateFv
+803ae410	352	GameState	CaptureScreenShot			GameState.cpp	CaptureScreenShot__9GameStateFv
+803ae570	152		__sinit_\GameState_cpp			GameState.cpp	__sinit_\GameState_cpp
+803ae608	48		ComputeHash	const char*		Locale.cpp	ComputeHash__FPCc
+803ae638	40		StringIndexEntryComparer	const void*, const void*		Locale.cpp	StringIndexEntryComparer__FPCvPCv
+803ae660	292	Locale	constructor	eLocaleDb, eLanguageId		Locale.cpp	__ct__6LocaleF9eLocaleDb11eLanguageId
+803ae784	112	Locale	destructor			Locale.cpp	__dt__6LocaleFv
+803ae7f4	100	Locale	FindStringIndex	unsigned int	const	Locale.cpp	FindStringIndex__6LocaleCFUi
+803ae858	108	Locale	GetString	const char*	const	Locale.cpp	GetString__6LocaleCFPCc
+803ae8c4	72	Locale	GetString	int	const	Locale.cpp	GetString__6LocaleCFi
+803ae90c	24		__sinit_\Locale_cpp			Locale.cpp	__sinit_\Locale_cpp
+803ae924	44		REALFile_MemAlloc	const char*, int, int		Main.cpp	REALFile_MemAlloc__FPCcii
+803ae950	36		REALFile_MemFree	void*		Main.cpp	REALFile_MemFree__FPv
+803ae974	136		UpdateHomeMenuIconPrimitive	int, int		Main.cpp	UpdateHomeMenuIconPrimitive__Fii
+803ae9fc	708		InitAllModules			Main.cpp	InitAllModules__Fv
+803aecc0	12		INLINE_getcycle			Main.cpp	INLINE_getcycle__Fv
+803aeccc	104		ShutdownAllModules			Main.cpp	ShutdownAllModules__Fv
+803aed34	104		MainThread	int, void*		Main.cpp	MainThread__FiPv
+803aed9c	108		BootSequence	bool		Main.cpp	BootSequence__Fb
+803aee08	464		SetBootOptionsFromIni	const char*		Main.cpp	SetBootOptionsFromIni__FPCc
+803aefd8	36		main			Main.cpp	main
+803aeffc	24		__sinit_\Main_cpp			Main.cpp	__sinit_\Main_cpp
+803af014	92	MultiplayerMode	constructor			multiplayermode.cpp	__ct__15MultiplayerModeFv
+803af070	92	MultiplayerMode	destructor			multiplayermode.cpp	__dt__15MultiplayerModeFv
+803af0cc	68	MultiplayerMode	Create			multiplayermode.cpp	Create__15MultiplayerModeFv
+803af110	48	MultiplayerMode	Destroy			multiplayermode.cpp	Destroy__15MultiplayerModeFv
+803af140	64	MultiplayerMode	SetupMultiplayerGame	const MGID*, const Teams*		multiplayermode.cpp	SetupMultiplayerGame__15MultiplayerModeFPC4MGIDPC5Teams
+803af180	12	MultiplayerMode	EndMultiplayerGame			multiplayermode.cpp	EndMultiplayerGame__15MultiplayerModeFv
+803af18c	36	MultiplayerMode	SetRules	const int*		multiplayermode.cpp	SetRules__15MultiplayerModeFPCi
+803af1b0	112	MultiplayerMode	StartFreePlay			multiplayermode.cpp	StartFreePlay__15MultiplayerModeFv
+803af220	124	MultiplayerMode	StartPointSeries	int		multiplayermode.cpp	StartPointSeries__15MultiplayerModeFi
+803af29c	448	MultiplayerMode	AddRoundResults	int, int, int, int		multiplayermode.cpp	AddRoundResults__15MultiplayerModeFiiii
+803af45c	432	MultiplayerMode	AddWinResults	int, int		multiplayermode.cpp	AddWinResults__15MultiplayerModeFii
+803af60c	36	MultiplayerMode	SetLastPlacement	int, int, int, int		multiplayermode.cpp	SetLastPlacement__15MultiplayerModeFiiii
+803af630	8	MultiplayerMode	GetNumRoundsLeft			multiplayermode.cpp	GetNumRoundsLeft__15MultiplayerModeFv
+803af638	16	MultiplayerMode	GetWinTotal	int		multiplayermode.cpp	GetWinTotal__15MultiplayerModeFi
+803af648	16	MultiplayerMode	GetPointTotal	int		multiplayermode.cpp	GetPointTotal__15MultiplayerModeFi
+803af658	44	MultiplayerMode	GetPlayerRank	int		multiplayermode.cpp	GetPlayerRank__15MultiplayerModeFi
+803af684	52	MultiplayerMode	WonLastGame	int		multiplayermode.cpp	WonLastGame__15MultiplayerModeFi
+803af6b8	144	MultiplayerMode	GetPlayerNumByRank	int		multiplayermode.cpp	GetPlayerNumByRank__15MultiplayerModeFi
+803af748	16	MultiplayerMode	GetPlayerPointsInThisMatch	int		multiplayermode.cpp	GetPlayerPointsInThisMatch__15MultiplayerModeFi
+803af758	24		__sinit_\multiplayermode_cpp			multiplayermode.cpp	__sinit_\multiplayermode_cpp
+803af770	24		SetProductCode	const char*		ProductCode.cpp	SetProductCode__FPCc
+803af788	16		SetParentalLock	unsigned int		ProductCode.cpp	SetParentalLock__FUi
+803af798	24		__sinit_\ProductCode_cpp			ProductCode.cpp	__sinit_\ProductCode_cpp
+803af7b0	232	CharacterProfile	constructor			profile.cpp	__ct__16CharacterProfileFv
+803af898	152	CharacterProfile	destructor			profile.cpp	__dt__16CharacterProfileFv
+803af930	68	CharacterProfile	Create			profile.cpp	Create__16CharacterProfileFv
+803af974	12	CharacterProfile	Destroy			profile.cpp	Destroy__16CharacterProfileFv
+803af980	24	CharacterProfile	SetProfileSlot	int		profile.cpp	SetProfileSlot__16CharacterProfileFi
+803af998	668	ProfileData	operator=	const ProfileData&		profile.cpp	__as__11ProfileDataFRC11ProfileData
+803afc34	140	CharacterProfile	EraseProfile	int		profile.cpp	EraseProfile__16CharacterProfileFi
+803afcc0	344	CharacterProfile	StartInitialConversation	Character*		profile.cpp	StartInitialConversation__16CharacterProfileFP9Character
+803afe18	88	CharacterProfile	GetNpcIndex	Character*		profile.cpp	GetNpcIndex__16CharacterProfileFP9Character
+803afe70	68	CharacterProfile	GetSavedNPCState	unsigned long long	const	profile.cpp	GetSavedNPCState__16CharacterProfileCFUx
+803afeb4	12	CharacterProfile	StartAreaIntroConversation	Character*		profile.cpp	StartAreaIntroConversation__16CharacterProfileFP9Character
+803afec0	868	CharacterProfile	EndMiniGame	SinglePlayerGameResult		profile.cpp	EndMiniGame__16CharacterProfileF22SinglePlayerGameResult
+803b0224	72	CharacterProfile	CheckForGateUnlocks			profile.cpp	CheckForGateUnlocks__16CharacterProfileFv
+803b026c	440	CharacterProfile	CheckForPopUpConversation			profile.cpp	CheckForPopUpConversation__16CharacterProfileFv
+803b0424	1408	CharacterProfile	StartNewProfile	int, bool		profile.cpp	StartNewProfile__16CharacterProfileFib
+803b09a4	792	CharacterProfile	GetGrade			profile.cpp	GetGrade__16CharacterProfileFv
+803b0cbc	100	CharacterProfile	GetTotalStickerCount	bool		profile.cpp	GetTotalStickerCount__16CharacterProfileFb
+803b0d20	64	CharacterProfile	GetTotalDaresComplete			profile.cpp	GetTotalDaresComplete__16CharacterProfileFv
+803b0d60	364	CharacterProfile	GetTotalNumberDares			profile.cpp	GetTotalNumberDares__16CharacterProfileFv
+803b0ecc	52	CharacterProfile	GetTotalPurchasedAbilities			profile.cpp	GetTotalPurchasedAbilities__16CharacterProfileFv
+803b0f00	8	CharacterProfile	GetTotalAvailableAbilities			profile.cpp	GetTotalAvailableAbilities__16CharacterProfileFv
+803b0f08	8	CharacterProfile	GetMaxGameStickers			profile.cpp	GetMaxGameStickers__16CharacterProfileFv
+803b0f10	12	CharacterProfile	GetTotalMarbleCount		const	profile.cpp	GetTotalMarbleCount__16CharacterProfileCFv
+803b0f1c	20	CharacterProfile	AddMarbles	unsigned int		profile.cpp	AddMarbles__16CharacterProfileFUi
+803b0f30	28	CharacterProfile	MarkMarbleAsPickedUp	Enums::AreaType, int		profile.cpp	MarkMarbleAsPickedUp__16CharacterProfileFQ25Enums8AreaTypei
+803b0f4c	12	CharacterProfile	GetTotalHiddenMarbles			profile.cpp	GetTotalHiddenMarbles__16CharacterProfileFv
+803b0f58	84	CharacterProfile	GetTotalHiddenMarblesCollected			profile.cpp	GetTotalHiddenMarblesCollected__16CharacterProfileFv
+803b0fac	36	CharacterProfile	RemoveMarbles	unsigned int		profile.cpp	RemoveMarbles__16CharacterProfileFUi
+803b0fd0	108	CharacterProfile	OpenStickerBook			profile.cpp	OpenStickerBook__16CharacterProfileFv
+803b103c	4	CharacterProfile	OpenStickerBookPageFromCover			profile.cpp	OpenStickerBookPageFromCover__16CharacterProfileFv
+803b1040	140	CharacterProfile	CloseStickerBook			profile.cpp	CloseStickerBook__16CharacterProfileFv
+803b10cc	140	CharacterProfile	OpenStickerBookCover			profile.cpp	OpenStickerBookCover__16CharacterProfileFv
+803b1158	140	CharacterProfile	OpenReportCard			profile.cpp	OpenReportCard__16CharacterProfileFv
+803b11e4	80	CharacterProfile	CloseReportCard			profile.cpp	CloseReportCard__16CharacterProfileFv
+803b1234	48	CharacterProfile	OpenStickerBookCoverFromPage			profile.cpp	OpenStickerBookCoverFromPage__16CharacterProfileFv
+803b1264	72	CharacterProfile	CloseStickerBookCover			profile.cpp	CloseStickerBookCover__16CharacterProfileFv
+803b12ac	20	CharacterProfile	GetStickerBookPage	Enums::MinigameType		profile.cpp	GetStickerBookPage__16CharacterProfileFQ25Enums12MinigameType
+803b12c0	112	CharacterProfile	OpenStickerBookStore			profile.cpp	OpenStickerBookStore__16CharacterProfileFv
+803b1330	124	CharacterProfile	CloseStickerBookStore			profile.cpp	CloseStickerBookStore__16CharacterProfileFv
+803b13ac	120	CharacterProfile	CloseStickerBookStorePage			profile.cpp	CloseStickerBookStorePage__16CharacterProfileFv
+803b1424	300	CharacterProfile	StartBossBattle	Enums::MinigameType		profile.cpp	StartBossBattle__16CharacterProfileFQ25Enums12MinigameType
+803b1550	100	CharacterProfile	QuitLastBossBattle			profile.cpp	QuitLastBossBattle__16CharacterProfileFv
+803b15b4	188	CharacterProfile	OpenBossEndGameScreen	int		profile.cpp	OpenBossEndGameScreen__16CharacterProfileFi
+803b1670	92	CharacterProfile	CloseBossEndGameScreen			profile.cpp	CloseBossEndGameScreen__16CharacterProfileFv
+803b16cc	56	CharacterProfile	ShowFinalSticker			profile.cpp	ShowFinalSticker__16CharacterProfileFv
+803b1704	388	CharacterProfile	BoughtSticker	Enums::MinigameType, int, int		profile.cpp	BoughtSticker__16CharacterProfileFQ25Enums12MinigameTypeii
+803b1888	20	CharacterProfile	LoadProfile	int, const ProfileData*		profile.cpp	LoadProfile__16CharacterProfileFiPC11ProfileData
+803b189c	8	CharacterProfile	GetProfile			profile.cpp	GetProfile__16CharacterProfileFv
+803b18a4	8	CharacterProfile	DEBUG_GetProfile			profile.cpp	DEBUG_GetProfile__16CharacterProfileFv
+803b18ac	148	CharacterProfile	ManualSave	void(*)(bool)*, bool, bool		profile.cpp	ManualSave__16CharacterProfileFPFb_vbb
+803b1940	28	CharacterProfile	RevertSaveFile			profile.cpp	RevertSaveFile__16CharacterProfileFv
+803b195c	92	CharacterProfile	SaveFailed			profile.cpp	SaveFailed__16CharacterProfileFv
+803b19b8	100	CharacterProfile	ConversationEndCallback	int		profile.cpp	ConversationEndCallback__16CharacterProfileFi
+803b1a1c	16	CharacterProfile	ConversationEndWonStickerCallback	int		profile.cpp	ConversationEndWonStickerCallback__16CharacterProfileFi
+803b1a2c	8	CharacterProfile	GetProfileName			profile.cpp	GetProfileName__16CharacterProfileFv
+803b1a34	8	CharacterProfile	SetProfileName	const wchar_t*		profile.cpp	SetProfileName__16CharacterProfileFPCw
+803b1a3c	108	CharacterProfile	SetHighScore	Enums::MinigameType, int, const wchar_t*		profile.cpp	SetHighScore__16CharacterProfileFQ25Enums12MinigameTypeiPCw
+803b1aa8	312	CharacterProfile	GetProfileFileName			profile.cpp	GetProfileFileName__16CharacterProfileFv
+803b1be0	16	CharacterProfile	SetAreaVisited	Enums::AreaType, bool		profile.cpp	SetAreaVisited__16CharacterProfileFQ25Enums8AreaTypeb
+803b1bf0	16	CharacterProfile	GetAreaVisited	Enums::AreaType		profile.cpp	GetAreaVisited__16CharacterProfileFQ25Enums8AreaType
+803b1c00	52	CharacterProfile	GetNumAreasVisited			profile.cpp	GetNumAreasVisited__16CharacterProfileFv
+803b1c34	8	CharacterProfile	GetTotalNumAreas			profile.cpp	GetTotalNumAreas__16CharacterProfileFv
+803b1c3c	40	CharacterProfile	UnlockAllGames			profile.cpp	UnlockAllGames__16CharacterProfileFv
+803b1c64	288	CharacterProfile	WinAllGamesExceptFor1			profile.cpp	WinAllGamesExceptFor1__16CharacterProfileFv
+803b1d84	68	CharacterProfile	MarkHighFiveObtained	int		profile.cpp	MarkHighFiveObtained__16CharacterProfileFi
+803b1dc8	16	CharacterProfile	HasAbility	Enums::AbilityType		profile.cpp	HasAbility__16CharacterProfileFQ25Enums11AbilityType
+803b1dd8	40	CharacterProfile	UnlockAllAbilities			profile.cpp	UnlockAllAbilities__16CharacterProfileFv
+803b1e00	40	CharacterProfile	LockAllAbilities			profile.cpp	LockAllAbilities__16CharacterProfileFv
+803b1e28	52	CharacterProfile	GetTotalAbilityCount			profile.cpp	GetTotalAbilityCount__16CharacterProfileFv
+803b1e5c	368	CharacterProfile	GetGameAbilities	Enums::MinigameType, int*, int*, int*		profile.cpp	GetGameAbilities__16CharacterProfileFQ25Enums12MinigameTypePiPiPi
+803b1fcc	76	CharacterProfile	GetPlayerReadyForGauntlet			profile.cpp	GetPlayerReadyForGauntlet__16CharacterProfileFv
+803b2018	44	CharacterProfile	GetNumBugHuntAreasBeat			profile.cpp	GetNumBugHuntAreasBeat__16CharacterProfileFv
+803b2044	8	CharacterProfile	GetTotalNumBugHuntAreas			profile.cpp	GetTotalNumBugHuntAreas__16CharacterProfileFv
+803b204c	12	CharacterProfile	SetBugHuntBeatNature	bool		profile.cpp	SetBugHuntBeatNature__16CharacterProfileFb
+803b2058	12	CharacterProfile	SetBugHuntBeatPark	bool		profile.cpp	SetBugHuntBeatPark__16CharacterProfileFb
+803b2064	16	CharacterProfile	SetDribblingGameBeat	Enums::AreaType, bool		profile.cpp	SetDribblingGameBeat__16CharacterProfileFQ25Enums8AreaTypeb
+803b2074	52	CharacterProfile	GetNumDribblingGamesBeat			profile.cpp	GetNumDribblingGamesBeat__16CharacterProfileFv
+803b20a8	8	CharacterProfile	GetTotalNumDribblingGames			profile.cpp	GetTotalNumDribblingGames__16CharacterProfileFv
+803b20b0	16	CharacterProfile	SetFreeThrowGameBeat	int, bool		profile.cpp	SetFreeThrowGameBeat__16CharacterProfileFib
+803b20c0	52	CharacterProfile	GetNumFreeThrowGamesBeat			profile.cpp	GetNumFreeThrowGamesBeat__16CharacterProfileFv
+803b20f4	8	CharacterProfile	GetTotalNumFreeThrowGames			profile.cpp	GetTotalNumFreeThrowGames__16CharacterProfileFv
+803b20fc	20	CharacterProfile	SetFreeThrowHighScore	int, int		profile.cpp	SetFreeThrowHighScore__16CharacterProfileFii
+803b2110	16	CharacterProfile	SetViewedAccessibilityDialog	Enums::AccessibilityPopupType, bool		profile.cpp	SetViewedAccessibilityDialog__16CharacterProfileFQ25Enums22AccessibilityPopupTypeb
+803b2120	24		__sinit_\profile_cpp			profile.cpp	__sinit_\profile_cpp
+803b345c	32	StrapWarningScreen	constructor			strapwarn.cpp	__ct__18StrapWarningScreenFv
+803b347c	68	StrapWarningScreen	Create			strapwarn.cpp	Create__18StrapWarningScreenFv
+803b34c0	56	StrapWarningScreen	Destroy			strapwarn.cpp	Destroy__18StrapWarningScreenFv
+803b34f8	540	StrapWarningScreen	Initialize			strapwarn.cpp	Initialize__18StrapWarningScreenFv
+803b3714	136	StrapWarningScreen	UnInitialize			strapwarn.cpp	UnInitialize__18StrapWarningScreenFv
+803b379c	316	StrapWarningScreen	Update	int		strapwarn.cpp	Update__18StrapWarningScreenFi
+803b38d8	20	StrapWarningScreen	ScreenFinished			strapwarn.cpp	ScreenFinished__18StrapWarningScreenFv
+803b38ec	24		__sinit_\strapwarn_cpp			strapwarn.cpp	__sinit_\strapwarn_cpp
+803b3904	80	TRC	ViewerPrint	const char*, ...		trcUtil.cpp	ViewerPrint__3TRCFPCce
+803b3954	20	TRC	TRCWiiAlloc	const char*, unsigned long		trcUtil.cpp	TRCWiiAlloc__3TRCFPCcUl
+803b3968	28	TRC	TRCWiiAllocAlign	const char*, unsigned long, int		trcUtil.cpp	TRCWiiAllocAlign__3TRCFPCcUli
+803b3984	4	TRC	TRCWiiFree	void*		trcUtil.cpp	TRCWiiFree__3TRCFPv
+803b3988	20	TRC	TrcNew	unsigned long		trcUtil.cpp	TrcNew__3TRCFUl
+803b399c	68	TRC	TrcAllocAlign	unsigned long, int		trcUtil.cpp	TrcAllocAlign__3TRCFUli
+803b39e0	4	TRC	TrcDelete	void*		trcUtil.cpp	TrcDelete__3TRCFPv
+803b39e4	232	TRC	CheckForHomeButton			trcUtil.cpp	CheckForHomeButton__3TRCFv
+803b3acc	48	TRC	ControllerDisconnected			trcUtil.cpp	ControllerDisconnected__3TRCFv
+803b3afc	556	TRC	ControllerDisconnectOptionsResult	int		trcUtil.cpp	ControllerDisconnectOptionsResult__3TRCFi
+803b3d28	76	TRC	OnDismissDisconnect	long		trcUtil.cpp	OnDismissDisconnect__3TRCFl
+803b3d74	744	TRC	CheckForControllers			trcUtil.cpp	CheckForControllers__3TRCFv
+803b405c	84	TRC	UpdateTRC	int		trcUtil.cpp	UpdateTRC__3TRCFi
+803b40b0	16	TRC	EnableHomeMenu			trcUtil.cpp	EnableHomeMenu__3TRCFv
+803b40c0	16	TRC	DisableHomeMenu			trcUtil.cpp	DisableHomeMenu__3TRCFv
+803b40d0	28	TRC	HomeMenuActive			trcUtil.cpp	HomeMenuActive__3TRCFv
+803b40ec	488	TRC	StartInitTRC			trcUtil.cpp	StartInitTRC__3TRCFv
+803b42d4	200	TRC	InitCoreHandlers			trcUtil.cpp	InitCoreHandlers__3TRCFv
+803b439c	120	TRC	InitHomeMenu			trcUtil.cpp	InitHomeMenu__3TRCFv
+803b4414	56	TRC	FinishInitTRC			trcUtil.cpp	FinishInitTRC__3TRCFv
+803b444c	64	TRC	BootcheckDone	int		trcUtil.cpp	BootcheckDone__3TRCFi
+803b448c	116	TRC	DeleteDone	int		trcUtil.cpp	DeleteDone__3TRCFi
+803b4500	8	TRC	GetAutoEnabled			trcUtil.cpp	GetAutoEnabled__3TRCFv
+803b4508	148	TRC	GetDataSave	void**, int*, const char**, const char**, const wchar_t**		trcUtil.cpp	GetDataSave__3TRCFPPvPiPPCcPPCcPPCw
+803b459c	56	TRC	GetFileTypeName	int		trcUtil.cpp	GetFileTypeName__3TRCFi
+803b45d4	152	TRC	GetLanguage			trcUtil.cpp	GetLanguage__3TRCFv
+803b466c	232	TRC	DiscErrorMessageHandler_GetLanguage			trcUtil.cpp	DiscErrorMessageHandler_GetLanguage__3TRCFv
+803b4754	120	TRC	TRC_WarningScreens_GetLanguage			trcUtil.cpp	TRC_WarningScreens_GetLanguage__3TRCFv
+803b47cc	160	TRC	LoadResults	int, int		trcUtil.cpp	LoadResults__3TRCFii
+803b486c	152	TRC	SaveResults	int, int		trcUtil.cpp	SaveResults__3TRCFii
+803b4904	20	TRC	SetAutoEnabled	int		trcUtil.cpp	SetAutoEnabled__3TRCFi
+803b4918	20	TRC	SetLanguage	TRC_LANG_DEF		trcUtil.cpp	SetLanguage__3TRCF12TRC_LANG_DEF
+803b492c	96	TRC	SetDataLoad	void**, int*		trcUtil.cpp	SetDataLoad__3TRCFPPvPi
+803b498c	16	TRC	StartAnimation			trcUtil.cpp	StartAnimation__3TRCFv
+803b499c	16	TRC	StopAnimation			trcUtil.cpp	StopAnimation__3TRCFv
+803b49ac	16	TRC	AutocheckDone			trcUtil.cpp	AutocheckDone__3TRCFv
+803b49bc	76	TRC	GetFileType	int, bool&		trcUtil.cpp	GetFileType__3TRCFiRb
+803b4a08	20	TRC	UtilStart	TRC_UTILITY_DEF		trcUtil.cpp	UtilStart__3TRCF15TRC_UTILITY_DEF
+803b4a1c	20	TRC	UtilStop	TRC_UTILITY_DEF		trcUtil.cpp	UtilStop__3TRCF15TRC_UTILITY_DEF
+803b4a30	188	TRC	FileListResults	TRC_ERROR_DEF, int		trcUtil.cpp	FileListResults__3TRCF13TRC_ERROR_DEFi
+803b4aec	48	TRC	GetFileHeaderDisplayName	int, bool*		trcUtil.cpp	GetFileHeaderDisplayName__3TRCFiPb
+803b4b1c	120	TRC	DoLoad	int, char*, void(*)(bool)*		trcUtil.cpp	DoLoad__3TRCFiPcPFb_v
+803b4b94	256	TRC	DoSave	int, const char*, char*, void(*)(bool)*, bool		trcUtil.cpp	DoSave__3TRCFiPCcPcPFb_vb
+803b4c94	148	TRC	SaveOverConfirmResults	int		trcUtil.cpp	SaveOverConfirmResults__3TRCFi
+803b4d28	168	TRC	KeyboardResults	int		trcUtil.cpp	KeyboardResults__3TRCFi
+803b4dd0	112	TRC	KeyboardFilter	wchar_t*		trcUtil.cpp	KeyboardFilter__3TRCFPw
+803b4e40	12	TRC	GetKeyboardOutput			trcUtil.cpp	GetKeyboardOutput__3TRCFv
+803b4e4c	352	TRC	OpenKeyboard	int, void(*)(bool)*, const wchar_t*, const wchar_t*		trcUtil.cpp	OpenKeyboard__3TRCFiPFb_vPCwPCw
+803b4fac	80	TRC	CloseMsgDialog	const char*		trcUtil.cpp	CloseMsgDialog__3TRCFPCc
+803b4ffc	120	TRC	OpenMsgDialog	const char*, const wchar_t*, const wchar_t*, const wchar_t*, void(*)(int)*, int		trcUtil.cpp	OpenMsgDialog__3TRCFPCcPCwPCwPCwPFi_vi
+803b5074	68	TRC	StartBootCheck			trcUtil.cpp	StartBootCheck__3TRCFv
+803b50b8	44	TRC	RegisterCoreController	int, bool		trcUtil.cpp	RegisterCoreController__3TRCFib
+803b50e4	16	TRC	UnregisterCoreController	int		trcUtil.cpp	UnregisterCoreController__3TRCFi
+803b50f4	16	TRC	IsCoreControllerRegistered	int		trcUtil.cpp	IsCoreControllerRegistered__3TRCFi
+803b5104	12	TRC	IsCoreControllerConnected	int		trcUtil.cpp	IsCoreControllerConnected__3TRCFi
+803b5110	220	TRC	OnDiscErrorCallback	long		trcUtil.cpp	OnDiscErrorCallback__3TRCFl
+803b51ec	88	TRC	OnDiscErrorResolveCallback			trcUtil.cpp	OnDiscErrorResolveCallback__3TRCFv
+803b5244	80	TRC	OnBatteryLow	_WiiPadInfo*, wchar_t*, unsigned int		trcUtil.cpp	OnBatteryLow__3TRCFP11_WiiPadInfoPwUi
+803b5294	4	TRC	GetNumFiles			trcUtil.cpp	GetNumFiles__3TRCFv
+803b5298	24		__sinit_\trcUtil_cpp			trcUtil.cpp	__sinit_\trcUtil_cpp

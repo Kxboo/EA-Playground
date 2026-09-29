@@ -31,6 +31,7 @@ This repository contains source, research notes, validation reports and existing
 | `Remaster/research/` | ELF-derived evidence, shader schemas, findings and corpus audits |
 | `Remaster/tests/` | Regression tests and corpus validation tools |
 | `_bevy/docs/captures/` | Actual viewer screenshots with JSON scene diagnostics |
+| `GameMap/` | Reference map of the executable for the future reconstruction: functions/classes by subsystem, state machine, input, menus, minigame rules, verified hashes and models |
 
 Keep `_bevy` and `Remaster` as siblings: the Python worker imports the shared decoders from `../Remaster/src`.
 

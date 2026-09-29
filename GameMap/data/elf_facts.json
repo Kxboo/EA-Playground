@@ -1,0 +1,85 @@
+{
+  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
+  "entry": "0x80006124",
+  "sections": [
+    {
+      "name": ".init",
+      "addr": "0x80004000",
+      "size": 9412
+    },
+    {
+      "name": "extab",
+      "addr": "0x800064e0",
+      "size": 28128
+    },
+    {
+      "name": "extabindex",
+      "addr": "0x8000d2c0",
+      "size": 27188
+    },
+    {
+      "name": ".text",
+      "addr": "0x80013d00",
+      "size": 4231620
+    },
+    {
+      "name": ".ctors",
+      "addr": "0x8041cee0",
+      "size": 2164
+    },
+    {
+      "name": ".dtors",
+      "addr": "0x8041d760",
+      "size": 12
+    },
+    {
+      "name": ".rodata",
+      "addr": "0x8041d780",
+      "size": 152912
+    },
+    {
+      "name": ".data",
+      "addr": "0x80442ce0",
+      "size": 713216
+    },
+    {
+      "name": ".bss",
+      "addr": "0x804f0f00",
+      "size": 1093576
+    },
+    {
+      "name": ".sdata",
+      "addr": "0x805fbee0",
+      "size": 16244
+    },
+    {
+      "name": ".sbss",
+      "addr": "0x805ffe60",
+      "size": 9932
+    },
+    {
+      "name": ".sdata2",
+      "addr": "0x80602540",
+      "size": 22804
+    },
+    {
+      "name": ".sbss2",
+      "addr": "0x80607e60",
+      "size": 28
+    }
+  ],
+  "symbol_counts": {
+    "functions": 19166,
+    "objects": 26613
+  },
+  "units": 757,
+  "tiers": {
+    "game": 183,
+    "engine": 107,
+    "middleware": 467
+  },
+  "sda": {
+    "r2": "0x8060a540",
+    "r13": "0x80603ee0"
+  }
+}

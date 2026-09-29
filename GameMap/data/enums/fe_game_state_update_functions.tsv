@@ -1,0 +1,23 @@
+# value	per-frame update function (FEManager::Update jump table @804d6e2c; empty = no per-frame work)
+-1	
+0	FEManager::UpdateIntroBootFlow(int)
+1	FEManager::UpdateIntro(int)
+2	
+3	
+4	FEManager::UpdateReturnToSelectKid(int)
+5	FEManager::UpdateSelectAKid(int)
+6	
+7	
+8	
+9	FEManager::UpdateKidSelected(int)
+10	FEManager::UpdateKeyboard(int)
+11	FEManager::UpdateConfirmKid(int)
+12	FEManager::UpdateConfirmedKid(int)
+13	
+14	
+15	FEManager::UpdateMPNumPlayers(int)
+16	FEManager::UpdateMPSelectAKid(int)
+17	FEManager::UpdateMPCharactersSelected(int)
+18	
+19	
+20	FEManager::IsFadeEffectComplete()

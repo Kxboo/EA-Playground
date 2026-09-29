@@ -1,0 +1,201 @@
+# addr	size	class	method	args	const	source_unit	mangled
+8036e16c	380	MGPaperAirplanes	constructor	Ren::Scene*		mgpaperairplanes.cpp	__ct__16MGPaperAirplanesFPQ23Ren5Scene
+8036e2e8	92	Ren::SceneOptions	constructor			mgpaperairplanes.cpp	__ct__Q23Ren12SceneOptionsFv
+8036e344	88	MGPaperAirplanes	destructor			mgpaperairplanes.cpp	__dt__16MGPaperAirplanesFv
+8036e39c	2480	MGPaperAirplanes	Initialize	const World*		mgpaperairplanes.cpp	Initialize__16MGPaperAirplanesFPC5World
+8036ed4c	16	WorldMan	SetDrawCurrentAreaModel	bool		mgpaperairplanes.cpp	SetDrawCurrentAreaModel__8WorldManFb
+8036ed5c	16	WorldMan	EnablePlaceablesDraw	bool		mgpaperairplanes.cpp	EnablePlaceablesDraw__8WorldManFb
+8036ed6c	956	MGPaperAirplanes	UnInitialize			mgpaperairplanes.cpp	UnInitialize__16MGPaperAirplanesFv
+8036f128	28	Ren::ShadowManager	OverrideLightPos	bool, rmVector3*		mgpaperairplanes.cpp	OverrideLightPos__Q23Ren13ShadowManagerFbP9rmVector3
+8036f144	208	MGPaperAirplanes	SetupViewPort			mgpaperairplanes.cpp	SetupViewPort__16MGPaperAirplanesFv
+8036f214	100	Ren::SceneOptions	operator=	const Ren::SceneOptions&		mgpaperairplanes.cpp	__as__Q23Ren12SceneOptionsFRCQ23Ren12SceneOptions
+8036f278	396	MGPaperAirplanes	Update	int		mgpaperairplanes.cpp	Update__16MGPaperAirplanesFi
+8036f404	136	MGPaperAirplanes	Draw	Ren::SceneContext&		mgpaperairplanes.cpp	Draw__16MGPaperAirplanesFRQ23Ren12SceneContext
+8036f48c	916	MGPaperAirplanes	ResetMiniGame			mgpaperairplanes.cpp	ResetMiniGame__16MGPaperAirplanesFv
+8036f820	444	MGPaperAirplanes	OnHudLoadComplete			mgpaperairplanes.cpp	OnHudLoadComplete__16MGPaperAirplanesFv
+8036f9dc	16	MGPaperAirplanes	OnPlaneSelected	int		mgpaperairplanes.cpp	OnPlaneSelected__16MGPaperAirplanesFi
+8036f9ec	100	MGPaperAirplanes	OnPauseContinue			mgpaperairplanes.cpp	OnPauseContinue__16MGPaperAirplanesFv
+8036fa50	124	MGPaperAirplanes	OnPauseReset			mgpaperairplanes.cpp	OnPauseReset__16MGPaperAirplanesFv
+8036facc	8	MGPaperAirplanes	GetNumHuds			mgpaperairplanes.cpp	GetNumHuds__16MGPaperAirplanesFv
+8036fad4	176	MGPaperAirplanes	UpdatePreGameInstructions	int		mgpaperairplanes.cpp	UpdatePreGameInstructions__16MGPaperAirplanesFi
+8036fb84	180	MGPaperAirplanes	UpdatePlaneSelect	int		mgpaperairplanes.cpp	UpdatePlaneSelect__16MGPaperAirplanesFi
+8036fc38	232	MGPaperAirplanes	UpdateIntro	int		mgpaperairplanes.cpp	UpdateIntro__16MGPaperAirplanesFi
+8036fd20	472	MGPaperAirplanes	UpdateWaitForReady	int		mgpaperairplanes.cpp	UpdateWaitForReady__16MGPaperAirplanesFi
+8036fef8	1044	MGPaperAirplanes	UpdateGame	int		mgpaperairplanes.cpp	UpdateGame__16MGPaperAirplanesFi
+8037030c	128	MGPaperAirplanes	UpdatePostGame	int		mgpaperairplanes.cpp	UpdatePostGame__16MGPaperAirplanesFi
+8037038c	60	MGPaperAirplanes	UpdateWaitForApocalypse	int		mgpaperairplanes.cpp	UpdateWaitForApocalypse__16MGPaperAirplanesFi
+803703c8	736	MGPaperAirplanes	UpdateOutro	int		mgpaperairplanes.cpp	UpdateOutro__16MGPaperAirplanesFi
+803706a8	56	MGPaperAirplanes	UpdatePositions			mgpaperairplanes.cpp	UpdatePositions__16MGPaperAirplanesFv
+803706e0	632	MGPaperAirplanes	UpdatePlacementFromPositions			mgpaperairplanes.cpp	UpdatePlacementFromPositions__16MGPaperAirplanesFv
+80370958	556	MGPaperAirplanes	UpdatePlacementFromScores			mgpaperairplanes.cpp	UpdatePlacementFromScores__16MGPaperAirplanesFv
+80370b84	484	MGPaperAirplanes	UpdateHud			mgpaperairplanes.cpp	UpdateHud__16MGPaperAirplanesFv
+80370d68	512	MGPaperAirplanes	UpdateWinners			mgpaperairplanes.cpp	UpdateWinners__16MGPaperAirplanesFv
+80370f68	252	MGPaperAirplanes	UpdateShadows			mgpaperairplanes.cpp	UpdateShadows__16MGPaperAirplanesFv
+80371064	28	rmVector3	constructor	const rmVector3&		mgpaperairplanes.cpp	__ct__9rmVector3FRC9rmVector3
+80371080	348	MGPaperAirplanes	ChangeGameState	MinigameState		mgpaperairplanes.cpp	ChangeGameState__16MGPaperAirplanesF13MinigameState
+803711dc	588	MGPaperAirplanes	InitializePlayer	const rmVector3*, float, unsigned long long		mgpaperairplanes.cpp	InitializePlayer__16MGPaperAirplanesFPC9rmVector3fUx
+80371428	460	MGPaperAirplanes	InitializeAdditionalPlayer	const rmVector3*, float, unsigned long long		mgpaperairplanes.cpp	InitializeAdditionalPlayer__16MGPaperAirplanesFPC9rmVector3fUx
+803715f4	72	MGPaperAirplanes	InitializeAptHud			mgpaperairplanes.cpp	InitializeAptHud__16MGPaperAirplanesFv
+8037163c	72	MGPaperAirplanes	InitializePaperAirplaneSelect			mgpaperairplanes.cpp	InitializePaperAirplaneSelect__16MGPaperAirplanesFv
+80371684	96	MGPaperAirplanes	InitializePaperAirplanes			mgpaperairplanes.cpp	InitializePaperAirplanes__16MGPaperAirplanesFv
+803716e4	52	MGPaperAirplanes	OnGameStartAnimComplete			mgpaperairplanes.cpp	OnGameStartAnimComplete__16MGPaperAirplanesFv
+80371718	112	MGPaperAirplanes	ThrowProcess	const EA::Conga::CongaOutput*		mgpaperairplanes.cpp	ThrowProcess__16MGPaperAirplanesFPCQ32EA5Conga11CongaOutput
+80371788	16	MGPaperAirplanes	ThrowCallback	const EA::Conga::CongaOutput*, void*		mgpaperairplanes.cpp	ThrowCallback__16MGPaperAirplanesFPCQ32EA5Conga11CongaOutputPv
+80371798	96	MGPaperAirplanes	BoostProcess	const EA::Conga::CongaOutput*		mgpaperairplanes.cpp	BoostProcess__16MGPaperAirplanesFPCQ32EA5Conga11CongaOutput
+803717f8	16	MGPaperAirplanes	BoostCallback	const EA::Conga::CongaOutput*, void*		mgpaperairplanes.cpp	BoostCallback__16MGPaperAirplanesFPCQ32EA5Conga11CongaOutputPv
+80371808	1304	MGPaperAirplanes	SetupSplitScreen	int		mgpaperairplanes.cpp	SetupSplitScreen__16MGPaperAirplanesFi
+80371d20	380	MGPaperAirplanes	SetDareType	Enums::MiniGameDareType		mgpaperairplanes.cpp	SetDareType__16MGPaperAirplanesFQ25Enums16MiniGameDareType
+80371e9c	340	MGPaperAirplanes	GetNumAllowedMissesFromDB	pgDBCollection*		mgpaperairplanes.cpp	GetNumAllowedMissesFromDB__16MGPaperAirplanesFP14pgDBCollection
+80371ff0	168	MGPaperAirplanes	CheckDare			mgpaperairplanes.cpp	CheckDare__16MGPaperAirplanesFv
+80372098	152	MGPaperAirplanes	InitStatsParameters	const char*		mgpaperairplanes.cpp	InitStatsParameters__16MGPaperAirplanesFPCc
+80372130	140	MGPaperAirplanes	ProcessRules			mgpaperairplanes.cpp	ProcessRules__16MGPaperAirplanesFv
+803721bc	92	MGPaperAirplanes	GetCourse			mgpaperairplanes.cpp	GetCourse__16MGPaperAirplanesFv
+80372218	92	MGPaperAirplanes	GetReverse			mgpaperairplanes.cpp	GetReverse__16MGPaperAirplanesFv
+80372274	112	MGPaperAirplanes	HandleControllerDisconnect			mgpaperairplanes.cpp	HandleControllerDisconnect__16MGPaperAirplanesFv
+803722e4	372		__sinit_\mgpaperairplanes_cpp			mgpaperairplanes.cpp	__sinit_\mgpaperairplanes_cpp
+80372458	96	PAObstacle	constructor			paobstacle.cpp	__ct__10PAObstacleFv
+803724b8	64	PAObstacle	destructor			paobstacle.cpp	__dt__10PAObstacleFv
+803724f8	1112	PAObstacle	Initialize	PAObstacleType, const rmVector3&, PAObstacleAssets*		paobstacle.cpp	Initialize__10PAObstacleF14PAObstacleTypeRC9rmVector3P16PAObstacleAssets
+80372950	292	PAObstacle	Uninitialize			paobstacle.cpp	Uninitialize__10PAObstacleFv
+80372a74	788	PAObstacle	Update	int		paobstacle.cpp	Update__10PAObstacleFi
+80372d88	412	PAObstacle	UpdateIdle	int		paobstacle.cpp	UpdateIdle__10PAObstacleFi
+80372f24	20	PAObstacle	Draw	Ren::SceneContext&		paobstacle.cpp	Draw__10PAObstacleFRQ23Ren12SceneContext
+80372f38	60	PAObstaclePhantomListener	constructor			paobstacle.cpp	__ct__25PAObstaclePhantomListenerFv
+80372f74	88	PAObstaclePhantomListener	destructor			paobstacle.cpp	__dt__25PAObstaclePhantomListenerFv
+80372fcc	48	PAObstaclePhantomListener	OverlapAddedCallback	const PhysicsUserData*		paobstacle.cpp	OverlapAddedCallback__25PAObstaclePhantomListenerFPC15PhysicsUserData
+80372ffc	48	PAObstaclePhantomListener	OverlapRemovedCallback	const PhysicsUserData*		paobstacle.cpp	OverlapRemovedCallback__25PAObstaclePhantomListenerFPC15PhysicsUserData
+8037302c	36	PAObstaclePhantomListener	GetPaperAirplanefromUserData	const PhysicsUserData*	const	paobstacle.cpp	GetPaperAirplanefromUserData__25PAObstaclePhantomListenerCFPC15PhysicsUserData
+80373050	24		__sinit_\paobstacle_cpp			paobstacle.cpp	__sinit_\paobstacle_cpp
+80373068	84	PAObstacleManager	constructor			paobstaclemanager.cpp	__ct__17PAObstacleManagerFv
+803730bc	112	PAObstacleManager	destructor			paobstaclemanager.cpp	__dt__17PAObstacleManagerFv
+8037312c	588	PAObstacleManager	Initialize	const rmVector3&, CString, PaperAirplaneCourse*		paobstaclemanager.cpp	Initialize__17PAObstacleManagerFRC9rmVector37CStringP19PaperAirplaneCourse
+80373378	208	PAObstacleManager	Uninitialize			paobstaclemanager.cpp	Uninitialize__17PAObstacleManagerFv
+80373448	432	PAObstacleManager	Populate	const rmVector3&, CString		paobstaclemanager.cpp	Populate__17PAObstacleManagerFRC9rmVector37CString
+803735f8	88	PAObstacleManager	AddObstacle	PAObstacleType, const rmVector3&, float		paobstaclemanager.cpp	AddObstacle__17PAObstacleManagerF14PAObstacleTypeRC9rmVector3f
+80373650	520	PAObstacleManager	Update	int		paobstaclemanager.cpp	Update__17PAObstacleManagerFi
+80373858	112	PAObstacleManager	Draw	Ren::SceneContext&		paobstaclemanager.cpp	Draw__17PAObstacleManagerFRQ23Ren12SceneContext
+803738c8	24		__sinit_\paobstaclemanager_cpp			paobstaclemanager.cpp	__sinit_\paobstaclemanager_cpp
+803738e0	492	PaperAirplane	constructor			paperairplane.cpp	__ct__13PaperAirplaneFv
+80373acc	64	PaperAirplane	destructor			paperairplane.cpp	__dt__13PaperAirplaneFv
+80373b0c	1788	PaperAirplane	Initialize	const rmVector3&, int, MGPAPlaneType, PaperAirplaneCamera*, PaperAirplaneCourse*, bool, float		paperairplane.cpp	Initialize__13PaperAirplaneFRC9rmVector3i13MGPAPlaneTypeP19PaperAirplaneCameraP19PaperAirplaneCoursebf
+80374208	60	MGPAPlaneProperties	operator=	const MGPAPlaneProperties&		paperairplane.cpp	__as__19MGPAPlanePropertiesFRC19MGPAPlaneProperties
+80374244	1424	PaperAirplane	ChangePlaneType	MGPAPlaneType		paperairplane.cpp	ChangePlaneType__13PaperAirplaneF13MGPAPlaneType
+803747d4	496	PaperAirplane	Uninitialize			paperairplane.cpp	Uninitialize__13PaperAirplaneFv
+803749c4	1556	PaperAirplane	Update	int		paperairplane.cpp	Update__13PaperAirplaneFi
+80374fd8	2876	PaperAirplane	UpdateInput	int		paperairplane.cpp	UpdateInput__13PaperAirplaneFi
+80375b14	128		rmMatrix4RotationZ	float, rmMatrix4&		paperairplane.cpp	rmMatrix4RotationZ__FfR9rmMatrix4
+80375b94	448		InterpolateAngle	rmAngle, rmAngle, float, float		paperairplane.cpp	InterpolateAngle__F7rmAngle7rmAngleff
+80375d54	652	PaperAirplane	UpdateTargets	int		paperairplane.cpp	UpdateTargets__13PaperAirplaneFi
+80375fe0	692	PaperAirplane	UpdateDashing	int		paperairplane.cpp	UpdateDashing__13PaperAirplaneFi
+80376294	204	PaperAirplane	ProcessPassedCheckPoint			paperairplane.cpp	ProcessPassedCheckPoint__13PaperAirplaneFv
+80376360	280	PaperAirplane	IsInTargettingRange	const rmVector3&		paperairplane.cpp	IsInTargettingRange__13PaperAirplaneFRC9rmVector3
+80376478	1352	PaperAirplane	ApplyPowerup	PAPowerup, int		paperairplane.cpp	ApplyPowerup__13PaperAirplaneF9PAPowerupi
+803769c0	24	PaperAirplane	Grab	Character*, const rmMatrix4*		paperairplane.cpp	Grab__13PaperAirplaneFP9CharacterPC9rmMatrix4
+803769d8	260	PaperAirplane	Draw	Ren::SceneContext&		paperairplane.cpp	Draw__13PaperAirplaneFRQ23Ren12SceneContext
+80376adc	16	PaperAirplane	DrawCallback	Ren::SceneContext&, Ren::SceneOrderTableEntry&		paperairplane.cpp	DrawCallback__13PaperAirplaneFRQ23Ren12SceneContextRQ23Ren20SceneOrderTableEntry
+80376aec	88	PaperAirplane	DrawImmediate	Ren::SceneContext&		paperairplane.cpp	DrawImmediate__13PaperAirplaneFRQ23Ren12SceneContext
+80376b44	64	PaperAirplane	IsAbleToGetPowerups			paperairplane.cpp	IsAbleToGetPowerups__13PaperAirplaneFv
+80376b84	120	PaperAirplane	SetToReady			paperairplane.cpp	SetToReady__13PaperAirplaneFv
+80376bfc	64	PaperAirplane	UpdateCatchUpLogic	float		paperairplane.cpp	UpdateCatchUpLogic__13PaperAirplaneFf
+80376c3c	92	PaperAirplane	BreakLock	PaperAirplane*		paperairplane.cpp	BreakLock__13PaperAirplaneFP13PaperAirplane
+80376c98	1012	PaperAirplane	Reset	const rmVector3&		paperairplane.cpp	Reset__13PaperAirplaneFRC9rmVector3
+8037708c	192	PaperAirplane	SetFinished	bool		paperairplane.cpp	SetFinished__13PaperAirplaneFb
+8037714c	584	PaperAirplane	Throw			paperairplane.cpp	Throw__13PaperAirplaneFv
+80377394	36	PaperAirplane	AddTarget	PaperAirplane*		paperairplane.cpp	AddTarget__13PaperAirplaneFP13PaperAirplane
+803773b8	16	PaperAirplane	SetLossOfVerticalControlDelay	int		paperairplane.cpp	SetLossOfVerticalControlDelay__13PaperAirplaneFi
+803773c8	1012	PaperAirplane	UpdateCounters	int		paperairplane.cpp	UpdateCounters__13PaperAirplaneFi
+803777bc	648	PaperAirplane	ProcessHitWorld	float, bool, const PhysicsUserData*		paperairplane.cpp	ProcessHitWorld__13PaperAirplaneFfbPC15PhysicsUserData
+80377a44	380	PaperAirplane	ProcessHitPlane	float, PaperAirplane*, PaperAirplane*		paperairplane.cpp	ProcessHitPlane__13PaperAirplaneFfP13PaperAirplaneP13PaperAirplane
+80377bc0	68	PaperAirplane	SetInSprinkler	bool		paperairplane.cpp	SetInSprinkler__13PaperAirplaneFb
+80377c04	252	PaperAirplane	UpdateSprinkler	int		paperairplane.cpp	UpdateSprinkler__13PaperAirplaneFi
+80377d00	420	PaperAirplane	UpdateParticles	int		paperairplane.cpp	UpdateParticles__13PaperAirplaneFi
+80377ea4	4	PaperAirplane	ProcessMovedIntoFirstPlace			paperairplane.cpp	ProcessMovedIntoFirstPlace__13PaperAirplaneFv
+80377ea8	4	PaperAirplane	ProcessPassedSomeone			paperairplane.cpp	ProcessPassedSomeone__13PaperAirplaneFv
+80377eac	344	PaperAirplane	ProcessBoost			paperairplane.cpp	ProcessBoost__13PaperAirplaneFv
+80378004	40	PaperAirplane	GetTarget			paperairplane.cpp	GetTarget__13PaperAirplaneFv
+8037802c	148	PaperAirplane	CrashPlane			paperairplane.cpp	CrashPlane__13PaperAirplaneFv
+803780c0	940	PaperAirplane	UpdateGetReadyIndicator	int		paperairplane.cpp	UpdateGetReadyIndicator__13PaperAirplaneFi
+8037846c	92	PaperAirplane	SetGetReadyIndicatorActive	bool		paperairplane.cpp	SetGetReadyIndicatorActive__13PaperAirplaneFb
+803784c8	104	PaperAirplaneCollisionListener	constructor	PaperAirplane*		paperairplane.cpp	__ct__30PaperAirplaneCollisionListenerFP13PaperAirplane
+80378530	88	PaperAirplaneCollisionListener	destructor			paperairplane.cpp	__dt__30PaperAirplaneCollisionListenerFv
+80378588	132	PaperAirplaneCollisionListener	ContactConfirmedCallback	const PhysicsUserData*, unsigned int, const PhysicsContactPoint*, float		paperairplane.cpp	ContactConfirmedCallback__30PaperAirplaneCollisionListenerFPC15PhysicsUserDataUiPC19PhysicsContactPointf
+8037860c	36	PaperAirplaneCollisionListener	GetPaperAirplanesFromUserData	const PhysicsUserData*	const	paperairplane.cpp	GetPaperAirplanesFromUserData__30PaperAirplaneCollisionListenerCFPC15PhysicsUserData
+80378630	28	PaperAirplaneShadowRenderEntity	constructor	EAGL::Model*		paperairplane.cpp	__ct__31PaperAirplaneShadowRenderEntityFPQ24EAGL5Model
+8037864c	88	PaperAirplaneShadowRenderEntity	destructor			paperairplane.cpp	__dt__31PaperAirplaneShadowRenderEntityFv
+803786a4	76	PaperAirplaneShadowRenderEntity	Draw	Ren::SceneContext&		paperairplane.cpp	Draw__31PaperAirplaneShadowRenderEntityFRQ23Ren12SceneContext
+803786f0	100		__sinit_\paperairplane_cpp			paperairplane.cpp	__sinit_\paperairplane_cpp
+80378754	528	PaperAirplaneCamera	constructor			paperairplanecamera.cpp	__ct__19PaperAirplaneCameraFv
+80378964	8	PaperAirplaneCamera	GetTotalCameraRotation		const	paperairplanecamera.cpp	GetTotalCameraRotation__19PaperAirplaneCameraCFv
+8037896c	4	PaperAirplaneCamera	UpdateInput	int		paperairplanecamera.cpp	UpdateInput__19PaperAirplaneCameraFi
+80378970	172	PaperAirplaneCamera	UpdatePlaneChase	const rmVector3&, const rmVector3&, rmVector3&, unsigned int		paperairplanecamera.cpp	UpdatePlaneChase__19PaperAirplaneCameraFRC9rmVector3RC9rmVector3R9rmVector3Ui
+80378a1c	532	PaperAirplaneCamera	Update	int		paperairplanecamera.cpp	Update__19PaperAirplaneCameraFi
+80378c30	88	PaperAirplaneCamera	SetDir	const rmVector3*		paperairplanecamera.cpp	SetDir__19PaperAirplaneCameraFPC9rmVector3
+80378c88	84	PaperAirplaneCamera	ZoomIn	int		paperairplanecamera.cpp	ZoomIn__19PaperAirplaneCameraFi
+80378cdc	84	PaperAirplaneCamera	ZoomOut	int		paperairplanecamera.cpp	ZoomOut__19PaperAirplaneCameraFi
+80378d30	180	PaperAirplaneCamera	Move	int, float, float		paperairplanecamera.cpp	Move__19PaperAirplaneCameraFiff
+80378de4	148	PaperAirplaneCamera	SetDesiredBackwardsOffset	float, unsigned int		paperairplanecamera.cpp	SetDesiredBackwardsOffset__19PaperAirplaneCameraFfUi
+80378e78	264	PaperAirplaneCamera	SoftTransition	float&, const float&, float&, float&, const unsigned int&		paperairplanecamera.cpp	SoftTransition__19PaperAirplaneCameraFRfRCfRfRfRCUi
+80378f80	324	PaperAirplaneCamera	SetRoll	rmAngle		paperairplanecamera.cpp	SetRoll__19PaperAirplaneCameraF7rmAngle
+803790c4	28	PaperAirplaneCamera	SetPlanePos	const rmVector3*		paperairplanecamera.cpp	SetPlanePos__19PaperAirplaneCameraFPC9rmVector3
+803790e0	112	PaperAirplaneCamera	SetChaseMode	bool, int		paperairplanecamera.cpp	SetChaseMode__19PaperAirplaneCameraFbi
+80379150	4	PaperAirplaneCamera	Reorient			paperairplanecamera.cpp	Reorient__19PaperAirplaneCameraFv
+80379154	4	PaperAirplaneCamera	Reset			paperairplanecamera.cpp	Reset__19PaperAirplaneCameraFv
+80379158	24		__sinit_\paperairplanecamera_cpp			paperairplanecamera.cpp	__sinit_\paperairplanecamera_cpp
+80379170	296	PaperAirplaneCourse	constructor			paperairplanecourse.cpp	__ct__19PaperAirplaneCourseFv
+80379298	64	PaperAirplaneCourse	destructor			paperairplanecourse.cpp	__dt__19PaperAirplaneCourseFv
+803792d8	2140	PaperAirplaneCourse	Initialize	const rmVector3&, CString, int, bool, bool		paperairplanecourse.cpp	Initialize__19PaperAirplaneCourseFRC9rmVector37CStringibb
+80379b34	468	PaperAirplaneCourse	Uninitialize			paperairplanecourse.cpp	Uninitialize__19PaperAirplaneCourseFv
+80379d08	508	PaperAirplaneCourse	GenerateCheckPointList	CString, bool		paperairplanecourse.cpp	GenerateCheckPointList__19PaperAirplaneCourseF7CStringb
+80379f04	124	PaperAirplaneCourse	DestroyPartFx			paperairplanecourse.cpp	DestroyPartFx__19PaperAirplaneCourseFv
+80379f80	224	PaperAirplaneCourse	GenerateCheckPointPartFxUpToDistance	float		paperairplanecourse.cpp	GenerateCheckPointPartFxUpToDistance__19PaperAirplaneCourseFf
+8037a060	228	PaperAirplaneCourse	GetNearestCheckpoint	const rmVector3&		paperairplanecourse.cpp	GetNearestCheckpoint__19PaperAirplaneCourseFRC9rmVector3
+8037a144	228	PaperAirplaneCourse	GetNearestRespawnPoint	const rmVector3&		paperairplanecourse.cpp	GetNearestRespawnPoint__19PaperAirplaneCourseFRC9rmVector3
+8037a228	296	PaperAirplaneCourse	Update	int		paperairplanecourse.cpp	Update__19PaperAirplaneCourseFi
+8037a350	1008	PaperAirplaneCourse	UpdateWalls	int, const rmVector3&		paperairplanecourse.cpp	UpdateWalls__19PaperAirplaneCourseFiRC9rmVector3
+8037a740	288	PaperAirplaneCourse	Draw	Ren::SceneContext&		paperairplanecourse.cpp	Draw__19PaperAirplaneCourseFRQ23Ren12SceneContext
+8037a860	40	EAGL::Model	GetGeometry	int		paperairplanecourse.cpp	GetGeometry__Q24EAGL5ModelFi
+8037a888	408		IsGeometryVisible	Ren::SceneContext&, EAGL::Geometry*, const rmMatrix4&		paperairplanecourse.cpp	IsGeometryVisible__FRQ23Ren12SceneContextPQ24EAGL8GeometryRC9rmMatrix4
+8037aa20	136	PaperAirplaneCourse	PassCheckpointsToHud			paperairplanecourse.cpp	PassCheckpointsToHud__19PaperAirplaneCourseFv
+8037aaa8	24		__sinit_\paperairplanecourse_cpp			paperairplanecourse.cpp	__sinit_\paperairplanecourse_cpp
+8037aac0	92	PAPowerupManager	constructor			papowerupmanager.cpp	__ct__16PAPowerupManagerFv
+8037ab1c	64	PAPowerupManager	destructor			papowerupmanager.cpp	__dt__16PAPowerupManagerFv
+8037ab5c	272	PAPowerupManager	Initialize	const rmVector3&, CString, PaperAirplaneCourse*, Enums::MiniGameDareType, bool		papowerupmanager.cpp	Initialize__16PAPowerupManagerFRC9rmVector37CStringP19PaperAirplaneCourseQ25Enums16MiniGameDareTypeb
+8037ac6c	172	PAPowerupManager	Uninitialize			papowerupmanager.cpp	Uninitialize__16PAPowerupManagerFv
+8037ad18	1696	PAPowerupManager	Populate	const rmVector3&, CString		papowerupmanager.cpp	Populate__16PAPowerupManagerFRC9rmVector37CString
+8037b3b8	544	PAPowerupManager	AddPowerup	const rmVector3&, Enums::MGPA_PowerupType, Enums::MGPA_PowerupColor		papowerupmanager.cpp	AddPowerup__16PAPowerupManagerFRC9rmVector3Q25Enums16MGPA_PowerupTypeQ25Enums17MGPA_PowerupColor
+8037b5d8	36	PAPowerupManager	PowerupCompare	const void*, const void*		papowerupmanager.cpp	PowerupCompare__16PAPowerupManagerFPCvPCv
+8037b5fc	352	PAPowerupManager	GeneratePartFx			papowerupmanager.cpp	GeneratePartFx__16PAPowerupManagerFv
+8037b75c	916	PAPowerupManager	PowerupPickupTest	PaperAirplane*, int		papowerupmanager.cpp	PowerupPickupTest__16PAPowerupManagerFP13PaperAirplanei
+8037baf0	276	PAPowerupManager	Update	int		papowerupmanager.cpp	Update__16PAPowerupManagerFi
+8037bc04	4	PAPowerupManager	Draw	Ren::SceneContext&		papowerupmanager.cpp	Draw__16PAPowerupManagerFRQ23Ren12SceneContext
+8037bc08	132	PAPowerupManager	CheckForPassedRing	const rmVector3&, Enums::MGPA_PowerupColor, int		papowerupmanager.cpp	CheckForPassedRing__16PAPowerupManagerFRC9rmVector3Q25Enums17MGPA_PowerupColori
+8037bc8c	264	PAPowerupManager	PowerupShouldBeAddedInDare	Enums::MiniGameDareType, Enums::MGPA_PowerupType, Enums::MGPA_PowerupColor		papowerupmanager.cpp	PowerupShouldBeAddedInDare__16PAPowerupManagerFQ25Enums16MiniGameDareTypeQ25Enums16MGPA_PowerupTypeQ25Enums17MGPA_PowerupColor
+8037bd94	24		__sinit_\papowerupmanager_cpp			papowerupmanager.cpp	__sinit_\papowerupmanager_cpp
+803c3d48	160	PanCamera	constructor			pancamera.cpp	__ct__9PanCameraFv
+803c3de8	8	PanCamera	GetTotalCameraRotation		const	pancamera.cpp	GetTotalCameraRotation__9PanCameraCFv
+803c3df0	4	PanCamera	ZoomIn	int		pancamera.cpp	ZoomIn__9PanCameraFi
+803c3df4	4	PanCamera	ZoomOut	int		pancamera.cpp	ZoomOut__9PanCameraFi
+803c3df8	4	PanCamera	Move	int, float, float		pancamera.cpp	Move__9PanCameraFiff
+803c3dfc	4	PanCamera	Reorient			pancamera.cpp	Reorient__9PanCameraFv
+803c3e00	4	PanCamera	Reset			pancamera.cpp	Reset__9PanCameraFv
+803c3e04	344	PanCamera	Initialize	const rmVector3&, const rmVector3&, const rmVector3&, const rmVector3&, int		pancamera.cpp	Initialize__9PanCameraFRC9rmVector3RC9rmVector3RC9rmVector3RC9rmVector3i
+803c3f5c	4	PanCamera	UpdateInput	int		pancamera.cpp	UpdateInput__9PanCameraFi
+803c3f60	1028	PanCamera	Update	int		pancamera.cpp	Update__9PanCameraFi
+803c4364	24		__sinit_\pancamera_cpp			pancamera.cpp	__sinit_\pancamera_cpp
+804137cc	148		GC_PAD_init			pad.cpp	GC_PAD_init__Fv
+80413860	236		GC_PAD_update			pad.cpp	GC_PAD_update__Fv
+8041394c	36		GC_PAD_active	int		pad.cpp	GC_PAD_active__Fi
+80413970	20		GC_PAD_getdataptr	int		pad.cpp	GC_PAD_getdataptr__Fi
+80413aa0	8		PAD_getoptsinternal			pad.cpp	PAD_getoptsinternal__Fv
+80413aa8	120		PAD_init			pad.cpp	PAD_init
+80413b20	276		PAD_update			pad.cpp	PAD_update
+80413c34	20		PAD_gethandler	int		pad.cpp	PAD_gethandler__Fi
+80413c48	140		PAD_sethandler	int, IPadModeHandler*		pad.cpp	PAD_sethandler__FiP15IPadModeHandler
+80413cd4	20		PAD_getdpdmode			pad.cpp	PAD_getdpdmode
+80413ce8	20		PAD_getdataptr			pad.cpp	PAD_getdataptr
+80413cfc	72		PAD_active			pad.cpp	PAD_active
+80413d44	20		PAD_getinfo			pad.cpp	PAD_getinfo
+80413d58	4		PAD_enableinfopolling			pad.cpp	PAD_enableinfopolling
+80413d5c	8		PAD_startrumble			pad.cpp	PAD_startrumble
+80413d64	8		PAD_stoprumble			pad.cpp	PAD_stoprumble
+80413d6c	60		__sinit_\pad_cpp			pad.cpp	__sinit_\pad_cpp

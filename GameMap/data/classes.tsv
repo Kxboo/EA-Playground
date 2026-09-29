@@ -1,0 +1,733 @@
+# class	subsystem	methods	code_bytes	constructor	destructor	source_units
+AICharacterControl	characters	13	1900	802e77a4	802e77e4	aicharactercontrol.cpp
+AIEntity	ai	12	1928	802cc5d4	802cc660	aientity.cpp
+AccessibilityManager	world	10	832	803d5a34		accessibilitymanager.cpp
+ActionPoI	ai	3	128	802d0ee4	802d0f20	poi.cpp
+ActionPoICompulsion	ai	6	468	802ceaa4	802ceaec	compulsion.cpp
+ActionWidget	engine-support	2	136	803ce718	803ce940	debugmenuwidgets.cpp
+AncientEvil	ai,frontend,mg-dartshootout,mg-rccars,mg-tetherball	15	1432	802cce60	802ccf4c	aircdriver.cpp,ancientevil.cpp,dstargetcharacter.cpp,mgtetherball.cpp,selectablecharacter.cpp
+AncientEvil::AIEntitySizeTracker	ai	1	20	802cf544		metaworldstaticaientity.cpp
+AncientEvil::CompulsionSizeTracker	ai	1	20	802cf2b8		metaworldplayaientity.cpp
+AnimationManager	animation-glue	3	788			animationmanager.cpp
+AnimationState	animation-glue,mg-dartshootout	21	4088	803c7da8	803c7e8c	animationstate.cpp,dstargetcharacter.cpp
+AnimationStateGraph	animation-glue	7	2864	803c8dc0	803c91fc	animationstategraph.cpp
+AnimationStateGraph::AnimEventInfo	animation-glue	3	212	803c8eb8	803c8ee8	animationstategraph.cpp
+AnimationStateGraph::AnimStateInfo	animation-glue	2	256	803c8e50	803c8f40	animationstategraph.cpp
+AreaDrawManager	world	21	5020	803d5d8c	803d5df0	areadrawmanager.cpp
+AreaManager	world	14	2812	803d74f0	803d7544	areamanager.cpp
+AssetManager	engine-support	54	11092	803c9f84	803ca2c0	assetmanager.cpp
+Attrib	attribute-db,renderer-eagl	12	2516			attribclass.cpp,attribcollection.cpp,attribdatabase.cpp,attribhash64.cpp,attribloadandgo.cpp,attribsupport.cpp,codegen.cpp
+Attrib::Array	attribute-db	3	372			attribclass.cpp,attribcollection.cpp
+Attrib::Attrib_RefSpec_TypeHandler	renderer-eagl	6	208	803e2990	803e29a0	model.cpp
+Attrib::Attribute	attribute-db,data-parsers	8	616	802da364	802da404	attribute.cpp,db.cpp
+Attrib::AttributeIterator	attribute-db	2	184	802d5920		attribcollection.cpp
+Attrib::Class	attribute-db	11	1076	802d34bc		attribclass.cpp
+Attrib::Class::TablePolicy	attribute-db	1	40			attribclass.cpp
+Attrib::ClassExportPolicy	attribute-db	9	1188		802d5b88	attribdatabase.cpp
+Attrib::ClassList	attribute-db	1	108		802d7e8c	attribdatabase.cpp
+Attrib::ClassStaticDesc	renderer-eagl	1	8			codegen.cpp
+Attrib::ClassTable	attribute-db	1	108		802d7abc	attribdatabase.cpp
+Attrib::Collection	attribute-db	11	2816	802d45bc	802d4b4c	attribcollection.cpp
+Attrib::CollectionExportPolicy	attribute-db	9	960		802d5bf4	attribdatabase.cpp
+Attrib::CollectionList	attribute-db	1	108		802d7dc4	attribdatabase.cpp
+Attrib::Database	attribute-db	11	1808		802d5c60	attribdatabase.cpp
+Attrib::DatabaseExportPolicy	attribute-db	9	1036		802d5b1c	attribdatabase.cpp
+Attrib::DatabasePrivate	attribute-db	1	220		802d80b0	attribdatabase.cpp
+Attrib::ExportManager	attribute-db	8	696	802d9068		attribloadandgo.cpp
+Attrib::ExportManager::ExportPolicyPair	attribute-db	1	28			attribloadandgo.cpp
+Attrib::HashMap	attribute-db	13	2620	802d4120	802d4540	attribcollection.cpp,attribdatabase.cpp
+Attrib::HashMapTablePolicy	attribute-db	2	128			attribcollection.cpp
+Attrib::IExportPolicy	attribute-db	1	64		802d9028	attribloadandgo.cpp
+Attrib::IGarbageCollector	attribute-db	1	64		802d8fe8	attribloadandgo.cpp
+Attrib::ITypeHandler	attribute-db	1	64		802da30c	attribsupport.cpp
+Attrib::Instance	attribute-db	3	372	802d8e54	802d8ea0	attribinstance.cpp
+Attrib::Node	attribute-db	5	280	802d4378		attribcollection.cpp
+Attrib::RefSpec	attribute-db,data-parsers	5	404	802da208	802f5c74	attribsupport.cpp,db.cpp
+Attrib::TypeDesc	attribute-db,renderer-eagl	3	224	802d60fc		attribdatabase.cpp,codegen.cpp
+Attrib::TypeDescPtrVec	attribute-db	1	112		802d7b84	attribdatabase.cpp
+Attrib::TypeTable	attribute-db	1	112		802d7c50	attribdatabase.cpp
+Attrib::Vault	attribute-db	13	2308	802d9800	802d9b28	attribloadandgo.cpp
+Attrib::Vault::DataBlock	attribute-db	2	164			attribloadandgo.cpp
+AuAEMSEventSystemFile	audio	3	284	802da94c	802da9a0	AuAEMSFile.cpp
+AuAEMSFile	audio	3	292	802da828	802da858	AuAEMSFile.cpp
+AuAEMSManager	audio	22	13712	802dabac	802db2c0	AuAEMSManager.cpp
+AuAEMSModule	audio	3	276	802daa68	802daab4	AuAEMSFile.cpp
+AuAEMSQueueLoader	audio	10	1840	802e0694	802e0930	AuAEMSQueueLoader.cpp
+AuAllocator	audio	8	284	802e0f68	802e0f78	AuAllocator.cpp
+AuCharacterSoundObject	audio	9	5136	802e4880	802e491c	AuSoundObject.cpp
+AuEnvironmentManager	audio	18	4588	802e232c	802e2678	AuEnvironmentManager.cpp
+AuHelpers	audio	1	396			AuHelpers.cpp
+AuLoopingSoundObject	audio	6	992	802e43b0	802e43fc	AuSoundObject.cpp
+AuMusicManager	audio	19	2136	802e3ad0	802e3b1c	AuMusicManager.cpp
+AuPlaceableSoundObject	audio	7	676	802e639c	802e63e0	AuSoundObject.cpp
+AuSoundObject	audio	3	120	802e4340	802e4370	AuEnvironmentManager.cpp,AuSoundObject.cpp
+AuSpeechManager	audio	11	2228	802e6658	802e66c8	AuSpeechManager.cpp
+AuWiimoteManager	audio	17	2152	802e6f24	802e6fa8	AuWiimoteManager.cpp
+Audio	audio	50	4724	802e10a0	802e10e4	Audio.cpp
+BBallList<P10AuAEMSFile>	audio	2	380		802e07b4	AuAEMSQueueLoader.cpp
+BBallList<P10AuAEMSFile>::node	audio	1	16	802e07a4		AuAEMSQueueLoader.cpp
+BBallList<P13AuSoundObject>	audio	4	824	802e23b4	802e24fc	AuEnvironmentManager.cpp
+BBallList<P13AuSoundObject>::node	audio	1	16	802e24ec		AuEnvironmentManager.cpp
+BaseAsset	engine-support	1	80			assetmanager.cpp
+BehindTheBackCamera	cameras,mg-tetherball	18	2212	803bc9c0		behindthebackcamera.cpp,mgtetherball.cpp
+BoolWidget	engine-support	4	472	803ce540	803ce598	debugmenuwidgets.cpp
+BossEndGameFSHandlers	frontend	4	416	80315318	80315390	BossEndGameHandlers.cpp
+BossEndGameHandlers	frontend	9	700	803150fc	803151ac	BossEndGameHandlers.cpp
+BossEndGameLVHandlers	frontend	3	320		803154b8	BossEndGameHandlers.cpp
+CClassicPadModeHandler	pad-drivers	9	748	80412924	80412960	gcpad.cpp
+CCorePadModeHandler	pad-drivers	9	700	80412c10	80412c4c	gcpad.cpp
+CDPDExPadModeHandler	pad-drivers	9	744	80412ecc	80412f08	gcpad.cpp
+CFreeStylePadModeHandler	pad-drivers	9	732	804131b4	804131f0	gcpad.cpp
+CFuturePadModeHandler	pad-drivers	9	700	80413490	804134cc	gcpad.cpp
+CGCPadModeHandler	pad-drivers	9	284	80413984	804139c0	pad.cpp
+CString	engine-support	35	4104	803ccc08	803cce94	CString.cpp
+Camera	cameras	18	3136	803bda3c		camera.cpp
+CameraManager	cameras	20	1900	803beb44	803bebbc	cameramanager.cpp
+CameraViewInfo	cameras,conversation,mg-footie	3	324	802f1380		camera.cpp,conversationmanager.cpp,footiecamera.cpp
+Character	characters	26	8032	802e7f4c	802e8208	character.cpp
+CharacterAssetBundle	characters	2	136	802ebd84	802ebad8	charactermanager.cpp
+CharacterAssetBundleInternal	characters	2	196	802ebd34	802eba64	charactermanager.cpp
+CharacterConversation	characters	4	644	802ea47c	802ea4cc	characterconversation.cpp
+CharacterEffects	characters	7	1488	802ea718	802ea744	charactereffects.cpp
+CharacterHeadTracking	characters	6	2180	802ead00	802ead50	characterheadtracking.cpp
+CharacterManager	characters	32	6368	802eb8d4	802eb97c	charactermanager.cpp
+CharacterMovement	characters	10	2120	802ed524	802ed5b8	charactermovement.cpp
+CharacterProfile	core-flow	82	9940	803af7b0	803af898	profile.cpp
+CharacterPropAssetBundle	characters	2	136	802e8180	802e81b0	character.cpp
+CharacterPropRenderEntity	characters	3	160	802e80fc	802edd84	character.cpp,characterproprenderentity.cpp
+CharacterPropShadowRenderEntity	characters	3	160	802e8118	802ede08	character.cpp,characterproprenderentity.cpp
+CharacterRenderEntity	characters	4	312		802e8814	character.cpp,characterrenderentity.cpp
+CharacterState	characters,frontend,mg-freethrow	21	2740	802edf8c	802ee0ac	character.cpp,characterstate.cpp,localcharactercontrol.cpp,mgfreethrow.cpp,selectablecharacter.cpp
+Compulsion	ai	5	316	802cd250	802cd3a8	aientity.cpp,compulsion.cpp
+Controller	input	28	9348	8032a258	8032a450	controller.cpp
+Conversation	conversation	2	596	802f26e0		conversationtree.cpp
+ConversationDialog	conversation	5	356	802f2350	802f2374	conversationnode.cpp
+ConversationFSHandlers	frontend	2	152		80315ad4	ConversationHandlers.cpp
+ConversationHandlers	frontend	5	520	803156b0	80315760	ConversationHandlers.cpp
+ConversationLVHandlers	frontend	5	700	80315818	803158a8	ConversationHandlers.cpp
+ConversationManager	conversation	19	4076	802f1064		conversationmanager.cpp
+ConversationNode	conversation	2	176			conversationnode.cpp
+ConversationPool	conversation	5	364	802f0e50	802f0e94	conversationmanager.cpp
+ConversationResponse	conversation	7	488	802f247c	802f24a0	conversationmanager.cpp,conversationnode.cpp
+ConversationRoot	conversation	5	380	802f220c	802f2230	conversationnode.cpp
+CreditScreenHandlers	frontend	4	428	80315c1c	80315ca4	CreditScreenHandlers.cpp
+CreditScreenLVHandlers	frontend	3	412		80315d30	CreditScreenHandlers.cpp
+Csis	audio	1	1380			AuAEMSManager.cpp
+Csis::FESFX_PreSelection_Anims_LP	audio	2	188	802e5ba0	802e5b40	AuSoundObject.cpp
+Csis::MGSFX_CommonHUD	audio	2	188	802dc75c	802dc7b8	AuAEMSManager.cpp
+Csis::MGSFX_DB_SetupAnim	audio	1	96		802de63c	AuAEMSManager.cpp
+Csis::MGSFX_Damage_Female	audio	1	96		802de10c	AuAEMSManager.cpp
+Csis::MGSFX_Damage_Male	audio	1	96		802de0ac	AuAEMSManager.cpp
+Csis::MGSFX_Darts_Boss_Death	audio	2	228	802dfdd8	802dfd78	AuAEMSManager.cpp
+Csis::MGSFX_Darts_Boss_Supermove	audio	1	96		802dfd18	AuAEMSManager.cpp
+Csis::MGSFX_Darts_BulletTime_SFX	audio	2	228	802debb0	802dec34	AuAEMSManager.cpp
+Csis::MGSFX_Darts_NPC	audio	2	228	802deacc	802deb50	AuAEMSManager.cpp
+Csis::MGSFX_Darts_PinupTarg_Move	audio	1	96		802e0088	AuAEMSManager.cpp
+Csis::MGSFX_Darts_Scrptd_Targets	audio	2	228	802de904	802de988	AuAEMSManager.cpp
+Csis::MGSFX_Darts_Weapons	audio	2	228	802de9e8	802dea6c	AuAEMSManager.cpp
+Csis::MGSFX_Dodgeball_Actions	audio	2	228	802de4f8	802de57c	AuAEMSManager.cpp
+Csis::MGSFX_Dodgeball_Ball	audio	1	96		802de5dc	AuAEMSManager.cpp
+Csis::MGSFX_Footie_Actions	audio	2	228	802decf4	802ded78	AuAEMSManager.cpp
+Csis::MGSFX_Footie_Ball	audio	1	96		802dec94	AuAEMSManager.cpp
+Csis::MGSFX_Footie_Collisions	audio	1	96		802dedd8	AuAEMSManager.cpp
+Csis::MGSFX_GENERIC_Celebrations	audio	2	228	802e5d40	802e5ce0	AuSoundObject.cpp
+Csis::MGSFX_Grunts_Female	audio	1	96		802ddf8c	AuAEMSManager.cpp
+Csis::MGSFX_Grunts_Male	audio	1	96		802ddf2c	AuAEMSManager.cpp
+Csis::MGSFX_HERO_Celebrations	audio	2	228	802e5c5c	802e5bfc	AuSoundObject.cpp
+Csis::MGSFX_HUD_CommonLP	audio	2	80			AuSoundObject.cpp
+Csis::MGSFX_HUD_DB	audio	1	96		802dc938	AuAEMSManager.cpp
+Csis::MGSFX_HUD_DS	audio	1	96		802dc998	AuAEMSManager.cpp
+Csis::MGSFX_HUD_Footie	audio	1	96		802dc9f8	AuAEMSManager.cpp
+Csis::MGSFX_HUD_PA	audio	1	96		802dc8d8	AuAEMSManager.cpp
+Csis::MGSFX_HUD_RC	audio	1	96		802dc878	AuAEMSManager.cpp
+Csis::MGSFX_HUD_TB	audio	1	96		802dc818	AuAEMSManager.cpp
+Csis::MGSFX_HUD_WB	audio	1	96		802dca58	AuAEMSManager.cpp
+Csis::MGSFX_Laughter_F	audio	2	228	802de250	802de2d4	AuAEMSManager.cpp
+Csis::MGSFX_Laughter_M	audio	2	228	802de16c	802de1f0	AuAEMSManager.cpp
+Csis::MGSFX_MEGAGrunts_Female	audio	1	96		802de04c	AuAEMSManager.cpp
+Csis::MGSFX_MEGAGrunts_Male	audio	1	96		802ddfec	AuAEMSManager.cpp
+Csis::MGSFX_PaperAirp_WindEngine	audio	2	132		802dfbe4	AuAEMSManager.cpp
+Csis::MGSFX_PaperAirpl_Collisions	audio	2	260	802de7a0	802de844	AuAEMSManager.cpp
+Csis::MGSFX_PaperAirpl_Emitters_LP	audio	3	176		802dfc68	AuAEMSManager.cpp
+Csis::MGSFX_PaperAirpl_Launch	audio	1	96		802de8a4	AuAEMSManager.cpp
+Csis::MGSFX_PaperAirpl_WindySFX	audio	2	260	802de69c	802de740	AuAEMSManager.cpp
+Csis::MGSFX_RCCars_Collision	audio	1	96		802de394	AuAEMSManager.cpp
+Csis::MGSFX_RCCars_Engine_1	audio	4	212		802df808	AuAEMSManager.cpp
+Csis::MGSFX_RCCars_Engine_2	audio	4	212		802df8dc	AuAEMSManager.cpp
+Csis::MGSFX_RCCars_Engine_3	audio	4	212		802df9b0	AuAEMSManager.cpp
+Csis::MGSFX_RCCars_Engine_4	audio	4	212		802dfa84	AuAEMSManager.cpp
+Csis::MGSFX_RCCars_FireCrkrWick_LP	audio	2	140		802dfb58	AuAEMSManager.cpp
+Csis::MGSFX_RCCars_Moves	audio	2	260	802de3f4	802de498	AuAEMSManager.cpp
+Csis::MGSFX_SIGNATURE_Celebrations	audio	2	228	802e5e24	802e5dc4	AuSoundObject.cpp
+Csis::MGSFX_TB_Windups	audio	2	228	802e5f08	802e5ea8	AuSoundObject.cpp
+Csis::MGSFX_Tetherball_Hits	audio	1	96		802de334	AuAEMSManager.cpp
+Csis::MGSFX_WallBall_Actions	audio	2	228	802dee38	802deebc	AuAEMSManager.cpp
+Csis::MGSFX_WallBall_Ball	audio	2	228	802def1c	802defa0	AuAEMSManager.cpp
+Csis::MicroSFX_BBall_Dribble	audio	2	228	802df0c0	802df144	AuAEMSManager.cpp
+Csis::MicroSFX_BugCatch	audio	1	96		802df060	AuAEMSManager.cpp
+Csis::MicroSFX_FreeThrow	audio	2	228	802df1a4	802df228	AuAEMSManager.cpp
+Csis::MicroSFX_High5	audio	1	96		802df000	AuAEMSManager.cpp
+Csis::UI_Loop_Sfx	audio	2	188	802dc700	802dc6a0	AuAEMSManager.cpp
+Csis::UI_Sfx	audio	1	96		802dc640	AuAEMSManager.cpp
+Csis::WSFX_Boss_Idles_LP	audio	2	80			AuSoundObject.cpp
+Csis::WSFX_Boss_Idles_OO	audio	4	304	802e5a10	802e59b0	AuSoundObject.cpp
+Csis::WSFX_Footsteps	audio	1	96		802dddd8	AuAEMSManager.cpp
+Csis::WSFX_NIS	audio	3	244	802dde38	802ddecc	AuAEMSManager.cpp
+Csis::WSFX_POIs_LP	audio	2	80			AuSoundObject.cpp
+Csis::WSFX_POIs_OO	audio	4	304	802e58e0	802e5880	AuSoundObject.cpp
+Csis::WSFX_StickerBook_Open	audio	1	96		802e5ae0	AuSoundObject.cpp
+DSDart	mg-dartshootout	15	5824	80339274	803392d0	dsdart.cpp
+DSDartCollisionListener	mg-dartshootout	6	3896	8033a9d0	8033aa38	dsdartcollisionlistener.cpp
+DSDartGun	mg-dartshootout	31	9556	8033b920	8033b9ac	dsdartgun.cpp,mgdartshootout.cpp
+DSDartManager	mg-dartshootout	10	1988	8033df04	8033df58	dsdartmanager.cpp
+DSEncounter	mg-dartshootout	14	3180	8033e6e0	8033e764	dsencounter.cpp
+DSEncounterManager	mg-dartshootout	13	3612	8033f39c	8033f3f4	dsencountermanager.cpp
+DSFullScreenFx	mg-dartshootout	8	1424	803401d8	80340240	dsfullscreenfx.cpp
+DSFullScreenFxManager	mg-dartshootout	9	928	803407e0	80340834	dsfullscreenfxmanager.cpp
+DSObject	mg-dartshootout	9	2420	80340b98	80340bac	dsobject.cpp
+DSObjectManager	mg-dartshootout	9	1244	80341524	80341574	dsobjectmanager.cpp
+DSPropSet	mg-dartshootout	8	1180	80341a18	80341a24	dspropset.cpp
+DSShadowEntity	mg-dartshootout	4	268	80341ecc	80341ee8	dsdart.cpp,dsshadowentity.cpp
+DSShieldEffect	mg-dartshootout	3	492	80341f6c	80342034	dsshieldeffect.cpp
+DSTarget	mg-dartshootout	7	1740	80342180	803421ac	dstarget.cpp
+DSTargetCharacter	mg-dartshootout	43	11040	80342864		dstargetcharacter.cpp
+DSTargetManager	mg-dartshootout	15	3200	803454dc	80345534	dstargetmanager.cpp
+DSTargetPinup	mg-dartshootout	10	5668	80346174		dstargetpinup.cpp
+DSTeam	mg-dartshootout	26	1368	80347838	80347844	dsteam.cpp
+DartShootoutCamera	mg-dartshootout	11	1140	80338de8		dartshootoutcamera.cpp
+DartShootoutEnterCompulsion	mg-dartshootout	9	308	803384d0	80338518	aidartshootout.cpp
+DartShootoutHostileAIEntity	mg-dartshootout	6	1456	80337d80	80337de0	aidartshootout.cpp
+DartShootoutIdleCompulsion	mg-dartshootout	8	256	80338bd4	80338c1c	aidartshootout.cpp
+DartShootoutInnocentAIEntity	mg-dartshootout	4	416	80338330	80338378	aidartshootout.cpp
+DartShootoutMegashotCompulsion	mg-dartshootout	8	292	803385d8	8033862c	aidartshootout.cpp
+DartShootoutRunStopShootCompulsion	mg-dartshootout	8	620	80338988	803389e8	aidartshootout.cpp
+DartShootoutShootCompulsion	mg-dartshootout	8	716	803386dc	80338738	aidartshootout.cpp
+DebugMenu	engine-support	23	1876	803cddd4	803cde14	debugmenu.cpp
+DebugMenuRenderEntity	engine-support	2	92		803d4414	pgdebugmenu.cpp
+Dodgeball	mg-dodgeball	23	6636	8034e200	8034e2a8	dodgeball.cpp
+DodgeballAIDifficultyInfo	mg-dodgeball	1	212			aidodgeball.cpp
+DodgeballAIEntity	mg-dodgeball	10	3576	8034bf4c	8034c000	aidodgeball.cpp
+DodgeballBoostCompulsion	mg-dodgeball	8	512	8034d610	8034d660	aidodgeball.cpp
+DodgeballCamera	mg-dodgeball	17	1996	8034fd90		dodgeballcamera.cpp
+DodgeballCharacter	mg-dodgeball	105	22516	80350598	80350708	aidodgeball.cpp,dodgeballcharacter.cpp
+DodgeballCharacterCollisionListener	mg-dodgeball	7	432	80355e84	80355ee0	dodgeballcharactercollisionlistener.cpp
+DodgeballCollisionListener	mg-dodgeball	6	1200	8035604c	803560b4	dodgeballcollisionlistener.cpp
+DodgeballCourt	mg-dodgeball	21	3652	80356514	80356540	dodgeballcourt.cpp
+DodgeballIdleCompulsion	mg-dodgeball	11	1700	8034da28	8034da74	aidodgeball.cpp
+DodgeballPowerMeter	mg-dodgeball	3	232		80350b98	dodgeballcharacter.cpp,dodgeballpowermeter.cpp
+DodgeballReactCompulsion	mg-dodgeball	8	800	8034ce68	8034cec0	aidodgeball.cpp
+DodgeballReactToFakeCompulsion	mg-dodgeball	8	624	8034d7e4	8034d830	aidodgeball.cpp
+DodgeballShadowRenderEntity	mg-dodgeball	3	192	8034fc84	8034fca0	dodgeball.cpp
+DodgeballThrowCompulsion	mg-dodgeball	8	1204	8034d17c	8034d1dc	aidodgeball.cpp
+DribblingBallShadowRenderEntity	mg-freethrow	3	256	80332fe0	80333030	dribblingmanager.cpp
+DribblingManager	mg-freethrow	27	6584	80331628		dribblingmanager.cpp
+EA::Allocator::ITaggedAllocator	effects	1	64		80309108	Lion_Unity.cpp
+EA::Conga::PrimaryControllerOutput	input	1	180			controller.cpp
+EA::Math	cameras,characters,frontend,input,mg-dartshootout,mg-dodgeball,mg-microbug,mg-rccars	16	1196			behindthebackcamera.cpp,camera.cpp,character.cpp,characterheadtracking.cpp,controller.cpp,dodgeballcharacter.cpp,dsfullscreenfx.cpp,microbug.cpp,npcindicator.cpp,orbitcamera.cpp,rccar.cpp,selectablecharacter.cpp,slerppancamera.cpp
+EA::Math::Quaternion	characters	1	20			characterheadtracking.cpp
+EA::Math::Vector3	audio	1	16			AuHelpers.cpp
+EA::Math::Vector4	characters	1	20			character.cpp
+EAGL	characters,renderer-eagl	3	480			device.cpp,model.cpp,npcrenderentity.cpp
+EAGL::Colour	render-scene	2	176	803bf888		fadetocoloureffect.cpp,shadowmanager.cpp
+EAGL::Device	renderer-eagl	12	1196	803e3a9c	803e396c	device.cpp,device_cmn.cpp
+EAGL::DrawImmediate	effects,mg-rccars	4	332			Lion_Unity.cpp,rcshadowmanager.cpp
+EAGL::EAGLFont	renderer-eagl	6	2112			fonteagl.cpp
+EAGL::FloatColour	render-scene	1	20	803bf874		fadetocoloureffect.cpp
+EAGL::GeoPrim	renderer-eagl	1	8			rendermethod.cpp
+EAGL::GeoPrimState	renderer-eagl	15	448	803e7520	803e74d0	state.cpp
+EAGL::GeoPrimStateExtension	renderer-eagl	9	2332	803e7344		state.cpp
+EAGL::Geometry	world	1	136			areadrawmanager.cpp
+EAGL::Model	mg-paperairplanes,render-scene,renderer-eagl	9	2980			cachedanimatedmodel.cpp,device.cpp,model.cpp,paperairplanecourse.cpp
+EAGL::Model::Variable	renderer-eagl	1	24			model.cpp
+EAGL::Model::VariableTable	renderer-eagl	2	272			model.cpp
+EAGL::Profiler	renderer-eagl	2	644		803ecc80	profiler_cmn.cpp
+EAGL::ProfilerRegion	renderer-eagl	5	3040	803eda08	803ed980	profiler_cmn.cpp
+EAGL::RenderContext	renderer-eagl	11	6012	803e61a0	803e5fc8	rendercontext.cpp
+EAGL::RenderContextBase	renderer-eagl	4	392		803e6258	rendercontext.cpp,rendercontext_cmn.cpp
+EAGL::RenderContextExtension	renderer-eagl	16	1516		803e4158	rendercontext.cpp
+EAGL::RenderContextExtensionBase	renderer-eagl	10	388		803e4198	rendercontext.cpp
+EAGL::RenderMethod	renderer-eagl	3	896	803e6888		rendermethod.cpp
+EAGL::TAR	renderer-eagl	9	536	803e8b00	803e8a74	tar.cpp
+EAGL::TARExtension	renderer-eagl	9	2636			tar.cpp
+EAGL::TevStage	renderer-eagl	14	1556	803e9e4c		tevstage.cpp
+EAGL::Transform	renderer-eagl	15	4064			texturerc.cpp
+EAGL::ViewPort	renderer-eagl	19	5860	803eca40	803ec9cc	viewport.cpp,viewport_cmn.cpp
+EAGL::ViewPortExtension	renderer-eagl	2	80	803eb3b8	803eb378	viewport.cpp
+EAGLAnim::FnAnim	animation-glue	3	20			animationstate.cpp
+EAGLAnim::FnDefaultAnimBank	animation-glue,engine-support	8	220		803cafec	animationstate.cpp,assetmanager.cpp
+EAGLInternal	renderer-eagl	7	5416			model.cpp,rendermethod.cpp,state.cpp,tar.cpp
+EAGLInternal::DevicePrivate	renderer-eagl	1	12			device_cmn.cpp
+EAGLInternal::InternalProfiler	renderer-eagl	1	64		803ecc40	profiler_cmn.cpp
+EAGLInternal::InternalProfilerRegion	renderer-eagl	1	88		803e6394	rendercontext_cmn.cpp
+EAGLInternal::Property	renderer-eagl	3	176	803e7eb0	803e7e14	state.cpp
+EAGLInternal::PropertyValue	renderer-eagl	2	36	803e7e08		state.cpp
+EAGLInternal::RenderContextPrivate	renderer-eagl	7	1464	803e4250	803e41d8	rendercontext.cpp
+EAGLInternal::RenderContextPrivateBase	renderer-eagl	2	72		803e4330	rendercontext.cpp,rendercontext_cmn.cpp
+EAGLInternal::TextureRenderContextPrivate	renderer-eagl	1	160			texturerc.cpp
+EAGLInternal::ViewPortPrivate	renderer-eagl	2	204	803eb3c8		viewport.cpp
+ELFHASH	effects	1	100			Lion_Unity.cpp
+Edict	ai	4	256		802cd34c	compulsion.cpp
+EdictMovementInfo	ai	1	64		802cd30c	compulsion.cpp
+EndTourneyFSHandlers	frontend	3	156		80316104	EndTourneyHandlers.cpp
+EndTourneyHandlers	frontend	4	544	80315f7c	8031604c	EndTourneyHandlers.cpp
+EndTourneyLVHandlers	frontend	3	244		803161a0	EndTourneyHandlers.cpp
+FEManager	frontend	65	14200	80325b4c	80325d98	FEManager.cpp
+FadeableGeometry	world	1	4	803d6770		areadrawmanager.cpp
+FileMap	data-parsers	2	112	802f4018	802f40e8	db.cpp
+FileRecord	attribute-db	1	28	802f3528		attribasset.cpp
+FixedCamera	cameras	9	408	803bfb2c		fixedcamera.cpp
+FootieAIDifficultyInfo	mg-footie	2	300	8035c2f8	8035c3e4	aifootie.cpp
+FootieAIEntity	mg-footie	14	4772	8035c424	8035c480	aifootie.cpp
+FootieBall	mg-footie	32	6500	8035e9d0	8035ea8c	footieball.cpp
+FootieBallCollisionListener	mg-footie	4	468	80360450	803604b8	footieballcollisionlistener.cpp
+FootieBallShadowRenderEntity	mg-footie	3	208	80360334	80360354	footieball.cpp
+FootieBlockCompulsion	mg-footie	8	444	8035ddc0	8035de10	aifootie.cpp
+FootieBlockShotCompulsion	mg-footie	8	464	8035df50	8035dfa0	aifootie.cpp
+FootieCamera	mg-footie	20	4188	8036063c	803606fc	footiecamera.cpp
+FootieCharacter	mg-footie	97	18524	803616b4	80361844	aifootie.cpp,footiecharacter.cpp
+FootieCharacterCollisionListener	mg-footie	7	392	80365ec4	80365f20	footiecharactercollisionlistener.cpp
+FootieDiveSaveCompulsion	mg-footie	8	500	8035dbf8	8035dc50	aifootie.cpp
+FootieField	mg-footie	32	8144	80366064	803660c4	footiefield.cpp
+FootieJuggleCompulsion	mg-footie	8	480	8035e0f4	8035e144	aifootie.cpp
+FootieJumpCompulsion	mg-footie	8	448	8035e480	8035e4cc	aifootie.cpp
+FootieNetListener	mg-footie	4	368	8036804c	80368098	footienetlistener.cpp
+FootiePositionCompulsion	mg-footie	9	1172	8035d744	8035d790	aifootie.cpp
+FootiePowerMeter	mg-footie	9	1600	803681d8	80368240	footiepowermeter.cpp
+FootieServeCompulsion	mg-footie	8	516	8035e2a8	8035e300	aifootie.cpp
+FootieShotCompulsion	mg-footie	8	488	8035e614	8035e660	aifootie.cpp
+FrameCamera	cameras	9	836	803bfcdc		framecamera.cpp
+FreeCamera	cameras	17	4028	803c0054		freecamera.cpp
+FreeThrowBall	mg-freethrow	10	4532	8033314c	80333484	freethrowball.cpp,mgfreethrow.cpp
+FreeThrowBallCollisionListener	mg-freethrow	3	544	803348f8	80334968	freethrowcollisionlistener.cpp
+FreeThrowBallCourt	mg-freethrow	4	772	80334478	803344cc	freethrowballcourt.cpp
+FreeThrowBallShadowRenderEntity	mg-freethrow	3	192	803343a0	803343bc	freethrowball.cpp
+FreeThrowCharacterCollisionListener	mg-freethrow	6	196	8033481c	80334874	freethrowcharactercollisionlistener.cpp
+GROPERS	effects	5	2228			Lion_Unity.cpp
+GUID	ai,effects	2	24	802ccd8c		aiutils.cpp,partfxmanager.cpp
+GUIDManager	characters	1	48			charactermanager.cpp
+GameMenuRenderer	engine-support	5	984	803d4388	803d446c	pgdebugmenu.cpp
+GameState	core-flow	26	9676			GameState.cpp
+GarbageCollector	data-parsers	3	232	802f4140	802f4150	db.cpp
+GlobalFSHandlers	frontend	6	1360	8031675c	803167f4	GlobalHandlers.cpp
+GlobalHandlers	frontend	6	616	80316344	803163cc	GlobalHandlers.cpp
+GlobalLVHandlers	frontend	3	584	80316514	803165ac	GlobalHandlers.cpp
+HighFiveManager	mg-freethrow	14	2564	80337310	80337344	highfivemanager.cpp
+HighResScreenShot	frontend	11	624			highres.cpp
+HingeCamera	cameras	10	3028	803c2348		hingecamera.cpp
+IPadModeHandler	pad-drivers	4	348	80413da8	80413dec	wiipad.cpp
+IniFile	engine-support	6	2116	803ce9c8	803cea0c	inifilemanager.cpp
+IniFileManager	engine-support	7	692	803cf288	803cf2ac	inifilemanager.cpp
+InputAllocator	input	5	120		8032e458	pgconga.cpp
+InternalCharacterListener	physics-glue	10	1900	803b548c	803b5534	physicscharacterlistener.cpp
+InternalRigidBodyListener	physics-glue	7	1584	803ba190	803ba1e4	physicsrigidbodylistener.cpp
+LIONPROXY	effects	1	40			Lion_Unity.cpp
+LionAllocator	engine-support	8	432	803cf4d8	803cf530	lionallocator.cpp
+LionSmallAlloc	effects	8	1296			Lion_Unity.cpp
+LionSmallAlloc::sLSABinItem	effects	1	36			Lion_Unity.cpp
+LionSmallAlloc::sLSAMerge	effects	3	464			Lion_Unity.cpp
+LionSmallAlloc::sLSAPage	effects	3	524			Lion_Unity.cpp
+LoadingScreenFSHandlers	frontend	2	128		80316fb8	LoadingScreenHandlers.cpp
+LoadingScreenHandlers	frontend	4	512	80316d5c	80316e0c	LoadingScreenHandlers.cpp
+LoadingScreenLVHandlers	frontend	4	324	80316ec4	80316f24	LoadingScreenHandlers.cpp
+LocalCharacterControl	characters	10	3240	802ee8f0	802ee97c	localcharactercontrol.cpp
+Locale	core-flow	5	684	803ae660	803ae784	Locale.cpp
+MAD_CODEC_INTERNAL	mg-rccars	6	1204	802973b0	80297468	rcmp_mad_codec.cpp
+MAD_FRAME	mg-rccars	2	372	802971e4	8029730c	rcmp_mad_codec.cpp
+MGDartShootout	mg-dartshootout	88	16628	80347da8	80347e90	dsencountermanager.cpp,mgdartshootout.cpp
+MGDodgeball	mg-dodgeball	93	20008	80357434	803576bc	aidodgeball.cpp,mgdodgeball.cpp
+MGFootie	mg-footie	95	22704	80368830	80368a64	aifootie.cpp,mgfootie.cpp
+MGFreeThrow	mg-freethrow	27	9744	80334b40	80334c58	mgfreethrow.cpp
+MGID	conversation,mg-dartshootout	2	116	802f2120		conversationnode.cpp,dsencounter.cpp
+MGPAPlaneProperties	mg-paperairplanes	1	60			paperairplane.cpp
+MGPaperAirplanes	mg-paperairplanes	47	16480	8036e16c	8036e344	mgpaperairplanes.cpp
+MGRcCars	mg-rccars	63	21984	8037e02c	8037e138	mgrccars.cpp
+MGTetherball	mg-tetherball	73	27768	80396410	8039666c	mgtetherball.cpp
+MGWallball	mg-wallball	54	13564	8039f954	8039fb4c	aiwallball.cpp,mgwallball.cpp
+MainMenuFSHandlers	frontend	5	844	803172e0	8031738c	MainMenuHandlers.cpp
+MainMenuHandlers	frontend	6	464	803171b0	80317210	MainMenuHandlers.cpp
+MarbleShadowRenderEntity	world	3	624	803db824	803dec00	playgroundWorld.cpp
+Marker	animation-glue,world	6	1060	803c9adc	803c9ae8	marker.cpp,placeables.cpp
+MemMgr	engine-support	9	880			MemMgr.cpp
+MenuWidget	engine-support	7	348	803ce3e4	803ce41c	debugmenuwidgets.cpp
+MetaWorldPlayAICharacterListener	ai	3	268	802cf2cc	802cf328	metaworldplayaientity.cpp
+MetaWorldPlayAIEntity	ai	4	280	802cf3d8	802cf428	metaworldplayaientity.cpp
+MetaWorldStaticAIEntity	ai	5	364	802cf558	802cf5a4	metaworldstaticaientity.cpp
+Metrowerks::alloc_ptr<Q33std105__tree_deleter<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>4node,RQ23std130allocator<Q33std105__tree_deleter<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>4node>,Q210Metrowerks12number<Ul,1>>	attribute-db	1	96		802d8410	attribdatabase.cpp
+Metrowerks::alloc_ptr<Q33std128__tree_deleter<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>4node,RQ23std153allocator<Q33std128__tree_deleter<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>4node>,Q210Metrowerks12number<Ul,1>>	attribute-db	1	96		802f3d98	attribasset.cpp
+Metrowerks::alloc_ptr<Q33std224__tree_deleter<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>4node,RQ23std249allocator<Q33std224__tree_deleter<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>4node>,Q210Metrowerks12number<Ul,1>>	attribute-db	1	96		802f3df8	attribasset.cpp
+Metrowerks::alloc_ptr<Q33std42__list_deleter<PCv,Q23std14allocator<PCv>>4node,RQ23std66allocator<Q33std42__list_deleter<PCv,Q23std14allocator<PCv>>4node>,Q210Metrowerks12number<Ul,1>>	attribute-db	1	96		802d8470	attribdatabase.cpp
+MicroBug	mg-microbug	7	1816	8032e718	8032e798	microbug.cpp
+MicroBugHuntManager	mg-microbug	28	7836	8032efb0	8032f050	microbughuntmanager.cpp
+MicroBugManager	mg-microbug	13	1292	80331104	80331130	microbugmanager.cpp
+MicroBugNetShadowRenderEntity	mg-microbug	4	388	80330ed0	80330f20	microbughuntmanager.cpp
+MicroBugShadowRenderEntity	mg-microbug	3	192	8032eed8	8032eef4	microbug.cpp
+Minigame	core-flow,mg-freethrow	33	3124	803ab294	803ab388	mgfreethrow.cpp,minigame.cpp
+MinigameFSHandlers	frontend	5	644	80319884	803198e4	MinigameHandlers.cpp
+MinigameHandlers	frontend	69	7492	80317880	80317908	MinigameHandlers.cpp
+MinigameLVHandlers	frontend	7	908	80319388	80319420	MinigameHandlers.cpp
+MoveToPointCompulsion	ai	10	516	802cefb4	802cf024	compulsion.cpp
+MoviePlayOptions	engine-support	2	108	803cfaa4		movie.cpp
+MoviePlayer	engine-support	12	1584	803cfb10	803cfba8	movie.cpp,pgmovieplayer.cpp
+MultiPlayerFSHandlers	frontend	13	5160	8031a058	8031a170	MultiPlayerHandlers.cpp
+MultiPlayerHandlers	frontend	13	1060	80319cd4	80319d5c	MultiPlayerHandlers.cpp
+MultiPlayerLVHandlers	frontend	22	8352	8031b4bc	8031b564	MultiPlayerHandlers.cpp
+MultiplayerMode	core-flow	19	1860	803af014	803af070	multiplayermode.cpp
+MyAllocator	mg-rccars	6	388	80297150	80296fac	rcmp_mad_codec.cpp,rcmp_vp6_codec.cpp
+MyEventObserver	frontend	1	16	802523c0		TRCWiiCoreHandlers.cpp
+NPCAnimationEventHandler	characters	2	108	802ed514		charactermanager.cpp,charactermovement.cpp
+NPCRenderEntity	characters	10	2204	802f0248	802f02fc	npcrenderentity.cpp
+NpcIndicator	characters	7	2408	802ef7d8	802ef82c	npcindicator.cpp
+OrbitCamera	cameras	10	1884	803c3514	803c3634	orbitcamera.cpp
+OrbitCameraState	cameras	1	116			orbitcamera.cpp
+PAObstacle	mg-paperairplanes	7	2784	80372458	803724b8	paobstacle.cpp
+PAObstacleManager	mg-paperairplanes	8	2144	80373068	803730bc	paobstaclemanager.cpp
+PAObstaclePhantomListener	mg-paperairplanes	5	280	80372f38	80372f74	paobstacle.cpp
+PAPowerupManager	mg-paperairplanes	13	4820	8037aac0	8037ab1c	papowerupmanager.cpp
+PGConga	input	5	400	8032e3cc	8032e498	pgconga.cpp
+PGCongaPlatform	input	8	216			pgconga.cpp
+PGMoviePlayer	engine-support	13	1064	803d4d9c	803d4e18	pgmovieplayer.cpp
+PanCamera	mg-paperairplanes	10	1564	803c3d48		pancamera.cpp
+PaperAirplane	mg-paperairplanes	38	18796	803738e0	80373acc	paperairplane.cpp
+PaperAirplaneCamera	mg-paperairplanes	16	2564	80378754		paperairplanecamera.cpp
+PaperAirplaneCollisionListener	mg-paperairplanes	4	360	803784c8	80378530	paperairplane.cpp
+PaperAirplaneCourse	mg-paperairplanes	13	6008	80379170	80379298	paperairplanecourse.cpp
+PaperAirplaneFSHandlers	frontend	3	276		8031d7dc	PaperAirplaneHandlers.cpp
+PaperAirplaneHandlers	frontend	4	544	8031d654	8031d724	PaperAirplaneHandlers.cpp
+PaperAirplaneLVHandlers	frontend	3	328		8031d8f0	PaperAirplaneHandlers.cpp
+PaperAirplaneShadowRenderEntity	mg-paperairplanes	3	192	80378630	8037864c	paperairplane.cpp
+PartFx	effects	16	2572	802f62fc	802f631c	partfx.cpp
+PartFxDef	effects	4	108	802f6f78	802f6f88	partfxdef.cpp
+PartFxManager	effects	20	3276	802f6ffc	802f7098	partfxmanager.cpp
+ParticleRenderEagl	effects	20	7648			Lion_Unity.cpp
+ParticleRenderQuadUVs	effects	1	36			Lion_Unity.cpp
+PauseMenuFSHandlers	frontend	7	1080	8031dbd4	8031dc5c	PauseMenuHandlers.cpp
+PauseMenuHandlers	frontend	4	388	8031dae8	8031db48	PauseMenuHandlers.cpp
+PhysicsCharacter	mg-footie,physics-glue	7	456	803b52b0	803b532c	footiecharacter.cpp,physicscharacter.cpp
+PhysicsCharacterListener	ai,physics-glue	8	296	803b5c00	803b5c80	metaworldplayaientity.cpp,physicscharacterlistener.cpp
+PhysicsDynamicCharacter	physics-glue	14	3596	803b5d3c	803b628c	physicsdynamiccharacter.cpp
+PhysicsManager	physics-glue	45	8872	803b6c58	803b6d04	physicsmanager.cpp
+PhysicsMemory	physics-glue	18	1176		803b90e8	physicsmemory.cpp
+PhysicsPhantom	physics-glue	8	704	803b9510	803b956c	physicsphantom.cpp
+PhysicsPhantomListener	mg-footie,physics-glue	6	412	803b97e8	803b9810	footienetlistener.cpp,physicsphantomlistener.cpp
+PhysicsRigidBody	physics-glue	21	2016	803b9998	803b99e8	physicsrigidbody.cpp
+PhysicsRigidBodyListener	mg-freethrow,physics-glue	6	300	803ba7c4	803ba850	freethrowcollisionlistener.cpp,physicsrigidbodylistener.cpp
+PhysicsStaticCharacter	physics-glue	13	1004	803ba8f4	803bab20	physicsstaticcharacter.cpp
+PhysicsUserData	mg-freethrow,physics-glue	4	288	803bacf8	80333444	freethrowball.cpp,physicsuserdata.cpp
+PhysicsVehicle	physics-glue	34	6516	803badf0	803bae2c	physicsvehicle.cpp
+PhysicsVehicleDummyAerodynamics	physics-glue	4	172		803bc8e0	physicsvehicle.cpp
+PhysicsVehicleWheelCollide	physics-glue	3	304		803bc944	physicsvehicle.cpp
+Placeable	world	8	852	803d8090	803d8104	placeables.cpp
+PlaceableAnimationEventHandler	world	2	156	803da0f4		placeables.cpp,playgroundGate.cpp
+PlaceableAsset	world	3	140	803d95d4	803d9604	placeables.cpp
+PlaceableManager	world	10	6568	803d867c	803d86e0	placeables.cpp
+PlaceableManager::PlaceableShadowEntity	world	3	668	803d83e0	803d83fc	placeables.cpp
+PlayerCharacterAnimationEventHandler	characters	2	344	802ed504		charactermanager.cpp,charactermovement.cpp
+PlayerScoreRec	core-flow	1	20			minigame.cpp
+PlaygroundGate	world	19	5872	803da104	803da178	playgroundGate.cpp
+PlaygroundWorld	world	64	18456	803dba94	803dbbd0	playgroundWorld.cpp
+PoI	ai	36	5932	802cf704	802cf950	poi.cpp
+PoICompulsion	ai	13	4192	802cd9f0	802cda7c	compulsion.cpp
+PoIGroup	ai	14	2140	802d0ffc	802d1164	poigroup.cpp
+PoIInterpreter	ai	20	3156	802d1870	802d1960	poiinterpreter.cpp
+PoIManager	ai	15	3360	802d2578	802d2628	poimanager.cpp
+PoIMemory	ai	3	156	802d24c4	802d24e4	poiinterpreter.cpp
+PostGameFSHandlers	frontend	5	752	8031eef4	8031ef7c	PostGameHandlers.cpp
+PostGameHandlers	frontend	7	508	8031e0f4	8031e17c	PostGameHandlers.cpp
+PostGameLVHandlers	frontend	14	3264	8031e234	8031e364	PostGameHandlers.cpp
+PreGameFSHandlers	frontend	3	156		80320128	PreGameHandlers.cpp
+PreGameHandlers	frontend	7	552	8031f2bc	8031f36c	PreGameHandlers.cpp
+PreGameInfo	core-flow	1	80	803ab634		minigame.cpp
+PreGameLVHandlers	frontend	15	3332	8031f424	8031f4d4	PreGameHandlers.cpp
+ProfileData	core-flow	1	668			profile.cpp
+ProfileFSHandlers	frontend	7	1024	803205a0	80320628	ProfileHandlers.cpp
+ProfileHandlers	frontend	6	964	80320274	803202fc	ProfileHandlers.cpp
+ProfileLVHandlers	frontend	6	1596	803209a0	80320a18	ProfileHandlers.cpp
+RCMP	mg-rccars	3	156			rcmp_mad_codec.cpp,rcmp_vp6_codec.cpp
+RCMP::AV_PLAYER	mg-rccars	2	32			rcmpbase.cpp
+RCMP::CHUNK	mg-rccars	1	20	802964f8		rcmpbase.cpp
+RCMP::CODEC_IDATA	mg-rccars	2	48	8029650c		rcmpbase.cpp
+RCMP::DECODER	mg-rccars	10	696	80296240	802962b8	rcmpbase.cpp
+RCMP::FRAME	mg-rccars	3	28			rcmpbase.cpp
+RCMP::RCMP_SYSTEM	mg-rccars	2	92	80296224	80296558	rcmpbase.cpp
+RCON::DLNode	mg-rccars	2	108		802966b0	rcmp_vp6_codec.cpp
+RCON::TDLList<9MAD_FRAME>	mg-rccars	3	144	80297400	8029740c	rcmp_mad_codec.cpp
+RCON::TDLList<9VP6_FRAME>	mg-rccars	3	144	80296874	80296880	rcmp_vp6_codec.cpp
+RCON::TDLNode<9MAD_FRAME>	mg-rccars	1	88		802972b4	rcmp_mad_codec.cpp
+RCON::TDLNode<9VP6_FRAME>	mg-rccars	1	88		802966fc	rcmp_vp6_codec.cpp
+RcByPassCompulsion	mg-rccars	5	448	8037da50	8037dab8	aircdriver.cpp
+RcCar	mg-rccars	63	27712	80383720	803837e8	aircdriver.cpp,rccar.cpp
+RcCarCollisionListener	mg-rccars	6	1392	8038a544	8038a598	rccarcollisionlistener.cpp
+RcCarVehicleInfo	mg-rccars	4	1276	8038aacc	8038af5c	rccarvehicleinfo.cpp
+RcChangeLaneCompulsion	mg-rccars	3	276	8037dc10	8037dc4c	aircdriver.cpp
+RcChaseCamera	mg-rccars	13	3492	8038afe0		rcchasecamera.cpp
+RcChaseCameraInfo	mg-rccars	1	36			mgrccars.cpp
+RcCollisionCourseCompulsion	mg-rccars	5	632	8037d490	8037d4d4	aircdriver.cpp
+RcDriverAIEntity	mg-rccars	22	3808	8037bdac	8037be2c	aircdriver.cpp
+RcDrivingCompulsion	mg-rccars	7	1004		8037ccdc	aircdriver.cpp
+RcInterestManager	mg-rccars	13	5980	8038bd9c	8038bdb8	rcinterestmanager.cpp
+RcLanePos	mg-rccars	2	132	8037fd1c		mgrccars.cpp
+RcObstacle	mg-rccars	5	1048	8038d510	8038d524	rcobstacle.cpp
+RcObstacleManager	mg-rccars	7	1288	8038d940	8038d990	rcobstaclemanager.cpp
+RcPatch	mg-rccars	8	1376	8038de60	8038de94	rcpatch.cpp
+RcPatchManager	mg-rccars	11	1540	8038e3d8	8038e428	rcpatchmanager.cpp
+RcPowerupManager	mg-rccars	31	7880	8038e9f4	8038ea34	rccar.cpp,rcpowerupmanager.cpp
+RcPushBackCompulsion	mg-rccars	3	840	8037d708	8037d744	aircdriver.cpp
+RcQuickBoostCompulsion	mg-rccars	3	308	8037de2c	8037de68	aircdriver.cpp
+RcShadowManager	mg-rccars	5	1224	803908a0	803908ac	rcshadowmanager.cpp
+RcSlowDownCompulsion	mg-rccars	3	160	8037d1b0	8037d1ec	aircdriver.cpp
+RcSpeedManager	mg-rccars	12	1456	80390df8	80390e04	rcspeedmanager.cpp
+RcSpeedUpCompulsion	mg-rccars	3	200	8037d0e8	8037d124	aircdriver.cpp
+RcTrack	mg-rccars	26	16056	803913c0	803913d0	rctrack.cpp
+RcUsePowerupCompulsion	mg-rccars	3	576	8037d250	8037d28c	aircdriver.cpp
+RcUseShieldCompulsion	mg-rccars	3	264	8037dd24	8037dd60	aircdriver.cpp
+Ren	render-scene	9	560			engine.cpp,frustumtest.cpp,scene.cpp,shadowmanager.cpp,worldlightmanager.cpp
+Ren::BoundingBox	render-scene,world	3	236	803d6b74		areadrawmanager.cpp,cachedanimatedmodel.cpp
+Ren::CachedAnimatedModel	render-scene	7	472	803bd390	803bd3ac	cachedanimatedmodel.cpp
+Ren::CachedListConfig	render-scene	3	80	803bd56c	803bd578	cachedanimatedmodel.cpp
+Ren::CachedModel	render-scene	4	1108	803bd5d0	803bd5f4	cachedmodel.cpp
+Ren::Engine	mg-dartshootout,render-scene	13	1292	803bef4c	803bef98	dstargetcharacter.cpp,engine.cpp
+Ren::Entity	render-scene	1	64		803bf490	entity.cpp
+Ren::FadeToColourEffect	render-scene,world	9	1436	803bf4e8	803bf52c	fadetocoloureffect.cpp,playgroundGate.cpp
+Ren::FrustumTest	render-scene	6	3436			frustumtest.cpp
+Ren::FullScreenEffect	mg-dartshootout	4	16			dsshieldeffect.cpp
+Ren::FullScreenEffectsManager	render-scene	10	928	803c1ed0	803c1f98	fullscreeneffectsmanager.cpp
+Ren::FullScreenEffectsManager::FullScreenEffectsManagerEntity	render-scene	3	316	803c224c	803c1f40	fullscreeneffectsmanager.cpp
+Ren::LightManager	render-scene	3	1480			lightmanager.cpp
+Ren::LinearBlend	mg-dartshootout,mg-wallball	2	144			dsfullscreenfx.cpp,wallballcharacter.cpp
+Ren::Scene	render-scene	14	2692	803c437c	803c44a4	scene.cpp
+Ren::SceneContext	render-scene	3	300	803c4e00		scene.cpp
+Ren::SceneOptions	mg-paperairplanes	2	192	8036e2e8		mgpaperairplanes.cpp
+Ren::ShadowManager	mg-paperairplanes,render-scene	10	4968	803c503c	803c50d8	mgpaperairplanes.cpp,shadowmanager.cpp
+Ren::ShadowViewOptions	render-scene	1	140	803c4f6c		shadowmanager.cpp
+Ren::WorldLightManager	render-scene	6	1212	803c7624	803c7830	worldlightmanager.cpp
+RenderTextureEntity	render-scene	5	848	803d5188	803d51bc	rendertexture.cpp
+RenderTextureUtil	render-scene	7	472	803d5520	803d55e8	rendertexture.cpp
+ReportCardFSHandlers	frontend	2	124		80321214	ReportCardHandlers.cpp
+ReportCardHandlers	frontend	4	544	8032108c	8032115c	ReportCardHandlers.cpp
+ReportCardLVHandlers	frontend	3	888		80321290	ReportCardHandlers.cpp
+SelectableCharacter	frontend	26	4760	80327d58	80327ea4	FEManager.cpp,selectablecharacter.cpp
+ShadowRenderEntity	characters	5	656	802f0ba8	802f0c40	shadowrenderentity.cpp
+SimpleMovementAIEntity	ai	5	460	802d32b0	802d3318	simplemovementaientity.cpp
+SkyDome	render-scene	7	1804	803c6420	803c6478	skydome.cpp
+SlerpPanCamera	cameras	10	1020	803c6bc4		slerppancamera.cpp
+SlotPool	engine-support	6	672	803d56c8	803d56f4	slotpool.cpp
+SpawnManager	world	8	1652	803e0398	803e0408	spawnmanager.cpp
+SpawnRegion	world	9	2856	803e0a24	803e0ae4	spawnregion.cpp
+StaticAnimCompulsion	ai	8	564	802cedac	802cedfc	compulsion.cpp
+StickerBookFSHandlers	frontend	9	1280	803227b4	8032288c	StickerBookHandlers.cpp
+StickerBookHandlers	frontend	8	672	80321780	80321808	StickerBookHandlers.cpp
+StickerBookLVHandlers	frontend	11	3828	803218c0	80321978	StickerBookHandlers.cpp
+StickerStoreFSHandlers	frontend	5	704	803233f4	8032349c	StickerStoreHandlers.cpp
+StickerStoreHandlers	frontend	4	472	80322df0	80322e78	StickerStoreHandlers.cpp
+StickerStoreLVHandlers	frontend	6	1220	80322f30	80322fa8	StickerStoreHandlers.cpp
+StrapWarningScreen	core-flow	7	1168	803b345c		strapwarn.cpp
+Structs::MGDS_TargetDef	data-parsers	1	36			db.cpp
+Structs::MGPA_Obstacle	data-parsers	1	44			db.cpp
+Structs::MGPA_Powerup	data-parsers	1	44			db.cpp
+Structs::PG_Ability	data-parsers	1	28			db.cpp
+Structs::PG_AccessibilityPopup	data-parsers	1	28			db.cpp
+Structs::PG_HighScore	data-parsers	1	28			db.cpp
+SubmenuWidget	engine-support	5	480	803ce760	803ce7b8	debugmenuwidgets.cpp
+TRC	core-flow	59	6548			trcUtil.cpp
+TRCCoreHandlers	frontend	49	6420	80252454		TRCWiiCoreHandlers.cpp
+TalkPoI	ai	3	128	802d0f5c	802d0f98	poi.cpp
+TalkPoICompulsion	ai	6	332	802cec6c	802cecb0	compulsion.cpp
+TarManager	render-scene	5	568	803c7054	803c7060	tarmanager.cpp
+Teams	core-flow	2	132	803ab210	803ab254	minigame.cpp
+Tetherball	mg-tetherball	20	6032	8039d264	8039d398	tetherball.cpp
+TetherballAIEntity	mg-tetherball	6	1464	80395290	80395318	aitetherball.cpp
+TetherballHitCompulsion	mg-tetherball	10	1908	80395c18	80395ca8	aitetherball.cpp
+TetherballMoveCompulsion	mg-tetherball	8	1020	80395848	8039589c	aitetherball.cpp
+TetherballShadowRenderEntity	mg-tetherball	4	324	8039ea78	8039ea94	tetherball.cpp
+TopDownCamera	cameras	10	596	803c72a4		topdowncamera.cpp
+VP6_CODEC_INTERNAL	mg-rccars	9	1604	802967e8	802968dc	rcmp_vp6_codec.cpp
+VP6_FRAME	mg-rccars	2	324	80296600	80296754	rcmp_vp6_codec.cpp
+VaultMap	data-parsers	2	112	802f3ef0	802f3fc0	db.cpp
+VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>	attribute-db	7	1640			attribclass.cpp
+VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>::Node	attribute-db	2	68			attribclass.cpp
+VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>	attribute-db	6	1564		802d7a38	attribdatabase.cpp
+VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>::Node	attribute-db	2	68			attribdatabase.cpp
+VideoCapture	input	4	108			controller.cpp
+VideoCapture::ScreenCapture	input	9	1900	803293fc	803293bc	controller.cpp
+VideoCapture::TargaWriter	input	1	288			controller.cpp
+Wallball	mg-wallball	26	7544	803a2f58	803a3038	wallball.cpp
+WallballAIDifficultyInfo	mg-wallball	1	108	8039ef1c		aiwallball.cpp
+WallballAIEntity	mg-wallball	5	876	8039eb84	8039ebd0	aiwallball.cpp
+WallballCamera	mg-wallball	15	1564	803a4dd8		wallballcamera.cpp
+WallballCharacter	mg-wallball	66	15344	803a540c	803a54f4	wallballcharacter.cpp
+WallballCourt	mg-wallball	13	1492	803a916c	803a9190	wallballcourt.cpp
+WallballDifficultyInfo	mg-wallball	1	68	8039f910		mgwallball.cpp
+WallballHitBallCompulsion	mg-wallball	10	1416	8039f164	8039f1c0	aiwallball.cpp
+WallballIdleCompulsion	mg-wallball	9	404	8039f6c0	8039f704	aiwallball.cpp
+WallballPowerMeter	mg-wallball	2	200		803a5898	wallballcharacter.cpp,wallballpowermeter.cpp
+WallballPowerupManager	mg-wallball	24	6620	803a97f8	803a9848	wallballpowerupmanager.cpp
+WallballServeCompulsion	mg-wallball	9	520	8039ef88	8039efe4	aiwallball.cpp
+WallballShadowRenderEntity	mg-wallball	3	136	803a4cd0	803a4cec	wallball.cpp
+WanderCompulsion	ai	9	916	802cd62c	802cd680	compulsion.cpp
+WiiRumbleEffects	pad-drivers	12	1628	80414688	804146ec	wiipadeffect.cpp
+World	world	6	316	803e1564	803e159c	World.cpp,playgroundWorld.cpp
+WorldEffectManager	effects	5	808	802f7d14	802f7d48	worldeffectmanager.cpp
+WorldHudFSHandlers	frontend	3	240	80324134	80324194	WorldHudHandlers.cpp
+WorldHudHandlers	frontend	24	2452	80323764	80323814	WorldHudHandlers.cpp
+WorldHudLVHandlers	frontend	2	212		803238cc	WorldHudHandlers.cpp
+WorldMan	ai,core-flow,frontend,mg-paperairplanes,world	29	5232	803e16b0	803e1734	GameState.cpp,MinigameHandlers.cpp,PauseMenuHandlers.cpp,WorldManager.cpp,mgpaperairplanes.cpp,poi.cpp
+cCSVParser	data-parsers	10	1712	802f2c84	802f2cf0	csvparser.cpp
+cColour8	effects	16	1840	802f8908		Lion_Unity.cpp
+cGroper	effects	6	1140			Lion_Unity.cpp
+cGroperBindGroup	effects	4	1008			Lion_Unity.cpp
+cGroperBinding	effects	7	1264			Lion_Unity.cpp
+cGroperMaterialSettings	effects	1	84			Lion_Unity.cpp
+cGroperPass	effects	12	2480	8031354c	80313550	Lion_Unity.cpp
+cGroperState	effects	3	120			Lion_Unity.cpp
+cGroperUV	effects	6	564	80312f9c		Lion_Unity.cpp
+cKeyStringTable	effects	5	564	80314cd4		Lion_Unity.cpp
+cKeyValueTable	effects	2	76	80314dd4		Lion_Unity.cpp
+cLionArgsParser	effects	6	1988			Lion_Unity.cpp
+cLionBindings	effects	2	148			Lion_Unity.cpp
+cLionBlockAlloc	effects	5	728			Lion_Unity.cpp
+cLionChunk	effects	4	204			Lion_Unity.cpp
+cLionChunkFactory	effects	2	276			Lion_Unity.cpp
+cLionChunkGroup	effects	13	4516			Lion_Unity.cpp
+cLionChunkManager	effects	14	5804			Lion_Unity.cpp
+cLionConBeh	effects	1	48			Lion_Unity.cpp
+cLionConDes	effects	2	304			Lion_Unity.cpp
+cLionConvert	effects	1	480			Lion_Unity.cpp
+cLionEffectDefinition	effects	3	528			Lion_Unity.cpp
+cLionEffectManager	effects	7	1224			Lion_Unity.cpp
+cLionFX	effects	18	1048			Lion_Unity.cpp
+cLionFog	effects	3	288	80314d0c	80314d20	Lion_Unity.cpp
+cLionForceEffect	effects	1	28			Lion_Unity.cpp
+cLionForceManager	effects	5	680			Lion_Unity.cpp
+cLionForceParser	effects	1	392			Lion_Unity.cpp
+cLionGeomBehaviour	effects	1	104			Lion_Unity.cpp
+cLionGeomBehaviourCube	effects,frontend	6	108		8031430c	BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionGeomBehaviourCylinder	effects,frontend	6	116		803142cc	BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionGeomBehaviourQuad	effects,frontend	6	116		8031428c	BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionGeomBehaviourSphere	effects,frontend	6	132		8031420c	BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionGeomBehaviourSpline	effects	6	116		8031424c	Lion_Unity.cpp
+cLionGeomDescriptor	effects	10	1464			Lion_Unity.cpp
+cLionGeomEffect	effects	5	824			Lion_Unity.cpp
+cLionGeomEffectManager	effects	6	884			Lion_Unity.cpp
+cLionGeomParser	effects	1	708			Lion_Unity.cpp
+cLionGeomPluginCube	effects,frontend	8	368	80314f64		BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionGeomPluginCylinder	effects,frontend	8	372	80314f74		BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionGeomPluginManager	effects	3	356			Lion_Unity.cpp
+cLionGeomPluginQuad	effects,frontend	8	368	80314f84		BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionGeomPluginSphere	effects,frontend	8	368	80314f94		BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionGeomPluginSpline	effects	7	352			Lion_Unity.cpp
+cLionGeomSystem	effects	2	248			Lion_Unity.cpp
+cLionLightBehaviour	effects	2	396			Lion_Unity.cpp
+cLionLightDescriptor	effects	6	1240			Lion_Unity.cpp
+cLionLightEffect	effects	4	620			Lion_Unity.cpp
+cLionLightEffectManager	effects	5	1464			Lion_Unity.cpp
+cLionLightParser	effects	1	512			Lion_Unity.cpp
+cLionLightSystem	effects	1	32			Lion_Unity.cpp
+cLionLine	effects	2	516			Lion_Unity.cpp
+cLionParticleEffect	effects	7	936			Lion_Unity.cpp
+cLionParticleEffectManager	effects	7	688			Lion_Unity.cpp
+cLionParticleParser	effects	3	1260			Lion_Unity.cpp
+cLionPostProBehaviour	effects	1	104			Lion_Unity.cpp
+cLionPostProBehaviourBloom	effects,frontend	6	196		803141a4	BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionPostProBehaviourBulge	effects,frontend	7	424		80314164	BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionPostProBehaviourFastTint	effects,frontend	7	180		8031402c	BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionPostProBehaviourFlexibleTint	effects,frontend	7	260		8031411c	BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionPostProBehaviourGloom	effects,frontend	6	196		803140ac	BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionPostProBehaviourMotionBlur	effects,frontend	7	136		8031406c	BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionPostProDescriptor	effects	7	1276			Lion_Unity.cpp
+cLionPostProEffect	effects	4	648			Lion_Unity.cpp
+cLionPostProEffectManager	effects	6	1008			Lion_Unity.cpp
+cLionPostProParser	effects	1	580			Lion_Unity.cpp
+cLionPostProPlugin	effects	1	8			Lion_Unity.cpp
+cLionPostProPluginBloom	effects,frontend	10	408	80314fa4		BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionPostProPluginBulge	effects,frontend	11	384	80314ff4		BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionPostProPluginFastTint	effects,frontend	10	380	80314fe4		BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionPostProPluginFlexibleTint	effects,frontend	11	388	80314fb4		BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionPostProPluginGloom	effects,frontend	10	408	80314fc4		BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionPostProPluginManager	effects	4	636			Lion_Unity.cpp
+cLionPostProPluginMotionBlur	effects,frontend	10	380	80314fd4		BossEndGameHandlers.cpp,Lion_Unity.cpp
+cLionPostProRenderStack	effects	4	1180			Lion_Unity.cpp
+cLionPostProSystem	effects	2	296			Lion_Unity.cpp
+cLionString	effects	3	320			Lion_Unity.cpp
+cLionStringCollection	effects	10	1336			Lion_Unity.cpp
+cLionStringCollectionFactory	effects	1	172			Lion_Unity.cpp
+cLionStringFactory	effects	1	172			Lion_Unity.cpp
+cLionTextParser	effects	2	1136			Lion_Unity.cpp
+cLionTokenTable	effects	9	1824	80314d60	80314d94	Lion_Unity.cpp
+cLionTrajectory	effects	2	440			Lion_Unity.cpp
+cMatrix	effects	27	1936	80306b04		Lion_Unity.cpp,partfx.cpp
+cParser	data-parsers	3	456			parser.cpp
+cParticleBehaviour	effects	12	7064			Lion_Unity.cpp
+cParticleBucket	effects	8	1920			Lion_Unity.cpp
+cParticleBucketManager	effects	21	3212			Lion_Unity.cpp
+cParticleDescriptor	effects	16	2516			Lion_Unity.cpp
+cParticleEmitter	effects	14	6568			Lion_Unity.cpp
+cParticleEmitterManager	effects	8	1408			Lion_Unity.cpp
+cParticleLocator	effects	3	1244			Lion_Unity.cpp
+cParticleLocatorManager	effects,frontend	3	128	80314e40	80314e44	BossEndGameHandlers.cpp,Lion_Unity.cpp
+cParticleMaterial	effects	3	344			Lion_Unity.cpp
+cParticleRadiusBuilder	effects	2	896			Lion_Unity.cpp
+cParticleRandomSeed	effects	2	280			Lion_Unity.cpp
+cParticleRender	effects,frontend	8	3264	80314f14	80314f24	BossEndGameHandlers.cpp,Lion_Unity.cpp
+cParticleRenderMaterial	effects	2	264			Lion_Unity.cpp
+cParticleScalerManager	effects	1	48			Lion_Unity.cpp
+cParticleStatsAllocator	effects	8	292	803090ec	80314410	Lion_Unity.cpp
+cParticleStatsManager	effects,frontend	6	1160	80314e84	80314eb8	BossEndGameHandlers.cpp,Lion_Unity.cpp
+cParticleSystem	effects	2	404			Lion_Unity.cpp
+cParticleTrigger	effects	1	456			Lion_Unity.cpp
+cParticleTriggerManager	effects	1	60			Lion_Unity.cpp
+cParticleWaveForm	effects	4	1000			Lion_Unity.cpp
+cParticleWaveFormTable	effects	6	676			Lion_Unity.cpp
+cQuat	effects	4	1804			Lion_Unity.cpp
+cTime	effects	3	128	803065e4	802f6564	Lion_Unity.cpp,partfx.cpp
+cVector	effects	23	1196	802f6494		Lion_Unity.cpp,partfx.cpp
+hkCharacterProxyCinfo	physics-glue	1	216	803b61b4		physicsdynamiccharacter.cpp
+hkReferencedObject	physics-glue	1	24	803bb48c		physicsvehicle.cpp
+hkRigidBodyCinfo	physics-glue	1	272			physicsmanager.cpp
+hkTransform	physics-glue	1	80	803bc284		physicsvehicle.cpp
+hkWorldRayCastInput	physics-glue	1	16	803b8304		physicsmanager.cpp
+hkWorldRayCastOutput	physics-glue	1	36	803b8314		physicsmanager.cpp
+iParticleRender	effects	9	364			Lion_Unity.cpp
+nw4r::lyt::FontRefLink	frontend	1	64		80252380	TRCWiiCoreHandlers.cpp
+pgDBCollection	data-parsers	48	6148	802f43e0	802f43f4	db.cpp
+pgDBIterator	data-parsers	1	68			db.cpp
+pgIDatabase	data-parsers	16	1252			db.cpp
+pgIO	engine-support	11	1224	803d47d0		pgFile.cpp
+pgIO::BigFileInMem	engine-support	2	136	803d4838	803d4868	pgFile.cpp
+rmAABB	world	1	28	803d7170		areadrawmanager.cpp
+rmAngle	ai,characters,math,mg-dodgeball,world	10	676	803b2138		charactermanager.cpp,compulsion.cpp,dodgeballcharacter.cpp,playgroundWorld.cpp,rmangle.cpp
+rmMatrix4	characters,effects,mg-microbug,render-scene	4	404	8030b670		Lion_Unity.cpp,character.cpp,entity.cpp,microbugmanager.cpp
+rmOBB	math,world	5	2288	803b2478		areadrawmanager.cpp,rMath.cpp
+rmTagPoint	ai,math	8	808	802cd450	802cd2cc	compulsion.cpp,poi.cpp,rmtagpoint.cpp
+rmVector2	characters,input	2	32	802ef554		controller.cpp,localcharactercontrol.cpp
+rmVector3	ai,cameras,frontend,mg-paperairplanes	5	104	802ccd98		FEManager.cpp,aiutils.cpp,compulsion.cpp,framecamera.cpp,mgpaperairplanes.cpp
+rmVector4	mg-dartshootout,mg-dodgeball	4	124	8033c5b0		dodgeballcamera.cpp,dodgeballcourt.cpp,dsdartgun.cpp,dstargetcharacter.cpp
+sLionChannel	effects	1	1080			Lion_Unity.cpp
+sLionMemberToken	effects	8	6172			Lion_Unity.cpp
+sLionPostProBloomMip	effects	2	68	80310e5c	80310e60	Lion_Unity.cpp
+sLionPostProGloomMip	effects	2	68	80311734	80311738	Lion_Unity.cpp
+sParticleNucleus	effects	3	84	80314de0	80314de4	Lion_Unity.cpp
+sProfilerCounter	effects	3	216			Lion_Unity.cpp
+std	attribute-db	5	1260			attribdatabase.cpp,attribloadandgo.cpp
+std::__list_deleter<PCv,Q23std14allocator<PCv>>	attribute-db	3	256		802d7cd8	attribdatabase.cpp
+std::__list_imp<PCv,Q23std14allocator<PCv>>	attribute-db	2	220	802d7cc0		attribdatabase.cpp
+std::__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>	attribute-db	1	140			attribasset.cpp
+std::__map_do_transform<Ux,PQ26Attrib5Vault,Q23std8less<Ux>,Q23std45allocator<Q23std26pair<CUx,PQ26Attrib5Vault>>,1>	attribute-db	2	144			attribasset.cpp
+std::__pointer_plus_bit<PQ23std39__tree_node_base<Q23std13allocator<Pv>>>	attribute-db	2	44			attribdatabase.cpp
+std::__red_black_tree<PQ23std39__tree_node_base<Q23std13allocator<Pv>>>	attribute-db	3	796			attribasset.cpp,attribdatabase.cpp
+std::__tree<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>	data-parsers	1	92		802f3f08	db.cpp
+std::__tree<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>	data-parsers	1	92		802f4030	db.cpp
+std::__tree<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>	attribute-db	1	92		802d7bf4	attribdatabase.cpp
+std::__tree_deleter<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>	data-parsers	2	196		802f42ec	db.cpp
+std::__tree_deleter<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>	data-parsers	2	196		802f4228	db.cpp
+std::__tree_deleter<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>	attribute-db	2	196		802d81b8	attribdatabase.cpp
+std::__tree_node_base<Q23std13allocator<Pv>>	attribute-db	2	52			attribasset.cpp,attribdatabase.cpp
+std::__vec_constructor<PCQ26Attrib8TypeDesc,Q23std31allocator<PCQ26Attrib8TypeDesc>,1>	attribute-db	1	92		802d7b28	attribdatabase.cpp
+std::__vec_deleter<Ul,Q23std13allocator<Ul>>	attribute-db	2	248			attribdatabase.cpp
+std::allocator<Ul>	attribute-db	1	92			attribdatabase.cpp
+std::list<PCQ26Attrib10Collection,Q23std34allocator<PCQ26Attrib10Collection>>	attribute-db	3	116		802d7d68	attribdatabase.cpp
+std::list<PCQ26Attrib5Class,Q23std28allocator<PCQ26Attrib5Class>>	attribute-db	3	116		802d7e30	attribdatabase.cpp
+std::map<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>	attribute-db,data-parsers	2	568		802f408c	attribasset.cpp,db.cpp
+std::map<Ux,PQ26Attrib5Vault,Q23std8less<Ux>,Q23std45allocator<Q23std26pair<CUx,PQ26Attrib5Vault>>>	data-parsers	1	92		802f3f64	db.cpp
+std::set<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>	attribute-db	3	1072			attribdatabase.cpp
+std::vector<PCQ26Attrib8TypeDesc,Q23std31allocator<PCQ26Attrib8TypeDesc>>	attribute-db	1	432			attribdatabase.cpp
+textinput::EventObserver	frontend	5	20			TRCWiiCoreHandlers.cpp

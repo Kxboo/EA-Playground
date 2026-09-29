@@ -1,0 +1,133 @@
+# handler_class	kind(FS=fscommand LV=loadVariables)	job_index	apt_name	native_target(s) on that dispatch path	dispatch_fn	registered_in
+AIP::AIPHandler	FS	0	StartAPTRender		80114284	80114158
+AIP::AIPHandler	FS	1	StopAPTRender		80114284	80114158
+AIP::AIPHandler	FS	2	SetAPTRenderCallback	AIP::AIPHandler::DoSetAptRenderCallback(const AIP::CmdDecomposer&)	80114284	80114158
+AIP::AIPHandler	LV	3	GetBattery		801142d4	80114158
+AIP::AIPHandler	LV	4	GetLocalizedString	AIP::CmdDecomposer::GetStringByName(const char*, char*, int) const [StringID] ; AIP::GetLocalizedString(char*) ; AIP::CmdComposer::SetStringByName(const char*, const wchar_t*) [LocString]	801142d4	80114158
+AIP::AIPHandler	LV	5	GetAPTRenderCallback	AIP::AIPHandler::DoGetAptRenderCallback(const AIP::CmdDecomposer&, AIP::CmdComposer&)	801142d4	80114158
+BossEndGameFSHandlers	FS	0	EndGame_OnStickerSelect	AIP::CmdDecomposer::GetIntByName(const char*, int*) const [iMinigame] ; CharacterProfile::StartBossBattle(Enums::MinigameType)	8031540c	80315318
+BossEndGameFSHandlers	FS	1	EndGame_QuitResponse	AIP::CmdDecomposer::GetIntByName(const char*, int*) const [iResponse] ; CharacterProfile::QuitLastBossBattle()	8031540c	80315318
+BossEndGameFSHandlers	FS	2	EndGame_OnFinished	BossEndGameFSHandlers::EndGameOnFinished(const AIP::CmdDecomposer&)	8031540c	80315318
+BossEndGameHandlers	LV	0	EndGame_OnLoad			803150fc
+ConversationHandlers	FS	4	ConversationOnButtonNext			803156b0
+ConversationLVHandlers	LV	0	Conversation_GetName	Locale::GetString(const char*) const ; AIP::CmdComposer::SetStringByName(const char*, const wchar_t*) [iCharacterName]	8031592c	80315818
+ConversationLVHandlers	LV	1	Conversation_GetDialogueText	ConversationManager::Get() ; ConversationManager::GetText(wchar_t*, int) ; AIP::CmdComposer::SetStringByName(const char*, const wchar_t*) [iDialogueText]	8031592c	80315818
+ConversationLVHandlers	LV	2	Conversation_GetResponses	ConversationLVHandlers::ConversationGetResponses(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031592c	80315818
+ConversationLVHandlers	LV	3	Conversation_OnPlayerSelect	ConversationLVHandlers::ConversationOnPlayerSelect(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031592c	80315818
+CreditScreenHandlers	LV	0	ScrCreditsInit			80315c1c
+EndTourneyHandlers	FS	0	EndTourney_OnButtonClick			80315f7c
+EndTourneyHandlers	LV	0	EndTourney_OnLoad			80315f7c
+GlobalFSHandlers	FS	5	PlayAEMSsfx	AIP::CmdDecomposer::GetStringByName(const char*, char*, int*) const [nFEsfxID] ; Audio::Instance() ; Audio::PlaySFX(const char*)	80316880	8031675c
+GlobalFSHandlers	FS	6	ActivateRumble	GlobalFSHandlers::ActivateRumble(const AIP::CmdDecomposer&)	80316880	8031675c
+GlobalFSHandlers	FS	7	ScreenReady	GlobalFSHandlers::ScreenReady(const AIP::CmdDecomposer&)	80316880	8031675c
+GlobalFSHandlers	FS	8	ScreenLeaving	AIP::CmdDecomposer::GetStringByName(const char*, char*, int) const [strCS] ; AIP::CmdDecomposer::GetStringByName(const char*, char*, int) const [strCO] ; AIP::CmdDecomposer::GetStringByName(const char*, char*, int) const [strCMO] ; AIP::CmdDecomposer::GetStringByName(const char*, char*, int) const [strCTO]	80316880	8031675c
+GlobalFSHandlers	FS	9	ReturnCursorVisibility	GlobalFSHandlers::ReturnCursorVisibility(const AIP::CmdDecomposer&)	80316880	8031675c
+GlobalLVHandlers	LV	0	GetStartScreenFromMain	AIP::CmdComposer::SetStringByName(const char*, const char*) [strFirstScreen]	80316638	80316514
+GlobalLVHandlers	LV	1	GetLocale	TRC::TRC_WarningScreens_GetLanguage() ; AIP::CmdComposer::SetIntByName(const char*, int) [iLocale]	80316638	80316514
+GlobalLVHandlers	LV	2	GetLocaleFE	AIP::CmdComposer::SetIntByName(const char*, int) [iLocale]	80316638	80316514
+GlobalLVHandlers	LV	3	GetAspectRatio	AIP::CmdComposer::SetIntByName(const char*, int) [iAspectRatio]	80316638	80316514
+GlobalLVHandlers	LV	4	PG_GetBuildType	AIP::CmdComposer::SetIntByName(const char*, int) [iBuildType]	80316638	80316514
+LoadingScreenHandlers	FS	2	LoadingStartPressed			80316d5c
+LoadingScreenLVHandlers	LV	0	LoadingGetBtnLabels		80316f98	80316ec4
+LoadingScreenLVHandlers	LV	1	LoadingGetStartOrBack	LoadingScreenLVHandlers::LoadingGetStartOrBack(const AIP::CmdDecomposer&, AIP::CmdComposer&)	80316f98	80316ec4
+MainMenuFSHandlers	FS	0	MainMenu_OnSelect	MainMenuFSHandlers::MainMenu_OnSelect(const AIP::CmdDecomposer&)	80317400	803172e0
+MainMenuFSHandlers	FS	1	Title_OnNextScreen		80317400	803172e0
+MinigameFSHandlers	FS	6	Hud_LoadComplete	MinigameFSHandlers::Hud_LoadComplete(const AIP::CmdDecomposer&)	80319958	80319884
+MinigameFSHandlers	FS	7	GameStartAnim_Complete	MinigameFSHandlers::GameStartAnim_Complete(const AIP::CmdDecomposer&)	80319958	80319884
+MinigameLVHandlers	LV	1	GetNumberOfHuds	MinigameLVHandlers::GetNumberOfHuds(const AIP::CmdDecomposer&, AIP::CmdComposer&)	803194ac	80319388
+MinigameLVHandlers	LV	2	GetGameRules	MinigameLVHandlers::GetGameRules(const AIP::CmdDecomposer&, AIP::CmdComposer&)	803194ac	80319388
+MinigameLVHandlers	LV	3	PaperAirPlanes_GetCheckPoints	MinigameLVHandlers::GetPaperAirplaneCheckPoints(const AIP::CmdDecomposer&, AIP::CmdComposer&)	803194ac	80319388
+MinigameLVHandlers	LV	4	Footie_IsSaveDare	MinigameLVHandlers::IsFootieSaveDare(const AIP::CmdDecomposer&, AIP::CmdComposer&)	803194ac	80319388
+MinigameLVHandlers	LV	5	Counter_GetText	AIP::CmdComposer::SetStringByName(const char*, const wchar_t*) [strText]	803194ac	80319388
+MultiPlayerFSHandlers	FS	0	MultiPlayer_SetNumberPlayers	MultiPlayerFSHandlers::SetNumberPlayers(const AIP::CmdDecomposer&) [DartShootout]	8031a23c	8031a058
+MultiPlayerFSHandlers	FS	1	MultiPlayer_NumPlayersBack	FEManager::SetFEGameState(eFrontEndGameState)	8031a23c	8031a058
+MultiPlayerFSHandlers	FS	2	MultiPlayer_SetPlayerAvatars	AIP::CmdDecomposer::GetIntArrayByName(const char*, int*, int) const [aiPlayerAvatarIds]	8031a23c	8031a058
+MultiPlayerFSHandlers	FS	3	PlayerSetup_Exit	MultiPlayerFSHandlers::SetPlayerOnBack(const AIP::CmdDecomposer&) [DartShootout]	8031a23c	8031a058
+MultiPlayerFSHandlers	FS	4	PlayerSetup_OnNext	MultiPlayerFSHandlers::SetPlayerOnNext(const AIP::CmdDecomposer&) [DartShootout]	8031a23c	8031a058
+MultiPlayerFSHandlers	FS	5	MultiPlayer_SetGameStyle	MultiPlayerFSHandlers::SetGameStyle(const AIP::CmdDecomposer&) [DartShootout]	8031a23c	8031a058
+MultiPlayerFSHandlers	FS	6	MultiPlayer_SetNumRounds	AIP::CmdDecomposer::GetIntByName(const char*, int*) const [iNumberRounds | DartShootout] ; MultiplayerMode::StartPointSeries(int)	8031a23c	8031a058
+MultiPlayerFSHandlers	FS	7	RoundSelect_OnBack		8031a23c	8031a058
+MultiPlayerFSHandlers	FS	8	MultiPlayer_SetMinigame	AIP::CmdDecomposer::GetIntByName(const char*, int*) const [iMiniGameType | DartShootout]	8031a23c	8031a058
+MultiPlayerFSHandlers	FS	9	MultiPlayer_SetRulesType	MultiPlayerFSHandlers::SetGameRulesType(const AIP::CmdDecomposer&) [DartShootout]	8031a23c	8031a058
+MultiPlayerFSHandlers	FS	10	MultiPlayer_SetGameRules	MultiPlayerFSHandlers::SetGameRules(const AIP::CmdDecomposer&) [DartShootout]	8031a23c	8031a058
+MultiPlayerFSHandlers	FS	11	MultiPlayer_SetTeams	MultiPlayerFSHandlers::SetTeams(const AIP::CmdDecomposer&) [DartShootout]	8031a23c	8031a058
+MultiPlayerFSHandlers	FS	12	QuickPlay_SaveScores	MultiPlayerFSHandlers::SaveScores(const AIP::CmdDecomposer&) [DartShootout]	8031a23c	8031a058
+MultiPlayerLVHandlers	LV	0	MultiPlayer_HowManyPlayersOnLoad	MultiPlayerLVHandlers::HowManyPlayersOnLoad(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031b5f8	8031b4bc
+MultiPlayerLVHandlers	LV	1	MultiPlayer_SetUpOnLoad	MultiPlayerLVHandlers::CharacterSetupOnLoad(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031b5f8	8031b4bc
+MultiPlayerLVHandlers	LV	2	MultiPlayer_SelectGameOnLoad	MultiPlayerLVHandlers::SelectGameOnLoad(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031b5f8	8031b4bc
+MultiPlayerLVHandlers	LV	3	MultiPlayer_GameRulesOnLoad	MultiPlayerLVHandlers::GameRulesOnLoad(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031b5f8	8031b4bc
+MultiPlayerLVHandlers	LV	4	MultiPlayer_GetGameRule	MultiPlayerLVHandlers::GetGameRule(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031b5f8	8031b4bc
+MultiPlayerLVHandlers	LV	5	MultiPlayer_TeamSelectOnLoad	MultiPlayerLVHandlers::TeamSelectOnLoad(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031b5f8	8031b4bc
+PaperAirplaneHandlers	FS	0	SelectPlane_Exit			8031d654
+PaperAirplaneHandlers	LV	0	SelectPlane_OnLoad			8031d654
+PauseMenuFSHandlers	FS	0	Pause_OnLoadComplete	PauseMenuFSHandlers::PauseOnLoadComplete(const AIP::CmdDecomposer&)	8031dce0	8031dbd4
+PauseMenuFSHandlers	FS	1	Pause_OnKeepPlaying	PauseMenuFSHandlers::PauseOnKeepPlaying(const AIP::CmdDecomposer&)	8031dce0	8031dbd4
+PauseMenuFSHandlers	FS	2	Pause_OnRestart	PauseMenuFSHandlers::PauseOnRestart(const AIP::CmdDecomposer&)	8031dce0	8031dbd4
+PauseMenuFSHandlers	FS	3	Pause_OnQuit	PauseMenuFSHandlers::PauseOnQuit(const AIP::CmdDecomposer&)	8031dce0	8031dbd4
+PostGameFSHandlers	FS	11	PostGame_OnReplay	WorldMan::GetActiveMinigame() ; Minigame::OnReplay()	8031f000	8031eef4
+PostGameFSHandlers	FS	12	PostGame_OnDone	WorldMan::GetActiveMinigame() ; Minigame::OnDone()	8031f000	8031eef4
+PostGameFSHandlers	FS	13	MultiPlayer_PostGameOnSelect	PostGameFSHandlers::MultiPlayerPostGameOnSelect(const AIP::CmdDecomposer&)	8031f000	8031eef4
+PostGameFSHandlers	FS	14	PostGame_OnButtonClick	PostGameFSHandlers::PostGameOnButtonClick(const AIP::CmdDecomposer&)	8031f000	8031eef4
+PostGameLVHandlers	LV	0	PostGame_OnLoad	PostGameLVHandlers::PostGameOnLoad(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031e420	8031e234
+PostGameLVHandlers	LV	1	PostGame_GetSPInfo	PostGameLVHandlers::PostGameGetSPInfo(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031e420	8031e234
+PostGameLVHandlers	LV	2	PostGame_GetStats	PostGameLVHandlers::PostGameGetStats(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031e420	8031e234
+PostGameLVHandlers	LV	3	PostGame_GetMPInfo	PostGameLVHandlers::PostGameGetMPInfo(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031e420	8031e234
+PostGameLVHandlers	LV	4	PostGame_IsLastTourneyGame	PostGameLVHandlers::PostGameIsLastTourneyGame(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031e420	8031e234
+PostGameLVHandlers	LV	5	PostGame_IsNextGameLastTourneyGame	MultiplayerMode::GetNumRoundsLeft() ; AIP::CmdComposer::SetIntByName(const char*, int) [iIsNextGameLastTourneyGame]	8031e420	8031e234
+PostGameLVHandlers	LV	6	PostGame_GetPointsWon	PostGameLVHandlers::PostGameGetPointsWon(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031e420	8031e234
+PostGameLVHandlers	LV	7	PostGame_GetTotalPoints	PostGameLVHandlers::PostGameGetTotalPoints(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031e420	8031e234
+PostGameLVHandlers	LV	8	PostGame_GetTeamSetup	PostGameLVHandlers::PostGameGetTeamSetup(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031e420	8031e234
+PostGameLVHandlers	LV	9	PostGame_GetGamesWon	PostGameLVHandlers::PostGameGetGamesWon(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031e420	8031e234
+PostGameLVHandlers	LV	10	PostGame_GetTotalGamesWon	PostGameLVHandlers::PostGameGetTotalGamesWon(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031e420	8031e234
+PreGameHandlers	FS	4	PreGame_OnPlay			8031f2bc
+PreGameLVHandlers	LV	0	PreGame_OnLoad	PreGameLVHandlers::PreGameOnLoad(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031f558	8031f424
+PreGameLVHandlers	LV	1	PreGame_GetSinglePlayerInfo	AIP::CmdComposer::SetIntByName(const char*, int) [iIsDare]	8031f558	8031f424
+PreGameLVHandlers	LV	2	PreGame_GetMultiPlayerInfo	PreGameLVHandlers::PreGameGetMultiPlayerInfo(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031f558	8031f424
+PreGameLVHandlers	LV	3	PreGame_GetDareText	PreGameLVHandlers::PreGameGetDareText(const AIP::CmdDecomposer&, AIP::CmdComposer&)	8031f558	8031f424
+ProfileFSHandlers	FS	0	ProfileSelect_OnSelect	ProfileFSHandlers::ProfileOnSelect(const AIP::CmdDecomposer&)	803206ac	803205a0
+ProfileFSHandlers	FS	1	ProfileSelect_OnErase	ProfileFSHandlers::ProfileOnErase(const AIP::CmdDecomposer&)	803206ac	803205a0
+ProfileFSHandlers	FS	2	SelectKid_OnFilterSelect	AIP::CmdDecomposer::GetIntByName(const char*, int*) const [iFilter] ; FEManager::SetSelectionFilter(eSelectionFilter) ; FEManager::SetFEGameState(eFrontEndGameState)	803206ac	803205a0
+ProfileFSHandlers	FS	3	KidConfirm_OnResponse	ProfileFSHandlers::KidConfirmOnResponse(const AIP::CmdDecomposer&)	803206ac	803205a0
+ProfileLVHandlers	LV	0	ProfileSelect_OnLoad	ProfileLVHandlers::ProfileOnLoad(const AIP::CmdDecomposer&, AIP::CmdComposer&)	80320a94	803209a0
+ProfileLVHandlers	LV	1	SelectKid_OnLoad	AIP::CmdComposer::SetIntByName(const char*, int) [iFilter]	80320a94	803209a0
+ProfileLVHandlers	LV	2	KidConfirm_GetDialogue	ProfileLVHandlers::KidConfirmGetDialogue(const AIP::CmdDecomposer&, AIP::CmdComposer&)	80320a94	803209a0
+ReportCardHandlers	FS	0	ReportCard_OnClose			8032108c
+ReportCardHandlers	LV	0	ReportCard_OnLoad			8032108c
+StickerBookFSHandlers	FS	7	StickerBook_RewardSelected	AIP::CmdDecomposer::GetIntByName(const char*, int*) const [iStickerID]	80322938	803227b4
+StickerBookFSHandlers	FS	8	StickerBook_LayoutSave	StickerBookFSHandlers::StickerBookSaveLayout(const AIP::CmdDecomposer&)	80322938	803227b4
+StickerBookFSHandlers	FS	9	StickerBook_LaunchMiniGame		80322938	803227b4
+StickerBookFSHandlers	FS	10	StickerBook_Exit	StickerBookFSHandlers::StickerBookExit(const AIP::CmdDecomposer&)	80322938	803227b4
+StickerBookFSHandlers	FS	11	StickerBookCover_OnWorld	CharacterProfile::CloseStickerBookCover()	80322938	803227b4
+StickerBookFSHandlers	FS	12	StickerBookCover_OnQuit	StickerBookFSHandlers::StickerBookCoverOnQuit()	80322938	803227b4
+StickerBookFSHandlers	FS	13	StickerBookCover_OnMusic	StickerBookFSHandlers::StickerBookCoverOnMusic(const AIP::CmdDecomposer&)	80322938	803227b4
+StickerBookFSHandlers	FS	14	StickerBookCover_OnSave	StickerBookFSHandlers::StickerBookCoverOnSave(const AIP::CmdDecomposer&)	80322938	803227b4
+StickerBookFSHandlers	FS	15	StickerBookCover_OnSelect	StickerBookFSHandlers::StickerBookCoverOnSelect(const AIP::CmdDecomposer&)	80322938	803227b4
+StickerBookLVHandlers	LV	0	StickerBook_RewardLoad	StickerBookLVHandlers::RewardLoad(const AIP::CmdDecomposer&, AIP::CmdComposer&)	80321a14	803218c0
+StickerBookLVHandlers	LV	1	StickerBook_RewardGetStickers	StickerBookLVHandlers::RewardGetStickers(const AIP::CmdDecomposer&, AIP::CmdComposer&)	80321a14	803218c0
+StickerBookLVHandlers	LV	2	StickerBook_GetSticker	StickerBookLVHandlers::GetSticker(const AIP::CmdDecomposer&, AIP::CmdComposer&)	80321a14	803218c0
+StickerBookLVHandlers	LV	3	StickerBook_LayoutLoad	StickerBookLVHandlers::StickerBookLoadLayout(const AIP::CmdDecomposer&, AIP::CmdComposer&)	80321a14	803218c0
+StickerBookLVHandlers	LV	4	StickerBook_GetPlayerName	CharacterProfile::GetProfileName() ; AIP::CmdComposer::SetStringByName(const char*, const wchar_t*) [strPlayerName]	80321a14	803218c0
+StickerBookLVHandlers	LV	5	StickerBookCover_LoadLayout	StickerBookLVHandlers::StickerBookCoverLoadLayout(const AIP::CmdDecomposer&, AIP::CmdComposer&)	80321a14	803218c0
+StickerBookLVHandlers	LV	6	StickerBookCover_IsGameDirty	AIP::CmdComposer::SetIntByName(const char*, int) [iDirty]	80321a14	803218c0
+StickerStoreFSHandlers	FS	0	StickerStoreCover_OnExit	CharacterProfile::CloseStickerBookStore() [DartShootout]	80323530	803233f4
+StickerStoreFSHandlers	FS	1	StickerStoreCover_OnGameSelect	AIP::CmdDecomposer::GetIntByName(const char*, int*) const [iSelectedGameId | DartShootout]	80323530	803233f4
+StickerStoreFSHandlers	FS	2	StickerStorePage_OnClick	StickerStoreFSHandlers::StickerStorePageOnClick(const AIP::CmdDecomposer&) [DartShootout]	80323530	803233f4
+StickerStoreFSHandlers	FS	3	StickerStorePage_OnBuy	AIP::CmdDecomposer::GetIntByName(const char*, int*) const [iSticker | DartShootout]	80323530	803233f4
+StickerStoreFSHandlers	FS	4	StickerStore_SetMinigame	AIP::CmdDecomposer::GetIntByName(const char*, int*) const [iMinigameType | DartShootout]	80323530	803233f4
+StickerStoreFSHandlers	FS	5	PurchaseConfirm_Answer	StickerStoreFSHandlers::PurchaseConfirmAnswer(const AIP::CmdDecomposer&) [DartShootout]	80323530	803233f4
+StickerStoreLVHandlers	LV	0	StickerStoreCover_OnLoad	StickerStoreLVHandlers::StickerStoreCoverOnLoad(const AIP::CmdDecomposer&, AIP::CmdComposer&)	80323024	80322f30
+StickerStoreLVHandlers	LV	1	StickerStorePage_OnLoad	StickerStoreLVHandlers::StickerStorePageOnLoad(const AIP::CmdDecomposer&, AIP::CmdComposer&)	80323024	80322f30
+StickerStoreLVHandlers	LV	2	PurchaseConfirm_OnLoad	StickerStoreLVHandlers::PurchaseConfirmOnLoad(const AIP::CmdDecomposer&, AIP::CmdComposer&)	80323024	80322f30
+TRCApt	FS	0	TRCSetPopupOption	TRCApt::DoFSSetPopupOption(const AIP::CmdDecomposer&)	8024c95c	8024c724
+TRCApt	FS	1	TRCSetKeyboardInfo	TRCApt::DoFSSetKeyboardInfo(const AIP::CmdDecomposer&)	8024c95c	8024c724
+TRCApt	FS	2	TRCCancelKeyboard	TRCUtilityManager::Instance() ; TRCUtilityManager::UtilityStop(TRC_UTILITY_DEF)	8024c95c	8024c724
+TRCApt	FS	3	TRCNISClosed	TRCApt::DoFSNISClosed(const AIP::CmdDecomposer&)	8024c95c	8024c724
+TRCApt	FS	4	TRCSave	TRCApt::DoFSSaveFile(const AIP::CmdDecomposer&)	8024c95c	8024c724
+TRCApt	FS	5	TRCCancelSave	TRCApt::DoFSSaveCanceled(const AIP::CmdDecomposer&)	8024c95c	8024c724
+TRCApt	FS	6	TRCLoad	TRCApt::DoFSLoadFile(const AIP::CmdDecomposer&)	8024c95c	8024c724
+TRCApt	FS	7	TRCCancelLoad	TRCApt::DoFSLoadCanceled(const AIP::CmdDecomposer&)	8024c95c	8024c724
+TRCApt	FS	8	TRCDelete	TRCApt::DoFSDeleteFile(const AIP::CmdDecomposer&)	8024c95c	8024c724
+TRCApt	FS	9	TRCCancelDelete	TRCUtilityManager::Instance() ; TRCUtilityManager::CloseScreen()	8024c95c	8024c724
+WorldHudFSHandlers	FS	0	WorldHud_LoadComplete		80324208	80324134
+WorldHudFSHandlers	FS	1	InfoDialogue_OnButtonClick	AccessibilityManager::PopupClosed()	80324208	80324134
+WorldHudHandlers	LV	0	InfoDialogue_GetText			80323764
