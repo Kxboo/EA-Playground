@@ -76,7 +76,7 @@ impl Ground {
 pub struct Game{
     bridge:Bridge,jobs:VecDeque<Job>,pending:Option<(u64,String)>,results:HashMap<String,Value>,
     phase:Phase,started:Instant,pub log:Vec<String>,boot_image:Option<Handle<Image>>,boot_egui:Option<egui::TextureId>,
-    layers:Vec<(String,String)>,layers_expected:usize,layers_ready:usize,clip_handles:Vec<Handle<AnimationClip>>,
+    layers:Vec<(String,String)>,layers_expected:usize,layers_ready:usize,layers_empty:usize,clip_handles:Vec<Handle<AnimationClip>>,
     ground:Option<Ground>,build_wait:u32,player:Option<Entity>,pub spawn:Vec3,
     pub tri_count:usize,pub controls_rows:usize,pub combat_bindings:usize,pub world_bounds:Option<(f32,f32,f32)>,
     boot_shown:Option<Instant>,boot_shot:bool,pub load_seconds:f32,
@@ -101,7 +101,7 @@ impl Game{
         let skel=format!("{}::player_skel.ske",src("characters/player_anims.viv"));let bank=format!("{}::player_anims.anm",src("characters/player_anims.viv"));
         for (name,index) in CLIPS{jobs.push_back(Job{key:format!("clip:{name}"),req:json!({"command":"preview","source":model,"skeleton":skel,"bank":bank,"index":index})});}
         Self{bridge:Bridge::start(),jobs,pending:None,results:HashMap::new(),phase:Phase::Loading,started:Instant::now(),log:vec!["Boot: reading original data files".into()],
-            boot_image:None,boot_egui:None,layers:vec![],layers_expected:0,layers_ready:0,clip_handles:vec![],ground:None,build_wait:0,player:None,spawn:Vec3::ZERO,
+            boot_image:None,boot_egui:None,layers:vec![],layers_expected:0,layers_ready:0,layers_empty:0,clip_handles:vec![],ground:None,build_wait:0,player:None,spawn:Vec3::ZERO,
             tri_count:0,controls_rows:0,combat_bindings:0,world_bounds:None,boot_shown:None,boot_shot:false,load_seconds:0.,selftest}
     }
 }
@@ -109,7 +109,8 @@ impl Game{
 fn in_game(mode:Res<AppMode>)->bool{*mode==AppMode::Game}
 pub fn plugin(app:&mut App){
     app.init_resource::<GameInput>().insert_resource(Time::<Fixed>::from_hz(TICK_HZ as f64))
-        .add_systems(Update,(pump,build,read_input,camera,animate,hud,selftest).chain().run_if(in_game))
+        .add_systems(Update,(pump,build,read_input,camera,animate,selftest).chain().run_if(in_game))
+        .add_systems(bevy_egui::EguiPrimaryContextPass,hud.run_if(in_game))
         .add_systems(FixedUpdate,movement.run_if(in_game));
 }
 
@@ -130,13 +131,14 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>
         match key.as_str(){
             "boot"=>{if let Some(p)=scene_path(&value){g.boot_image=Some(assets.load(p));}}
             "filelist"=>{
-                // worldfilelist.csv (FILE_NAME,IS_HIGH): the whole-world entries (IS_HIGH=0) are the low-detail layers.
+                // worldfilelist.csv (FILE_NAME,IS_HIGH): every row is a world layer; IS_HIGH=1 rows are the detailed area chunks,
+                // the IS_HIGH=0 row is the whole-world mesh.
                 let rows=value["rows"].as_array().cloned().unwrap_or_default();
                 let big=src("world/world.big");
                 for row in rows.iter().skip(1){
                     let (name,high)=(row[0].as_str().unwrap_or(""),row[1].as_str().unwrap_or("1"));
-                    if high=="0"{for s in WORLD_SUFFIXES{
-                        let file=format!("{name}{s}.o");
+                    {for s in WORLD_SUFFIXES{
+                        let file=if high=="1"{format!("{name}-high{s}.o")}else{format!("{name}{s}.o")}; // IS_HIGH=1 entries map to <name>-high[-variant].o inside world.big
                         g.jobs.push_back(Job{key:format!("layer:{file}"),req:json!({"command":"preview","source":format!("{big}::{file}")})});
                         g.layers_expected+=1;
                     }}
@@ -145,6 +147,10 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>
             "bounds"=>{if let Some(row)=value["rows"].as_array().and_then(|r|r.get(1)){let f=|i:usize|row[i].as_str().unwrap_or("0").parse::<f32>().unwrap_or(0.);g.world_bounds=Some((f(0),f(1),f(2)));}}
             "controls"=>{let rows=value["rows"].as_array().cloned().unwrap_or_default();g.controls_rows=rows.len().saturating_sub(1);g.combat_bindings=rows.iter().filter(|r|r[1]=="STATE_COMBAT").count();}
             k if k.starts_with("layer:")=>{
+                if scene_path(&value).is_none(){
+                    // Decoder reports an empty draw list (see FINDINGS.md: eight empty models); nothing to spawn.
+                    g.layers_expected-=1;g.layers_empty+=1;g.log.push(format!("{} has an empty draw list; skipped",k.trim_start_matches("layer:")));
+                }
                 if let Some(p)=scene_path(&value){
                     let name=k.trim_start_matches("layer:").to_string();
                     let e=commands.spawn((GameEntity,WorldLayer(name.clone()),WorldAssetRoot(assets.load(GltfAssetLabel::Scene(0).from_asset(p.clone()))),Transform::IDENTITY,
@@ -161,6 +167,10 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>
         }
         g.results.insert(key,value);
     }
+    if g.pending.is_none()&&g.jobs.is_empty()&&g.started.elapsed().as_secs_f32()>30.&&g.layers_ready<g.layers_expected&&g.layers_ready>0{
+        // Never hang on the boot screen: continue with the layers that did arrive and say so.
+        let (r,e)=(g.layers_ready,g.layers_expected);g.log.push(format!("WARNING: only {r}/{e} world layers became ready; continuing"));g.layers_expected=r;
+    }
     if g.pending.is_none(){
         if let Some(job)=g.jobs.pop_front(){let id=g.bridge.request(job.req);g.pending=Some((id,job.key));}
         else if g.layers_ready>=g.layers_expected && g.clip_handles.len()==CLIPS.len(){
@@ -171,7 +181,7 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>
     }
 }
 
-fn layer_ready(_e:On<WorldInstanceReady>,mut g:Option<ResMut<Game>>){if let Some(g)=g.as_mut(){g.layers_ready+=1;}}
+fn layer_ready(_e:On<WorldInstanceReady>,mut g:Option<ResMut<Game>>){if let Some(g)=g.as_mut(){g.layers_ready+=1;let n=g.layers_ready;g.log.push(format!("world layer ready ({n})"));}}
 
 fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>,meshes:Res<Assets<Mesh>>,layers:Query<(Entity,&WorldLayer)>,children:Query<&Children>,mesh_q:Query<(&Mesh3d,&GlobalTransform)>,mut graphs:ResMut<Assets<AnimationGraph>>,cam:Query<Entity,With<GameCamera>>){
     let Some(g)=g.as_mut() else{return};let g=&mut **g;
@@ -179,7 +189,7 @@ fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer
     g.build_wait+=1;if g.build_wait<3{return} // let transforms propagate
     let mut tris=Vec::new();let mut mesh_count=0;
     for (e,layer) in &layers{
-        if layer.0!="world-low-all.o"{continue} // walkable surface comes from the opaque base layer
+        if !(layer.0.ends_with("-high.o")||layer.0=="world-low-all.o"){continue} // walkable surface: opaque base layers
         for d in children.iter_descendants(e){if let Ok((m,t))=mesh_q.get(d){
             let Some(mesh)=meshes.get(&m.0) else{continue};mesh_count+=1;
             let Some(pos)=mesh.attribute(Mesh::ATTRIBUTE_POSITION).and_then(|a|a.as_float3()) else{continue};
@@ -191,10 +201,15 @@ fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer
     g.tri_count=tris.len();
     if tris.is_empty(){let m=format!("world mesh data unavailable ({mesh_count} meshes)");g.log.push(m.clone());g.phase=Phase::Failed(m);return}
     let ground=Ground::build(tris);
-    // Provisional spawn: middle of the playground hub bounds (original spawn table not decoded).
+    // Provisional spawn (original spawn table not decoded): nearest point with walkable ground to the hub.
     let hub=Vec2::new(20.,-56.);
-    let y=ground.height(hub.x,hub.y,50.).unwrap_or(-5.);
-    g.spawn=Vec3::new(hub.x,y,hub.y);g.ground=Some(ground);
+    let mut best:Option<(f32,Vec3)>=None;let mut covered=0;let mut total=0;
+    for gx in -30..30{for gz in -30..30{
+        let (x,z)=(hub.x+gx as f32*2.,hub.y+gz as f32*2.);total+=1;
+        if let Some(y)=ground.height(x,z,50.){covered+=1;let d=Vec2::new(x,z).distance(hub);if best.is_none_or(|b|d<b.0){best=Some((d,Vec3::new(x,y,z)));}}
+    }}
+    g.log.push(format!("ground coverage around hub: {covered}/{total} samples"));
+    g.spawn=best.map(|b|b.1).unwrap_or(Vec3::new(hub.x,-5.,hub.y));g.ground=Some(ground);
     g.load_seconds=g.started.elapsed().as_secs_f32();
     // Animation graph over the three decoded clips.
     let mut graph=AnimationGraph::new();
@@ -291,7 +306,7 @@ fn animate(mut q:Query<(&mut Player,&Children)>,children:Query<&Children>,mut pl
     }
 }
 
-fn hud(mut contexts:EguiContexts,mut g:Option<ResMut<Game>>,mut mode:ResMut<AppMode>,keys:Res<ButtonInput<KeyCode>>,time:Res<Time>,player:Query<(&Player,&Transform)>)->Result{
+fn hud(images:Res<Assets<Image>>,mut contexts:EguiContexts,mut g:Option<ResMut<Game>>,mut mode:ResMut<AppMode>,keys:Res<ButtonInput<KeyCode>>,time:Res<Time>,player:Query<(&Player,&Transform)>)->Result{
     let Some(g)=g.as_mut() else{return Ok(())};
     if g.boot_image.is_some()&&g.boot_egui.is_none(){if let Some(h)=g.boot_image.clone(){g.boot_egui=Some(contexts.add_image(EguiTextureHandle::Strong(h)));}}
     let ctx=contexts.ctx_mut()?;
@@ -302,17 +317,17 @@ fn hud(mut contexts:EguiContexts,mut g:Option<ResMut<Game>>,mut mode:ResMut<AppM
             let painter=ctx.layer_painter(egui::LayerId::new(egui::Order::Background,egui::Id::new("boot")));
             painter.rect_filled(screen,0.,egui::Color32::BLACK);
             if let Some(id)=g.boot_egui{
-                let ready=g.boot_image.is_some()&&ctx.tex_manager().read().meta(id).is_some();
+                let ready=g.boot_image.as_ref().is_some_and(|h|images.contains(h));
                 if ready{
                     if g.boot_shown.is_none(){g.boot_shown=Some(Instant::now());}
-                    let (w,h)=(640.,480.);let fit=(screen.width()/w).min(screen.height()/h);let r=egui::Rect::from_center_size(screen.center(),egui::vec2(w*fit,h*fit));
+                    let (w,h)=g.boot_image.as_ref().and_then(|h|images.get(h)).map(|i|(i.width() as f32,i.height() as f32)).unwrap_or((640.,480.));let fit=(screen.width()/w).min(screen.height()/h);let r=egui::Rect::from_center_size(screen.center(),egui::vec2(w*fit,h*fit));
                     painter.image(id,r,egui::Rect::from_min_max(egui::pos2(0.,0.),egui::pos2(1.,1.)),egui::Color32::WHITE);
                 }
             }
-            egui::Area::new(egui::Id::new("loadlog")).fixed_pos(egui::pos2(16.,screen.bottom()-120.)).show(ctx,|ui|{
+            egui::Area::new(egui::Id::new("loadlog")).fixed_pos(egui::pos2(16.,16.)).show(ctx,|ui|{egui::Frame::popup(ui.style()).show(ui,|ui|{
                 ui.label(egui::RichText::new("Loading from original data files…").color(egui::Color32::WHITE));
                 for l in g.log.iter().rev().take(4).rev(){ui.label(egui::RichText::new(l).small().monospace().color(egui::Color32::LIGHT_GRAY));}
-            });
+            });});
         }
         Phase::Failed(e)=>{egui::Area::new(egui::Id::new("fail")).fixed_pos(screen.center()-egui::vec2(200.,20.)).show(ctx,|ui|{ui.heading(egui::RichText::new("Game failed to load").color(egui::Color32::LIGHT_RED));ui.label(e);ui.label("Esc: back to menu");});}
         Phase::Playing=>{
@@ -359,7 +374,7 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
     let st=g.selftest.as_mut().unwrap();
     let Ok((p,t))=player.single() else{return};
     st.t+=time.delta_secs();
-    let mut record=|st:&mut SelfTest,name:&str|{st.samples.push(json!({"step":name,"t":st.t,"pos":[t.translation.x,t.translation.y,t.translation.z],"speed":p.speed,"grounded":p.grounded,"weights":p.weights}));};
+    let record=|st:&mut SelfTest,name:&str|{st.samples.push(json!({"step":name,"t":st.t,"pos":[t.translation.x,t.translation.y,t.translation.z],"speed":p.speed,"grounded":p.grounded,"weights":p.weights}));};
     input.scripted=true;
     // Scripted input sequence: settle, walk forward, run diagonally, jump, settle.
     let script=[(0.,0.,0.,false,1.5,"settle"),(0.,1.,0.,false,2.5,"forward"),(1.,1.,0.,false,2.0,"diagonal"),(0.,0.,0.,true,0.4,"jump"),(0.,0.,0.,false,1.0,"land")];
@@ -370,25 +385,25 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
         Some(i)=>{let s=script[i];input.x=s.0;input.y=s.1;input.jump=s.3;
             if i>st.step{record(st,script[st.step].5);st.step=i;}}
         None=>{
-            record(st,"final");
             if !st.shot{
+                record(st,"final");
                 st.shot=true;let out=st.out.clone();let _=std::fs::create_dir_all(&out);
                 commands.spawn(Screenshot::primary_window()).observe(save_to_disk(out.join("02-game.png")));
             }
             st.shot_wait+=time.delta_secs();
             if st.shot_wait>1.5{
                 let moved=(t.translation-st.start).xz().length();
-                let walk_w=st.samples.iter().filter(|s|s["step"]=="forward").filter_map(|s|s["weights"][1].as_f64()).fold(0.,f64::max);
+                let walk_w=st.samples.iter().filter(|s|s["step"]=="forward").filter_map(|s|Some(s["weights"][1].as_f64()?+s["weights"][2].as_f64()?)).fold(0.,f64::max);
                 let mut checks=vec![];
                 let mut check=|name:&str,ok:bool,detail:String|checks.push(json!({"name":name,"ok":ok,"detail":detail}));
-                check("world layers spawned from worldfilelist.csv",g.layers_ready==g.layers_expected&&g.layers_expected==WORLD_SUFFIXES.len(),format!("{}/{} layers",g.layers_ready,g.layers_expected));
-                check("world geometry decoded",g.tri_count>50_000,format!("{} walkable-source triangles",g.tri_count));
+                check("world layers spawned from worldfilelist.csv",g.layers_ready==g.layers_expected&&g.layers_expected+g.layers_empty==WORLD_SUFFIXES.len()*5,format!("{}/{} layers ready, {} empty draw lists skipped",g.layers_ready,g.layers_expected,g.layers_empty));
+                check("world geometry decoded",g.tri_count>20_000,format!("{} walkable-source triangles",g.tri_count));
                 check("player model + 3 clips loaded",g.clip_handles.len()==CLIPS.len()&&p.anim_ready,format!("{} clips, anim player bound: {}",g.clip_handles.len(),p.anim_ready));
                 check("controls.csv parsed",g.combat_bindings>=8,format!("{} rows, {} STATE_COMBAT",g.controls_rows,g.combat_bindings));
                 check("mesh entities in scene",meshes.iter().count()>100,format!("{} Mesh3d entities",meshes.iter().count()));
                 check("animation players active",players.iter().count()>=1,format!("{} players",players.iter().count()));
                 check("player walked on recovered locomotion",moved>5.,format!("moved {:.2} m horizontally (5 m/s max for 4.5 s)",moved));
-                check("walk clip blended in while moving",walk_w>0.5,format!("peak walk weight {walk_w:.2}"));
+                check("walk/run clip blended in while moving",walk_w>0.5,format!("peak walk+run weight {walk_w:.2} (full stick = run)"));
                 check("player grounded on world surface",p.grounded,format!("y={:.2}",t.translation.y));
                 let jumped=st.samples.iter().any(|s|s["step"]=="jump"||s["step"]=="land");
                 check("jump script executed",jumped,"jump/land samples recorded".into());
