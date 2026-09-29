@@ -13,6 +13,7 @@ Facts this module relies on (all verified against the supplied binary, see docs/
 """
 import bisect
 import io
+import os
 import re
 import struct
 from collections import defaultdict
@@ -43,7 +44,7 @@ _RULES = [
     (r"^(aicharactercontrol|character\w*|localcharactercontrol|npc\w+|shadowrenderentity)\.cpp$", "game", "characters"),
     (r"^conversation\w+\.cpp$", "game", "conversation"),
     (r"^(csvparser|parser|db)\.cpp$", "game", "data-parsers"),
-    (r"^(partfx\w*|worldeffectmanager|Lion_Unity)\.cpp$", "game", "effects"),
+    (r"^(partfx\w*|worldeffectmanager|Lion_Unity|Lion\w+)\.cpp$", "game", "effects"),
     (r"^\w+Handlers\.cpp$", "game", "frontend"),
     (r"^(FEManager|selectablecharacter|highres)\.cpp$", "game", "frontend"),
     (r"^(controller|pgconga)\.cpp$", "game", "input"),
@@ -61,11 +62,11 @@ _RULES = [
     # --- engine layer (EAGL "Ren" renderer, cameras, world, physics glue) ---
     (r"^physics\w+\.cpp$", "engine", "physics-glue"),
     (r"^(\w*camera|cameramanager)\.cpp$", "engine", "cameras"),
-    (r"^(engine|entity|scene|frustumtest|fadetocoloureffect|fullscreeneffectsmanager|lightmanager|worldlightmanager|shadowmanager|skydome|tarmanager|cachedmodel|cachedanimatedmodel|rendertexture)\.cpp$", "engine", "render-scene"),
+    (r"^(engine|entity|boundingbox|scene|frustumtest|fadetocoloureffect|fullscreeneffectsmanager|lightmanager|worldlightmanager|shadowmanager|skydome|tarmanager|cachedmodel|cachedanimatedmodel|rendertexture)\.cpp$", "engine", "render-scene"),
     (r"^(animationmanager|animationstate|animationstategraph|marker)\.cpp$", "engine", "animation-glue"),
     (r"^(accessibilitymanager|areadrawmanager|areamanager|placeables|playgroundGate|playgroundWorld|spawnmanager|spawnregion|World|WorldManager)\.cpp$", "engine", "world"),
-    (r"^(assetmanager|CString|debugmenu\w*|DipSwitch|inifilemanager|lionallocator|MemMgr|movie|pgdebugmenu|pgFile|pgmovieplayer|slotpool|Utils)\.cpp$", "engine", "engine-support"),
-    (r"^(codegen|model|platform_model|device\w*|rendercontext\w*|rendermethod|state|tar|tevstage|texturerc|viewport\w*|profiler_cmn|fonteagl|transform|pcode|singledraw|drawimmediate|drawarray|cmn\w+|positionallight|Playground\w+|Gouraud\w*|TextureApt)\.cpp$", "engine", "renderer-eagl"),
+    (r"^(assetmanager|CString|debugmenu\w*|DipSwitch|inifile\w*|lionallocator|MemMgr|movie|pgdebugmenu|pgFile|pgmovieplayer|slotpool|Utils|screencapture|targawriter|videocapture|embeddedfontdata)\.cpp$", "engine", "engine-support"),
+    (r"^(codegen|model|symbolinit|platform_model|device\w*|rendercontext\w*|rendermethod|state|tar|tevstage|texturerc|viewport\w*|profiler_cmn|fonteagl|transform|pcode|singledraw|drawimmediate|drawarray|cmn\w+|positionallight|Playground\w+|Gouraud\w*|TextureApt)\.cpp$", "engine", "renderer-eagl"),
     (r"^(wiipad\w*|gcpad|pad|\w+padmodehandler)\.cpp$", "engine", "pad-drivers"),
     # --- EA / third-party middleware and SDK ---
     (r"^hk\w+\.cpp$", "middleware", "havok"),
@@ -108,6 +109,8 @@ class Elf:
         self.allsecs = [(s["sh_addr"], s["sh_size"], s.name) for s in self.elf.iter_sections() if s["sh_addr"]]
         self._load_symbols()
         self._build_units()
+        self._refine_attribution()
+        self._rebuild_units_from_attribution()
         self._md = None
 
     # -- memory ---------------------------------------------------------------------------
@@ -179,6 +182,92 @@ class Elf:
                 break
         return None
 
+    @staticmethod
+    def _norm(x):
+        return re.sub(r"[^a-z0-9]", "", x.lower())
+
+    def _refine_attribution(self):
+        """Attribute every function to a source unit, resolving units that have no local symbol.
+
+        MWCC anchors a unit's end with its last local symbol (`__sinit_`). Units without any local function have no
+        anchor, so the functions between two anchors belong to the *run of FILE entries* between them (link order).
+        The run is partitioned monotonically by dynamic programming, scoring how well each function's class/name
+        matches a file name. `unit_conf`: 'anchored' (only one candidate), 'inferred' (votes decided), 'assumed'.
+        """
+        files = self.file_syms  # [name, end, lo] in link order
+        funcs = sorted((a, sz, n) for a, sz, t, n, b in self.syms if t == "FUNC" and TEXT_LO <= a < TEXT_HI)
+        self.func_unit = {}
+        prev_i, prev_end = -1, TEXT_LO
+        anchored_idx = [i for i, f in enumerate(files) if f[1]]
+        anchored_idx.sort(key=lambda i: files[i][1])
+        import bisect
+        faddrs = [f[0] for f in funcs]
+        for j in anchored_idx:
+            end = files[j][1]
+            lo_i = bisect.bisect_left(faddrs, prev_end)
+            hi_i = bisect.bisect_left(faddrs, end)
+            seg = funcs[lo_i:hi_i]
+            # candidate files: all FILE entries after the previous anchored one up to and including j (link order)
+            cands = [k for k in range(min(prev_i, j) + 1, j + 1)] if prev_i < j else [j]
+            if prev_i >= j:  # link order not monotone here; fall back to the anchored file only
+                cands = [j]
+            names = [files[k][0] for k in cands]
+            stems = [self._norm(os.path.splitext(os.path.basename(n.replace("\\", "/")))[0]) for n in names]
+            m = len(cands)
+            if m == 1 or not seg:
+                for a, sz, n in seg:
+                    self.func_unit[a] = (names[-1], "anchored" if m == 1 else "assumed")
+            else:
+                def score(fn, k):
+                    d = mwdemangle.demangle(fn)
+                    cls = self._norm(d["cls"]) if d["cls"] else ""
+                    nm = self._norm(fn)
+                    st = stems[k]
+                    if len(st) < 4:
+                        return 0
+                    sc = 0
+                    if cls and (st == cls.split("::")[-1] or st in cls or (len(cls) > 4 and cls in st)):
+                        sc = 2
+                    elif st in nm:
+                        sc = 1
+                    return sc
+                n_ = len(seg)
+                NEG = -10 ** 9
+                dp = [[NEG] * m for _ in range(n_ + 1)]
+                back = [[0] * m for _ in range(n_ + 1)]
+                for k in range(m):
+                    dp[0][k] = 0
+                for f_i in range(n_):
+                    a, sz, fn = seg[f_i]
+                    forced = None
+                    mm = re.match(r"^__sinit_\\(.+)_(cpp|c)$", fn)
+                    if mm:
+                        cand = [k for k in range(m) if self._norm(names[k]).startswith(self._norm(mm.group(1)))]
+                        forced = cand[-1] if cand else None
+                    for k in range(m):
+                        best, bk = NEG, 0
+                        for kk in range(k + 1):  # monotone: previous state <= k
+                            v = dp[f_i][kk] - (0.01 if kk != k else 0)
+                            if v > best:
+                                best, bk = v, kk
+                        sc = score(fn, k)
+                        if forced is not None:
+                            sc = 100 if k == forced else -100
+                        dp[f_i + 1][k] = best + sc
+                        back[f_i + 1][k] = bk
+                k = max(range(m), key=lambda k: (dp[n_][k], k))
+                assign = [0] * n_
+                for f_i in range(n_, 0, -1):
+                    assign[f_i - 1] = k
+                    k = back[f_i][k]
+                for (a, sz, fn), k in zip(seg, assign):
+                    sc = score(fn, k)
+                    self.func_unit[a] = (names[k], "inferred" if sc > 0 else "assumed")
+            prev_i, prev_end = j, end
+        # trailing functions after the last anchor
+        for a, sz, n in funcs[bisect.bisect_left(faddrs, prev_end):]:
+            self.func_unit[a] = (files[anchored_idx[-1]][0], "assumed")
+
     def _build_units(self):
         units = sorted([(e, n, lo) for n, e, lo in self.file_syms if e], key=lambda u: u[0])
         prev = TEXT_LO
@@ -190,7 +279,56 @@ class Elf:
             prev = end
         self._unit_ends = [u["end"] for u in self.units]
 
+    def _rebuild_units_from_attribution(self):
+        """Unit table from the refined attribution: one row per (file, contiguous run) with its address range."""
+        rows = []
+        cur = None
+        for a in sorted(self.func_unit):
+            name, conf = self.func_unit[a]
+            sz = self.by_name and next((s[1] for s in self._by_addr_cache(a)), 0)
+            if cur and cur["file"] == name:
+                cur["end"] = a + sz; cur["funcs"] += 1
+                if conf != "anchored":
+                    cur["conf"].add(conf)
+                else:
+                    cur["conf"].add(conf)
+            else:
+                if cur:
+                    rows.append(cur)
+                cur = {"file": name, "start": a, "end": a + sz, "funcs": 1, "conf": {conf}}
+        if cur:
+            rows.append(cur)
+        units = []
+        for i, r in enumerate(rows):
+            tier, sub = classify(r["file"])
+            units.append({"idx": i, "file": r["file"], "start": r["start"], "end": r["end"], "tier": tier,
+                          "subsystem": sub, "funcs_refined": r["funcs"], "conf": ",".join(sorted(r["conf"]))})
+        self.units = units
+        self._unit_starts = [u["start"] for u in units]
+
+    def _by_addr_cache(self, a):
+        if not hasattr(self, "_fsz"):
+            self._fsz = {}
+            for x, sz, t, n, b in self.syms:
+                if t == "FUNC":
+                    self._fsz.setdefault(x, sz)
+        return [(a, self._fsz.get(a, 0))]
+
     def unit_of(self, addr):
+        if hasattr(self, "_unit_starts"):
+            i = bisect.bisect_right(self._unit_starts, addr) - 1
+            if i >= 0:
+                u = self.units[i]
+                if addr < u["end"] or addr in self.func_unit:
+                    fu = self.func_unit.get(addr)
+                    if fu and fu[0] != u["file"]:  # a function inside another run (interleaved units): synthesize
+                        t, sb = classify(fu[0])
+                        return {"idx": -1, "file": fu[0], "start": addr, "end": addr, "tier": t, "subsystem": sb, "conf": fu[1]}
+                    return u
+            return None
+        return self._unit_of_old(addr)
+
+    def _unit_of_old(self, addr):
         i = bisect.bisect_right(self._unit_ends, addr)
         return self.units[i] if i < len(self.units) else None
 
