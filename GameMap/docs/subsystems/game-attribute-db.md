@@ -631,10 +631,9 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (8 d
 | callee subsystem | call sites |
 |---|---:|
 | attribute-db | 321 |
-| wii-sdk-crt | 124 |
+| wii-sdk-crt | 129 |
 | data-parsers | 37 |
 | engine-support | 21 |
-| ea-core-libs | 11 |
-| ea-audio-sndlib | 8 |
+| other-cpp | 14 |
 | renderer-eagl | 5 |
 | ai | 2 |

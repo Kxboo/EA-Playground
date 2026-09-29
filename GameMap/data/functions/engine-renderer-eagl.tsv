@@ -150,8 +150,8 @@
 803e3774	4	EAGLInternal	ModelDestructor	void*		model.cpp	ModelDestructor__12EAGLInternalFPv
 803e3778	16	EAGLInternal	ModelConstructor	void*, EAGL::DynamicLoader*, const char*		model.cpp	ModelConstructor__12EAGLInternalFPvPQ24EAGL13DynamicLoaderPCc
 803e3788	32		__sinit_\model_cpp			model.cpp	__sinit_\model_cpp
-803e37a8	28	EAGL::Model	CheckIfSafeToDelete			device.cpp	CheckIfSafeToDelete__Q24EAGL5ModelFv
-803e37c4	184	EAGL	SymbolInit			device.cpp	SymbolInit__4EAGLFv
+803e37a8	28	EAGL::Model	CheckIfSafeToDelete			symbolinit.cpp	CheckIfSafeToDelete__Q24EAGL5ModelFv
+803e37c4	184	EAGL	SymbolInit			symbolinit.cpp	SymbolInit__4EAGLFv
 803e387c	240	EAGL::Device	Init			device.cpp	Init__Q24EAGL6DeviceFv
 803e396c	304	EAGL::Device	destructor			device.cpp	__dt__Q24EAGL6DeviceFv
 803e3a9c	24	EAGL::Device	constructor			device.cpp	__ct__Q24EAGL6DeviceFv
@@ -294,23 +294,23 @@
 803e9e30	28	EAGL::TevStage	SetAlphaIn	_GXTevAlphaArg, _GXTevAlphaArg, _GXTevAlphaArg, _GXTevAlphaArg		tevstage.cpp	SetAlphaIn__Q24EAGL8TevStageF14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg
 803e9e4c	140	EAGL::TevStage	constructor			tevstage.cpp	__ct__Q24EAGL8TevStageFv
 803e9ed8	32		__sinit_\tevstage_cpp			tevstage.cpp	__sinit_\tevstage_cpp
-803e9ef8	940		MultMatrix	const MATRIX4*, const MATRIX4*, MATRIX4*		texturerc.cpp	MultMatrix__FPC7MATRIX4PC7MATRIX4P7MATRIX4
-803ea2a4	324	EAGL::Transform	BuildSQT	float, float, float, float, float, float, float, float, float, float		texturerc.cpp	BuildSQT__Q24EAGL9TransformFffffffffff
-803ea3e8	300	EAGL::Transform	TransformPoint	const COORD3&, COORD3&	const	texturerc.cpp	TransformPoint__Q24EAGL9TransformCFRC6COORD3R6COORD3
-803ea514	224	EAGL::Transform	PrependMatrix	const MATRIX4*		texturerc.cpp	PrependMatrix__Q24EAGL9TransformFPC7MATRIX4
-803ea5f4	220	EAGL::Transform	AppendMatrix	const MATRIX4*		texturerc.cpp	AppendMatrix__Q24EAGL9TransformFPC7MATRIX4
-803ea6d0	96	EAGL::Transform	AppendTranslate	float, float, float		texturerc.cpp	AppendTranslate__Q24EAGL9TransformFfff
-803ea730	1140	EAGL::Transform	Invert	const EAGL::Transform&, EAGL::Transform&		texturerc.cpp	Invert__Q24EAGL9TransformFRCQ24EAGL9TransformRQ24EAGL9Transform
-803eaba4	312	EAGL::Transform	Transpose	const EAGL::Transform&, EAGL::Transform&		texturerc.cpp	Transpose__Q24EAGL9TransformFRCQ24EAGL9TransformRQ24EAGL9Transform
-803eacdc	100	EAGL::Transform	Transpose			texturerc.cpp	Transpose__Q24EAGL9TransformFv
-803ead40	184	EAGL::Transform	Inverse			texturerc.cpp	Inverse__Q24EAGL9TransformFv
-803eadf8	704	EAGL::Transform	ExtractQuatTrans	COORD4*, COORD4*	const	texturerc.cpp	ExtractQuatTrans__Q24EAGL9TransformCFP6COORD4P6COORD4
-803eb0b8	172	EAGL::Transform	BuildMatrix	const MATRIX4*		texturerc.cpp	BuildMatrix__Q24EAGL9TransformFPC7MATRIX4
-803eb164	76	EAGL::Transform	BuildIdentity			texturerc.cpp	BuildIdentity__Q24EAGL9TransformFv
-803eb1b0	76	EAGL::Transform	BuildTranslate	float, float, float		texturerc.cpp	BuildTranslate__Q24EAGL9TransformFfff
-803eb1fc	72	EAGL::Transform	BuildScale	float, float, float, float		texturerc.cpp	BuildScale__Q24EAGL9TransformFffff
-803eb244	64	EAGL::Transform	PostMult	const EAGL::Transform&		texturerc.cpp	PostMult__Q24EAGL9TransformFRCQ24EAGL9Transform
-803eb284	160	EAGLInternal::TextureRenderContextPrivate	GetPhysicalXOffset		const	texturerc.cpp	GetPhysicalXOffset__Q212EAGLInternal27TextureRenderContextPrivateCFv
+803e9ef8	940		MultMatrix	const MATRIX4*, const MATRIX4*, MATRIX4*		transform.cpp	MultMatrix__FPC7MATRIX4PC7MATRIX4P7MATRIX4
+803ea2a4	324	EAGL::Transform	BuildSQT	float, float, float, float, float, float, float, float, float, float		transform.cpp	BuildSQT__Q24EAGL9TransformFffffffffff
+803ea3e8	300	EAGL::Transform	TransformPoint	const COORD3&, COORD3&	const	transform.cpp	TransformPoint__Q24EAGL9TransformCFRC6COORD3R6COORD3
+803ea514	224	EAGL::Transform	PrependMatrix	const MATRIX4*		transform.cpp	PrependMatrix__Q24EAGL9TransformFPC7MATRIX4
+803ea5f4	220	EAGL::Transform	AppendMatrix	const MATRIX4*		transform.cpp	AppendMatrix__Q24EAGL9TransformFPC7MATRIX4
+803ea6d0	96	EAGL::Transform	AppendTranslate	float, float, float		transform.cpp	AppendTranslate__Q24EAGL9TransformFfff
+803ea730	1140	EAGL::Transform	Invert	const EAGL::Transform&, EAGL::Transform&		transform.cpp	Invert__Q24EAGL9TransformFRCQ24EAGL9TransformRQ24EAGL9Transform
+803eaba4	312	EAGL::Transform	Transpose	const EAGL::Transform&, EAGL::Transform&		transform.cpp	Transpose__Q24EAGL9TransformFRCQ24EAGL9TransformRQ24EAGL9Transform
+803eacdc	100	EAGL::Transform	Transpose			transform.cpp	Transpose__Q24EAGL9TransformFv
+803ead40	184	EAGL::Transform	Inverse			transform.cpp	Inverse__Q24EAGL9TransformFv
+803eadf8	704	EAGL::Transform	ExtractQuatTrans	COORD4*, COORD4*	const	transform.cpp	ExtractQuatTrans__Q24EAGL9TransformCFP6COORD4P6COORD4
+803eb0b8	172	EAGL::Transform	BuildMatrix	const MATRIX4*		transform.cpp	BuildMatrix__Q24EAGL9TransformFPC7MATRIX4
+803eb164	76	EAGL::Transform	BuildIdentity			transform.cpp	BuildIdentity__Q24EAGL9TransformFv
+803eb1b0	76	EAGL::Transform	BuildTranslate	float, float, float		transform.cpp	BuildTranslate__Q24EAGL9TransformFfff
+803eb1fc	72	EAGL::Transform	BuildScale	float, float, float, float		transform.cpp	BuildScale__Q24EAGL9TransformFffff
+803eb244	64	EAGL::Transform	PostMult	const EAGL::Transform&		transform.cpp	PostMult__Q24EAGL9TransformFRCQ24EAGL9Transform
+803eb284	160	EAGLInternal::TextureRenderContextPrivate	GetPhysicalXOffset		const	transform.cpp	GetPhysicalXOffset__Q212EAGLInternal27TextureRenderContextPrivateCFv
 803eb324	32		__sinit_\texturerc_cpp			texturerc.cpp	__sinit_\texturerc_cpp
 803eb344	52	EAGLInternal::ViewPortPrivate	ResetHardwareClearColour			viewport.cpp	ResetHardwareClearColour__Q212EAGLInternal15ViewPortPrivateFv
 803eb378	64	EAGL::ViewPortExtension	destructor			viewport.cpp	__dt__Q24EAGL17ViewPortExtensionFv
@@ -353,3 +353,46 @@
 803ee3b8	564	EAGL::EAGLFont	drawarray	FONT*, FONTCHARBUF*, int		fonteagl.cpp	drawarray__Q24EAGL8EAGLFontFP4FONTP11FONTCHARBUFi
 803ee5ec	64	EAGL::EAGLFont	draw	FONT*, const FONTCHAR*, float, float		fonteagl.cpp	draw__Q24EAGL8EAGLFontFP4FONTPC8FONTCHARff
 803ee62c	252		__sinit_\fonteagl_cpp			fonteagl.cpp	__sinit_\fonteagl_cpp
+803ee728	2764	EAGLInternal	DrawHandBuilt	int, unsigned int, unsigned int, unsigned int		pcode.cpp	DrawHandBuilt__12EAGLInternalFiUiUiUi
+803ef1f4	88	EAGLInternal	CallDisplayList	const void*, unsigned int, bool		pcode.cpp	CallDisplayList__12EAGLInternalFPCvUib
+803ef24c	1108	EAGLInternal	ProcessPCode	EAGL::GeoPrim*, EAGLInternal::PCodeNewRenderMethodFlag		pcode.cpp	ProcessPCode__12EAGLInternalFPQ24EAGL7GeoPrimQ212EAGLInternal24PCodeNewRenderMethodFlag
+803ef6a0	932	EAGL::PositionalLightBlock	Use	const MATRIX4*		positionallight.cpp	Use__Q24EAGL20PositionalLightBlockFPC7MATRIX4
+803efa44	120	EAGL::PositionalLightBlock	SetColour	int, const EAGL::FloatColour&		positionallight.cpp	SetColour__Q24EAGL20PositionalLightBlockFiRCQ24EAGL11FloatColour
+803efabc	28	EAGL::PositionalLightBlock	SetPointLight	int		positionallight.cpp	SetPointLight__Q24EAGL20PositionalLightBlockFi
+803efad8	36	EAGL::PositionalLightBlock	SetPosition	int, const COORD3&		positionallight.cpp	SetPosition__Q24EAGL20PositionalLightBlockFiRC6COORD3
+803efafc	16	EAGL::PositionalLightBlock	Enable	int, bool		positionallight.cpp	Enable__Q24EAGL20PositionalLightBlockFib
+803efb0c	112	EAGL::PositionalLightBlock	SetAmbientColour	const EAGL::FloatColour&		positionallight.cpp	SetAmbientColour__Q24EAGL20PositionalLightBlockFRCQ24EAGL11FloatColour
+803efb7c	404	EAGL::PositionalLightBlock	constructor			positionallight.cpp	__ct__Q24EAGL20PositionalLightBlockFv
+803efd10	4	EAGL::DrawTextured	SetState	const EAGL::GeoPrimState&		positionallight.cpp	SetState__Q24EAGL12DrawTexturedFRCQ24EAGL12GeoPrimState
+803efd14	200	EAGL::DrawTextured	AddVertex	const COORD3&, const EAGL::Colour&, const COORD2&		positionallight.cpp	AddVertex__Q24EAGL12DrawTexturedFRC6COORD3RCQ24EAGL6ColourRC6COORD2
+803efddc	4	EAGL::DrawTextured	End			positionallight.cpp	End__Q24EAGL12DrawTexturedFv
+803efde0	4	EAGL::DrawTextured	Begin	EAGL::PrimitiveType		positionallight.cpp	Begin__Q24EAGL12DrawTexturedFQ24EAGL13PrimitiveType
+803efde4	4	EAGL::DrawTextured	SetTexture	EAGL::TAR*		positionallight.cpp	SetTexture__Q24EAGL12DrawTexturedFPQ24EAGL3TAR
+803efde8	184	EAGL::DrawTextured	Init	unsigned int		positionallight.cpp	Init__Q24EAGL12DrawTexturedFUi
+803efea0	4	EAGL::DrawTextured	GetState			positionallight.cpp	GetState__Q24EAGL12DrawTexturedFv
+803efea4	4	EAGL::DrawTextured	SetModelMatrix	MATRIX4&		positionallight.cpp	SetModelMatrix__Q24EAGL12DrawTexturedFR7MATRIX4
+803efea8	4	EAGL::DrawTextured	SetModelMatrix	const MATRIX4&		positionallight.cpp	SetModelMatrix__Q24EAGL12DrawTexturedFRC7MATRIX4
+803efeac	112	EAGL::DrawTextured	destructor			positionallight.cpp	__dt__Q24EAGL12DrawTexturedFv
+803eff1c	56	EAGL::DrawTextured	constructor			positionallight.cpp	__ct__Q24EAGL12DrawTexturedFv
+803eff54	4	EAGL::DrawGouraud	SetState	const EAGL::GeoPrimState&		positionallight.cpp	SetState__Q24EAGL11DrawGouraudFRCQ24EAGL12GeoPrimState
+803eff58	140	EAGL::DrawGouraud	AddVertex	const COORD3&, const EAGL::Colour&		positionallight.cpp	AddVertex__Q24EAGL11DrawGouraudFRC6COORD3RCQ24EAGL6Colour
+803effe4	180	EAGL::DrawGouraud	AddVertex	const COORD4&, const EAGL::Colour&		positionallight.cpp	AddVertex__Q24EAGL11DrawGouraudFRC6COORD4RCQ24EAGL6Colour
+803f0098	4	EAGL::DrawGouraud	End			positionallight.cpp	End__Q24EAGL11DrawGouraudFv
+803f009c	4	EAGL::DrawGouraud	Begin	EAGL::PrimitiveType		positionallight.cpp	Begin__Q24EAGL11DrawGouraudFQ24EAGL13PrimitiveType
+803f00a0	172	EAGL::DrawGouraud	Init	unsigned int		positionallight.cpp	Init__Q24EAGL11DrawGouraudFUi
+803f014c	4	EAGL::DrawGouraud	GetState			positionallight.cpp	GetState__Q24EAGL11DrawGouraudFv
+803f0150	4	EAGL::DrawGouraud	SetModelMatrix	MATRIX4&		positionallight.cpp	SetModelMatrix__Q24EAGL11DrawGouraudFR7MATRIX4
+803f0154	4	EAGL::DrawGouraud	SetModelMatrix	const MATRIX4&		positionallight.cpp	SetModelMatrix__Q24EAGL11DrawGouraudFRC7MATRIX4
+803f0158	112	EAGL::DrawGouraud	destructor			positionallight.cpp	__dt__Q24EAGL11DrawGouraudFv
+803f01c8	56	EAGL::DrawGouraud	constructor			positionallight.cpp	__ct__Q24EAGL11DrawGouraudFv
+803f0200	160	EAGL::DrawImmediate	SetLocalMatrix	const MATRIX4*		drawimmediate.cpp	SetLocalMatrix__Q24EAGL13DrawImmediateFPC7MATRIX4
+803f02a0	20	EAGL::DrawImmediate	SetTexture	EAGL::TAR*		drawimmediate.cpp	SetTexture__Q24EAGL13DrawImmediateFPQ24EAGL3TAR
+803f02b4	8	EAGL::DrawImmediate	SetVertexType	int		drawimmediate.cpp	SetVertexType__Q24EAGL13DrawImmediateFi
+803f02bc	12	EAGL::DrawImmediate	GetState			drawimmediate.cpp	GetState__Q24EAGL13DrawImmediateFv
+803f02c8	48	EAGL::DrawImmediate	SetState	const EAGL::GeoPrimState*		drawimmediate.cpp	SetState__Q24EAGL13DrawImmediateFPCQ24EAGL12GeoPrimState
+803f02f8	1056	EAGL::DrawImmediate	End			drawimmediate.cpp	End__Q24EAGL13DrawImmediateFv
+803f0718	276	EAGL::DrawImmediate	Begin	EAGL::PrimitiveType		drawimmediate.cpp	Begin__Q24EAGL13DrawImmediateFQ24EAGL13PrimitiveType
+803f082c	904	EAGL::DrawImmediate	SetVertexDescription			drawimmediate.cpp	SetVertexDescription__Q24EAGL13DrawImmediateFv
+803f0bb4	96	EAGL::DrawImmediate	constructor			drawimmediate.cpp	__ct__Q24EAGL13DrawImmediateFv
+803f0c14	2156	EAGLInternal	HandleDefaultStateProp	EAGL::GeoPrimState&, const EAGLInternal::Property&		drawimmediate.cpp	HandleDefaultStateProp__12EAGLInternalFRQ24EAGL12GeoPrimStateRCQ212EAGLInternal8Property
+803f1480	632	EAGLInternal	HandleDefaultTARProp	EAGL::TAR&, const EAGLInternal::Property&		drawimmediate.cpp	HandleDefaultTARProp__12EAGLInternalFRQ24EAGL3TARRCQ212EAGLInternal8Property

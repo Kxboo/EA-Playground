@@ -176,14 +176,13 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (30 
 | callee subsystem | call sites |
 |---|---:|
 | engine-support | 49 |
-| wii-sdk-crt | 33 |
+| wii-sdk-crt | 35 |
 | animation-glue | 16 |
 | data-parsers | 11 |
-| ea-core-libs | 5 |
-| ea-fonts-shapes-mem | 2 |
+| ea-core-libs | 4 |
+| ea-animation | 3 |
 | characters | 2 |
-| ea-audio-sndlib | 2 |
-| ea-animation | 1 |
 | math | 1 |
+| ea-fonts-shapes-mem | 1 |
 | mg-dartshootout | 1 |
 | audio | 1 |

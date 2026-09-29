@@ -968,27 +968,27 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (83 
 | callee subsystem | call sites |
 |---|---:|
 | mg-dartshootout | 428 |
-| wii-sdk-crt | 207 |
+| wii-sdk-crt | 219 |
 | engine-support | 132 |
 | audio | 110 |
 | frontend | 98 |
 | characters | 71 |
 | physics-glue | 64 |
 | ai | 59 |
-| ea-core-libs | 49 |
 | cameras | 46 |
 | render-scene | 44 |
 | data-parsers | 39 |
 | effects | 28 |
+| ea-core-libs | 26 |
+| renderer-eagl | 24 |
 | core-flow | 19 |
 | world | 18 |
 | math | 15 |
 | input | 11 |
-| renderer-eagl | 10 |
-| ea-audio-sndlib | 6 |
 | animation-glue | 6 |
 | exposure-conga | 5 |
 | conversation | 4 |
 | attribute-db | 4 |
+| ea-fonts-shapes-mem | 2 |
+| ea-audio-sndlib | 2 |
 | mg-freethrow | 2 |
-| ea-fonts-shapes-mem | 1 |

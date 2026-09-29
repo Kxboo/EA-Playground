@@ -384,6 +384,7 @@
 805e6160	128	.bss	gKeyBoardInitialText__3TRC	TRC	
 80442340	302	.rodata	gKeyboardFilterList		
 804422b8	120	.rodata	gLanguage		
+805ffcc8	4	.sdata	gLastCompBlockIdx__Q24EAGL7GeoPrim	EAGL::GeoPrim	0xffffffff
 80602364	4	.sbss	gLastCycleCount__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
 8060235c	2	.sbss	gLastToken__Q212EAGLInternal20RenderContextPrivate	EAGLInternal::RenderContextPrivate	
 804cd3ac	396	.data	gLionChunkTypeStrings		
@@ -1086,7 +1087,6 @@
 805ab0a4	32	.bss	masIterators__15cParticleBucket	cParticleBucket	
 805ab024	128	.bss	masParticleSet__15cParticleBucket	cParticleBucket	
 805aaf98	128	.bss	masSeeds__15cParticleBucket	cParticleBucket	
-80602468	4	.sbss	memorylisterror		
 80602244	4	.sbss	mempool__7CString	CString	
 80601990	4	.sbss	mpAllocator__14LionSmallAlloc	LionSmallAlloc	
 80601afc	4	.sbss	mpAllocator__7GROPERS	GROPERS	
@@ -1110,6 +1110,7 @@
 80607890	4	.sdata2	npos__7CString	CString	0xffffffff
 80602248	4	.sbss	numfreepools__7CString	CString	
 80602054	4	.sbss	parentalLock		
+804ed6c8	13	.data	pcodestride__12EAGLInternal	EAGLInternal	
 805e3990	16	.bss	productCode		
 805a62fc	16	.bss	rcmp_sys__4RCMP	RCMP	
 806019d8	4	.sbss	retiredCount		
@@ -1227,6 +1228,8 @@
 80601d00	1	.sbss	sDartShootoutShootCompulsion		
 805ffae4	4	.sdata	sDefaultPool__6MemMgr	MemMgr	0xffffffff
 805dfd80	20	.bss	sDefaultRules		
+80602404	4	.sbss	sDisplayListSize__Q24EAGL9DrawArray	EAGL::DrawArray	
+80602400	4	.sbss	sDisplayList__Q24EAGL9DrawArray	EAGL::DrawArray	
 80601dbc	1	.sbss	sDodgeballAIEntity		
 80601dbf	1	.sbss	sDodgeballBoostCompulsion		
 80601dc1	1	.sbss	sDodgeballIdleCompulsion		

@@ -7,6 +7,7 @@
 !/Remaster/
 !/_bevy/
 !/GameMap/
+!/.github/
 
 # Local runtimes, game inputs, exports and machine state.
 **/_cli_internal/
@@ -42,3 +43,4 @@
 
 # Local decompiler output (decompiled game code): never commit; regenerate with GameMap/tools/ghidra
 /GameMap/decomp/
+/GameMap/site/code/

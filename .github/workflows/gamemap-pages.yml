@@ -1,0 +1,38 @@
+name: GameMap progress site
+
+# Publishes GameMap/site (static progress dashboard) to GitHub Pages.
+# One-time setup: repository Settings -> Pages -> Source: "GitHub Actions".
+# The site contains only measurements (data.js); the code viewer's "code pack" (site/code/) is git-ignored and never published.
+
+on:
+  push:
+    branches: [main, master]
+    paths: ["GameMap/site/**", ".github/workflows/gamemap-pages.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: gamemap-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refuse to publish game code
+        run: |
+          if [ -d GameMap/site/code ]; then echo "site/code must not be published"; exit 1; fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: GameMap/site
+      - id: deployment
+        uses: actions/deploy-pages@v4

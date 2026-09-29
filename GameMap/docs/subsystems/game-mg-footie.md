@@ -871,14 +871,14 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (89 
 | callee subsystem | call sites |
 |---|---:|
 | mg-footie | 467 |
-| wii-sdk-crt | 134 |
+| wii-sdk-crt | 140 |
 | frontend | 77 |
 | ai | 75 |
 | audio | 62 |
 | physics-glue | 53 |
-| ea-core-libs | 49 |
 | math | 38 |
 | characters | 38 |
+| ea-core-libs | 36 |
 | engine-support | 30 |
 | effects | 26 |
 | mg-dartshootout | 24 |
@@ -886,12 +886,12 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (89 
 | core-flow | 18 |
 | input | 17 |
 | data-parsers | 16 |
+| renderer-eagl | 16 |
 | cameras | 16 |
 | world | 9 |
 | exposure-conga | 8 |
-| renderer-eagl | 7 |
-| ea-audio-sndlib | 3 |
 | animation-glue | 3 |
 | conversation | 2 |
 | mg-dodgeball | 2 |
 | mg-microbug | 2 |
+| ea-fonts-shapes-mem | 1 |

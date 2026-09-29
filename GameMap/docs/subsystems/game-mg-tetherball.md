@@ -396,11 +396,12 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (63 
 | cameras | 14 |
 | render-scene | 10 |
 | animation-glue | 9 |
-| ea-core-libs | 6 |
+| ea-core-libs | 5 |
 | exposure-conga | 5 |
 | world | 3 |
 | mg-freethrow | 3 |
 | renderer-eagl | 2 |
 | conversation | 1 |
 | physics-glue | 1 |
+| ea-fonts-shapes-mem | 1 |
 | mg-wallball | 1 |

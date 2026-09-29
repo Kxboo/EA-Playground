@@ -296,6 +296,6 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (7 d
 |---|---:|
 | data-parsers | 103 |
 | attribute-db | 99 |
-| wii-sdk-crt | 89 |
+| wii-sdk-crt | 88 |
 | engine-support | 25 |
-| ea-audio-sndlib | 1 |
+| ea-audio-sndlib | 2 |

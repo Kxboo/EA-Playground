@@ -1,4 +1,18 @@
 # addr	size	class	method	args	const	source_unit	mangled
+803293bc	64	VideoCapture::ScreenCapture	destructor			videocapture.cpp	__dt__Q212VideoCapture13ScreenCaptureFv
+803293fc	168	VideoCapture::ScreenCapture	constructor			videocapture.cpp	__ct__Q212VideoCapture13ScreenCaptureFv
+803294a4	328	VideoCapture::ScreenCapture	Init	const char*, const char*, unsigned int, unsigned int		videocapture.cpp	Init__Q212VideoCapture13ScreenCaptureFPCcPCcUiUi
+803295ec	60	VideoCapture::ScreenCapture	Release			videocapture.cpp	Release__Q212VideoCapture13ScreenCaptureFv
+80329628	80	VideoCapture::ScreenCapture	StartCapture			videocapture.cpp	StartCapture__Q212VideoCapture13ScreenCaptureFv
+80329678	84	VideoCapture::ScreenCapture	StopCapture			videocapture.cpp	StopCapture__Q212VideoCapture13ScreenCaptureFv
+803296cc	172	VideoCapture::ScreenCapture	CaptureFrame			videocapture.cpp	CaptureFrame__Q212VideoCapture13ScreenCaptureFv
+80329778	672	VideoCapture::ScreenCapture	MatrixTilePerspective	EAGL::ViewPort*		videocapture.cpp	MatrixTilePerspective__Q212VideoCapture13ScreenCaptureFPQ24EAGL8ViewPort
+80329a18	272	VideoCapture::ScreenCapture	TakeScreenShot			videocapture.cpp	TakeScreenShot__Q212VideoCapture13ScreenCaptureFv
+80329b28	288	VideoCapture::TargaWriter	SaveFile	const char*, const long*, unsigned int, unsigned int		videocapture.cpp	SaveFile__Q212VideoCapture11TargaWriterFPCcPClUiUi
+80329c48	56	VideoCapture	Init	const VideoCapture::TInitParams&		videocapture.cpp	Init__12VideoCaptureFRCQ212VideoCapture11TInitParams
+80329c80	20	VideoCapture	VideoCaptureMemAlloc	const char*, int, int		videocapture.cpp	VideoCaptureMemAlloc__12VideoCaptureFPCcii
+80329c94	20	VideoCapture	VideoCaptureMemFree	void*		videocapture.cpp	VideoCaptureMemFree__12VideoCaptureFPv
+80329ca8	12	VideoCapture	GetCapturePath			videocapture.cpp	GetCapturePath__12VideoCaptureFv
 803c9f14	112		ExtToUINT32	char*		assetmanager.cpp	ExtToUINT32__FPc
 803c9f84	748	AssetManager	constructor			assetmanager.cpp	__ct__12AssetManagerFv
 803ca270	80	BaseAsset	CleanData			assetmanager.cpp	CleanData__9BaseAssetFv

@@ -565,25 +565,25 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (60 
 | callee subsystem | call sites |
 |---|---:|
 | mg-wallball | 272 |
-| wii-sdk-crt | 101 |
+| wii-sdk-crt | 109 |
 | audio | 63 |
 | frontend | 44 |
 | ai | 42 |
-| ea-core-libs | 39 |
 | characters | 37 |
+| renderer-eagl | 25 |
 | engine-support | 23 |
 | render-scene | 19 |
 | math | 19 |
+| ea-core-libs | 17 |
 | data-parsers | 16 |
 | input | 16 |
 | effects | 16 |
 | core-flow | 13 |
-| renderer-eagl | 8 |
 | mg-dartshootout | 8 |
 | cameras | 7 |
 | physics-glue | 7 |
 | exposure-conga | 6 |
 | world | 6 |
-| ea-audio-sndlib | 4 |
 | animation-glue | 3 |
 | mg-dodgeball | 2 |
+| ea-fonts-shapes-mem | 1 |

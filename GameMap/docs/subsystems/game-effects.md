@@ -19,7 +19,7 @@
 | class | methods | code bytes | ctor | dtor | virtual slots (vtable) |
 |---|---:|---:|---|---|---:|
 | `EA::Allocator::ITaggedAllocator` | 1 | 64 |  | `80309108` | 0 |
-| `EAGL::DrawImmediate` | 3 | 212 |  |  | 0 |
+| `EAGL::DrawImmediate` | 3 | 212 | `803f0bb4` |  | 0 |
 | `ELFHASH` | 1 | 100 |  |  | 0 |
 | `GROPERS` | 5 | 2228 |  |  | 0 |
 | `GUID` | 1 | 12 | `802ccd8c` |  | 0 |
@@ -2135,16 +2135,16 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (148
 | callee subsystem | call sites |
 |---|---:|
 | effects | 921 |
-| wii-sdk-crt | 408 |
-| ea-core-libs | 49 |
+| wii-sdk-crt | 422 |
+| renderer-eagl | 53 |
 | engine-support | 36 |
-| renderer-eagl | 35 |
+| ea-audio-sndlib | 17 |
 | frontend | 13 |
 | data-parsers | 10 |
 | characters | 9 |
 | ai | 8 |
 | audio | 6 |
-| ea-audio-sndlib | 6 |
+| ea-core-libs | 6 |
 | world | 6 |
 | cameras | 4 |
 | render-scene | 2 |

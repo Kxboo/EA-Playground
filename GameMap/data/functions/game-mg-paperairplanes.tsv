@@ -182,20 +182,4 @@
 803c3f5c	4	PanCamera	UpdateInput	int		pancamera.cpp	UpdateInput__9PanCameraFi
 803c3f60	1028	PanCamera	Update	int		pancamera.cpp	Update__9PanCameraFi
 803c4364	24		__sinit_\pancamera_cpp			pancamera.cpp	__sinit_\pancamera_cpp
-804137cc	148		GC_PAD_init			pad.cpp	GC_PAD_init__Fv
-80413860	236		GC_PAD_update			pad.cpp	GC_PAD_update__Fv
-8041394c	36		GC_PAD_active	int		pad.cpp	GC_PAD_active__Fi
-80413970	20		GC_PAD_getdataptr	int		pad.cpp	GC_PAD_getdataptr__Fi
-80413aa0	8		PAD_getoptsinternal			pad.cpp	PAD_getoptsinternal__Fv
-80413aa8	120		PAD_init			pad.cpp	PAD_init
-80413b20	276		PAD_update			pad.cpp	PAD_update
-80413c34	20		PAD_gethandler	int		pad.cpp	PAD_gethandler__Fi
-80413c48	140		PAD_sethandler	int, IPadModeHandler*		pad.cpp	PAD_sethandler__FiP15IPadModeHandler
-80413cd4	20		PAD_getdpdmode			pad.cpp	PAD_getdpdmode
-80413ce8	20		PAD_getdataptr			pad.cpp	PAD_getdataptr
-80413cfc	72		PAD_active			pad.cpp	PAD_active
-80413d44	20		PAD_getinfo			pad.cpp	PAD_getinfo
-80413d58	4		PAD_enableinfopolling			pad.cpp	PAD_enableinfopolling
-80413d5c	8		PAD_startrumble			pad.cpp	PAD_startrumble
-80413d64	8		PAD_stoprumble			pad.cpp	PAD_stoprumble
 80413d6c	60		__sinit_\pad_cpp			pad.cpp	__sinit_\pad_cpp

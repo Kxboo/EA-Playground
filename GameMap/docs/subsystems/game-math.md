@@ -84,11 +84,11 @@ Free functions: 20 (listed at the end).
 
 | callee subsystem | call sites |
 |---|---:|
-| ea-core-libs | 12 |
+| wii-sdk-crt | 15 |
 | math | 9 |
 | ai | 8 |
-| wii-sdk-crt | 8 |
 | characters | 6 |
+| ea-core-libs | 5 |
 | audio | 5 |
 | mg-dartshootout | 2 |
 | havok | 1 |

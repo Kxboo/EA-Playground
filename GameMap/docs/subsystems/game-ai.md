@@ -671,14 +671,14 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (61 
 | callee subsystem | call sites |
 |---|---:|
 | ai | 252 |
-| wii-sdk-crt | 98 |
+| wii-sdk-crt | 102 |
 | data-parsers | 49 |
 | engine-support | 32 |
 | math | 21 |
 | characters | 12 |
-| ea-core-libs | 8 |
+| ea-fonts-shapes-mem | 4 |
 | world | 2 |
 | animation-glue | 2 |
 | physics-glue | 2 |
 | attribute-db | 2 |
-| ea-audio-sndlib | 1 |
+| ea-core-libs | 1 |

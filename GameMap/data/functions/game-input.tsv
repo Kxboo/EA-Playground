@@ -1,18 +1,4 @@
 # addr	size	class	method	args	const	source_unit	mangled
-803293bc	64	VideoCapture::ScreenCapture	destructor			controller.cpp	__dt__Q212VideoCapture13ScreenCaptureFv
-803293fc	168	VideoCapture::ScreenCapture	constructor			controller.cpp	__ct__Q212VideoCapture13ScreenCaptureFv
-803294a4	328	VideoCapture::ScreenCapture	Init	const char*, const char*, unsigned int, unsigned int		controller.cpp	Init__Q212VideoCapture13ScreenCaptureFPCcPCcUiUi
-803295ec	60	VideoCapture::ScreenCapture	Release			controller.cpp	Release__Q212VideoCapture13ScreenCaptureFv
-80329628	80	VideoCapture::ScreenCapture	StartCapture			controller.cpp	StartCapture__Q212VideoCapture13ScreenCaptureFv
-80329678	84	VideoCapture::ScreenCapture	StopCapture			controller.cpp	StopCapture__Q212VideoCapture13ScreenCaptureFv
-803296cc	172	VideoCapture::ScreenCapture	CaptureFrame			controller.cpp	CaptureFrame__Q212VideoCapture13ScreenCaptureFv
-80329778	672	VideoCapture::ScreenCapture	MatrixTilePerspective	EAGL::ViewPort*		controller.cpp	MatrixTilePerspective__Q212VideoCapture13ScreenCaptureFPQ24EAGL8ViewPort
-80329a18	272	VideoCapture::ScreenCapture	TakeScreenShot			controller.cpp	TakeScreenShot__Q212VideoCapture13ScreenCaptureFv
-80329b28	288	VideoCapture::TargaWriter	SaveFile	const char*, const long*, unsigned int, unsigned int		controller.cpp	SaveFile__Q212VideoCapture11TargaWriterFPCcPClUiUi
-80329c48	56	VideoCapture	Init	const VideoCapture::TInitParams&		controller.cpp	Init__12VideoCaptureFRCQ212VideoCapture11TInitParams
-80329c80	20	VideoCapture	VideoCaptureMemAlloc	const char*, int, int		controller.cpp	VideoCaptureMemAlloc__12VideoCaptureFPCcii
-80329c94	20	VideoCapture	VideoCaptureMemFree	void*		controller.cpp	VideoCaptureMemFree__12VideoCaptureFPv
-80329ca8	12	VideoCapture	GetCapturePath			controller.cpp	GetCapturePath__12VideoCaptureFv
 80329cb4	1444	Controller	GetInput	int, int&, int&, int&, int		controller.cpp	GetInput__10ControllerFiRiRiRii
 8032a258	504	Controller	constructor			controller.cpp	__ct__10ControllerFv
 8032a450	112	Controller	destructor			controller.cpp	__dt__10ControllerFv

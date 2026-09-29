@@ -33,7 +33,7 @@
 |---|---:|---:|---|---|---:|
 | `AncientEvil` | 1 | 80 | `802cce60` | `802ccf4c` | 1 |
 | `EA::Math` | 1 | 80 |  |  | 0 |
-| `EAGL::DrawImmediate` | 1 | 120 |  |  | 0 |
+| `EAGL::DrawImmediate` | 1 | 120 | `803f0bb4` |  | 0 |
 | `MAD_CODEC_INTERNAL` | 6 | 1204 | `802973b0` | `80297468` | 0 |
 | `MAD_FRAME` | 2 | 372 | `802971e4` | `8029730c` | 2 |
 | `MGRcCars` | 63 | 21984 | `8037e02c` | `8037e138` | 7 |
@@ -1114,7 +1114,7 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (119
 | callee subsystem | call sites |
 |---|---:|
 | mg-rccars | 419 |
-| wii-sdk-crt | 217 |
+| wii-sdk-crt | 241 |
 | engine-support | 87 |
 | frontend | 80 |
 | audio | 73 |
@@ -1123,20 +1123,18 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (119
 | render-scene | 40 |
 | characters | 34 |
 | data-parsers | 32 |
+| renderer-eagl | 31 |
 | physics-glue | 27 |
 | math | 26 |
-| ea-core-libs | 24 |
-| renderer-eagl | 22 |
-| ea-audio-sndlib | 20 |
 | cameras | 20 |
 | core-flow | 18 |
 | input | 18 |
+| video-vp6-mp3 | 13 |
+| ea-core-libs | 9 |
 | world | 9 |
-| video-vp6-mp3 | 7 |
 | mg-paperairplanes | 7 |
-| text-input | 6 |
+| ea-fonts-shapes-mem | 5 |
 | exposure-conga | 5 |
-| ea-fonts-shapes-mem | 3 |
 | havok | 3 |
 | mg-footie | 2 |
 | conversation | 1 |

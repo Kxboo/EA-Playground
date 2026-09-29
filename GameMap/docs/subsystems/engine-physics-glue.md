@@ -492,14 +492,14 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (7 d
 
 | callee subsystem | call sites |
 |---|---:|
-| havok | 175 |
+| havok | 190 |
 | physics-glue | 109 |
 | wii-sdk-crt | 96 |
 | math | 43 |
 | engine-support | 34 |
-| trc-wii-requirements | 15 |
 | ai | 11 |
-| ea-core-libs | 3 |
 | characters | 3 |
 | audio | 2 |
+| ea-audio-sndlib | 2 |
 | world | 2 |
+| ea-core-libs | 1 |

@@ -320,17 +320,16 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (6 d
 |---|---:|
 | cameras | 90 |
 | characters | 29 |
-| wii-sdk-crt | 22 |
+| wii-sdk-crt | 26 |
 | math | 20 |
 | ai | 18 |
 | audio | 16 |
-| ea-core-libs | 8 |
 | engine-support | 7 |
+| ea-core-libs | 6 |
 | mg-rccars | 3 |
 | world | 3 |
 | mg-footie | 2 |
 | renderer-eagl | 2 |
-| ea-audio-sndlib | 2 |
 | mg-paperairplanes | 2 |
 | mg-dartshootout | 1 |
 | mg-dodgeball | 1 |

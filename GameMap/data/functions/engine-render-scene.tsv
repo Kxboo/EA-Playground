@@ -1,7 +1,7 @@
 # addr	size	class	method	args	const	source_unit	mangled
-803bd274	52	EAGL::Model	GetBoundingBox	COORD3&, COORD3&	const	cachedanimatedmodel.cpp	GetBoundingBox__Q24EAGL5ModelCFR6COORD3R6COORD3
-803bd2a8	72	Ren::BoundingBox	Init	const EAGL::Model*		cachedanimatedmodel.cpp	Init__Q23Ren11BoundingBoxFPCQ24EAGL5Model
-803bd2f0	160	Ren::BoundingBox	InitCoords	const COORD3&, const COORD3&		cachedanimatedmodel.cpp	InitCoords__Q23Ren11BoundingBoxFRC6COORD3RC6COORD3
+803bd274	52	EAGL::Model	GetBoundingBox	COORD3&, COORD3&	const	boundingbox.cpp	GetBoundingBox__Q24EAGL5ModelCFR6COORD3R6COORD3
+803bd2a8	72	Ren::BoundingBox	Init	const EAGL::Model*		boundingbox.cpp	Init__Q23Ren11BoundingBoxFPCQ24EAGL5Model
+803bd2f0	160	Ren::BoundingBox	InitCoords	const COORD3&, const COORD3&		boundingbox.cpp	InitCoords__Q23Ren11BoundingBoxFRC6COORD3RC6COORD3
 803bd390	28	Ren::CachedAnimatedModel	constructor			cachedanimatedmodel.cpp	__ct__Q23Ren19CachedAnimatedModelFv
 803bd3ac	132	Ren::CachedAnimatedModel	destructor			cachedanimatedmodel.cpp	__dt__Q23Ren19CachedAnimatedModelFv
 803bd430	4	Ren::CachedListConfig	operator delete[]	void*		cachedanimatedmodel.cpp	__dla__Q23Ren16CachedListConfigFPv

@@ -580,21 +580,21 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (85 
 |---|---:|
 | characters | 139 |
 | engine-support | 119 |
-| wii-sdk-crt | 103 |
+| wii-sdk-crt | 105 |
 | render-scene | 33 |
+| renderer-eagl | 23 |
 | animation-glue | 21 |
 | data-parsers | 20 |
-| ea-core-libs | 18 |
 | effects | 17 |
-| renderer-eagl | 17 |
 | ai | 15 |
 | audio | 15 |
 | math | 14 |
+| ea-core-libs | 9 |
 | conversation | 9 |
 | world | 7 |
+| ea-animation | 4 |
 | physics-glue | 3 |
 | ea-fonts-shapes-mem | 3 |
-| ea-animation | 3 |
 | core-flow | 2 |
 | ea-audio-sndlib | 2 |
 | cameras | 1 |

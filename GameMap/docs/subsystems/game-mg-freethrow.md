@@ -363,7 +363,7 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (31 
 | callee subsystem | call sites |
 |---|---:|
 | mg-freethrow | 66 |
-| wii-sdk-crt | 47 |
+| wii-sdk-crt | 48 |
 | characters | 37 |
 | audio | 37 |
 | ai | 33 |
@@ -372,15 +372,15 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (31 
 | engine-support | 23 |
 | exposure-conga | 19 |
 | input | 19 |
+| renderer-eagl | 17 |
 | effects | 15 |
 | render-scene | 13 |
-| ea-core-libs | 13 |
 | animation-glue | 12 |
 | math | 12 |
 | cameras | 11 |
 | core-flow | 11 |
-| renderer-eagl | 8 |
 | world | 8 |
 | data-parsers | 7 |
 | conversation | 4 |
+| ea-core-libs | 3 |
 | mg-microbug | 2 |

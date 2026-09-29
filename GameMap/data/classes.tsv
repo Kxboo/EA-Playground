@@ -74,12 +74,12 @@ BoolWidget	engine-support	4	472	803ce540	803ce598	debugmenuwidgets.cpp
 BossEndGameFSHandlers	frontend	4	416	80315318	80315390	BossEndGameHandlers.cpp
 BossEndGameHandlers	frontend	9	700	803150fc	803151ac	BossEndGameHandlers.cpp
 BossEndGameLVHandlers	frontend	3	320		803154b8	BossEndGameHandlers.cpp
-CClassicPadModeHandler	pad-drivers	9	748	80412924	80412960	gcpad.cpp
-CCorePadModeHandler	pad-drivers	9	700	80412c10	80412c4c	gcpad.cpp
-CDPDExPadModeHandler	pad-drivers	9	744	80412ecc	80412f08	gcpad.cpp
-CFreeStylePadModeHandler	pad-drivers	9	732	804131b4	804131f0	gcpad.cpp
-CFuturePadModeHandler	pad-drivers	9	700	80413490	804134cc	gcpad.cpp
-CGCPadModeHandler	pad-drivers	9	284	80413984	804139c0	pad.cpp
+CClassicPadModeHandler	pad-drivers	9	748	80412924	80412960	classicpadmodehandler.cpp
+CCorePadModeHandler	pad-drivers	9	700	80412c10	80412c4c	corepadmodehandler.cpp
+CDPDExPadModeHandler	pad-drivers	9	744	80412ecc	80412f08	dpdexpadmodehandler.cpp
+CFreeStylePadModeHandler	pad-drivers	9	732	804131b4	804131f0	freestylepadmodehandler.cpp
+CFuturePadModeHandler	pad-drivers	9	700	80413490	804134cc	futurepadmodehandler.cpp
+CGCPadModeHandler	pad-drivers	9	284	80413984	804139c0	gcpadmodehandler.cpp
 CString	engine-support	35	4104	803ccc08	803cce94	CString.cpp
 Camera	cameras	18	3136	803bda3c		camera.cpp
 CameraManager	cameras	20	1900	803beb44	803bebbc	cameramanager.cpp
@@ -227,19 +227,22 @@ EA::Math	cameras,characters,frontend,input,mg-dartshootout,mg-dodgeball,mg-micro
 EA::Math::Quaternion	characters	1	20			characterheadtracking.cpp
 EA::Math::Vector3	audio	1	16			AuHelpers.cpp
 EA::Math::Vector4	characters	1	20			character.cpp
-EAGL	characters,renderer-eagl	3	480			device.cpp,model.cpp,npcrenderentity.cpp
+EAGL	characters,renderer-eagl	3	480			model.cpp,npcrenderentity.cpp,symbolinit.cpp
 EAGL::Colour	render-scene	2	176	803bf888		fadetocoloureffect.cpp,shadowmanager.cpp
 EAGL::Device	renderer-eagl	12	1196	803e3a9c	803e396c	device.cpp,device_cmn.cpp
-EAGL::DrawImmediate	effects,mg-rccars	4	332			Lion_Unity.cpp,rcshadowmanager.cpp
+EAGL::DrawGouraud	renderer-eagl	11	684	803f01c8	803f0158	positionallight.cpp
+EAGL::DrawImmediate	effects,mg-rccars,renderer-eagl	13	2912	803f0bb4		Lion_Unity.cpp,drawimmediate.cpp,rcshadowmanager.cpp
+EAGL::DrawTextured	renderer-eagl	11	580	803eff1c	803efeac	positionallight.cpp
 EAGL::EAGLFont	renderer-eagl	6	2112			fonteagl.cpp
 EAGL::FloatColour	render-scene	1	20	803bf874		fadetocoloureffect.cpp
 EAGL::GeoPrim	renderer-eagl	1	8			rendermethod.cpp
 EAGL::GeoPrimState	renderer-eagl	15	448	803e7520	803e74d0	state.cpp
 EAGL::GeoPrimStateExtension	renderer-eagl	9	2332	803e7344		state.cpp
 EAGL::Geometry	world	1	136			areadrawmanager.cpp
-EAGL::Model	mg-paperairplanes,render-scene,renderer-eagl	9	2980			cachedanimatedmodel.cpp,device.cpp,model.cpp,paperairplanecourse.cpp
+EAGL::Model	mg-paperairplanes,render-scene,renderer-eagl	9	2980			boundingbox.cpp,model.cpp,paperairplanecourse.cpp,symbolinit.cpp
 EAGL::Model::Variable	renderer-eagl	1	24			model.cpp
 EAGL::Model::VariableTable	renderer-eagl	2	272			model.cpp
+EAGL::PositionalLightBlock	renderer-eagl	7	1648	803efb7c		positionallight.cpp
 EAGL::Profiler	renderer-eagl	2	644		803ecc80	profiler_cmn.cpp
 EAGL::ProfilerRegion	renderer-eagl	5	3040	803eda08	803ed980	profiler_cmn.cpp
 EAGL::RenderContext	renderer-eagl	11	6012	803e61a0	803e5fc8	rendercontext.cpp
@@ -250,12 +253,12 @@ EAGL::RenderMethod	renderer-eagl	3	896	803e6888		rendermethod.cpp
 EAGL::TAR	renderer-eagl	9	536	803e8b00	803e8a74	tar.cpp
 EAGL::TARExtension	renderer-eagl	9	2636			tar.cpp
 EAGL::TevStage	renderer-eagl	14	1556	803e9e4c		tevstage.cpp
-EAGL::Transform	renderer-eagl	15	4064			texturerc.cpp
+EAGL::Transform	renderer-eagl	15	4064			transform.cpp
 EAGL::ViewPort	renderer-eagl	19	5860	803eca40	803ec9cc	viewport.cpp,viewport_cmn.cpp
 EAGL::ViewPortExtension	renderer-eagl	2	80	803eb3b8	803eb378	viewport.cpp
 EAGLAnim::FnAnim	animation-glue	3	20			animationstate.cpp
 EAGLAnim::FnDefaultAnimBank	animation-glue,engine-support	8	220		803cafec	animationstate.cpp,assetmanager.cpp
-EAGLInternal	renderer-eagl	7	5416			model.cpp,rendermethod.cpp,state.cpp,tar.cpp
+EAGLInternal	renderer-eagl	12	12164			drawimmediate.cpp,model.cpp,pcode.cpp,rendermethod.cpp,state.cpp,tar.cpp
 EAGLInternal::DevicePrivate	renderer-eagl	1	12			device_cmn.cpp
 EAGLInternal::InternalProfiler	renderer-eagl	1	64		803ecc40	profiler_cmn.cpp
 EAGLInternal::InternalProfilerRegion	renderer-eagl	1	88		803e6394	rendercontext_cmn.cpp
@@ -263,7 +266,7 @@ EAGLInternal::Property	renderer-eagl	3	176	803e7eb0	803e7e14	state.cpp
 EAGLInternal::PropertyValue	renderer-eagl	2	36	803e7e08		state.cpp
 EAGLInternal::RenderContextPrivate	renderer-eagl	7	1464	803e4250	803e41d8	rendercontext.cpp
 EAGLInternal::RenderContextPrivateBase	renderer-eagl	2	72		803e4330	rendercontext.cpp,rendercontext_cmn.cpp
-EAGLInternal::TextureRenderContextPrivate	renderer-eagl	1	160			texturerc.cpp
+EAGLInternal::TextureRenderContextPrivate	renderer-eagl	1	160			transform.cpp
 EAGLInternal::ViewPortPrivate	renderer-eagl	2	204	803eb3c8		viewport.cpp
 ELFHASH	effects	1	100			Lion_Unity.cpp
 Edict	ai	4	256		802cd34c	compulsion.cpp
@@ -314,7 +317,7 @@ GlobalLVHandlers	frontend	3	584	80316514	803165ac	GlobalHandlers.cpp
 HighFiveManager	mg-freethrow	14	2564	80337310	80337344	highfivemanager.cpp
 HighResScreenShot	frontend	11	624			highres.cpp
 HingeCamera	cameras	10	3028	803c2348		hingecamera.cpp
-IPadModeHandler	pad-drivers	4	348	80413da8	80413dec	wiipad.cpp
+IPadModeHandler	pad-drivers	4	348	80413da8	80413dec	padmodehandler.cpp
 IniFile	engine-support	6	2116	803ce9c8	803cea0c	inifilemanager.cpp
 IniFileManager	engine-support	7	692	803cf288	803cf2ac	inifilemanager.cpp
 InputAllocator	input	5	120		8032e458	pgconga.cpp
@@ -481,7 +484,7 @@ RcTrack	mg-rccars	26	16056	803913c0	803913d0	rctrack.cpp
 RcUsePowerupCompulsion	mg-rccars	3	576	8037d250	8037d28c	aircdriver.cpp
 RcUseShieldCompulsion	mg-rccars	3	264	8037dd24	8037dd60	aircdriver.cpp
 Ren	render-scene	9	560			engine.cpp,frustumtest.cpp,scene.cpp,shadowmanager.cpp,worldlightmanager.cpp
-Ren::BoundingBox	render-scene,world	3	236	803d6b74		areadrawmanager.cpp,cachedanimatedmodel.cpp
+Ren::BoundingBox	render-scene,world	3	236	803d6b74		areadrawmanager.cpp,boundingbox.cpp
 Ren::CachedAnimatedModel	render-scene	7	472	803bd390	803bd3ac	cachedanimatedmodel.cpp
 Ren::CachedListConfig	render-scene	3	80	803bd56c	803bd578	cachedanimatedmodel.cpp
 Ren::CachedModel	render-scene	4	1108	803bd5d0	803bd5f4	cachedmodel.cpp
@@ -547,9 +550,9 @@ VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>	attribute
 VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>::Node	attribute-db	2	68			attribclass.cpp
 VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>	attribute-db	6	1564		802d7a38	attribdatabase.cpp
 VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>::Node	attribute-db	2	68			attribdatabase.cpp
-VideoCapture	input	4	108			controller.cpp
-VideoCapture::ScreenCapture	input	9	1900	803293fc	803293bc	controller.cpp
-VideoCapture::TargaWriter	input	1	288			controller.cpp
+VideoCapture	engine-support	4	108			videocapture.cpp
+VideoCapture::ScreenCapture	engine-support	9	1900	803293fc	803293bc	videocapture.cpp
+VideoCapture::TargaWriter	engine-support	1	288			videocapture.cpp
 Wallball	mg-wallball	26	7544	803a2f58	803a3038	wallball.cpp
 WallballAIDifficultyInfo	mg-wallball	1	108	8039ef1c		aiwallball.cpp
 WallballAIEntity	mg-wallball	5	876	8039eb84	8039ebd0	aiwallball.cpp

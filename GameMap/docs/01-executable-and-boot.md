@@ -35,9 +35,9 @@ tunables and singletons are reached, so `tools/elfmap.py` resolves them.
 
 | tier | units | code | functions |
 |---|---:|---:|---:|
-| game (`aientity.cpp` … `trcUtil.cpp`) | 183 | 969,308 B | 5,205 |
-| engine (renderer "Ren"/EAGL, cameras, world, physics glue, pad drivers) | 107 | 336,652 B | 1,543 |
-| middleware (Wii SDK, Havok, nw4r/HBM, APT, Lua, EA audio/video/text-input, Bluetooth) | 467 | 2,990,428 B | 12,418 |
+| game (`aientity.cpp` … `trcUtil.cpp`) | 184 | 965,920 B | 5,170 |
+| engine (renderer "Ren"/EAGL, cameras, world, physics glue, pad drivers) | 119 | 350,872 B | 1,616 |
+| middleware (Wii SDK, Havok, nw4r/HBM, APT, Lua, EA audio/video/text-input, Bluetooth) | 825 | 2,978,432 B | 12,380 |
 
 Link order is stable and contiguous, which is what makes per-unit ranges reliable. **[C]** Each unit's `__sinit_\<file>_cpp` is emitted at the *end* of
 its code, so a unit's range ends at its last local symbol. `data/source_units.tsv` is the complete map.

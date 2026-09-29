@@ -182,7 +182,7 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (19 
 
 | callee subsystem | call sites |
 |---|---:|
-| wii-sdk-crt | 37 |
+| wii-sdk-crt | 36 |
 | conversation | 35 |
 | engine-support | 18 |
 | characters | 13 |
@@ -190,11 +190,12 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (19 
 | cameras | 10 |
 | frontend | 9 |
 | audio | 9 |
-| ea-core-libs | 7 |
 | core-flow | 5 |
+| ea-core-libs | 4 |
 | input | 4 |
 | animation-glue | 4 |
+| ea-fonts-shapes-mem | 3 |
+| ea-audio-sndlib | 3 |
 | data-parsers | 3 |
-| pad-drivers | 2 |
 | world | 2 |
 | math | 2 |

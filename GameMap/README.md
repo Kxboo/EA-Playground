@@ -90,7 +90,7 @@ Also validated against **real game files supplied by the project owner** (not co
 
 ## Scale of the problem
 
-Of 4.30 MB of PowerPC code, **969 KB (5,205 functions) is game code** and **337 KB (1,543 functions) is the engine layer**; the other
-**2.99 MB (12,418 functions) is middleware** (Wii SDK, Havok 4.x, nw4r/HBM, the APT UI runtime, Lua, EA audio/video/text-input
+Of 4.30 MB of PowerPC code, **966 KB (5,170 functions) is game code** and **351 KB (1,616 functions) is the engine layer**; the other
+**2.98 MB (12,380 functions) is middleware** (Wii SDK, Havok 4.x, nw4r/HBM, the APT UI runtime, Lua, EA audio/video/text-input
 libraries, Bluetooth stack). Reconstruction should concentrate on the first two; the middleware has public equivalents in Bevy/Rust.
 See [`data/middleware_units.tsv`](data/middleware_units.tsv) and [`docs/subsystems/README.md`](docs/subsystems/README.md).

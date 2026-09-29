@@ -1181,15 +1181,15 @@ Asset paths, attribute names, tuning keys, sound events, debug-menu labels. (48 
 | callee subsystem | call sites |
 |---|---:|
 | audio | 378 |
-| ea-audio-sndlib | 282 |
-| wii-sdk-crt | 96 |
+| ea-audio-sndlib | 250 |
+| wii-sdk-crt | 131 |
 | engine-support | 53 |
-| ea-core-libs | 13 |
+| ea-core-libs | 10 |
 | math | 5 |
 | ai | 5 |
 | world | 4 |
 | data-parsers | 4 |
+| ea-fonts-shapes-mem | 2 |
 | core-flow | 2 |
 | cameras | 2 |
-| video-vp6-mp3 | 2 |
 | characters | 1 |
