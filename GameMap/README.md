@@ -43,8 +43,10 @@ raw); the call graph contains direct `bl` calls only (virtual/indirect calls are
 | [`docs/08-container-and-boot-files.md`](docs/08-container-and-boot-files.md) | `.dol`/`.elf`, `opening.bnr`, the 16:9 strap `.tpl`, `disc.ini` |
 | [`docs/09-roadmap.md`](docs/09-roadmap.md) | suggested reconstruction order, prerequisites and start addresses, open questions |
 | [`docs/10-evidence-log.md`](docs/10-evidence-log.md) | every verified claim with address, method and script |
+| [`docs/11-progress-site.md`](docs/11-progress-site.md) | the decomp.dev-style progress site, states, code viewer, publishing |
 | [`docs/asset-name-tables.md`](docs/asset-name-tables.md) | names the code builds file paths and DB keys from (generated) |
 | [`docs/subsystems/`](docs/subsystems/README.md) | one generated page per game/engine subsystem: classes, vtables, every function, strings, globals |
+| `site/` | static progress dashboard (open `site/index.html` or serve it; see docs/11) |
 | `data/` | machine-readable tables (TSV/JSON): units, functions, classes, vtables, call graph, xrefs, enums, APT handlers, traces |
 | `reference/` | byte-exact Python models verified against the original code |
 | `tools/` | the generators and verifiers (below) |
@@ -73,6 +75,8 @@ python3 GameMap/tools/vlt_probe.py --vlt db.vlt --bin db.bin --elf Remaster/refe
 | `tools/gen_map.py`, `tools/gen_docs.py` | generators |
 | `tools/verify_hashes.py`, `verify_multiplayer.py`, `verify_postgame.py` | emulate the original code and compare with the reference models |
 | `tools/check_controls_csv.py` | validate `controls*.csv` files against the enums recovered from the executable |
+| `tools/lift.py`, `verify_lift.py`, `pseudo.py`, `lift_all.py` | verified PowerPC→pseudo-C lifter (guarded IR, loops, randomized Unicorn equivalence proof) |
+| `tools/build_site.py`, `build_code_pack.py`, `make_annotations.py` | progress-site data, local code viewer pack, human annotations |
 | `tools/vlt_probe.py` | parse `db.vlt`/`db.bin`: chunk table, export table, classes, collections, resolvable field names (schema only) |
 
 ## Verified reference models

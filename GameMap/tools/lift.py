@@ -1,8 +1,8 @@
 """A small verified lifter: PowerPC (Gekko integer/FP subset) -> guarded statement IR -> pseudo-C.
 
 Scope (deliberately narrow, so that every output can be *proved* against the machine code):
-  * forward-only control flow (no loops, no jump tables); branches become predicated (guarded) statements and
-    register merges become `ite` expressions,
+  * structured control flow: acyclic parts are predicated (guarded statements, `ite` merges); single-entry loops become
+    ('loop', ...) statements (no jump tables / irreducible loops),
   * integer ALU, rotate/shift/mask, carry ops, compares, loads/stores (incl. update/indexed forms, lmw/stmw),
   * single/double FP arithmetic, conversions, compares,
   * calls (`bl`, `bctrl`, tail `b`) as opaque events: (target, r3..r10, f1..f8) -> deterministic oracle results.
@@ -219,6 +219,18 @@ class Lifted:
         self.calls = 0
         self.notes = set()
 
+    def all_blocks(self):
+        """Start addresses of every block, including those inside loop bodies."""
+        out = {s for s, g in self.blocks}
+
+        def walk(stmts):
+            for g, s in stmts:
+                if s[0] == "loop":
+                    out.update(b[0] for b in s[4])
+                    walk(s[3])
+        walk(self.stmts)
+        return out
+
 
 def ite_chain(edges, getter, none_ok=False):
     """edges: [(cond, state)]; getter(state) -> expr. Merge with ite over mutually exclusive conditions."""
@@ -272,9 +284,70 @@ def p_not(a):
     return ("pnot", a)
 
 
+def _subst(x, m, memo):
+    """Structural substitution of loop-variable leaves ('lv', lid, key) using m[(lid, key)]."""
+    if isinstance(x, tuple):
+        if len(x) == 3 and x[0] == "lv" and (x[1], x[2]) in m:
+            return m[(x[1], x[2])]
+        r = memo.get(id(x))
+        if r is not None:
+            return r[1]
+        res = tuple(_subst(y, m, memo) for y in x)
+        memo[id(x)] = (x, res)
+        return res
+    if isinstance(x, list):
+        return [_subst(y, m, memo) for y in x]
+    return x
+
+
+def _lx_walk(x, used, seen):
+    if isinstance(x, (tuple, list)):
+        if id(x) in seen:
+            return
+        seen[id(x)] = x
+        if isinstance(x, tuple) and len(x) == 4 and x[0] == "lx":
+            used.add((x[1], x[2], x[3]))
+        for y in x:
+            _lx_walk(y, used, seen)
+
+
+def _walk_stmts(stmts, used):
+    seen = {}
+    for g, s in stmts:
+        _lx_walk(g, used, seen)
+        if s[0] == "loop":
+            _, lid, entries, body, blocks, conts, exits = s
+            _lx_walk(entries, used, seen)
+            _lx_walk(blocks, used, seen)
+            _lx_walk(conts, used, seen)
+            for j, c, assigns in exits:
+                _lx_walk(c, used, seen)
+                for key, x in assigns:
+                    if (lid, j, key) in used:
+                        _lx_walk(x, used, seen)
+            _walk_stmts(body, used)
+        else:
+            _lx_walk(s, used, seen)
+
+
+def _prune_stmts(stmts, used):
+    out = []
+    for g, s in stmts:
+        if s[0] == "loop":
+            _, lid, entries, body, blocks, conts, exits = s
+            exits = tuple((j, c, tuple((k, x) for k, x in assigns if (lid, j, k) in used)) for j, c, assigns in exits)
+            s = ("loop", lid, entries, tuple(_prune_stmts(body, used)), blocks, conts, exits)
+        out.append((g, s))
+    return out
+
+
 def lift(instrs, image_read=None, func_start=None, func_end=None):
     """instrs: list[Instr] of one function in address order. image_read(addr,n)->bytes|b'' for constant folding of
-    loads from read-only data. Returns Lifted."""
+    loads from read-only data. Returns Lifted.
+
+    Control flow: the CFG is decomposed into strongly connected components in topological order. Acyclic parts are
+    predicated (guards + ite merges). A single-entry cycle becomes a ('loop', ...) statement whose body is lifted the same
+    way with loop-carried registers as ('lv', loop, key) leaves; its exits export register values as ('lx', loop, exit, key)."""
     if not instrs:
         raise Unsupported("empty")
     by_addr = {i.addr: k for k, i in enumerate(instrs)}
@@ -283,81 +356,89 @@ def lift(instrs, image_read=None, func_start=None, func_end=None):
     leaders = {lo}
     for k, i in enumerate(instrs):
         mn = i.mn
-        if mn in ("bdnz", "bdz", "bdnzt", "bdzt", "bdnzf", "bdzf", "bctr", "bctrl", "blrl"):
-            if mn == "bctrl":
-                continue
+        if mn in ("bdnzt", "bdzt", "bdnzf", "bdzf", "bctr", "blrl", "bdnzlr", "bdzlr"):
             raise Unsupported("ctr-branch " + mn)
-        if mn == "b" or mn in COND_BR or (mn.endswith("lr") and mn[:-2] in COND_BR) or mn == "blr":
-            if i.target is not None:
-                if lo <= i.target < hi:
-                    if i.target <= i.addr:
-                        raise Unsupported("loop")
-                    leaders.add(i.target)
+        if mn == "b" or mn in COND_BR or mn in ("bdnz", "bdz") or (mn.endswith("lr") and mn[:-2] in COND_BR) or mn == "blr":
+            if i.target is not None and lo <= i.target < hi:
+                leaders.add(i.target)
             if k + 1 < len(instrs):
                 leaders.add(instrs[k + 1].addr)
     lifted = Lifted()
     tid = [0]
     cid = [0]
+    lid_c = [0]
 
     def newt():
         tid[0] += 1
         return tid[0]
 
     order = sorted(leaders)
-    incoming = {a: [] for a in order}       # addr -> [(edge_cond, state)]
-    incoming[lo].append((("c", 1), State()))
-    exits = []                              # [(cond, state)]
+    bend = {a_: (order[k + 1] if k + 1 < len(order) else hi) for k, a_ in enumerate(order)}
+    for a_ in order:
+        if a_ not in by_addr:
+            raise Unsupported("branch into data")
 
-    def add_edge(addr, cond, state):
-        if addr in incoming:
-            incoming[addr].append((cond, state))
-        elif addr >= hi:
-            exits.append((cond, state))
+    # ---- static successors
+    succs = {}
+    for a_ in order:
+        last = instrs[by_addr[bend[a_] - 4]]
+        mn = last.mn
+        fall = bend[a_] if bend[a_] < hi else None
+        if mn == "b":
+            s_ = [last.target] if last.target is not None and lo <= last.target < hi else []
+        elif mn == "blr":
+            s_ = []
+        elif mn in COND_BR or mn in ("bdnz", "bdz"):
+            if last.target is None or not (lo <= last.target < hi):
+                raise Unsupported("cond branch out of function")
+            s_ = [last.target] + ([fall] if fall is not None else [])
+        elif mn.endswith("lr") and mn[:-2] in COND_BR:
+            s_ = [fall] if fall is not None else []
         else:
-            raise Unsupported("edge into the middle of a block")
+            s_ = [fall] if fall is not None else []
+        succs[a_] = s_
 
-    for bi, start in enumerate(order):
-        end = order[bi + 1] if bi + 1 < len(order) else hi
-        if not incoming[start]:
-            continue  # unreachable block
-        edges = incoming[start]
+    def merge(edges):
+        """Merge incoming (cond, state) edges into (guard, state)."""
         if len(edges) == 1:
-            guard, st = edges[0][0], edges[0][1].copy()
-        else:
-            guard = ("c", 0)
-            for c, _ in edges:
-                guard = p_or(guard, c)
-            st = State()
-            keys_g = set().union(*[set(s.g) for _, s in edges])
-            keys_f = set().union(*[set(s.f) for _, s in edges])
-            for n in keys_g:
-                st.g[n] = ite_chain(edges, lambda s, n=n: s.G(n))
-            for n in keys_f:
-                st.f[n] = ite_chain(edges, lambda s, n=n: s.F(n))
-            for fld in set().union(*[set(s.cr) for _, s in edges]):
-                kinds = {s.cr.get(fld, (None,))[0] for _, s in edges}
-                if len(kinds) != 1 or None in kinds:
-                    continue  # not defined on every path: a later branch on it would be Unsupported("branch on unset cr")
-                a = ite_chain(edges, lambda s, fld=fld: s.cr[fld][1])
-                b = ite_chain(edges, lambda s, fld=fld: s.cr[fld][2])
-                st.cr[fld] = (kinds.pop(), a, b)
-            st.ca = ite_chain(edges, lambda s: s.ca)
-            st.ctr = ite_chain(edges, lambda s: s.ctr)
-        lifted.blocks.append((start, guard))
+            return edges[0][0], edges[0][1].copy()
+        guard = ("c", 0)
+        for c, _ in edges:
+            guard = p_or(guard, c)
+        st = State()
+        keys_g = set().union(*[set(s.g) for _, s in edges])
+        keys_f = set().union(*[set(s.f) for _, s in edges])
+        for n in keys_g:
+            st.g[n] = ite_chain(edges, lambda s, n=n: s.G(n))
+        for n in keys_f:
+            st.f[n] = ite_chain(edges, lambda s, n=n: s.F(n))
+        for fld in set().union(*[set(s.cr) for _, s in edges]):
+            kinds = {s.cr.get(fld, (None,))[0] for _, s in edges}
+            if len(kinds) != 1 or None in kinds:
+                continue  # not defined on every path: a later branch on it would be Unsupported("branch on unset cr")
+            a2 = ite_chain(edges, lambda s, fld=fld: s.cr[fld][1])
+            b2 = ite_chain(edges, lambda s, fld=fld: s.cr[fld][2])
+            st.cr[fld] = (kinds.pop(), a2, b2)
+        st.ca = ite_chain(edges, lambda s: s.ca)
+        st.ctr = ite_chain(edges, lambda s: s.ctr)
+        return guard, st
 
-        def emit(stmt, guard=guard):
-            lifted.stmts.append((guard, stmt))
+    def run_block(start, guard, st, emit):
+        """Lift one basic block. Returns outgoing edges [(target addr | None for leaving the function, cond, state)]."""
+        end = bend[start]
+        outs = []
+
+        def out(addr, cond, state):
+            outs.append((addr if (addr is not None and addr < hi) else None, cond, state))
 
         k = by_addr[start]
         while k < len(instrs) and instrs[k].addr < end:
             i = instrs[k]
             k += 1
             mn, o = i.mn, i.ops
-            # ------------------------------------------------ control flow
             if mn == "bl" or mn == "bctrl":
                 if mn == "bl":
                     tsym = C(i.target)
-                    tname = None
                 else:
                     tsym = st.ctr
                 cid[0] += 1
@@ -375,7 +456,7 @@ def lift(instrs, image_read=None, func_start=None, func_end=None):
                 if i.target is None:
                     raise Unsupported("indirect b")
                 if lo <= i.target < hi:
-                    add_edge(i.target, guard, st.copy())
+                    out(i.target, guard, st.copy())
                 else:  # tail call
                     cid[0] += 1
                     lifted.calls += 1
@@ -385,11 +466,18 @@ def lift(instrs, image_read=None, func_start=None, func_end=None):
                         st.g[n] = ("cr", c, "r%d" % n)
                     for n in range(0, 14):
                         st.f[n] = ("cr", c, "f%d" % n)
-                    exits.append((guard, st))
-                break
+                    out(None, guard, st)
+                return outs
             if mn == "blr":
-                exits.append((guard, st))
-                break
+                out(None, guard, st)
+                return outs
+            if mn in ("bdnz", "bdz"):
+                newc = mk("add", st.ctr, C(M32))
+                pred = ("pctr", newc, mn == "bdnz")
+                st.ctr = newc
+                out(i.target, p_and(guard, pred), st.copy())
+                out(end, p_and(guard, p_not(pred)), st)
+                return outs
             if mn in COND_BR or (mn.endswith("lr") and mn[:-2] in COND_BR):
                 is_ret = mn.endswith("lr") and mn not in COND_BR
                 base = mn[:-2] if is_ret else mn
@@ -407,25 +495,209 @@ def lift(instrs, image_read=None, func_start=None, func_end=None):
                 pred = ("pbit", bit, cmpv[0], cmpv[1], cmpv[2])
                 taken = pred if sense else p_not(pred)
                 if is_ret:
-                    exits.append((p_and(guard, taken), st.copy()))
+                    out(None, p_and(guard, taken), st.copy())
                 else:
                     if not (lo <= i.target < hi):
                         raise Unsupported("cond branch out of function")
-                    add_edge(i.target, p_and(guard, taken), st.copy())
-                # fallthrough continues in next block with the negated condition
-                add_edge(order[bi + 1] if bi + 1 < len(order) else hi, p_and(guard, p_not(taken)), st)
-                break
-            # ------------------------------------------------ straight-line instructions
+                    out(i.target, p_and(guard, taken), st.copy())
+                out(end, p_and(guard, p_not(taken)), st)
+                return outs
             _step(i, st, emit, newt, image_read)
-        else:
-            # fell off the end of the block: fallthrough edge
-            add_edge(end, guard, st)
-            continue
-        # a terminator `break`ed: handled above; but a block ended by 'break' may also fall to next for cond branches
+        out(end, guard, st)  # fell off the end of the block
+        return outs
+
+    def tarjan(nodes, g):
+        index, low, onst, stack, res, idx = {}, {}, set(), [], [], [0]
+
+        def sc(v):
+            index[v] = low[v] = idx[0]
+            idx[0] += 1
+            stack.append(v)
+            onst.add(v)
+            for w in g[v]:
+                if w not in index:
+                    sc(w)
+                    low[v] = min(low[v], low[w])
+                elif w in onst:
+                    low[v] = min(low[v], index[w])
+            if low[v] == index[v]:
+                comp = []
+                while True:
+                    w = stack.pop()
+                    onst.discard(w)
+                    comp.append(w)
+                    if w == v:
+                        break
+                res.append(comp)
+        for v in nodes:
+            if v not in index:
+                sc(v)
+        res.reverse()   # topological order of the condensation
+        return res
+
+    def lift_region(blockset, incoming, stmts, blocks_out, cut):
+        nodes = sorted(blockset)
+        entry_nodes = {n for n in nodes if incoming.get(n)}
+        gr = {n: [s_ for s_ in succs[n] if s_ in blockset and s_ != cut] for n in nodes}
+        leaving = []
+
+        def route(t, cond, state):
+            if t is not None and t in blockset and t != cut:
+                incoming[t].append((cond, state))
+            else:
+                leaving.append((t, cond, state))
+
+        for scc in tarjan(nodes, gr):
+            if len(scc) == 1 and scc[0] not in gr[scc[0]]:
+                n = scc[0]
+                if not incoming[n]:
+                    continue
+                guard, st = merge(incoming[n])
+                blocks_out.append((n, guard))
+                for t, c, s in run_block(n, guard, st, lambda stmt, guard=guard: stmts.append((guard, stmt))):
+                    route(t, c, s)
+                continue
+            # ---------------- a loop
+            sccset = set(scc)
+            heads = [n for n in scc if n in entry_nodes or any(n in gr[m] for m in nodes if m not in sccset)]
+            if len(heads) != 1:
+                raise Unsupported("irreducible loop")
+            head = heads[0]
+            if not incoming[head]:
+                continue
+            g_in, E = merge(incoming[head])
+            lid_c[0] += 1
+            lid = lid_c[0]
+            B = State()
+            for n in range(32):
+                B.g[n] = ("lv", lid, ("g", n))
+                B.f[n] = ("lv", lid, ("f", n))
+            B.ctr = ("lv", lid, ("ctr",))
+            B.ca = ("lv", lid, ("ca",))
+            for fld, (kind, _a, _b) in E.cr.items():
+                B.cr[fld] = (kind, ("lv", lid, ("cra", fld)), ("lv", lid, ("crb", fld)))
+            B.lr = E.lr
+            body, bblocks = [], []
+            sub_in = {n: [] for n in sccset}
+            sub_in[head] = [(("c", 1), B)]
+            inner = lift_region(sccset, sub_in, body, bblocks, head)
+            conts = [(c, s) for t, c, s in inner if t == head]
+            exits_ = [(t, c, s) for t, c, s in inner if t != head]
+            if not conts:
+                raise Unsupported("loop without back edge")
+
+            def keys_of(s):
+                ks = {("g", n): s.G(n) for n in range(32)}
+                ks.update({("f", n): s.F(n) for n in range(32)})
+                ks[("ctr",)] = s.ctr
+                ks[("ca",)] = s.ca
+                for fld, (kind, a2, b2) in s.cr.items():
+                    ks[("cra", fld)] = a2
+                    ks[("crb", fld)] = b2
+                return ks
+            ek = keys_of(E)
+            cont_vals = [keys_of(s) for c, s in conts]
+
+            def refs(x, out, seen):
+                if isinstance(x, (tuple, list)):
+                    if id(x) in seen:
+                        return
+                    seen[id(x)] = x
+                    if isinstance(x, tuple) and len(x) == 3 and x[0] == "lv" and x[1] == lid:
+                        out.add(x[2])
+                        return
+                    for y in x:
+                        refs(y, out, seen)
+            # live loop variables: read before being written in some iteration (or exported); iterate to a fixpoint
+            live, seen = set(), {}
+            refs((body, bblocks, [c for c, s in conts], [(c, s2) for t, c, s2 in exits_]), live, seen)
+            for t, c, s in exits_:
+                for key, v0 in keys_of(s).items():
+                    refs(v0, live, seen)
+            carried = []
+            while True:
+                nc = [k for k in ek if k in live and any(cv.get(k, ("lv", lid, k)) != ("lv", lid, k) for cv in cont_vals)]
+                for k in nc:
+                    for cv in cont_vals:
+                        refs(cv.get(k), live, seen)
+                if len(nc) == len(carried):
+                    break
+                carried = nc
+            for fld, (kind, _a, _b) in E.cr.items():
+                if ("cra", fld) in live or ("crb", fld) in live:
+                    for c, s in conts:
+                        if fld not in s.cr or s.cr[fld][0] != kind:
+                            raise Unsupported("cr kind changes in loop")
+            m = {(lid, key): ek[key] for key in ek if key not in carried}
+            memo = {}
+            body_s = tuple(_subst(list(body), m, memo))
+            body_blocks = tuple(_subst(list(bblocks), m, memo))
+            conts_s = tuple((_subst(c, m, memo), tuple((key, _subst(cv.get(key, ("lv", lid, key)), m, memo)) for key in carried))
+                            for (c, s), cv in zip(conts, cont_vals))
+            entries = tuple((key, ek[key]) for key in carried)
+            exits_s = []
+            outer = []
+            for j, (t, c, s) in enumerate(exits_):
+                sk = keys_of(s)
+                assigns = []
+                st2 = E.copy()
+                for key, v0 in sk.items():
+                    if key[0] in ("cra", "crb"):
+                        continue
+                    val = _subst(v0, m, memo)
+                    if val == ek[key]:
+                        continue
+                    assigns.append((key, val))
+                    sym = ("lx", lid, j, key)
+                    if key[0] == "g":
+                        st2.g[key[1]] = sym
+                    elif key[0] == "f":
+                        st2.f[key[1]] = sym
+                    elif key[0] == "ctr":
+                        st2.ctr = sym
+                    else:
+                        st2.ca = sym
+                for fld in list(E.cr):
+                    if fld not in s.cr:
+                        st2.cr.pop(fld, None)   # clobbered on this exit
+                for fld, (kind, a2, b2) in s.cr.items():
+                    ea, eb = _subst(a2, m, memo), _subst(b2, m, memo)
+                    e0 = E.cr.get(fld)
+                    if e0 is not None and e0[0] == kind and e0[1] == ea and e0[2] == eb:
+                        st2.cr[fld] = e0
+                        continue
+                    na = e0[1] if (e0 is not None and e0[1] == ea) else ("lx", lid, j, ("cra", fld))
+                    nb = e0[2] if (e0 is not None and e0[2] == eb) else ("lx", lid, j, ("crb", fld))
+                    if na[0] == "lx":
+                        assigns.append((("cra", fld), ea))
+                    if nb[0] == "lx":
+                        assigns.append((("crb", fld), eb))
+                    st2.cr[fld] = (kind, na, nb)
+                exits_s.append((j, _subst(c, m, memo), tuple(assigns)))
+                outer.append((t, p_and(g_in, ("lxc", lid, j)) if len(exits_) > 1 else g_in, st2))
+            stmts.append((g_in, ("loop", lid, entries, body_s, body_blocks, conts_s, tuple(exits_s))))
+            blocks_out.append((head, g_in))
+            for t, c, s in outer:
+                route(t, c, s)
+        return leaving
+
+    incoming0 = {a_: [] for a_ in order}
+    incoming0[lo] = [(("c", 1), State())]
+    leaving = lift_region(set(order), incoming0, lifted.stmts, lifted.blocks, None)
+    exits = [(c, s) for t, c, s in leaving]
     if not exits:
         raise Unsupported("no return")
     lifted.ret_g = ite_chain(exits, lambda s: s.G(3))
     lifted.ret_f = ite_chain(exits, lambda s: s.F(1))
+    # drop loop exports nothing refers to
+    used = set()
+    _lx_walk(lifted.ret_g, used, {})
+    _lx_walk(lifted.ret_f, used, {})
+    n0 = -1
+    while len(used) != n0:
+        n0 = len(used)
+        _walk_stmts(lifted.stmts, used)
+    lifted.stmts = _prune_stmts(lifted.stmts, used)
     return lifted
 
 
@@ -774,6 +1046,10 @@ class Env:
         self.init = init          # name -> int|float  (r0..r31, f0..f31, ctr, lr, sp)
         self.t = {}
         self.cr = {}
+        self.lv = {}
+        self.lx = {}
+        self.lxk = {}
+        self.cov = set()
         self.mem_read = mem_read
         self.oracle = oracle
 
@@ -792,6 +1068,14 @@ def ev(e, env):
         return env.cr[(e[1], e[2])]
     if op == "lr":
         return env.init["lr"]
+    if op == "lv":
+        return env.lv[(e[1], e[2])]
+    if op == "lx":
+        return env.lx[(e[1], e[2], e[3])]
+    if op == "lxc":
+        return int(env.lxk.get(e[1]) == e[2])
+    if op == "pctr":
+        return int(((ev(e[1], env) & M32) != 0) == bool(e[2]))
     if op == "ite":
         return ev(e[2], env) if ev(e[1], env) else ev(e[3], env)
     if op in ("pand",):
@@ -896,11 +1180,19 @@ def ev(e, env):
     raise Unsupported("eval " + op)
 
 
+LOOP_CAP = 5000
+
+
 def run(lifted, env, mem_write):
     """Interpret the statement list. mem_write(addr,width,value,kind) records stores.
-    Returns (ret_g, ret_f, calls) where calls is the list of (target, args, fargs)."""
+    Returns (ret_g, ret_f, calls) where calls is the list of (target, args, fargs). env.cov collects loop-internal blocks."""
     calls = []
-    for guard, s in lifted.stmts:
+    _exec(lifted.stmts, env, mem_write, calls)
+    return ev(lifted.ret_g, env), ev(lifted.ret_f, env), calls
+
+
+def _exec(stmts, env, mem_write, calls):
+    for guard, s in stmts:
         if not ev(guard, env):
             continue
         k = s[0]
@@ -938,7 +1230,40 @@ def run(lifted, env, mem_write):
                 env.cr[(c, "r%d" % n)] = v
             for n, v in res["f"].items():
                 env.cr[(c, "f%d" % n)] = v
-    return ev(lifted.ret_g, env), ev(lifted.ret_f, env), calls
+        elif k == "loop":
+            _, lid, entries, body, blocks, conts, exits = s
+            vals = [(key, ev(x, env)) for key, x in entries]
+            for key, v in vals:
+                env.lv[(lid, key)] = v
+            it = 0
+            while True:
+                it += 1
+                if it > LOOP_CAP:
+                    raise Undefined("loop bound")
+                _exec(body, env, mem_write, calls)
+                for start, bg in blocks:
+                    try:
+                        if ev(bg, env):
+                            env.cov.add(start)
+                    except (KeyError, Undefined):
+                        pass
+                nxt = None
+                for c, assigns in conts:
+                    if ev(c, env):
+                        nxt = [(key, ev(x, env)) for key, x in assigns]
+                        break
+                if nxt is None:
+                    break
+                for key, v in nxt:
+                    env.lv[(lid, key)] = v
+            for j, c, assigns in exits:
+                if ev(c, env):
+                    env.lxk[lid] = j
+                    for key, x in assigns:
+                        env.lx[(lid, j, key)] = ev(x, env)
+                    break
+            else:
+                raise Undefined("no loop exit")
 
 
 def decode(md, addr, code):

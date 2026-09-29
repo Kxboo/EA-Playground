@@ -28,6 +28,7 @@ import unicorn.ppc_const as PC  # noqa: E402
 RBASE, RSIZE = 0x81000000, 0x10000
 SBASE, SSIZE = 0x80780000, 0x20000
 STOP = 0x807F0000          # return address (blr stub)
+DBASE, DEND = 0x80442CE0, 0x80602540   # writable data (.data .bss .sdata .sbss): re-randomised per trial so global pointer chains resolve
 MIN_OK = 24
 MAX_TRIALS = 140
 GREG = [getattr(PC, "UC_PPC_REG_%d" % i) for i in range(32)]
@@ -91,12 +92,48 @@ class LiftVerifier:
             if name in (".rodata", ".sdata2", ".sdata", ".data", ".init", ".text", "extab", "extabindex", ".ctors", ".dtors"):
                 self.image_ro[name] = (ad, sz)
         self.rng = random.Random(1234)
+        self._pats = self._make_patterns()
+        self._pat = 0
         self._hook_writes = []
         self._call_sites = {}
         self._hooks = []
         self._cur = None
         self.mu.hook_add(UC_HOOK_MEM_WRITE, self._on_write)
         self.mu.hook_add(UC_HOOK_CODE, self._on_code)
+
+    def _make_patterns(self):
+        """Contents for the writable data region: 0 = the ELF's own initial contents, then pointer-rich / sparse / small-int fills."""
+        E = self.E
+        n = DEND - DBASE
+        orig = bytearray(n)
+        for ad, sz, off, nm, ty in E.secs:
+            lo, hi = max(ad, DBASE), min(ad + sz, DEND)
+            if lo < hi:
+                orig[lo - DBASE:hi - DBASE] = E.raw[off + (lo - ad):off + (hi - ad)]
+        rng = random.Random(99)
+        nw = n // 4
+        tbl_ptr = bytes(x & 0xFC for x in range(256))
+
+        def pointers():
+            r = rng.randbytes(2 * nw)
+            p = bytearray(n)
+            p[0::4] = b"\x81" * nw
+            p[2::4] = r[0::2]
+            p[3::4] = r[1::2].translate(tbl_ptr)
+            return p
+
+        def sparse(p, keep):
+            thr = int(256 * keep)
+            m = rng.randbytes(nw).translate(bytes(0xFF if x < thr else 0 for x in range(256)))
+            mm = bytearray(n)
+            for k in range(4):
+                mm[k::4] = m
+            return (int.from_bytes(p, "big") & int.from_bytes(mm, "big")).to_bytes(n, "big")
+
+        small = bytearray(n)
+        small[3::4] = rng.randbytes(nw).translate(bytes(x % 9 for x in range(256)))
+        p1 = pointers()
+        return [bytes(orig), bytes(p1), sparse(p1, 0.5), bytes(small), sparse(pointers(), 0.15)]
 
     # ------------------------------------------------------------------ image reads (for the model and const folding)
     def image_read(self, addr, n):
@@ -108,6 +145,8 @@ class LiftVerifier:
         return b""
 
     def _model_image_read(self, addr, n):
+        if DBASE <= addr and addr + n <= DEND:
+            return self._pats[self._pat][addr - DBASE:addr - DBASE + n]
         b = self.E.rd(addr, n)
         if len(b) == n:
             return b
@@ -188,6 +227,7 @@ class LiftVerifier:
     def _gen_state(self, trial):
         rng = self.rng
         mode = trial % 7
+        self._pat = (0, 1, 2, 3, 4, 1, 2)[mode]
         rmem = self._gen_memory(mode)
         smem = bytes(rng.getrandbits(8) for _ in range(SSIZE))
         regs = {}
@@ -214,6 +254,7 @@ class LiftVerifier:
         mu = self.mu
         mu.mem_write(RBASE, rmem)
         mu.mem_write(SBASE, smem)
+        mu.mem_write(DBASE, self._pats[self._pat])
         for n in range(32):
             mu.reg_write(GREG[n], regs[n])
             self._set_fpr(mu, n, fregs[n])
@@ -278,7 +319,7 @@ class LiftVerifier:
         except L.Undefined:
             raise Fault("undefined-op")
         # coverage: which blocks' guards were true
-        cov = set()
+        cov = set(env.cov)
         for start, guard in lifted.blocks:
             try:
                 if L.ev(guard, env):
@@ -349,7 +390,7 @@ class LiftVerifier:
         faults = 0
         covered = set()
         first_bad = None
-        total_blocks = {s for s, g in lifted.blocks}
+        total_blocks = lifted.all_blocks()
         for t in range(MAX_TRIALS):
             rmem, smem, regs, fregs, ctr, mode = self._gen_state(t)
             try:

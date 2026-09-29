@@ -23,6 +23,47 @@ def _leaves(e, out):
         _leaves(x, out)
 
 
+def _leaves_all(x, out):
+    """Like _leaves but walks every element (used for loop statements, whose parts are (guard, stmt) pairs)."""
+    if isinstance(x, (tuple, list)):
+        if len(x) == 2 and x[0] == "t" and isinstance(x[1], int):
+            out.add(x[1])
+            return
+        for y in x:
+            _leaves_all(y, out)
+
+
+def _mentions_sp_all(x):
+    if isinstance(x, (tuple, list)):
+        if len(x) == 2 and x[0] == "init" and x[1] == "r1":
+            return True
+        return any(_mentions_sp_all(y) for y in x)
+    return False
+
+
+def _flat(stmts):
+    for g, s in stmts:
+        yield g, s
+        if s[0] == "loop":
+            yield from _flat(s[3])
+
+
+def _drop_dead_loads(stmts, used):
+    """Recursively remove loads whose value is unused. Returns (new list, changed)."""
+    out, changed = [], False
+    for g, s in stmts:
+        if s[0] == "ld" and s[1] not in used:
+            changed = True
+            continue
+        if s[0] == "loop":
+            body, ch = _drop_dead_loads(s[3], used)
+            if ch:
+                changed = True
+                s = s[:3] + (tuple(body),) + s[4:]
+        out.append((g, s))
+    return out, changed
+
+
 def _uses(e):
     s = set()
     _leaves(e, s)
@@ -63,6 +104,7 @@ def clean(lifted):
     st = list(lifted.stmts)
     # escape analysis: stack addresses appearing (anywhere) in call args or non-stack store values or return
     escaped_any = False
+    sp_into_loop = False
 
     def mentions_sp(e):
         if not isinstance(e, tuple):
@@ -70,34 +112,38 @@ def clean(lifted):
         if e[0] == "init" and e[1] == "r1":
             return True
         return any(mentions_sp(x) for x in e[1:])
-    for g, s in st:
+    for g, s in _flat(st):
         if s[0] == "call":
             if any(mentions_sp(a) for a in s[3]) or mentions_sp(s[2]):
                 escaped_any = True
         elif s[0] == "st" and _stack_off(s[2]) is None and mentions_sp(s[3]):
             escaped_any = True
+        elif s[0] == "loop" and _mentions_sp_all(s[2]):
+            sp_into_loop = True   # a stack address becomes a loop variable: loop loads may read any slot
     if mentions_sp(lifted.ret_g):
         escaped_any = True
     changed = True
     while changed:
         changed = False
         used = set()
-        for g, s in st:
-            _leaves(g, used)
+        for g, s in _flat(st):
+            _leaves_all(g, used)
             if s[0] == "ld":
-                _leaves(s[4], used)
+                _leaves_all(s[4], used)
             elif s[0] == "st":
-                _leaves(s[2], used)
-                _leaves(s[3], used)
+                _leaves_all(s[2], used)
+                _leaves_all(s[3], used)
             elif s[0] == "call":
-                _leaves(s[2], used)
+                _leaves_all(s[2], used)
                 for a in s[3] + s[4]:
-                    _leaves(a, used)
+                    _leaves_all(a, used)
+            elif s[0] == "loop":
+                _leaves_all((s[2], s[4], s[5], s[6]), used)
         _leaves(lifted.ret_g, used)
         _leaves(lifted.ret_f, used)
         # a stack store is live if some remaining load could read it (same slot) or the stack escapes
-        live_slots = set()
-        for g, s in st:
+        live_slots = {None} if sp_into_loop else set()
+        for g, s in _flat(st):
             if s[0] == "ld" and s[1] in used:
                 off = _stack_off(s[4])
                 if off is None:
@@ -110,9 +156,6 @@ def clean(lifted):
                         live_slots.add(off + k)
         new = []
         for g, s in st:
-            if s[0] == "ld" and s[1] not in used:
-                changed = True
-                continue
             if s[0] == "st":
                 off = _stack_off(s[2])
                 save_like = s[3] in (("lr",),) or (s[3][0] == "init" and (s[3][1] == "r1" or (s[3][1][0] == "r" and int(s[3][1][1:]) >= 14) or s[3][1][0] == "f"))
@@ -121,6 +164,8 @@ def clean(lifted):
                         changed = True
                         continue
             new.append((g, s))
+        new, ch = _drop_dead_loads(new, used)
+        changed = changed or ch
         st = new
     out = L.Lifted()
     out.stmts = st
@@ -163,6 +208,14 @@ def _arity(d):
         else:
             g += 1
     return min(g, 8), min(f, 8)
+
+
+def _keyname(k):
+    if k[0] in ("g", "f"):
+        return "%s%d" % (k[0] if k[0] == "f" else "r", k[1])
+    if k[0] in ("cra", "crb"):
+        return "cr%d_%s" % (k[1], k[0][2])
+    return k[0]
 
 
 class Printer:
@@ -236,6 +289,14 @@ class Printer:
             return "clobbered_%s_%d" % (e[2], e[1])
         if op == "lr":
             return "LR"
+        if op == "lv":
+            return "L%d_%s" % (e[1], _keyname(e[2]))
+        if op == "lx":
+            return "L%d_x%d_%s" % (e[1], e[2], _keyname(e[3]))
+        if op == "lxc":
+            return "(L%d_exit == %d)" % (e[1], e[2])
+        if op == "pctr":
+            return "(%s %s 0)" % (self.ex(e[1]), "!=" if e[2] else "==")
         if op == "add":
             so = _stack_off(e)
             if so is not None:
@@ -396,6 +457,74 @@ class Printer:
             return "ret%d = %s(%s);" % (c, callee, ", ".join(al))
         return "?"
 
+    def emit(self, stmts, ind, out):
+        i = 0
+        pad = "    " * ind
+        while i < len(stmts):
+            g = stmts[i][0]
+            j = i
+            block = []
+            while j < len(stmts) and stmts[j][0] == g:
+                block.append(stmts[j][1])
+                j += 1
+            if g == ("c", 1):
+                for s in block:
+                    self.emit_one(s, ind, out)
+            else:
+                out.append("%sif (%s) {" % (pad, self.ex(g)))
+                for s in block:
+                    self.emit_one(s, ind + 1, out)
+                out.append(pad + "}")
+            i = j
+
+    def emit_one(self, s, ind, out):
+        if s[0] == "loop":
+            self.emit_loop(s, ind, out)
+        else:
+            out.append("    " * ind + self.stmt(s))
+
+    def assign_par(self, pairs, ind, out):
+        """pairs: [(dest name, rhs expr string)] executed as a parallel assignment."""
+        pad = "    " * ind
+        pairs = [(d, r) for d, r in pairs if d != r]
+        clash = any(d2 in r and d2 != d for d, r in pairs for d2, _ in pairs)
+        if clash:
+            for k, (d, r) in enumerate(pairs):
+                out.append("%s%s_n = %s;" % (pad, d, r))
+            for d, r in pairs:
+                out.append("%s%s = %s_n;" % (pad, d, d))
+        else:
+            for d, r in pairs:
+                out.append("%s%s = %s;" % (pad, d, r))
+
+    def emit_loop(self, s, ind, out):
+        _, lid, entries, body, blocks, conts, exits = s
+        pad = "    " * ind
+        out.append("%s// loop L%d" % (pad, lid))
+        for key, x in entries:
+            out.append("%sL%d_%s = %s;" % (pad, lid, _keyname(key), self.ex(x)))
+        out.append("%sfor (;;) {   // L%d" % (pad, lid))
+        self.emit(body, ind + 1, out)
+        for c, assigns in conts:
+            out.append("%s    if (%s) {" % (pad, self.ex(c)))
+            self.assign_par([("L%d_%s" % (lid, _keyname(k)), self.ex(x)) for k, x in assigns if x != ("lv", lid, k)], ind + 2, out)
+            out.append(pad + "        continue;")
+            out.append(pad + "    }")
+        for idx, (j, c, assigns) in enumerate(exits):
+            last = idx == len(exits) - 1
+            lines = ["L%d_x%d_%s = %s;" % (lid, j, _keyname(k), self.ex(x)) for k, x in assigns]
+            if len(exits) > 1:
+                lines.append("L%d_exit = %d;" % (lid, j))
+            if last:
+                out.extend("%s    %s" % (pad, ln) for ln in lines)
+                out.append(pad + "    break;")
+            else:
+                out.append("%s    if (%s) {" % (pad, self.ex(c)))
+                out.extend("%s        %s" % (pad, ln) for ln in lines)
+                out.append(pad + "        break;")
+                out.append(pad + "    }")
+        out.append(pad + "}")
+
     def render(self, lifted, header=None):
         out = []
         f = self.fn
@@ -403,24 +532,7 @@ class Printer:
         out.append("// %s   @0x%08x  size %d  unit %s" % (sig, f["addr"], f["size"], f.get("file", "")))
         out.append("// generated from the machine code by GameMap/tools/lift.py; equivalence-tested (see verify_lift.py)")
         out.append("%s {" % sig)
-        i = 0
-        stmts = lifted.stmts
-        while i < len(stmts):
-            g = stmts[i][0]
-            j = i
-            block = []
-            while j < len(stmts) and stmts[j][0] == g:
-                block.append(self.stmt(stmts[j][1]))
-                j += 1
-            if g == ("c", 1):
-                for b in block:
-                    out.append("    " + b)
-            else:
-                out.append("    if (%s) {" % self.ex(g))
-                for b in block:
-                    out.append("        " + b)
-                out.append("    }")
-            i = j
+        self.emit(lifted.stmts, 1, out)
         rg, rf = lifted.ret_g, lifted.ret_f
         tail_call = rf[0] == "cr" and rf[2] == "f1" and rg[0] == "cr" and rg[2] == "r3" and rf[1] == rg[1]
         if rf != ("init", "f1") and not tail_call and not (rf[0] == "cr" and rf[2] == "f1"):
@@ -435,7 +547,8 @@ class Printer:
 def one_line(E, fn, lifted):
     """A short description derived mechanically from the cleaned IR (used as the auto summary for proven functions)."""
     P = Printer(E, fn)
-    st = lifted.stmts
+    st = list(_flat(lifted.stmts))
+    loops = [s for g, s in st if s[0] == "loop"]
     loads = [s for g, s in st if s[0] == "ld"]
     stores = [s for g, s in st if s[0] == "st"]
     calls = [s for g, s in st if s[0] == "call"]
@@ -463,6 +576,8 @@ def one_line(E, fn, lifted):
                 names.append("indirect")
         uniq = list(dict.fromkeys(names))
         bits.append("calls " + ", ".join(uniq[:4]) + ("…" if len(uniq) > 4 else ""))
+    if loops:
+        bits.append("%d loop%s" % (len(loops), "s" if len(loops) != 1 else ""))
     if cond:
         bits.append("conditional")
     return "; ".join(bits) if bits else "computes " + P.ex(lifted.ret_g)
