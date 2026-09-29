@@ -16,6 +16,14 @@ The long-term goal is an evidence-based reconstruction in Rust/Bevy. **Gameplay 
 
 The latest local corpus audit accounts for **836 distinct models: 828 geometry exports and eight empty draw lists**, with **3,480 diffuse texture bindings resolved** and **zero material lookup warnings**. These are corpus validation results, not a claim of complete format or game accuracy. See [current findings](Remaster/research/FINDINGS.md) and [validation evidence](docs/HANDOFF.md#verification-baseline).
 
+## Menu, playable slice and proof
+
+The Bevy app opens a menu with the asset viewer, a **playable reconstruction slice** and a **proof-of-decode** screen. The slice boots from the original files (decoded Wii strap-warning screen, world layers listed in `worldfilelist.csv`, Alicia with decoded animations) and moves the character with locomotion recovered from `LocalCharacterControl::Update` in the executable. It is a vertical slice, not a full port: terrain collision, jump/gravity and camera framing are provisional, and AI, minigames and menus are not reconstructed. `tools/prove.py` checks that the retail DOL equals the symbol-bearing ELF byte for byte, that three copies of the game data agree, and that the decoders reproduce recorded results. Details: [_bevy/README.md](_bevy/README.md#menu-game-and-proof) and the [evidence table](_bevy/docs/RECONSTRUCTION.md#evidence-table-for-the-game-slice).
+
+![Menu](_bevy/docs/captures/ui-menu.png)
+![Game slice](_bevy/docs/selftest/02-game.png)
+![Proof screen](_bevy/docs/captures/ui-proof.png)
+
 ## Start here
 
 This repository contains source, research notes, validation reports and existing application screenshots. Game data, the original ELF, generated asset exports, packaged executables and build caches are not included. Supply your own local game files to run the viewer.

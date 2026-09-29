@@ -2,6 +2,32 @@
 
 Open **EAGL-Workbench.exe** in this folder. This is a native Bevy viewer using the recovered EA Playground decoders. No browser, server, Python installation or Internet connection is needed by the packaged application. Keep `EAGL-Decoder.exe`, `_decoder_internal`, `reference`, `research` and `assets` beside it. Original game files remain at their existing DATA paths.
 
+## Menu, game and proof
+
+`EAGL-Workbench.exe` now opens a menu:
+
+| Entry | What it does |
+| --- | --- |
+| **Asset Viewer** | The workbench below (use **< Menu** to return). |
+| **Play — reconstructed game** | Boots from the original files: decoded Wii strap-warning screen, then every layer in `worldfilelist.csv` (5 areas x 4 variants), Alicia with the decoded idle/walk/run clips, and locomotion from `LocalCharacterControl::Update`. WASD/arrows move, Space jumps, Q/E or right-drag orbit, wheel zoom, R swings the camera behind, Esc returns. |
+| **Proof of decode** | Shows `docs/proof-report.json`; **Run verification** regenerates it with `tools/prove.py` (needs Python 3.14 and the game files). |
+
+What is and is not original in the game slice is printed in its HUD and in `docs/RECONSTRUCTION.md`. Locomotion constants are generated from the ELF (`tools/extract_constants.py` -> `src/recovered.rs`); terrain, jump/gravity, camera framing and the spawn point are provisional.
+
+Command-line switches (all optional):
+
+```powershell
+EAGL-Workbench.exe --mode menu|viewer|game|proof   # start in a mode
+EAGL-Workbench.exe --selftest docs\selftest        # boot the game, scripted walk, write report + screenshots, exit
+EAGL-Workbench.exe --flow-test --mode menu         # menu>game>menu>viewer>menu>game transition test, writes docs/flow-test.json
+EAGL-Workbench.exe --mode proof --shot out.png     # screenshot any mode and exit
+$env:EAGL_DATA='D:\path	o\DATA'                  # override the DATA location
+py -3.14 tools/prove.py [--with-tests] [--run-selftest]
+py -3.14 tools/re_functions.py Update__21LocalCharacterControl   # annotated PowerPC disassembly with resolved constants
+```
+
+The self-test and flow test open a window for up to a minute; leave it open.
+
 ## Using the viewer
 
 Search the library and select an asset. Models load on demand with resolved GSH textures and per-primitive materials. Images display over a checkerboard; GSH/TPL banks expose individual entries. Other formats show their parsed structure. The catalog includes files inside BIG/VIV/U8 archives; nested members are read directly.
