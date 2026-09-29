@@ -16,6 +16,11 @@
       "ok": true
     },
     {
+      "detail": "start_location (12,0,-53) -> ground-snapped spawn 12.0,-6.0,-53.0",
+      "name": "player spawn read from db.vlt (character_info/player)",
+      "ok": true
+    },
+    {
       "detail": "66 rows, 15 STATE_COMBAT",
       "name": "controls.csv parsed",
       "ok": true
@@ -41,7 +46,7 @@
       "ok": true
     },
     {
-      "detail": "y=-14.64",
+      "detail": "y=-1.24",
       "name": "player grounded on world surface",
       "ok": true
     },
@@ -61,9 +66,10 @@
     "locomotion": "ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs",
     "terrain": "AssetDerived display mesh"
   },
-  "load_seconds": 2.8620798587799072,
+  "load_seconds": 3.6566169261932373,
   "log": [
     "Boot: reading original data files",
+    "db.vlt: 75 types, 32 classes, 908 collections",
     "loaded boot",
     "loaded filelist",
     "loaded bounds",
@@ -72,22 +78,22 @@
     "loaded clip:S_walk",
     "loaded clip:S_run",
     "loaded layer:playground-high.o",
-    "loaded layer:playground-high-alpha.o",
     "world layer ready (1)",
-    "loaded layer:playground-high-fade.o",
+    "loaded layer:playground-high-alpha.o",
     "world layer ready (2)",
+    "loaded layer:playground-high-fade.o",
+    "world layer ready (3)",
     "loaded layer:playground-high-alphafade.o",
     "playground-high-alphafade.o has an empty draw list; skipped",
-    "world layer ready (3)",
     "loaded layer:playground_nature-high.o",
     "loaded layer:playground_nature-high-alpha.o",
     "world layer ready (4)",
-    "loaded layer:playground_nature-high-fade.o",
     "world layer ready (5)",
+    "loaded layer:playground_nature-high-fade.o",
     "loaded layer:playground_nature-high-alphafade.o",
     "world layer ready (6)",
-    "loaded layer:playground_park-high.o",
     "world layer ready (7)",
+    "loaded layer:playground_park-high.o",
     "world layer ready (8)",
     "loaded layer:playground_park-high-alpha.o",
     "loaded layer:playground_park-high-fade.o",
@@ -100,33 +106,33 @@
     "world layer ready (11)",
     "loaded layer:playground_stadium-high-fade.o",
     "world layer ready (12)",
-    "loaded layer:playground_stadium-high-alphafade.o",
     "world layer ready (13)",
+    "loaded layer:playground_stadium-high-alphafade.o",
     "world layer ready (14)",
     "loaded layer:world-low-all.o",
     "loaded layer:world-low-all-alpha.o",
     "world layer ready (15)",
-    "world layer ready (16)",
     "loaded layer:world-low-all-fade.o",
     "loaded layer:world-low-all-alphafade.o",
+    "world layer ready (16)",
     "world layer ready (17)",
     "world layer ready (18)",
     "world and player assets ready",
-    "ground coverage around hub: 3505/3600 samples",
-    "ground: 129128 triangles; spawn 20.0,-7.2,-56.0"
+    "ground coverage around start: 3568/3600 samples",
+    "ground: 129128 triangles; spawn 12.0,-6.0,-53.0"
   ],
   "passed": true,
   "samples": [
     {
       "grounded": true,
       "pos": [
-        20.0,
-        -7.176739692687988,
-        -56.0
+        12.0,
+        -5.984487533569336,
+        -53.0
       ],
       "speed": 0.0,
       "step": "settle",
-      "t": 1.500946044921875,
+      "t": 1.5016932487487793,
       "weights": [
         1.0,
         0.0,
@@ -136,65 +142,65 @@
     {
       "grounded": true,
       "pos": [
-        20.0,
-        -10.21695327758789,
-        -68.15000915527344
+        12.0,
+        -3.615029811859131,
+        -40.85017776489258
       ],
       "speed": 5.0,
       "step": "forward",
-      "t": 4.000761032104492,
+      "t": 4.000589847564697,
       "weights": [
-        4.750569937428395e-10,
-        8.163207887434965e-10,
+        4.779027173995587e-10,
+        8.13120237808107e-10,
         0.9999998211860657
       ]
     },
     {
       "grounded": true,
       "pos": [
-        29.647615432739258,
-        -14.481285095214844,
-        -78.15090942382812
+        2.3524627685546875,
+        -1.2072840929031372,
+        -30.849693298339844
       ],
       "speed": 7.071067810058594,
       "step": "diagonal",
-      "t": 6.000617980957031,
+      "t": 6.000552177429199,
       "weights": [
-        1.6553576468719367e-17,
-        2.8445057125971464e-17,
-        0.9999998211860657
+        1.1942514392324168e-17,
+        2.031940554287318e-17,
+        0.9999999403953552
       ]
     },
     {
       "grounded": false,
       "pos": [
-        29.994281768798828,
-        -13.947951316833496,
-        -78.49756622314453
+        2.005795955657959,
+        -0.6739509105682373,
+        -30.503026962280273
       ],
       "speed": 0.0,
       "step": "jump",
-      "t": 6.401198863983154,
+      "t": 6.400118350982666,
       "weights": [
-        0.8993249535560608,
-        0.04362308606505394,
-        0.05705191195011139
+        0.8982521891593933,
+        0.04443356767296791,
+        0.05731426924467087
       ]
     },
     {
       "grounded": true,
       "pos": [
-        29.994281768798828,
-        -14.638080596923828,
-        -78.49756622314453
+        2.005795955657959,
+        -1.236891746520996,
+        -30.503026962280273
       ],
       "speed": 0.0,
       "step": "final",
-      "t": 7.400478363037109,
+      "t": 7.400127410888672,
       "weights": [
-        0.999983549118042,
-        7.109988018783042e-6,
-        9.2987156676827e-6
+        0.9999809861183167,
+        8.291586709674448e-6,
+        0.000010695212040445767
       ]
     }
   ]

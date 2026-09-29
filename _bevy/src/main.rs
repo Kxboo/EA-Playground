@@ -5,6 +5,7 @@ mod game;
 mod menu;
 mod locomotion;
 mod recovered;
+mod vlt;
 
 use bevy::{prelude::*,render::view::window::screenshot::{Screenshot,save_to_disk},winit::WinitSettings};
 use bevy_egui::{EguiPlugin,EguiPrimaryContextPass};
@@ -29,6 +30,13 @@ fn main(){
         if let Some(i)=arg("--index"){req["index"]=json!(i.parse::<usize>().unwrap_or(0));}
         match bridge::headless(req){Ok(v)=>{println!("{}",serde_json::to_string_pretty(&v).unwrap());if v["ok"]!=true || v["value"]["exit_code"].as_u64().unwrap_or(0)!=0{std::process::exit(2)}},Err(e)=>{eprintln!("{e}");std::process::exit(1)}}
         return
+    }
+    if let Some(out)=arg("--vlt-dump"){
+        let dir=bridge::data_root().join("files").join("data").join("db");
+        let (v,b)=(std::fs::read(dir.join("db.vlt")).expect("db.vlt"),std::fs::read(dir.join("db.bin")).expect("db.bin"));
+        let db=vlt::Database::load(&v,&b,vlt::known_names()).expect("vault load");
+        std::fs::write(&out,serde_json::to_string_pretty(&db.to_json()).unwrap()).expect("write");
+        eprintln!("wrote {out}: {} types, {} classes, {} collections",db.types.len(),db.classes.len(),db.collections.len());return
     }
     let mut state=viewer::Viewer::default();
     state.startup_asset=arg("--asset").or(Some("basketball.o".into()));

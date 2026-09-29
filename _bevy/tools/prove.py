@@ -150,6 +150,26 @@ def decode_checks():
     rows=ctl.get('value',{}).get('rows',[])
     check('controls.csv maps player events',sum(1 for r in rows if len(r)>1 and r[1]=='STATE_COMBAT')>=8,f"{len(rows)-1} bindings, includes EVENT_PLAYER_MOVE/JUMP/CAMERA_REORIENT: "+str(all(any(r and r[0]==n for r in rows) for n in ('EVENT_PLAYER_MOVE','EVENT_PLAYER_JUMP','EVENT_CAMERA_REORIENT'))))
 
+def vlt_checks():
+    import random,ppc_emu
+    sys.path.insert(0,str(REPO/'Remaster'/'src'));import vlt
+    emu=ppc_emu.Emu();rnd=random.Random(int(time.time())%1000);bad=0;n=0
+    for L in list(range(0,50))+[96,123]:
+        d=bytes(rnd.randrange(256) for _ in range(L));n+=1
+        if ppc_emu.hash64_ref(emu,d)!=vlt.hash64(d):bad+=1
+    check('Attrib::hash64 reimplementation equals the original machine code (fresh random inputs)',bad==0,f'{n} inputs executed on the emulated PowerPC function, {bad} mismatches')
+    D_=DATA/'files'/'data'/'db'
+    names={vlt.string_hash64(x.strip()):x.strip() for x in open(BEVY/'src'/'vlt_names.txt',encoding='utf-8')}
+    db=vlt.load_database((D_/'db.vlt').read_bytes(),(D_/'db.bin').read_bytes(),names)
+    check('db.vlt/db.bin decode using the loader layout recovered from the executable',len(db['types'])==75 and len(db['classes'])==32,f"{len(db['types'])} types, {len(db['classes'])} classes, relocations applied: {db['relocations']}")
+    p=[c for c in db['collections'].values() if c['cls']=='character_info' and c['name']=='player']
+    loc=vlt.decode_value(db,*[(a['type'],a['raw'],a['flags']) for a in p[0]['attributes'] if a['name']=='start_location'][0]) if p else None
+    check('Player start location recovered from the database',loc==[12.0,0.0,-53.0],f'character_info/player start_location = {loc}')
+    dump=BEVY/'exports'/'db-rust.json'
+    if dump.exists():
+        j=json.loads(dump.read_text(encoding='utf-8'))
+        check('Rust vault loader output covers the whole database',len(j['collections'])==908 and len(j['classes'])==32,f"{len(j['collections'])} collections, {sum(len(c['attributes']) for c in j['collections'])} attributes (cross-checked value-by-value against the Python decoder)")
+
 def recorded_checks():
     mv=REPO/'Remaster'/'research'/'model-verification.json'
     if mv.exists():
@@ -164,11 +184,11 @@ def recorded_checks():
     else:check('Game self-test report',False,'run: EAGL-Workbench.exe --selftest docs/selftest')
 
 def main():
-    e=exe_checks();dol_checks(e);constants_checks();data_checks();decode_checks()
+    e=exe_checks();dol_checks(e);constants_checks();vlt_checks();data_checks();decode_checks()
     if '--with-tests' in sys.argv:
-        r=subprocess.run(['cargo','test','--release','--offline','locomotion'],cwd=BEVY,capture_output=True,text=True)
+        r=subprocess.run(['cargo','test','--release','--offline'],cwd=BEVY,capture_output=True,text=True)
         m=re.search(r'test result: (\w+)\. (\d+) passed; (\d+) failed',r.stdout)
-        check('Locomotion unit tests (pin the recovered numbers)',bool(m) and m.group(1)=='ok',m.group(0) if m else r.stderr[-200:])
+        check('Rust unit tests (locomotion constants, hash64 golden vectors, database loader)',bool(m) and m.group(1)=='ok',m.group(0) if m else r.stderr[-200:])
     if '--run-selftest' in sys.argv:
         exe=BEVY/'target'/'release'/'EAGL-Workbench.exe';r=subprocess.run([str(exe),'--selftest',str(BEVY/'docs'/'selftest')],cwd=BEVY,timeout=300)
         check('Game self-test run',r.returncode==0,f'exit code {r.returncode}')

@@ -78,7 +78,7 @@ pub struct Game{
     phase:Phase,started:Instant,pub log:Vec<String>,boot_image:Option<Handle<Image>>,boot_egui:Option<egui::TextureId>,
     layers:Vec<(String,String)>,layers_expected:usize,layers_ready:usize,layers_empty:usize,clip_handles:Vec<Handle<AnimationClip>>,
     ground:Option<Ground>,build_wait:u32,player:Option<Entity>,pub spawn:Vec3,
-    pub tri_count:usize,pub controls_rows:usize,pub combat_bindings:usize,pub world_bounds:Option<(f32,f32,f32)>,
+    pub db_summary:String,pub start_dir:Vec3,pub spawn_from_db:bool,pub tri_count:usize,pub controls_rows:usize,pub combat_bindings:usize,pub world_bounds:Option<(f32,f32,f32)>,
     boot_shown:Option<Instant>,boot_shot:bool,pub load_seconds:f32,
     pub selftest:Option<SelfTest>,
 }
@@ -89,6 +89,12 @@ impl SelfTest{pub fn new(out:PathBuf)->Self{Self{out,step:0,t:0.,samples:vec![],
 fn src(rel:&str)->String{bridge::data_root().join("files").join("data").join(rel.replace('/',"\\")).to_string_lossy().into_owned()}
 
 impl Game{
+    fn apply_db(&mut self,r:HashMap<String,Value>){
+        if let Some(s)=r.get("summary").and_then(|v|v.as_str()){self.db_summary=s.to_string();}
+        let v3=|v:&Value|v.as_array().filter(|a|a.len()==3).map(|a|Vec3::new(a[0].as_f64().unwrap_or(0.) as f32,a[1].as_f64().unwrap_or(0.) as f32,a[2].as_f64().unwrap_or(0.) as f32));
+        if let Some(d)=r.get("start_direction").and_then(v3){self.start_dir=d;}
+        if let Some(l)=r.get("start_location").and_then(v3){self.results.insert("db_start".into(),json!([l.x,l.y,l.z]));self.spawn_from_db=true;}
+    }
     pub fn new(selftest:Option<SelfTest>)->Self{
         let mut jobs=VecDeque::new();
         let strap=src("boot/strapwarn_standard_english.gsh");
@@ -100,9 +106,29 @@ impl Game{
         let model=format!("{}::alicia.viv::alicia.o",src("characters/models/characters.viv"));
         let skel=format!("{}::player_skel.ske",src("characters/player_anims.viv"));let bank=format!("{}::player_anims.anm",src("characters/player_anims.viv"));
         for (name,index) in CLIPS{jobs.push_back(Job{key:format!("clip:{name}"),req:json!({"command":"preview","source":model,"skeleton":skel,"bank":bank,"index":index})});}
-        Self{bridge:Bridge::start(),jobs,pending:None,results:HashMap::new(),phase:Phase::Loading,started:Instant::now(),log:vec!["Boot: reading original data files".into()],
+        // Player start from the game's own Attrib database (character_info/player), read by the Rust vault loader.
+        let mut db_results=HashMap::new();
+        let dir=bridge::data_root().join("files").join("data").join("db");
+        let mut log=vec!["Boot: reading original data files".to_string()];
+        match (std::fs::read(dir.join("db.vlt")),std::fs::read(dir.join("db.bin"))){
+            (Ok(v),Ok(b))=>match crate::vlt::Database::load(&v,&b,crate::vlt::known_names()){
+                Ok(db)=>{
+                    let start=db.find_collection("character_info","player");
+                    let loc=start.and_then(|c|db.attribute(c,"start_location"));let dir_=start.and_then(|c|db.attribute(c,"start_direction"));
+                    log.push(format!("db.vlt: {} types, {} classes, {} collections",db.types.len(),db.classes.len(),db.collections.len()));
+                    db_results.insert("summary".to_string(),json!(format!("{} types / {} classes / {} collections",db.types.len(),db.classes.len(),db.collections.len())));
+                    if let Some(l)=loc{db_results.insert("start_location".into(),l);}
+                    if let Some(d)=dir_{db_results.insert("start_direction".into(),d);}
+                }
+                Err(e)=>log.push(format!("db.vlt failed to load: {e}")),
+            },
+            _=>log.push("db.vlt/db.bin not found".into()),
+        }
+        let mut g=Self{bridge:Bridge::start(),jobs,pending:None,results:HashMap::new(),phase:Phase::Loading,started:Instant::now(),log,
             boot_image:None,boot_egui:None,layers:vec![],layers_expected:0,layers_ready:0,layers_empty:0,clip_handles:vec![],ground:None,build_wait:0,player:None,spawn:Vec3::ZERO,
-            tri_count:0,controls_rows:0,combat_bindings:0,world_bounds:None,boot_shown:None,boot_shot:false,load_seconds:0.,selftest}
+            db_summary:String::new(),start_dir:Vec3::Z,spawn_from_db:false,tri_count:0,controls_rows:0,combat_bindings:0,world_bounds:None,boot_shown:None,boot_shot:false,load_seconds:0.,selftest};
+        // (fields set below)
+        g.apply_db(db_results);g
     }
 }
 
@@ -201,14 +227,16 @@ fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer
     g.tri_count=tris.len();
     if tris.is_empty(){let m=format!("world mesh data unavailable ({mesh_count} meshes)");g.log.push(m.clone());g.phase=Phase::Failed(m);return}
     let ground=Ground::build(tris);
-    // Provisional spawn (original spawn table not decoded): nearest point with walkable ground to the hub.
-    let hub=Vec2::new(20.,-56.);
+    // Spawn: character_info/player start_location from db.vlt (x,z; the stored y is 0, so height comes from the ground).
+    // Fallback if the database is unavailable: nearest walkable point to the hub.
+    let start=g.results.get("db_start").and_then(|v|v.as_array()).map(|a|Vec2::new(a[0].as_f64().unwrap_or(0.) as f32,a[2].as_f64().unwrap_or(0.) as f32));
+    let hub=start.unwrap_or(Vec2::new(20.,-56.));
     let mut best:Option<(f32,Vec3)>=None;let mut covered=0;let mut total=0;
     for gx in -30..30{for gz in -30..30{
-        let (x,z)=(hub.x+gx as f32*2.,hub.y+gz as f32*2.);total+=1;
+        let (x,z)=(hub.x+gx as f32*0.5,hub.y+gz as f32*0.5);total+=1;
         if let Some(y)=ground.height(x,z,50.){covered+=1;let d=Vec2::new(x,z).distance(hub);if best.is_none_or(|b|d<b.0){best=Some((d,Vec3::new(x,y,z)));}}
     }}
-    g.log.push(format!("ground coverage around hub: {covered}/{total} samples"));
+    g.log.push(format!("ground coverage around start: {covered}/{total} samples"));
     g.spawn=best.map(|b|b.1).unwrap_or(Vec3::new(hub.x,-5.,hub.y));g.ground=Some(ground);
     g.load_seconds=g.started.elapsed().as_secs_f32();
     // Animation graph over the three decoded clips.
@@ -218,7 +246,7 @@ fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer
     let idle_scene=g.results.get("scene:clip:S_idle").and_then(|v|v.as_str()).map(|s|s.to_owned()).unwrap_or_default();
     let source=g.results["clip:S_idle"]["source"].as_str().unwrap_or("").to_string();
     let dv=g.results["clip:S_idle"]["decoder_version"].as_str().unwrap_or("").to_string();
-    let player=commands.spawn((GameEntity,Player{loco:Locomotion::default(),vy:0.,grounded:true,speed:0.,facing:Vec3::Z,weights:[1.,0.,0.],anim_ready:false},Transform::from_translation(g.spawn),Visibility::default(),
+    let player=commands.spawn((GameEntity,Player{loco:Locomotion::default(),vy:0.,grounded:true,speed:0.,facing:g.start_dir,weights:[1.,0.,0.],anim_ready:false},Transform::from_translation(g.spawn),Visibility::default(),
         OriginalAsset{evidence:EvidenceLevel::AssetDerived,source,decoder_version:dv})).id();
     let nodes2=nodes.clone();let h2=handle.clone();
     commands.spawn((GameEntity,PlayerModel,ChildOf(player),WorldAssetRoot(assets.load(GltfAssetLabel::Scene(0).from_asset(idle_scene))),Transform::default()))
@@ -230,7 +258,7 @@ fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer
             }}
         });
     g.player=Some(player);
-    if cam.is_empty(){commands.spawn((GameEntity,GameCamera{yaw:0.,pitch:0.28,distance:k::HINGE_CAMERA_DISTANCE},Camera3d::default(),Transform::from_translation(g.spawn+Vec3::new(0.,2.,4.))));}
+    if cam.is_empty(){commands.spawn((GameEntity,GameCamera{yaw:(-g.start_dir.x).atan2(-g.start_dir.z),pitch:0.28,distance:k::HINGE_CAMERA_DISTANCE},Camera3d::default(),Transform::from_translation(g.spawn+Vec3::new(0.,2.,4.))));}
     commands.spawn((GameEntity,DirectionalLight{illuminance:9000.,shadow_maps_enabled:false,..default()},Transform::from_rotation(Quat::from_euler(EulerRot::XYZ,-0.9,-0.5,0.))));
     g.log.push(format!("ground: {} triangles; spawn {:.1},{:.1},{:.1}",g.tri_count,g.spawn.x,g.spawn.y,g.spawn.z));
     g.phase=Phase::Playing;
@@ -337,12 +365,13 @@ fn hud(images:Res<Assets<Image>>,mut contexts:EguiContexts,mut g:Option<ResMut<G
                     ui.label(egui::RichText::new("EA PLAYGROUND — reconstruction slice").strong());
                     ui.label(format!("pos {:.1}, {:.1}, {:.1}   speed {:.2}/{:.1}   {:.0} fps",pos.x,pos.y,pos.z,speed,k::STATE_MAX_SPEED,1./time.delta_secs().max(1e-4)));
                     ui.label(format!("world: {} ground triangles • loaded in {:.1}s",g.tri_count,g.load_seconds));
+                    ui.label(format!("db.vlt: {} • spawn {}",g.db_summary,if g.spawn_from_db{"from character_info/player"}else{"provisional"}));
                     if let Some((x,z,r))=g.world_bounds{ui.label(format!("world.csv bounds: min ({x}, {z}) radius {r}"));}
                     ui.label(format!("controls.csv: {} bindings ({} in STATE_COMBAT)",g.controls_rows,g.combat_bindings));
                     ui.separator();
                     ui.colored_label(egui::Color32::from_rgb(104,200,170),"Locomotion: ELF-derived (LocalCharacterControl::Update)");
                     ui.colored_label(egui::Color32::YELLOW,"Terrain: display mesh, not original collision");
-                    ui.colored_label(egui::Color32::YELLOW,"Jump/gravity: provisional");
+                    ui.colored_label(egui::Color32::YELLOW,"Jump/gravity, camera framing: provisional");
                     ui.label(egui::RichText::new("WASD/arrows move • Space jump • Q/E or right-drag camera • wheel zoom • R behind • Esc menu").small());
                 });
             });
@@ -399,6 +428,7 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
                 check("world layers spawned from worldfilelist.csv",g.layers_ready==g.layers_expected&&g.layers_expected+g.layers_empty==WORLD_SUFFIXES.len()*5,format!("{}/{} layers ready, {} empty draw lists skipped",g.layers_ready,g.layers_expected,g.layers_empty));
                 check("world geometry decoded",g.tri_count>20_000,format!("{} walkable-source triangles",g.tri_count));
                 check("player model + 3 clips loaded",g.clip_handles.len()==CLIPS.len()&&p.anim_ready,format!("{} clips, anim player bound: {}",g.clip_handles.len(),p.anim_ready));
+                check("player spawn read from db.vlt (character_info/player)",g.spawn_from_db&&(g.spawn.x-12.).abs()<1.&&(g.spawn.z+53.).abs()<1.,format!("start_location (12,0,-53) -> ground-snapped spawn {:.1},{:.1},{:.1}",g.spawn.x,g.spawn.y,g.spawn.z));
                 check("controls.csv parsed",g.combat_bindings>=8,format!("{} rows, {} STATE_COMBAT",g.controls_rows,g.combat_bindings));
                 check("mesh entities in scene",meshes.iter().count()>100,format!("{} Mesh3d entities",meshes.iter().count()));
                 check("animation players active",players.iter().count()>=1,format!("{} players",players.iter().count()));

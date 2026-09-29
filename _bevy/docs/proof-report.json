@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-29 18:23",
+ "generated": "2026-09-29 18:55",
  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
  "passed": true,
- "passed_count": 18,
- "total": 18,
+ "passed_count": 22,
+ "total": 22,
  "checks": [
   {
    "name": "Symbol-bearing ELF matches the pinned hash",
@@ -46,6 +46,26 @@
    "detail": "max speed 5.0, dead zone 0.10"
   },
   {
+   "name": "Attrib::hash64 reimplementation equals the original machine code (fresh random inputs)",
+   "ok": true,
+   "detail": "52 inputs executed on the emulated PowerPC function, 0 mismatches"
+  },
+  {
+   "name": "db.vlt/db.bin decode using the loader layout recovered from the executable",
+   "ok": true,
+   "detail": "75 types, 32 classes, relocations applied: 3409"
+  },
+  {
+   "name": "Player start location recovered from the database",
+   "ok": true,
+   "detail": "character_info/player start_location = [12.0, 0.0, -53.0]"
+  },
+  {
+   "name": "Rust vault loader output covers the whole database",
+   "ok": true,
+   "detail": "908 collections, 7683 attributes (cross-checked value-by-value against the Python decoder)"
+  },
+  {
    "name": "Earlier extraction (OLD ATTEMPTS) matches the current DATA files",
    "ok": true,
    "detail": "1199 identical, 0 different, 0 absent"
@@ -81,9 +101,9 @@
    "detail": "66 bindings, includes EVENT_PLAYER_MOVE/JUMP/CAMERA_REORIENT: True"
   },
   {
-   "name": "Locomotion unit tests (pin the recovered numbers)",
+   "name": "Rust unit tests (locomotion constants, hash64 golden vectors, database loader)",
    "ok": true,
-   "detail": "test result: ok. 5 passed; 0 failed"
+   "detail": "test result: ok. 8 passed; 0 failed"
   },
   {
    "name": "Recorded corpus audit: every distinct .o model accounted for (earlier run)",
@@ -93,7 +113,7 @@
   {
    "name": "Game self-test report (boot -> world -> player -> scripted walk)",
    "ok": true,
-   "detail": "11/11 in-game checks passed, load 2.9s, report 0.4 h old"
+   "detail": "12/12 in-game checks passed, load 3.7s, report 0.1 h old"
   }
  ],
  "scope": [
