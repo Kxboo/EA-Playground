@@ -21,7 +21,7 @@ EAGL-Workbench.exe --mode menu|viewer|game|proof   # start in a mode
 EAGL-Workbench.exe --selftest docs\selftest        # boot the game, scripted walk, write report + screenshots, exit
 EAGL-Workbench.exe --flow-test --mode menu         # menu>game>menu>viewer>menu>game transition test, writes docs/flow-test.json
 EAGL-Workbench.exe --mode proof --shot out.png     # screenshot any mode and exit
-$env:EAGL_DATA='D:\path	o\DATA'                  # override the DATA location
+$env:EAGL_DATA='D:path	oDATA'                  # override the DATA location
 py -3.14 tools/prove.py [--with-tests] [--run-selftest]
 py -3.14 tools/re_functions.py Update__21LocalCharacterControl   # annotated PowerPC disassembly with resolved constants
 ```
