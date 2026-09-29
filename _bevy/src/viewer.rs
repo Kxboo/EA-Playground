@@ -3,7 +3,7 @@ use bevy_egui::{egui,EguiContexts,EguiTextureHandle,EguiGlobalSettings,PrimaryEg
 use serde::Deserialize;
 use serde_json::{Value,json};
 use std::{time::Duration,sync::Arc};
-use crate::{bridge::Bridge,game::OriginalAsset};
+use crate::{bridge::Bridge,game::OriginalAsset,menu::AppMode};
 
 #[derive(Clone,Deserialize)]
 pub struct AssetRow {pub id:usize,pub name:String,pub source:String,pub kind:String,pub status:String,pub size:u64,#[serde(default)]pub family:String}
@@ -28,6 +28,7 @@ impl Default for Viewer {fn default()->Self{Self{
 
 #[derive(Component)] pub struct PreviewRoot;
 #[derive(Component)] pub struct PreviewCamera;
+#[derive(Component)] pub struct PreviewLight;
 #[derive(Component)] pub struct ClipGraph{handle:Handle<AnimationGraph>,index:AnimationNodeIndex}
 #[derive(Resource)] pub struct Orbit{pub target:Vec3,pub distance:f32,pub yaw:f32,pub pitch:f32,pub radius:f32}
 impl Default for Orbit{fn default()->Self{Self{target:Vec3::ZERO,distance:4.,yaw:0.6,pitch:0.2,radius:1.}}}
@@ -36,7 +37,7 @@ pub fn setup(mut commands:Commands,mut egui_settings:ResMut<EguiGlobalSettings>)
     egui_settings.auto_create_primary_context=false;
     commands.spawn((Camera3d::default(),PreviewCamera,Transform::from_xyz(3.,2.,4.).looking_at(Vec3::ZERO,Vec3::Y)));
     commands.spawn((PrimaryEguiContext,Camera2d,RenderLayers::none(),Camera{order:1,output_mode:CameraOutputMode::Write{blend_state:Some(BlendState::ALPHA_BLENDING),clear_color:ClearColorConfig::None},clear_color:ClearColorConfig::Custom(Color::NONE),..default()}));
-    commands.spawn((DirectionalLight{illuminance:8000.,shadow_maps_enabled:false,..default()},Transform::from_rotation(Quat::from_euler(EulerRot::XYZ,-0.7,-0.6,0.))));
+    commands.spawn((PreviewLight,DirectionalLight{illuminance:8000.,shadow_maps_enabled:false,..default()},Transform::from_rotation(Quat::from_euler(EulerRot::XYZ,-0.7,-0.6,0.))));
 }
 
 fn source(v:&Viewer,id:Option<usize>)->Option<String>{id.and_then(|i|v.assets.get(i)).map(|a|a.source.clone())}
@@ -129,13 +130,14 @@ fn chooser(ui:&mut egui::Ui,label:&str,value:&mut Option<usize>,rows:&[AssetRow]
     });changed
 }
 
-pub fn ui(mut contexts:EguiContexts,mut v:ResMut<Viewer>,bridge:Res<Bridge>,mut orbit:ResMut<Orbit>,mut camera:Single<(&mut Camera,&mut Transform,&mut Projection),With<PreviewCamera>>,window:Single<&Window,With<PrimaryWindow>>,mut roots:Query<&mut Transform,(With<PreviewRoot>,Without<PreviewCamera>)>,mut materials:ResMut<Assets<StandardMaterial>>)->Result {
+pub fn ui(mut contexts:EguiContexts,mut v:ResMut<Viewer>,bridge:Res<Bridge>,mut orbit:ResMut<Orbit>,mut camera:Single<(&mut Camera,&mut Transform,&mut Projection),With<PreviewCamera>>,window:Single<&Window,With<PrimaryWindow>>,mut roots:Query<&mut Transform,(With<PreviewRoot>,Without<PreviewCamera>)>,mut materials:ResMut<Assets<StandardMaterial>>,mut mode:ResMut<AppMode>)->Result {
     for id in v.old_images.drain(..){contexts.remove_image(id);}
     if v.image_id.is_none(){if let Some(image)=v.image.clone(){v.image_id=Some(contexts.add_image(EguiTextureHandle::Strong(image)));}}
     let ctx=contexts.ctx_mut()?;
     let mut root=egui::Ui::new(ctx.clone(),"workbench".into(),egui::UiBuilder::new().layer_id(egui::LayerId::background()).max_rect(ctx.viewport_rect()));
     let mut reload=false;let mut selected=None;
     egui::Panel::top("header").show(&mut root,|ui|{ui.horizontal(|ui|{
+        if ui.button("← Menu").clicked(){*mode=AppMode::Menu;}
         ui.heading("EA Playground");ui.label(egui::RichText::new("ASSET WORKBENCH").small().color(egui::Color32::from_rgb(104,200,170)));
         ui.separator();ui.label("Bevy • local files");
         if v.busy{ui.spinner();} ui.label(&v.status);
