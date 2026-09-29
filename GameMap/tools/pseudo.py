@@ -29,10 +29,27 @@ def _uses(e):
     return s
 
 
+def _is_frame(e):
+    """The dynamically aligned frame base: init-r1 + non-constant (from `stwux r1, r1, rX` prologues)."""
+    return e[0] == "add" and e[1] == ("init", "r1") and e[2][0] != "c" and _mentions_only_sp(e[2])
+
+
+def _mentions_only_sp(e):
+    if not isinstance(e, tuple):
+        return True
+    if e[0] == "init":
+        return e[1] == "r1"
+    if e[0] == "c":
+        return True
+    return all(_mentions_only_sp(x) for x in e[1:])
+
+
 def _stack_off(e):
-    """If e is init-r1 + const, return the signed offset from entry SP, else None."""
+    """Offset from the entry SP (or, for aligned frames, from the frame base, tagged +1<<40); None if not stack-based."""
     if e[0] == "init" and e[1] == "r1":
         return 0
+    if _is_frame(e):
+        return 1 << 40
     if e[0] == "add" and e[2][0] == "c":
         b = _stack_off(e[1])
         if b is not None:
@@ -84,7 +101,10 @@ def clean(lifted):
             if s[0] == "ld" and s[1] in used:
                 off = _stack_off(s[4])
                 if off is None:
-                    live_slots.add(None)  # unknown address load: may alias
+                    # a load through an unknown pointer can only hit this frame if the frame's address escaped or the
+                    # address itself is derived from sp; pointers passed in by callers point *above* the entry SP
+                    if escaped_any or mentions_sp(s[4]):
+                        live_slots.add(None)
                 else:
                     for k in range(s[2]):
                         live_slots.add(off + k)
@@ -93,9 +113,10 @@ def clean(lifted):
             if s[0] == "ld" and s[1] not in used:
                 changed = True
                 continue
-            if s[0] == "st" and not escaped_any:
+            if s[0] == "st":
                 off = _stack_off(s[2])
-                if off is not None and None not in live_slots:
+                save_like = s[3] in (("lr",),) or (s[3][0] == "init" and (s[3][1] == "r1" or (s[3][1][0] == "r" and int(s[3][1][1:]) >= 14) or s[3][1][0] == "f"))
+                if off is not None and None not in live_slots and (not escaped_any or save_like):
                     if not any((off + k) in live_slots for k in range(s[1])):
                         changed = True
                         continue
@@ -111,6 +132,39 @@ def clean(lifted):
 
 
 # ---------------------------------------------------------------------------------------------- printing
+def _split_args(a):
+    out, depth, cur = [], 0, ""
+    for ch in a:
+        if ch in "(<":
+            depth += 1
+        elif ch in ")>":
+            depth -= 1
+        if ch == "," and depth == 0:
+            out.append(cur.strip())
+            cur = ""
+        else:
+            cur += ch
+    if cur.strip():
+        out.append(cur.strip())
+    return out
+
+
+def _arity(d):
+    """(#gpr args, #fpr args) from a demangled signature (implicit `this` counts as a gpr)."""
+    g = 1 if d["cls"] and d["method"] not in ("__sinit",) else 0
+    f = 0
+    for t in _split_args(d["args"]):
+        if t in ("float", "double"):
+            f += 1
+        elif t in ("long long", "unsigned long long"):
+            g += 2
+        elif t == "...":
+            g += 0
+        else:
+            g += 1
+    return min(g, 8), min(f, 8)
+
+
 class Printer:
     def __init__(self, E, fn, image_str=None):
         self.E = E
@@ -146,6 +200,9 @@ class Printer:
         return hex(v)
 
     def sp(self, off):
+        if off >= (1 << 39):
+            off -= 1 << 40
+            return "frame" if off == 0 else ("frame - 0x%x" % -off if off < 0 else "frame + 0x%x" % off)
         return "sp" if off == 0 else ("sp - 0x%x" % -off if off < 0 else "sp + 0x%x" % off)
 
     # expressions ------------------------------------------------------
@@ -172,7 +229,11 @@ class Printer:
         if op == "t":
             return "v%d" % e[1]
         if op == "cr":
-            return "ret%d" % e[1] if e[2] in ("r3", "f1") else "ret%d_%s" % (e[1], e[2])
+            if e[2] == "r3":
+                return "ret%d" % e[1]
+            if e[2] == "f1":
+                return "fret%d" % e[1]
+            return "clobbered_%s_%d" % (e[2], e[1])
         if op == "lr":
             return "LR"
         if op == "add":
@@ -221,6 +282,9 @@ class Printer:
             return "(s16)%s" % self.ex(e[1])
         if op == "rlw":
             return self._rlw(e[1], e[2], e[3], e[4])
+        if op == "rlwimi" and e[3] == 0:
+            m = L._mask(e[4], e[5])
+            return "((%s & %s) | (%s & %s))" % (self.ex(e[1]), hex(~m & M32), self.ex(e[2]), hex(m))
         if op == "rlwnm":
             return "(rotl(%s, %s & 31) & %s)" % (self.ex(e[1]), self.ex(e[2]), hex(L._mask(e[3], e[4])))
         if op == "rlwimi":
@@ -244,7 +308,8 @@ class Printer:
             _, bit, kind, a, b = e
             A, B = self.ex(a), self.ex(b)
             if kind == "s":
-                A, B = "(s32)%s" % A, "(s32)%s" % B
+                A = "(s32)%s" % A if a[0] != "c" else A
+                B = "(s32)%s" % B if b[0] != "c" else B
             if bit == "eq":
                 return "(%s == %s)" % (A, B)
             if bit == "lt":
@@ -309,26 +374,26 @@ class Printer:
         if k == "call":
             _, c, tgt, args, fargs = s
             name = None
-            arity = None
+            garity = farity = None
             if tgt[0] == "c":
                 sy = self.E.sym_at(tgt[1])
                 if sy and "+" not in sy:
-                    name = mwdemangle.pretty(sy)
+                    name = mwdemangle.pretty(sy).split("(")[0]
                     d = mwdemangle.demangle(sy)
-                    if not d["args"].startswith("?"):
-                        na = 0 if d["args"] == "" else d["args"].count(",") + 1
-                        arity = na + (1 if d["cls"] else 0)
+                    if d.get("parsed"):
+                        garity, farity = _arity(d)
             callee = name if name else ("(*%s)" % self.ex(tgt) if tgt[0] != "c" else hex(tgt[1]))
-            if arity is None:  # strip trailing junk args (call clobbers / untouched non-arg registers)
+            if garity is None:  # unknown callee: strip trailing junk registers
                 n = 8
                 while n > 0 and (args[n - 1][0] == "cr" or (args[n - 1][0] == "init" and args[n - 1][1] not in ("r%d" % r for r in range(3, 11)))):
                     n -= 1
-                arity = n
-            al = [self.ex(a) for a in args[:arity]]
-            fa = [self.ex(x) for x in fargs if x[0] != "init" or x[1] in ("f%d" % i for i in range(1, 9))]
-            fa = [self.ex(x) for x in fargs if not (x[0] == "cr" or (x[0] == "init" and x[1] not in ("f%d" % i for i in range(1, 9))))]
-            arglist = ", ".join(al + fa[:0])
-            return "ret%d = %s(%s);" % (c, callee, arglist)
+                garity = n
+                nf = 8
+                while nf > 0 and (fargs[nf - 1][0] == "cr" or fargs[nf - 1][0] == "init"):
+                    nf -= 1
+                farity = nf
+            al = [self.ex(a) for a in args[:garity]] + [self.ex(x) for x in fargs[:farity]]
+            return "ret%d = %s(%s);" % (c, callee, ", ".join(al))
         return "?"
 
     def render(self, lifted, header=None):
@@ -357,9 +422,12 @@ class Printer:
                 out.append("    }")
             i = j
         rg, rf = lifted.ret_g, lifted.ret_f
-        if rf != ("init", "f1"):
-            out.append("    return_f %s;" % self.ex(rf))
-        out.append("    return %s;" % self.ex(rg))
+        tail_call = rf[0] == "cr" and rf[2] == "f1" and rg[0] == "cr" and rg[2] == "r3" and rf[1] == rg[1]
+        if rf != ("init", "f1") and not tail_call and not (rf[0] == "cr" and rf[2] == "f1"):
+            out.append("    return_f %s;   // f1 at return" % self.ex(rf))
+        elif rf[0] == "cr" and rf[2] == "f1" and not tail_call:
+            out.append("    return_f %s;   // f1 at return" % self.ex(rf))
+        out.append("    return %s;   // r3 at return (unused if the function is void)" % self.ex(rg))
         out.append("}")
         return "\n".join(out)
 

@@ -238,6 +238,10 @@ def p_and(a, b):
         return a
     if a == ("c", 0) or b == ("c", 0):
         return ("c", 0)
+    if a == b:
+        return a
+    if a == p_not(b):
+        return ("c", 0)
     return ("pand", a, b)
 
 
@@ -248,6 +252,15 @@ def p_or(a, b):
         return b
     if b == ("c", 0):
         return a
+    if a == b:
+        return a
+    # (g & c) | (g & !c) == g ; also c | !c == 1
+    if a == p_not(b):
+        return ("c", 1)
+    if a[0] == "pand" and b[0] == "pand" and a[1] == b[1] and (a[2] == p_not(b[2])):
+        return a[1]
+    if a[0] == "pand" and a[1] == b and False:
+        return b
     return ("por", a, b)
 
 

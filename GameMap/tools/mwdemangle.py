@@ -118,13 +118,14 @@ def _type(p, subs):
 
 def demangle(sym):
     """Return dict(cls, method, args, const, raw)."""
-    out = {"raw": sym, "cls": "", "method": sym, "args": "", "const": False}
+    out = {"raw": sym, "cls": "", "method": sym, "args": "", "const": False, "parsed": False}
     m = re.match(r"^(__[a-z]+|[A-Za-z_][A-Za-z0-9_$<>,*:&\\ ]*?)__((?:Q\d)?\d.*)$", sym)
     if not m:
         m2 = re.match(r"^(.*?)__F(.*)$", sym)  # free function with args
         if m2 and m2.group(1):
             out["method"] = m2.group(1)
             out["args"] = _args("F" + m2.group(2), out)
+            out["parsed"] = not out["args"].startswith("?")
         return out
     meth, rest = m.group(1), m.group(2)
     if meth.startswith("__"):
@@ -140,6 +141,7 @@ def demangle(sym):
         p.i += 1
     if p.peek() == "F":
         out["args"] = _args(p.s[p.i:], out)
+        out["parsed"] = not out["args"].startswith("?")
     return out
 
 
