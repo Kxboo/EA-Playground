@@ -1,0 +1,337 @@
+# addr	size	class	method	args	const	source_unit	mangled
+803293bc	64	VideoCapture::ScreenCapture	destructor			videocapture.cpp	__dt__Q212VideoCapture13ScreenCaptureFv
+803293fc	168	VideoCapture::ScreenCapture	constructor			videocapture.cpp	__ct__Q212VideoCapture13ScreenCaptureFv
+803294a4	328	VideoCapture::ScreenCapture	Init	const char*, const char*, unsigned int, unsigned int		videocapture.cpp	Init__Q212VideoCapture13ScreenCaptureFPCcPCcUiUi
+803295ec	60	VideoCapture::ScreenCapture	Release			videocapture.cpp	Release__Q212VideoCapture13ScreenCaptureFv
+80329628	80	VideoCapture::ScreenCapture	StartCapture			videocapture.cpp	StartCapture__Q212VideoCapture13ScreenCaptureFv
+80329678	84	VideoCapture::ScreenCapture	StopCapture			videocapture.cpp	StopCapture__Q212VideoCapture13ScreenCaptureFv
+803296cc	172	VideoCapture::ScreenCapture	CaptureFrame			videocapture.cpp	CaptureFrame__Q212VideoCapture13ScreenCaptureFv
+80329778	672	VideoCapture::ScreenCapture	MatrixTilePerspective	EAGL::ViewPort*		videocapture.cpp	MatrixTilePerspective__Q212VideoCapture13ScreenCaptureFPQ24EAGL8ViewPort
+80329a18	272	VideoCapture::ScreenCapture	TakeScreenShot			videocapture.cpp	TakeScreenShot__Q212VideoCapture13ScreenCaptureFv
+80329b28	288	VideoCapture::TargaWriter	SaveFile	const char*, const long*, unsigned int, unsigned int		videocapture.cpp	SaveFile__Q212VideoCapture11TargaWriterFPCcPClUiUi
+80329c48	56	VideoCapture	Init	const VideoCapture::TInitParams&		videocapture.cpp	Init__12VideoCaptureFRCQ212VideoCapture11TInitParams
+80329c80	20	VideoCapture	VideoCaptureMemAlloc	const char*, int, int		videocapture.cpp	VideoCaptureMemAlloc__12VideoCaptureFPCcii
+80329c94	20	VideoCapture	VideoCaptureMemFree	void*		videocapture.cpp	VideoCaptureMemFree__12VideoCaptureFPv
+80329ca8	12	VideoCapture	GetCapturePath			videocapture.cpp	GetCapturePath__12VideoCaptureFv
+803c9f14	112		ExtToUINT32	char*		assetmanager.cpp	ExtToUINT32__FPc
+803c9f84	748	AssetManager	constructor			assetmanager.cpp	__ct__12AssetManagerFv
+803ca270	80	BaseAsset	CleanData			assetmanager.cpp	CleanData__9BaseAssetFv
+803ca2c0	96	AssetManager	destructor			assetmanager.cpp	__dt__12AssetManagerFv
+803ca320	72	AssetManager	Create			assetmanager.cpp	Create__12AssetManagerFv
+803ca368	128	AssetManager	Destroy			assetmanager.cpp	Destroy__12AssetManagerFv
+803ca3e8	264	AssetManager	LoadModel	const char*, const char*, int*, int		assetmanager.cpp	LoadModel__12AssetManagerFPCcPCcPii
+803ca4f0	76	AssetManager	LoadModelTextured	const char*, const char*, char*, int*		assetmanager.cpp	LoadModelTextured__12AssetManagerFPCcPCcPcPi
+803ca53c	228	AssetManager	LoadTexture	const char*, const char*, int*, int*		assetmanager.cpp	LoadTexture__12AssetManagerFPCcPCcPiPi
+803ca620	176	AssetManager	LoadMarkerSet	const char*, const char*, int*		assetmanager.cpp	LoadMarkerSet__12AssetManagerFPCcPCcPi
+803ca6d0	144	AssetManager	LoadFile	const char*, const char*, int&		assetmanager.cpp	LoadFile__12AssetManagerFPCcPCcRi
+803ca760	440	AssetManager	LoadTexture	const char*, const char*, void*, int, int*		assetmanager.cpp	LoadTexture__12AssetManagerFPCcPCcPviPi
+803ca918	124	AssetManager	FreeAllModels			assetmanager.cpp	FreeAllModels__12AssetManagerFv
+803ca994	116	AssetManager	FreeAllTextures			assetmanager.cpp	FreeAllTextures__12AssetManagerFv
+803caa08	116	AssetManager	FreeAllSkeletons			assetmanager.cpp	FreeAllSkeletons__12AssetManagerFv
+803caa7c	116	AssetManager	FreeAllAnimBanks			assetmanager.cpp	FreeAllAnimBanks__12AssetManagerFv
+803caaf0	116	AssetManager	FreeAllMarkerSets			assetmanager.cpp	FreeAllMarkerSets__12AssetManagerFv
+803cab64	116	AssetManager	FreeAllCheckpointSets			assetmanager.cpp	FreeAllCheckpointSets__12AssetManagerFv
+803cabd8	116	AssetManager	FreeAllCSVs			assetmanager.cpp	FreeAllCSVs__12AssetManagerFv
+803cac4c	252	AssetManager	FreeModel	int		assetmanager.cpp	FreeModel__12AssetManagerFi
+803cad48	176	AssetManager	FreeTexture	int		assetmanager.cpp	FreeTexture__12AssetManagerFi
+803cadf8	244	AssetManager	FreeSkeleton	int		assetmanager.cpp	FreeSkeleton__12AssetManagerFi
+803caeec	256	AssetManager	FreeAnimBank	int		assetmanager.cpp	FreeAnimBank__12AssetManagerFi
+803cafec	64	EAGLAnim::FnDefaultAnimBank	destructor			assetmanager.cpp	__dt__Q28EAGLAnim17FnDefaultAnimBankFv
+803cb02c	160	AssetManager	FreeMarkerSet	int		assetmanager.cpp	FreeMarkerSet__12AssetManagerFi
+803cb0cc	160	AssetManager	FreeCheckpointSet	int		assetmanager.cpp	FreeCheckpointSet__12AssetManagerFi
+803cb16c	160	AssetManager	FreeCSV	int		assetmanager.cpp	FreeCSV__12AssetManagerFi
+803cb20c	12	AssetManager	LoadEverythingInBigfileInPlace	const char*, const void*, bool		assetmanager.cpp	LoadEverythingInBigfileInPlace__12AssetManagerFPCcPCvb
+803cb218	132	AssetManager	LoadEverythingInBigfile	const char*, bool, MemMgr::PoolType		assetmanager.cpp	LoadEverythingInBigfile__12AssetManagerFPCcbQ26MemMgr8PoolType
+803cb29c	1132	AssetManager	LoadEverythingInBigfileInternal	const char*, const void*, bool, bool, MemMgr::PoolType		assetmanager.cpp	LoadEverythingInBigfileInternal__12AssetManagerFPCcPCvbbQ26MemMgr8PoolType
+803cb708	552	AssetManager	DeleteEverythingLoadedFromBigfile	int		assetmanager.cpp	DeleteEverythingLoadedFromBigfile__12AssetManagerFi
+803cb930	4	AssetManager	GetLoadedModel	const char*, int*, int		assetmanager.cpp	GetLoadedModel__12AssetManagerFPCcPii
+803cb934	12	AssetManager	GetLoadedTexture	const char*, int*		assetmanager.cpp	GetLoadedTexture__12AssetManagerFPCcPi
+803cb940	4	AssetManager	GetLoadedSkeleton	const char*, int*		assetmanager.cpp	GetLoadedSkeleton__12AssetManagerFPCcPi
+803cb944	4	AssetManager	GetLoadedAnimBank	const char*, int*		assetmanager.cpp	GetLoadedAnimBank__12AssetManagerFPCcPi
+803cb948	4	AssetManager	GetLoadedMarkerSet	const char*, int*		assetmanager.cpp	GetLoadedMarkerSet__12AssetManagerFPCcPi
+803cb94c	4	AssetManager	GetLoadedCheckpointSet	const char*, int*		assetmanager.cpp	GetLoadedCheckpointSet__12AssetManagerFPCcPi
+803cb950	4	AssetManager	GetLoadedCSV	const char*, int*, int*		assetmanager.cpp	GetLoadedCSV__12AssetManagerFPCcPiPi
+803cb954	188	AssetManager	CheckForModel	const char*, int*, int		assetmanager.cpp	CheckForModel__12AssetManagerFPCcPii
+803cba10	184	AssetManager	CheckForTexture	const char*, int*, int*		assetmanager.cpp	CheckForTexture__12AssetManagerFPCcPiPi
+803cbac8	156	AssetManager	CheckForSkeleton	const char*, int*		assetmanager.cpp	CheckForSkeleton__12AssetManagerFPCcPi
+803cbb64	164	AssetManager	CheckForAnimBank	const char*, int*		assetmanager.cpp	CheckForAnimBank__12AssetManagerFPCcPi
+803cbc08	164	AssetManager	CheckForMarkerSet	const char*, int*		assetmanager.cpp	CheckForMarkerSet__12AssetManagerFPCcPi
+803cbcac	164	AssetManager	CheckForCheckpointSet	const char*, int*		assetmanager.cpp	CheckForCheckpointSet__12AssetManagerFPCcPi
+803cbd50	184	AssetManager	CheckForCSV	const char*, int*, int*		assetmanager.cpp	CheckForCSV__12AssetManagerFPCcPiPi
+803cbe08	316	AssetManager	ProcessModel	void*, int, const char*, bool, int*		assetmanager.cpp	ProcessModel__12AssetManagerFPviPCcbPi
+803cbf44	316	AssetManager	ProcessTexture	void*, int, const char*, bool, int*		assetmanager.cpp	ProcessTexture__12AssetManagerFPviPCcbPi
+803cc080	224	AssetManager	ProcessSkeleton	void*, int, const char*, bool, int*		assetmanager.cpp	ProcessSkeleton__12AssetManagerFPviPCcbPi
+803cc160	400	AssetManager	ProcessAnimBank	void*, int, const char*, bool, int*		assetmanager.cpp	ProcessAnimBank__12AssetManagerFPviPCcbPi
+803cc2f0	8	EAGLAnim::FnDefaultAnimBank	Init	EAGLAnim::AnimBank*		assetmanager.cpp	Init__Q28EAGLAnim17FnDefaultAnimBankFPQ28EAGLAnim8AnimBank
+803cc2f8	192	AssetManager	ProcessCSV	void*, int, const char*, bool, int*		assetmanager.cpp	ProcessCSV__12AssetManagerFPviPCcbPi
+803cc3b8	208	AssetManager	ResolveModel	void*, int, EAGL::DynamicLoader**, EAGL::Model**, int*		assetmanager.cpp	ResolveModel__12AssetManagerFPviPPQ24EAGL13DynamicLoaderPPQ24EAGL5ModelPi
+803cc488	168	AssetManager	ResolveSkeleton	void*, int, EAGL::DynamicLoader**, EAGLAnim::Skeleton**		assetmanager.cpp	ResolveSkeleton__12AssetManagerFPviPPQ24EAGL13DynamicLoaderPPQ28EAGLAnim8Skeleton
+803cc530	316	AssetManager	ProcessMarkerSet	void*, int, const char*, bool, int*		assetmanager.cpp	ProcessMarkerSet__12AssetManagerFPviPCcbPi
+803cc66c	576	AssetManager	ProcessCheckpointSet	void*, int, const char*, bool, int*		assetmanager.cpp	ProcessCheckpointSet__12AssetManagerFPviPCcbPi
+803cc8ac	252	AssetManager	GetAssetTypeFromFileName	char*		assetmanager.cpp	GetAssetTypeFromFileName__12AssetManagerFPc
+803cc9a8	400	AssetManager	CheckForFile	const char*, AssetType, int*		assetmanager.cpp	CheckForFile__12AssetManagerFPCc9AssetTypePi
+803ccb38	56	AssetManager	CalculateHash	const char*		assetmanager.cpp	CalculateHash__12AssetManagerFPCc
+803ccb70	12	EAGLAnim::FnDefaultAnimBank	GetAttributeDictionary		const	assetmanager.cpp	GetAttributeDictionary__Q28EAGLAnim17FnDefaultAnimBankCFv
+803ccb7c	8	EAGLAnim::FnDefaultAnimBank	GetAnimIndex	const char*		assetmanager.cpp	GetAnimIndex__Q28EAGLAnim17FnDefaultAnimBankFPCc
+803ccb84	20	EAGLAnim::FnDefaultAnimBank	GetAnimName	int	const	assetmanager.cpp	GetAnimName__Q28EAGLAnim17FnDefaultAnimBankCFi
+803ccb98	76	EAGLAnim::FnDefaultAnimBank	GetAnim	const char*		assetmanager.cpp	GetAnim__Q28EAGLAnim17FnDefaultAnimBankFPCc
+803ccbe4	12	EAGLAnim::FnDefaultAnimBank	GetNumAnims		const	assetmanager.cpp	GetNumAnims__Q28EAGLAnim17FnDefaultAnimBankCFv
+803ccbf0	24		__sinit_\assetmanager_cpp			assetmanager.cpp	__sinit_\assetmanager_cpp
+803ccc08	88	CString	constructor			CString.cpp	__ct__7CStringFv
+803ccc60	24	CString	InitPool			CString.cpp	InitPool__7CStringFv
+803ccc78	168	CString	constructor	const char*		CString.cpp	__ct__7CStringFPCc
+803ccd20	100	CString	constructor	const CString&		CString.cpp	__ct__7CStringFRC7CString
+803ccd84	136	CString	operator=	const CString&		CString.cpp	__as__7CStringFRC7CString
+803cce0c	136	CString	operator=	const char*		CString.cpp	__as__7CStringFPCc
+803cce94	84	CString	destructor			CString.cpp	__dt__7CStringFv
+803ccee8	92	CString	DecRefCount			CString.cpp	DecRefCount__7CStringFv
+803ccf44	140	CString	operator+=	const CString&		CString.cpp	__apl__7CStringFRC7CString
+803ccfd0	148	CString	operator+=	const char*		CString.cpp	__apl__7CStringFPCc
+803cd064	152	CString	substr	unsigned long, unsigned long	const	CString.cpp	substr__7CStringCFUlUl
+803cd0fc	64	CString	operator[]	unsigned long		CString.cpp	__vc__7CStringFUl
+803cd13c	208	CString	erase	unsigned long, unsigned long		CString.cpp	erase__7CStringFUlUl
+803cd20c	72	CString	find	char, unsigned long	const	CString.cpp	find__7CStringCFcUl
+803cd254	152	CString	find	const char*, unsigned long	const	CString.cpp	find__7CStringCFPCcUl
+803cd2ec	160	CString	rfind	const char*, unsigned long	const	CString.cpp	rfind__7CStringCFPCcUl
+803cd38c	72	CString	compare	const char*	const	CString.cpp	compare__7CStringCFPCc
+803cd3d4	128	CString	compare	unsigned long, unsigned long, const char*	const	CString.cpp	compare__7CStringCFUlUlPCc
+803cd454	8	CString	c_str		const	CString.cpp	c_str__7CStringCFv
+803cd45c	104	CString	UnShareString			CString.cpp	UnShareString__7CStringFv
+803cd4c4	48	CString	StrLen	const char*		CString.cpp	StrLen__7CStringFPCc
+803cd4f4	44	CString	Align	int&		CString.cpp	Align__7CStringFRi
+803cd520	132	CString	AllocateMemPool	int		CString.cpp	AllocateMemPool__7CStringFi
+803cd5a4	76	CString	AddPoolToList	CString::PoolHeader*		CString.cpp	AddPoolToList__7CStringFPQ27CString10PoolHeader
+803cd5f0	92	CString	RemovePoolFromList	CString::PoolHeader*		CString.cpp	RemovePoolFromList__7CStringFPQ27CString10PoolHeader
+803cd64c	36	CString	AddToChain	CString::BlockHeader*, CString::BlockHeader*		CString.cpp	AddToChain__7CStringFPQ27CString11BlockHeaderPQ27CString11BlockHeader
+803cd670	72	CString	RemoveFromChain	CString::BlockHeader*		CString.cpp	RemoveFromChain__7CStringFPQ27CString11BlockHeader
+803cd6b8	40	CString	AddToFreeChain	CString::BlockHeader*, CString::PoolHeader*		CString.cpp	AddToFreeChain__7CStringFPQ27CString11BlockHeaderPQ27CString10PoolHeader
+803cd6e0	56	CString	RemoveFromFreeChain	CString::BlockHeader*, CString::PoolHeader*		CString.cpp	RemoveFromFreeChain__7CStringFPQ27CString11BlockHeaderPQ27CString10PoolHeader
+803cd718	316	CString	Alloc	int		CString.cpp	Alloc__7CStringFi
+803cd854	280	CString	DeAlloc	char*		CString.cpp	DeAlloc__7CStringFPc
+803cd96c	200	CString	DownsizeBlock	CString::BlockHeader*, int		CString.cpp	DownsizeBlock__7CStringFPQ27CString11BlockHeaderi
+803cda34	320	CString	UpsizeBlock	CString::BlockHeader*&, int, bool		CString.cpp	UpsizeBlock__7CStringFRPQ27CString11BlockHeaderib
+803cdb74	104	CString	UpsizeBlock	char*&, int, bool		CString.cpp	UpsizeBlock__7CStringFRPcib
+803cdbdc	52	CString	GetPoolHeader	CString::BlockHeader*		CString.cpp	GetPoolHeader__7CStringFPQ27CString11BlockHeader
+803cdc10	24		__sinit_\CString_cpp			CString.cpp	__sinit_\CString_cpp
+803cdc28	4		DebugMenuDraw			debugmenu.cpp	DebugMenuDraw__Fv
+803cdc2c	76		DebugMenuShutdown			debugmenu.cpp	DebugMenuShutdown__Fv
+803cdc78	256	DebugMenu	Create	const char*, DebugMenu*		debugmenu.cpp	Create__9DebugMenuFPCcP9DebugMenu
+803cdd78	92	DebugMenu	Destroy	const DebugMenu*		debugmenu.cpp	Destroy__9DebugMenuFPC9DebugMenu
+803cddd4	64	DebugMenu	constructor			debugmenu.cpp	__ct__9DebugMenuFv
+803cde14	152	DebugMenu	destructor			debugmenu.cpp	__dt__9DebugMenuFv
+803cdeac	48	DebugMenu	GetWidget	int	const	debugmenu.cpp	GetWidget__9DebugMenuCFi
+803cdedc	128	DebugMenu	ActionUp			debugmenu.cpp	ActionUp__9DebugMenuFv
+803cdf5c	148	DebugMenu	ActionDown			debugmenu.cpp	ActionDown__9DebugMenuFv
+803cdff0	84	DebugMenu	ActionLeft	bool		debugmenu.cpp	ActionLeft__9DebugMenuFb
+803ce044	84	DebugMenu	ActionRight	bool		debugmenu.cpp	ActionRight__9DebugMenuFb
+803ce098	68	DebugMenu	ActionSelect			debugmenu.cpp	ActionSelect__9DebugMenuFv
+803ce0dc	20	DebugMenu	ActionCancel			debugmenu.cpp	ActionCancel__9DebugMenuFv
+803ce0f0	20	DebugMenu	EventUp			debugmenu.cpp	EventUp__9DebugMenuFv
+803ce104	20	DebugMenu	EventDown			debugmenu.cpp	EventDown__9DebugMenuFv
+803ce118	28	DebugMenu	EventLeft	bool		debugmenu.cpp	EventLeft__9DebugMenuFb
+803ce134	28	DebugMenu	EventRight	bool		debugmenu.cpp	EventRight__9DebugMenuFb
+803ce150	20	DebugMenu	EventSelect			debugmenu.cpp	EventSelect__9DebugMenuFv
+803ce164	20	DebugMenu	EventCancel			debugmenu.cpp	EventCancel__9DebugMenuFv
+803ce178	164	DebugMenu	AddWidget	MenuWidget*		debugmenu.cpp	AddWidget__9DebugMenuFP10MenuWidget
+803ce21c	28	DebugMenu	AddWidgetToNewestMenu	MenuWidget*		debugmenu.cpp	AddWidgetToNewestMenu__9DebugMenuFP10MenuWidget
+803ce238	32	DebugMenu	EndNewestMenu			debugmenu.cpp	EndNewestMenu__9DebugMenuFv
+803ce258	36	DebugMenu	Render			debugmenu.cpp	Render__9DebugMenuFv
+803ce27c	176	DebugMenu	DoRender	const IMenuRenderer*	const	debugmenu.cpp	DoRender__9DebugMenuCFPC13IMenuRenderer
+803ce32c	160	DebugMenu	SelectionFitsOnScreen			debugmenu.cpp	SelectionFitsOnScreen__9DebugMenuFv
+803ce3cc	24		__sinit_\debugmenu_cpp			debugmenu.cpp	__sinit_\debugmenu_cpp
+803ce3e4	56	MenuWidget	constructor	const char*, int, int, void(*)(void)*		debugmenuwidgets.cpp	__ct__10MenuWidgetFPCciiPFv_v
+803ce41c	64	MenuWidget	destructor			debugmenuwidgets.cpp	__dt__10MenuWidgetFv
+803ce45c	24	MenuWidget	OnGainFocus			debugmenuwidgets.cpp	OnGainFocus__10MenuWidgetFv
+803ce474	20	MenuWidget	OnLoseFocus			debugmenuwidgets.cpp	OnLoseFocus__10MenuWidgetFv
+803ce488	92	MenuWidget	InitializeSize	const IMenuRenderer*		debugmenuwidgets.cpp	InitializeSize__10MenuWidgetFPC13IMenuRenderer
+803ce4e4	40	MenuWidget	Render	const IMenuRenderer*, int, int	const	debugmenuwidgets.cpp	Render__10MenuWidgetCFPC13IMenuRendererii
+803ce50c	52	MenuWidget	OnAction	MenuWidget::Actions, bool		debugmenuwidgets.cpp	OnAction__10MenuWidgetFQ210MenuWidget7Actionsb
+803ce540	88	BoolWidget	constructor	const char*, bool*, void(*)(void)*		debugmenuwidgets.cpp	__ct__10BoolWidgetFPCcPbPFv_v
+803ce598	64	BoolWidget	destructor			debugmenuwidgets.cpp	__dt__10BoolWidgetFv
+803ce5d8	124	BoolWidget	OnAction	MenuWidget::Actions, bool		debugmenuwidgets.cpp	OnAction__10BoolWidgetFQ210MenuWidget7Actionsb
+803ce654	196	BoolWidget	Render	const IMenuRenderer*, int, int	const	debugmenuwidgets.cpp	Render__10BoolWidgetCFPC13IMenuRendererii
+803ce718	72	ActionWidget	constructor	const char*, void(*)(void)*		debugmenuwidgets.cpp	__ct__12ActionWidgetFPCcPFv_v
+803ce760	88	SubmenuWidget	constructor	const char*, DebugMenu*		debugmenuwidgets.cpp	__ct__13SubmenuWidgetFPCcP9DebugMenu
+803ce7b8	120	SubmenuWidget	destructor			debugmenuwidgets.cpp	__dt__13SubmenuWidgetFv
+803ce830	116	SubmenuWidget	Render	const IMenuRenderer*, int, int	const	debugmenuwidgets.cpp	Render__13SubmenuWidgetCFPC13IMenuRendererii
+803ce8a4	56	SubmenuWidget	OnGainFocus			debugmenuwidgets.cpp	OnGainFocus__13SubmenuWidgetFv
+803ce8dc	100	SubmenuWidget	OnAction	MenuWidget::Actions, bool		debugmenuwidgets.cpp	OnAction__13SubmenuWidgetFQ210MenuWidget7Actionsb
+803ce940	64	ActionWidget	destructor			debugmenuwidgets.cpp	__dt__12ActionWidgetFv
+803ce980	24		__sinit_\debugmenuwidgets_cpp			debugmenuwidgets.cpp	__sinit_\debugmenuwidgets_cpp
+803ce998	24		UpdateDipSwitches			DipSwitch.cpp	UpdateDipSwitches__Fv
+803ce9b0	24		__sinit_\DipSwitch_cpp			DipSwitch.cpp	__sinit_\DipSwitch_cpp
+803ce9c8	68	IniFile	constructor			inifilemanager.cpp	__ct__7IniFileFv
+803cea0c	96	IniFile	destructor			inifilemanager.cpp	__dt__7IniFileFv
+803cea6c	92	IniFile	Clear			inifilemanager.cpp	Clear__7IniFileFv
+803ceac8	320	IniFile	LoadFile	const char*		inifilemanager.cpp	LoadFile__7IniFileFPCc
+803cec08	1244	IniFile	FindParam	char*&, const char*&, const char*&, const char*&, const char*&	const	inifilemanager.cpp	FindParam__7IniFileCFRPcRPCcRPCcRPCcRPCc
+803cf0e4	296	IniFile	GetParamValue	const char*, const char*	const	inifilemanager.cpp	GetParamValue__7IniFileCFPCcPCc
+803cf20c	68	IniFileManager	Create			inifilemanager.cpp	Create__14IniFileManagerFv
+803cf250	56	IniFileManager	Destroy			inifilemanager.cpp	Destroy__14IniFileManagerFv
+803cf288	36	IniFileManager	constructor			inifilemanager.cpp	__ct__14IniFileManagerFv
+803cf2ac	128	IniFileManager	destructor			inifilemanager.cpp	__dt__14IniFileManagerFv
+803cf32c	196	IniFileManager	LoadIniFile	const char*		inifilemanager.cpp	LoadIniFile__14IniFileManagerFPCc
+803cf3f0	68	IniFileManager	GetIniFile	const char*	const	inifilemanager.cpp	GetIniFile__14IniFileManagerCFPCc
+803cf434	140	IniFileManager	FoundFile	const char*	const	inifilemanager.cpp	FoundFile__14IniFileManagerCFPCc
+803cf4c0	24		__sinit_\inifilemanager_cpp			inifilemanager.cpp	__sinit_\inifilemanager_cpp
+803cf4d8	88	LionAllocator	constructor	const AllocatorInfo*		lionallocator.cpp	__ct__13LionAllocatorFPC13AllocatorInfo
+803cf530	64	LionAllocator	destructor			lionallocator.cpp	__dt__13LionAllocatorFv
+803cf570	20	LionAllocator	Alloc	unsigned long, const char*, unsigned int		lionallocator.cpp	Alloc__13LionAllocatorFUlPCcUi
+803cf584	28	LionAllocator	Alloc	unsigned long, const char*, unsigned int, unsigned int, unsigned int		lionallocator.cpp	Alloc__13LionAllocatorFUlPCcUiUiUi
+803cf5a0	116	LionAllocator	Alloc	unsigned long, const EA::TagValuePair&		lionallocator.cpp	Alloc__13LionAllocatorFUlRCQ22EA12TagValuePair
+803cf614	8	LionAllocator	Free	void*, unsigned long		lionallocator.cpp	Free__13LionAllocatorFPvUl
+803cf61c	20	LionAllocator	AddRef			lionallocator.cpp	AddRef__13LionAllocatorFv
+803cf630	88	LionAllocator	Release			lionallocator.cpp	Release__13LionAllocatorFv
+803cf688	24		__sinit_\lionallocator_cpp			lionallocator.cpp	__sinit_\lionallocator_cpp
+803cf6a0	4		__dl	void*		MemMgr.cpp	__dl__FPv
+803cf6a4	4		__dla	void*		MemMgr.cpp	__dla__FPv
+803cf6a8	20		__nw	unsigned long		MemMgr.cpp	__nw__FUl
+803cf6bc	20		__nwa	unsigned long		MemMgr.cpp	__nwa__FUl
+803cf6d0	20		__nw	unsigned long, const char*, MemMgr::PoolType, MemMgr::AllocType		MemMgr.cpp	__nw__FUlPCcQ26MemMgr8PoolTypeQ26MemMgr9AllocType
+803cf6e4	20		__nwa	unsigned long, const char*, MemMgr::PoolType, MemMgr::AllocType		MemMgr.cpp	__nwa__FUlPCcQ26MemMgr8PoolTypeQ26MemMgr9AllocType
+803cf6f8	8	MemMgr	GetMaxHeapSize			MemMgr.cpp	GetMaxHeapSize__6MemMgrFv
+803cf700	80	MemMgr	Create			MemMgr.cpp	Create__6MemMgrFv
+803cf750	348	MemMgr	InitPoolConfig	const MemMgr::InitType&		MemMgr.cpp	InitPoolConfig__6MemMgrFRCQ26MemMgr8InitType
+803cf8ac	184	MemMgr	ShutdownPoolConfig	const MemMgr::InitType&		MemMgr.cpp	ShutdownPoolConfig__6MemMgrFRCQ26MemMgr8InitType
+803cf964	160	MemMgr	IsPoolRequired	const MemMgr::InitType&, const MemMgr::Usage&		MemMgr.cpp	IsPoolRequired__6MemMgrFRCQ26MemMgr8InitTypeRCQ26MemMgr5Usage
+803cfa04	4	MemMgr	Free	void*		MemMgr.cpp	Free__6MemMgrFPv
+803cfa08	44	MemMgr	Alloc	unsigned long, MemMgr::PoolType, MemMgr::AllocType, const char*		MemMgr.cpp	Alloc__6MemMgrFUlQ26MemMgr8PoolTypeQ26MemMgr9AllocTypePCc
+803cfa34	48	MemMgr	Alloc	unsigned long, MemMgr::PoolType, MemMgr::AllocType, int, int, const char*		MemMgr.cpp	Alloc__6MemMgrFUlQ26MemMgr8PoolTypeQ26MemMgr9AllocTypeiiPCc
+803cfa64	4	MemMgr	MemFill	void*, unsigned int, int		MemMgr.cpp	MemFill__6MemMgrFPvUii
+803cfa68	60		__sinit_\MemMgr_cpp			MemMgr.cpp	__sinit_\MemMgr_cpp
+803cfaa4	48	MoviePlayOptions	constructor			movie.cpp	__ct__16MoviePlayOptionsFv
+803cfad4	60	MoviePlayOptions	SetDefaults			movie.cpp	SetDefaults__16MoviePlayOptionsFv
+803cfb10	152	MoviePlayer	constructor			movie.cpp	__ct__11MoviePlayerFv
+803cfba8	96	MoviePlayer	destructor			movie.cpp	__dt__11MoviePlayerFv
+803cfc08	372	MoviePlayer	Initialize	MoviePlayOptions&		movie.cpp	Initialize__11MoviePlayerFR16MoviePlayOptions
+803cfd7c	200	MoviePlayer	Purge			movie.cpp	Purge__11MoviePlayerFv
+803cfe44	140	MoviePlayer	startPlay			movie.cpp	startPlay__11MoviePlayerFv
+803cfed0	32	MoviePlayer	SetScale	float, float		movie.cpp	SetScale__11MoviePlayerFff
+803cfef0	32	MoviePlayer	SetPosition	float, float, float		movie.cpp	SetPosition__11MoviePlayerFfff
+803cff10	56	MoviePlayer	asyncPlay			movie.cpp	asyncPlay__11MoviePlayerFv
+803cff48	176	MoviePlayer	asyncRender	bool		movie.cpp	asyncRender__11MoviePlayerFb
+803cfff8	208	MoviePlayer	asyncUpdate			movie.cpp	asyncUpdate__11MoviePlayerFv
+803d00c8	104	MoviePlayer	asyncPause			movie.cpp	asyncPause__11MoviePlayerFv
+803d0130	24		__sinit_\movie_cpp			movie.cpp	__sinit_\movie_cpp
+803d0148	120		WinCurrentMinigame			pgdebugmenu.cpp	WinCurrentMinigame__Fv
+803d01c0	112		UnlockAllGates			pgdebugmenu.cpp	UnlockAllGates__Fv
+803d0230	52		WinAllMinigamesAndDareExcept1			pgdebugmenu.cpp	WinAllMinigamesAndDareExcept1__Fv
+803d0264	52		UnlockAllMiniGames			pgdebugmenu.cpp	UnlockAllMiniGames__Fv
+803d0298	52		UnlockAllAbilities			pgdebugmenu.cpp	UnlockAllAbilities__Fv
+803d02cc	52		LockAllAbilities			pgdebugmenu.cpp	LockAllAbilities__Fv
+803d0300	20		AddMarbles			pgdebugmenu.cpp	AddMarbles__Fv
+803d0314	12		HResScreenShot			pgdebugmenu.cpp	HResScreenShot__Fv
+803d0320	84		StartDodgeballEnduranceEasy			pgdebugmenu.cpp	StartDodgeballEnduranceEasy__Fv
+803d0374	84		StartDodgeballEnduranceNormal			pgdebugmenu.cpp	StartDodgeballEnduranceNormal__Fv
+803d03c8	84		StartDodgeballEnduranceHard			pgdebugmenu.cpp	StartDodgeballEnduranceHard__Fv
+803d041c	84		StartDodgeballTeamFlurryEasy			pgdebugmenu.cpp	StartDodgeballTeamFlurryEasy__Fv
+803d0470	84		StartDodgeballTeamFlurryNormal			pgdebugmenu.cpp	StartDodgeballTeamFlurryNormal__Fv
+803d04c4	84		StartDodgeballTeamFlurryHard			pgdebugmenu.cpp	StartDodgeballTeamFlurryHard__Fv
+803d0518	84		StartDodgeballDodgeEasy			pgdebugmenu.cpp	StartDodgeballDodgeEasy__Fv
+803d056c	84		StartDodgeballDodgeNormal			pgdebugmenu.cpp	StartDodgeballDodgeNormal__Fv
+803d05c0	84		StartDodgeballDodgeHard			pgdebugmenu.cpp	StartDodgeballDodgeHard__Fv
+803d0614	84		StartTetherballSpeedRoundsEasy			pgdebugmenu.cpp	StartTetherballSpeedRoundsEasy__Fv
+803d0668	84		StartTetherballSpeedRoundsNormal			pgdebugmenu.cpp	StartTetherballSpeedRoundsNormal__Fv
+803d06bc	84		StartTetherballSpeedRoundsHard			pgdebugmenu.cpp	StartTetherballSpeedRoundsHard__Fv
+803d0710	84		StartTetherballTimeEasy			pgdebugmenu.cpp	StartTetherballTimeEasy__Fv
+803d0764	84		StartTetherballTimeNormal			pgdebugmenu.cpp	StartTetherballTimeNormal__Fv
+803d07b8	84		StartTetherballTimeHard			pgdebugmenu.cpp	StartTetherballTimeHard__Fv
+803d080c	84		StartTetherballEnduranceEasy			pgdebugmenu.cpp	StartTetherballEnduranceEasy__Fv
+803d0860	84		StartTetherballEnduranceNormal			pgdebugmenu.cpp	StartTetherballEnduranceNormal__Fv
+803d08b4	84		StartTetherballEnduranceHard			pgdebugmenu.cpp	StartTetherballEnduranceHard__Fv
+803d0908	84		StartSlotRacerSprintEasy			pgdebugmenu.cpp	StartSlotRacerSprintEasy__Fv
+803d095c	84		StartSlotRacerSprintNormal			pgdebugmenu.cpp	StartSlotRacerSprintNormal__Fv
+803d09b0	84		StartSlotRacerSprintHard			pgdebugmenu.cpp	StartSlotRacerSprintHard__Fv
+803d0a04	84		StartSlotRacerSprintHardest			pgdebugmenu.cpp	StartSlotRacerSprintHardest__Fv
+803d0a58	84		StartSlotRacerKnockoutEasy			pgdebugmenu.cpp	StartSlotRacerKnockoutEasy__Fv
+803d0aac	84		StartSlotRacerKnockoutNormal			pgdebugmenu.cpp	StartSlotRacerKnockoutNormal__Fv
+803d0b00	84		StartSlotRacerKnockoutHard			pgdebugmenu.cpp	StartSlotRacerKnockoutHard__Fv
+803d0b54	84		StartSlotRacerKnockoutHardest			pgdebugmenu.cpp	StartSlotRacerKnockoutHardest__Fv
+803d0ba8	84		StartSlotRacerSpeedEasy			pgdebugmenu.cpp	StartSlotRacerSpeedEasy__Fv
+803d0bfc	84		StartSlotRacerSpeedNormal			pgdebugmenu.cpp	StartSlotRacerSpeedNormal__Fv
+803d0c50	84		StartSlotRacerSpeedHard			pgdebugmenu.cpp	StartSlotRacerSpeedHard__Fv
+803d0ca4	84		StartSlotRacerSpeedHardest			pgdebugmenu.cpp	StartSlotRacerSpeedHardest__Fv
+803d0cf8	84		StartDartTagHealthEasy			pgdebugmenu.cpp	StartDartTagHealthEasy__Fv
+803d0d4c	84		StartDartTagHealthNormal			pgdebugmenu.cpp	StartDartTagHealthNormal__Fv
+803d0da0	84		StartDartTagHealthHard			pgdebugmenu.cpp	StartDartTagHealthHard__Fv
+803d0df4	84		StartDartTagTimeEasy			pgdebugmenu.cpp	StartDartTagTimeEasy__Fv
+803d0e48	84		StartDartTagTimeNormal			pgdebugmenu.cpp	StartDartTagTimeNormal__Fv
+803d0e9c	84		StartDartTagTimeHard			pgdebugmenu.cpp	StartDartTagTimeHard__Fv
+803d0ef0	84		StartDartTagPointsEasy			pgdebugmenu.cpp	StartDartTagPointsEasy__Fv
+803d0f44	84		StartDartTagPointsNormal			pgdebugmenu.cpp	StartDartTagPointsNormal__Fv
+803d0f98	84		StartDartTagPointsHard			pgdebugmenu.cpp	StartDartTagPointsHard__Fv
+803d0fec	84		StartFootieShootoutEasy			pgdebugmenu.cpp	StartFootieShootoutEasy__Fv
+803d1040	84		StartFootieShootoutNormal			pgdebugmenu.cpp	StartFootieShootoutNormal__Fv
+803d1094	84		StartFootieShootoutHard			pgdebugmenu.cpp	StartFootieShootoutHard__Fv
+803d10e8	84		StartFootieKeeperEasy			pgdebugmenu.cpp	StartFootieKeeperEasy__Fv
+803d113c	84		StartFootieKeeperNormal			pgdebugmenu.cpp	StartFootieKeeperNormal__Fv
+803d1190	84		StartFootieKeeperHard			pgdebugmenu.cpp	StartFootieKeeperHard__Fv
+803d11e4	84		StartPaperAirplanesRedRingsLevel1			pgdebugmenu.cpp	StartPaperAirplanesRedRingsLevel1__Fv
+803d1238	84		StartPaperAirplanesRedRingsLevel2			pgdebugmenu.cpp	StartPaperAirplanesRedRingsLevel2__Fv
+803d128c	84		StartPaperAirplanesRedRingsLevel4			pgdebugmenu.cpp	StartPaperAirplanesRedRingsLevel4__Fv
+803d12e0	84		StartPaperAirplanesGreenRingsLevel1			pgdebugmenu.cpp	StartPaperAirplanesGreenRingsLevel1__Fv
+803d1334	84		StartPaperAirplanesGreenRingsLevel3			pgdebugmenu.cpp	StartPaperAirplanesGreenRingsLevel3__Fv
+803d1388	84		StartPaperAirplanesPointsLevel1			pgdebugmenu.cpp	StartPaperAirplanesPointsLevel1__Fv
+803d13dc	84		StartPaperAirplanesPointsLevel2			pgdebugmenu.cpp	StartPaperAirplanesPointsLevel2__Fv
+803d1430	84		StartPaperAirplanesPointsLevel3			pgdebugmenu.cpp	StartPaperAirplanesPointsLevel3__Fv
+803d1484	84		StartPaperAirplanesPointsLevel4			pgdebugmenu.cpp	StartPaperAirplanesPointsLevel4__Fv
+803d14d8	84		StartPaperAirplanesBlueRingsLevel2			pgdebugmenu.cpp	StartPaperAirplanesBlueRingsLevel2__Fv
+803d152c	84		StartPaperAirplanesBlueRingsLevel3			pgdebugmenu.cpp	StartPaperAirplanesBlueRingsLevel3__Fv
+803d1580	84		StartPaperAirplanesBlueRingsLevel4			pgdebugmenu.cpp	StartPaperAirplanesBlueRingsLevel4__Fv
+803d15d4	84		StartWallballPowerDownEasy			pgdebugmenu.cpp	StartWallballPowerDownEasy__Fv
+803d1628	84		StartWallballPowerDownNormal			pgdebugmenu.cpp	StartWallballPowerDownNormal__Fv
+803d167c	84		StartWallballSoloEasy			pgdebugmenu.cpp	StartWallballSoloEasy__Fv
+803d16d0	84		StartWallballSoloNormal			pgdebugmenu.cpp	StartWallballSoloNormal__Fv
+803d1724	84		StartWallballSoloHard			pgdebugmenu.cpp	StartWallballSoloHard__Fv
+803d1778	84		StartWallballWarpSpeedEasy			pgdebugmenu.cpp	StartWallballWarpSpeedEasy__Fv
+803d17cc	84		StartWallballWarpSpeedNormal			pgdebugmenu.cpp	StartWallballWarpSpeedNormal__Fv
+803d1820	84		StartWallballWarpSpeedHard			pgdebugmenu.cpp	StartWallballWarpSpeedHard__Fv
+803d1874	10828		DebugMenuInit	Ren::Scene*		pgdebugmenu.cpp	DebugMenuInit__FPQ23Ren5Scene
+803d42c0	196		DebugMenuUpdate	EActionEvent		pgdebugmenu.cpp	DebugMenuUpdate__F12EActionEvent
+803d4384	4	DebugMenuRenderEntity	Draw	Ren::SceneContext&		pgdebugmenu.cpp	Draw__21DebugMenuRenderEntityFRQ23Ren12SceneContext
+803d4388	140	GameMenuRenderer	constructor	Ren::Scene*		pgdebugmenu.cpp	__ct__16GameMenuRendererFPQ23Ren5Scene
+803d4414	88	DebugMenuRenderEntity	destructor			pgdebugmenu.cpp	__dt__21DebugMenuRenderEntityFv
+803d446c	120	GameMenuRenderer	destructor			pgdebugmenu.cpp	__dt__16GameMenuRendererFv
+803d44e4	420	GameMenuRenderer	Print	int, int, unsigned int, const char*	const	pgdebugmenu.cpp	Print__16GameMenuRendererCFiiUiPCc
+803d4688	284	GameMenuRenderer	RenderBackground	unsigned int	const	pgdebugmenu.cpp	RenderBackground__16GameMenuRendererCFUi
+803d47a4	20	GameMenuRenderer	GetStringSize	const char*, int*, int*	const	pgdebugmenu.cpp	GetStringSize__16GameMenuRendererCFPCcPiPi
+803d47b8	24		__sinit_\pgdebugmenu_cpp			pgdebugmenu.cpp	__sinit_\pgdebugmenu_cpp
+803d47d0	104	pgIO	constructor			pgFile.cpp	__ct__4pgIOFv
+803d4838	48	pgIO::BigFileInMem	constructor			pgFile.cpp	__ct__Q24pgIO12BigFileInMemFv
+803d4868	88	pgIO::BigFileInMem	destructor			pgFile.cpp	__dt__Q24pgIO12BigFileInMemFv
+803d48c0	64	pgIO	Create			pgFile.cpp	Create__4pgIOFv
+803d4900	260	pgIO	LoadFile	const char*, MemMgr::PoolType, MemMgr::AllocType, int*, bool		pgFile.cpp	LoadFile__4pgIOFPCcQ26MemMgr8PoolTypeQ26MemMgr9AllocTypePib
+803d4a04	204	pgIO	LoadFile	const char*, void*, int, int*, bool		pgFile.cpp	LoadFile__4pgIOFPCcPviPib
+803d4ad0	8	pgIO	FileExists	const char*		pgFile.cpp	FileExists__4pgIOFPCc
+803d4ad8	8	pgIO	FileSize	const char*		pgFile.cpp	FileSize__4pgIOFPCc
+803d4ae0	52	pgIO	AddBigFile	const char*		pgFile.cpp	AddBigFile__4pgIOFPCc
+803d4b14	132	pgIO	DelBigFile	int		pgFile.cpp	DelBigFile__4pgIOFi
+803d4b98	204	pgIO	AddBigFileMem	const char*, MemMgr::PoolType, MemMgr::AllocType		pgFile.cpp	AddBigFileMem__4pgIOFPCcQ26MemMgr8PoolTypeQ26MemMgr9AllocType
+803d4c64	52	pgIO	GetBigFileEntryCount	int		pgFile.cpp	GetBigFileEntryCount__4pgIOFi
+803d4c98	136	pgIO	GetBigFileEntrySize	int, int		pgFile.cpp	GetBigFileEntrySize__4pgIOFii
+803d4d20	24		__sinit_\pgFile_cpp			pgFile.cpp	__sinit_\pgFile_cpp
+803d4d38	80	PGMoviePlayer	Create			pgmovieplayer.cpp	Create__13PGMoviePlayerFv
+803d4d88	12	PGMoviePlayer	Destroy			pgmovieplayer.cpp	Destroy__13PGMoviePlayerFv
+803d4d94	8	PGMoviePlayer	Get			pgmovieplayer.cpp	Get__13PGMoviePlayerFv
+803d4d9c	124	PGMoviePlayer	constructor			pgmovieplayer.cpp	__ct__13PGMoviePlayerFv
+803d4e18	84	PGMoviePlayer	destructor			pgmovieplayer.cpp	__dt__13PGMoviePlayerFv
+803d4e6c	152	PGMoviePlayer	Update			pgmovieplayer.cpp	Update__13PGMoviePlayerFv
+803d4f04	108	PGMoviePlayer	Render			pgmovieplayer.cpp	Render__13PGMoviePlayerFv
+803d4f70	316	PGMoviePlayer	Play	const char*, const char*, void(*)(void)*		pgmovieplayer.cpp	Play__13PGMoviePlayerFPCcPCcPFv_v
+803d50ac	12	PGMoviePlayer	DiscErrorOccured			pgmovieplayer.cpp	DiscErrorOccured__13PGMoviePlayerFv
+803d50b8	8	PGMoviePlayer	HasDiscErrorOccured			pgmovieplayer.cpp	HasDiscErrorOccured__13PGMoviePlayerFv
+803d50c0	108	PGMoviePlayer	Stop			pgmovieplayer.cpp	Stop__13PGMoviePlayerFv
+803d512c	28	PGMoviePlayer	IsFinished			pgmovieplayer.cpp	IsFinished__13PGMoviePlayerFv
+803d5148	24	PGMoviePlayer	IsPlaying			pgmovieplayer.cpp	IsPlaying__13PGMoviePlayerFv
+803d5160	16	MoviePlayer	isPlaying			pgmovieplayer.cpp	isPlaying__11MoviePlayerFv
+803d5170	24		__sinit_\pgmovieplayer_cpp			pgmovieplayer.cpp	__sinit_\pgmovieplayer_cpp
+803d56c8	44	SlotPool	constructor			slotpool.cpp	__ct__8SlotPoolFv
+803d56f4	108	SlotPool	destructor			slotpool.cpp	__dt__8SlotPoolFv
+803d5760	208	SlotPool	Initialize	int, int, const char*		slotpool.cpp	Initialize__8SlotPoolFiiPCc
+803d5830	100	SlotPool	UnInitialize			slotpool.cpp	UnInitialize__8SlotPoolFv
+803d5894	96	SlotPool	Malloc			slotpool.cpp	Malloc__8SlotPoolFv
+803d58f4	116	SlotPool	Free	void*		slotpool.cpp	Free__8SlotPoolFPv
+803d5968	24		__sinit_\slotpool_cpp			slotpool.cpp	__sinit_\slotpool_cpp
+803d5980	68		AsciiToUni	wchar_t*, const char*, int		Utils.cpp	AsciiToUni__FPwPCci
+803d59c4	88		UniToAscii	char*, const wchar_t*, int		Utils.cpp	UniToAscii__FPcPCwi
+803d5a1c	24		__sinit_\Utils_cpp			Utils.cpp	__sinit_\Utils_cpp

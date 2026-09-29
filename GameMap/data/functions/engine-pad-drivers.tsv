@@ -1,0 +1,106 @@
+# addr	size	class	method	args	const	source_unit	mangled
+80412924	60	CClassicPadModeHandler	constructor			classicpadmodehandler.cpp	__ct__22CClassicPadModeHandlerFv
+80412960	88	CClassicPadModeHandler	destructor			classicpadmodehandler.cpp	__dt__22CClassicPadModeHandlerFv
+804129b8	76	CClassicPadModeHandler	Init	long		classicpadmodehandler.cpp	Init__22CClassicPadModeHandlerFl
+80412a04	4	CClassicPadModeHandler	Shutdown	long		classicpadmodehandler.cpp	Shutdown__22CClassicPadModeHandlerFl
+80412a08	32	CClassicPadModeHandler	GetActive	_WiiPadStatus*		classicpadmodehandler.cpp	GetActive__22CClassicPadModeHandlerFP13_WiiPadStatus
+80412a28	88	CClassicPadModeHandler	Connect	_WiiPadStatus*, long, long		classicpadmodehandler.cpp	Connect__22CClassicPadModeHandlerFP13_WiiPadStatusll
+80412a80	236	CClassicPadModeHandler	Sample	_WiiPadStatus*, long		classicpadmodehandler.cpp	Sample__22CClassicPadModeHandlerFP13_WiiPadStatusl
+80412b6c	60	CClassicPadModeHandler	Extension	_WiiPadStatus*, long, long		classicpadmodehandler.cpp	Extension__22CClassicPadModeHandlerFP13_WiiPadStatusll
+80412ba8	104	CClassicPadModeHandler	Update	_WiiPadStatus*, long		classicpadmodehandler.cpp	Update__22CClassicPadModeHandlerFP13_WiiPadStatusl
+80412c10	60	CCorePadModeHandler	constructor			corepadmodehandler.cpp	__ct__19CCorePadModeHandlerFv
+80412c4c	88	CCorePadModeHandler	destructor			corepadmodehandler.cpp	__dt__19CCorePadModeHandlerFv
+80412ca4	76	CCorePadModeHandler	Init	long		corepadmodehandler.cpp	Init__19CCorePadModeHandlerFl
+80412cf0	4	CCorePadModeHandler	Shutdown	long		corepadmodehandler.cpp	Shutdown__19CCorePadModeHandlerFl
+80412cf4	32	CCorePadModeHandler	GetActive	_WiiPadStatus*		corepadmodehandler.cpp	GetActive__19CCorePadModeHandlerFP13_WiiPadStatus
+80412d14	88	CCorePadModeHandler	Connect	_WiiPadStatus*, long, long		corepadmodehandler.cpp	Connect__19CCorePadModeHandlerFP13_WiiPadStatusll
+80412d6c	180	CCorePadModeHandler	Sample	_WiiPadStatus*, long		corepadmodehandler.cpp	Sample__19CCorePadModeHandlerFP13_WiiPadStatusl
+80412e20	68	CCorePadModeHandler	Extension	_WiiPadStatus*, long, long		corepadmodehandler.cpp	Extension__19CCorePadModeHandlerFP13_WiiPadStatusll
+80412e64	104	CCorePadModeHandler	Update	_WiiPadStatus*, long		corepadmodehandler.cpp	Update__19CCorePadModeHandlerFP13_WiiPadStatusl
+80412ecc	60	CDPDExPadModeHandler	constructor			dpdexpadmodehandler.cpp	__ct__20CDPDExPadModeHandlerFv
+80412f08	88	CDPDExPadModeHandler	destructor			dpdexpadmodehandler.cpp	__dt__20CDPDExPadModeHandlerFv
+80412f60	76	CDPDExPadModeHandler	Init	long		dpdexpadmodehandler.cpp	Init__20CDPDExPadModeHandlerFl
+80412fac	4	CDPDExPadModeHandler	Shutdown	long		dpdexpadmodehandler.cpp	Shutdown__20CDPDExPadModeHandlerFl
+80412fb0	32	CDPDExPadModeHandler	GetActive	_WiiPadStatus*		dpdexpadmodehandler.cpp	GetActive__20CDPDExPadModeHandlerFP13_WiiPadStatus
+80412fd0	88	CDPDExPadModeHandler	Connect	_WiiPadStatus*, long, long		dpdexpadmodehandler.cpp	Connect__20CDPDExPadModeHandlerFP13_WiiPadStatusll
+80413028	224	CDPDExPadModeHandler	Sample	_WiiPadStatus*, long		dpdexpadmodehandler.cpp	Sample__20CDPDExPadModeHandlerFP13_WiiPadStatusl
+80413108	68	CDPDExPadModeHandler	Extension	_WiiPadStatus*, long, long		dpdexpadmodehandler.cpp	Extension__20CDPDExPadModeHandlerFP13_WiiPadStatusll
+8041314c	104	CDPDExPadModeHandler	Update	_WiiPadStatus*, long		dpdexpadmodehandler.cpp	Update__20CDPDExPadModeHandlerFP13_WiiPadStatusl
+804131b4	60	CFreeStylePadModeHandler	constructor			freestylepadmodehandler.cpp	__ct__24CFreeStylePadModeHandlerFv
+804131f0	88	CFreeStylePadModeHandler	destructor			freestylepadmodehandler.cpp	__dt__24CFreeStylePadModeHandlerFv
+80413248	76	CFreeStylePadModeHandler	Init	long		freestylepadmodehandler.cpp	Init__24CFreeStylePadModeHandlerFl
+80413294	4	CFreeStylePadModeHandler	Shutdown	long		freestylepadmodehandler.cpp	Shutdown__24CFreeStylePadModeHandlerFl
+80413298	32	CFreeStylePadModeHandler	GetActive	_WiiPadStatus*		freestylepadmodehandler.cpp	GetActive__24CFreeStylePadModeHandlerFP13_WiiPadStatus
+804132b8	88	CFreeStylePadModeHandler	Connect	_WiiPadStatus*, long, long		freestylepadmodehandler.cpp	Connect__24CFreeStylePadModeHandlerFP13_WiiPadStatusll
+80413310	220	CFreeStylePadModeHandler	Sample	_WiiPadStatus*, long		freestylepadmodehandler.cpp	Sample__24CFreeStylePadModeHandlerFP13_WiiPadStatusl
+804133ec	60	CFreeStylePadModeHandler	Extension	_WiiPadStatus*, long, long		freestylepadmodehandler.cpp	Extension__24CFreeStylePadModeHandlerFP13_WiiPadStatusll
+80413428	104	CFreeStylePadModeHandler	Update	_WiiPadStatus*, long		freestylepadmodehandler.cpp	Update__24CFreeStylePadModeHandlerFP13_WiiPadStatusl
+80413490	60	CFuturePadModeHandler	constructor			futurepadmodehandler.cpp	__ct__21CFuturePadModeHandlerFv
+804134cc	88	CFuturePadModeHandler	destructor			futurepadmodehandler.cpp	__dt__21CFuturePadModeHandlerFv
+80413524	76	CFuturePadModeHandler	Init	long		futurepadmodehandler.cpp	Init__21CFuturePadModeHandlerFl
+80413570	4	CFuturePadModeHandler	Shutdown	long		futurepadmodehandler.cpp	Shutdown__21CFuturePadModeHandlerFl
+80413574	32	CFuturePadModeHandler	GetActive	_WiiPadStatus*		futurepadmodehandler.cpp	GetActive__21CFuturePadModeHandlerFP13_WiiPadStatus
+80413594	88	CFuturePadModeHandler	Connect	_WiiPadStatus*, long, long		futurepadmodehandler.cpp	Connect__21CFuturePadModeHandlerFP13_WiiPadStatusll
+804135ec	188	CFuturePadModeHandler	Sample	_WiiPadStatus*, long		futurepadmodehandler.cpp	Sample__21CFuturePadModeHandlerFP13_WiiPadStatusl
+804136a8	60	CFuturePadModeHandler	Extension	_WiiPadStatus*, long, long		futurepadmodehandler.cpp	Extension__21CFuturePadModeHandlerFP13_WiiPadStatusll
+804136e4	104	CFuturePadModeHandler	Update	_WiiPadStatus*, long		futurepadmodehandler.cpp	Update__21CFuturePadModeHandlerFP13_WiiPadStatusl
+8041374c	128		VBLUpdate			futurepadmodehandler.cpp	VBLUpdate__Fv
+804137cc	148		GC_PAD_init			gcpadmodehandler.cpp	GC_PAD_init__Fv
+80413860	236		GC_PAD_update			gcpadmodehandler.cpp	GC_PAD_update__Fv
+8041394c	36		GC_PAD_active	int		gcpadmodehandler.cpp	GC_PAD_active__Fi
+80413970	20		GC_PAD_getdataptr	int		gcpadmodehandler.cpp	GC_PAD_getdataptr__Fi
+80413984	60	CGCPadModeHandler	constructor			gcpadmodehandler.cpp	__ct__17CGCPadModeHandlerFv
+804139c0	88	CGCPadModeHandler	destructor			gcpadmodehandler.cpp	__dt__17CGCPadModeHandlerFv
+80413a18	4	CGCPadModeHandler	Init	long		gcpadmodehandler.cpp	Init__17CGCPadModeHandlerFl
+80413a1c	4	CGCPadModeHandler	Shutdown	long		gcpadmodehandler.cpp	Shutdown__17CGCPadModeHandlerFl
+80413a20	20	CGCPadModeHandler	GetActive	_WiiPadStatus*		gcpadmodehandler.cpp	GetActive__17CGCPadModeHandlerFP13_WiiPadStatus
+80413a34	96	CGCPadModeHandler	Update	_WiiPadStatus*, long		gcpadmodehandler.cpp	Update__17CGCPadModeHandlerFP13_WiiPadStatusl
+80413a94	4	CGCPadModeHandler	Extension	_WiiPadStatus*, long, long		gcpadmodehandler.cpp	Extension__17CGCPadModeHandlerFP13_WiiPadStatusll
+80413a98	4	CGCPadModeHandler	Sample	_WiiPadStatus*, long		gcpadmodehandler.cpp	Sample__17CGCPadModeHandlerFP13_WiiPadStatusl
+80413a9c	4	CGCPadModeHandler	Connect	_WiiPadStatus*, long, long		gcpadmodehandler.cpp	Connect__17CGCPadModeHandlerFP13_WiiPadStatusll
+80413aa0	8		PAD_getoptsinternal			gcpadmodehandler.cpp	PAD_getoptsinternal__Fv
+80413aa8	120		PAD_init			gcpadmodehandler.cpp	PAD_init
+80413b20	276		PAD_update			gcpadmodehandler.cpp	PAD_update
+80413c34	20		PAD_gethandler	int		gcpadmodehandler.cpp	PAD_gethandler__Fi
+80413c48	140		PAD_sethandler	int, IPadModeHandler*		gcpadmodehandler.cpp	PAD_sethandler__FiP15IPadModeHandler
+80413cd4	20		PAD_getdpdmode			gcpadmodehandler.cpp	PAD_getdpdmode
+80413ce8	20		PAD_getdataptr			gcpadmodehandler.cpp	PAD_getdataptr
+80413cfc	72		PAD_active			gcpadmodehandler.cpp	PAD_active
+80413d44	20		PAD_getinfo			gcpadmodehandler.cpp	PAD_getinfo
+80413d58	4		PAD_enableinfopolling			gcpadmodehandler.cpp	PAD_enableinfopolling
+80413d5c	8		PAD_startrumble			gcpadmodehandler.cpp	PAD_startrumble
+80413d64	8		PAD_stoprumble			gcpadmodehandler.cpp	PAD_stoprumble
+80413da8	68	IPadModeHandler	constructor			padmodehandler.cpp	__ct__15IPadModeHandlerFv
+80413dec	64	IPadModeHandler	destructor			padmodehandler.cpp	__dt__15IPadModeHandlerFv
+80413e2c	96	IPadModeHandler	SetDataFormat	long, long		padmodehandler.cpp	SetDataFormat__15IPadModeHandlerFll
+80413e8c	120	IPadModeHandler	SetDPDControl	long, long		padmodehandler.cpp	SetDPDControl__15IPadModeHandlerFll
+80413f04	144		WII_PAD_walloc	unsigned long		wiipad.cpp	WII_PAD_walloc__FUl
+80413f94	96		WII_PAD_wfree	void*		wiipad.cpp	WII_PAD_wfree__FPv
+80413ff4	244		WII_PAD_getrequiredhandlerforchannel	long		wiipad.cpp	WII_PAD_getrequiredhandlerforchannel__Fl
+804140e8	72		WII_PAD_updatehandler	long		wiipad.cpp	WII_PAD_updatehandler__Fl
+80414130	124		WII_PAD_extensionCallback	long, long		wiipad.cpp	WII_PAD_extensionCallback__Fll
+804141ac	100		WII_PAD_samplingCallback	long		wiipad.cpp	WII_PAD_samplingCallback__Fl
+80414210	76		WII_PAD_checkchannelhandler	long		wiipad.cpp	WII_PAD_checkchannelhandler__Fl
+8041425c	12		WII_PAD_isconnected	long		wiipad.cpp	WII_PAD_isconnected__Fl
+80414268	196		WII_PAD_connectCallback	long, long		wiipad.cpp	WII_PAD_connectCallback__Fll
+8041432c	16		WII_PAD_enableinfopolling	int		wiipad.cpp	WII_PAD_enableinfopolling__Fi
+8041433c	172		WII_PAD_processinfo	long		wiipad.cpp	WII_PAD_processinfo__Fl
+804143e8	32		WII_PAD_getinfocallback	long, long		wiipad.cpp	WII_PAD_getinfocallback__Fll
+80414408	128		WII_PAD_getinfo	long		wiipad.cpp	WII_PAD_getinfo__Fl
+80414488	136		WII_PAD_updateinfo	long		wiipad.cpp	WII_PAD_updateinfo__Fl
+80414510	176		WII_PAD_init			wiipad.cpp	WII_PAD_init__Fv
+804145c0	184		__sinit_\wiipad_cpp			wiipad.cpp	__sinit_\wiipad_cpp
+80414678	16		PAD_updateinternaleffects	int		wiipadeffect.cpp	PAD_updateinternaleffects__Fi
+80414688	100	WiiRumbleEffects	constructor			wiipadeffect.cpp	__ct__16WiiRumbleEffectsFv
+804146ec	84	WiiRumbleEffects	destructor			wiipadeffect.cpp	__dt__16WiiRumbleEffectsFv
+80414740	144	WiiRumbleEffects	Restore			wiipadeffect.cpp	Restore__16WiiRumbleEffectsFv
+804147d0	116	WiiRumbleEffects	Stop	int, int		wiipadeffect.cpp	Stop__16WiiRumbleEffectsFii
+80414844	128	WiiRumbleEffects	PadRumble	int, WiiRumbleEffects::ePulseState		wiipadeffect.cpp	PadRumble__16WiiRumbleEffectsFiQ216WiiRumbleEffects11ePulseState
+804148c4	112	WiiRumbleEffects	BeginEffect	WiiRumbleEffects::WiiPadEffect*		wiipadeffect.cpp	BeginEffect__16WiiRumbleEffectsFPQ216WiiRumbleEffects12WiiPadEffect
+80414934	40	WiiRumbleEffects	EndEffect	WiiRumbleEffects::WiiPadEffect*		wiipadeffect.cpp	EndEffect__16WiiRumbleEffectsFPQ216WiiRumbleEffects12WiiPadEffect
+8041495c	172	WiiRumbleEffects	GetCurrentMS			wiipadeffect.cpp	GetCurrentMS__16WiiRumbleEffectsFv
+80414a08	256	WiiRumbleEffects	UpdatePulse	WiiRumbleEffects::WiiPadEffect*, _WiiRumblePulse*		wiipadeffect.cpp	UpdatePulse__16WiiRumbleEffectsFPQ216WiiRumbleEffects12WiiPadEffectP15_WiiRumblePulse
+80414b08	92	WiiRumbleEffects	NextPulse	WiiRumbleEffects::WiiPadEffect*		wiipadeffect.cpp	NextPulse__16WiiRumbleEffectsFPQ216WiiRumbleEffects12WiiPadEffect
+80414b64	248	WiiRumbleEffects	UpdateEffect	WiiRumbleEffects::WiiPadEffect*		wiipadeffect.cpp	UpdateEffect__16WiiRumbleEffectsFPQ216WiiRumbleEffects12WiiPadEffect
+80414c5c	136	WiiRumbleEffects	UpdateInternal	int		wiipadeffect.cpp	UpdateInternal__16WiiRumbleEffectsFi
+80414ce4	72		__sinit_\wiipadeffect_cpp			wiipadeffect.cpp	__sinit_\wiipadeffect_cpp

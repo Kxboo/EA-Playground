@@ -1,0 +1,146 @@
+# addr	size	class	method	args	const	source_unit	mangled
+803bc9c0	280	BehindTheBackCamera	constructor			behindthebackcamera.cpp	__ct__19BehindTheBackCameraFv
+803bcad8	8	BehindTheBackCamera	GetTotalCameraRotation		const	behindthebackcamera.cpp	GetTotalCameraRotation__19BehindTheBackCameraCFv
+803bcae0	4	BehindTheBackCamera	UpdateInput	int		behindthebackcamera.cpp	UpdateInput__19BehindTheBackCameraFi
+803bcae4	632	BehindTheBackCamera	Update	int		behindthebackcamera.cpp	Update__19BehindTheBackCameraFi
+803bcd5c	88	BehindTheBackCamera	SetDir	const rmVector3*		behindthebackcamera.cpp	SetDir__19BehindTheBackCameraFPC9rmVector3
+803bcdb4	84	BehindTheBackCamera	ZoomIn	int		behindthebackcamera.cpp	ZoomIn__19BehindTheBackCameraFi
+803bce08	84	BehindTheBackCamera	ZoomOut	int		behindthebackcamera.cpp	ZoomOut__19BehindTheBackCameraFi
+803bce5c	180	BehindTheBackCamera	Move	int, float, float		behindthebackcamera.cpp	Move__19BehindTheBackCameraFiff
+803bcf10	176	BehindTheBackCamera	SetDesiredPositionOffset	const rmVector3*, unsigned int		behindthebackcamera.cpp	SetDesiredPositionOffset__19BehindTheBackCameraFPC9rmVector3Ui
+803bcfc0	64	EA::Math	operator!=	const EA::Math::Vector3&, const EA::Math::Vector3&		behindthebackcamera.cpp	__ne__Q22EA4MathFRCQ32EA4Math7Vector3RCQ32EA4Math7Vector3
+803bd000	176	BehindTheBackCamera	SetDesiredTargetOffset	const rmVector3*, unsigned int		behindthebackcamera.cpp	SetDesiredTargetOffset__19BehindTheBackCameraFPC9rmVector3Ui
+803bd0b0	156	BehindTheBackCamera	SetDesiredRotationAboutTarget	float, unsigned int		behindthebackcamera.cpp	SetDesiredRotationAboutTarget__19BehindTheBackCameraFfUi
+803bd14c	264	BehindTheBackCamera	SoftTransition	float&, const float&, float&, float&, const unsigned int&		behindthebackcamera.cpp	SoftTransition__19BehindTheBackCameraFRfRCfRfRfRCUi
+803bd254	4	BehindTheBackCamera	Reorient			behindthebackcamera.cpp	Reorient__19BehindTheBackCameraFv
+803bd258	4	BehindTheBackCamera	Reset			behindthebackcamera.cpp	Reset__19BehindTheBackCameraFv
+803bd25c	24		__sinit_\behindthebackcamera_cpp			behindthebackcamera.cpp	__sinit_\behindthebackcamera_cpp
+803bda3c	236	Camera	constructor			camera.cpp	__ct__6CameraFv
+803bdb28	132	CameraViewInfo	operator=	const CameraViewInfo&		camera.cpp	__as__14CameraViewInfoFRC14CameraViewInfo
+803bdbac	1240	Camera	Update	int		camera.cpp	Update__6CameraFi
+803be084	52	EA::Math	Subtract	const EA::Math::Vector3&, const EA::Math::Vector3&, EA::Math::Vector3&		camera.cpp	Subtract__Q22EA4MathFRCQ32EA4Math7Vector3RCQ32EA4Math7Vector3RQ32EA4Math7Vector3
+803be0b8	256	Camera	UpdateViewMatrices	CameraViewInfo&		camera.cpp	UpdateViewMatrices__6CameraFR14CameraViewInfo
+803be1b8	36	Camera	GetCameraViewInfo	bool		camera.cpp	GetCameraViewInfo__6CameraFb
+803be1dc	176	Camera	StartCameraSysTransition	CameraViewInfo, int, bool		camera.cpp	StartCameraSysTransition__6CameraF14CameraViewInfoib
+803be28c	12	Camera	AbortCameraSysTransition			camera.cpp	AbortCameraSysTransition__6CameraFv
+803be298	180	Camera	SetBase	const rmVector3&, const rmVector3&, const rmVector3&, rmVector3&, rmVector3&, rmVector3&		camera.cpp	SetBase__6CameraFRC9rmVector3RC9rmVector3RC9rmVector3R9rmVector3R9rmVector3R9rmVector3
+803be34c	532	Camera	SetViewMatrix	const rmVector3&, const rmVector3&, const rmVector3&, const rmVector3&, rmMatrix4&		camera.cpp	SetViewMatrix__6CameraFRC9rmVector3RC9rmVector3RC9rmVector3RC9rmVector3R9rmMatrix4
+803be560	28	Camera	Shake	int, float		camera.cpp	Shake__6CameraFif
+803be57c	24	Camera	GetPos	bool	const	camera.cpp	GetPos__6CameraCFb
+803be594	24	Camera	GetTarget	bool	const	camera.cpp	GetTarget__6CameraCFb
+803be5ac	24	Camera	GetUp	bool	const	camera.cpp	GetUp__6CameraCFb
+803be5c4	24	Camera	GetRenderPos	bool	const	camera.cpp	GetRenderPos__6CameraCFb
+803be5dc	24	Camera	GetRenderTarget	bool	const	camera.cpp	GetRenderTarget__6CameraCFb
+803be5f4	108	Camera	SetPos	const rmVector3&		camera.cpp	SetPos__6CameraFRC9rmVector3
+803be660	164	Camera	SetTarget	const rmVector3&		camera.cpp	SetTarget__6CameraFRC9rmVector3
+803be704	20	Camera	SetUp	const rmVector3&		camera.cpp	SetUp__6CameraFRC9rmVector3
+803be718	28	Camera	SetRenderUp	const rmVector3&		camera.cpp	SetRenderUp__6CameraFRC9rmVector3
+803be734	24		__sinit_\camera_cpp			camera.cpp	__sinit_\camera_cpp
+803be74c	68	CameraManager	Create			cameramanager.cpp	Create__13CameraManagerFv
+803be790	748	CameraManager	Initialize	CameraType, unsigned int		cameramanager.cpp	Initialize__13CameraManagerF10CameraTypeUi
+803bea7c	112	CameraManager	ReInitialize	CameraType, unsigned int		cameramanager.cpp	ReInitialize__13CameraManagerF10CameraTypeUi
+803beaec	88	CameraManager	UnInitialize	unsigned int		cameramanager.cpp	UnInitialize__13CameraManagerFUi
+803beb44	120	CameraManager	constructor			cameramanager.cpp	__ct__13CameraManagerFv
+803bebbc	136	CameraManager	destructor			cameramanager.cpp	__dt__13CameraManagerFv
+803bec44	36	CameraManager	GetFixedCamera	unsigned int		cameramanager.cpp	GetFixedCamera__13CameraManagerFUi
+803bec68	36	CameraManager	GetFrameCamera	unsigned int		cameramanager.cpp	GetFrameCamera__13CameraManagerFUi
+803bec8c	36	CameraManager	GetFreeCamera	unsigned int		cameramanager.cpp	GetFreeCamera__13CameraManagerFUi
+803becb0	36	CameraManager	GetBehindTheBackCamera	unsigned int		cameramanager.cpp	GetBehindTheBackCamera__13CameraManagerFUi
+803becd4	36	CameraManager	GetDartShootoutCamera	unsigned int		cameramanager.cpp	GetDartShootoutCamera__13CameraManagerFUi
+803becf8	36	CameraManager	GetDodgeballCamera	unsigned int		cameramanager.cpp	GetDodgeballCamera__13CameraManagerFUi
+803bed1c	36	CameraManager	GetFootieCamera	unsigned int		cameramanager.cpp	GetFootieCamera__13CameraManagerFUi
+803bed40	36	CameraManager	GetPaperAirplaneCamera	unsigned int		cameramanager.cpp	GetPaperAirplaneCamera__13CameraManagerFUi
+803bed64	36	CameraManager	GetRcChaseCamera	unsigned int		cameramanager.cpp	GetRcChaseCamera__13CameraManagerFUi
+803bed88	36	CameraManager	GetWallballCamera	unsigned int		cameramanager.cpp	GetWallballCamera__13CameraManagerFUi
+803bedac	36	CameraManager	GetPanCamera	unsigned int		cameramanager.cpp	GetPanCamera__13CameraManagerFUi
+803bedd0	36	CameraManager	GetSlerpPanCamera	unsigned int		cameramanager.cpp	GetSlerpPanCamera__13CameraManagerFUi
+803bedf4	16	CameraManager	GetCameraToAlignTo			cameramanager.cpp	GetCameraToAlignTo__13CameraManagerFv
+803bee04	180	CameraManager	Update	int		cameramanager.cpp	Update__13CameraManagerFi
+803beeb8	24		__sinit_\cameramanager_cpp			cameramanager.cpp	__sinit_\cameramanager_cpp
+803bfb2c	148	FixedCamera	constructor			fixedcamera.cpp	__ct__11FixedCameraFv
+803bfbc0	8	FixedCamera	GetTotalCameraRotation		const	fixedcamera.cpp	GetTotalCameraRotation__11FixedCameraCFv
+803bfbc8	4	FixedCamera	ZoomIn	int		fixedcamera.cpp	ZoomIn__11FixedCameraFi
+803bfbcc	4	FixedCamera	ZoomOut	int		fixedcamera.cpp	ZoomOut__11FixedCameraFi
+803bfbd0	4	FixedCamera	Move	int, float, float		fixedcamera.cpp	Move__11FixedCameraFiff
+803bfbd4	4	FixedCamera	Reorient			fixedcamera.cpp	Reorient__11FixedCameraFv
+803bfbd8	4	FixedCamera	Reset			fixedcamera.cpp	Reset__11FixedCameraFv
+803bfbdc	4	FixedCamera	UpdateInput	int		fixedcamera.cpp	UpdateInput__11FixedCameraFi
+803bfbe0	228	FixedCamera	Update	int		fixedcamera.cpp	Update__11FixedCameraFi
+803bfcc4	24		__sinit_\fixedcamera_cpp			fixedcamera.cpp	__sinit_\fixedcamera_cpp
+803bfcdc	300	FrameCamera	constructor			framecamera.cpp	__ct__11FrameCameraFv
+803bfe08	8	FrameCamera	GetTotalCameraRotation		const	framecamera.cpp	GetTotalCameraRotation__11FrameCameraCFv
+803bfe10	4	FrameCamera	ZoomIn	int		framecamera.cpp	ZoomIn__11FrameCameraFi
+803bfe14	4	FrameCamera	ZoomOut	int		framecamera.cpp	ZoomOut__11FrameCameraFi
+803bfe18	4	FrameCamera	Move	int, float, float		framecamera.cpp	Move__11FrameCameraFiff
+803bfe1c	4	FrameCamera	Reorient			framecamera.cpp	Reorient__11FrameCameraFv
+803bfe20	4	FrameCamera	Reset			framecamera.cpp	Reset__11FrameCameraFv
+803bfe24	504	FrameCamera	UpdateInput	int		framecamera.cpp	UpdateInput__11FrameCameraFi
+803c001c	28	rmVector3	constructor	const EA::Math::Vector3&		framecamera.cpp	__ct__9rmVector3FRCQ32EA4Math7Vector3
+803c0038	4	FrameCamera	Update	int		framecamera.cpp	Update__11FrameCameraFi
+803c003c	24		__sinit_\framecamera_cpp			framecamera.cpp	__sinit_\framecamera_cpp
+803c0054	168	FreeCamera	constructor			freecamera.cpp	__ct__10FreeCameraFv
+803c00fc	8	FreeCamera	GetTotalCameraRotation		const	freecamera.cpp	GetTotalCameraRotation__10FreeCameraCFv
+803c0104	28	FreeCamera	ZoomIn	int		freecamera.cpp	ZoomIn__10FreeCameraFi
+803c0120	32	FreeCamera	ZoomOut	int		freecamera.cpp	ZoomOut__10FreeCameraFi
+803c0140	424	FreeCamera	ApplyZoom			freecamera.cpp	ApplyZoom__10FreeCameraFv
+803c02e8	96	FreeCamera	GetZoomMultiplier			freecamera.cpp	GetZoomMultiplier__10FreeCameraFv
+803c0348	768	FreeCamera	Move	int, float, float		freecamera.cpp	Move__10FreeCameraFiff
+803c0648	464	FreeCamera	TiltUp			freecamera.cpp	TiltUp__10FreeCameraFv
+803c0818	464	FreeCamera	TiltDown			freecamera.cpp	TiltDown__10FreeCameraFv
+803c09e8	484	FreeCamera	TiltLeft			freecamera.cpp	TiltLeft__10FreeCameraFv
+803c0bcc	452	FreeCamera	TiltRight			freecamera.cpp	TiltRight__10FreeCameraFv
+803c0d90	188	FreeCamera	Up			freecamera.cpp	Up__10FreeCameraFv
+803c0e4c	188	FreeCamera	Down			freecamera.cpp	Down__10FreeCameraFv
+803c0f08	4	FreeCamera	Reorient			freecamera.cpp	Reorient__10FreeCameraFv
+803c0f0c	28	FreeCamera	Reset			freecamera.cpp	Reset__10FreeCameraFv
+803c0f28	4	FreeCamera	UpdateInput	int		freecamera.cpp	UpdateInput__10FreeCameraFi
+803c0f2c	228	FreeCamera	Update	int		freecamera.cpp	Update__10FreeCameraFi
+803c1010	24		__sinit_\freecamera_cpp			freecamera.cpp	__sinit_\freecamera_cpp
+803c2348	224	HingeCamera	constructor			hingecamera.cpp	__ct__11HingeCameraFv
+803c2428	16	HingeCamera	GetTotalCameraRotation		const	hingecamera.cpp	GetTotalCameraRotation__11HingeCameraCFv
+803c2438	92	HingeCamera	ZoomIn	int		hingecamera.cpp	ZoomIn__11HingeCameraFi
+803c2494	92	HingeCamera	ZoomOut	int		hingecamera.cpp	ZoomOut__11HingeCameraFi
+803c24f0	204	HingeCamera	Move	int, float, float		hingecamera.cpp	Move__11HingeCameraFiff
+803c25bc	148	HingeCamera	Reorient			hingecamera.cpp	Reorient__11HingeCameraFv
+803c2650	200	HingeCamera	Reset			hingecamera.cpp	Reset__11HingeCameraFv
+803c2718	1388	HingeCamera	UpdateInput	int		hingecamera.cpp	UpdateInput__11HingeCameraFi
+803c2c84	636	HingeCamera	Update	int		hingecamera.cpp	Update__11HingeCameraFi
+803c2f00	28	HingeCamera	SetDesiredRotationAboutTarget	float		hingecamera.cpp	SetDesiredRotationAboutTarget__11HingeCameraFf
+803c2f1c	24		__sinit_\hingecamera_cpp			hingecamera.cpp	__sinit_\hingecamera_cpp
+803c3514	288	OrbitCamera	constructor			orbitcamera.cpp	__ct__11OrbitCameraFv
+803c3634	64	OrbitCamera	destructor			orbitcamera.cpp	__dt__11OrbitCameraFv
+803c3674	8	OrbitCamera	GetTotalCameraRotation		const	orbitcamera.cpp	GetTotalCameraRotation__11OrbitCameraCFv
+803c367c	4	OrbitCamera	ZoomIn	int		orbitcamera.cpp	ZoomIn__11OrbitCameraFi
+803c3680	4	OrbitCamera	ZoomOut	int		orbitcamera.cpp	ZoomOut__11OrbitCameraFi
+803c3684	4	OrbitCamera	Move	int, float, float		orbitcamera.cpp	Move__11OrbitCameraFiff
+803c3688	4	OrbitCamera	Reorient			orbitcamera.cpp	Reorient__11OrbitCameraFv
+803c368c	4	OrbitCamera	Reset			orbitcamera.cpp	Reset__11OrbitCameraFv
+803c3690	1500	OrbitCamera	UpdateInput	int		orbitcamera.cpp	UpdateInput__11OrbitCameraFi
+803c3c6c	24	EA::Math	fAbs	float		orbitcamera.cpp	fAbs__Q22EA4MathFf
+803c3c84	116	OrbitCameraState	operator=	const OrbitCameraState&		orbitcamera.cpp	__as__16OrbitCameraStateFRC16OrbitCameraState
+803c3cf8	4	OrbitCamera	Update	int		orbitcamera.cpp	Update__11OrbitCameraFi
+803c3cfc	76		__sinit_\orbitcamera_cpp			orbitcamera.cpp	__sinit_\orbitcamera_cpp
+803c6bc4	140	SlerpPanCamera	constructor			slerppancamera.cpp	__ct__14SlerpPanCameraFv
+803c6c50	8	SlerpPanCamera	GetTotalCameraRotation		const	slerppancamera.cpp	GetTotalCameraRotation__14SlerpPanCameraCFv
+803c6c58	4	SlerpPanCamera	ZoomIn	int		slerppancamera.cpp	ZoomIn__14SlerpPanCameraFi
+803c6c5c	4	SlerpPanCamera	ZoomOut	int		slerppancamera.cpp	ZoomOut__14SlerpPanCameraFi
+803c6c60	4	SlerpPanCamera	Move	int, float, float		slerppancamera.cpp	Move__14SlerpPanCameraFiff
+803c6c64	4	SlerpPanCamera	Reorient			slerppancamera.cpp	Reorient__14SlerpPanCameraFv
+803c6c68	4	SlerpPanCamera	Reset			slerppancamera.cpp	Reset__14SlerpPanCameraFv
+803c6c6c	208	SlerpPanCamera	Initialize	const rmVector3&, const rmVector3&, const rmVector3&, const rmVector3&, int, int, int		slerppancamera.cpp	Initialize__14SlerpPanCameraFRC9rmVector3RC9rmVector3RC9rmVector3RC9rmVector3iii
+803c6d3c	4	SlerpPanCamera	UpdateInput	int		slerppancamera.cpp	UpdateInput__14SlerpPanCameraFi
+803c6d40	640	SlerpPanCamera	Update	int		slerppancamera.cpp	Update__14SlerpPanCameraFi
+803c6fc0	96		rmNormalize	const rmVector2&, rmVector2&		slerppancamera.cpp	rmNormalize__FRC9rmVector2R9rmVector2
+803c7020	28	EA::Math	Mult	const EA::Math::Vector2&, float, EA::Math::Vector2&		slerppancamera.cpp	Mult__Q22EA4MathFRCQ32EA4Math7Vector2fRQ32EA4Math7Vector2
+803c703c	24		__sinit_\slerppancamera_cpp			slerppancamera.cpp	__sinit_\slerppancamera_cpp
+803c72a4	308	TopDownCamera	constructor			topdowncamera.cpp	__ct__13TopDownCameraFv
+803c73d8	8	TopDownCamera	GetTotalCameraRotation		const	topdowncamera.cpp	GetTotalCameraRotation__13TopDownCameraCFv
+803c73e0	4	TopDownCamera	ZoomIn	int		topdowncamera.cpp	ZoomIn__13TopDownCameraFi
+803c73e4	4	TopDownCamera	ZoomOut	int		topdowncamera.cpp	ZoomOut__13TopDownCameraFi
+803c73e8	4	TopDownCamera	Move	int, float, float		topdowncamera.cpp	Move__13TopDownCameraFiff
+803c73ec	4	TopDownCamera	Reorient			topdowncamera.cpp	Reorient__13TopDownCameraFv
+803c73f0	4	TopDownCamera	Reset			topdowncamera.cpp	Reset__13TopDownCameraFv
+803c73f4	120	TopDownCamera	SetTarget	rmVector3		topdowncamera.cpp	SetTarget__13TopDownCameraF9rmVector3
+803c746c	4	TopDownCamera	UpdateInput	int		topdowncamera.cpp	UpdateInput__13TopDownCameraFi
+803c7470	136	TopDownCamera	Update	int		topdowncamera.cpp	Update__13TopDownCameraFi
+803c74f8	24		__sinit_\topdowncamera_cpp			topdowncamera.cpp	__sinit_\topdowncamera_cpp

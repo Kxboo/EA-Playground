@@ -1,0 +1,130 @@
+# addr	size	class	method	args	const	source_unit	mangled
+80395290	136	TetherballAIEntity	constructor	Character*		aitetherball.cpp	__ct__18TetherballAIEntityFP9Character
+80395318	60	TetherballAIEntity	destructor			aitetherball.cpp	__dt__18TetherballAIEntityFv
+80395354	340	TetherballAIEntity	Initialize	bool, AITetherballDifficultyType, rmAngle		aitetherball.cpp	Initialize__18TetherballAIEntityFb26AITetherballDifficultyType7rmAngle
+803954a8	436	TetherballAIEntity	EvaluateCompulsions	int, unsigned char, AIThinkDepth, AIThinkLoD		aitetherball.cpp	EvaluateCompulsions__18TetherballAIEntityFiUc12AIThinkDepth10AIThinkLoD
+8039565c	428	TetherballAIEntity	IsInPosition	float		aitetherball.cpp	IsInPosition__18TetherballAIEntityFf
+80395808	64	TetherballAIEntity	IsSwinging			aitetherball.cpp	IsSwinging__18TetherballAIEntityFv
+80395848	84	TetherballMoveCompulsion	constructor	AIEntity*, unsigned char		aitetherball.cpp	__ct__24TetherballMoveCompulsionFP8AIEntityUc
+8039589c	60	TetherballMoveCompulsion	destructor			aitetherball.cpp	__dt__24TetherballMoveCompulsionFv
+803958d8	184	TetherballMoveCompulsion	HasExpired	AIThinkLoD	const	aitetherball.cpp	HasExpired__24TetherballMoveCompulsionCF10AIThinkLoD
+80395990	648	TetherballMoveCompulsion	Think	int		aitetherball.cpp	Think__24TetherballMoveCompulsionFi
+80395c18	144	TetherballHitCompulsion	constructor	AIEntity*, unsigned char		aitetherball.cpp	__ct__23TetherballHitCompulsionFP8AIEntityUc
+80395ca8	60	TetherballHitCompulsion	destructor			aitetherball.cpp	__dt__23TetherballHitCompulsionFv
+80395ce4	128	TetherballHitCompulsion	SetAttributes	rmAngle, float, bool, MGTetherballPlayerDistance, unsigned int, rmAngle		aitetherball.cpp	SetAttributes__23TetherballHitCompulsionF7rmAnglefb26MGTetherballPlayerDistanceUi7rmAngle
+80395d64	32	TetherballHitCompulsion	SetDifficultyVariables	unsigned char, unsigned char, unsigned char, unsigned char, unsigned char, unsigned char, unsigned char		aitetherball.cpp	SetDifficultyVariables__23TetherballHitCompulsionFUcUcUcUcUcUcUc
+80395d84	1168	TetherballHitCompulsion	Activate			aitetherball.cpp	Activate__23TetherballHitCompulsionFv
+80396214	116	TetherballHitCompulsion	HasExpired	AIThinkLoD	const	aitetherball.cpp	HasExpired__23TetherballHitCompulsionCF10AIThinkLoD
+80396288	228	TetherballHitCompulsion	Think	int		aitetherball.cpp	Think__23TetherballHitCompulsionFi
+8039636c	8	TetherballHitCompulsion	IsInterruptible		const	aitetherball.cpp	IsInterruptible__23TetherballHitCompulsionCFv
+80396374	12	TetherballHitCompulsion	GetName		const	aitetherball.cpp	GetName__23TetherballHitCompulsionCFv
+80396380	12	TetherballHitCompulsion	Deactivate			aitetherball.cpp	Deactivate__23TetherballHitCompulsionFv
+8039638c	8	TetherballMoveCompulsion	IsInterruptible		const	aitetherball.cpp	IsInterruptible__24TetherballMoveCompulsionCFv
+80396394	12	TetherballMoveCompulsion	GetName		const	aitetherball.cpp	GetName__24TetherballMoveCompulsionCFv
+803963a0	12	TetherballMoveCompulsion	Deactivate			aitetherball.cpp	Deactivate__24TetherballMoveCompulsionFv
+803963ac	12	TetherballMoveCompulsion	Activate			aitetherball.cpp	Activate__24TetherballMoveCompulsionFv
+803963b8	88		__sinit_\aitetherball_cpp			aitetherball.cpp	__sinit_\aitetherball_cpp
+80396410	604	MGTetherball	constructor	Ren::Scene*		mgtetherball.cpp	__ct__12MGTetherballFPQ23Ren5Scene
+8039666c	88	MGTetherball	destructor			mgtetherball.cpp	__dt__12MGTetherballFv
+803966c4	3276	MGTetherball	Initialize	const World*		mgtetherball.cpp	Initialize__12MGTetherballFPC5World
+80397390	20	BehindTheBackCamera	SetPositionOffset	const rmVector3*		mgtetherball.cpp	SetPositionOffset__19BehindTheBackCameraFPC9rmVector3
+803973a4	20	BehindTheBackCamera	SetTargetOffset	const rmVector3*		mgtetherball.cpp	SetTargetOffset__19BehindTheBackCameraFPC9rmVector3
+803973b8	12	BehindTheBackCamera	SetBackwardsOffset	float		mgtetherball.cpp	SetBackwardsOffset__19BehindTheBackCameraFf
+803973c4	20	BehindTheBackCamera	SetStartPos	const rmVector3*		mgtetherball.cpp	SetStartPos__19BehindTheBackCameraFPC9rmVector3
+803973d8	616	MGTetherball	UnInitialize			mgtetherball.cpp	UnInitialize__12MGTetherballFv
+80397640	500	MGTetherball	Update	int		mgtetherball.cpp	Update__12MGTetherballFi
+80397834	116	MGTetherball	Draw	Ren::SceneContext&		mgtetherball.cpp	Draw__12MGTetherballFRQ23Ren12SceneContext
+803978a8	12	MGTetherball	OnGameStartAnimComplete			mgtetherball.cpp	OnGameStartAnimComplete__12MGTetherballFv
+803978b4	80	MGTetherball	OnHudLoadComplete			mgtetherball.cpp	OnHudLoadComplete__12MGTetherballFv
+80397904	76	MGTetherball	OnPauseReset			mgtetherball.cpp	OnPauseReset__12MGTetherballFv
+80397950	56	MGTetherball	IsInGamePlay			mgtetherball.cpp	IsInGamePlay__12MGTetherballFv
+80397988	92	MGTetherball	UpdatePreGameInstructions	int		mgtetherball.cpp	UpdatePreGameInstructions__12MGTetherballFi
+803979e4	256	MGTetherball	UpdateIntro	int		mgtetherball.cpp	UpdateIntro__12MGTetherballFi
+80397ae4	144	MGTetherball	UpdateResetting	int		mgtetherball.cpp	UpdateResetting__12MGTetherballFi
+80397b74	2036	MGTetherball	UpdateServe	int		mgtetherball.cpp	UpdateServe__12MGTetherballFi
+80398368	1820	MGTetherball	UpdateReturn	int		mgtetherball.cpp	UpdateReturn__12MGTetherballFi
+80398a84	1668	MGTetherball	UpdateAccelerate	int		mgtetherball.cpp	UpdateAccelerate__12MGTetherballFi
+80399108	856	MGTetherball	UpdateRoundEnd	int		mgtetherball.cpp	UpdateRoundEnd__12MGTetherballFi
+80399460	148	MGTetherball	ResetMiniGame			mgtetherball.cpp	ResetMiniGame__12MGTetherballFv
+803994f4	1544	MGTetherball	ResetRound			mgtetherball.cpp	ResetRound__12MGTetherballFv
+80399afc	100	AncientEvil	CreateAIEntity<18TetherballAIEntity>	?FP9Character_P18TetherballAIEntity		mgtetherball.cpp	CreateAIEntity<18TetherballAIEntity>__11AncientEvilFP9Character_P18TetherballAIEntity
+80399b60	128	MGTetherball	UpdatePostGame	int		mgtetherball.cpp	UpdatePostGame__12MGTetherballFi
+80399be0	60	MGTetherball	UpdateWaitForApocalypse	int		mgtetherball.cpp	UpdateWaitForApocalypse__12MGTetherballFi
+80399c1c	148	MGTetherball	CalculateTetherballZone	MGTetherballHitType		mgtetherball.cpp	CalculateTetherballZone__12MGTetherballF19MGTetherballHitType
+80399cb0	264	MGTetherball	IsBallInHitRange	unsigned int, float, float		mgtetherball.cpp	IsBallInHitRange__12MGTetherballFUiff
+80399db8	464	MGTetherball	CheckForWaitingCharacterSwing			mgtetherball.cpp	CheckForWaitingCharacterSwing__12MGTetherballFv
+80399f88	496	MGTetherball	StartHitAnimation	unsigned int, bool, bool, MGTetherballPowerHitType		mgtetherball.cpp	StartHitAnimation__12MGTetherballFUibb24MGTetherballPowerHitType
+8039a178	328	MGTetherball	StartReadyAnimation	unsigned int, MGTetherballPowerHitType		mgtetherball.cpp	StartReadyAnimation__12MGTetherballFUi24MGTetherballPowerHitType
+8039a2c0	1548	MGTetherball	HitTetherball			mgtetherball.cpp	HitTetherball__12MGTetherballFv
+8039a8cc	80	MGTetherball	InHitAnimation	unsigned int		mgtetherball.cpp	InHitAnimation__12MGTetherballFUi
+8039a91c	48	MGTetherball	SetActiveCharacter	int		mgtetherball.cpp	SetActiveCharacter__12MGTetherballFi
+8039a94c	1388	MGTetherball	ChangeGameState	MinigameState		mgtetherball.cpp	ChangeGameState__12MGTetherballF13MinigameState
+8039aeb8	164	MGTetherball	UpdatePlayerDistance			mgtetherball.cpp	UpdatePlayerDistance__12MGTetherballFv
+8039af5c	32	MGTetherball	CheckIfGameIsOver			mgtetherball.cpp	CheckIfGameIsOver__12MGTetherballFv
+8039af7c	328	MGTetherball	CheckIfGameIsOver_BestOfNRounds			mgtetherball.cpp	CheckIfGameIsOver_BestOfNRounds__12MGTetherballFv
+8039b0c4	236	MGTetherball	CheckIfGameIsOver_TimeSurvive			mgtetherball.cpp	CheckIfGameIsOver_TimeSurvive__12MGTetherballFv
+8039b1b0	852	MGTetherball	SetUpServer			mgtetherball.cpp	SetUpServer__12MGTetherballFv
+8039b504	368	MGTetherball	AdjustCameraHeight	TetherballZone		mgtetherball.cpp	AdjustCameraHeight__12MGTetherballF14TetherballZone
+8039b674	248	MGTetherball	ProcessGestures			mgtetherball.cpp	ProcessGestures__12MGTetherballFv
+8039b76c	296	MGTetherball	GetPlayerHitAttempt	unsigned int, bool&, bool&, MGTetherballPowerHitType&		mgtetherball.cpp	GetPlayerHitAttempt__12MGTetherballFUiRbRbR24MGTetherballPowerHitType
+8039b894	212	MGTetherball	GetAIHitAttempt	unsigned int, bool&, bool&, MGTetherballPowerHitType&		mgtetherball.cpp	GetAIHitAttempt__12MGTetherballFUiRbRbR24MGTetherballPowerHitType
+8039b968	68	MGTetherball	GetAIPowerHitType	unsigned int		mgtetherball.cpp	GetAIPowerHitType__12MGTetherballFUi
+8039b9ac	84	MGTetherball	CheckForBallDrop			mgtetherball.cpp	CheckForBallDrop__12MGTetherballFv
+8039ba00	492	MGTetherball	InitializePlayer	const rmVector3*, float, unsigned long long		mgtetherball.cpp	InitializePlayer__12MGTetherballFPC9rmVector3fUx
+8039bbec	308	MGTetherball	InitializeAI	const rmVector3*, float, unsigned long long		mgtetherball.cpp	InitializeAI__12MGTetherballFPC9rmVector3fUx
+8039bd20	356	MGTetherball	InitializeAdditionalPlayer	const rmVector3*, float, unsigned long long		mgtetherball.cpp	InitializeAdditionalPlayer__12MGTetherballFPC9rmVector3fUx
+8039be84	504	MGTetherball	InitializePlayerAnimations			mgtetherball.cpp	InitializePlayerAnimations__12MGTetherballFv
+8039c07c	348	MGTetherball	InitializePlayerWinAnimations			mgtetherball.cpp	InitializePlayerWinAnimations__12MGTetherballFv
+8039c1d8	72	MGTetherball	InitializeAptHud			mgtetherball.cpp	InitializeAptHud__12MGTetherballFv
+8039c220	500	MGTetherball	IncrementMultiplier	unsigned int		mgtetherball.cpp	IncrementMultiplier__12MGTetherballFUi
+8039c414	172	MGTetherball	IncrementChargeMeter	unsigned int		mgtetherball.cpp	IncrementChargeMeter__12MGTetherballFUi
+8039c4c0	120	MGTetherball	ConsumeCharge	unsigned int, unsigned int		mgtetherball.cpp	ConsumeCharge__12MGTetherballFUiUi
+8039c538	420	MGTetherball	DrawHitIndicatorParticle	unsigned int, bool		mgtetherball.cpp	DrawHitIndicatorParticle__12MGTetherballFUib
+8039c6dc	144	MGTetherball	SetPlayerDistance	MGTetherballPlayerDistance		mgtetherball.cpp	SetPlayerDistance__12MGTetherballF26MGTetherballPlayerDistance
+8039c76c	88	MGTetherball	StartRumble	unsigned int, unsigned int		mgtetherball.cpp	StartRumble__12MGTetherballFUiUi
+8039c7c4	192	MGTetherball	RegularStrikeProcess	const EA::Conga::CongaOutput*		mgtetherball.cpp	RegularStrikeProcess__12MGTetherballFPCQ32EA5Conga11CongaOutput
+8039c884	44	MGTetherball	RegularStrikeCallback	const EA::Conga::CongaOutput*, void*		mgtetherball.cpp	RegularStrikeCallback__12MGTetherballFPCQ32EA5Conga11CongaOutputPv
+8039c8b0	192	MGTetherball	RegularStrikeReverseProcess	const EA::Conga::CongaOutput*		mgtetherball.cpp	RegularStrikeReverseProcess__12MGTetherballFPCQ32EA5Conga11CongaOutput
+8039c970	44	MGTetherball	RegularStrikeReverseCallback	const EA::Conga::CongaOutput*, void*		mgtetherball.cpp	RegularStrikeReverseCallback__12MGTetherballFPCQ32EA5Conga11CongaOutputPv
+8039c99c	96	MGTetherball	OverhandStrikeProcess	const EA::Conga::CongaOutput*		mgtetherball.cpp	OverhandStrikeProcess__12MGTetherballFPCQ32EA5Conga11CongaOutput
+8039c9fc	44	MGTetherball	OverhandStrikeCallback	const EA::Conga::CongaOutput*, void*		mgtetherball.cpp	OverhandStrikeCallback__12MGTetherballFPCQ32EA5Conga11CongaOutputPv
+8039ca28	96	MGTetherball	ServeTossProcess	const EA::Conga::CongaOutput*		mgtetherball.cpp	ServeTossProcess__12MGTetherballFPCQ32EA5Conga11CongaOutput
+8039ca88	44	MGTetherball	ServeTossCallback	const EA::Conga::CongaOutput*, void*		mgtetherball.cpp	ServeTossCallback__12MGTetherballFPCQ32EA5Conga11CongaOutputPv
+8039cab4	124	MGTetherball	SetPoleIndicatorOffset	float		mgtetherball.cpp	SetPoleIndicatorOffset__12MGTetherballFf
+8039cb30	160	MGTetherball	SetupShadowOptions			mgtetherball.cpp	SetupShadowOptions__12MGTetherballFv
+8039cbd0	320	MGTetherball	ResetStats			mgtetherball.cpp	ResetStats__12MGTetherballFv
+8039cd10	56	MGTetherball	CalcScore	AITetherballDifficultyType, int		mgtetherball.cpp	CalcScore__12MGTetherballF26AITetherballDifficultyTypei
+8039cd48	8	MGTetherball	SetDareType	Enums::MiniGameDareType		mgtetherball.cpp	SetDareType__12MGTetherballFQ25Enums16MiniGameDareType
+8039cd50	188	MGTetherball	SetupSinglePlayerAbility			mgtetherball.cpp	SetupSinglePlayerAbility__12MGTetherballFv
+8039ce0c	44	MGTetherball	SetupMultiPlayerAbility			mgtetherball.cpp	SetupMultiPlayerAbility__12MGTetherballFv
+8039ce38	116	MGTetherball	GetTunablesCollectionName			mgtetherball.cpp	GetTunablesCollectionName__12MGTetherballFv
+8039ceac	228	MGTetherball	InitGameLogicState			mgtetherball.cpp	InitGameLogicState__12MGTetherballFv
+8039cf90	240	MGTetherball	InitTunablesForSinglePlayer			mgtetherball.cpp	InitTunablesForSinglePlayer__12MGTetherballFv
+8039d080	60	MGTetherball	InitTunablesForMultiPlayer			mgtetherball.cpp	InitTunablesForMultiPlayer__12MGTetherballFv
+8039d0bc	120	MGTetherball	CelebrationAnimsAreFinished			mgtetherball.cpp	CelebrationAnimsAreFinished__12MGTetherballFv
+8039d134	304		__sinit_\mgtetherball_cpp			mgtetherball.cpp	__sinit_\mgtetherball_cpp
+8039d264	308	Tetherball	constructor			tetherball.cpp	__ct__10TetherballFv
+8039d398	64	Tetherball	destructor			tetherball.cpp	__dt__10TetherballFv
+8039d3d8	912	Tetherball	Initialize	AITetherballDifficultyType, const rmVector3&, float, Placeable*		tetherball.cpp	Initialize__10TetherballF26AITetherballDifficultyTypeRC9rmVector3fP9Placeable
+8039d768	412	Tetherball	Uninitialize			tetherball.cpp	Uninitialize__10TetherballFv
+8039d904	2628	Tetherball	Update	int		tetherball.cpp	Update__10TetherballFi
+8039e348	12	Tetherball	SetAngularVelocity	float		tetherball.cpp	SetAngularVelocity__10TetherballFf
+8039e354	132	TetherballShadowRenderEntity	SetModelMatrix	const rmMatrix4&		tetherball.cpp	SetModelMatrix__28TetherballShadowRenderEntityFRC9rmMatrix4
+8039e3d8	356	Tetherball	Hit	TetherballDirection, float, float, MGTetherballHitType		tetherball.cpp	Hit__10TetherballF19TetherballDirectionff19MGTetherballHitType
+8039e53c	40	Tetherball	Miss			tetherball.cpp	Miss__10TetherballFv
+8039e564	12	Tetherball	SetRadius	float		tetherball.cpp	SetRadius__10TetherballFf
+8039e570	56	Tetherball	SetDesiredRadius	float		tetherball.cpp	SetDesiredRadius__10TetherballFf
+8039e5a8	232	Tetherball	Grab	Character*, const rmMatrix4*		tetherball.cpp	Grab__10TetherballFP9CharacterPC9rmMatrix4
+8039e690	28	Tetherball	Toss			tetherball.cpp	Toss__10TetherballFv
+8039e6ac	216	Tetherball	Serve	TetherballDirection, float		tetherball.cpp	Serve__10TetherballF19TetherballDirectionf
+8039e784	104	Tetherball	CheckForPowerServe	unsigned int		tetherball.cpp	CheckForPowerServe__10TetherballFUi
+8039e7ec	92	Tetherball	CheckForHighServe	unsigned int		tetherball.cpp	CheckForHighServe__10TetherballFUi
+8039e848	32	Tetherball	SetZone	TetherballZone		tetherball.cpp	SetZone__10TetherballF14TetherballZone
+8039e868	88	Tetherball	DropOneZone			tetherball.cpp	DropOneZone__10TetherballFv
+8039e8c0	252	Tetherball	SpinUpPole			tetherball.cpp	SpinUpPole__10TetherballFv
+8039e9bc	116	Tetherball	SpinDownPole			tetherball.cpp	SpinDownPole__10TetherballFv
+8039ea30	72	Tetherball	Draw			tetherball.cpp	Draw__10TetherballFv
+8039ea78	28	TetherballShadowRenderEntity	constructor	EAGL::Model*		tetherball.cpp	__ct__28TetherballShadowRenderEntityFPQ24EAGL5Model
+8039ea94	88	TetherballShadowRenderEntity	destructor			tetherball.cpp	__dt__28TetherballShadowRenderEntityFv
+8039eaec	76	TetherballShadowRenderEntity	Draw	Ren::SceneContext&		tetherball.cpp	Draw__28TetherballShadowRenderEntityFRQ23Ren12SceneContext
+8039eb38	64		__sinit_\tetherball_cpp			tetherball.cpp	__sinit_\tetherball_cpp

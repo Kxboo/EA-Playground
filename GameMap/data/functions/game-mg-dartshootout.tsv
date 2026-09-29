@@ -1,0 +1,427 @@
+# addr	size	class	method	args	const	source_unit	mangled
+80337d80	96	DartShootoutHostileAIEntity	constructor	Character*		aidartshootout.cpp	__ct__27DartShootoutHostileAIEntityFP9Character
+80337de0	60	DartShootoutHostileAIEntity	destructor			aidartshootout.cpp	__dt__27DartShootoutHostileAIEntityFv
+80337e1c	28	DartShootoutHostileAIEntity	SetTargetType	Enums::DSTargetType		aidartshootout.cpp	SetTargetType__27DartShootoutHostileAIEntityFQ25Enums12DSTargetType
+80337e38	40	DartShootoutHostileAIEntity	Update	int		aidartshootout.cpp	Update__27DartShootoutHostileAIEntityFi
+80337e60	1204	DartShootoutHostileAIEntity	EvaluateCompulsions	int, unsigned char, AIThinkDepth, AIThinkLoD		aidartshootout.cpp	EvaluateCompulsions__27DartShootoutHostileAIEntityFiUc12AIThinkDepth10AIThinkLoD
+80338314	28	DartShootoutHostileAIEntity	IsBossCharacter			aidartshootout.cpp	IsBossCharacter__27DartShootoutHostileAIEntityFv
+80338330	72	DartShootoutInnocentAIEntity	constructor	Character*		aidartshootout.cpp	__ct__28DartShootoutInnocentAIEntityFP9Character
+80338378	60	DartShootoutInnocentAIEntity	destructor			aidartshootout.cpp	__dt__28DartShootoutInnocentAIEntityFv
+803383b4	40	DartShootoutInnocentAIEntity	Update	int		aidartshootout.cpp	Update__28DartShootoutInnocentAIEntityFi
+803383dc	244	DartShootoutInnocentAIEntity	EvaluateCompulsions	int, unsigned char, AIThinkDepth, AIThinkLoD		aidartshootout.cpp	EvaluateCompulsions__28DartShootoutInnocentAIEntityFiUc12AIThinkDepth10AIThinkLoD
+803384d0	72	DartShootoutEnterCompulsion	constructor	AIEntity*, unsigned char		aidartshootout.cpp	__ct__27DartShootoutEnterCompulsionFP8AIEntityUc
+80338518	60	DartShootoutEnterCompulsion	destructor			aidartshootout.cpp	__dt__27DartShootoutEnterCompulsionFv
+80338554	40	DartShootoutEnterCompulsion	HasExpired	AIThinkLoD	const	aidartshootout.cpp	HasExpired__27DartShootoutEnterCompulsionCF10AIThinkLoD
+8033857c	72	DartShootoutEnterCompulsion	Think	int		aidartshootout.cpp	Think__27DartShootoutEnterCompulsionFi
+803385c4	20	DartShootoutEnterCompulsion	IsValid		const	aidartshootout.cpp	IsValid__27DartShootoutEnterCompulsionCFv
+803385d8	84	DartShootoutMegashotCompulsion	constructor	AIEntity*, unsigned char		aidartshootout.cpp	__ct__30DartShootoutMegashotCompulsionFP8AIEntityUc
+8033862c	60	DartShootoutMegashotCompulsion	destructor			aidartshootout.cpp	__dt__30DartShootoutMegashotCompulsionFv
+80338668	12	DartShootoutMegashotCompulsion	Activate			aidartshootout.cpp	Activate__30DartShootoutMegashotCompulsionFv
+80338674	8	DartShootoutMegashotCompulsion	HasExpired	AIThinkLoD	const	aidartshootout.cpp	HasExpired__30DartShootoutMegashotCompulsionCF10AIThinkLoD
+8033867c	96	DartShootoutMegashotCompulsion	Think	int		aidartshootout.cpp	Think__30DartShootoutMegashotCompulsionFi
+803386dc	92	DartShootoutShootCompulsion	constructor	AIEntity*, unsigned char		aidartshootout.cpp	__ct__27DartShootoutShootCompulsionFP8AIEntityUc
+80338738	60	DartShootoutShootCompulsion	destructor			aidartshootout.cpp	__dt__27DartShootoutShootCompulsionFv
+80338774	12	DartShootoutShootCompulsion	Activate			aidartshootout.cpp	Activate__27DartShootoutShootCompulsionFv
+80338780	52	DartShootoutShootCompulsion	HasExpired	AIThinkLoD	const	aidartshootout.cpp	HasExpired__27DartShootoutShootCompulsionCF10AIThinkLoD
+803387b4	468	DartShootoutShootCompulsion	Think	int		aidartshootout.cpp	Think__27DartShootoutShootCompulsionFi
+80338988	96	DartShootoutRunStopShootCompulsion	constructor	AIEntity*, unsigned char		aidartshootout.cpp	__ct__34DartShootoutRunStopShootCompulsionFP8AIEntityUc
+803389e8	60	DartShootoutRunStopShootCompulsion	destructor			aidartshootout.cpp	__dt__34DartShootoutRunStopShootCompulsionFv
+80338a24	64	DartShootoutRunStopShootCompulsion	Activate			aidartshootout.cpp	Activate__34DartShootoutRunStopShootCompulsionFv
+80338a64	52	DartShootoutRunStopShootCompulsion	HasExpired	AIThinkLoD	const	aidartshootout.cpp	HasExpired__34DartShootoutRunStopShootCompulsionCF10AIThinkLoD
+80338a98	316	DartShootoutRunStopShootCompulsion	Think	int		aidartshootout.cpp	Think__34DartShootoutRunStopShootCompulsionFi
+80338bd4	72	DartShootoutIdleCompulsion	constructor	AIEntity*, unsigned char		aidartshootout.cpp	__ct__26DartShootoutIdleCompulsionFP8AIEntityUc
+80338c1c	60	DartShootoutIdleCompulsion	destructor			aidartshootout.cpp	__dt__26DartShootoutIdleCompulsionFv
+80338c58	8	DartShootoutIdleCompulsion	HasExpired	AIThinkLoD	const	aidartshootout.cpp	HasExpired__26DartShootoutIdleCompulsionCF10AIThinkLoD
+80338c60	72	DartShootoutIdleCompulsion	Think	int		aidartshootout.cpp	Think__26DartShootoutIdleCompulsionFi
+80338ca8	8	DartShootoutIdleCompulsion	IsInterruptible		const	aidartshootout.cpp	IsInterruptible__26DartShootoutIdleCompulsionCFv
+80338cb0	12	DartShootoutIdleCompulsion	GetName		const	aidartshootout.cpp	GetName__26DartShootoutIdleCompulsionCFv
+80338cbc	12	DartShootoutIdleCompulsion	Deactivate			aidartshootout.cpp	Deactivate__26DartShootoutIdleCompulsionFv
+80338cc8	12	DartShootoutIdleCompulsion	Activate			aidartshootout.cpp	Activate__26DartShootoutIdleCompulsionFv
+80338cd4	8	DartShootoutRunStopShootCompulsion	IsInterruptible		const	aidartshootout.cpp	IsInterruptible__34DartShootoutRunStopShootCompulsionCFv
+80338cdc	12	DartShootoutRunStopShootCompulsion	GetName		const	aidartshootout.cpp	GetName__34DartShootoutRunStopShootCompulsionCFv
+80338ce8	12	DartShootoutRunStopShootCompulsion	Deactivate			aidartshootout.cpp	Deactivate__34DartShootoutRunStopShootCompulsionFv
+80338cf4	8	DartShootoutShootCompulsion	IsInterruptible		const	aidartshootout.cpp	IsInterruptible__27DartShootoutShootCompulsionCFv
+80338cfc	12	DartShootoutShootCompulsion	GetName		const	aidartshootout.cpp	GetName__27DartShootoutShootCompulsionCFv
+80338d08	12	DartShootoutShootCompulsion	Deactivate			aidartshootout.cpp	Deactivate__27DartShootoutShootCompulsionFv
+80338d14	8	DartShootoutMegashotCompulsion	IsInterruptible		const	aidartshootout.cpp	IsInterruptible__30DartShootoutMegashotCompulsionCFv
+80338d1c	12	DartShootoutMegashotCompulsion	GetName		const	aidartshootout.cpp	GetName__30DartShootoutMegashotCompulsionCFv
+80338d28	12	DartShootoutMegashotCompulsion	Deactivate			aidartshootout.cpp	Deactivate__30DartShootoutMegashotCompulsionFv
+80338d34	8	DartShootoutEnterCompulsion	IsInterruptible		const	aidartshootout.cpp	IsInterruptible__27DartShootoutEnterCompulsionCFv
+80338d3c	12	DartShootoutEnterCompulsion	GetName		const	aidartshootout.cpp	GetName__27DartShootoutEnterCompulsionCFv
+80338d48	12	DartShootoutEnterCompulsion	Deactivate			aidartshootout.cpp	Deactivate__27DartShootoutEnterCompulsionFv
+80338d54	12	DartShootoutEnterCompulsion	Activate			aidartshootout.cpp	Activate__27DartShootoutEnterCompulsionFv
+80338d60	136		__sinit_\aidartshootout_cpp			aidartshootout.cpp	__sinit_\aidartshootout_cpp
+80338de8	180	DartShootoutCamera	constructor			dartshootoutcamera.cpp	__ct__18DartShootoutCameraFv
+80338e9c	8	DartShootoutCamera	GetTotalCameraRotation		const	dartshootoutcamera.cpp	GetTotalCameraRotation__18DartShootoutCameraCFv
+80338ea4	4	DartShootoutCamera	ZoomIn	int		dartshootoutcamera.cpp	ZoomIn__18DartShootoutCameraFi
+80338ea8	4	DartShootoutCamera	ZoomOut	int		dartshootoutcamera.cpp	ZoomOut__18DartShootoutCameraFi
+80338eac	4	DartShootoutCamera	Move	int, float, float		dartshootoutcamera.cpp	Move__18DartShootoutCameraFiff
+80338eb0	4	DartShootoutCamera	Reorient			dartshootoutcamera.cpp	Reorient__18DartShootoutCameraFv
+80338eb4	40	DartShootoutCamera	Reset			dartshootoutcamera.cpp	Reset__18DartShootoutCameraFv
+80338edc	208	DartShootoutCamera	CalculateCameraMatrix	rmVector3, rmVector3		dartshootoutcamera.cpp	CalculateCameraMatrix__18DartShootoutCameraF9rmVector39rmVector3
+80338fac	4	DartShootoutCamera	UpdateInput	int		dartshootoutcamera.cpp	UpdateInput__18DartShootoutCameraFi
+80338fb0	648	DartShootoutCamera	Update	int		dartshootoutcamera.cpp	Update__18DartShootoutCameraFi
+80339238	36	DartShootoutCamera	GenerateWalkEffect	int		dartshootoutcamera.cpp	GenerateWalkEffect__18DartShootoutCameraFi
+8033925c	24		__sinit_\dartshootoutcamera_cpp			dartshootoutcamera.cpp	__sinit_\dartshootoutcamera_cpp
+80339274	92	DSDart	constructor			dsdart.cpp	__ct__6DSDartFv
+803392d0	76	DSDart	destructor			dsdart.cpp	__dt__6DSDartFv
+8033931c	1236	DSDart	Initialize	rmVector3, rmVector3, int, bool, DSDartType, GUID, bool		dsdart.cpp	Initialize__6DSDartF9rmVector39rmVector3ib10DSDartType4GUIDb
+803397f0	132	DSShadowEntity	SetModelMatrix	const rmMatrix4&		dsdart.cpp	SetModelMatrix__14DSShadowEntityFRC9rmMatrix4
+80339874	288	DSDart	UnInitialize			dsdart.cpp	UnInitialize__6DSDartFv
+80339994	96	DSDart	SetCollided			dsdart.cpp	SetCollided__6DSDartFv
+803399f4	224	DSDart	StickDart	rmVector3, rmVector3		dsdart.cpp	StickDart__6DSDartF9rmVector39rmVector3
+80339ad4	12	DSDart	UnStickDart			dsdart.cpp	UnStickDart__6DSDartFv
+80339ae0	1340	DSDart	Update	int		dsdart.cpp	Update__6DSDartFi
+8033a01c	252	DSDart	Render			dsdart.cpp	Render__6DSDartFv
+8033a118	336	DSDart	RenderTrail			dsdart.cpp	RenderTrail__6DSDartFv
+8033a268	112	DSDart	LoadModels			dsdart.cpp	LoadModels__6DSDartFv
+8033a2d8	960	DSDart	LoadDartAsset	const char*, DSDartAssets&		dsdart.cpp	LoadDartAsset__6DSDartFPCcR12DSDartAssets
+8033a698	264	DSDart	UnLoadDartAsset	int		dsdart.cpp	UnLoadDartAsset__6DSDartFi
+8033a7a0	68	DSDart	UnloadModels			dsdart.cpp	UnloadModels__6DSDartFv
+8033a7e4	468	DSDart	AddTrailPoints			dsdart.cpp	AddTrailPoints__6DSDartFv
+8033a9b8	24		__sinit_\dsdart_cpp			dsdart.cpp	__sinit_\dsdart_cpp
+8033a9d0	104	DSDartCollisionListener	constructor	DSDart*		dsdartcollisionlistener.cpp	__ct__23DSDartCollisionListenerFP6DSDart
+8033aa38	88	DSDartCollisionListener	destructor			dsdartcollisionlistener.cpp	__dt__23DSDartCollisionListenerFv
+8033aa90	352	DSDartCollisionListener	ContactAddedCallback	const PhysicsUserData*, unsigned int, const PhysicsContactPoint*, float		dsdartcollisionlistener.cpp	ContactAddedCallback__23DSDartCollisionListenerFPC15PhysicsUserDataUiPC19PhysicsContactPointf
+8033abf0	4	DSDartCollisionListener	ContactRemovedCallback	const PhysicsUserData*, unsigned int		dsdartcollisionlistener.cpp	ContactRemovedCallback__23DSDartCollisionListenerFPC15PhysicsUserDataUi
+8033abf4	4	DSDartCollisionListener	ContactConfirmedCallback	const PhysicsUserData*, unsigned int, const PhysicsContactPoint*, float		dsdartcollisionlistener.cpp	ContactConfirmedCallback__23DSDartCollisionListenerFPC15PhysicsUserDataUiPC19PhysicsContactPointf
+8033abf8	3344	DSDartCollisionListener	ContactProcessCallback	const PhysicsUserData*, unsigned int, const PhysicsContactPoint*		dsdartcollisionlistener.cpp	ContactProcessCallback__23DSDartCollisionListenerFPC15PhysicsUserDataUiPC19PhysicsContactPoint
+8033b908	24		__sinit_\dsdartcollisionlistener_cpp			dsdartcollisionlistener.cpp	__sinit_\dsdartcollisionlistener_cpp
+8033b920	140	DSDartGun	constructor			dsdartgun.cpp	__ct__9DSDartGunFv
+8033b9ac	76	DSDartGun	destructor			dsdartgun.cpp	__dt__9DSDartGunFv
+8033b9f8	796	DSDartGun	Initialize	int		dsdartgun.cpp	Initialize__9DSDartGunFi
+8033bd14	244	DSDartGun	UnInitialize			dsdartgun.cpp	UnInitialize__9DSDartGunFv
+8033be08	132	DSDartGun	HideReticule	bool		dsdartgun.cpp	HideReticule__9DSDartGunFb
+8033be8c	156	DSDartGun	ArmMegashot			dsdartgun.cpp	ArmMegashot__9DSDartGunFv
+8033bf28	72	DSDartGun	MegashotCharge			dsdartgun.cpp	MegashotCharge__9DSDartGunFv
+8033bf70	76	DSDartGun	MegashotChargeReset			dsdartgun.cpp	MegashotChargeReset__9DSDartGunFv
+8033bfbc	380	DSDartGun	Fire			dsdartgun.cpp	Fire__9DSDartGunFv
+8033c138	1056	DSDartGun	FireInternal	bool		dsdartgun.cpp	FireInternal__9DSDartGunFb
+8033c558	88		rmMatrix4FromTranslation	const rmVector3&, rmMatrix4&		dsdartgun.cpp	rmMatrix4FromTranslation__FRC9rmVector3R9rmMatrix4
+8033c5b0	32	rmVector4	constructor	const EA::Math::Vector3&, float		dsdartgun.cpp	__ct__9rmVector4FRCQ32EA4Math7Vector3f
+8033c5d0	80	DSDartGun	Reload			dsdartgun.cpp	Reload__9DSDartGunFv
+8033c620	60	DSDartGun	EnableFullAuto			dsdartgun.cpp	EnableFullAuto__9DSDartGunFv
+8033c65c	48	DSDartGun	DoNoAmmoRumble			dsdartgun.cpp	DoNoAmmoRumble__9DSDartGunFv
+8033c68c	144	DSDartGun	RaiseShield			dsdartgun.cpp	RaiseShield__9DSDartGunFv
+8033c71c	68	DSDartGun	LowerShield			dsdartgun.cpp	LowerShield__9DSDartGunFv
+8033c760	44	DSDartGun	Lower			dsdartgun.cpp	Lower__9DSDartGunFv
+8033c78c	44	DSDartGun	Raise			dsdartgun.cpp	Raise__9DSDartGunFv
+8033c7b8	484	DSDartGun	SetCollided	int		dsdartgun.cpp	SetCollided__9DSDartGunFi
+8033c99c	2836	DSDartGun	Update	int		dsdartgun.cpp	Update__9DSDartGunFi
+8033d4b0	160	DSDartGun	RenderOpaque	bool		dsdartgun.cpp	RenderOpaque__9DSDartGunFb
+8033d550	284	DSDartGun	RenderTranslucent			dsdartgun.cpp	RenderTranslucent__9DSDartGunFv
+8033d66c	236	DSDartGun	UpdateTransition	DSDartGunTransition&, int, int		dsdartgun.cpp	UpdateTransition__9DSDartGunFR19DSDartGunTransitionii
+8033d758	536	DSDartGun	UpdateMegaMeter			dsdartgun.cpp	UpdateMegaMeter__9DSDartGunFv
+8033d970	60	DSDartGun	GetDartType			dsdartgun.cpp	GetDartType__9DSDartGunFv
+8033d9ac	44	DSDartGun	LoadModels			dsdartgun.cpp	LoadModels__9DSDartGunFv
+8033d9d8	392	DSDartGun	LoadGunModel			dsdartgun.cpp	LoadGunModel__9DSDartGunFv
+8033db60	544	DSDartGun	LoadShieldModel			dsdartgun.cpp	LoadShieldModel__9DSDartGunFv
+8033dd80	44	DSDartGun	UnloadModels			dsdartgun.cpp	UnloadModels__9DSDartGunFv
+8033ddac	108	DSDartGun	UnloadGunModel			dsdartgun.cpp	UnloadGunModel__9DSDartGunFv
+8033de18	136	DSDartGun	UnloadShieldModel			dsdartgun.cpp	UnloadShieldModel__9DSDartGunFv
+8033dea0	100		__sinit_\dsdartgun_cpp			dsdartgun.cpp	__sinit_\dsdartgun_cpp
+8033df04	84	DSDartManager	constructor			dsdartmanager.cpp	__ct__13DSDartManagerFv
+8033df58	112	DSDartManager	destructor			dsdartmanager.cpp	__dt__13DSDartManagerFv
+8033dfc8	68	DSDartManager	Initialize			dsdartmanager.cpp	Initialize__13DSDartManagerFv
+8033e00c	104	DSDartManager	UnInitialize			dsdartmanager.cpp	UnInitialize__13DSDartManagerFv
+8033e074	184	DSDartManager	AddDart	rmVector3, rmVector3, int, bool, DSDartType, GUID, bool		dsdartmanager.cpp	AddDart__13DSDartManagerF9rmVector39rmVector3ib10DSDartType4GUIDb
+8033e12c	136	DSDartManager	DestroyAiDarts			dsdartmanager.cpp	DestroyAiDarts__13DSDartManagerFv
+8033e1b4	1156	DSDartManager	Update	int		dsdartmanager.cpp	Update__13DSDartManagerFi
+8033e638	136	DSDartManager	Render			dsdartmanager.cpp	Render__13DSDartManagerFv
+8033e6c0	4	DSDartManager	LoadModels			dsdartmanager.cpp	LoadModels__13DSDartManagerFv
+8033e6c4	4	DSDartManager	UnloadModels			dsdartmanager.cpp	UnloadModels__13DSDartManagerFv
+8033e6c8	24		__sinit_\dsdartmanager_cpp			dsdartmanager.cpp	__sinit_\dsdartmanager_cpp
+8033e6e0	132	DSEncounter	constructor			dsencounter.cpp	__ct__11DSEncounterFv
+8033e764	72	DSEncounter	destructor			dsencounter.cpp	__dt__11DSEncounterFv
+8033e7ac	312	DSEncounter	Initialize	rmVector3, rmVector3, int, int, Enums::DSEncounterWeaponsType		dsencounter.cpp	Initialize__11DSEncounterF9rmVector39rmVector3iiQ25Enums22DSEncounterWeaponsType
+8033e8e4	12	DSEncounter	UnInitialize			dsencounter.cpp	UnInitialize__11DSEncounterFv
+8033e8f0	204	DSEncounter	AreAllTargetsEliminated		const	dsencounter.cpp	AreAllTargetsEliminated__11DSEncounterCFv
+8033e9bc	292	DSEncounter	AddTargetDef	MGID, MGID, MGID, MGID, int, int		dsencounter.cpp	AddTargetDef__11DSEncounterF4MGID4MGID4MGID4MGIDii
+8033eae0	160	DSEncounter	AddSpawnPoint	MGID, MGID, MGID, MGID, float, float, float		dsencounter.cpp	AddSpawnPoint__11DSEncounterF4MGID4MGID4MGID4MGIDfff
+8033eb80	16	DSEncounter	SetPostEncounterInfo	bool, unsigned char, unsigned char		dsencounter.cpp	SetPostEncounterInfo__11DSEncounterFbUcUc
+8033eb90	152	DSEncounter	ProcessPostEncounterInfo	bool&, bool&, bool&		dsencounter.cpp	ProcessPostEncounterInfo__11DSEncounterFRbRbRb
+8033ec28	1336	DSEncounter	Update	int		dsencounter.cpp	Update__11DSEncounterFi
+8033f160	56	MGID	GetAsString	char*		dsencounter.cpp	GetAsString__4MGIDFPc
+8033f198	4	DSEncounter	Render			dsencounter.cpp	Render__11DSEncounterFv
+8033f19c	164	DSEncounter	CanTargetDefUseSpawnPoint	DSEncounterTargetDef, DSEncounterSpawnPoint		dsencounter.cpp	CanTargetDefUseSpawnPoint__11DSEncounterF20DSEncounterTargetDef21DSEncounterSpawnPoint
+8033f240	240	DSEncounter	GetIndexOfRandomTargetIDThatCanUseSpawnPoint	DSEncounterTargetDef, DSEncounterSpawnPoint		dsencounter.cpp	GetIndexOfRandomTargetIDThatCanUseSpawnPoint__11DSEncounterF20DSEncounterTargetDef21DSEncounterSpawnPoint
+8033f330	84	DSEncounter	GetNumUndestroyedTargetsInSequence	int		dsencounter.cpp	GetNumUndestroyedTargetsInSequence__11DSEncounterFi
+8033f384	24		__sinit_\dsencounter_cpp			dsencounter.cpp	__sinit_\dsencounter_cpp
+8033f39c	88	DSEncounterManager	constructor			dsencountermanager.cpp	__ct__18DSEncounterManagerFv
+8033f3f4	116	DSEncounterManager	destructor			dsencountermanager.cpp	__dt__18DSEncounterManagerFv
+8033f468	168	DSEncounterManager	Initialize			dsencountermanager.cpp	Initialize__18DSEncounterManagerFv
+8033f510	8	MGDartShootout	GetCourseName			dsencountermanager.cpp	GetCourseName__14MGDartShootoutFv
+8033f518	144	DSEncounterManager	UnInitialize			dsencountermanager.cpp	UnInitialize__18DSEncounterManagerFv
+8033f5a8	100	DSEncounterManager	AreAllTargetsEliminated		const	dsencountermanager.cpp	AreAllTargetsEliminated__18DSEncounterManagerCFv
+8033f60c	20	DSEncounterManager	GetEncounterWeapons		const	dsencountermanager.cpp	GetEncounterWeapons__18DSEncounterManagerCFv
+8033f620	16	DSEncounterManager	GetEncounter	int		dsencountermanager.cpp	GetEncounter__18DSEncounterManagerFi
+8033f630	824	DSEncounterManager	Update	int		dsencountermanager.cpp	Update__18DSEncounterManagerFi
+8033f968	108	DSEncounterManager	Render			dsencountermanager.cpp	Render__18DSEncounterManagerFv
+8033f9d4	188	DSEncounterManager	AddEncounter	rmVector3, rmVector3, int, int, Enums::DSEncounterWeaponsType		dsencountermanager.cpp	AddEncounter__18DSEncounterManagerF9rmVector39rmVector3iiQ25Enums22DSEncounterWeaponsType
+8033fa90	1228	DSEncounterManager	PopulateFromDatabase	CString		dsencountermanager.cpp	PopulateFromDatabase__18DSEncounterManagerF7CString
+8033ff5c	520	DSEncounterManager	UpdatePostEncounter	int		dsencountermanager.cpp	UpdatePostEncounter__18DSEncounterManagerFi
+80340164	92	DSEncounterManager	HidePostEncounterMessages			dsencountermanager.cpp	HidePostEncounterMessages__18DSEncounterManagerFv
+803401c0	24		__sinit_\dsencountermanager_cpp			dsencountermanager.cpp	__sinit_\dsencountermanager_cpp
+803401d8	104	DSFullScreenFx	constructor			dsfullscreenfx.cpp	__ct__14DSFullScreenFxFv
+80340240	104	DSFullScreenFx	destructor			dsfullscreenfx.cpp	__dt__14DSFullScreenFxFv
+803402a8	188	DSFullScreenFx	Initialize	rmVector3		dsfullscreenfx.cpp	Initialize__14DSFullScreenFxF9rmVector3
+80340364	24	Ren::LinearBlend	Start	float, float, int		dsfullscreenfx.cpp	Start__Q23Ren11LinearBlendFffi
+8034037c	16	DSFullScreenFx	UnInitialize			dsfullscreenfx.cpp	UnInitialize__14DSFullScreenFxFv
+8034038c	20	DSFullScreenFx	SetFocalPoint	rmVector3		dsfullscreenfx.cpp	SetFocalPoint__14DSFullScreenFxF9rmVector3
+803403a0	64	DSFullScreenFx	TransitionToEnd			dsfullscreenfx.cpp	TransitionToEnd__14DSFullScreenFxFv
+803403e0	116	DSFullScreenFx	Update	int		dsfullscreenfx.cpp	Update__14DSFullScreenFxFi
+80340454	812	DSFullScreenFx	Render			dsfullscreenfx.cpp	Render__14DSFullScreenFxFv
+80340780	72	EA::Math	operator*	float, const EA::Math::Vector3&		dsfullscreenfx.cpp	__ml__Q22EA4MathFfRCQ32EA4Math7Vector3
+803407c8	24		__sinit_\dsfullscreenfx_cpp			dsfullscreenfx.cpp	__sinit_\dsfullscreenfx_cpp
+803407e0	84	DSFullScreenFxManager	constructor			dsfullscreenfxmanager.cpp	__ct__21DSFullScreenFxManagerFv
+80340834	108	DSFullScreenFxManager	destructor			dsfullscreenfxmanager.cpp	__dt__21DSFullScreenFxManagerFv
+803408a0	60	DSFullScreenFxManager	Initialize			dsfullscreenfxmanager.cpp	Initialize__21DSFullScreenFxManagerFv
+803408dc	100	DSFullScreenFxManager	UnInitialize			dsfullscreenfxmanager.cpp	UnInitialize__21DSFullScreenFxManagerFv
+80340940	188	DSFullScreenFxManager	AddEffect	rmVector3		dsfullscreenfxmanager.cpp	AddEffect__21DSFullScreenFxManagerF9rmVector3
+803409fc	56	DSFullScreenFxManager	EndEffect	GUID		dsfullscreenfxmanager.cpp	EndEffect__21DSFullScreenFxManagerF4GUID
+80340a34	72	DSFullScreenFxManager	GetEffect	GUID		dsfullscreenfxmanager.cpp	GetEffect__21DSFullScreenFxManagerF4GUID
+80340a7c	168	DSFullScreenFxManager	Update	int		dsfullscreenfxmanager.cpp	Update__21DSFullScreenFxManagerFi
+80340b24	92	DSFullScreenFxManager	Render			dsfullscreenfxmanager.cpp	Render__21DSFullScreenFxManagerFv
+80340b80	24		__sinit_\dsfullscreenfxmanager_cpp			dsfullscreenfxmanager.cpp	__sinit_\dsfullscreenfxmanager_cpp
+80340b98	20	DSObject	constructor			dsobject.cpp	__ct__8DSObjectFv
+80340bac	108	DSObject	destructor			dsobject.cpp	__dt__8DSObjectFv
+80340c18	216	DSObject	Initialize	rmVector3, DSObjectType		dsobject.cpp	Initialize__8DSObjectF9rmVector312DSObjectType
+80340cf0	124	DSObject	UnInitialize			dsobject.cpp	UnInitialize__8DSObjectFv
+80340d6c	216	DSObject	SetCollided			dsobject.cpp	SetCollided__8DSObjectFv
+80340e44	36	DSObject	Update	int		dsobject.cpp	Update__8DSObjectFi
+80340e68	880	DSObject	Render			dsobject.cpp	Render__8DSObjectFv
+803411d8	644	DSObject	LoadModels			dsobject.cpp	LoadModels__8DSObjectFv
+8034145c	176	DSObject	UnloadModels			dsobject.cpp	UnloadModels__8DSObjectFv
+8034150c	24		__sinit_\dsobject_cpp			dsobject.cpp	__sinit_\dsobject_cpp
+80341524	80	DSObjectManager	constructor			dsobjectmanager.cpp	__ct__15DSObjectManagerFv
+80341574	108	DSObjectManager	destructor			dsobjectmanager.cpp	__dt__15DSObjectManagerFv
+803415e0	368	DSObjectManager	Initialize			dsobjectmanager.cpp	Initialize__15DSObjectManagerFv
+80341750	104	DSObjectManager	UnInitialize			dsobjectmanager.cpp	UnInitialize__15DSObjectManagerFv
+803417b8	316	DSObjectManager	Populate	MarkerSetData*		dsobjectmanager.cpp	Populate__15DSObjectManagerFP13MarkerSetData
+803418f4	168	DSObjectManager	Update	int		dsobjectmanager.cpp	Update__15DSObjectManagerFi
+8034199c	92	DSObjectManager	Render			dsobjectmanager.cpp	Render__15DSObjectManagerFv
+803419f8	4	DSObjectManager	LoadModels			dsobjectmanager.cpp	LoadModels__15DSObjectManagerFv
+803419fc	4	DSObjectManager	UnloadModels			dsobjectmanager.cpp	UnloadModels__15DSObjectManagerFv
+80341a00	24		__sinit_\dsobjectmanager_cpp			dsobjectmanager.cpp	__sinit_\dsobjectmanager_cpp
+80341a18	12	DSPropSet	constructor			dspropset.cpp	__ct__9DSPropSetFv
+80341a24	72	DSPropSet	destructor			dspropset.cpp	__dt__9DSPropSetFv
+80341a6c	104	DSPropSet	Initialize			dspropset.cpp	Initialize__9DSPropSetFv
+80341ad4	12	DSPropSet	UnInitialize			dspropset.cpp	UnInitialize__9DSPropSetFv
+80341ae0	4	DSPropSet	Update	int		dspropset.cpp	Update__9DSPropSetFi
+80341ae4	112	DSPropSet	Render			dspropset.cpp	Render__9DSPropSetFv
+80341b54	716	DSPropSet	LoadModels			dspropset.cpp	LoadModels__9DSPropSetFv
+80341e20	148	DSPropSet	UnloadModels			dspropset.cpp	UnloadModels__9DSPropSetFv
+80341eb4	24		__sinit_\dspropset_cpp			dspropset.cpp	__sinit_\dspropset_cpp
+80341ecc	28	DSShadowEntity	constructor	Ren::CachedModel*		dsshadowentity.cpp	__ct__14DSShadowEntityFPQ23Ren11CachedModel
+80341ee8	88	DSShadowEntity	destructor			dsshadowentity.cpp	__dt__14DSShadowEntityFv
+80341f40	20	DSShadowEntity	Draw	Ren::SceneContext&		dsshadowentity.cpp	Draw__14DSShadowEntityFRQ23Ren12SceneContext
+80341f54	24		__sinit_\dsshadowentity_cpp			dsshadowentity.cpp	__sinit_\dsshadowentity_cpp
+80341f6c	200	DSShieldEffect	constructor			dsshieldeffect.cpp	__ct__14DSShieldEffectFv
+80342034	104	DSShieldEffect	destructor			dsshieldeffect.cpp	__dt__14DSShieldEffectFv
+8034209c	188	DSShieldEffect	DrawPostWorld	Ren::SceneContext&		dsshieldeffect.cpp	DrawPostWorld__14DSShieldEffectFRQ23Ren12SceneContext
+80342158	4	Ren::FullScreenEffect	Update	int		dsshieldeffect.cpp	Update__Q23Ren16FullScreenEffectFi
+8034215c	4	Ren::FullScreenEffect	DrawPostHUD	Ren::SceneContext&		dsshieldeffect.cpp	DrawPostHUD__Q23Ren16FullScreenEffectFRQ23Ren12SceneContext
+80342160	4	Ren::FullScreenEffect	DrawPreHUD	Ren::SceneContext&		dsshieldeffect.cpp	DrawPreHUD__Q23Ren16FullScreenEffectFRQ23Ren12SceneContext
+80342164	4	Ren::FullScreenEffect	DrawPostWorld	Ren::SceneContext&		dsshieldeffect.cpp	DrawPostWorld__Q23Ren16FullScreenEffectFRQ23Ren12SceneContext
+80342168	24		__sinit_\dsshieldeffect_cpp			dsshieldeffect.cpp	__sinit_\dsshieldeffect_cpp
+80342180	44	DSTarget	constructor			dstarget.cpp	__ct__8DSTargetFv
+803421ac	28	DSTarget	destructor			dstarget.cpp	__dt__8DSTargetFv
+803421c8	60	DSTarget	Initialize	DSTargetDef*		dstarget.cpp	Initialize__8DSTargetFP11DSTargetDef
+80342204	20	DSTarget	UnInitialize			dstarget.cpp	UnInitialize__8DSTargetFv
+80342218	324	DSTarget	Rebase	rmVector3, rmVector3		dstarget.cpp	Rebase__8DSTargetF9rmVector39rmVector3
+8034235c	836	DSTarget	SetTranslationState	DSTarget::DSTargetTransState		dstarget.cpp	SetTranslationState__8DSTargetFQ28DSTarget18DSTargetTransState
+803426a0	428	DSTarget	SetTranslatedPosAndReturnComplete	int		dstarget.cpp	SetTranslatedPosAndReturnComplete__8DSTargetFi
+8034284c	24		__sinit_\dstarget_cpp			dstarget.cpp	__sinit_\dstarget_cpp
+80342864	80	DSTargetCharacter	constructor			dstargetcharacter.cpp	__ct__17DSTargetCharacterFv
+803428b4	156	DSTargetCharacter	Initialize	DSTargetDef*, rmVector3, int		dstargetcharacter.cpp	Initialize__17DSTargetCharacterFP11DSTargetDef9rmVector3i
+80342950	108	DSTargetCharacter	UnInitialize			dstargetcharacter.cpp	UnInitialize__17DSTargetCharacterFv
+803429bc	32	DSTargetCharacter	IsBoss			dstargetcharacter.cpp	IsBoss__17DSTargetCharacterFv
+803429dc	656	DSTargetCharacter	Spawn			dstargetcharacter.cpp	Spawn__17DSTargetCharacterFv
+80342c6c	172	DSTargetCharacter	UnSpawn			dstargetcharacter.cpp	UnSpawn__17DSTargetCharacterFv
+80342d18	132	DSTargetCharacter	AddDrawEvent			dstargetcharacter.cpp	AddDrawEvent__17DSTargetCharacterFv
+80342d9c	108	DSTargetCharacter	AddEnterEvent			dstargetcharacter.cpp	AddEnterEvent__17DSTargetCharacterFv
+80342e08	88	DSTargetCharacter	AddIdleEvent			dstargetcharacter.cpp	AddIdleEvent__17DSTargetCharacterFv
+80342e60	112	DSTargetCharacter	AddLeaveEvent			dstargetcharacter.cpp	AddLeaveEvent__17DSTargetCharacterFv
+80342ed0	84	DSTargetCharacter	AddShootEvent			dstargetcharacter.cpp	AddShootEvent__17DSTargetCharacterFv
+80342f24	88	DSTargetCharacter	AddRunShootLeftEvent			dstargetcharacter.cpp	AddRunShootLeftEvent__17DSTargetCharacterFv
+80342f7c	88	DSTargetCharacter	AddRunShootRightEvent			dstargetcharacter.cpp	AddRunShootRightEvent__17DSTargetCharacterFv
+80342fd4	88	DSTargetCharacter	AddRunStopEvent			dstargetcharacter.cpp	AddRunStopEvent__17DSTargetCharacterFv
+8034302c	116	DSTargetCharacter	AddMegashotLeftEvent			dstargetcharacter.cpp	AddMegashotLeftEvent__17DSTargetCharacterFv
+803430a0	116	DSTargetCharacter	AddMegashotRightEvent			dstargetcharacter.cpp	AddMegashotRightEvent__17DSTargetCharacterFv
+80343114	124	DSTargetCharacter	IsDrawAnimationComplete		const	dstargetcharacter.cpp	IsDrawAnimationComplete__17DSTargetCharacterCFv
+80343190	32	AnimationState	IsAnimationComplete		const	dstargetcharacter.cpp	IsAnimationComplete__14AnimationStateCFv
+803431b0	32	DSTargetCharacter	ClearDrawState			dstargetcharacter.cpp	ClearDrawState__17DSTargetCharacterFv
+803431d0	32	DSTargetCharacter	ClearShootState			dstargetcharacter.cpp	ClearShootState__17DSTargetCharacterFv
+803431f0	36	DSTargetCharacter	ClearMegashotState			dstargetcharacter.cpp	ClearMegashotState__17DSTargetCharacterFv
+80343214	120	DSTargetCharacter	UpdateEnter	int		dstargetcharacter.cpp	UpdateEnter__17DSTargetCharacterFi
+8034328c	140	DSTargetCharacter	UpdateHit	int		dstargetcharacter.cpp	UpdateHit__17DSTargetCharacterFi
+80343318	228	DSTargetCharacter	UpdateLeave	int		dstargetcharacter.cpp	UpdateLeave__17DSTargetCharacterFi
+803433fc	500	DSTargetCharacter	UpdateMegashot	int		dstargetcharacter.cpp	UpdateMegashot__17DSTargetCharacterFi
+803435f0	136	DSTargetCharacter	UpdateWait	int		dstargetcharacter.cpp	UpdateWait__17DSTargetCharacterFi
+80343678	892	DSTargetCharacter	SetCharacterAnimation	bool		dstargetcharacter.cpp	SetCharacterAnimation__17DSTargetCharacterFb
+803439f4	1268	DSTargetCharacter	SetCollided	int, bool, PhysicsUserData::Type		dstargetcharacter.cpp	SetCollided__17DSTargetCharacterFibQ215PhysicsUserData4Type
+80343ee8	12	DSTargetCharacter	ResetAlternatingGuns			dstargetcharacter.cpp	ResetAlternatingGuns__17DSTargetCharacterFv
+80343ef4	876	DSTargetCharacter	Update	int		dstargetcharacter.cpp	Update__17DSTargetCharacterFi
+80344260	20	rmVector4	constructor	float, float, float, float		dstargetcharacter.cpp	__ct__9rmVector4Fffff
+80344274	92	DSTargetCharacter	GetHeldGunMatrix	rmMatrix4&, int	const	dstargetcharacter.cpp	GetHeldGunMatrix__17DSTargetCharacterCFR9rmMatrix4i
+803442d0	388	DSTargetCharacter	Render			dstargetcharacter.cpp	Render__17DSTargetCharacterFv
+80344454	36	Ren::Engine	SetGlobalAlphaScale	float		dstargetcharacter.cpp	SetGlobalAlphaScale__Q23Ren6EngineFf
+80344478	1096	DSTargetCharacter	FireInternal	bool		dstargetcharacter.cpp	FireInternal__17DSTargetCharacterFb
+803448c0	112	DSTargetCharacter	SpawnCharacter	rmVector3, char*		dstargetcharacter.cpp	SpawnCharacter__17DSTargetCharacterF9rmVector3Pc
+80344930	236	DSTargetCharacter	InitializePhysics			dstargetcharacter.cpp	InitializePhysics__17DSTargetCharacterFv
+80344a1c	152	DSTargetCharacter	UnInitializePhysics			dstargetcharacter.cpp	UnInitializePhysics__17DSTargetCharacterFv
+80344ab4	264	DSTargetCharacter	CreatePhysicsRigidBody	int, float, PhysicsUserData::Type		dstargetcharacter.cpp	CreatePhysicsRigidBody__17DSTargetCharacterFifQ215PhysicsUserData4Type
+80344bbc	532	DSTargetCharacter	SpawnCharacter			dstargetcharacter.cpp	SpawnCharacter__17DSTargetCharacterFv
+80344dd0	400	DSTargetCharacter	CreateAIEntity			dstargetcharacter.cpp	CreateAIEntity__17DSTargetCharacterFv
+80344f60	100	AncientEvil	CreateAIEntity<27DartShootoutHostileAIEntity>	?FP9Character_P27DartShootoutHostileAIEntity		dstargetcharacter.cpp	CreateAIEntity<27DartShootoutHostileAIEntity>__11AncientEvilFP9Character_P27DartShootoutHostileAIEntity
+80344fc4	156	DSTargetCharacter	PlayRandomGruntSFX	int		dstargetcharacter.cpp	PlayRandomGruntSFX__17DSTargetCharacterFi
+80345060	264	DSTargetCharacter	GetBonePos	int		dstargetcharacter.cpp	GetBonePos__17DSTargetCharacterFi
+80345168	400	DSTargetCharacter	LoadModel			dstargetcharacter.cpp	LoadModel__17DSTargetCharacterFv
+803452f8	120	DSTargetCharacter	UnloadModel			dstargetcharacter.cpp	UnloadModel__17DSTargetCharacterFv
+80345370	208	DSTargetCharacter	HandleEvent	const CString&, void*		dstargetcharacter.cpp	HandleEvent__17DSTargetCharacterFRC7CStringPv
+80345440	148		__sinit_\dstargetcharacter_cpp			dstargetcharacter.cpp	__sinit_\dstargetcharacter_cpp
+803454d4	8		@116@HandleEvent__17DSTargetCharacterFRC7CStringPv			dstargetmanager.cpp	@116@HandleEvent__17DSTargetCharacterFRC7CStringPv
+803454dc	88	DSTargetManager	constructor			dstargetmanager.cpp	__ct__15DSTargetManagerFv
+80345534	96	DSTargetManager	destructor			dstargetmanager.cpp	__dt__15DSTargetManagerFv
+80345594	160	DSTargetManager	Initialize			dstargetmanager.cpp	Initialize__15DSTargetManagerFv
+80345634	60	DSTargetManager	UnInitialize			dstargetmanager.cpp	UnInitialize__15DSTargetManagerFv
+80345670	912	DSTargetManager	AddTarget	MGID, rmVector3, rmMatrix4, int		dstargetmanager.cpp	AddTarget__15DSTargetManagerF4MGID9rmVector39rmMatrix4i
+80345a00	184	DSTargetManager	DestroyAllTargets			dstargetmanager.cpp	DestroyAllTargets__15DSTargetManagerFv
+80345ab8	116	DSTargetManager	IsTargetInnocent	MGID		dstargetmanager.cpp	IsTargetInnocent__15DSTargetManagerF4MGID
+80345b2c	92	DSTargetManager	GetTarget	GUID		dstargetmanager.cpp	GetTarget__15DSTargetManagerF4GUID
+80345b88	304	DSTargetManager	GetMegashotTarget	GUID*, int		dstargetmanager.cpp	GetMegashotTarget__15DSTargetManagerFP4GUIDi
+80345cb8	316	DSTargetManager	Update	int		dstargetmanager.cpp	Update__15DSTargetManagerFi
+80345df4	116	DSTargetManager	Render			dstargetmanager.cpp	Render__15DSTargetManagerFv
+80345e68	64	DSTargetManager	GetTargetDef	MGID		dstargetmanager.cpp	GetTargetDef__15DSTargetManagerF4MGID
+80345ea8	620	DSTargetManager	PopulateFromDatabase			dstargetmanager.cpp	PopulateFromDatabase__15DSTargetManagerFv
+80346114	36	DSTargetManager	LoadModels			dstargetmanager.cpp	LoadModels__15DSTargetManagerFv
+80346138	36	DSTargetManager	UnloadModels			dstargetmanager.cpp	UnloadModels__15DSTargetManagerFv
+8034615c	24		__sinit_\dstargetmanager_cpp			dstargetmanager.cpp	__sinit_\dstargetmanager_cpp
+80346174	60	DSTargetPinup	constructor			dstargetpinup.cpp	__ct__13DSTargetPinupFv
+803461b0	116	DSTargetPinup	Initialize	DSTargetDef*, rmVector3, rmMatrix4, int		dstargetpinup.cpp	Initialize__13DSTargetPinupFP11DSTargetDef9rmVector39rmMatrix4i
+80346224	72	DSTargetPinup	UnInitialize			dstargetpinup.cpp	UnInitialize__13DSTargetPinupFv
+8034626c	700	DSTargetPinup	Spawn			dstargetpinup.cpp	Spawn__13DSTargetPinupFv
+80346528	212	DSTargetPinup	UnSpawn			dstargetpinup.cpp	UnSpawn__13DSTargetPinupFv
+803465fc	496	DSTargetPinup	SetCollided	int		dstargetpinup.cpp	SetCollided__13DSTargetPinupFi
+803467ec	2672	DSTargetPinup	Update	int		dstargetpinup.cpp	Update__13DSTargetPinupFi
+8034725c	136		rmMatrix4RotationX	float, rmMatrix4&		dstargetpinup.cpp	rmMatrix4RotationX__FfR9rmMatrix4
+803472e4	296	DSTargetPinup	Render			dstargetpinup.cpp	Render__13DSTargetPinupFv
+8034740c	820	DSTargetPinup	LoadModels			dstargetpinup.cpp	LoadModels__13DSTargetPinupFv
+80347740	224	DSTargetPinup	UnloadModels			dstargetpinup.cpp	UnloadModels__13DSTargetPinupFv
+80347820	24		__sinit_\dstargetpinup_cpp			dstargetpinup.cpp	__sinit_\dstargetpinup_cpp
+80347838	12	DSTeam	constructor			dsteam.cpp	__ct__6DSTeamFv
+80347844	72	DSTeam	destructor			dsteam.cpp	__dt__6DSTeamFv
+8034788c	240	DSTeam	Initialize			dsteam.cpp	Initialize__6DSTeamFv
+8034797c	12	DSTeam	UnInitialize			dsteam.cpp	UnInitialize__6DSTeamFv
+80347988	60	DSTeam	GetMaxHealth			dsteam.cpp	GetMaxHealth__6DSTeamFv
+803479c4	128	DSTeam	SetHealth	int		dsteam.cpp	SetHealth__6DSTeamFi
+80347a44	60	DSTeam	SetPlane	rmVector3, rmVector3		dsteam.cpp	SetPlane__6DSTeamF9rmVector39rmVector3
+80347a80	128	DSTeam	IsPosBehindTeam	rmVector3		dsteam.cpp	IsPosBehindTeam__6DSTeamF9rmVector3
+80347b00	32	DSTeam	AddScore	int, int		dsteam.cpp	AddScore__6DSTeamFii
+80347b20	12	DSTeam	GetScore	int		dsteam.cpp	GetScore__6DSTeamFi
+80347b2c	24	DSTeam	AddShotFired	int		dsteam.cpp	AddShotFired__6DSTeamFi
+80347b44	16	DSTeam	GetShotFired	int		dsteam.cpp	GetShotFired__6DSTeamFi
+80347b54	156	DSTeam	AddShotHit	int, rmVector3		dsteam.cpp	AddShotHit__6DSTeamFi9rmVector3
+80347bf0	16	DSTeam	GetShotHits	int		dsteam.cpp	GetShotHits__6DSTeamFi
+80347c00	196	DSTeam	AddShotMiss	int		dsteam.cpp	AddShotMiss__6DSTeamFi
+80347cc4	20	DSTeam	ResetHittingStreak	int		dsteam.cpp	ResetHittingStreak__6DSTeamFi
+80347cd8	20	DSTeam	ResetMegameterHittingStreak	int		dsteam.cpp	ResetMegameterHittingStreak__6DSTeamFi
+80347cec	16	DSTeam	GetMegameterHittingStreak	int		dsteam.cpp	GetMegameterHittingStreak__6DSTeamFi
+80347cfc	4	DSTeam	Update	int		dsteam.cpp	Update__6DSTeamFi
+80347d00	24	DSTeam	AddKnockout	int		dsteam.cpp	AddKnockout__6DSTeamFi
+80347d18	24	DSTeam	AddGoodPopup	int		dsteam.cpp	AddGoodPopup__6DSTeamFi
+80347d30	24	DSTeam	AddBadPopup	int		dsteam.cpp	AddBadPopup__6DSTeamFi
+80347d48	24	DSTeam	AddSuccessfulMegaHit	int		dsteam.cpp	AddSuccessfulMegaHit__6DSTeamFi
+80347d60	16	DSTeam	GetSuccessfulMegaHits	int		dsteam.cpp	GetSuccessfulMegaHits__6DSTeamFi
+80347d70	16	DSTeam	SetAccuracy	int, int		dsteam.cpp	SetAccuracy__6DSTeamFii
+80347d80	16	DSTeam	GetAccuracy	int		dsteam.cpp	GetAccuracy__6DSTeamFi
+80347d90	24		__sinit_\dsteam_cpp			dsteam.cpp	__sinit_\dsteam_cpp
+80347da8	232	MGDartShootout	constructor	Ren::Scene*		mgdartshootout.cpp	__ct__14MGDartShootoutFPQ23Ren5Scene
+80347e90	112	MGDartShootout	destructor			mgdartshootout.cpp	__dt__14MGDartShootoutFv
+80347f00	1436	MGDartShootout	Initialize	const World*		mgdartshootout.cpp	Initialize__14MGDartShootoutFPC5World
+8034849c	780	MGDartShootout	UnInitialize			mgdartshootout.cpp	UnInitialize__14MGDartShootoutFv
+803487a8	308	MGDartShootout	InitializeViewport			mgdartshootout.cpp	InitializeViewport__14MGDartShootoutFv
+803488dc	68	MGDartShootout	InitializeAptHud			mgdartshootout.cpp	InitializeAptHud__14MGDartShootoutFv
+80348920	156	MGDartShootout	InitializeAbilities			mgdartshootout.cpp	InitializeAbilities__14MGDartShootoutFv
+803489bc	424	MGDartShootout	Update	int		mgdartshootout.cpp	Update__14MGDartShootoutFi
+80348b64	288	MGDartShootout	Draw	Ren::SceneContext&		mgdartshootout.cpp	Draw__14MGDartShootoutFRQ23Ren12SceneContext
+80348c84	1288	MGDartShootout	ResetMiniGame			mgdartshootout.cpp	ResetMiniGame__14MGDartShootoutFv
+8034918c	140	MGDartShootout	StartTransition			mgdartshootout.cpp	StartTransition__14MGDartShootoutFv
+80349218	196	MGDartShootout	StartEncounter			mgdartshootout.cpp	StartEncounter__14MGDartShootoutFv
+803492dc	8	MGDartShootout	DestroyAiDarts			mgdartshootout.cpp	DestroyAiDarts__14MGDartShootoutFv
+803492e4	196	MGDartShootout	EnableBulletTime	rmVector3		mgdartshootout.cpp	EnableBulletTime__14MGDartShootoutF9rmVector3
+803493a8	124	MGDartShootout	SetBulletTimeFocus	rmVector3		mgdartshootout.cpp	SetBulletTimeFocus__14MGDartShootoutF9rmVector3
+80349424	100	MGDartShootout	DisableBulletTime			mgdartshootout.cpp	DisableBulletTime__14MGDartShootoutFv
+80349488	44	MGDartShootout	GetBulletTimeDartHitScore		const	mgdartshootout.cpp	GetBulletTimeDartHitScore__14MGDartShootoutCFv
+803494b4	44	MGDartShootout	GetBulletTimeDartHitProgression		const	mgdartshootout.cpp	GetBulletTimeDartHitProgression__14MGDartShootoutCFv
+803494e0	12	MGDartShootout	ShowBulletTimeDartHitScore			mgdartshootout.cpp	ShowBulletTimeDartHitScore__14MGDartShootoutFv
+803494ec	300	MGDartShootout	ShowScorePartFx	MGDartShootout::ScorePartFx, const rmVector3&		mgdartshootout.cpp	ShowScorePartFx__14MGDartShootoutFQ214MGDartShootout11ScorePartFxRC9rmVector3
+80349618	8	MGDartShootout	IsEncounterShieldOnly		const	mgdartshootout.cpp	IsEncounterShieldOnly__14MGDartShootoutCFv
+80349620	44	MGDartShootout	IsInGame		const	mgdartshootout.cpp	IsInGame__14MGDartShootoutCFv
+8034964c	76	MGDartShootout	GenerateCameraShake	int, float	const	mgdartshootout.cpp	GenerateCameraShake__14MGDartShootoutCFif
+80349698	60	MGDartShootout	GenerateWalkEffect	int	const	mgdartshootout.cpp	GenerateWalkEffect__14MGDartShootoutCFi
+803496d4	356	MGDartShootout	GetPlayerPosWithOffset			mgdartshootout.cpp	GetPlayerPosWithOffset__14MGDartShootoutFv
+80349838	244	MGDartShootout	CreateTarget	rmVector3, MGID, rmMatrix4, int		mgdartshootout.cpp	CreateTarget__14MGDartShootoutF9rmVector34MGID9rmMatrix4i
+8034992c	48	MGDartShootout	IsTargetInnocent	MGID		mgdartshootout.cpp	IsTargetInnocent__14MGDartShootoutF4MGID
+8034995c	48	MGDartShootout	GetTarget	GUID		mgdartshootout.cpp	GetTarget__14MGDartShootoutF4GUID
+8034998c	8	MGDartShootout	GetMegashotTarget	GUID*, int		mgdartshootout.cpp	GetMegashotTarget__14MGDartShootoutFP4GUIDi
+80349994	8	MGDartShootout	DestroyAllTargets			mgdartshootout.cpp	DestroyAllTargets__14MGDartShootoutFv
+8034999c	88	MGDartShootout	IsPosBehindTeam	rmVector3		mgdartshootout.cpp	IsPosBehindTeam__14MGDartShootoutF9rmVector3
+803499f4	40	MGDartShootout	GetTeamPlane			mgdartshootout.cpp	GetTeamPlane__14MGDartShootoutFv
+80349a1c	12	MGDartShootout	GetTeamHealth			mgdartshootout.cpp	GetTeamHealth__14MGDartShootoutFv
+80349a28	8	MGDartShootout	SetTeamHealth	int		mgdartshootout.cpp	SetTeamHealth__14MGDartShootoutFi
+80349a30	128	MGDartShootout	ReplenishTeamHealth	float		mgdartshootout.cpp	ReplenishTeamHealth__14MGDartShootoutFf
+80349ab0	100	MGDartShootout	AddFullAutoEffect			mgdartshootout.cpp	AddFullAutoEffect__14MGDartShootoutFv
+80349b14	92	MGDartShootout	AddScore	int, int		mgdartshootout.cpp	AddScore__14MGDartShootoutFii
+80349b70	8	MGDartShootout	GetScore	int		mgdartshootout.cpp	GetScore__14MGDartShootoutFi
+80349b78	8	MGDartShootout	AddShotFired	int		mgdartshootout.cpp	AddShotFired__14MGDartShootoutFi
+80349b80	88	MGDartShootout	AddShotHit	int, rmVector3		mgdartshootout.cpp	AddShotHit__14MGDartShootoutFi9rmVector3
+80349bd8	8	MGDartShootout	AddShotMiss	int		mgdartshootout.cpp	AddShotMiss__14MGDartShootoutFi
+80349be0	8	MGDartShootout	AddKnockout	int		mgdartshootout.cpp	AddKnockout__14MGDartShootoutFi
+80349be8	8	MGDartShootout	AddGoodPopup	int		mgdartshootout.cpp	AddGoodPopup__14MGDartShootoutFi
+80349bf0	8	MGDartShootout	AddBadPopup	int		mgdartshootout.cpp	AddBadPopup__14MGDartShootoutFi
+80349bf8	8	MGDartShootout	AddSuccessfulMegaHit	int		mgdartshootout.cpp	AddSuccessfulMegaHit__14MGDartShootoutFi
+80349c00	8	MGDartShootout	ResetHittingStreak	int		mgdartshootout.cpp	ResetHittingStreak__14MGDartShootoutFi
+80349c08	8	MGDartShootout	ResetMegameterHittingStreak	int		mgdartshootout.cpp	ResetMegameterHittingStreak__14MGDartShootoutFi
+80349c10	8	MGDartShootout	GetMegameterHittingStreak	int		mgdartshootout.cpp	GetMegameterHittingStreak__14MGDartShootoutFi
+80349c18	84	MGDartShootout	GetBossBestiaryKey		const	mgdartshootout.cpp	GetBossBestiaryKey__14MGDartShootoutCFv
+80349c6c	24	MGDartShootout	ShowBossHealth	bool		mgdartshootout.cpp	ShowBossHealth__14MGDartShootoutFb
+80349c84	40	MGDartShootout	ShowBossMsg	bool		mgdartshootout.cpp	ShowBossMsg__14MGDartShootoutFb
+80349cac	152	MGDartShootout	AddDart	rmVector3, rmVector3, int, bool, DSDartType, GUID, bool		mgdartshootout.cpp	AddDart__14MGDartShootoutF9rmVector39rmVector3ib10DSDartType4GUIDb
+80349d44	164	MGDartShootout	IsMaleCharacter			mgdartshootout.cpp	IsMaleCharacter__14MGDartShootoutFv
+80349de8	12	MGDartShootout	OnGameStartAnimComplete			mgdartshootout.cpp	OnGameStartAnimComplete__14MGDartShootoutFv
+80349df4	12	MGDartShootout	OnHudLoadComplete			mgdartshootout.cpp	OnHudLoadComplete__14MGDartShootoutFv
+80349e00	4	MGDartShootout	OnPauseMenuLoaded			mgdartshootout.cpp	OnPauseMenuLoaded__14MGDartShootoutFv
+80349e04	120	MGDartShootout	OnPauseContinue			mgdartshootout.cpp	OnPauseContinue__14MGDartShootoutFv
+80349e7c	92	MGDartShootout	OnPauseReset			mgdartshootout.cpp	OnPauseReset__14MGDartShootoutFv
+80349ed8	28	MGDartShootout	OnPauseQuit			mgdartshootout.cpp	OnPauseQuit__14MGDartShootoutFv
+80349ef4	8	MGDartShootout	GetNumHuds			mgdartshootout.cpp	GetNumHuds__14MGDartShootoutFv
+80349efc	100	MGDartShootout	HandleControllerDisconnect			mgdartshootout.cpp	HandleControllerDisconnect__14MGDartShootoutFv
+80349f60	1456	MGDartShootout	HandleActions			mgdartshootout.cpp	HandleActions__14MGDartShootoutFv
+8034a510	76	DSDartGun	CanShoot		const	mgdartshootout.cpp	CanShoot__9DSDartGunCFv
+8034a55c	228	MGDartShootout	LookForPauseEvents			mgdartshootout.cpp	LookForPauseEvents__14MGDartShootoutFv
+8034a640	248	MGDartShootout	UpdateCamera	int		mgdartshootout.cpp	UpdateCamera__14MGDartShootoutFi
+8034a738	308	MGDartShootout	UpdateShadows			mgdartshootout.cpp	UpdateShadows__14MGDartShootoutFv
+8034a86c	88	MGDartShootout	UpdatePreGameInstructions	int		mgdartshootout.cpp	UpdatePreGameInstructions__14MGDartShootoutFi
+8034a8c4	304	MGDartShootout	UpdateIntro	int		mgdartshootout.cpp	UpdateIntro__14MGDartShootoutFi
+8034a9f4	1028	MGDartShootout	UpdateGame	int		mgdartshootout.cpp	UpdateGame__14MGDartShootoutFi
+8034adf8	240	MGDartShootout	UpdateTransitionToNextEncounter	int		mgdartshootout.cpp	UpdateTransitionToNextEncounter__14MGDartShootoutFi
+8034aee8	240	MGDartShootout	UpdateEncounter	int		mgdartshootout.cpp	UpdateEncounter__14MGDartShootoutFi
+8034afd8	156	MGDartShootout	UpdatePostGame	int		mgdartshootout.cpp	UpdatePostGame__14MGDartShootoutFi
+8034b074	860	MGDartShootout	UpdateOutro	int		mgdartshootout.cpp	UpdateOutro__14MGDartShootoutFi
+8034b3d0	60	MGDartShootout	UpdateWaitForApocalypse	int		mgdartshootout.cpp	UpdateWaitForApocalypse__14MGDartShootoutFi
+8034b40c	1000	MGDartShootout	UpdateHUD	int		mgdartshootout.cpp	UpdateHUD__14MGDartShootoutFi
+8034b7f4	184	MGDartShootout	ResetHUD			mgdartshootout.cpp	ResetHUD__14MGDartShootoutFv
+8034b8ac	204	MGDartShootout	SetDareType	Enums::MiniGameDareType		mgdartshootout.cpp	SetDareType__14MGDartShootoutFQ25Enums16MiniGameDareType
+8034b978	292	MGDartShootout	CheckDare			mgdartshootout.cpp	CheckDare__14MGDartShootoutFv
+8034ba9c	184	MGDartShootout	HasTimeLimitExpired			mgdartshootout.cpp	HasTimeLimitExpired__14MGDartShootoutFv
+8034bb54	16	MGDartShootout	ReloadCallback	const EA::Conga::CongaOutput*, void*		mgdartshootout.cpp	ReloadCallback__14MGDartShootoutFPCQ32EA5Conga11CongaOutputPv
+8034bb64	36	MGDartShootout	ProcessReloadGesture	const EA::Conga::CongaOutput*		mgdartshootout.cpp	ProcessReloadGesture__14MGDartShootoutFPCQ32EA5Conga11CongaOutput
+8034bb88	16	MGDartShootout	GetTargetScoreValue	Enums::DSTargetType		mgdartshootout.cpp	GetTargetScoreValue__14MGDartShootoutFQ25Enums12DSTargetType
+8034bb98	8	MGDartShootout	GetMegaShotPoints			mgdartshootout.cpp	GetMegaShotPoints__14MGDartShootoutFv
+8034bba0	8	MGDartShootout	GetShieldedDartPoints			mgdartshootout.cpp	GetShieldedDartPoints__14MGDartShootoutFv
+8034bba8	8	MGDartShootout	GetDartUpgradeScoreMultiplier			mgdartshootout.cpp	GetDartUpgradeScoreMultiplier__14MGDartShootoutFv
+8034bbb0	444	MGDartShootout	InitializeScoringSchema			mgdartshootout.cpp	InitializeScoringSchema__14MGDartShootoutFv
+8034bd6c	120	MGDartShootout	InitializeTimeLimit			mgdartshootout.cpp	InitializeTimeLimit__14MGDartShootoutFv
+8034bde4	252	MGDartShootout	ProcessRules			mgdartshootout.cpp	ProcessRules__14MGDartShootoutFv
+8034bee0	108		__sinit_\mgdartshootout_cpp			mgdartshootout.cpp	__sinit_\mgdartshootout_cpp

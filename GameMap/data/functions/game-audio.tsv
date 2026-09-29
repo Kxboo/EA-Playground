@@ -1,0 +1,330 @@
+# addr	size	class	method	args	const	source_unit	mangled
+802da56c	700		__sinit_\Playground_AEMS_cpp			Playground_AEMS.cpp	__sinit_\Playground_AEMS_cpp
+802da828	48	AuAEMSFile	constructor			AuAEMSFile.cpp	__ct__10AuAEMSFileFv
+802da858	104	AuAEMSFile	destructor			AuAEMSFile.cpp	__dt__10AuAEMSFileFv
+802da8c0	140	AuAEMSFile	Purge			AuAEMSFile.cpp	Purge__10AuAEMSFileFv
+802da94c	84	AuAEMSEventSystemFile	constructor	Csis::Result(*)(void)*		AuAEMSFile.cpp	__ct__21AuAEMSEventSystemFileFPFv_Q24Csis6Result
+802da9a0	116	AuAEMSEventSystemFile	destructor			AuAEMSFile.cpp	__dt__21AuAEMSEventSystemFileFv
+802daa14	84	AuAEMSEventSystemFile	Purge			AuAEMSFile.cpp	Purge__21AuAEMSEventSystemFileFv
+802daa68	76	AuAEMSModule	constructor			AuAEMSFile.cpp	__ct__12AuAEMSModuleFv
+802daab4	116	AuAEMSModule	destructor			AuAEMSFile.cpp	__dt__12AuAEMSModuleFv
+802dab28	84	AuAEMSModule	Purge			AuAEMSFile.cpp	Purge__12AuAEMSModuleFv
+802dab7c	24		__sinit_\AuAEMSFile_cpp			AuAEMSFile.cpp	__sinit_\AuAEMSFile_cpp
+802dab94	24		__sinit_\AuAEMSFiles_cpp			AuAEMSFiles.cpp	__sinit_\AuAEMSFiles_cpp
+802dabac	432	AuAEMSManager	constructor			AuAEMSManager.cpp	__ct__13AuAEMSManagerFv
+802dad5c	1380	Csis	CacheHandlesPlayground_AEMS			AuAEMSManager.cpp	CacheHandlesPlayground_AEMS__4CsisFv
+802db2c0	344	AuAEMSManager	destructor			AuAEMSManager.cpp	__dt__13AuAEMSManagerFv
+802db418	84	AuAEMSManager	Instance			AuAEMSManager.cpp	Instance__13AuAEMSManagerFv
+802db46c	208	AuAEMSManager	Initialize			AuAEMSManager.cpp	Initialize__13AuAEMSManagerFv
+802db53c	220	AuAEMSManager	Destroy			AuAEMSManager.cpp	Destroy__13AuAEMSManagerFv
+802db618	192	AuAEMSManager	Update	int		AuAEMSManager.cpp	Update__13AuAEMSManagerFi
+802db6d8	156	AuAEMSManager	SetAudioMode	AUDIOMODE		AuAEMSManager.cpp	SetAudioMode__13AuAEMSManagerF9AUDIOMODE
+802db774	1128	AuAEMSManager	LoadData	AUDIODATA		AuAEMSManager.cpp	LoadData__13AuAEMSManagerF9AUDIODATA
+802dbbdc	660	AuAEMSManager	UnloadData	AUDIODATA		AuAEMSManager.cpp	UnloadData__13AuAEMSManagerF9AUDIODATA
+802dbe70	232	AuAEMSManager	ResetMinigame			AuAEMSManager.cpp	ResetMinigame__13AuAEMSManagerFv
+802dbf58	472	AuAEMSManager	SetGlobal	AUDIOAEMSGLOBALTYPES, int		AuAEMSManager.cpp	SetGlobal__13AuAEMSManagerF20AUDIOAEMSGLOBALTYPESi
+802dc130	112	AuAEMSManager	Pause			AuAEMSManager.cpp	Pause__13AuAEMSManagerFv
+802dc1a0	108	AuAEMSManager	UnPause			AuAEMSManager.cpp	UnPause__13AuAEMSManagerFv
+802dc20c	1076	AuAEMSManager	PlaySFX	AUDIOAEMSFEHUDSFX, int, int		AuAEMSManager.cpp	PlaySFX__13AuAEMSManagerF17AUDIOAEMSFEHUDSFXii
+802dc640	96	Csis::UI_Sfx	destructor			AuAEMSManager.cpp	__dt__Q24Csis6UI_SfxFv
+802dc6a0	96	Csis::UI_Loop_Sfx	destructor			AuAEMSManager.cpp	__dt__Q24Csis11UI_Loop_SfxFv
+802dc700	92	Csis::UI_Loop_Sfx	constructor	int		AuAEMSManager.cpp	__ct__Q24Csis11UI_Loop_SfxFi
+802dc75c	92	Csis::MGSFX_CommonHUD	constructor	int		AuAEMSManager.cpp	__ct__Q24Csis15MGSFX_CommonHUDFi
+802dc7b8	96	Csis::MGSFX_CommonHUD	destructor			AuAEMSManager.cpp	__dt__Q24Csis15MGSFX_CommonHUDFv
+802dc818	96	Csis::MGSFX_HUD_TB	destructor			AuAEMSManager.cpp	__dt__Q24Csis12MGSFX_HUD_TBFv
+802dc878	96	Csis::MGSFX_HUD_RC	destructor			AuAEMSManager.cpp	__dt__Q24Csis12MGSFX_HUD_RCFv
+802dc8d8	96	Csis::MGSFX_HUD_PA	destructor			AuAEMSManager.cpp	__dt__Q24Csis12MGSFX_HUD_PAFv
+802dc938	96	Csis::MGSFX_HUD_DB	destructor			AuAEMSManager.cpp	__dt__Q24Csis12MGSFX_HUD_DBFv
+802dc998	96	Csis::MGSFX_HUD_DS	destructor			AuAEMSManager.cpp	__dt__Q24Csis12MGSFX_HUD_DSFv
+802dc9f8	96	Csis::MGSFX_HUD_Footie	destructor			AuAEMSManager.cpp	__dt__Q24Csis16MGSFX_HUD_FootieFv
+802dca58	96	Csis::MGSFX_HUD_WB	destructor			AuAEMSManager.cpp	__dt__Q24Csis12MGSFX_HUD_WBFv
+802dcab8	144	AuAEMSManager	PlaySFX	const char*		AuAEMSManager.cpp	PlaySFX__13AuAEMSManagerFPCc
+802dcb48	4752	AuAEMSManager	PlaySFX	AUDIOAEMSBESFX, int, int		AuAEMSManager.cpp	PlaySFX__13AuAEMSManagerF14AUDIOAEMSBESFXii
+802dddd8	96	Csis::WSFX_Footsteps	destructor			AuAEMSManager.cpp	__dt__Q24Csis14WSFX_FootstepsFv
+802dde38	104	Csis::WSFX_NIS	constructor	int, int		AuAEMSManager.cpp	__ct__Q24Csis8WSFX_NISFii
+802ddea0	44	Csis::WSFX_NIS	SetAzimuth	int		AuAEMSManager.cpp	SetAzimuth__Q24Csis8WSFX_NISFi
+802ddecc	96	Csis::WSFX_NIS	destructor			AuAEMSManager.cpp	__dt__Q24Csis8WSFX_NISFv
+802ddf2c	96	Csis::MGSFX_Grunts_Male	destructor			AuAEMSManager.cpp	__dt__Q24Csis17MGSFX_Grunts_MaleFv
+802ddf8c	96	Csis::MGSFX_Grunts_Female	destructor			AuAEMSManager.cpp	__dt__Q24Csis19MGSFX_Grunts_FemaleFv
+802ddfec	96	Csis::MGSFX_MEGAGrunts_Male	destructor			AuAEMSManager.cpp	__dt__Q24Csis21MGSFX_MEGAGrunts_MaleFv
+802de04c	96	Csis::MGSFX_MEGAGrunts_Female	destructor			AuAEMSManager.cpp	__dt__Q24Csis23MGSFX_MEGAGrunts_FemaleFv
+802de0ac	96	Csis::MGSFX_Damage_Male	destructor			AuAEMSManager.cpp	__dt__Q24Csis17MGSFX_Damage_MaleFv
+802de10c	96	Csis::MGSFX_Damage_Female	destructor			AuAEMSManager.cpp	__dt__Q24Csis19MGSFX_Damage_FemaleFv
+802de16c	132	Csis::MGSFX_Laughter_M	constructor	int, int		AuAEMSManager.cpp	__ct__Q24Csis16MGSFX_Laughter_MFii
+802de1f0	96	Csis::MGSFX_Laughter_M	destructor			AuAEMSManager.cpp	__dt__Q24Csis16MGSFX_Laughter_MFv
+802de250	132	Csis::MGSFX_Laughter_F	constructor	int, int		AuAEMSManager.cpp	__ct__Q24Csis16MGSFX_Laughter_FFii
+802de2d4	96	Csis::MGSFX_Laughter_F	destructor			AuAEMSManager.cpp	__dt__Q24Csis16MGSFX_Laughter_FFv
+802de334	96	Csis::MGSFX_Tetherball_Hits	destructor			AuAEMSManager.cpp	__dt__Q24Csis21MGSFX_Tetherball_HitsFv
+802de394	96	Csis::MGSFX_RCCars_Collision	destructor			AuAEMSManager.cpp	__dt__Q24Csis22MGSFX_RCCars_CollisionFv
+802de3f4	164	Csis::MGSFX_RCCars_Moves	constructor	int, int, int		AuAEMSManager.cpp	__ct__Q24Csis18MGSFX_RCCars_MovesFiii
+802de498	96	Csis::MGSFX_RCCars_Moves	destructor			AuAEMSManager.cpp	__dt__Q24Csis18MGSFX_RCCars_MovesFv
+802de4f8	132	Csis::MGSFX_Dodgeball_Actions	constructor	int, int		AuAEMSManager.cpp	__ct__Q24Csis23MGSFX_Dodgeball_ActionsFii
+802de57c	96	Csis::MGSFX_Dodgeball_Actions	destructor			AuAEMSManager.cpp	__dt__Q24Csis23MGSFX_Dodgeball_ActionsFv
+802de5dc	96	Csis::MGSFX_Dodgeball_Ball	destructor			AuAEMSManager.cpp	__dt__Q24Csis20MGSFX_Dodgeball_BallFv
+802de63c	96	Csis::MGSFX_DB_SetupAnim	destructor			AuAEMSManager.cpp	__dt__Q24Csis18MGSFX_DB_SetupAnimFv
+802de69c	164	Csis::MGSFX_PaperAirpl_WindySFX	constructor	int, int, int		AuAEMSManager.cpp	__ct__Q24Csis25MGSFX_PaperAirpl_WindySFXFiii
+802de740	96	Csis::MGSFX_PaperAirpl_WindySFX	destructor			AuAEMSManager.cpp	__dt__Q24Csis25MGSFX_PaperAirpl_WindySFXFv
+802de7a0	164	Csis::MGSFX_PaperAirpl_Collisions	constructor	int, int, int		AuAEMSManager.cpp	__ct__Q24Csis27MGSFX_PaperAirpl_CollisionsFiii
+802de844	96	Csis::MGSFX_PaperAirpl_Collisions	destructor			AuAEMSManager.cpp	__dt__Q24Csis27MGSFX_PaperAirpl_CollisionsFv
+802de8a4	96	Csis::MGSFX_PaperAirpl_Launch	destructor			AuAEMSManager.cpp	__dt__Q24Csis23MGSFX_PaperAirpl_LaunchFv
+802de904	132	Csis::MGSFX_Darts_Scrptd_Targets	constructor	int, int		AuAEMSManager.cpp	__ct__Q24Csis26MGSFX_Darts_Scrptd_TargetsFii
+802de988	96	Csis::MGSFX_Darts_Scrptd_Targets	destructor			AuAEMSManager.cpp	__dt__Q24Csis26MGSFX_Darts_Scrptd_TargetsFv
+802de9e8	132	Csis::MGSFX_Darts_Weapons	constructor	int, int		AuAEMSManager.cpp	__ct__Q24Csis19MGSFX_Darts_WeaponsFii
+802dea6c	96	Csis::MGSFX_Darts_Weapons	destructor			AuAEMSManager.cpp	__dt__Q24Csis19MGSFX_Darts_WeaponsFv
+802deacc	132	Csis::MGSFX_Darts_NPC	constructor	int, int		AuAEMSManager.cpp	__ct__Q24Csis15MGSFX_Darts_NPCFii
+802deb50	96	Csis::MGSFX_Darts_NPC	destructor			AuAEMSManager.cpp	__dt__Q24Csis15MGSFX_Darts_NPCFv
+802debb0	132	Csis::MGSFX_Darts_BulletTime_SFX	constructor	int, int		AuAEMSManager.cpp	__ct__Q24Csis26MGSFX_Darts_BulletTime_SFXFii
+802dec34	96	Csis::MGSFX_Darts_BulletTime_SFX	destructor			AuAEMSManager.cpp	__dt__Q24Csis26MGSFX_Darts_BulletTime_SFXFv
+802dec94	96	Csis::MGSFX_Footie_Ball	destructor			AuAEMSManager.cpp	__dt__Q24Csis17MGSFX_Footie_BallFv
+802decf4	132	Csis::MGSFX_Footie_Actions	constructor	int, int		AuAEMSManager.cpp	__ct__Q24Csis20MGSFX_Footie_ActionsFii
+802ded78	96	Csis::MGSFX_Footie_Actions	destructor			AuAEMSManager.cpp	__dt__Q24Csis20MGSFX_Footie_ActionsFv
+802dedd8	96	Csis::MGSFX_Footie_Collisions	destructor			AuAEMSManager.cpp	__dt__Q24Csis23MGSFX_Footie_CollisionsFv
+802dee38	132	Csis::MGSFX_WallBall_Actions	constructor	int, int		AuAEMSManager.cpp	__ct__Q24Csis22MGSFX_WallBall_ActionsFii
+802deebc	96	Csis::MGSFX_WallBall_Actions	destructor			AuAEMSManager.cpp	__dt__Q24Csis22MGSFX_WallBall_ActionsFv
+802def1c	132	Csis::MGSFX_WallBall_Ball	constructor	int, int		AuAEMSManager.cpp	__ct__Q24Csis19MGSFX_WallBall_BallFii
+802defa0	96	Csis::MGSFX_WallBall_Ball	destructor			AuAEMSManager.cpp	__dt__Q24Csis19MGSFX_WallBall_BallFv
+802df000	96	Csis::MicroSFX_High5	destructor			AuAEMSManager.cpp	__dt__Q24Csis14MicroSFX_High5Fv
+802df060	96	Csis::MicroSFX_BugCatch	destructor			AuAEMSManager.cpp	__dt__Q24Csis17MicroSFX_BugCatchFv
+802df0c0	132	Csis::MicroSFX_BBall_Dribble	constructor	int, int		AuAEMSManager.cpp	__ct__Q24Csis22MicroSFX_BBall_DribbleFii
+802df144	96	Csis::MicroSFX_BBall_Dribble	destructor			AuAEMSManager.cpp	__dt__Q24Csis22MicroSFX_BBall_DribbleFv
+802df1a4	132	Csis::MicroSFX_FreeThrow	constructor	int, int		AuAEMSManager.cpp	__ct__Q24Csis18MicroSFX_FreeThrowFii
+802df228	96	Csis::MicroSFX_FreeThrow	destructor			AuAEMSManager.cpp	__dt__Q24Csis18MicroSFX_FreeThrowFv
+802df288	1408	AuAEMSManager	StartSFX	AUDIOAEMSBESFX, int, int		AuAEMSManager.cpp	StartSFX__13AuAEMSManagerF14AUDIOAEMSBESFXii
+802df808	96	Csis::MGSFX_RCCars_Engine_1	destructor			AuAEMSManager.cpp	__dt__Q24Csis21MGSFX_RCCars_Engine_1Fv
+802df868	44	Csis::MGSFX_RCCars_Engine_1	SetAzimuth	int		AuAEMSManager.cpp	SetAzimuth__Q24Csis21MGSFX_RCCars_Engine_1Fi
+802df894	36	Csis::MGSFX_RCCars_Engine_1	SetSpeed	int		AuAEMSManager.cpp	SetSpeed__Q24Csis21MGSFX_RCCars_Engine_1Fi
+802df8b8	36	Csis::MGSFX_RCCars_Engine_1	SetDistance	int		AuAEMSManager.cpp	SetDistance__Q24Csis21MGSFX_RCCars_Engine_1Fi
+802df8dc	96	Csis::MGSFX_RCCars_Engine_2	destructor			AuAEMSManager.cpp	__dt__Q24Csis21MGSFX_RCCars_Engine_2Fv
+802df93c	44	Csis::MGSFX_RCCars_Engine_2	SetAzimuth	int		AuAEMSManager.cpp	SetAzimuth__Q24Csis21MGSFX_RCCars_Engine_2Fi
+802df968	36	Csis::MGSFX_RCCars_Engine_2	SetSpeed	int		AuAEMSManager.cpp	SetSpeed__Q24Csis21MGSFX_RCCars_Engine_2Fi
+802df98c	36	Csis::MGSFX_RCCars_Engine_2	SetDistance	int		AuAEMSManager.cpp	SetDistance__Q24Csis21MGSFX_RCCars_Engine_2Fi
+802df9b0	96	Csis::MGSFX_RCCars_Engine_3	destructor			AuAEMSManager.cpp	__dt__Q24Csis21MGSFX_RCCars_Engine_3Fv
+802dfa10	44	Csis::MGSFX_RCCars_Engine_3	SetAzimuth	int		AuAEMSManager.cpp	SetAzimuth__Q24Csis21MGSFX_RCCars_Engine_3Fi
+802dfa3c	36	Csis::MGSFX_RCCars_Engine_3	SetSpeed	int		AuAEMSManager.cpp	SetSpeed__Q24Csis21MGSFX_RCCars_Engine_3Fi
+802dfa60	36	Csis::MGSFX_RCCars_Engine_3	SetDistance	int		AuAEMSManager.cpp	SetDistance__Q24Csis21MGSFX_RCCars_Engine_3Fi
+802dfa84	96	Csis::MGSFX_RCCars_Engine_4	destructor			AuAEMSManager.cpp	__dt__Q24Csis21MGSFX_RCCars_Engine_4Fv
+802dfae4	44	Csis::MGSFX_RCCars_Engine_4	SetAzimuth	int		AuAEMSManager.cpp	SetAzimuth__Q24Csis21MGSFX_RCCars_Engine_4Fi
+802dfb10	36	Csis::MGSFX_RCCars_Engine_4	SetSpeed	int		AuAEMSManager.cpp	SetSpeed__Q24Csis21MGSFX_RCCars_Engine_4Fi
+802dfb34	36	Csis::MGSFX_RCCars_Engine_4	SetDistance	int		AuAEMSManager.cpp	SetDistance__Q24Csis21MGSFX_RCCars_Engine_4Fi
+802dfb58	96	Csis::MGSFX_RCCars_FireCrkrWick_LP	destructor			AuAEMSManager.cpp	__dt__Q24Csis28MGSFX_RCCars_FireCrkrWick_LPFv
+802dfbb8	44	Csis::MGSFX_RCCars_FireCrkrWick_LP	SetAzimuth	int		AuAEMSManager.cpp	SetAzimuth__Q24Csis28MGSFX_RCCars_FireCrkrWick_LPFi
+802dfbe4	96	Csis::MGSFX_PaperAirp_WindEngine	destructor			AuAEMSManager.cpp	__dt__Q24Csis26MGSFX_PaperAirp_WindEngineFv
+802dfc44	36	Csis::MGSFX_PaperAirp_WindEngine	SetHeight	int		AuAEMSManager.cpp	SetHeight__Q24Csis26MGSFX_PaperAirp_WindEngineFi
+802dfc68	96	Csis::MGSFX_PaperAirpl_Emitters_LP	destructor			AuAEMSManager.cpp	__dt__Q24Csis28MGSFX_PaperAirpl_Emitters_LPFv
+802dfcc8	44	Csis::MGSFX_PaperAirpl_Emitters_LP	SetAzimuth	int		AuAEMSManager.cpp	SetAzimuth__Q24Csis28MGSFX_PaperAirpl_Emitters_LPFi
+802dfcf4	36	Csis::MGSFX_PaperAirpl_Emitters_LP	SetDistance	int		AuAEMSManager.cpp	SetDistance__Q24Csis28MGSFX_PaperAirpl_Emitters_LPFi
+802dfd18	96	Csis::MGSFX_Darts_Boss_Supermove	destructor			AuAEMSManager.cpp	__dt__Q24Csis26MGSFX_Darts_Boss_SupermoveFv
+802dfd78	96	Csis::MGSFX_Darts_Boss_Death	destructor			AuAEMSManager.cpp	__dt__Q24Csis22MGSFX_Darts_Boss_DeathFv
+802dfdd8	132	Csis::MGSFX_Darts_Boss_Death	constructor	int, int		AuAEMSManager.cpp	__ct__Q24Csis22MGSFX_Darts_Boss_DeathFii
+802dfe5c	556	AuAEMSManager	StopSFX	AUDIOAEMSBESFX		AuAEMSManager.cpp	StopSFX__13AuAEMSManagerF14AUDIOAEMSBESFX
+802e0088	96	Csis::MGSFX_Darts_PinupTarg_Move	destructor			AuAEMSManager.cpp	__dt__Q24Csis26MGSFX_Darts_PinupTarg_MoveFv
+802e00e8	144	AuAEMSManager	StopAllSFX	AUDIOAEMSBESFX		AuAEMSManager.cpp	StopAllSFX__13AuAEMSManagerF14AUDIOAEMSBESFX
+802e0178	796	AuAEMSManager	UpdateSFX	AUDIOAEMSBESFX, int, int, int		AuAEMSManager.cpp	UpdateSFX__13AuAEMSManagerF14AUDIOAEMSBESFXiii
+802e0494	384	AuAEMSManager	IsSFXActive	AUDIOAEMSBESFX		AuAEMSManager.cpp	IsSFXActive__13AuAEMSManagerF14AUDIOAEMSBESFX
+802e0614	104	AuAEMSManager	Queue	const char*, const char*, AuAEMSFile*, bool		AuAEMSManager.cpp	Queue__13AuAEMSManagerFPCcPCcP10AuAEMSFileb
+802e067c	24		__sinit_\AuAEMSManager_cpp			AuAEMSManager.cpp	__sinit_\AuAEMSManager_cpp
+802e0694	272	AuAEMSQueueLoader	constructor			AuAEMSQueueLoader.cpp	__ct__17AuAEMSQueueLoaderFv
+802e07a4	16	BBallList<P10AuAEMSFile>::node	constructor			AuAEMSQueueLoader.cpp	__ct__Q224BBallList<P10AuAEMSFile>4nodeFv
+802e07b4	140	BBallList<P10AuAEMSFile>	destructor			AuAEMSQueueLoader.cpp	__dt__24BBallList<P10AuAEMSFile>Fv
+802e0840	240	BBallList<P10AuAEMSFile>	erase	BBallList<P10AuAEMSFile>::iterator		AuAEMSQueueLoader.cpp	erase__24BBallList<P10AuAEMSFile>FQ224BBallList<P10AuAEMSFile>8iterator
+802e0930	92	AuAEMSQueueLoader	destructor			AuAEMSQueueLoader.cpp	__dt__17AuAEMSQueueLoaderFv
+802e098c	84	AuAEMSQueueLoader	Instance			AuAEMSQueueLoader.cpp	Instance__17AuAEMSQueueLoaderFv
+802e09e0	16	AuAEMSQueueLoader	Initialize			AuAEMSQueueLoader.cpp	Initialize__17AuAEMSQueueLoaderFv
+802e09f0	760	AuAEMSQueueLoader	Update	int		AuAEMSQueueLoader.cpp	Update__17AuAEMSQueueLoaderFi
+802e0ce8	404	AuAEMSQueueLoader	Queue	const char*, const char*, AuAEMSFile*, bool		AuAEMSQueueLoader.cpp	Queue__17AuAEMSQueueLoaderFPCcPCcP10AuAEMSFileb
+802e0e7c	80	AuAEMSQueueLoader	LoadAllFilesNow			AuAEMSQueueLoader.cpp	LoadAllFilesNow__17AuAEMSQueueLoaderFv
+802e0ecc	56	AuAEMSQueueLoader	DoneLoading			AuAEMSQueueLoader.cpp	DoneLoading__17AuAEMSQueueLoaderFv
+802e0f04	72	AuAEMSQueueLoader	AuAEMSModuleBankMalloc	int		AuAEMSQueueLoader.cpp	AuAEMSModuleBankMalloc__17AuAEMSQueueLoaderFi
+802e0f4c	4	AuAEMSQueueLoader	AuAEMSModuleBankMalloc	void*, int, int		AuAEMSQueueLoader.cpp	AuAEMSModuleBankMalloc__17AuAEMSQueueLoaderFPvii
+802e0f50	24		__sinit_\AuAEMSQueueLoader_cpp			AuAEMSQueueLoader.cpp	__sinit_\AuAEMSQueueLoader_cpp
+802e0f68	16	AuAllocator	constructor			AuAllocator.cpp	__ct__11AuAllocatorFv
+802e0f78	64	AuAllocator	destructor			AuAllocator.cpp	__dt__11AuAllocatorFv
+802e0fb8	84	AuAllocator	Instance			AuAllocator.cpp	Instance__11AuAllocatorFv
+802e100c	72	AuAllocator	Destroy			AuAllocator.cpp	Destroy__11AuAllocatorFv
+802e1054	24	AuAllocator	Alloc	unsigned long, const EA::TagValuePair&		AuAllocator.cpp	Alloc__11AuAllocatorFUlRCQ22EA12TagValuePair
+802e106c	8	AuAllocator	Free	void*, unsigned long		AuAllocator.cpp	Free__11AuAllocatorFPvUl
+802e1074	8	AuAllocator	AddRef			AuAllocator.cpp	AddRef__11AuAllocatorFv
+802e107c	8	AuAllocator	Release			AuAllocator.cpp	Release__11AuAllocatorFv
+802e1084	24		__sinit_\AuAllocator_cpp			AuAllocator.cpp	__sinit_\AuAllocator_cpp
+802e109c	4		SNDAbortHandler	const char*		Audio.cpp	SNDAbortHandler__FPCc
+802e10a0	68	Audio	constructor			Audio.cpp	__ct__5AudioFv
+802e10e4	64	Audio	destructor			Audio.cpp	__dt__5AudioFv
+802e1124	84	Audio	Instance			Audio.cpp	Instance__5AudioFv
+802e1178	560	Audio	Initialize			Audio.cpp	Initialize__5AudioFv
+802e13a8	176	Audio	Destroy			Audio.cpp	Destroy__5AudioFv
+802e1458	212	Audio	Update	int		Audio.cpp	Update__5AudioFi
+802e152c	180	Audio	SetAudioMode	AUDIOMODE		Audio.cpp	SetAudioMode__5AudioF9AUDIOMODE
+802e15e0	76	Audio	LoadData	AUDIODATA		Audio.cpp	LoadData__5AudioF9AUDIODATA
+802e162c	76	Audio	UnloadData	AUDIODATA		Audio.cpp	UnloadData__5AudioF9AUDIODATA
+802e1678	48	Audio	ResetMinigame			Audio.cpp	ResetMinigame__5AudioFv
+802e16a8	80	Audio	SetGlobal	AUDIOAEMSGLOBALTYPES, int		Audio.cpp	SetGlobal__5AudioF20AUDIOAEMSGLOBALTYPESi
+802e16f8	176	Audio	SystemPause			Audio.cpp	SystemPause__5AudioFv
+802e17a8	176	Audio	SystemUnPause			Audio.cpp	SystemUnPause__5AudioFv
+802e1858	76	Audio	Pause	Audio::PAUSEMODE		Audio.cpp	Pause__5AudioFQ25Audio9PAUSEMODE
+802e18a4	104	Audio	UnPause			Audio.cpp	UnPause__5AudioFv
+802e190c	88	Audio	PlaySFX	AUDIOAEMSFEHUDSFX, int, int		Audio.cpp	PlaySFX__5AudioF17AUDIOAEMSFEHUDSFXii
+802e1964	64	Audio	PlaySFX	const char*		Audio.cpp	PlaySFX__5AudioFPCc
+802e19a4	88	Audio	PlaySFX	AUDIOAEMSBESFX, int, int		Audio.cpp	PlaySFX__5AudioF14AUDIOAEMSBESFXii
+802e19fc	88	Audio	StartSFX	AUDIOAEMSBESFX, int, int		Audio.cpp	StartSFX__5AudioF14AUDIOAEMSBESFXii
+802e1a54	64	Audio	StopSFX	AUDIOAEMSBESFX		Audio.cpp	StopSFX__5AudioF14AUDIOAEMSBESFX
+802e1a94	64	Audio	StopAllSFX	AUDIOAEMSBESFX		Audio.cpp	StopAllSFX__5AudioF14AUDIOAEMSBESFX
+802e1ad4	96	Audio	UpdateSFX	AUDIOAEMSBESFX, int, int, int		Audio.cpp	UpdateSFX__5AudioF14AUDIOAEMSBESFXiii
+802e1b34	68	Audio	IsSFXActive	AUDIOAEMSBESFX		Audio.cpp	IsSFXActive__5AudioF14AUDIOAEMSBESFX
+802e1b78	32	Audio	PlayAnimSFX	Character*		Audio.cpp	PlayAnimSFX__5AudioFP9Character
+802e1b98	44	Audio	StopAnimSFX	Character*		Audio.cpp	StopAnimSFX__5AudioFP9Character
+802e1bc4	88	Audio	PlaySFX	int, AUDIOWIIMOTESFX, int		Audio.cpp	PlaySFX__5AudioFi15AUDIOWIIMOTESFXi
+802e1c1c	88	Audio	StartSFX	int, AUDIOWIIMOTESFX, int		Audio.cpp	StartSFX__5AudioFi15AUDIOWIIMOTESFXi
+802e1c74	80	Audio	StopSFX	int, AUDIOWIIMOTESFX		Audio.cpp	StopSFX__5AudioFi15AUDIOWIIMOTESFX
+802e1cc4	64	Audio	StopSFX	AUDIOWIIMOTESFX		Audio.cpp	StopSFX__5AudioF15AUDIOWIIMOTESFX
+802e1d04	84	Audio	IsLoopPlaying	int, AUDIOWIIMOTESFX		Audio.cpp	IsLoopPlaying__5AudioFi15AUDIOWIIMOTESFX
+802e1d58	48	Audio	EnterArea			Audio.cpp	EnterArea__5AudioFv
+802e1d88	48	Audio	LeaveArea			Audio.cpp	LeaveArea__5AudioFv
+802e1db8	48	Audio	StartAmbience			Audio.cpp	StartAmbience__5AudioFv
+802e1de8	48	Audio	StopAmbience			Audio.cpp	StopAmbience__5AudioFv
+802e1e18	64	Audio	CreateCharacterSoundObject	Character*		Audio.cpp	CreateCharacterSoundObject__5AudioFP9Character
+802e1e58	64	Audio	DeleteCharacterSoundObject	Character*		Audio.cpp	DeleteCharacterSoundObject__5AudioFP9Character
+802e1e98	100	Audio	CreatePlaceableSoundObject	AUDIOSOUNDOBJECTTYPE, const rmVector3&, float		Audio.cpp	CreatePlaceableSoundObject__5AudioF20AUDIOSOUNDOBJECTTYPERC9rmVector3f
+802e1efc	64	Audio	DeletePlaceableSoundObject	AuPlaceableSoundObject*		Audio.cpp	DeletePlaceableSoundObject__5AudioFP22AuPlaceableSoundObject
+802e1f3c	48	Audio	EnableMusic			Audio.cpp	EnableMusic__5AudioFv
+802e1f6c	48	Audio	DisableMusic			Audio.cpp	DisableMusic__5AudioFv
+802e1f9c	52	Audio	IsMusicEnabled			Audio.cpp	IsMusicEnabled__5AudioFv
+802e1fd0	64	Audio	PlayMusic	AUDIOMUSICTYPES		Audio.cpp	PlayMusic__5AudioF15AUDIOMUSICTYPES
+802e2010	48	Audio	StopMusic			Audio.cpp	StopMusic__5AudioFv
+802e2040	64	Audio	DuckMusic	float		Audio.cpp	DuckMusic__5AudioFf
+802e2080	48	Audio	UnduckMusic			Audio.cpp	UnduckMusic__5AudioFv
+802e20b0	88	Audio	PlaySpeech	AUDIOSPEECHGENDERTYPE, AUDIOSPEECHPERSONALITYTYPE, AUDIOSPEECHEVENTTYPE		Audio.cpp	PlaySpeech__5AudioF21AUDIOSPEECHGENDERTYPE26AUDIOSPEECHPERSONALITYTYPE20AUDIOSPEECHEVENTTYPE
+802e2108	184	Audio	GetAzimuth	const rmVector3&		Audio.cpp	GetAzimuth__5AudioFRC9rmVector3
+802e21c0	4	Audio	GetAzimuth	const rmVector3&, const rmVector3&, const rmVector3&		Audio.cpp	GetAzimuth__5AudioFRC9rmVector3RC9rmVector3RC9rmVector3
+802e21c4	188	Audio	GetMPAzimuth	int, int		Audio.cpp	GetMPAzimuth__5AudioFii
+802e2280	148	Audio	GetMPVolumeScale	int, int		Audio.cpp	GetMPVolumeScale__5AudioFii
+802e2314	24		__sinit_\Audio_cpp			Audio.cpp	__sinit_\Audio_cpp
+802e232c	136	AuEnvironmentManager	constructor			AuEnvironmentManager.cpp	__ct__20AuEnvironmentManagerFv
+802e23b4	312	BBallList<P13AuSoundObject>	constructor	unsigned long		AuEnvironmentManager.cpp	__ct__27BBallList<P13AuSoundObject>FUl
+802e24ec	16	BBallList<P13AuSoundObject>::node	constructor			AuEnvironmentManager.cpp	__ct__Q227BBallList<P13AuSoundObject>4nodeFv
+802e24fc	140	BBallList<P13AuSoundObject>	destructor			AuEnvironmentManager.cpp	__dt__27BBallList<P13AuSoundObject>Fv
+802e2588	240	BBallList<P13AuSoundObject>	erase	BBallList<P13AuSoundObject>::iterator		AuEnvironmentManager.cpp	erase__27BBallList<P13AuSoundObject>FQ227BBallList<P13AuSoundObject>8iterator
+802e2678	104	AuEnvironmentManager	destructor			AuEnvironmentManager.cpp	__dt__20AuEnvironmentManagerFv
+802e26e0	84	AuEnvironmentManager	Instance			AuEnvironmentManager.cpp	Instance__20AuEnvironmentManagerFv
+802e2734	16	AuEnvironmentManager	Initialize			AuEnvironmentManager.cpp	Initialize__20AuEnvironmentManagerFv
+802e2744	112	AuEnvironmentManager	Destroy			AuEnvironmentManager.cpp	Destroy__20AuEnvironmentManagerFv
+802e27b4	1016	AuEnvironmentManager	Update	int		AuEnvironmentManager.cpp	Update__20AuEnvironmentManagerFi
+802e2bac	8	AuSoundObject	GetPosition		const	AuEnvironmentManager.cpp	GetPosition__13AuSoundObjectCFv
+802e2bb4	48	AuEnvironmentManager	SetAudioMode	AUDIOMODE		AuEnvironmentManager.cpp	SetAudioMode__20AuEnvironmentManagerF9AUDIOMODE
+802e2be4	20	AuEnvironmentManager	EnterArea			AuEnvironmentManager.cpp	EnterArea__20AuEnvironmentManagerFv
+802e2bf8	20	AuEnvironmentManager	LeaveArea			AuEnvironmentManager.cpp	LeaveArea__20AuEnvironmentManagerFv
+802e2c0c	580	AuEnvironmentManager	StartAmbience			AuEnvironmentManager.cpp	StartAmbience__20AuEnvironmentManagerFv
+802e2e50	540	AuEnvironmentManager	StopAmbience			AuEnvironmentManager.cpp	StopAmbience__20AuEnvironmentManagerFv
+802e306c	136	AuEnvironmentManager	CreateCharacterSoundObject	Character*		AuEnvironmentManager.cpp	CreateCharacterSoundObject__20AuEnvironmentManagerFP9Character
+802e30f4	132	BBallList<P13AuSoundObject>	push_back	const AuSoundObject*&		AuEnvironmentManager.cpp	push_back__27BBallList<P13AuSoundObject>FRCP13AuSoundObject
+802e3178	180	AuEnvironmentManager	DeleteCharacterSoundObject	Character*		AuEnvironmentManager.cpp	DeleteCharacterSoundObject__20AuEnvironmentManagerFP9Character
+802e322c	164	AuEnvironmentManager	CreatePlaceableSoundObject	AUDIOSOUNDOBJECTTYPE, const rmVector3&, float		AuEnvironmentManager.cpp	CreatePlaceableSoundObject__20AuEnvironmentManagerF20AUDIOSOUNDOBJECTTYPERC9rmVector3f
+802e32d0	184	AuEnvironmentManager	DeletePlaceableSoundObject	AuPlaceableSoundObject*		AuEnvironmentManager.cpp	DeletePlaceableSoundObject__20AuEnvironmentManagerFP22AuPlaceableSoundObject
+802e3388	196	AuEnvironmentManager	CreateSoundObject	AUDIOSOUNDOBJECTTYPE, const rmVector3&, float		AuEnvironmentManager.cpp	CreateSoundObject__20AuEnvironmentManagerF20AUDIOSOUNDOBJECTTYPERC9rmVector3f
+802e344c	884	AuEnvironmentManager	SetupSpotAmbiences			AuEnvironmentManager.cpp	SetupSpotAmbiences__20AuEnvironmentManagerFv
+802e37c0	168	AuEnvironmentManager	ClearSpotAmbiences			AuEnvironmentManager.cpp	ClearSpotAmbiences__20AuEnvironmentManagerFv
+802e3868	24		__sinit_\AuEnvironmentManager_cpp			AuEnvironmentManager.cpp	__sinit_\AuEnvironmentManager_cpp
+802e3880	396	AuHelpers	GetAzimuth	const rmVector3&, const rmVector3&, const rmVector3&		AuHelpers.cpp	GetAzimuth__9AuHelpersFRC9rmVector3RC9rmVector3RC9rmVector3
+802e3a0c	28		rmCopy	rmVector3&, const rmVector3&		AuHelpers.cpp	rmCopy__FR9rmVector3RC9rmVector3
+802e3a28	16	EA::Math::Vector3	Set	float, float, float		AuHelpers.cpp	Set__Q32EA4Math7Vector3Ffff
+802e3a38	128		rmNormalize	const rmVector3&, rmVector3&		AuHelpers.cpp	rmNormalize__FRC9rmVector3R9rmVector3
+802e3ab8	24		__sinit_\AuHelpers_cpp			AuHelpers.cpp	__sinit_\AuHelpers_cpp
+802e3ad0	76	AuMusicManager	constructor			AuMusicManager.cpp	__ct__14AuMusicManagerFv
+802e3b1c	64	AuMusicManager	destructor			AuMusicManager.cpp	__dt__14AuMusicManagerFv
+802e3b5c	84	AuMusicManager	Instance			AuMusicManager.cpp	Instance__14AuMusicManagerFv
+802e3bb0	160	AuMusicManager	Initialize			AuMusicManager.cpp	Initialize__14AuMusicManagerFv
+802e3c50	132	AuMusicManager	Destroy			AuMusicManager.cpp	Destroy__14AuMusicManagerFv
+802e3cd4	752	AuMusicManager	Update	int		AuMusicManager.cpp	Update__14AuMusicManagerFi
+802e3fc4	4	AuMusicManager	SetAudioMode	AUDIOMODE		AuMusicManager.cpp	SetAudioMode__14AuMusicManagerF9AUDIOMODE
+802e3fc8	32	AuMusicManager	Enable			AuMusicManager.cpp	Enable__14AuMusicManagerFv
+802e3fe8	64	AuMusicManager	Disable			AuMusicManager.cpp	Disable__14AuMusicManagerFv
+802e4028	28	AuMusicManager	IsEnabled			AuMusicManager.cpp	IsEnabled__14AuMusicManagerFv
+802e4044	72	AuMusicManager	Pause			AuMusicManager.cpp	Pause__14AuMusicManagerFv
+802e408c	72	AuMusicManager	UnPause			AuMusicManager.cpp	UnPause__14AuMusicManagerFv
+802e40d4	52	AuMusicManager	Play	AUDIOMUSICTYPES		AuMusicManager.cpp	Play__14AuMusicManagerF15AUDIOMUSICTYPES
+802e4108	92	AuMusicManager	Stop			AuMusicManager.cpp	Stop__14AuMusicManagerFv
+802e4164	40	AuMusicManager	Duck	float		AuMusicManager.cpp	Duck__14AuMusicManagerFf
+802e418c	36	AuMusicManager	Unduck			AuMusicManager.cpp	Unduck__14AuMusicManagerFv
+802e41b0	28	AuMusicManager	IsDucking			AuMusicManager.cpp	IsDucking__14AuMusicManagerFv
+802e41cc	148	AuMusicManager	SetVolume	float		AuMusicManager.cpp	SetVolume__14AuMusicManagerFf
+802e4260	200	AuMusicManager	AutoVolume	float, int		AuMusicManager.cpp	AutoVolume__14AuMusicManagerFfi
+802e4328	24		__sinit_\AuMusicManager_cpp			AuMusicManager.cpp	__sinit_\AuMusicManager_cpp
+802e4340	48	AuSoundObject	constructor	AUDIOSOUNDOBJECTTYPE, const rmVector3&, float		AuSoundObject.cpp	__ct__13AuSoundObjectF20AUDIOSOUNDOBJECTTYPERC9rmVector3f
+802e4370	64	AuSoundObject	destructor			AuSoundObject.cpp	__dt__13AuSoundObjectFv
+802e43b0	76	AuLoopingSoundObject	constructor	AUDIOSOUNDOBJECTTYPE, const rmVector3&, float		AuSoundObject.cpp	__ct__20AuLoopingSoundObjectF20AUDIOSOUNDOBJECTTYPERC9rmVector3f
+802e43fc	104	AuLoopingSoundObject	destructor			AuSoundObject.cpp	__dt__20AuLoopingSoundObjectFv
+802e4464	344	AuLoopingSoundObject	Play	int, int		AuSoundObject.cpp	Play__20AuLoopingSoundObjectFii
+802e45bc	44	Csis::MGSFX_HUD_CommonLP	SetAzimuth	int		AuSoundObject.cpp	SetAzimuth__Q24Csis18MGSFX_HUD_CommonLPFi
+802e45e8	36	Csis::MGSFX_HUD_CommonLP	SetDistance	int		AuSoundObject.cpp	SetDistance__Q24Csis18MGSFX_HUD_CommonLPFi
+802e460c	44	Csis::WSFX_POIs_LP	SetAzimuth	int		AuSoundObject.cpp	SetAzimuth__Q24Csis12WSFX_POIs_LPFi
+802e4638	36	Csis::WSFX_POIs_LP	SetDistance	int		AuSoundObject.cpp	SetDistance__Q24Csis12WSFX_POIs_LPFi
+802e465c	44	Csis::WSFX_Boss_Idles_LP	SetAzimuth	int		AuSoundObject.cpp	SetAzimuth__Q24Csis18WSFX_Boss_Idles_LPFi
+802e4688	36	Csis::WSFX_Boss_Idles_LP	SetDistance	int		AuSoundObject.cpp	SetDistance__Q24Csis18WSFX_Boss_Idles_LPFi
+802e46ac	224	AuLoopingSoundObject	Update	int, int		AuSoundObject.cpp	Update__20AuLoopingSoundObjectFii
+802e478c	192	AuLoopingSoundObject	Stop			AuSoundObject.cpp	Stop__20AuLoopingSoundObjectFv
+802e484c	52	AuLoopingSoundObject	IsPlaying			AuSoundObject.cpp	IsPlaying__20AuLoopingSoundObjectFv
+802e4880	156	AuCharacterSoundObject	constructor	Character*, float		AuSoundObject.cpp	__ct__22AuCharacterSoundObjectFP9Characterf
+802e491c	112	AuCharacterSoundObject	destructor			AuSoundObject.cpp	__dt__22AuCharacterSoundObjectFv
+802e498c	3828	AuCharacterSoundObject	Play	int, int		AuSoundObject.cpp	Play__22AuCharacterSoundObjectFii
+802e5880	96	Csis::WSFX_POIs_OO	destructor			AuSoundObject.cpp	__dt__Q24Csis12WSFX_POIs_OOFv
+802e58e0	128	Csis::WSFX_POIs_OO	constructor	int, int, int		AuSoundObject.cpp	__ct__Q24Csis12WSFX_POIs_OOFiii
+802e5960	44	Csis::WSFX_POIs_OO	SetAzimuth	int		AuSoundObject.cpp	SetAzimuth__Q24Csis12WSFX_POIs_OOFi
+802e598c	36	Csis::WSFX_POIs_OO	SetDistance	int		AuSoundObject.cpp	SetDistance__Q24Csis12WSFX_POIs_OOFi
+802e59b0	96	Csis::WSFX_Boss_Idles_OO	destructor			AuSoundObject.cpp	__dt__Q24Csis18WSFX_Boss_Idles_OOFv
+802e5a10	128	Csis::WSFX_Boss_Idles_OO	constructor	int, int, int		AuSoundObject.cpp	__ct__Q24Csis18WSFX_Boss_Idles_OOFiii
+802e5a90	44	Csis::WSFX_Boss_Idles_OO	SetAzimuth	int		AuSoundObject.cpp	SetAzimuth__Q24Csis18WSFX_Boss_Idles_OOFi
+802e5abc	36	Csis::WSFX_Boss_Idles_OO	SetDistance	int		AuSoundObject.cpp	SetDistance__Q24Csis18WSFX_Boss_Idles_OOFi
+802e5ae0	96	Csis::WSFX_StickerBook_Open	destructor			AuSoundObject.cpp	__dt__Q24Csis21WSFX_StickerBook_OpenFv
+802e5b40	96	Csis::FESFX_PreSelection_Anims_LP	destructor			AuSoundObject.cpp	__dt__Q24Csis27FESFX_PreSelection_Anims_LPFv
+802e5ba0	92	Csis::FESFX_PreSelection_Anims_LP	constructor	int		AuSoundObject.cpp	__ct__Q24Csis27FESFX_PreSelection_Anims_LPFi
+802e5bfc	96	Csis::MGSFX_HERO_Celebrations	destructor			AuSoundObject.cpp	__dt__Q24Csis23MGSFX_HERO_CelebrationsFv
+802e5c5c	132	Csis::MGSFX_HERO_Celebrations	constructor	int, int		AuSoundObject.cpp	__ct__Q24Csis23MGSFX_HERO_CelebrationsFii
+802e5ce0	96	Csis::MGSFX_GENERIC_Celebrations	destructor			AuSoundObject.cpp	__dt__Q24Csis26MGSFX_GENERIC_CelebrationsFv
+802e5d40	132	Csis::MGSFX_GENERIC_Celebrations	constructor	int, int		AuSoundObject.cpp	__ct__Q24Csis26MGSFX_GENERIC_CelebrationsFii
+802e5dc4	96	Csis::MGSFX_SIGNATURE_Celebrations	destructor			AuSoundObject.cpp	__dt__Q24Csis28MGSFX_SIGNATURE_CelebrationsFv
+802e5e24	132	Csis::MGSFX_SIGNATURE_Celebrations	constructor	int, int		AuSoundObject.cpp	__ct__Q24Csis28MGSFX_SIGNATURE_CelebrationsFii
+802e5ea8	96	Csis::MGSFX_TB_Windups	destructor			AuSoundObject.cpp	__dt__Q24Csis16MGSFX_TB_WindupsFv
+802e5f08	132	Csis::MGSFX_TB_Windups	constructor	int, int		AuSoundObject.cpp	__ct__Q24Csis16MGSFX_TB_WindupsFii
+802e5f8c	308	AuCharacterSoundObject	Update	int, int		AuSoundObject.cpp	Update__22AuCharacterSoundObjectFii
+802e60c0	276	AuCharacterSoundObject	Stop			AuSoundObject.cpp	Stop__22AuCharacterSoundObjectFv
+802e61d4	112	AuCharacterSoundObject	IsPlaying			AuSoundObject.cpp	IsPlaying__22AuCharacterSoundObjectFv
+802e6244	280	AuCharacterSoundObject	Play			AuSoundObject.cpp	Play__22AuCharacterSoundObjectFv
+802e635c	12	AuCharacterSoundObject	GetPosition		const	AuSoundObject.cpp	GetPosition__22AuCharacterSoundObjectCFv
+802e6368	52	AuCharacterSoundObject	CurrentAnimNeedsDucking			AuSoundObject.cpp	CurrentAnimNeedsDucking__22AuCharacterSoundObjectFv
+802e639c	68	AuPlaceableSoundObject	constructor	AUDIOSOUNDOBJECTTYPE, const rmVector3&, float		AuSoundObject.cpp	__ct__22AuPlaceableSoundObjectF20AUDIOSOUNDOBJECTTYPERC9rmVector3f
+802e63e0	104	AuPlaceableSoundObject	destructor			AuSoundObject.cpp	__dt__22AuPlaceableSoundObjectFv
+802e6448	128	AuPlaceableSoundObject	Play	int, int		AuSoundObject.cpp	Play__22AuPlaceableSoundObjectFii
+802e64c8	108	AuPlaceableSoundObject	Update	int, int		AuSoundObject.cpp	Update__22AuPlaceableSoundObjectFii
+802e6534	72	AuPlaceableSoundObject	Stop			AuSoundObject.cpp	Stop__22AuPlaceableSoundObjectFv
+802e657c	16	AuPlaceableSoundObject	IsPlaying			AuSoundObject.cpp	IsPlaying__22AuPlaceableSoundObjectFv
+802e658c	180	AuPlaceableSoundObject	Play			AuSoundObject.cpp	Play__22AuPlaceableSoundObjectFv
+802e6640	24		__sinit_\AuSoundObject_cpp			AuSoundObject.cpp	__sinit_\AuSoundObject_cpp
+802e6658	112	AuSpeechManager	constructor			AuSpeechManager.cpp	__ct__15AuSpeechManagerFv
+802e66c8	64	AuSpeechManager	destructor			AuSpeechManager.cpp	__dt__15AuSpeechManagerFv
+802e6708	84	AuSpeechManager	Instance			AuSpeechManager.cpp	Instance__15AuSpeechManagerFv
+802e675c	708	AuSpeechManager	Initialize			AuSpeechManager.cpp	Initialize__15AuSpeechManagerFv
+802e6a20	312	AuSpeechManager	Destroy			AuSpeechManager.cpp	Destroy__15AuSpeechManagerFv
+802e6b58	80	AuSpeechManager	Update	int		AuSpeechManager.cpp	Update__15AuSpeechManagerFi
+802e6ba8	4	AuSpeechManager	SetAudioMode	AUDIOMODE		AuSpeechManager.cpp	SetAudioMode__15AuSpeechManagerF9AUDIOMODE
+802e6bac	592	AuSpeechManager	Play	AUDIOSPEECHGENDERTYPE, AUDIOSPEECHPERSONALITYTYPE, AUDIOSPEECHEVENTTYPE		AuSpeechManager.cpp	Play__15AuSpeechManagerF21AUDIOSPEECHGENDERTYPE26AUDIOSPEECHPERSONALITYTYPE20AUDIOSPEECHEVENTTYPE
+802e6dfc	248	AuSpeechManager	SampleRequest	SPCHType_SampleRequestData*		AuSpeechManager.cpp	SampleRequest__15AuSpeechManagerFP26SPCHType_SampleRequestData
+802e6ef4	20	AuSpeechManager	MemAlloc	unsigned int		AuSpeechManager.cpp	MemAlloc__15AuSpeechManagerFUi
+802e6f08	4	AuSpeechManager	MemFree	void*		AuSpeechManager.cpp	MemFree__15AuSpeechManagerFPv
+802e6f0c	24		__sinit_\AuSpeechManager_cpp			AuSpeechManager.cpp	__sinit_\AuSpeechManager_cpp
+802e6f24	132	AuWiimoteManager	constructor			AuWiimoteManager.cpp	__ct__16AuWiimoteManagerFv
+802e6fa8	64	AuWiimoteManager	destructor			AuWiimoteManager.cpp	__dt__16AuWiimoteManagerFv
+802e6fe8	84	AuWiimoteManager	Instance			AuWiimoteManager.cpp	Instance__16AuWiimoteManagerFv
+802e703c	284	AuWiimoteManager	Initialize			AuWiimoteManager.cpp	Initialize__16AuWiimoteManagerFv
+802e7158	228	AuWiimoteManager	Destroy			AuWiimoteManager.cpp	Destroy__16AuWiimoteManagerFv
+802e723c	24	AuWiimoteManager	ReinitController	int		AuWiimoteManager.cpp	ReinitController__16AuWiimoteManagerFi
+802e7254	4	AuWiimoteManager	Update	int		AuWiimoteManager.cpp	Update__16AuWiimoteManagerFi
+802e7258	4	AuWiimoteManager	SetAudioMode	AUDIOMODE		AuWiimoteManager.cpp	SetAudioMode__16AuWiimoteManagerF9AUDIOMODE
+802e725c	196	AuWiimoteManager	LoadData	AUDIODATA		AuWiimoteManager.cpp	LoadData__16AuWiimoteManagerF9AUDIODATA
+802e7320	100	AuWiimoteManager	UnloadData	AUDIODATA		AuWiimoteManager.cpp	UnloadData__16AuWiimoteManagerF9AUDIODATA
+802e7384	24	AuWiimoteManager	Pause			AuWiimoteManager.cpp	Pause__16AuWiimoteManagerFv
+802e739c	24	AuWiimoteManager	UnPause			AuWiimoteManager.cpp	UnPause__16AuWiimoteManagerFv
+802e73b4	448	AuWiimoteManager	PlaySFX	int, AUDIOWIIMOTESFX, int		AuWiimoteManager.cpp	PlaySFX__16AuWiimoteManagerFi15AUDIOWIIMOTESFXi
+802e7574	276	AuWiimoteManager	StartSFX	int, AUDIOWIIMOTESFX, int		AuWiimoteManager.cpp	StartSFX__16AuWiimoteManagerFi15AUDIOWIIMOTESFXi
+802e7688	108	AuWiimoteManager	StopSFX	int, AUDIOWIIMOTESFX		AuWiimoteManager.cpp	StopSFX__16AuWiimoteManagerFi15AUDIOWIIMOTESFX
+802e76f4	96	AuWiimoteManager	StopSFX	AUDIOWIIMOTESFX		AuWiimoteManager.cpp	StopSFX__16AuWiimoteManagerF15AUDIOWIIMOTESFX
+802e7754	56	AuWiimoteManager	IsLoopPlaying	int, AUDIOWIIMOTESFX		AuWiimoteManager.cpp	IsLoopPlaying__16AuWiimoteManagerFi15AUDIOWIIMOTESFX
+802e778c	24		__sinit_\AuWiimoteManager_cpp			AuWiimoteManager.cpp	__sinit_\AuWiimoteManager_cpp

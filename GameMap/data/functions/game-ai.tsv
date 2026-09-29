@@ -1,0 +1,232 @@
+# addr	size	class	method	args	const	source_unit	mangled
+802cc578	92		AIRand	int, int		aientity.cpp	AIRand__Fii
+802cc5d4	140	AIEntity	constructor	Character*		aientity.cpp	__ct__8AIEntityFP9Character
+802cc660	80	AIEntity	destructor			aientity.cpp	__dt__8AIEntityFv
+802cc6b0	440	AIEntity	Think	int, AIThinkDepth		aientity.cpp	Think__8AIEntityFi12AIThinkDepth
+802cc868	12	Compulsion	Activate			aientity.cpp	Activate__10CompulsionFv
+802cc874	24	AIEntity	SetEdictAccomplished	const Edict*		aientity.cpp	SetEdictAccomplished__8AIEntityFPC5Edict
+802cc88c	36	AIEntity	ForceHeadTracking	const rmVector3*		aientity.cpp	ForceHeadTracking__8AIEntityFPC9rmVector3
+802cc8b0	8	AIEntity	GetHeadTrackingCharacterLookAtHeight		const	aientity.cpp	GetHeadTrackingCharacterLookAtHeight__8AIEntityCFv
+802cc8b8	4	AIEntity	Update	int		aientity.cpp	Update__8AIEntityFi
+802cc8bc	60	AIEntity	CreatePoIInterpreter			aientity.cpp	CreatePoIInterpreter__8AIEntityFv
+802cc8f8	68	AIEntity	DestroyPoIInterpreter			aientity.cpp	DestroyPoIInterpreter__8AIEntityFv
+802cc93c	136	AIEntity	CalculateCurrentPriority		const	aientity.cpp	CalculateCurrentPriority__8AIEntityCFv
+802cc9c4	116	AIEntity	SetCompulsion	Compulsion*		aientity.cpp	SetCompulsion__8AIEntityFP10Compulsion
+802cca38	12	Compulsion	Deactivate			aientity.cpp	Deactivate__10CompulsionFv
+802cca44	816	AIEntity	UpdateHeadTracking	int		aientity.cpp	UpdateHeadTracking__8AIEntityFi
+802ccd74	24		__sinit_\aientity_cpp			aientity.cpp	__sinit_\aientity_cpp
+802ccd8c	12	GUID	constructor	unsigned short, unsigned short		aiutils.cpp	__ct__4GUIDFUsUs
+802ccd98	16	rmVector3	constructor	float, float, float		aiutils.cpp	__ct__9rmVector3Ffff
+802ccda8	52		rmSub	const rmVector3&, const rmVector3&, rmVector3&		aiutils.cpp	rmSub__FRC9rmVector3RC9rmVector3R9rmVector3
+802ccddc	40		rmDot	const rmVector3&, const rmVector3&		aiutils.cpp	rmDot__FRC9rmVector3RC9rmVector3
+802cce04	24		__sinit_\aiutils_cpp			aiutils.cpp	__sinit_\aiutils_cpp
+802cce1c	68	AncientEvil	Create			ancientevil.cpp	Create__11AncientEvilFv
+802cce60	236	AncientEvil	constructor			ancientevil.cpp	__ct__11AncientEvilFv
+802ccf4c	208	AncientEvil	destructor			ancientevil.cpp	__dt__11AncientEvilFv
+802cd01c	8	AncientEvil	LoadArea	Enums::AreaType		ancientevil.cpp	LoadArea__11AncientEvilFQ25Enums8AreaType
+802cd024	8	AncientEvil	UnloadArea			ancientevil.cpp	UnloadArea__11AncientEvilFv
+802cd02c	28	AncientEvil	Update	int		ancientevil.cpp	Update__11AncientEvilFi
+802cd048	36	AncientEvil	AddAIEntity	AIEntity*		ancientevil.cpp	AddAIEntity__11AncientEvilFP8AIEntity
+802cd06c	140	AncientEvil	DestroyAIEntity	AIEntity*		ancientevil.cpp	DestroyAIEntity__11AncientEvilFP8AIEntity
+802cd0f8	108	AncientEvil	CreatePoIInterpreter	AIEntity*		ancientevil.cpp	CreatePoIInterpreter__11AncientEvilFP8AIEntity
+802cd164	116	AncientEvil	DestroyPoIInterpreter	PoIInterpreter*		ancientevil.cpp	DestroyPoIInterpreter__11AncientEvilFP14PoIInterpreter
+802cd1d8	96	AncientEvil	DestroyCompulsion	Compulsion*		ancientevil.cpp	DestroyCompulsion__11AncientEvilFP10Compulsion
+802cd238	24		__sinit_\ancientevil_cpp			ancientevil.cpp	__sinit_\ancientevil_cpp
+802cd250	124	Compulsion	constructor	AIEntity*, unsigned char		compulsion.cpp	__ct__10CompulsionFP8AIEntityUc
+802cd2cc	64	rmTagPoint	destructor			compulsion.cpp	__dt__10rmTagPointFv
+802cd30c	64	EdictMovementInfo	destructor			compulsion.cpp	__dt__17EdictMovementInfoFv
+802cd34c	92	Edict	destructor			compulsion.cpp	__dt__5EdictFv
+802cd3a8	64	Compulsion	destructor			compulsion.cpp	__dt__10CompulsionFv
+802cd3e8	104	Compulsion	GetRandomAIWanderType		const	compulsion.cpp	GetRandomAIWanderType__10CompulsionCFv
+802cd450	124	rmTagPoint	constructor	const rmVector3*, const rmAngle*		compulsion.cpp	__ct__10rmTagPointFPC9rmVector3PC7rmAngle
+802cd4cc	28	rmVector3	operator=	const rmVector3&		compulsion.cpp	__as__9rmVector3FRC9rmVector3
+802cd4e8	76	rmAngle	Wrap			compulsion.cpp	Wrap__7rmAngleFv
+802cd534	96	Edict	SetMovementInfo	const rmTagPoint*, float, Enums::AIWanderType, bool		compulsion.cpp	SetMovementInfo__5EdictFPC10rmTagPointfQ25Enums12AIWanderTypeb
+802cd594	84	rmTagPoint	operator=	const rmTagPoint&		compulsion.cpp	__as__10rmTagPointFRC10rmTagPoint
+802cd5e8	32	Edict	SetAnimationInfo	int, int, const rmAngle*, float		compulsion.cpp	SetAnimationInfo__5EdictFiiPC7rmAnglef
+802cd608	36	Edict	SetAnimationDirection	const rmAngle*		compulsion.cpp	SetAnimationDirection__5EdictFPC7rmAngle
+802cd62c	84	WanderCompulsion	constructor	AIEntity*, unsigned char		compulsion.cpp	__ct__16WanderCompulsionFP8AIEntityUc
+802cd680	104	WanderCompulsion	destructor			compulsion.cpp	__dt__16WanderCompulsionFv
+802cd6e8	144	WanderCompulsion	Activate			compulsion.cpp	Activate__16WanderCompulsionFv
+802cd778	12	WanderCompulsion	Deactivate			compulsion.cpp	Deactivate__16WanderCompulsionFv
+802cd784	32	WanderCompulsion	HasExpired	AIThinkLoD	const	compulsion.cpp	HasExpired__16WanderCompulsionCF10AIThinkLoD
+802cd7a4	312	WanderCompulsion	Think	int		compulsion.cpp	Think__16WanderCompulsionFi
+802cd8dc	208	WanderCompulsion	UpdateStuck	int		compulsion.cpp	UpdateStuck__16WanderCompulsionFi
+802cd9ac	68		rmDistanceXZ	const rmVector3&, const rmVector3&		compulsion.cpp	rmDistanceXZ__FRC9rmVector3RC9rmVector3
+802cd9f0	140	PoICompulsion	constructor	AIEntity*, unsigned char		compulsion.cpp	__ct__13PoICompulsionFP8AIEntityUc
+802cda7c	104	PoICompulsion	destructor			compulsion.cpp	__dt__13PoICompulsionFv
+802cdae4	52	PoICompulsion	Activate			compulsion.cpp	Activate__13PoICompulsionFv
+802cdb18	72	PoICompulsion	Deactivate			compulsion.cpp	Deactivate__13PoICompulsionFv
+802cdb60	144	PoICompulsion	HasExpired	AIThinkLoD	const	compulsion.cpp	HasExpired__13PoICompulsionCF10AIThinkLoD
+802cdbf0	1632	PoICompulsion	Think	int		compulsion.cpp	Think__13PoICompulsionFi
+802ce250	136	PoICompulsion	InitializeStateVariables			compulsion.cpp	InitializeStateVariables__13PoICompulsionFv
+802ce2d8	88	PoICompulsion	ChooseRandomIdleAnimation			compulsion.cpp	ChooseRandomIdleAnimation__13PoICompulsionFv
+802ce330	444	PoICompulsion	IsHigherPriorityCharacterInPath	const rmVector3*, const rmVector3*, bool	const	compulsion.cpp	IsHigherPriorityCharacterInPath__13PoICompulsionCFPC9rmVector3PC9rmVector3b
+802ce4ec	1116	PoICompulsion	MoveWithObstacleAvoidance	float, const rmVector3*, rmVector3*		compulsion.cpp	MoveWithObstacleAvoidance__13PoICompulsionFfPC9rmVector3P9rmVector3
+802ce948	40		rmScale	const rmVector3&, float, rmVector3&		compulsion.cpp	rmScale__FRC9rmVector3fR9rmVector3
+802ce970	52		rmAdd	const rmVector3&, const rmVector3&, rmVector3&		compulsion.cpp	rmAdd__FRC9rmVector3RC9rmVector3R9rmVector3
+802ce9a4	100	PoICompulsion	SetFrustration			compulsion.cpp	SetFrustration__13PoICompulsionFv
+802cea08	156	PoICompulsion	StandStill			compulsion.cpp	StandStill__13PoICompulsionFv
+802ceaa4	72	ActionPoICompulsion	constructor	AIEntity*, unsigned char		compulsion.cpp	__ct__19ActionPoICompulsionFP8AIEntityUc
+802ceaec	60	ActionPoICompulsion	destructor			compulsion.cpp	__dt__19ActionPoICompulsionFv
+802ceb28	156	ActionPoICompulsion	Initialize	PoIInterpreter*, const ActionPoI*		compulsion.cpp	Initialize__19ActionPoICompulsionFP14PoIInterpreterPC9ActionPoI
+802cebc4	8	ActionPoICompulsion	ShouldUsePoI		const	compulsion.cpp	ShouldUsePoI__19ActionPoICompulsionCFv
+802cebcc	160	ActionPoICompulsion	SetPoIEdict			compulsion.cpp	SetPoIEdict__19ActionPoICompulsionFv
+802cec6c	68	TalkPoICompulsion	constructor	AIEntity*, unsigned char		compulsion.cpp	__ct__17TalkPoICompulsionFP8AIEntityUc
+802cecb0	60	TalkPoICompulsion	destructor			compulsion.cpp	__dt__17TalkPoICompulsionFv
+802cecec	16	TalkPoICompulsion	Initialize	PoIInterpreter*, const TalkPoI*		compulsion.cpp	Initialize__17TalkPoICompulsionFP14PoIInterpreterPC7TalkPoI
+802cecfc	8	TalkPoICompulsion	ShouldUsePoI		const	compulsion.cpp	ShouldUsePoI__17TalkPoICompulsionCFv
+802ced04	168	TalkPoICompulsion	SetPoIEdict			compulsion.cpp	SetPoIEdict__17TalkPoICompulsionFv
+802cedac	80	StaticAnimCompulsion	constructor	AIEntity*, unsigned char		compulsion.cpp	__ct__20StaticAnimCompulsionFP8AIEntityUc
+802cedfc	104	StaticAnimCompulsion	destructor			compulsion.cpp	__dt__20StaticAnimCompulsionFv
+802cee64	100	StaticAnimCompulsion	HasExpired	AIThinkLoD	const	compulsion.cpp	HasExpired__20StaticAnimCompulsionCF10AIThinkLoD
+802ceec8	236	StaticAnimCompulsion	Think	int		compulsion.cpp	Think__20StaticAnimCompulsionFi
+802cefb4	112	MoveToPointCompulsion	constructor	AIEntity*, unsigned char		compulsion.cpp	__ct__21MoveToPointCompulsionFP8AIEntityUc
+802cf024	68	MoveToPointCompulsion	destructor			compulsion.cpp	__dt__21MoveToPointCompulsionFv
+802cf068	8	MoveToPointCompulsion	HasExpired	AIThinkLoD	const	compulsion.cpp	HasExpired__21MoveToPointCompulsionCF10AIThinkLoD
+802cf070	196	MoveToPointCompulsion	Think	int		compulsion.cpp	Think__21MoveToPointCompulsionFi
+802cf134	80	MoveToPointCompulsion	SetDestination	const rmTagPoint*, void(*)(void*)*, void*		compulsion.cpp	SetDestination__21MoveToPointCompulsionFPC10rmTagPointPFPv_vPv
+802cf184	8	MoveToPointCompulsion	SetAIWanderType	Enums::AIWanderType		compulsion.cpp	SetAIWanderType__21MoveToPointCompulsionFQ25Enums12AIWanderType
+802cf18c	8	MoveToPointCompulsion	IsInterruptible		const	compulsion.cpp	IsInterruptible__21MoveToPointCompulsionCFv
+802cf194	12	MoveToPointCompulsion	GetName		const	compulsion.cpp	GetName__21MoveToPointCompulsionCFv
+802cf1a0	12	MoveToPointCompulsion	Deactivate			compulsion.cpp	Deactivate__21MoveToPointCompulsionFv
+802cf1ac	12	MoveToPointCompulsion	Activate			compulsion.cpp	Activate__21MoveToPointCompulsionFv
+802cf1b8	8	StaticAnimCompulsion	IsInterruptible		const	compulsion.cpp	IsInterruptible__20StaticAnimCompulsionCFv
+802cf1c0	12	StaticAnimCompulsion	GetName		const	compulsion.cpp	GetName__20StaticAnimCompulsionCFv
+802cf1cc	12	StaticAnimCompulsion	Deactivate			compulsion.cpp	Deactivate__20StaticAnimCompulsionFv
+802cf1d8	12	StaticAnimCompulsion	Activate			compulsion.cpp	Activate__20StaticAnimCompulsionFv
+802cf1e4	8	PoICompulsion	IsInterruptible		const	compulsion.cpp	IsInterruptible__13PoICompulsionCFv
+802cf1ec	12	TalkPoICompulsion	GetName		const	compulsion.cpp	GetName__17TalkPoICompulsionCFv
+802cf1f8	12	ActionPoICompulsion	GetName		const	compulsion.cpp	GetName__19ActionPoICompulsionCFv
+802cf204	8	WanderCompulsion	IsInterruptible		const	compulsion.cpp	IsInterruptible__16WanderCompulsionCFv
+802cf20c	12	WanderCompulsion	GetName		const	compulsion.cpp	GetName__16WanderCompulsionCFv
+802cf218	160		__sinit_\compulsion_cpp			compulsion.cpp	__sinit_\compulsion_cpp
+802cf2b8	20	AncientEvil::CompulsionSizeTracker	constructor	int		metaworldplayaientity.cpp	__ct__Q211AncientEvil21CompulsionSizeTrackerFi
+802cf2cc	92	MetaWorldPlayAICharacterListener	constructor	MetaWorldPlayAIEntity*		metaworldplayaientity.cpp	__ct__32MetaWorldPlayAICharacterListenerFP21MetaWorldPlayAIEntity
+802cf328	88	MetaWorldPlayAICharacterListener	destructor			metaworldplayaientity.cpp	__dt__32MetaWorldPlayAICharacterListenerFv
+802cf380	88	MetaWorldPlayAICharacterListener	OverlapAddedCallback	const PhysicsUserData*		metaworldplayaientity.cpp	OverlapAddedCallback__32MetaWorldPlayAICharacterListenerFPC15PhysicsUserData
+802cf3d8	80	MetaWorldPlayAIEntity	constructor	Character*		metaworldplayaientity.cpp	__ct__21MetaWorldPlayAIEntityFP9Character
+802cf428	92	MetaWorldPlayAIEntity	destructor			metaworldplayaientity.cpp	__dt__21MetaWorldPlayAIEntityFv
+802cf484	104	MetaWorldPlayAIEntity	EvaluateCompulsions	int, unsigned char, AIThinkDepth, AIThinkLoD		metaworldplayaientity.cpp	EvaluateCompulsions__21MetaWorldPlayAIEntityFiUc12AIThinkDepth10AIThinkLoD
+802cf4ec	4	MetaWorldPlayAIEntity	Update	int		metaworldplayaientity.cpp	Update__21MetaWorldPlayAIEntityFi
+802cf4f0	4	PhysicsCharacterListener	OverlapRemovedCallback	const PhysicsUserData*, bool		metaworldplayaientity.cpp	OverlapRemovedCallback__24PhysicsCharacterListenerFPC15PhysicsUserDatab
+802cf4f4	4	PhysicsCharacterListener	ContactRemovedCallback	const PhysicsUserData*, const PhysicsContactPoint*		metaworldplayaientity.cpp	ContactRemovedCallback__24PhysicsCharacterListenerFPC15PhysicsUserDataPC19PhysicsContactPoint
+802cf4f8	4	PhysicsCharacterListener	ContactAddedCallback	const PhysicsUserData*, const PhysicsContactPoint*		metaworldplayaientity.cpp	ContactAddedCallback__24PhysicsCharacterListenerFPC15PhysicsUserDataPC19PhysicsContactPoint
+802cf4fc	4	PhysicsCharacterListener	ObjectInteractionCallback	const PhysicsUserData*, const PhysicsContactPoint*		metaworldplayaientity.cpp	ObjectInteractionCallback__24PhysicsCharacterListenerFPC15PhysicsUserDataPC19PhysicsContactPoint
+802cf500	4	PhysicsCharacterListener	CharacterInteractionCallback	const PhysicsUserData*, const PhysicsContactPoint*		metaworldplayaientity.cpp	CharacterInteractionCallback__24PhysicsCharacterListenerFPC15PhysicsUserDataPC19PhysicsContactPoint
+802cf504	64		__sinit_\metaworldplayaientity_cpp			metaworldplayaientity.cpp	__sinit_\metaworldplayaientity_cpp
+802cf544	20	AncientEvil::AIEntitySizeTracker	constructor	int		metaworldstaticaientity.cpp	__ct__Q211AncientEvil19AIEntitySizeTrackerFi
+802cf558	76	MetaWorldStaticAIEntity	constructor	Character*		metaworldstaticaientity.cpp	__ct__23MetaWorldStaticAIEntityFP9Character
+802cf5a4	60	MetaWorldStaticAIEntity	destructor			metaworldstaticaientity.cpp	__dt__23MetaWorldStaticAIEntityFv
+802cf5e0	76	MetaWorldStaticAIEntity	SetAnimID	int		metaworldstaticaientity.cpp	SetAnimID__23MetaWorldStaticAIEntityFi
+802cf62c	8	MetaWorldStaticAIEntity	SetLinkedPlaceable	Placeable*		metaworldstaticaientity.cpp	SetLinkedPlaceable__23MetaWorldStaticAIEntityFP9Placeable
+802cf634	144	MetaWorldStaticAIEntity	EvaluateCompulsions	int, unsigned char, AIThinkDepth, AIThinkLoD		metaworldstaticaientity.cpp	EvaluateCompulsions__23MetaWorldStaticAIEntityFiUc12AIThinkDepth10AIThinkLoD
+802cf6c4	64		__sinit_\metaworldstaticaientity_cpp			metaworldstaticaientity.cpp	__sinit_\metaworldstaticaientity_cpp
+802cf704	528	PoI	constructor	int, unsigned long long		poi.cpp	__ct__3PoIFiUx
+802cf914	60	rmTagPoint	constructor			poi.cpp	__ct__10rmTagPointFv
+802cf950	76	PoI	destructor			poi.cpp	__dt__3PoIFv
+802cf99c	64	PoI	Think	int		poi.cpp	Think__3PoIFi
+802cf9dc	220	PoI	CheckFilterCriteria	const AIEntity*	const	poi.cpp	CheckFilterCriteria__3PoICFPC8AIEntity
+802cfab8	164	PoI	CheckInterestProximity	const AIEntity*	const	poi.cpp	CheckInterestProximity__3PoICFPC8AIEntity
+802cfb5c	124	PoI	SetInterested	const AIEntity*		poi.cpp	SetInterested__3PoIFPC8AIEntity
+802cfbd8	28	PoI	ClearInterested	const AIEntity*		poi.cpp	ClearInterested__3PoIFPC8AIEntity
+802cfbf4	92	PoI	PickTagPoint			poi.cpp	PickTagPoint__3PoIFv
+802cfc50	116	PoI	GetRandomDuration		const	poi.cpp	GetRandomDuration__3PoICFv
+802cfcc4	116	PoI	GetRandomBoredom		const	poi.cpp	GetRandomBoredom__3PoICFv
+802cfd38	116	PoI	GetRandomRecharge		const	poi.cpp	GetRandomRecharge__3PoICFv
+802cfdac	116	PoI	GetRandomInitialRecharge		const	poi.cpp	GetRandomInitialRecharge__3PoICFv
+802cfe20	116	PoI	GetRandomWaitTime		const	poi.cpp	GetRandomWaitTime__3PoICFv
+802cfe94	116	PoI	GetUninterruptibleInterestedTime		const	poi.cpp	GetUninterruptibleInterestedTime__3PoICFv
+802cff08	116	PoI	GetUninterruptibleUsageTime		const	poi.cpp	GetUninterruptibleUsageTime__3PoICFv
+802cff7c	344	PoI	GetPosition		const	poi.cpp	GetPosition__3PoICFv
+802d00d4	76	rmTagPoint	Set	const rmVector3*, float		poi.cpp	Set__10rmTagPointFPC9rmVector3f
+802d0120	28	WorldMan	GetPlayerCharacter	int		poi.cpp	GetPlayerCharacter__8WorldManFi
+802d013c	16	rmTagPoint	SetPos	float, float, float		poi.cpp	SetPos__10rmTagPointFfff
+802d014c	312	PoI	GetUsePosition		const	poi.cpp	GetUsePosition__3PoICFv
+802d0284	372	PoI	GetRelativeDirection	const rmVector3*, rmAngle*	const	poi.cpp	GetRelativeDirection__3PoICFPC9rmVector3P7rmAngle
+802d03f8	132	PoI	GetTagPointPosition	int	const	poi.cpp	GetTagPointPosition__3PoICFi
+802d047c	84	PoI	GetTagPointOffset	int	const	poi.cpp	GetTagPointOffset__3PoICFi
+802d04d0	24	PoI	IsBeingUsed		const	poi.cpp	IsBeingUsed__3PoICFv
+802d04e8	208	PoI	GetTargetPosition	rmTagPoint*	const	poi.cpp	GetTargetPosition__3PoICFP10rmTagPoint
+802d05b8	124	PoI	GetDatabaseBool	unsigned long long	const	poi.cpp	GetDatabaseBool__3PoICFUx
+802d0634	124	PoI	GetDatabaseInt32	unsigned long long	const	poi.cpp	GetDatabaseInt32__3PoICFUx
+802d06b0	124	PoI	GetDatabaseUInt8	unsigned long long	const	poi.cpp	GetDatabaseUInt8__3PoICFUx
+802d072c	132	PoI	GetDatabaseFloat	unsigned long long	const	poi.cpp	GetDatabaseFloat__3PoICFUx
+802d07b0	120	PoI	GetDatabaseString	unsigned long long	const	poi.cpp	GetDatabaseString__3PoICFUx
+802d0828	4	PoI	GetDatabaseEnum	unsigned long long	const	poi.cpp	GetDatabaseEnum__3PoICFUx
+802d082c	120	PoI	GetDatabaseVector4	unsigned long long	const	poi.cpp	GetDatabaseVector4__3PoICFUx
+802d08a4	132	PoI	GetDatabaseRefSpecKey	unsigned long long	const	poi.cpp	GetDatabaseRefSpecKey__3PoICFUx
+802d0928	108	PoI	GetDatabaseAnimationIndex	unsigned long long	const	poi.cpp	GetDatabaseAnimationIndex__3PoICFUx
+802d0994	132	PoI	ConvertVector4ToTagPoint	const rmVector4*, rmTagPoint*		poi.cpp	ConvertVector4ToTagPoint__3PoIFPC9rmVector4P10rmTagPoint
+802d0a18	992	PoI	InitializeDatabaseKeys			poi.cpp	InitializeDatabaseKeys__3PoIFv
+802d0df8	12	PoI	UnInitializeDatabaseKeys			poi.cpp	UnInitializeDatabaseKeys__3PoIFv
+802d0e04	112	PoI	GetPoITypeFromDatabase	unsigned long long		poi.cpp	GetPoITypeFromDatabase__3PoIFUx
+802d0e74	112	PoI	GetPoIAreaFromDatabase	unsigned long long		poi.cpp	GetPoIAreaFromDatabase__3PoIFUx
+802d0ee4	60	ActionPoI	constructor	int, unsigned long long		poi.cpp	__ct__9ActionPoIFiUx
+802d0f20	60	ActionPoI	destructor			poi.cpp	__dt__9ActionPoIFv
+802d0f5c	60	TalkPoI	constructor	int, unsigned long long		poi.cpp	__ct__7TalkPoIFiUx
+802d0f98	60	TalkPoI	destructor			poi.cpp	__dt__7TalkPoIFv
+802d0fd4	8	TalkPoI	GetType		const	poi.cpp	GetType__7TalkPoICFv
+802d0fdc	8	ActionPoI	GetType		const	poi.cpp	GetType__9ActionPoICFv
+802d0fe4	24		__sinit_\poi_cpp			poi.cpp	__sinit_\poi_cpp
+802d0ffc	360	PoIGroup	constructor	unsigned long long		poigroup.cpp	__ct__8PoIGroupFUx
+802d1164	4	PoIGroup	destructor			poigroup.cpp	__dt__8PoIGroupFv
+802d1168	140	PoIGroup	IsBeingUsed		const	poigroup.cpp	IsBeingUsed__8PoIGroupCFv
+802d11f4	164	PoIGroup	IsSatisfied		const	poigroup.cpp	IsSatisfied__8PoIGroupCFv
+802d1298	472	PoIGroup	IsEveryoneReady		const	poigroup.cpp	IsEveryoneReady__8PoIGroupCFv
+802d1470	120	PoIGroup	GetDatabaseArraySize	unsigned long long	const	poigroup.cpp	GetDatabaseArraySize__8PoIGroupCFUx
+802d14e8	136	PoIGroup	GetDatabaseArrayRefSpecKey	unsigned long long, int	const	poigroup.cpp	GetDatabaseArrayRefSpecKey__8PoIGroupCFUxi
+802d1570	128	PoIGroup	GetDatabaseArrayBool	unsigned long long, int	const	poigroup.cpp	GetDatabaseArrayBool__8PoIGroupCFUxi
+802d15f0	124	PoIGroup	GetDatabaseBool	unsigned long long	const	poigroup.cpp	GetDatabaseBool__8PoIGroupCFUx
+802d166c	124	PoIGroup	GetDatabaseUInt8	unsigned long long	const	poigroup.cpp	GetDatabaseUInt8__8PoIGroupCFUx
+802d16e8	28	PoIGroup	GetPoIFromRefSpecKey	unsigned long long	const	poigroup.cpp	GetPoIFromRefSpecKey__8PoIGroupCFUx
+802d1704	216	PoIGroup	InitializeDatabaseKeys			poigroup.cpp	InitializeDatabaseKeys__8PoIGroupFv
+802d17dc	12	PoIGroup	UnInitializeDatabaseKeys			poigroup.cpp	UnInitializeDatabaseKeys__8PoIGroupFv
+802d17e8	112	PoIGroup	GetPoIAreaFromDatabase	unsigned long long		poigroup.cpp	GetPoIAreaFromDatabase__8PoIGroupFUx
+802d1858	24		__sinit_\poigroup_cpp			poigroup.cpp	__sinit_\poigroup_cpp
+802d1870	240	PoIInterpreter	constructor	AIEntity*		poiinterpreter.cpp	__ct__14PoIInterpreterFP8AIEntity
+802d1960	104	PoIInterpreter	destructor			poiinterpreter.cpp	__dt__14PoIInterpreterFv
+802d19c8	376	PoIInterpreter	Think	int, unsigned char, AIThinkDepth, AIThinkLoD		poiinterpreter.cpp	Think__14PoIInterpreterFiUc12AIThinkDepth10AIThinkLoD
+802d1b40	80	PoIInterpreter	IsAvailable	const PoI*	const	poiinterpreter.cpp	IsAvailable__14PoIInterpreterCFPC3PoI
+802d1b90	260	PoIInterpreter	CalculateDesirability	const PoI*		poiinterpreter.cpp	CalculateDesirability__14PoIInterpreterFPC3PoI
+802d1c94	20	PoIInterpreter	GetIndex		const	poiinterpreter.cpp	GetIndex__14PoIInterpreterCFv
+802d1ca8	104	PoIInterpreter	AssignPoI	PoI*		poiinterpreter.cpp	AssignPoI__14PoIInterpreterFP3PoI
+802d1d10	40	PoIInterpreter	SetUsingPoI	const PoI*		poiinterpreter.cpp	SetUsingPoI__14PoIInterpreterFPC3PoI
+802d1d38	120	PoIInterpreter	SetPoIFinished	const PoI*		poiinterpreter.cpp	SetPoIFinished__14PoIInterpreterFPC3PoI
+802d1db0	76	PoIInterpreter	SetBoredom	const PoI*		poiinterpreter.cpp	SetBoredom__14PoIInterpreterFPC3PoI
+802d1dfc	240	PoIInterpreter	GeneratePoICompulsion	const PoI*, unsigned char		poiinterpreter.cpp	GeneratePoICompulsion__14PoIInterpreterFPC3PoIUc
+802d1eec	92	PoIInterpreter	UpdatePoIMemory	int		poiinterpreter.cpp	UpdatePoIMemory__14PoIInterpreterFi
+802d1f48	80	PoIInterpreter	CheckGroupValidity		const	poiinterpreter.cpp	CheckGroupValidity__14PoIInterpreterCFv
+802d1f98	96	PoIInterpreter	CanSwitchPoIs		const	poiinterpreter.cpp	CanSwitchPoIs__14PoIInterpreterCFv
+802d1ff8	140	PoIInterpreter	AssignCurrentPoI	PoI*		poiinterpreter.cpp	AssignCurrentPoI__14PoIInterpreterFP3PoI
+802d2084	124	PoIInterpreter	CleanupRootPoI			poiinterpreter.cpp	CleanupRootPoI__14PoIInterpreterFv
+802d2100	28	PoIInterpreter	CleanupCurrentPoI			poiinterpreter.cpp	CleanupCurrentPoI__14PoIInterpreterFv
+802d211c	384	PoIInterpreter	GetNextChainedPoI			poiinterpreter.cpp	GetNextChainedPoI__14PoIInterpreterFv
+802d229c	372	PoIInterpreter	GetDesirability	const PoI*	const	poiinterpreter.cpp	GetDesirability__14PoIInterpreterCFPC3PoI
+802d2410	180	PoIInterpreter	GetPriority	const PoI*	const	poiinterpreter.cpp	GetPriority__14PoIInterpreterCFPC3PoI
+802d24c4	32	PoIMemory	constructor			poiinterpreter.cpp	__ct__9PoIMemoryFv
+802d24e4	64	PoIMemory	destructor			poiinterpreter.cpp	__dt__9PoIMemoryFv
+802d2524	60	PoIMemory	Think	int		poiinterpreter.cpp	Think__9PoIMemoryFi
+802d2560	24		__sinit_\poiinterpreter_cpp			poiinterpreter.cpp	__sinit_\poiinterpreter_cpp
+802d2578	176	PoIManager	constructor			poimanager.cpp	__ct__10PoIManagerFv
+802d2628	136	PoIManager	destructor			poimanager.cpp	__dt__10PoIManagerFv
+802d26b0	916	PoIManager	Think	int, AIThinkDepth		poimanager.cpp	Think__10PoIManagerFi12AIThinkDepth
+802d2a44	328	PoIManager	LoadArea	Enums::AreaType		poimanager.cpp	LoadArea__10PoIManagerFQ25Enums8AreaType
+802d2b8c	272	PoIManager	UnloadArea			poimanager.cpp	UnloadArea__10PoIManagerFv
+802d2c9c	72	PoIManager	AddInterpreter	PoIInterpreter*		poimanager.cpp	AddInterpreter__10PoIManagerFP14PoIInterpreter
+802d2ce4	64	PoIManager	RemoveInterpreter	PoIInterpreter*		poimanager.cpp	RemoveInterpreter__10PoIManagerFP14PoIInterpreter
+802d2d24	32	PoIManager	GetPoI	int		poimanager.cpp	GetPoI__10PoIManagerFi
+802d2d44	92	PoIManager	GetPoIFromKey	unsigned long long		poimanager.cpp	GetPoIFromKey__10PoIManagerFUx
+802d2da0	388	PoIManager	AddPoI	unsigned long long		poimanager.cpp	AddPoI__10PoIManagerFUx
+802d2f24	192	PoIManager	ResolvePoIChains			poimanager.cpp	ResolvePoIChains__10PoIManagerFv
+802d2fe4	148	PoIManager	AddPoIGroup	unsigned long long		poimanager.cpp	AddPoIGroup__10PoIManagerFUx
+802d3078	204	PoIManager	AssignBestCharacterToPoI	?FPA29_UciPiPi		poimanager.cpp	AssignBestCharacterToPoI__10PoIManagerFPA29_UciPiPi
+802d3144	252	PoIManager	VerifyPoIGroup	int, int*	const	poimanager.cpp	VerifyPoIGroup__10PoIManagerCFiPi
+802d3240	88	PoIManager	GetNextBestPoI	?FPA29_UciPi	const	poimanager.cpp	GetNextBestPoI__10PoIManagerCFPA29_UciPi
+802d3298	24		__sinit_\poimanager_cpp			poimanager.cpp	__sinit_\poimanager_cpp
+802d32b0	104	SimpleMovementAIEntity	constructor	Character*		simplemovementaientity.cpp	__ct__22SimpleMovementAIEntityFP9Character
+802d3318	60	SimpleMovementAIEntity	destructor			simplemovementaientity.cpp	__dt__22SimpleMovementAIEntityFv
+802d3354	136	SimpleMovementAIEntity	SetDestination	const rmTagPoint*, void(*)(void*)*, void*		simplemovementaientity.cpp	SetDestination__22SimpleMovementAIEntityFPC10rmTagPointPFPv_vPv
+802d33dc	8	SimpleMovementAIEntity	SetAIWanderType	Enums::AIWanderType		simplemovementaientity.cpp	SetAIWanderType__22SimpleMovementAIEntityFQ25Enums12AIWanderType
+802d33e4	152	SimpleMovementAIEntity	EvaluateCompulsions	int, unsigned char, AIThinkDepth, AIThinkLoD		simplemovementaientity.cpp	EvaluateCompulsions__22SimpleMovementAIEntityFiUc12AIThinkDepth10AIThinkLoD
+802d347c	64		__sinit_\simplemovementaientity_cpp			simplemovementaientity.cpp	__sinit_\simplemovementaientity_cpp

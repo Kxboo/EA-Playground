@@ -1,0 +1,210 @@
+# addr	size	class	method	args	const	source_unit	mangled
+802e77a4	64	AICharacterControl	constructor	Character*		aicharactercontrol.cpp	__ct__18AICharacterControlFP9Character
+802e77e4	68	AICharacterControl	destructor			aicharactercontrol.cpp	__dt__18AICharacterControlFv
+802e7828	232	AICharacterControl	Update	int, CharacterMovement*, CharacterState*		aicharactercontrol.cpp	Update__18AICharacterControlFiP17CharacterMovementP14CharacterState
+802e7910	68	AICharacterControl	SetAIEntity	AIEntity*		aicharactercontrol.cpp	SetAIEntity__18AICharacterControlFP8AIEntity
+802e7954	24	AICharacterControl	DestroyAIEntity			aicharactercontrol.cpp	DestroyAIEntity__18AICharacterControlFv
+802e796c	48	AICharacterControl	SetCurrentEdict	const Edict*		aicharactercontrol.cpp	SetCurrentEdict__18AICharacterControlFPC5Edict
+802e799c	340	AICharacterControl	IsEdictAccomplished	int, const Edict*, CharacterMovement*, CharacterState*		aicharactercontrol.cpp	IsEdictAccomplished__18AICharacterControlFiPC5EdictP17CharacterMovementP14CharacterState
+802e7af0	88	AICharacterControl	ProcessEdict	const Edict*, CharacterMovement*, CharacterState*		aicharactercontrol.cpp	ProcessEdict__18AICharacterControlFPC5EdictP17CharacterMovementP14CharacterState
+802e7b48	340	AICharacterControl	ProcessMovement	const EdictMovementInfo*, CharacterMovement*, CharacterState*		aicharactercontrol.cpp	ProcessMovement__18AICharacterControlFPC17EdictMovementInfoP17CharacterMovementP14CharacterState
+802e7c9c	36		rmDistanceSquaredXZ	const rmVector3&, const rmVector3&		aicharactercontrol.cpp	rmDistanceSquaredXZ__FRC9rmVector3RC9rmVector3
+802e7cc0	184	AICharacterControl	ProcessAnimation	const EdictAnimationInfo*, CharacterMovement*, CharacterState*		aicharactercontrol.cpp	ProcessAnimation__18AICharacterControlFPC18EdictAnimationInfoP17CharacterMovementP14CharacterState
+802e7d78	212	AICharacterControl	ProcessConversation	const EdictConversationInfo*, CharacterMovement*, CharacterState*		aicharactercontrol.cpp	ProcessConversation__18AICharacterControlFPC21EdictConversationInfoP17CharacterMovementP14CharacterState
+802e7e4c	136	AICharacterControl	IsFacingDirection	float, const rmTagPoint*	const	aicharactercontrol.cpp	IsFacingDirection__18AICharacterControlCFfPC10rmTagPoint
+802e7ed4	96	AICharacterControl	PickRandomConversationAnimation			aicharactercontrol.cpp	PickRandomConversationAnimation__18AICharacterControlFv
+802e7f34	24		__sinit_\aicharactercontrol_cpp			aicharactercontrol.cpp	__sinit_\aicharactercontrol_cpp
+802e7f4c	432	Character	constructor	GUID		character.cpp	__ct__9CharacterF4GUID
+802e80fc	28	CharacterPropRenderEntity	constructor			character.cpp	__ct__25CharacterPropRenderEntityFv
+802e8118	28	CharacterPropShadowRenderEntity	constructor			character.cpp	__ct__31CharacterPropShadowRenderEntityFv
+802e8134	76		rmSetIdentity	rmMatrix4&		character.cpp	rmSetIdentity__FR9rmMatrix4
+802e8180	48	CharacterPropAssetBundle	constructor			character.cpp	__ct__24CharacterPropAssetBundleFv
+802e81b0	88	CharacterPropAssetBundle	destructor			character.cpp	__dt__24CharacterPropAssetBundleFv
+802e8208	180	Character	destructor			character.cpp	__dt__9CharacterFv
+802e82bc	912	Character	Initialize	CharacterAssetBundle*, AnimationState*, SpawnRegion*, unsigned int, float, float, float, int, unsigned long long, TarManager*		character.cpp	Initialize__9CharacterFP20CharacterAssetBundleP14AnimationStateP11SpawnRegionUifffiUxP10TarManager
+802e864c	456	Character	UnInitialize			character.cpp	UnInitialize__9CharacterFv
+802e8814	104	CharacterRenderEntity	destructor			character.cpp	__dt__21CharacterRenderEntityFv
+802e887c	460	Character	UpdateNpcIndicatorState			character.cpp	UpdateNpcIndicatorState__9CharacterFv
+802e8a48	8	Character	StartConversation	ConversationBranchType		character.cpp	StartConversation__9CharacterF22ConversationBranchType
+802e8a50	2092	Character	Update	int		character.cpp	Update__9CharacterFi
+802e927c	140	EA::Math	Set	EA::Math::Matrix44&, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float		character.cpp	Set__Q22EA4MathFRQ32EA4Math8Matrix44ffffffffffffffff
+802e9308	580		rmMult	const rmMatrix4&, const rmMatrix4&, rmMatrix4&		character.cpp	rmMult__FRC9rmMatrix4RC9rmMatrix4R9rmMatrix4
+802e954c	20	EA::Math::Vector4	Set	float, float, float, float		character.cpp	Set__Q32EA4Math7Vector4Fffff
+802e9560	144	rmMatrix4	operator=	const rmMatrix4&		character.cpp	__as__9rmMatrix4FRC9rmMatrix4
+802e95f0	116	Character	AddToScene	Ren::Scene*		character.cpp	AddToScene__9CharacterFPQ23Ren5Scene
+802e9664	180	Character	RemoveFromScene	Ren::Scene*		character.cpp	RemoveFromScene__9CharacterFPQ23Ren5Scene
+802e9718	28	Character	GetCurrentCharacterControl			character.cpp	GetCurrentCharacterControl__9CharacterFv
+802e9734	104	Character	SwitchToLocalControl			character.cpp	SwitchToLocalControl__9CharacterFv
+802e979c	84	Character	SwitchToAIControl			character.cpp	SwitchToAIControl__9CharacterFv
+802e97f0	8	Character	SetHeadTrackingEnabled	bool		character.cpp	SetHeadTrackingEnabled__9CharacterFb
+802e97f8	8	Character	SetHeadTrackingTarget	const rmVector3&		character.cpp	SetHeadTrackingTarget__9CharacterFRC9rmVector3
+802e9800	32	Character	ForceInvisible	bool, bool		character.cpp	ForceInvisible__9CharacterFbb
+802e9820	28	Character	GetPlayerIndex		const	character.cpp	GetPlayerIndex__9CharacterCFv
+802e983c	920	Character	UpdateProp	int		character.cpp	UpdateProp__9CharacterFi
+802e9bd4	576	Character	LoadProp	CString, int		character.cpp	LoadProp__9CharacterF7CStringi
+802e9e14	232	Character	UnloadProp	int		character.cpp	UnloadProp__9CharacterFi
+802e9efc	288	Character	UpdateWalkSurfaceType	int		character.cpp	UpdateWalkSurfaceType__9CharacterFi
+802ea01c	176	Character	InitializeAmbientEffect			character.cpp	InitializeAmbientEffect__9CharacterFv
+802ea0cc	96	CharacterState	GetPartFxInfo	CString&, Enums::CharacterSkeleton&, rmVector3&		character.cpp	GetPartFxInfo__14CharacterStateFR7CStringRQ25Enums17CharacterSkeletonR9rmVector3
+802ea12c	112		rmMult	const rmVector3&, const rmMatrix4&, rmVector3&		character.cpp	rmMult__FRC9rmVector3RC9rmMatrix4R9rmVector3
+802ea19c	228	Character	UpdateAmbientEffect			character.cpp	UpdateAmbientEffect__9CharacterFv
+802ea280	256	Character	HasProp		const	character.cpp	HasProp__9CharacterCFv
+802ea380	20	Character	SetIndicatorVisible	bool		character.cpp	SetIndicatorVisible__9CharacterFb
+802ea394	140	Character	AddMarbleEffect			character.cpp	AddMarbleEffect__9CharacterFv
+802ea420	68	Character	GetCelebrationAnimation			character.cpp	GetCelebrationAnimation__9CharacterFv
+802ea464	24		__sinit_\character_cpp			character.cpp	__sinit_\character_cpp
+802ea47c	80	CharacterConversation	constructor			characterconversation.cpp	__ct__21CharacterConversationFv
+802ea4cc	104	CharacterConversation	destructor			characterconversation.cpp	__dt__21CharacterConversationFv
+802ea534	352	CharacterConversation	StartConversation	ConversationBranchType		characterconversation.cpp	StartConversation__21CharacterConversationF22ConversationBranchType
+802ea694	108	CharacterConversation	SetPositionAndRotation	const rmVector3*, const rmAngle*		characterconversation.cpp	SetPositionAndRotation__21CharacterConversationFPC9rmVector3PC7rmAngle
+802ea700	24		__sinit_\characterconversation_cpp			characterconversation.cpp	__sinit_\characterconversation_cpp
+802ea718	44	CharacterEffects	constructor			charactereffects.cpp	__ct__16CharacterEffectsFv
+802ea744	72	CharacterEffects	destructor			charactereffects.cpp	__dt__16CharacterEffectsFv
+802ea78c	172	CharacterEffects	Initialize			charactereffects.cpp	Initialize__16CharacterEffectsFv
+802ea838	172	CharacterEffects	TriggerEffect	const char*, CharacterMarkerType, unsigned int, int		charactereffects.cpp	TriggerEffect__16CharacterEffectsFPCc19CharacterMarkerTypeUii
+802ea8e4	236	CharacterEffects	EnableAllEffects			charactereffects.cpp	EnableAllEffects__16CharacterEffectsFv
+802ea9d0	148	CharacterEffects	DisableAllEffects			charactereffects.cpp	DisableAllEffects__16CharacterEffectsFv
+802eaa64	644	CharacterEffects	Update	unsigned int, AnimationState*		charactereffects.cpp	Update__16CharacterEffectsFUiP14AnimationState
+802eace8	24		__sinit_\charactereffects_cpp			charactereffects.cpp	__sinit_\charactereffects_cpp
+802ead00	80	CharacterHeadTracking	constructor	const Character*		characterheadtracking.cpp	__ct__21CharacterHeadTrackingFPC9Character
+802ead50	64	CharacterHeadTracking	destructor			characterheadtracking.cpp	__dt__21CharacterHeadTrackingFv
+802ead90	28	CharacterHeadTracking	SetEnabled	bool		characterheadtracking.cpp	SetEnabled__21CharacterHeadTrackingFb
+802eadac	584	CharacterHeadTracking	SetTargetPos	const rmVector3&		characterheadtracking.cpp	SetTargetPos__21CharacterHeadTrackingFRC9rmVector3
+802eaff4	24		rmfAbs	float		characterheadtracking.cpp	rmfAbs__Ff
+802eb00c	928	CharacterHeadTracking	Update	int		characterheadtracking.cpp	Update__21CharacterHeadTrackingFi
+802eb3ac	496	CharacterHeadTracking	DoProceduralAnimation	EAGLAnim::Skeleton*, float*, float*		characterheadtracking.cpp	DoProceduralAnimation__21CharacterHeadTrackingFPQ28EAGLAnim8SkeletonPfPf
+802eb59c	128		rmQuaternionFromAxisAngle	const rmVector3&, float, rmQuaternion&		characterheadtracking.cpp	rmQuaternionFromAxisAngle__FRC9rmVector3fR12rmQuaternion
+802eb61c	20	EA::Math::Quaternion	Set	float, float, float, float		characterheadtracking.cpp	Set__Q32EA4Math10QuaternionFffff
+802eb630	156	EA::Math	operator*	const EA::Math::Quaternion&, const EA::Math::Quaternion&		characterheadtracking.cpp	__ml__Q22EA4MathFRCQ32EA4Math10QuaternionRCQ32EA4Math10Quaternion
+802eb6cc	100		__sinit_\characterheadtracking_cpp			characterheadtracking.cpp	__sinit_\characterheadtracking_cpp
+802eb730	328	PlayerCharacterAnimationEventHandler	HandleEvent	const CString&, void*		charactermanager.cpp	HandleEvent__36PlayerCharacterAnimationEventHandlerFRC7CStringPv
+802eb878	92	NPCAnimationEventHandler	HandleEvent	const CString&, void*		charactermanager.cpp	HandleEvent__24NPCAnimationEventHandlerFRC7CStringPv
+802eb8d4	168	CharacterManager	constructor			charactermanager.cpp	__ct__16CharacterManagerFv
+802eb97c	232	CharacterManager	destructor			charactermanager.cpp	__dt__16CharacterManagerFv
+802eba64	116	CharacterAssetBundleInternal	destructor			charactermanager.cpp	__dt__28CharacterAssetBundleInternalFv
+802ebad8	88	CharacterAssetBundle	destructor			charactermanager.cpp	__dt__20CharacterAssetBundleFv
+802ebb30	516	CharacterManager	Initialize			charactermanager.cpp	Initialize__16CharacterManagerFv
+802ebd34	80	CharacterAssetBundleInternal	constructor			charactermanager.cpp	__ct__28CharacterAssetBundleInternalFv
+802ebd84	48	CharacterAssetBundle	constructor			charactermanager.cpp	__ct__20CharacterAssetBundleFv
+802ebdb4	96	CharacterManager	UnInitialize			charactermanager.cpp	UnInitialize__16CharacterManagerFv
+802ebe14	216	CharacterManager	InitializeBE			charactermanager.cpp	InitializeBE__16CharacterManagerFv
+802ebeec	344	CharacterManager	UnInitializeBE			charactermanager.cpp	UnInitializeBE__16CharacterManagerFv
+802ec044	188	CharacterManager	AllocateAdditionalCharacterSlots			charactermanager.cpp	AllocateAdditionalCharacterSlots__16CharacterManagerFv
+802ec100	156	CharacterManager	DeAllocatoeAdditionalCharacterSlots			charactermanager.cpp	DeAllocatoeAdditionalCharacterSlots__16CharacterManagerFv
+802ec19c	156	CharacterManager	Update	int		charactermanager.cpp	Update__16CharacterManagerFi
+802ec238	100	CharacterManager	ReLocateDataForMovies			charactermanager.cpp	ReLocateDataForMovies__16CharacterManagerFv
+802ec29c	108	CharacterManager	UnReLocateDataForMovies			charactermanager.cpp	UnReLocateDataForMovies__16CharacterManagerFv
+802ec308	920	CharacterManager	SpawnCharacter	unsigned long long, const rmVector3*, SpawnRegion*, unsigned int, bool, int, int		charactermanager.cpp	SpawnCharacter__16CharacterManagerFUxPC9rmVector3P11SpawnRegionUibii
+802ec6a0	48	GUIDManager	GetNewGuid	unsigned short		charactermanager.cpp	GetNewGuid__11GUIDManagerFUs
+802ec6d0	40	CharacterManager	GetPlayerCharacter	int		charactermanager.cpp	GetPlayerCharacter__16CharacterManagerFi
+802ec6f8	12	CharacterManager	GetCharacter	int		charactermanager.cpp	GetCharacter__16CharacterManagerFi
+802ec704	56	CharacterManager	GetCharacterByID	GUID		charactermanager.cpp	GetCharacterByID__16CharacterManagerF4GUID
+802ec73c	80	CharacterManager	GetCharacterByDatabaseKey	unsigned long long		charactermanager.cpp	GetCharacterByDatabaseKey__16CharacterManagerFUx
+802ec78c	44	CharacterManager	DespawnCharacter	Character*, bool		charactermanager.cpp	DespawnCharacter__16CharacterManagerFP9Characterb
+802ec7b8	172	CharacterManager	DespawnCharacter	GUID, bool		charactermanager.cpp	DespawnCharacter__16CharacterManagerF4GUIDb
+802ec864	376	CharacterManager	RemoveCharacter	int		charactermanager.cpp	RemoveCharacter__16CharacterManagerFi
+802ec9dc	112	CharacterManager	ForceAllInvisible	bool, bool		charactermanager.cpp	ForceAllInvisible__16CharacterManagerFbb
+802eca4c	176	CharacterManager	SetPlayerCharacter	Character*, int		charactermanager.cpp	SetPlayerCharacter__16CharacterManagerFP9Characteri
+802ecafc	96	CharacterManager	UnSetPlayerCharacter	int		charactermanager.cpp	UnSetPlayerCharacter__16CharacterManagerFi
+802ecb5c	116	CharacterManager	UnSetPlayerCharacter	Character*		charactermanager.cpp	UnSetPlayerCharacter__16CharacterManagerFP9Character
+802ecbd0	60		rmMagnitude	const rmVector3&		charactermanager.cpp	rmMagnitude__FRC9rmVector3
+802ecc0c	96		__mi	const rmAngle&, const rmAngle&		charactermanager.cpp	__mi__FRC7rmAngleRC7rmAngle
+802ecc6c	176	rmAngle	IsBetween	const rmAngle&, const rmAngle&, bool	const	charactermanager.cpp	IsBetween__7rmAngleCFRC7rmAngleRC7rmAngleb
+802ecd1c	188	CharacterManager	LoadPlayerAnimAssets			charactermanager.cpp	LoadPlayerAnimAssets__16CharacterManagerFv
+802ecdd8	100	CharacterManager	UnLoadPlayerAnimAssets			charactermanager.cpp	UnLoadPlayerAnimAssets__16CharacterManagerFv
+802ece3c	48	CharacterManager	GetAnimationAssets	Enums::CharacterGender		charactermanager.cpp	GetAnimationAssets__16CharacterManagerFQ25Enums15CharacterGender
+802ece6c	96	CharacterManager	LoadCharacterAssetsBundle			charactermanager.cpp	LoadCharacterAssetsBundle__16CharacterManagerFv
+802ececc	104	CharacterManager	UnLoadCharacterAssetBundle			charactermanager.cpp	UnLoadCharacterAssetBundle__16CharacterManagerFv
+802ecf34	776	CharacterManager	LoadAssets	const char*		charactermanager.cpp	LoadAssets__16CharacterManagerFPCc
+802ed23c	68		__pl	const CString&, const CString&		charactermanager.cpp	__pl__FRC7CStringRC7CString
+802ed280	236	CharacterManager	UnLoadAssets	int		charactermanager.cpp	UnLoadAssets__16CharacterManagerFi
+802ed36c	100	CharacterManager	DestroyCharacterControl	CharacterControl*		charactermanager.cpp	DestroyCharacterControl__16CharacterManagerFP16CharacterControl
+802ed3d0	240	CharacterManager	GetCharacterAssetBundle	const char*, int		charactermanager.cpp	GetCharacterAssetBundle__16CharacterManagerFPCci
+802ed4c0	68		__sinit_\charactermanager_cpp			charactermanager.cpp	__sinit_\charactermanager_cpp
+802ed504	16	PlayerCharacterAnimationEventHandler	constructor			charactermovement.cpp	__ct__36PlayerCharacterAnimationEventHandlerFv
+802ed514	16	NPCAnimationEventHandler	constructor			charactermovement.cpp	__ct__24NPCAnimationEventHandlerFv
+802ed524	148	CharacterMovement	constructor	Character*		charactermovement.cpp	__ct__17CharacterMovementFP9Character
+802ed5b8	72	CharacterMovement	destructor			charactermovement.cpp	__dt__17CharacterMovementFv
+802ed600	20	CharacterMovement	StopMovement			charactermovement.cpp	StopMovement__17CharacterMovementFv
+802ed614	8	CharacterMovement	SetMoveSpeed	float		charactermovement.cpp	SetMoveSpeed__17CharacterMovementFf
+802ed61c	140	CharacterMovement	SetWaypoints	const rmVector3*, int, Enums::AIWanderType		charactermovement.cpp	SetWaypoints__17CharacterMovementFPC9rmVector3iQ25Enums12AIWanderType
+802ed6a8	20	CharacterMovement	SetFacingAngle	const rmAngle*		charactermovement.cpp	SetFacingAngle__17CharacterMovementFPC7rmAngle
+802ed6bc	20	CharacterMovement	SetDirection	const rmAngle*		charactermovement.cpp	SetDirection__17CharacterMovementFPC7rmAngle
+802ed6d0	80	CharacterMovement	ResetMappedMovmentStates			charactermovement.cpp	ResetMappedMovmentStates__17CharacterMovementFv
+802ed720	100	CharacterMovement	SetMappedMovmentState	AnimationStateGraph::AnimStates, AnimationStateGraph::AnimStates		charactermovement.cpp	SetMappedMovmentState__17CharacterMovementFQ219AnimationStateGraph10AnimStatesQ219AnimationStateGraph10AnimStates
+802ed784	1512	CharacterMovement	Update	int, CharacterState*, PhysicsCharacter*		charactermovement.cpp	Update__17CharacterMovementFiP14CharacterStateP16PhysicsCharacter
+802edd6c	24		__sinit_\charactermovement_cpp			charactermovement.cpp	__sinit_\charactermovement_cpp
+802edd84	88	CharacterPropRenderEntity	destructor			characterproprenderentity.cpp	__dt__25CharacterPropRenderEntityFv
+802edddc	44	CharacterPropRenderEntity	Draw	Ren::SceneContext&		characterproprenderentity.cpp	Draw__25CharacterPropRenderEntityFRQ23Ren12SceneContext
+802ede08	88	CharacterPropShadowRenderEntity	destructor			characterproprenderentity.cpp	__dt__31CharacterPropShadowRenderEntityFv
+802ede60	44	CharacterPropShadowRenderEntity	Draw	Ren::SceneContext&		characterproprenderentity.cpp	Draw__31CharacterPropShadowRenderEntityFRQ23Ren12SceneContext
+802ede8c	24		__sinit_\characterproprenderentity_cpp			characterproprenderentity.cpp	__sinit_\characterproprenderentity_cpp
+802edea4	60	CharacterRenderEntity	SetAlphaFade	float, int		characterrenderentity.cpp	SetAlphaFade__21CharacterRenderEntityFfi
+802edee0	140	CharacterRenderEntity	Update	int		characterrenderentity.cpp	Update__21CharacterRenderEntityFi
+802edf6c	8	CharacterRenderEntity	SetNearPlaneFadeEnabled	bool		characterrenderentity.cpp	SetNearPlaneFadeEnabled__21CharacterRenderEntityFb
+802edf74	24		__sinit_\characterrenderentity_cpp			characterrenderentity.cpp	__sinit_\characterrenderentity_cpp
+802edf8c	288	CharacterState	constructor			characterstate.cpp	__ct__14CharacterStateFv
+802ee0ac	120	CharacterState	destructor			characterstate.cpp	__dt__14CharacterStateFv
+802ee124	1140	CharacterState	Initialize	unsigned long long, GUID		characterstate.cpp	Initialize__14CharacterStateFUx4GUID
+802ee598	240	CharacterState	SetMiniGame	unsigned long long		characterstate.cpp	SetMiniGame__14CharacterStateFUx
+802ee688	8	CharacterState	StartConversation	ConversationBranchType		characterstate.cpp	StartConversation__14CharacterStateF22ConversationBranchType
+802ee690	256	CharacterState	Update	unsigned int, PhysicsCharacter*		characterstate.cpp	Update__14CharacterStateFUiP16PhysicsCharacter
+802ee790	188	CharacterState	FaceDesiredPos	const rmVector3&		characterstate.cpp	FaceDesiredPos__14CharacterStateFRC9rmVector3
+802ee84c	12	CharacterState	IsInConversation			characterstate.cpp	IsInConversation__14CharacterStateFv
+802ee858	12	CharacterState	SetIsInConversation	bool		characterstate.cpp	SetIsInConversation__14CharacterStateFb
+802ee864	36	CharacterState	HasConversation			characterstate.cpp	HasConversation__14CharacterStateFv
+802ee888	8	CharacterState	IsHighFiveable		const	characterstate.cpp	IsHighFiveable__14CharacterStateCFv
+802ee890	12	CharacterState	GetNameStringId		const	characterstate.cpp	GetNameStringId__14CharacterStateCFv
+802ee89c	20	CharacterState	SaveConversationPositionAndRotation			characterstate.cpp	SaveConversationPositionAndRotation__14CharacterStateFv
+802ee8b0	12	CharacterState	GetConversationRotation			characterstate.cpp	GetConversationRotation__14CharacterStateFv
+802ee8bc	12	CharacterState	GetConversationPosition			characterstate.cpp	GetConversationPosition__14CharacterStateFv
+802ee8c8	8	CharacterState	IsDoingHighFive		const	characterstate.cpp	IsDoingHighFive__14CharacterStateCFv
+802ee8d0	8	CharacterState	SetIsDoingHighFive	bool		characterstate.cpp	SetIsDoingHighFive__14CharacterStateFb
+802ee8d8	24		__sinit_\characterstate_cpp			characterstate.cpp	__sinit_\characterstate_cpp
+802ee8f0	140	LocalCharacterControl	constructor	int		localcharactercontrol.cpp	__ct__21LocalCharacterControlFi
+802ee97c	4	LocalCharacterControl	destructor			localcharactercontrol.cpp	__dt__21LocalCharacterControlFv
+802ee980	128	LocalCharacterControl	Move	int, float, float, bool		localcharactercontrol.cpp	Move__21LocalCharacterControlFiffb
+802eea00	104	LocalCharacterControl	StopMovement			localcharactercontrol.cpp	StopMovement__21LocalCharacterControlFv
+802eea68	96	LocalCharacterControl	FaceDirection	int, float, float		localcharactercontrol.cpp	FaceDirection__21LocalCharacterControlFiff
+802eeac8	96	LocalCharacterControl	Jump	int, float, float		localcharactercontrol.cpp	Jump__21LocalCharacterControlFiff
+802eeb28	2604	LocalCharacterControl	Update	int, CharacterMovement*, CharacterState*		localcharactercontrol.cpp	Update__21LocalCharacterControlFiP17CharacterMovementP14CharacterState
+802ef554	12	rmVector2	constructor	float, float		localcharactercontrol.cpp	__ct__9rmVector2Fff
+802ef560	52		rmMagnitude	const rmVector2&		localcharactercontrol.cpp	rmMagnitude__FRC9rmVector2
+802ef594	188		SmallAngleBetween	const rmAngle&, const rmAngle&, bool*		localcharactercontrol.cpp	SmallAngleBetween__FRC7rmAngleRC7rmAnglePb
+802ef650	100		__pl	const rmAngle&, float		localcharactercontrol.cpp	__pl__FRC7rmAnglef
+802ef6b4	100		__mi	const rmAngle&, float		localcharactercontrol.cpp	__mi__FRC7rmAnglef
+802ef718	100	CharacterState	SetRot	float		localcharactercontrol.cpp	SetRot__14CharacterStateFf
+802ef77c	24	LocalCharacterControl	ClearHistory			localcharactercontrol.cpp	ClearHistory__21LocalCharacterControlFv
+802ef794	16	LocalCharacterControl	IncRefCount			localcharactercontrol.cpp	IncRefCount__21LocalCharacterControlFv
+802ef7a4	28	LocalCharacterControl	DecRefCount			localcharactercontrol.cpp	DecRefCount__21LocalCharacterControlFv
+802ef7c0	24		__sinit_\localcharactercontrol_cpp			localcharactercontrol.cpp	__sinit_\localcharactercontrol_cpp
+802ef7d8	84	NpcIndicator	constructor			npcindicator.cpp	__ct__12NpcIndicatorFv
+802ef82c	88	NpcIndicator	destructor			npcindicator.cpp	__dt__12NpcIndicatorFv
+802ef884	472	NpcIndicator	SetState	NpcIndicator::IndicatorState		npcindicator.cpp	SetState__12NpcIndicatorFQ212NpcIndicator14IndicatorState
+802efa5c	56	NpcIndicator	IsInBounceState		const	npcindicator.cpp	IsInBounceState__12NpcIndicatorCFv
+802efa94	252	NpcIndicator	Draw	Ren::SceneContext&		npcindicator.cpp	Draw__12NpcIndicatorFRQ23Ren12SceneContext
+802efb90	1196	NpcIndicator	DrawImmediate	Ren::SceneContext&		npcindicator.cpp	DrawImmediate__12NpcIndicatorFRQ23Ren12SceneContext
+802f003c	84	EA::Math	operator+	const EA::Math::Vector3&, const EA::Math::Vector3&		npcindicator.cpp	__pl__Q22EA4MathFRCQ32EA4Math7Vector3RCQ32EA4Math7Vector3
+802f0090	84	EA::Math	operator-	const EA::Math::Vector3&, const EA::Math::Vector3&		npcindicator.cpp	__mi__Q22EA4MathFRCQ32EA4Math7Vector3RCQ32EA4Math7Vector3
+802f00e4	72	EA::Math	operator*	const EA::Math::Vector3&, float		npcindicator.cpp	__ml__Q22EA4MathFRCQ32EA4Math7Vector3f
+802f012c	260	NpcIndicator	Update	int		npcindicator.cpp	Update__12NpcIndicatorFi
+802f0230	24		__sinit_\npcindicator_cpp			npcindicator.cpp	__sinit_\npcindicator_cpp
+802f0248	180	NPCRenderEntity	constructor	CharacterAssetBundle*, Ren::BoundingBox*, int, int		npcrenderentity.cpp	__ct__15NPCRenderEntityFP20CharacterAssetBundlePQ23Ren11BoundingBoxii
+802f02fc	136	NPCRenderEntity	destructor			npcrenderentity.cpp	__dt__15NPCRenderEntityFv
+802f0384	232	NPCRenderEntity	Load			npcrenderentity.cpp	Load__15NPCRenderEntityFv
+802f046c	68	NPCRenderEntity	Update	int		npcrenderentity.cpp	Update__15NPCRenderEntityFi
+802f04b0	508	NPCRenderEntity	CalcNearPlaneFade	const Ren::SceneContext&		npcrenderentity.cpp	CalcNearPlaneFade__15NPCRenderEntityFRCQ23Ren12SceneContext
+802f06ac	432	NPCRenderEntity	Draw	Ren::SceneContext&		npcrenderentity.cpp	Draw__15NPCRenderEntityFRQ23Ren12SceneContext
+802f085c	16	NPCRenderEntity	DrawCallback	Ren::SceneContext&, Ren::SceneOrderTableEntry&		npcrenderentity.cpp	DrawCallback__15NPCRenderEntityFRQ23Ren12SceneContextRQ23Ren20SceneOrderTableEntry
+802f086c	272	NPCRenderEntity	DrawImmediate	Ren::SceneContext&		npcrenderentity.cpp	DrawImmediate__15NPCRenderEntityFRQ23Ren12SceneContext
+802f097c	352	NPCRenderEntity	SetTextures			npcrenderentity.cpp	SetTextures__15NPCRenderEntityFv
+802f0adc	68		__pl	const CString&, const char*		npcrenderentity.cpp	__pl__FRC7CStringPCc
+802f0b20	104	EAGL	ModelShape_next	int*&		npcrenderentity.cpp	ModelShape_next__4EAGLFRPi
+802f0b88	8	NPCRenderEntity	SetNearPlaneFadeEnabled	bool		npcrenderentity.cpp	SetNearPlaneFadeEnabled__15NPCRenderEntityFb
+802f0b90	24		__sinit_\npcrenderentity_cpp			npcrenderentity.cpp	__sinit_\npcrenderentity_cpp
+802f0ba8	152	ShadowRenderEntity	constructor	CharacterAssetBundle*, Ren::BoundingBox*, int		shadowrenderentity.cpp	__ct__18ShadowRenderEntityFP20CharacterAssetBundlePQ23Ren11BoundingBoxi
+802f0c40	88	ShadowRenderEntity	destructor			shadowrenderentity.cpp	__dt__18ShadowRenderEntityFv
+802f0c98	80	ShadowRenderEntity	Load			shadowrenderentity.cpp	Load__18ShadowRenderEntityFv
+802f0ce8	120	ShadowRenderEntity	Draw	Ren::SceneContext&		shadowrenderentity.cpp	Draw__18ShadowRenderEntityFRQ23Ren12SceneContext
+802f0d60	216	ShadowRenderEntity	TestVisibility	Ren::SceneContext&		shadowrenderentity.cpp	TestVisibility__18ShadowRenderEntityFRQ23Ren12SceneContext
+802f0e38	24		__sinit_\shadowrenderentity_cpp			shadowrenderentity.cpp	__sinit_\shadowrenderentity_cpp

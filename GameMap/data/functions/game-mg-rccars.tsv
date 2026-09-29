@@ -1,0 +1,416 @@
+# addr	size	class	method	args	const	source_unit	mangled
+80296204	16	RCMP::AV_PLAYER	StaticGetRCMPChunk	RCMP::DECODER*, RCMP::STREAMER*, RCMP::CHUNK**		rcmpbase.cpp	StaticGetRCMPChunk__Q24RCMP9AV_PLAYERFPQ24RCMP7DECODERPQ24RCMP8STREAMERPPQ24RCMP5CHUNK
+80296214	16	RCMP::AV_PLAYER	StaticReleaseRCMPChunk	RCMP::DECODER*, RCMP::STREAMER*, RCMP::CHUNK*		rcmpbase.cpp	StaticReleaseRCMPChunk__Q24RCMP9AV_PLAYERFPQ24RCMP7DECODERPQ24RCMP8STREAMERPQ24RCMP5CHUNK
+80296224	28	RCMP::RCMP_SYSTEM	constructor			rcmpbase.cpp	__ct__Q24RCMP11RCMP_SYSTEMFv
+80296240	120	RCMP::DECODER	constructor	const RCMP::CODEC_IDATA*		rcmpbase.cpp	__ct__Q24RCMP7DECODERFPCQ24RCMP11CODEC_IDATA
+802962b8	112	RCMP::DECODER	destructor			rcmpbase.cpp	__dt__Q24RCMP7DECODERFv
+80296328	36	RCMP::DECODER	ChooseCodec	RCMP::CODEC*, RCMP::CHUNK*		rcmpbase.cpp	ChooseCodec__Q24RCMP7DECODERFPQ24RCMP5CODECPQ24RCMP5CHUNK
+8029634c	88	RCMP::DECODER	FreeChosenCodec			rcmpbase.cpp	FreeChosenCodec__Q24RCMP7DECODERFv
+802963a4	40	RCMP::DECODER	GetCurrentFrameNumber			rcmpbase.cpp	GetCurrentFrameNumber__Q24RCMP7DECODERFv
+802963cc	40	RCMP::DECODER	GetFrameRate			rcmpbase.cpp	GetFrameRate__Q24RCMP7DECODERFv
+802963f4	136	RCMP::DECODER	GetFrame	unsigned int		rcmpbase.cpp	GetFrame__Q24RCMP7DECODERFUi
+8029647c	20	RCMP::DECODER	ReleaseFrame	RCMP::FRAME*		rcmpbase.cpp	ReleaseFrame__Q24RCMP7DECODERFPQ24RCMP5FRAME
+80296490	84	RCMP::DECODER	GetChunk			rcmpbase.cpp	GetChunk__Q24RCMP7DECODERFv
+802964e4	20	RCMP::DECODER	ReleaseChunk	RCMP::CHUNK*		rcmpbase.cpp	ReleaseChunk__Q24RCMP7DECODERFPQ24RCMP5CHUNK
+802964f8	20	RCMP::CHUNK	constructor			rcmpbase.cpp	__ct__Q24RCMP5CHUNKFv
+8029650c	28	RCMP::CODEC_IDATA	constructor			rcmpbase.cpp	__ct__Q24RCMP11CODEC_IDATAFv
+80296528	20	RCMP::CODEC_IDATA	constructor	RCMP::STREAMER*, void(*)(RCMP::DECODER*, RCMP::STREAMER*, RCMP::CHUNK**)*, void(*)(RCMP::DECODER*, RCMP::STREAMER*, RCMP::CHUNK*)*, unsigned int		rcmpbase.cpp	__ct__Q24RCMP11CODEC_IDATAFPQ24RCMP8STREAMERPFPQ24RCMP7DECODERPQ24RCMP8STREAMERPPQ24RCMP5CHUNK_vPFPQ24RCMP7DECODERPQ24RCMP8STREAMERPQ24RCMP5CHUNK_vUi
+8029653c	12	RCMP::FRAME	GetWidth			rcmpbase.cpp	GetWidth__Q24RCMP5FRAMEFv
+80296548	12	RCMP::FRAME	GetHeight			rcmpbase.cpp	GetHeight__Q24RCMP5FRAMEFv
+80296554	4	RCMP::FRAME	Release			rcmpbase.cpp	Release__Q24RCMP5FRAMEFv
+80296558	64	RCMP::RCMP_SYSTEM	destructor			rcmpbase.cpp	__dt__Q24RCMP11RCMP_SYSTEMFv
+80296598	72		__sinit_\rcmpbase_cpp			rcmpbase.cpp	__sinit_\rcmpbase_cpp
+802965e0	32		GetChunkType	RCMP::CHUNK*		rcmp_vp6_codec.cpp	GetChunkType__FPQ24RCMP5CHUNK
+80296600	176	VP6_FRAME	constructor	unsigned int, unsigned int		rcmp_vp6_codec.cpp	__ct__9VP6_FRAMEFUiUi
+802966b0	76	RCON::DLNode	destructor			rcmp_vp6_codec.cpp	__dt__Q24RCON6DLNodeFv
+802966fc	88	RCON::TDLNode<9VP6_FRAME>	destructor			rcmp_vp6_codec.cpp	__dt__Q24RCON19TDLNode<9VP6_FRAME>Fv
+80296754	148	VP6_FRAME	destructor			rcmp_vp6_codec.cpp	__dt__9VP6_FRAMEFv
+802967e8	140	VP6_CODEC_INTERNAL	constructor			rcmp_vp6_codec.cpp	__ct__18VP6_CODEC_INTERNALFv
+80296874	12	RCON::TDLList<9VP6_FRAME>	constructor			rcmp_vp6_codec.cpp	__ct__Q24RCON19TDLList<9VP6_FRAME>Fv
+80296880	92	RCON::TDLList<9VP6_FRAME>	destructor			rcmp_vp6_codec.cpp	__dt__Q24RCON19TDLList<9VP6_FRAME>Fv
+802968dc	272	VP6_CODEC_INTERNAL	destructor			rcmp_vp6_codec.cpp	__dt__18VP6_CODEC_INTERNALFv
+802969ec	32	RCON::DLNode	Remove			rcmp_vp6_codec.cpp	Remove__Q24RCON6DLNodeFv
+80296a0c	20	VP6_CODEC_INTERNAL	Init	RCMP::DECODER*, RCMP::CHUNK*		rcmp_vp6_codec.cpp	Init__18VP6_CODEC_INTERNALFPQ24RCMP7DECODERPQ24RCMP5CHUNK
+80296a20	8	VP6_CODEC_INTERNAL	GetCurrentFrameNumber			rcmp_vp6_codec.cpp	GetCurrentFrameNumber__18VP6_CODEC_INTERNALFv
+80296a28	8	VP6_CODEC_INTERNAL	GetFrameRate			rcmp_vp6_codec.cpp	GetFrameRate__18VP6_CODEC_INTERNALFv
+80296a30	712	VP6_CODEC_INTERNAL	GetFrame	unsigned int		rcmp_vp6_codec.cpp	GetFrame__18VP6_CODEC_INTERNALFUi
+80296cf8	128		geti	const void*, int		rcmp_vp6_codec.cpp	geti__FPCvi
+80296d78	100	VP6_CODEC_INTERNAL	ReleaseFrame	RCMP::FRAME*		rcmp_vp6_codec.cpp	ReleaseFrame__18VP6_CODEC_INTERNALFPQ24RCMP5FRAME
+80296ddc	40	RCON::TDLList<9VP6_FRAME>	AddTail	RCON::DLNode*		rcmp_vp6_codec.cpp	AddTail__Q24RCON19TDLList<9VP6_FRAME>FPQ24RCON6DLNode
+80296e04	196	VP6_CODEC_INTERNAL	DecodeChunk	RCMP::CHUNK*		rcmp_vp6_codec.cpp	DecodeChunk__18VP6_CODEC_INTERNALFPQ24RCMP5CHUNK
+80296ec8	148	VP6_CODEC_INTERNAL	GetFrameFromList			rcmp_vp6_codec.cpp	GetFrameFromList__18VP6_CODEC_INTERNALFv
+80296f5c	80	RCMP	VP6_CODEC_create			rcmp_vp6_codec.cpp	VP6_CODEC_create__4RCMPFv
+80296fac	64	MyAllocator	destructor			rcmp_vp6_codec.cpp	__dt__11MyAllocatorFv
+80296fec	88	MyAllocator	Release			rcmp_vp6_codec.cpp	Release__11MyAllocatorFv
+80297044	20	MyAllocator	AddRef			rcmp_vp6_codec.cpp	AddRef__11MyAllocatorFv
+80297058	44	MyAllocator	Free	void*, unsigned long		rcmp_vp6_codec.cpp	Free__11MyAllocatorFPvUl
+80297084	132	MyAllocator	Alloc	unsigned long, const EA::TagValuePair&		rcmp_vp6_codec.cpp	Alloc__11MyAllocatorFUlRCQ22EA12TagValuePair
+80297108	72		__sinit_\rcmp_vp6_codec_cpp			rcmp_vp6_codec.cpp	__sinit_\rcmp_vp6_codec_cpp
+80297150	40	MyAllocator	constructor			rcmp_mad_codec.cpp	__ct__11MyAllocatorFv
+80297178	40	RCMP	VP6_CODEC_is_head_chunk_for_codec	unsigned int, unsigned int		rcmp_mad_codec.cpp	VP6_CODEC_is_head_chunk_for_codec__4RCMPFUiUi
+802971a0	36	RCMP	VP6_CODEC_is_chunk_for_codec	unsigned int		rcmp_mad_codec.cpp	VP6_CODEC_is_chunk_for_codec__4RCMPFUi
+802971c4	32		GetChunkType	RCMP::CHUNK*		rcmp_mad_codec.cpp	GetChunkType__FPQ24RCMP5CHUNK
+802971e4	208	MAD_FRAME	constructor	unsigned int, unsigned int		rcmp_mad_codec.cpp	__ct__9MAD_FRAMEFUiUi
+802972b4	88	RCON::TDLNode<9MAD_FRAME>	destructor			rcmp_mad_codec.cpp	__dt__Q24RCON19TDLNode<9MAD_FRAME>Fv
+8029730c	164	MAD_FRAME	destructor			rcmp_mad_codec.cpp	__dt__9MAD_FRAMEFv
+802973b0	80	MAD_CODEC_INTERNAL	constructor			rcmp_mad_codec.cpp	__ct__18MAD_CODEC_INTERNALFv
+80297400	12	RCON::TDLList<9MAD_FRAME>	constructor			rcmp_mad_codec.cpp	__ct__Q24RCON19TDLList<9MAD_FRAME>Fv
+8029740c	92	RCON::TDLList<9MAD_FRAME>	destructor			rcmp_mad_codec.cpp	__dt__Q24RCON19TDLList<9MAD_FRAME>Fv
+80297468	260	MAD_CODEC_INTERNAL	destructor			rcmp_mad_codec.cpp	__dt__18MAD_CODEC_INTERNALFv
+8029756c	24	MAD_CODEC_INTERNAL	Init	RCMP::DECODER*, RCMP::CHUNK*		rcmp_mad_codec.cpp	Init__18MAD_CODEC_INTERNALFPQ24RCMP7DECODERPQ24RCMP5CHUNK
+80297584	40	RCON::TDLList<9MAD_FRAME>	AddTail	RCON::DLNode*		rcmp_mad_codec.cpp	AddTail__Q24RCON19TDLList<9MAD_FRAME>FPQ24RCON6DLNode
+802975ac	8	MAD_CODEC_INTERNAL	GetCurrentFrameNumber			rcmp_mad_codec.cpp	GetCurrentFrameNumber__18MAD_CODEC_INTERNALFv
+802975b4	8	MAD_CODEC_INTERNAL	GetFrameRate			rcmp_mad_codec.cpp	GetFrameRate__18MAD_CODEC_INTERNALFv
+802975bc	824	MAD_CODEC_INTERNAL	DecodeChunk	RCMP::CHUNK*		rcmp_mad_codec.cpp	DecodeChunk__18MAD_CODEC_INTERNALFPQ24RCMP5CHUNK
+802978f4	32		INLINESHAPE_data	SHAPE*		rcmp_mad_codec.cpp	INLINESHAPE_data__FP5SHAPE
+80297914	128		geti	const void*, int		rcmp_mad_codec.cpp	geti__FPCvi
+8037bdac	128	RcDriverAIEntity	constructor	Character*		aircdriver.cpp	__ct__16RcDriverAIEntityFP9Character
+8037be2c	60	RcDriverAIEntity	destructor			aircdriver.cpp	__dt__16RcDriverAIEntityFv
+8037be68	164	RcDriverAIEntity	Reset			aircdriver.cpp	Reset__16RcDriverAIEntityFv
+8037bf0c	256	RcDriverAIEntity	ReadProbabilityTables			aircdriver.cpp	ReadProbabilityTables__16RcDriverAIEntityFv
+8037c00c	204	RcDriverAIEntity	ReadStateTransitions			aircdriver.cpp	ReadStateTransitions__16RcDriverAIEntityFv
+8037c0d8	216	RcDriverAIEntity	ReadLevelInfo			aircdriver.cpp	ReadLevelInfo__16RcDriverAIEntityFv
+8037c1b0	168	RcDriverAIEntity	ReadStateDurations			aircdriver.cpp	ReadStateDurations__16RcDriverAIEntityFv
+8037c258	512	RcDriverAIEntity	Update	int		aircdriver.cpp	Update__16RcDriverAIEntityFi
+8037c458	76	RcDriverAIEntity	ProcessNormalTransition			aircdriver.cpp	ProcessNormalTransition__16RcDriverAIEntityFv
+8037c4a4	172	RcDriverAIEntity	ProcessTakingLeadTransition			aircdriver.cpp	ProcessTakingLeadTransition__16RcDriverAIEntityFv
+8037c550	152	RcDriverAIEntity	ProcessRelaxingTransition			aircdriver.cpp	ProcessRelaxingTransition__16RcDriverAIEntityFv
+8037c5e8	76	RcDriverAIEntity	ProcessProvokeTransition			aircdriver.cpp	ProcessProvokeTransition__16RcDriverAIEntityFv
+8037c634	108	RcDriverAIEntity	ProcessAngryTransition			aircdriver.cpp	ProcessAngryTransition__16RcDriverAIEntityFv
+8037c6a0	140	RcDriverAIEntity	SelectNextState	RCCARS_AI_STATES		aircdriver.cpp	SelectNextState__16RcDriverAIEntityF16RCCARS_AI_STATES
+8037c72c	28	RcDriverAIEntity	CanChangeLane			aircdriver.cpp	CanChangeLane__16RcDriverAIEntityFv
+8037c748	20	RcDriverAIEntity	IsBadPowerupApplied			aircdriver.cpp	IsBadPowerupApplied__16RcDriverAIEntityFv
+8037c75c	68	RcDriverAIEntity	IsLeading			aircdriver.cpp	IsLeading__16RcDriverAIEntityFv
+8037c7a0	80	RcDriverAIEntity	IsLastPlace			aircdriver.cpp	IsLastPlace__16RcDriverAIEntityFv
+8037c7f0	104	RcDriverAIEntity	GetClosestPlayerCar	bool		aircdriver.cpp	GetClosestPlayerCar__16RcDriverAIEntityFb
+8037c858	104	RcDriverAIEntity	GetClosestCar	bool		aircdriver.cpp	GetClosestCar__16RcDriverAIEntityFb
+8037c8c0	472	RcDriverAIEntity	SelectCompulsion			aircdriver.cpp	SelectCompulsion__16RcDriverAIEntityFv
+8037ca98	80	AncientEvil	CreateCompulsion<22RcChangeLaneCompulsion>	?FP8AIEntityUc_P22RcChangeLaneCompulsion		aircdriver.cpp	CreateCompulsion<22RcChangeLaneCompulsion>__11AncientEvilFP8AIEntityUc_P22RcChangeLaneCompulsion
+8037cae8	500	RcDriverAIEntity	EvaluateCompulsions	int, unsigned char, AIThinkDepth, AIThinkLoD		aircdriver.cpp	EvaluateCompulsions__16RcDriverAIEntityFiUc12AIThinkDepth10AIThinkLoD
+8037ccdc	60	RcDrivingCompulsion	destructor			aircdriver.cpp	__dt__19RcDrivingCompulsionFv
+8037cd18	12	RcDrivingCompulsion	Activate			aircdriver.cpp	Activate__19RcDrivingCompulsionFv
+8037cd24	12	RcDrivingCompulsion	Deactivate			aircdriver.cpp	Deactivate__19RcDrivingCompulsionFv
+8037cd30	156	RcDrivingCompulsion	HasExpired	AIThinkLoD	const	aircdriver.cpp	HasExpired__19RcDrivingCompulsionCF10AIThinkLoD
+8037cdcc	744	RcDrivingCompulsion	Think	int		aircdriver.cpp	Think__19RcDrivingCompulsionFi
+8037d0b4	52	RcCar	GetLanePos			aircdriver.cpp	GetLanePos__5RcCarFv
+8037d0e8	60	RcSpeedUpCompulsion	constructor	AIEntity*, unsigned char		aircdriver.cpp	__ct__19RcSpeedUpCompulsionFP8AIEntityUc
+8037d124	64	RcSpeedUpCompulsion	destructor			aircdriver.cpp	__dt__19RcSpeedUpCompulsionFv
+8037d164	76	RcSpeedUpCompulsion	Think	int		aircdriver.cpp	Think__19RcSpeedUpCompulsionFi
+8037d1b0	60	RcSlowDownCompulsion	constructor	AIEntity*, unsigned char		aircdriver.cpp	__ct__20RcSlowDownCompulsionFP8AIEntityUc
+8037d1ec	64	RcSlowDownCompulsion	destructor			aircdriver.cpp	__dt__20RcSlowDownCompulsionFv
+8037d22c	36	RcSlowDownCompulsion	Think	int		aircdriver.cpp	Think__20RcSlowDownCompulsionFi
+8037d250	60	RcUsePowerupCompulsion	constructor	AIEntity*, unsigned char		aircdriver.cpp	__ct__22RcUsePowerupCompulsionFP8AIEntityUc
+8037d28c	64	RcUsePowerupCompulsion	destructor			aircdriver.cpp	__dt__22RcUsePowerupCompulsionFv
+8037d2cc	452	RcUsePowerupCompulsion	Think	int		aircdriver.cpp	Think__22RcUsePowerupCompulsionFi
+8037d490	68	RcCollisionCourseCompulsion	constructor	AIEntity*, unsigned char		aircdriver.cpp	__ct__27RcCollisionCourseCompulsionFP8AIEntityUc
+8037d4d4	64	RcCollisionCourseCompulsion	destructor			aircdriver.cpp	__dt__27RcCollisionCourseCompulsionFv
+8037d514	20	RcCollisionCourseCompulsion	Activate			aircdriver.cpp	Activate__27RcCollisionCourseCompulsionFv
+8037d528	16	RcCollisionCourseCompulsion	Deactivate			aircdriver.cpp	Deactivate__27RcCollisionCourseCompulsionFv
+8037d538	464	RcCollisionCourseCompulsion	Think	int		aircdriver.cpp	Think__27RcCollisionCourseCompulsionFi
+8037d708	60	RcPushBackCompulsion	constructor	AIEntity*, unsigned char		aircdriver.cpp	__ct__20RcPushBackCompulsionFP8AIEntityUc
+8037d744	64	RcPushBackCompulsion	destructor			aircdriver.cpp	__dt__20RcPushBackCompulsionFv
+8037d784	716	RcPushBackCompulsion	Think	int		aircdriver.cpp	Think__20RcPushBackCompulsionFi
+8037da50	68	RcByPassCompulsion	constructor	AIEntity*, unsigned char		aircdriver.cpp	__ct__18RcByPassCompulsionFP8AIEntityUc
+8037da94	20	RcByPassCompulsion	Activate			aircdriver.cpp	Activate__18RcByPassCompulsionFv
+8037daa8	16	RcByPassCompulsion	Deactivate			aircdriver.cpp	Deactivate__18RcByPassCompulsionFv
+8037dab8	64	RcByPassCompulsion	destructor			aircdriver.cpp	__dt__18RcByPassCompulsionFv
+8037daf8	280	RcByPassCompulsion	Think	int		aircdriver.cpp	Think__18RcByPassCompulsionFi
+8037dc10	60	RcChangeLaneCompulsion	constructor	AIEntity*, unsigned char		aircdriver.cpp	__ct__22RcChangeLaneCompulsionFP8AIEntityUc
+8037dc4c	64	RcChangeLaneCompulsion	destructor			aircdriver.cpp	__dt__22RcChangeLaneCompulsionFv
+8037dc8c	152	RcChangeLaneCompulsion	Think	int		aircdriver.cpp	Think__22RcChangeLaneCompulsionFi
+8037dd24	60	RcUseShieldCompulsion	constructor	AIEntity*, unsigned char		aircdriver.cpp	__ct__21RcUseShieldCompulsionFP8AIEntityUc
+8037dd60	64	RcUseShieldCompulsion	destructor			aircdriver.cpp	__dt__21RcUseShieldCompulsionFv
+8037dda0	140	RcUseShieldCompulsion	Think	int		aircdriver.cpp	Think__21RcUseShieldCompulsionFi
+8037de2c	60	RcQuickBoostCompulsion	constructor	AIEntity*, unsigned char		aircdriver.cpp	__ct__22RcQuickBoostCompulsionFP8AIEntityUc
+8037de68	64	RcQuickBoostCompulsion	destructor			aircdriver.cpp	__dt__22RcQuickBoostCompulsionFv
+8037dea8	184	RcQuickBoostCompulsion	Think	int		aircdriver.cpp	Think__22RcQuickBoostCompulsionFi
+8037df60	8	RcDrivingCompulsion	IsInterruptible		const	aircdriver.cpp	IsInterruptible__19RcDrivingCompulsionCFv
+8037df68	12	RcDrivingCompulsion	GetName		const	aircdriver.cpp	GetName__19RcDrivingCompulsionCFv
+8037df74	184		__sinit_\aircdriver_cpp			aircdriver.cpp	__sinit_\aircdriver_cpp
+8037e02c	268	MGRcCars	constructor	Ren::Scene*, Ren::Scene*		mgrccars.cpp	__ct__8MGRcCarsFPQ23Ren5ScenePQ23Ren5Scene
+8037e138	88	MGRcCars	destructor			mgrccars.cpp	__dt__8MGRcCarsFv
+8037e190	3496	MGRcCars	Initialize	const World*		mgrccars.cpp	Initialize__8MGRcCarsFPC5World
+8037ef38	292	MGRcCars	InitTunables			mgrccars.cpp	InitTunables__8MGRcCarsFv
+8037f05c	1060	MGRcCars	UnInitialize			mgrccars.cpp	UnInitialize__8MGRcCarsFv
+8037f480	660	MGRcCars	InitializeChallenges			mgrccars.cpp	InitializeChallenges__8MGRcCarsFv
+8037f714	1464	MGRcCars	InitializeViewports	int		mgrccars.cpp	InitializeViewports__8MGRcCarsFi
+8037fccc	80	RcLanePos	operator=	const RcLanePos&		mgrccars.cpp	__as__9RcLanePosFRC9RcLanePos
+8037fd1c	52	RcLanePos	constructor	const RcLanePos&		mgrccars.cpp	__ct__9RcLanePosFRC9RcLanePos
+8037fd50	36	RcChaseCameraInfo	operator=	const RcChaseCameraInfo&		mgrccars.cpp	__as__17RcChaseCameraInfoFRC17RcChaseCameraInfo
+8037fd74	1228	MGRcCars	InitializeCameras	bool		mgrccars.cpp	InitializeCameras__8MGRcCarsFb
+80380240	36	MGRcCars	SetHudIcon	int, int, bool		mgrccars.cpp	SetHudIcon__8MGRcCarsFiib
+80380264	8	MGRcCars	GetTar	const char*		mgrccars.cpp	GetTar__8MGRcCarsFPCc
+8038026c	80	MGRcCars	RenderPowerup	RcPowerupModelType, rmMatrix4		mgrccars.cpp	RenderPowerup__8MGRcCarsF18RcPowerupModelType9rmMatrix4
+803802bc	8	MGRcCars	EnableAllWarningStrips	bool		mgrccars.cpp	EnableAllWarningStrips__8MGRcCarsFb
+803802c4	8	MGRcCars	EnableWarningStrip	int, bool		mgrccars.cpp	EnableWarningStrip__8MGRcCarsFib
+803802cc	212	MGRcCars	AddShadow	rmVector3, rmVector3, rmVector3, rmVector3, RcShadowType		mgrccars.cpp	AddShadow__8MGRcCarsF9rmVector39rmVector39rmVector39rmVector312RcShadowType
+803803a0	536	MGRcCars	InitializeAIDriver	RcCarVehicleInfo*, int, int		mgrccars.cpp	InitializeAIDriver__8MGRcCarsFP16RcCarVehicleInfoii
+803805b8	280	MGRcCars	InitializePlayerDriver	RcCarVehicleInfo*, int, int		mgrccars.cpp	InitializePlayerDriver__8MGRcCarsFP16RcCarVehicleInfoii
+803806d0	304	MGRcCars	InitDriverAbilities	RcCar*		mgrccars.cpp	InitDriverAbilities__8MGRcCarsFP5RcCar
+80380800	72	MGRcCars	InitializeAptHud			mgrccars.cpp	InitializeAptHud__8MGRcCarsFv
+80380848	88	MGRcCars	ZapLeadingCar	int, int		mgrccars.cpp	ZapLeadingCar__8MGRcCarsFii
+803808a0	116	MGRcCars	ZapCarInFront	RcCar*, int		mgrccars.cpp	ZapCarInFront__8MGRcCarsFP5RcCari
+80380914	136	MGRcCars	ZapCar	int, int, int		mgrccars.cpp	ZapCar__8MGRcCarsFiii
+8038099c	8	MGRcCars	AddInterest	int, int, int, int, RcInterestPriority		mgrccars.cpp	AddInterest__8MGRcCarsFiiii18RcInterestPriority
+803809a4	444	MGRcCars	Update	int		mgrccars.cpp	Update__8MGRcCarsFi
+80380b60	8	MGRcCars	GetMedianCar			mgrccars.cpp	GetMedianCar__8MGRcCarsFv
+80380b68	168	MGRcCars	Draw	Ren::SceneContext&		mgrccars.cpp	Draw__8MGRcCarsFRQ23Ren12SceneContext
+80380c10	892	MGRcCars	ResetMiniGame			mgrccars.cpp	ResetMiniGame__8MGRcCarsFv
+80380f8c	92	MGRcCars	OnGameStartAnimComplete			mgrccars.cpp	OnGameStartAnimComplete__8MGRcCarsFv
+80380fe8	12	MGRcCars	OnHudLoadComplete			mgrccars.cpp	OnHudLoadComplete__8MGRcCarsFv
+80380ff4	808	MGRcCars	HandleActions	int		mgrccars.cpp	HandleActions__8MGRcCarsFi
+8038131c	200	MGRcCars	LookForPauseEvents			mgrccars.cpp	LookForPauseEvents__8MGRcCarsFv
+803813e4	80	MGRcCars	UpdatePreGameInstructions	int		mgrccars.cpp	UpdatePreGameInstructions__8MGRcCarsFi
+80381434	236	MGRcCars	UpdateIntro	int		mgrccars.cpp	UpdateIntro__8MGRcCarsFi
+80381520	1556	MGRcCars	UpdateReadyState	int		mgrccars.cpp	UpdateReadyState__8MGRcCarsFi
+80381b34	316	MGRcCars	UpdateCountdown	int		mgrccars.cpp	UpdateCountdown__8MGRcCarsFi
+80381c70	2260	MGRcCars	UpdateGame	int		mgrccars.cpp	UpdateGame__8MGRcCarsFi
+80382544	884	MGRcCars	PostUpdateGame	int		mgrccars.cpp	PostUpdateGame__8MGRcCarsFi
+803828b8	120	MGRcCars	UpdateKnockout	int, int, int		mgrccars.cpp	UpdateKnockout__8MGRcCarsFiii
+80382930	64	MGRcCars	UpdateSprint	int, int, int		mgrccars.cpp	UpdateSprint__8MGRcCarsFiii
+80382970	192	MGRcCars	CheckNormalWinner			mgrccars.cpp	CheckNormalWinner__8MGRcCarsFv
+80382a30	184	MGRcCars	CheckKnockoutWinner			mgrccars.cpp	CheckKnockoutWinner__8MGRcCarsFv
+80382ae8	144	MGRcCars	CheckSprintWinner			mgrccars.cpp	CheckSprintWinner__8MGRcCarsFv
+80382b78	344	MGRcCars	CheckFirecrackerWinner			mgrccars.cpp	CheckFirecrackerWinner__8MGRcCarsFv
+80382cd0	568	MGRcCars	UpdateOutro	int		mgrccars.cpp	UpdateOutro__8MGRcCarsFi
+80382f08	196	MGRcCars	UpdatePostGame	int		mgrccars.cpp	UpdatePostGame__8MGRcCarsFi
+80382fcc	60	MGRcCars	UpdateWaitForApocalypse	int		mgrccars.cpp	UpdateWaitForApocalypse__8MGRcCarsFi
+80383008	240	MGRcCars	GetClosestPlayerCar	RcCar*, bool		mgrccars.cpp	GetClosestPlayerCar__8MGRcCarsFP5RcCarb
+803830f8	248	MGRcCars	GetClosestCar	RcCar*, bool		mgrccars.cpp	GetClosestCar__8MGRcCarsFP5RcCarb
+803831f0	24	MGRcCars	SwitchLeftFromRestCallback	const EA::Conga::CongaOutput*, void*		mgrccars.cpp	SwitchLeftFromRestCallback__8MGRcCarsFPCQ32EA5Conga11CongaOutputPv
+80383208	24	MGRcCars	SwitchRightFromRestCallback	const EA::Conga::CongaOutput*, void*		mgrccars.cpp	SwitchRightFromRestCallback__8MGRcCarsFPCQ32EA5Conga11CongaOutputPv
+80383220	24	MGRcCars	SwitchLeftAgainCallback	const EA::Conga::CongaOutput*, void*		mgrccars.cpp	SwitchLeftAgainCallback__8MGRcCarsFPCQ32EA5Conga11CongaOutputPv
+80383238	24	MGRcCars	SwitchRightAgainCallback	const EA::Conga::CongaOutput*, void*		mgrccars.cpp	SwitchRightAgainCallback__8MGRcCarsFPCQ32EA5Conga11CongaOutputPv
+80383250	36	MGRcCars	SwitchLanes	const EA::Conga::CongaOutput*, bool, bool		mgrccars.cpp	SwitchLanes__8MGRcCarsFPCQ32EA5Conga11CongaOutputbb
+80383274	16	MGRcCars	BoostCallback	const EA::Conga::CongaOutput*, void*		mgrccars.cpp	BoostCallback__8MGRcCarsFPCQ32EA5Conga11CongaOutputPv
+80383284	128	MGRcCars	ProcessBoostGesture	const EA::Conga::CongaOutput*		mgrccars.cpp	ProcessBoostGesture__8MGRcCarsFPCQ32EA5Conga11CongaOutput
+80383304	96	MGRcCars	GetTotalBoostWindow	int&, int&	const	mgrccars.cpp	GetTotalBoostWindow__8MGRcCarsCFRiRi
+80383364	4	MGRcCars	OnPauseMenuLoaded			mgrccars.cpp	OnPauseMenuLoaded__8MGRcCarsFv
+80383368	124	MGRcCars	OnPauseContinue			mgrccars.cpp	OnPauseContinue__8MGRcCarsFv
+803833e4	124	MGRcCars	OnPauseReset			mgrccars.cpp	OnPauseReset__8MGRcCarsFv
+80383460	28	MGRcCars	OnPauseQuit			mgrccars.cpp	OnPauseQuit__8MGRcCarsFv
+8038347c	92	MGRcCars	GetArrayIndexFromDiffLevel	Enums::MiniGameDifficultyLevel		mgrccars.cpp	GetArrayIndexFromDiffLevel__8MGRcCarsFQ25Enums23MiniGameDifficultyLevel
+803834d8	236	MGRcCars	InitScoringSchema			mgrccars.cpp	InitScoringSchema__8MGRcCarsFv
+803835c4	152	MGRcCars	CalcScore	int		mgrccars.cpp	CalcScore__8MGRcCarsFi
+8038365c	88	MGRcCars	HandleControllerDisconnect			mgrccars.cpp	HandleControllerDisconnect__8MGRcCarsFv
+803836b4	108		__sinit_\mgrccars_cpp			mgrccars.cpp	__sinit_\mgrccars_cpp
+80383720	200	RcCar	constructor			rccar.cpp	__ct__5RcCarFv
+803837e8	100	RcCar	destructor			rccar.cpp	__dt__5RcCarFv
+8038384c	2148	RcCar	Initialize	int, int, RcPatchManager*, RcCarModelType, bool, PhysicsVehicleInfo*, int, int, bool		rccar.cpp	Initialize__5RcCarFiiP14RcPatchManager14RcCarModelTypebP18PhysicsVehicleInfoiib
+803840b0	300	RcCar	GetPositionOnTrack	rmVector3, float		rccar.cpp	GetPositionOnTrack__5RcCarF9rmVector3f
+803841dc	176	RcCar	InitializePhysics	PhysicsVehicleInfo*		rccar.cpp	InitializePhysics__5RcCarFP18PhysicsVehicleInfo
+8038428c	652	RcCar	UnInitialize			rccar.cpp	UnInitialize__5RcCarFv
+80384518	1272	RcCar	Reset			rccar.cpp	Reset__5RcCarFv
+80384a10	108	RcCar	SetReadyStatus	bool		rccar.cpp	SetReadyStatus__5RcCarFb
+80384a7c	852	RcCar	EnableParticleEffects	bool		rccar.cpp	EnableParticleEffects__5RcCarFb
+80384dd0	316	RcCar	Boost	bool, int		rccar.cpp	Boost__5RcCarFbi
+80384f0c	76	RcCar	Accelerate	float		rccar.cpp	Accelerate__5RcCarFf
+80384f58	324	RcCar	Zap	int, int		rccar.cpp	Zap__5RcCarFii
+8038509c	104	RcCar	UsePowerup			rccar.cpp	UsePowerup__5RcCarFv
+80385104	196	RcCar	DoNitroRecharge			rccar.cpp	DoNitroRecharge__5RcCarFv
+803851c8	104	RcCar	DoTornado			rccar.cpp	DoTornado__5RcCarFv
+80385230	192	RcCar	UseZap			rccar.cpp	UseZap__5RcCarFv
+803852f0	192	RcCar	UseZapUpgrade			rccar.cpp	UseZapUpgrade__5RcCarFv
+803853b0	92	RcCar	UseShield			rccar.cpp	UseShield__5RcCarFv
+8038540c	208	RcCar	UseTornado			rccar.cpp	UseTornado__5RcCarFv
+803854dc	76	RcCar	TransferFirecracker	RcCar*		rccar.cpp	TransferFirecracker__5RcCarFP5RcCar
+80385528	304	RcCar	ExplodeFirecracker			rccar.cpp	ExplodeFirecracker__5RcCarFv
+80385658	92	RcCar	IsFirecrackerOnboard			rccar.cpp	IsFirecrackerOnboard__5RcCarFv
+803856b4	52	RcPowerupManager	GetPowerup	GUID&		rccar.cpp	GetPowerup__16RcPowerupManagerFR4GUID
+803856e8	248	RcCar	UseThumbTacks			rccar.cpp	UseThumbTacks__5RcCarFv
+803857e0	124	RcCar	IsAheadByLargeMargin	RcCar*		rccar.cpp	IsAheadByLargeMargin__5RcCarFP5RcCar
+8038585c	124	RcCar	IsTrailingByLargeMargin	RcCar*		rccar.cpp	IsTrailingByLargeMargin__5RcCarFP5RcCar
+803858d8	8	RcCar	GetActualPos			rccar.cpp	GetActualPos__5RcCarFv
+803858e0	28	RcCar	GetPos			rccar.cpp	GetPos__5RcCarFv
+803858fc	352	RcCar	ComputeDistanceFromCar	RcCar*		rccar.cpp	ComputeDistanceFromCar__5RcCarFP5RcCar
+80385a5c	84		rmDistance	const rmVector3&, const rmVector3&		rccar.cpp	rmDistance__FRC9rmVector3RC9rmVector3
+80385ab0	240	RcCar	Deactivate			rccar.cpp	Deactivate__5RcCarFv
+80385ba0	988	RcCar	CanSwitchLanes	bool		rccar.cpp	CanSwitchLanes__5RcCarFb
+80385f7c	732	RcCar	SwitchLanes	bool		rccar.cpp	SwitchLanes__5RcCarFb
+80386258	160	RcCar	AddToSwitchLaneQueue	bool		rccar.cpp	AddToSwitchLaneQueue__5RcCarFb
+803862f8	80	RcCar	WarpBack			rccar.cpp	WarpBack__5RcCarFv
+80386348	1140	RcCar	SetCollisionFromOtherCar	rmVector3, float, int, int		rccar.cpp	SetCollisionFromOtherCar__5RcCarF9rmVector3fii
+803867bc	124	RcCar	SetFinishedRace	int		rccar.cpp	SetFinishedRace__5RcCarFi
+80386838	296	RcCar	GetCarTilt			rccar.cpp	GetCarTilt__5RcCarFv
+80386960	8	RcCar	GetSpeed			rccar.cpp	GetSpeed__5RcCarFv
+80386968	636	RcCar	SetCurPlacement	int		rccar.cpp	SetCurPlacement__5RcCarFi
+80386be4	84	RcCar	TriggerPickupEffect			rccar.cpp	TriggerPickupEffect__5RcCarFv
+80386c38	644	RcCar	SetCurPowerup	GUID&, bool, bool, bool		rccar.cpp	SetCurPowerup__5RcCarFR4GUIDbbb
+80386ebc	16	RcCar	GetCurPowerupType			rccar.cpp	GetCurPowerupType__5RcCarFv
+80386ecc	5992	RcCar	Update	int		rccar.cpp	Update__5RcCarFi
+80388634	80	EA::Math	operator/	const EA::Math::Vector3&, float		rccar.cpp	__dv__Q22EA4MathFRCQ32EA4Math7Vector3f
+80388684	3888	RcCar	PostUpdate	int		rccar.cpp	PostUpdate__5RcCarFi
+803895b4	32		AsRmVector4	const rmVector3&, float		rccar.cpp	AsRmVector4__FRC9rmVector3f
+803895d4	556	RcCar	Render	Ren::SceneContext&		rccar.cpp	Render__5RcCarFRQ23Ren12SceneContext
+80389800	136	RcCar	GetTiltMagnitude	rmMatrix4		rccar.cpp	GetTiltMagnitude__5RcCarF9rmMatrix4
+80389888	864	RcCar	ClampCarMat	rmMatrix4, rmMatrix4&, bool		rccar.cpp	ClampCarMat__5RcCarF9rmMatrix4R9rmMatrix4b
+80389be8	992	RcCar	LoadModels			rccar.cpp	LoadModels__5RcCarFv
+80389fc8	188	RcCar	UnloadModels			rccar.cpp	UnloadModels__5RcCarFv
+8038a084	8	RcCar	HasBoostOffLineAbility			rccar.cpp	HasBoostOffLineAbility__5RcCarFv
+8038a08c	8	RcCar	HasZapUpgrade			rccar.cpp	HasZapUpgrade__5RcCarFv
+8038a094	304	RcCar	SetAbilities	bool, bool, bool, bool		rccar.cpp	SetAbilities__5RcCarFbbbb
+8038a1c4	104	RcCar	Honk			rccar.cpp	Honk__5RcCarFv
+8038a22c	16	RcCar	ReportTimeInFirstPlace	int		rccar.cpp	ReportTimeInFirstPlace__5RcCarFi
+8038a23c	8	RcCar	GetTimeInFirstPlace			rccar.cpp	GetTimeInFirstPlace__5RcCarFv
+8038a244	8	RcCar	GetNumPickups			rccar.cpp	GetNumPickups__5RcCarFv
+8038a24c	8	RcCar	GetNumPowerupAttacks			rccar.cpp	GetNumPowerupAttacks__5RcCarFv
+8038a254	8	RcCar	GetNumBumps			rccar.cpp	GetNumBumps__5RcCarFv
+8038a25c	48	RcCar	ResetStats			rccar.cpp	ResetStats__5RcCarFv
+8038a28c	88	RcCar	ClearAccelerateTimer			rccar.cpp	ClearAccelerateTimer__5RcCarFv
+8038a2e4	88	RcCar	ClearBoostTimer			rccar.cpp	ClearBoostTimer__5RcCarFv
+8038a33c	88	RcCar	ClearPowerupTimer			rccar.cpp	ClearPowerupTimer__5RcCarFv
+8038a394	144	RcCar	GetFirecrackerBeepInterval			rccar.cpp	GetFirecrackerBeepInterval__5RcCarFv
+8038a424	288		__sinit_\rccar_cpp			rccar.cpp	__sinit_\rccar_cpp
+8038a544	84	RcCarCollisionListener	constructor	RcCar*		rccarcollisionlistener.cpp	__ct__22RcCarCollisionListenerFP5RcCar
+8038a598	120	RcCarCollisionListener	destructor			rccarcollisionlistener.cpp	__dt__22RcCarCollisionListenerFv
+8038a610	288	RcCarCollisionListener	contactPointAddedCallback	hkContactPointAddedEvent&		rccarcollisionlistener.cpp	contactPointAddedCallback__22RcCarCollisionListenerFR24hkContactPointAddedEvent
+8038a730	4	RcCarCollisionListener	contactPointRemovedCallback	hkContactPointRemovedEvent&		rccarcollisionlistener.cpp	contactPointRemovedCallback__22RcCarCollisionListenerFR26hkContactPointRemovedEvent
+8038a734	892	RcCarCollisionListener	contactPointConfirmedCallback	hkContactPointConfirmedEvent&		rccarcollisionlistener.cpp	contactPointConfirmedCallback__22RcCarCollisionListenerFR28hkContactPointConfirmedEvent
+8038aab0	4	RcCarCollisionListener	contactProcessCallback	hkContactProcessEvent&		rccarcollisionlistener.cpp	contactProcessCallback__22RcCarCollisionListenerFR21hkContactProcessEvent
+8038aab4	24		__sinit_\rccarcollisionlistener_cpp			rccarcollisionlistener.cpp	__sinit_\rccarcollisionlistener_cpp
+8038aacc	48	RcCarVehicleInfo	constructor			rccarvehicleinfo.cpp	__ct__16RcCarVehicleInfoFv
+8038aafc	1120	RcCarVehicleInfo	Initialize			rccarvehicleinfo.cpp	Initialize__16RcCarVehicleInfoFv
+8038af5c	64	RcCarVehicleInfo	destructor			rccarvehicleinfo.cpp	__dt__16RcCarVehicleInfoFv
+8038af9c	44	RcCarVehicleInfo	GetInfo	RcCarVehicleType		rccarvehicleinfo.cpp	GetInfo__16RcCarVehicleInfoF16RcCarVehicleType
+8038afc8	24		__sinit_\rccarvehicleinfo_cpp			rccarvehicleinfo.cpp	__sinit_\rccarvehicleinfo_cpp
+8038afe0	412	RcChaseCamera	constructor			rcchasecamera.cpp	__ct__13RcChaseCameraFv
+8038b17c	72	RcChaseCamera	Reset			rcchasecamera.cpp	Reset__13RcChaseCameraFv
+8038b1c4	8	RcChaseCamera	GetTotalCameraRotation		const	rcchasecamera.cpp	GetTotalCameraRotation__13RcChaseCameraCFv
+8038b1cc	500	RcChaseCamera	SwitchLanes	bool		rcchasecamera.cpp	SwitchLanes__13RcChaseCameraFb
+8038b3c0	24	RcChaseCamera	SetSafeInfo	int, RcChaseCameraInfo*		rcchasecamera.cpp	SetSafeInfo__13RcChaseCameraFiP17RcChaseCameraInfo
+8038b3d8	296	RcChaseCamera	EnableSafeCamera	int, bool, float, bool		rcchasecamera.cpp	EnableSafeCamera__13RcChaseCameraFibfb
+8038b500	1832	RcChaseCamera	Update	int		rcchasecamera.cpp	Update__13RcChaseCameraFi
+8038bc28	328	RcChaseCamera	UpdateCameraInfo	int		rcchasecamera.cpp	UpdateCameraInfo__13RcChaseCameraFi
+8038bd70	4	RcChaseCamera	UpdateInput	int		rcchasecamera.cpp	UpdateInput__13RcChaseCameraFi
+8038bd74	4	RcChaseCamera	Reorient			rcchasecamera.cpp	Reorient__13RcChaseCameraFv
+8038bd78	4	RcChaseCamera	Move	int, float, float		rcchasecamera.cpp	Move__13RcChaseCameraFiff
+8038bd7c	4	RcChaseCamera	ZoomOut	int		rcchasecamera.cpp	ZoomOut__13RcChaseCameraFi
+8038bd80	4	RcChaseCamera	ZoomIn	int		rcchasecamera.cpp	ZoomIn__13RcChaseCameraFi
+8038bd84	24		__sinit_\rcchasecamera_cpp			rcchasecamera.cpp	__sinit_\rcchasecamera_cpp
+8038bd9c	28	RcInterestManager	constructor			rcinterestmanager.cpp	__ct__17RcInterestManagerFv
+8038bdb8	96	RcInterestManager	destructor			rcinterestmanager.cpp	__dt__17RcInterestManagerFv
+8038be18	160	RcInterestManager	Initialize	Ren::Scene*, Ren::Scene*, int		rcinterestmanager.cpp	Initialize__17RcInterestManagerFPQ23Ren5ScenePQ23Ren5Scenei
+8038beb8	36	RcInterestManager	ResetInterest	int		rcinterestmanager.cpp	ResetInterest__17RcInterestManagerFi
+8038bedc	492	RcInterestManager	InitializeInterestCam			rcinterestmanager.cpp	InitializeInterestCam__17RcInterestManagerFv
+8038c0c8	76	RcInterestManager	UnInitialize			rcinterestmanager.cpp	UnInitialize__17RcInterestManagerFv
+8038c114	248	RcInterestManager	Reset			rcinterestmanager.cpp	Reset__17RcInterestManagerFv
+8038c20c	304	RcInterestManager	AddInterest	int, int, int, int, RcInterestPriority		rcinterestmanager.cpp	AddInterest__17RcInterestManagerFiiii18RcInterestPriority
+8038c33c	1532	RcInterestManager	AddInterestHud	int		rcinterestmanager.cpp	AddInterestHud__17RcInterestManagerFi
+8038c938	120	RcInterestManager	RemoveInterestHud	int		rcinterestmanager.cpp	RemoveInterestHud__17RcInterestManagerFi
+8038c9b0	1252	RcInterestManager	ShowInterestCam	int, int		rcinterestmanager.cpp	ShowInterestCam__17RcInterestManagerFii
+8038ce94	744	RcInterestManager	Update	int		rcinterestmanager.cpp	Update__17RcInterestManagerFi
+8038d17c	892	RcInterestManager	Draw	Ren::SceneContext&		rcinterestmanager.cpp	Draw__17RcInterestManagerFRQ23Ren12SceneContext
+8038d4f8	24		__sinit_\rcinterestmanager_cpp			rcinterestmanager.cpp	__sinit_\rcinterestmanager_cpp
+8038d510	20	RcObstacle	constructor			rcobstacle.cpp	__ct__10RcObstacleFv
+8038d524	164	RcObstacle	destructor			rcobstacle.cpp	__dt__10RcObstacleFv
+8038d5c8	124	RcObstacle	UnInitialize			rcobstacle.cpp	UnInitialize__10RcObstacleFv
+8038d644	4	RcObstacle	Update	int		rcobstacle.cpp	Update__10RcObstacleFi
+8038d648	736	RcObstacle	Render			rcobstacle.cpp	Render__10RcObstacleFv
+8038d928	24		__sinit_\rcobstacle_cpp			rcobstacle.cpp	__sinit_\rcobstacle_cpp
+8038d940	80	RcObstacleManager	constructor			rcobstaclemanager.cpp	__ct__17RcObstacleManagerFv
+8038d990	108	RcObstacleManager	destructor			rcobstaclemanager.cpp	__dt__17RcObstacleManagerFv
+8038d9fc	284	RcObstacleManager	Initialize	rmVector3		rcobstaclemanager.cpp	Initialize__17RcObstacleManagerF9rmVector3
+8038db18	136	RcObstacleManager	UnInitialize			rcobstaclemanager.cpp	UnInitialize__17RcObstacleManagerFv
+8038dba0	268	RcObstacleManager	Populate	MarkerSetData*, rmVector3		rcobstaclemanager.cpp	Populate__17RcObstacleManagerFP13MarkerSetData9rmVector3
+8038dcac	312	RcObstacleManager	Update	int		rcobstaclemanager.cpp	Update__17RcObstacleManagerFi
+8038dde4	100	RcObstacleManager	Render			rcobstaclemanager.cpp	Render__17RcObstacleManagerFv
+8038de48	24		__sinit_\rcobstaclemanager_cpp			rcobstaclemanager.cpp	__sinit_\rcobstaclemanager_cpp
+8038de60	52	RcPatch	constructor			rcpatch.cpp	__ct__7RcPatchFv
+8038de94	76	RcPatch	destructor			rcpatch.cpp	__dt__7RcPatchFv
+8038dee0	456	RcPatch	Initialize	rmVector3, float, int, RcPatchType, int		rcpatch.cpp	Initialize__7RcPatchF9rmVector3fi11RcPatchTypei
+8038e0a8	100	RcPatch	UnInitialize			rcpatch.cpp	UnInitialize__7RcPatchFv
+8038e10c	156	RcPatch	Copy	RcPatch*		rcpatch.cpp	Copy__7RcPatchFP7RcPatch
+8038e1a8	280	RcPatch	IsInPatch	rmVector3, int		rcpatch.cpp	IsInPatch__7RcPatchF9rmVector3i
+8038e2c0	48	RcPatch	Update	int		rcpatch.cpp	Update__7RcPatchFi
+8038e2f0	208	RcPatch	Render			rcpatch.cpp	Render__7RcPatchFv
+8038e3c0	24		__sinit_\rcpatch_cpp			rcpatch.cpp	__sinit_\rcpatch_cpp
+8038e3d8	80	RcPatchManager	constructor			rcpatchmanager.cpp	__ct__14RcPatchManagerFv
+8038e428	108	RcPatchManager	destructor			rcpatchmanager.cpp	__dt__14RcPatchManagerFv
+8038e494	20	RcPatchManager	Initialize	rmVector3		rcpatchmanager.cpp	Initialize__14RcPatchManagerF9rmVector3
+8038e4a8	52	RcPatchManager	UnInitialize			rcpatchmanager.cpp	UnInitialize__14RcPatchManagerFv
+8038e4dc	100	RcPatchManager	Reset			rcpatchmanager.cpp	Reset__14RcPatchManagerFv
+8038e540	460	RcPatchManager	Populate	MarkerSetData*, rmVector3		rcpatchmanager.cpp	Populate__14RcPatchManagerFP13MarkerSetData9rmVector3
+8038e70c	120	RcPatchManager	AddPatch	rmVector3, float, int, RcPatchType, int		rcpatchmanager.cpp	AddPatch__14RcPatchManagerF9rmVector3fi11RcPatchTypei
+8038e784	280	RcPatchManager	GetChevronPatch	RcPatchType, int, float		rcpatchmanager.cpp	GetChevronPatch__14RcPatchManagerF11RcPatchTypeif
+8038e89c	12	RcPatchManager	GetPatch	int		rcpatchmanager.cpp	GetPatch__14RcPatchManagerFi
+8038e8a8	220	RcPatchManager	Update	int		rcpatchmanager.cpp	Update__14RcPatchManagerFi
+8038e984	88	RcPatchManager	Render			rcpatchmanager.cpp	Render__14RcPatchManagerFv
+8038e9dc	24		__sinit_\rcpatchmanager_cpp			rcpatchmanager.cpp	__sinit_\rcpatchmanager_cpp
+8038e9f4	64	RcPowerupManager	constructor			rcpowerupmanager.cpp	__ct__16RcPowerupManagerFv
+8038ea34	72	RcPowerupManager	destructor			rcpowerupmanager.cpp	__dt__16RcPowerupManagerFv
+8038ea7c	352	RcPowerupManager	Initialize	rmVector3, int, RcPowerupType, bool		rcpowerupmanager.cpp	Initialize__16RcPowerupManagerF9rmVector3i13RcPowerupTypeb
+8038ebdc	64	RcPowerupManager	UnInitialize			rcpowerupmanager.cpp	UnInitialize__16RcPowerupManagerFv
+8038ec1c	156	RcPowerupManager	Reset	bool		rcpowerupmanager.cpp	Reset__16RcPowerupManagerFb
+8038ecb8	1180	RcPowerupManager	Populate	rmVector3, int		rcpowerupmanager.cpp	Populate__16RcPowerupManagerF9rmVector3i
+8038f154	876	RcPowerupManager	PopulateFromDatabase	rmVector3, int		rcpowerupmanager.cpp	PopulateFromDatabase__16RcPowerupManagerF9rmVector3i
+8038f4c0	76	RcPowerupManager	GetPowerupType	GUID&		rcpowerupmanager.cpp	GetPowerupType__16RcPowerupManagerFR4GUID
+8038f50c	180	RcPowerupManager	ActivatePowerup	int		rcpowerupmanager.cpp	ActivatePowerup__16RcPowerupManagerFi
+8038f5c0	96	RcPowerupManager	FindEmptySlot			rcpowerupmanager.cpp	FindEmptySlot__16RcPowerupManagerFv
+8038f620	44	RcPowerupManager	IsActive	int		rcpowerupmanager.cpp	IsActive__16RcPowerupManagerFi
+8038f64c	152	RcPowerupManager	DeactivatePowerup	int		rcpowerupmanager.cpp	DeactivatePowerup__16RcPowerupManagerFi
+8038f6e4	128	RcPowerupManager	ResetPowerup	int		rcpowerupmanager.cpp	ResetPowerup__16RcPowerupManagerFi
+8038f764	800	RcPowerupManager	PickupPowerup	RcCar*, float		rcpowerupmanager.cpp	PickupPowerup__16RcPowerupManagerFP5RcCarf
+8038fa84	364	RcPowerupManager	AssignPowerup	RcCar*, RcPowerupType		rcpowerupmanager.cpp	AssignPowerup__16RcPowerupManagerFP5RcCar13RcPowerupType
+8038fbf0	48	RcPowerupManager	ReleasePowerup	GUID&		rcpowerupmanager.cpp	ReleasePowerup__16RcPowerupManagerFR4GUID
+8038fc20	48	RcPowerupManager	ClearFirecrackerFlag			rcpowerupmanager.cpp	ClearFirecrackerFlag__16RcPowerupManagerFv
+8038fc50	320	RcPowerupManager	GetNearbyPowerupLane	int, float		rcpowerupmanager.cpp	GetNearbyPowerupLane__16RcPowerupManagerFif
+8038fd90	8	RcPowerupManager	LockOn	int, RcPowerupLocation*		rcpowerupmanager.cpp	LockOn__16RcPowerupManagerFiP17RcPowerupLocation
+8038fd98	12	RcPowerupManager	ReleaseLock	RcPowerupLocation*		rcpowerupmanager.cpp	ReleaseLock__16RcPowerupManagerFP17RcPowerupLocation
+8038fda4	304	RcPowerupManager	UsePowerup	RcCar*		rcpowerupmanager.cpp	UsePowerup__16RcPowerupManagerFP5RcCar
+8038fed4	136	RcPowerupManager	IsPowerupHit	int, rmVector3&, float		rcpowerupmanager.cpp	IsPowerupHit__16RcPowerupManagerFiR9rmVector3f
+8038ff5c	140	RcPowerupManager	SelectPowerupType	int		rcpowerupmanager.cpp	SelectPowerupType__16RcPowerupManagerFi
+8038ffe8	656	RcPowerupManager	Update	int		rcpowerupmanager.cpp	Update__16RcPowerupManagerFi
+80390278	580	RcPowerupManager	DrawPowerup	RcPowerup&		rcpowerupmanager.cpp	DrawPowerup__16RcPowerupManagerFR9RcPowerup
+803904bc	136	RcPowerupManager	RenderPowerupPickups			rcpowerupmanager.cpp	RenderPowerupPickups__16RcPowerupManagerFv
+80390544	360	RcPowerupManager	RenderPowerup	GUID&, rmMatrix4, RcCarVehicleType		rcpowerupmanager.cpp	RenderPowerup__16RcPowerupManagerFR4GUID9rmMatrix416RcCarVehicleType
+803906ac	44	RcPowerupManager	RenderPowerup	RcPowerupModelType, rmMatrix4		rcpowerupmanager.cpp	RenderPowerup__16RcPowerupManagerF18RcPowerupModelType9rmMatrix4
+803906d8	312	RcPowerupManager	LoadModels			rcpowerupmanager.cpp	LoadModels__16RcPowerupManagerFv
+80390810	120	RcPowerupManager	UnloadModels			rcpowerupmanager.cpp	UnloadModels__16RcPowerupManagerFv
+80390888	24		__sinit_\rcpowerupmanager_cpp			rcpowerupmanager.cpp	__sinit_\rcpowerupmanager_cpp
+803908a0	12	RcShadowManager	constructor			rcshadowmanager.cpp	__ct__15RcShadowManagerFv
+803908ac	72	RcShadowManager	destructor			rcshadowmanager.cpp	__dt__15RcShadowManagerFv
+803908f4	468	RcShadowManager	Initialize			rcshadowmanager.cpp	Initialize__15RcShadowManagerFv
+80390ac8	180	RcShadowManager	AddShadow	rmVector3, rmVector3, rmVector3, rmVector3, RcShadowType		rcshadowmanager.cpp	AddShadow__15RcShadowManagerF9rmVector39rmVector39rmVector39rmVector312RcShadowType
+80390b7c	492	RcShadowManager	Render			rcshadowmanager.cpp	Render__15RcShadowManagerFv
+80390d68	120	EAGL::DrawImmediate	AddCoord	const COORD3&		rcshadowmanager.cpp	AddCoord__Q24EAGL13DrawImmediateFRC6COORD3
+80390de0	24		__sinit_\rcshadowmanager_cpp			rcshadowmanager.cpp	__sinit_\rcshadowmanager_cpp
+80390df8	12	RcSpeedManager	constructor			rcspeedmanager.cpp	__ct__14RcSpeedManagerFv
+80390e04	72	RcSpeedManager	destructor			rcspeedmanager.cpp	__dt__14RcSpeedManagerFv
+80390e4c	100	RcSpeedManager	Initialize	bool		rcspeedmanager.cpp	Initialize__14RcSpeedManagerFb
+80390eb0	68	RcSpeedManager	Reset			rcspeedmanager.cpp	Reset__14RcSpeedManagerFv
+80390ef4	12	RcSpeedManager	Boost			rcspeedmanager.cpp	Boost__14RcSpeedManagerFv
+80390f00	12	RcSpeedManager	EnterAccelStrip			rcspeedmanager.cpp	EnterAccelStrip__14RcSpeedManagerFv
+80390f0c	12	RcSpeedManager	EnterDecelStrip			rcspeedmanager.cpp	EnterDecelStrip__14RcSpeedManagerFv
+80390f18	120	RcSpeedManager	HardSpeedSet	float		rcspeedmanager.cpp	HardSpeedSet__14RcSpeedManagerFf
+80390f90	68	RcSpeedManager	SpeedChangeFromCollision	float		rcspeedmanager.cpp	SpeedChangeFromCollision__14RcSpeedManagerFf
+80390fd4	28	RcSpeedManager	SetTargetSpeed	float, int		rcspeedmanager.cpp	SetTargetSpeed__14RcSpeedManagerFfi
+80390ff0	8	RcSpeedManager	SetTargetSpeedMultiplier	float		rcspeedmanager.cpp	SetTargetSpeedMultiplier__14RcSpeedManagerFf
+80390ff8	944	RcSpeedManager	Update	bool, int		rcspeedmanager.cpp	Update__14RcSpeedManagerFbi
+803913a8	24		__sinit_\rcspeedmanager_cpp			rcspeedmanager.cpp	__sinit_\rcspeedmanager_cpp
+803913c0	16	RcTrack	constructor			rctrack.cpp	__ct__7RcTrackFv
+803913d0	76	RcTrack	destructor			rctrack.cpp	__dt__7RcTrackFv
+8039141c	964	RcTrack	Initialize	float, rmVector3, PhysicsManager*, int		rctrack.cpp	Initialize__7RcTrackFf9rmVector3P14PhysicsManageri
+803917e0	228	RcTrack	LoadAndSetupProgressMarkers			rctrack.cpp	LoadAndSetupProgressMarkers__7RcTrackFv
+803918c4	452	RcTrack	SetupProgressMarkers			rctrack.cpp	SetupProgressMarkers__7RcTrackFv
+80391a88	604	RcTrack	SetupLaneMarkers	MarkerSetData*		rctrack.cpp	SetupLaneMarkers__7RcTrackFP13MarkerSetData
+80391ce4	5132	RcTrack	SetupCameraMarkers			rctrack.cpp	SetupCameraMarkers__7RcTrackFv
+803930f0	92	RcTrack	AddCameraMarker	int, int, float, bool, float		rctrack.cpp	AddCameraMarker__7RcTrackFiifbf
+8039314c	100	RcTrack	ProgressMarkerCompare	const void*, const void*		rctrack.cpp	ProgressMarkerCompare__7RcTrackFPCvPCv
+803931b0	260	RcTrack	LoadAndSetupLanes			rctrack.cpp	LoadAndSetupLanes__7RcTrackFv
+803932b4	152	RcTrack	LoadAndSetupLaneMarkers			rctrack.cpp	LoadAndSetupLaneMarkers__7RcTrackFv
+8039334c	884	RcTrack	GetSplinePoint	rmVector3, rmVector3, rmVector3, rmVector3, float		rctrack.cpp	GetSplinePoint__7RcTrackF9rmVector39rmVector39rmVector39rmVector3f
+803936c0	392	RcTrack	IsGeometryVisible	Ren::SceneContext&, EAGL::Geometry*		rctrack.cpp	IsGeometryVisible__7RcTrackFRQ23Ren12SceneContextPQ24EAGL8Geometry
+80393848	800	RcTrack	SetupLanes	CheckpointSetData*		rctrack.cpp	SetupLanes__7RcTrackFP17CheckpointSetData
+80393b68	236	RcTrack	UnInitialize	PhysicsManager*		rctrack.cpp	UnInitialize__7RcTrackFP14PhysicsManager
+80393c54	672	RcTrack	GetTrackProgress	RcLanePos, int		rctrack.cpp	GetTrackProgress__7RcTrackF9RcLanePosi
+80393ef4	792	RcTrack	GetLapChange	RcLanePos, RcLanePos		rctrack.cpp	GetLapChange__7RcTrackF9RcLanePos9RcLanePos
+8039420c	1532	RcTrack	GetLanePos	RcLanePos, float		rctrack.cpp	GetLanePos__7RcTrackF9RcLanePosf
+80394808	712	RcTrack	GetClosestLanePos	RcLanePos, int		rctrack.cpp	GetClosestLanePos__7RcTrackF9RcLanePosi
+80394ad0	396	RcTrack	GetClosestLanePos	rmVector3, int		rctrack.cpp	GetClosestLanePos__7RcTrackF9rmVector3i
+80394c5c	676	RcTrack	CanSwitchLanes	RcLanePos, float, bool		rctrack.cpp	CanSwitchLanes__7RcTrackF9RcLanePosfb
+80394f00	264	RcTrack	IsCarInBadCameraArea	RcLanePos, int, float*		rctrack.cpp	IsCarInBadCameraArea__7RcTrackF9RcLanePosiPf
+80395008	4	RcTrack	Update	int		rctrack.cpp	Update__7RcTrackFi
+8039500c	348	RcTrack	Render	Ren::SceneContext&		rctrack.cpp	Render__7RcTrackFRQ23Ren12SceneContext
+80395168	140	RcTrack	EnableAllWarningStrips	bool		rctrack.cpp	EnableAllWarningStrips__7RcTrackFb
+803951f4	132	RcTrack	EnableWarningStrip	int, bool		rctrack.cpp	EnableWarningStrip__7RcTrackFib
+80395278	24		__sinit_\rctrack_cpp			rctrack.cpp	__sinit_\rctrack_cpp

@@ -1,0 +1,216 @@
+# addr	size	class	method	args	const	source_unit	mangled
+802d34bc	16	Attrib::Class	constructor	unsigned long long, Attrib::ClassPrivate&		attribclass.cpp	__ct__Q26Attrib5ClassFUxRQ26Attrib12ClassPrivate
+802d34cc	20	Attrib::Class	AddRef	unsigned long long	const	attribclass.cpp	AddRef__Q26Attrib5ClassCFUx
+802d34e0	64	Attrib::Class	Release	unsigned long long	const	attribclass.cpp	Release__Q26Attrib5ClassCFUx
+802d3520	20	Attrib::Class	IsReferenced		const	attribclass.cpp	IsReferenced__Q26Attrib5ClassCFv
+802d3534	12	Attrib::Class	GetCollection	unsigned long long	const	attribclass.cpp	GetCollection__Q26Attrib5ClassCFUx
+802d3540	116	VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>	Find	unsigned long long	const	attribclass.cpp	Find__70VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>CFUx
+802d35b4	28	VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>::Node	Get		const	attribclass.cpp	Get__Q270VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>4NodeCFv
+802d35d0	216	VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>	FindIndex	unsigned long long	const	attribclass.cpp	FindIndex__70VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>CFUx
+802d36a8	40	VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>::Node	Key		const	attribclass.cpp	Key__Q270VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>4NodeCFv
+802d36d0	52	VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>	ValidIndex	unsigned int	const	attribclass.cpp	ValidIndex__70VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>CFUi
+802d3704	16	Attrib::Class	GetFirstCollection		const	attribclass.cpp	GetFirstCollection__Q26Attrib5ClassCFv
+802d3714	192	Attrib	ScanForValidKey<Q36Attrib12ClassPrivate17CollectionHashMap>	?FRCQ36Attrib12ClassPrivate17CollectionHashMapUi_Ux		attribclass.cpp	ScanForValidKey<Q36Attrib12ClassPrivate17CollectionHashMap>__6AttribFRCQ36Attrib12ClassPrivate17CollectionHashMapUi_Ux
+802d37d4	116	Attrib::Class	GetNextCollection	unsigned long long	const	attribclass.cpp	GetNextCollection__Q26Attrib5ClassCFUx
+802d3848	200	VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>	RebuildTable	unsigned int		attribclass.cpp	RebuildTable__70VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>FUi
+802d3910	232	VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>	CopyFromOldTable	VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>::Node*, unsigned int, bool		attribclass.cpp	CopyFromOldTable__70VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>FPQ270VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>4NodeUib
+802d39f8	320	VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>	InternalAdd	unsigned long long, Attrib::Collection*		attribclass.cpp	InternalAdd__70VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>FUxPQ26Attrib10Collection
+802d3b38	40	Attrib::Class::TablePolicy	GrowRequest	unsigned int, bool		attribclass.cpp	GrowRequest__Q36Attrib5Class11TablePolicyFUib
+802d3b60	340	Attrib::Class	Delete		const	attribclass.cpp	Delete__Q26Attrib5ClassCFv
+802d3cb4	116	Attrib::Class	AddCollection	Attrib::Collection*		attribclass.cpp	AddCollection__Q26Attrib5ClassFPQ26Attrib10Collection
+802d3d28	256	Attrib::Class	RemoveCollection	Attrib::Collection*		attribclass.cpp	RemoveCollection__Q26Attrib5ClassFPQ26Attrib10Collection
+802d3e28	504	VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>	UpdateSearchLength	unsigned int, unsigned int		attribclass.cpp	UpdateSearchLength__70VecHashMap<Ux,Q26Attrib10Collection,Q36Attrib5Class11TablePolicy,1,96>FUiUi
+802d4020	100	Attrib::Array	GetData	unsigned int	const	attribclass.cpp	GetData__Q26Attrib5ArrayCFUi
+802d4084	32	Attrib::Array	Data	unsigned int	const	attribclass.cpp	Data__Q26Attrib5ArrayCFUi
+802d40a4	100	Attrib::Class	FreeLayout	void*	const	attribclass.cpp	FreeLayout__Q26Attrib5ClassCFPv
+802d4108	24		__sinit_\attribclass_cpp			attribclass.cpp	__sinit_\attribclass_cpp
+802d4120	112	Attrib::HashMap	constructor	unsigned int, unsigned int, bool		attribcollection.cpp	__ct__Q26Attrib7HashMapFUiUib
+802d4190	40	Attrib::HashMapTablePolicy	GrowRequest	unsigned int, bool		attribcollection.cpp	GrowRequest__Q26Attrib18HashMapTablePolicyFUib
+802d41b8	448	Attrib::HashMap	RebuildTable	unsigned int		attribcollection.cpp	RebuildTable__Q26Attrib7HashMapFUi
+802d4378	32	Attrib::Node	constructor			attribcollection.cpp	__ct__Q26Attrib4NodeFv
+802d4398	40	Attrib::Node	GetKey		const	attribcollection.cpp	GetKey__Q26Attrib4NodeCFv
+802d43c0	164	Attrib::HashMap	PreFlightAdd	unsigned long long, unsigned int, unsigned int&		attribcollection.cpp	PreFlightAdd__Q26Attrib7HashMapFUxUiRUi
+802d4464	64	Attrib::Node	Move	Attrib::Node&		attribcollection.cpp	Move__Q26Attrib4NodeFRQ26Attrib4Node
+802d44a4	68	Attrib::HashMap	PostFlightAdd	unsigned int, unsigned int		attribcollection.cpp	PostFlightAdd__Q26Attrib7HashMapFUiUi
+802d44e8	88	Attrib::HashMapTablePolicy	Free	void*, unsigned long		attribcollection.cpp	Free__Q26Attrib18HashMapTablePolicyFPvUl
+802d4540	124	Attrib::HashMap	destructor			attribcollection.cpp	__dt__Q26Attrib7HashMapFv
+802d45bc	852	Attrib::Collection	constructor	const Attrib::CollectionLoadData&, Attrib::Vault*		attribcollection.cpp	__ct__Q26Attrib10CollectionFRCQ26Attrib18CollectionLoadDataPQ26Attrib5Vault
+802d4910	396	Attrib::HashMap	Add	unsigned long long, unsigned long long, void*, bool, unsigned char, bool, void*		attribcollection.cpp	Add__Q26Attrib7HashMapFUxUxPvbUcbPv
+802d4a9c	64	Attrib::Node	GetArray	void*, const Attrib::Collection*	const	attribcollection.cpp	GetArray__Q26Attrib4NodeCFPvPCQ26Attrib10Collection
+802d4adc	60	Attrib::HashMap	GetNextValidIndex	unsigned int	const	attribcollection.cpp	GetNextValidIndex__Q26Attrib7HashMapCFUi
+802d4b18	52	Attrib::HashMap	ValidIndex	unsigned int	const	attribcollection.cpp	ValidIndex__Q26Attrib7HashMapCFUi
+802d4b4c	212	Attrib::Collection	destructor			attribcollection.cpp	__dt__Q26Attrib10CollectionFv
+802d4c20	64	Attrib::Collection	Release	unsigned long long	const	attribcollection.cpp	Release__Q26Attrib10CollectionCFUx
+802d4c60	176	Attrib::Collection	GetNode	unsigned long long, const Attrib::Collection*&	const	attribcollection.cpp	GetNode__Q26Attrib10CollectionCFUxRPCQ26Attrib10Collection
+802d4d10	96	Attrib::HashMap	Find	unsigned long long	const	attribcollection.cpp	Find__Q26Attrib7HashMapCFUx
+802d4d70	260	Attrib::HashMap	FindIndex	unsigned long long	const	attribcollection.cpp	FindIndex__Q26Attrib7HashMapCFUx
+802d4e74	184	Attrib::Collection	Get	const Attrib::Instance&, unsigned long long	const	attribcollection.cpp	Get__Q26Attrib10CollectionCFRCQ26Attrib8InstanceUx
+802d4f2c	80	Attrib::Node	GetPointer	void*, const Attrib::Collection*	const	attribcollection.cpp	GetPointer__Q26Attrib4NodeCFPvPCQ26Attrib10Collection
+802d4f7c	108	Attrib::Collection	FirstKey	bool&	const	attribcollection.cpp	FirstKey__Q26Attrib10CollectionCFRb
+802d4fe8	104	Attrib	ScanForValidKey<Q26Attrib7HashMap>	?FRCQ26Attrib7HashMapUi_Ux		attribcollection.cpp	ScanForValidKey<Q26Attrib7HashMap>__6AttribFRCQ26Attrib7HashMapUi_Ux
+802d5050	240	Attrib::Collection	NextKey	unsigned long long, bool&	const	attribcollection.cpp	NextKey__Q26Attrib10CollectionCFUxRb
+802d5140	240	Attrib::Array	Destroy	Attrib::Array*		attribcollection.cpp	Destroy__Q26Attrib5ArrayFPQ26Attrib5Array
+802d5230	280	Attrib::HashMap	Remove	Attrib::Node*, void*, const Attrib::Collection*, bool		attribcollection.cpp	Remove__Q26Attrib7HashMapFPQ26Attrib4NodePvPCQ26Attrib10Collectionb
+802d5348	516	Attrib::HashMap	UpdateSearchLength	unsigned int, unsigned int		attribcollection.cpp	UpdateSearchLength__Q26Attrib7HashMapFUiUi
+802d554c	224	Attrib::Collection	Clear			attribcollection.cpp	Clear__Q26Attrib10CollectionFv
+802d562c	512	Attrib::Collection	Clean		const	attribcollection.cpp	Clean__Q26Attrib10CollectionCFv
+802d582c	236	Attrib::Collection	FreeNodeData	bool, void*, bool, const Attrib::TypeDesc&		attribcollection.cpp	FreeNodeData__Q26Attrib10CollectionFbPvbRCQ26Attrib8TypeDesc
+802d5918	8	Attrib::Collection	Delete		const	attribcollection.cpp	Delete__Q26Attrib10CollectionCFv
+802d5920	88	Attrib::AttributeIterator	constructor	const Attrib::Collection*		attribcollection.cpp	__ct__Q26Attrib17AttributeIteratorFPCQ26Attrib10Collection
+802d5978	96	Attrib::AttributeIterator	Advance			attribcollection.cpp	Advance__Q26Attrib17AttributeIteratorFv
+802d59d8	24		__sinit_\attribcollection_cpp			attribcollection.cpp	__sinit_\attribcollection_cpp
+802d59f0	300	Attrib::Database	GetExportPolicies			attribdatabase.cpp	GetExportPolicies__Q26Attrib8DatabaseFv
+802d5b1c	108	Attrib::DatabaseExportPolicy	destructor			attribdatabase.cpp	__dt__Q26Attrib20DatabaseExportPolicyFv
+802d5b88	108	Attrib::ClassExportPolicy	destructor			attribdatabase.cpp	__dt__Q26Attrib17ClassExportPolicyFv
+802d5bf4	108	Attrib::CollectionExportPolicy	destructor			attribdatabase.cpp	__dt__Q26Attrib22CollectionExportPolicyFv
+802d5c60	88	Attrib::Database	destructor			attribdatabase.cpp	__dt__Q26Attrib8DatabaseFv
+802d5cb8	124	Attrib::Database	GetClass	unsigned long long	const	attribdatabase.cpp	GetClass__Q26Attrib8DatabaseCFUx
+802d5d34	28	VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>::Node	Get		const	attribdatabase.cpp	Get__Q264VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>4NodeCFv
+802d5d50	216	VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>	FindIndex	unsigned long long	const	attribdatabase.cpp	FindIndex__64VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>CFUx
+802d5e28	40	VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>::Node	Key		const	attribdatabase.cpp	Key__Q264VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>4NodeCFv
+802d5e50	52	VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>	ValidIndex	unsigned int	const	attribdatabase.cpp	ValidIndex__64VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>CFUi
+802d5e84	192	Attrib	ScanForValidKey<Q26Attrib10ClassTable>	?FRCQ26Attrib10ClassTableUi_Ux		attribdatabase.cpp	ScanForValidKey<Q26Attrib10ClassTable>__6AttribFRCQ26Attrib10ClassTableUi_Ux
+802d5f44	116	Attrib::Database	GetNextClass	unsigned long long	const	attribdatabase.cpp	GetNextClass__Q26Attrib8DatabaseCFUx
+802d5fb8	36	Attrib::Database	GetIndexedTypeDesc	unsigned short	const	attribdatabase.cpp	GetIndexedTypeDesc__Q26Attrib8DatabaseCFUs
+802d5fdc	148	Attrib::Database	GetTypeDesc	unsigned long long	const	attribdatabase.cpp	GetTypeDesc__Q26Attrib8DatabaseCFUx
+802d6070	132	std::set<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>	find	const Attrib::TypeDesc&		attribdatabase.cpp	find__Q23std94set<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>FRCQ26Attrib8TypeDesc
+802d60f4	8	std::set<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>	end			attribdatabase.cpp	end__Q23std94set<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>Fv
+802d60fc	100	Attrib::TypeDesc	constructor	const char*, unsigned int, unsigned int		attribdatabase.cpp	__ct__Q26Attrib8TypeDescFPCcUiUi
+802d6160	932	std::set<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>	insert	const Attrib::TypeDesc&		attribdatabase.cpp	insert__Q23std94set<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>FRCQ26Attrib8TypeDesc
+802d6504	160	Attrib::Database	Delete	const Attrib::Collection*		attribdatabase.cpp	Delete__Q26Attrib8DatabaseFPCQ26Attrib10Collection
+802d65a4	12	std::list<PCQ26Attrib10Collection,Q23std34allocator<PCQ26Attrib10Collection>>	begin			attribdatabase.cpp	begin__Q23std72list<PCQ26Attrib10Collection,Q23std34allocator<PCQ26Attrib10Collection>>Fv
+802d65b0	12	std::list<PCQ26Attrib10Collection,Q23std34allocator<PCQ26Attrib10Collection>>	end			attribdatabase.cpp	end__Q23std72list<PCQ26Attrib10Collection,Q23std34allocator<PCQ26Attrib10Collection>>Fv
+802d65bc	196	std::__list_imp<PCv,Q23std14allocator<PCv>>	push_back	const const void*&		attribdatabase.cpp	push_back__Q23std38__list_imp<PCv,Q23std14allocator<PCv>>FRCPCv
+802d6680	160	Attrib::Database	Delete	const Attrib::Class*		attribdatabase.cpp	Delete__Q26Attrib8DatabaseFPCQ26Attrib5Class
+802d6720	12	std::list<PCQ26Attrib5Class,Q23std28allocator<PCQ26Attrib5Class>>	begin			attribdatabase.cpp	begin__Q23std60list<PCQ26Attrib5Class,Q23std28allocator<PCQ26Attrib5Class>>Fv
+802d672c	12	std::list<PCQ26Attrib5Class,Q23std28allocator<PCQ26Attrib5Class>>	end			attribdatabase.cpp	end__Q23std60list<PCQ26Attrib5Class,Q23std28allocator<PCQ26Attrib5Class>>Fv
+802d6738	340	Attrib::Database	CollectGarbage			attribdatabase.cpp	CollectGarbage__Q26Attrib8DatabaseFv
+802d688c	84	std::__list_deleter<PCv,Q23std14allocator<PCv>>	pop_front			attribdatabase.cpp	pop_front__Q23std42__list_deleter<PCv,Q23std14allocator<PCv>>Fv
+802d68e0	116	Attrib::Database	AddClass	Attrib::Class*		attribdatabase.cpp	AddClass__Q26Attrib8DatabaseFPQ26Attrib5Class
+802d6954	320	VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>	InternalAdd	unsigned long long, Attrib::Class*		attribdatabase.cpp	InternalAdd__64VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>FUxPQ26Attrib5Class
+802d6a94	340	VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>	RebuildTable	unsigned int		attribdatabase.cpp	RebuildTable__64VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>FUi
+802d6be8	40		ATTRIB_GROWTABLE	int, int		attribdatabase.cpp	ATTRIB_GROWTABLE__Fii
+802d6c10	220	Attrib::Database	RemoveClass	const Attrib::Class*		attribdatabase.cpp	RemoveClass__Q26Attrib8DatabaseFPCQ26Attrib5Class
+802d6cec	504	VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>	UpdateSearchLength	unsigned int, unsigned int		attribdatabase.cpp	UpdateSearchLength__64VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>FUiUi
+802d6ee4	4	Attrib	StringToKey	const char*		attribdatabase.cpp	StringToKey__6AttribFPCc
+802d6ee8	4	Attrib::CollectionExportPolicy	Deinitialize	Attrib::Vault&, const unsigned long long&, const unsigned long long&		attribdatabase.cpp	Deinitialize__Q26Attrib22CollectionExportPolicyFRQ26Attrib5VaultRCUxRCUx
+802d6eec	244	Attrib::CollectionExportPolicy	PrepareToDeinitialize	Attrib::Vault&		attribdatabase.cpp	PrepareToDeinitialize__Q26Attrib22CollectionExportPolicyFRQ26Attrib5Vault
+802d6fe0	44	Attrib::HashMap	Release		const	attribdatabase.cpp	Release__Q26Attrib7HashMapCFv
+802d700c	4	Attrib::CollectionExportPolicy	Clean	Attrib::Vault&, const unsigned long long&, const unsigned long long&		attribdatabase.cpp	Clean__Q26Attrib22CollectionExportPolicyFRQ26Attrib5VaultRCUxRCUx
+802d7010	212	Attrib::CollectionExportPolicy	PrepareToClean	Attrib::Vault&		attribdatabase.cpp	PrepareToClean__Q26Attrib22CollectionExportPolicyFRQ26Attrib5Vault
+802d70e4	8	Attrib::CollectionExportPolicy	IsReferenced	const Attrib::Vault&, const unsigned long long&, const unsigned long long&		attribdatabase.cpp	IsReferenced__Q26Attrib22CollectionExportPolicyFRCQ26Attrib5VaultRCUxRCUx
+802d70ec	232	Attrib::CollectionExportPolicy	AnyReferences	const Attrib::Vault&		attribdatabase.cpp	AnyReferences__Q26Attrib22CollectionExportPolicyFRCQ26Attrib5Vault
+802d71d4	140	Attrib::CollectionExportPolicy	Initialize	Attrib::Vault&, const unsigned long long&, const unsigned long long&, void*, unsigned int		attribdatabase.cpp	Initialize__Q26Attrib22CollectionExportPolicyFRQ26Attrib5VaultRCUxRCUxPvUi
+802d7260	8	Attrib::CollectionExportPolicy	IsExported	const unsigned long long&		attribdatabase.cpp	IsExported__Q26Attrib22CollectionExportPolicyFRCUx
+802d7268	4	Attrib::ClassExportPolicy	Deinitialize	Attrib::Vault&, const unsigned long long&, const unsigned long long&		attribdatabase.cpp	Deinitialize__Q26Attrib17ClassExportPolicyFRQ26Attrib5VaultRCUxRCUx
+802d726c	172	Attrib::ClassExportPolicy	PrepareToDeinitialize	Attrib::Vault&		attribdatabase.cpp	PrepareToDeinitialize__Q26Attrib17ClassExportPolicyFRQ26Attrib5Vault
+802d7318	4	Attrib::ClassExportPolicy	Clean	Attrib::Vault&, const unsigned long long&, const unsigned long long&		attribdatabase.cpp	Clean__Q26Attrib17ClassExportPolicyFRQ26Attrib5VaultRCUxRCUx
+802d731c	4	Attrib::ClassExportPolicy	PrepareToClean	Attrib::Vault&		attribdatabase.cpp	PrepareToClean__Q26Attrib17ClassExportPolicyFRQ26Attrib5Vault
+802d7320	8	Attrib::ClassExportPolicy	IsReferenced	const Attrib::Vault&, const unsigned long long&, const unsigned long long&		attribdatabase.cpp	IsReferenced__Q26Attrib17ClassExportPolicyFRCQ26Attrib5VaultRCUxRCUx
+802d7328	164	Attrib::ClassExportPolicy	AnyReferences	const Attrib::Vault&		attribdatabase.cpp	AnyReferences__Q26Attrib17ClassExportPolicyFRCQ26Attrib5Vault
+802d73cc	716	Attrib::ClassExportPolicy	Initialize	Attrib::Vault&, const unsigned long long&, const unsigned long long&, void*, unsigned int		attribdatabase.cpp	Initialize__Q26Attrib17ClassExportPolicyFRQ26Attrib5VaultRCUxRCUxPvUi
+802d7698	8	Attrib::ClassExportPolicy	IsExported	const unsigned long long&		attribdatabase.cpp	IsExported__Q26Attrib17ClassExportPolicyFRCUx
+802d76a0	100	Attrib::DatabaseExportPolicy	Deinitialize	Attrib::Vault&, const unsigned long long&, const unsigned long long&		attribdatabase.cpp	Deinitialize__Q26Attrib20DatabaseExportPolicyFRQ26Attrib5VaultRCUxRCUx
+802d7704	4	Attrib::DatabaseExportPolicy	PrepareToDeinitialize	Attrib::Vault&		attribdatabase.cpp	PrepareToDeinitialize__Q26Attrib20DatabaseExportPolicyFRQ26Attrib5Vault
+802d7708	4	Attrib::DatabaseExportPolicy	Clean	Attrib::Vault&, const unsigned long long&, const unsigned long long&		attribdatabase.cpp	Clean__Q26Attrib20DatabaseExportPolicyFRQ26Attrib5VaultRCUxRCUx
+802d770c	4	Attrib::DatabaseExportPolicy	PrepareToClean	Attrib::Vault&		attribdatabase.cpp	PrepareToClean__Q26Attrib20DatabaseExportPolicyFRQ26Attrib5Vault
+802d7710	96	Attrib::DatabaseExportPolicy	IsReferenced	const Attrib::Vault&, const unsigned long long&, const unsigned long long&		attribdatabase.cpp	IsReferenced__Q26Attrib20DatabaseExportPolicyFRCQ26Attrib5VaultRCUxRCUx
+802d7770	8	Attrib::DatabaseExportPolicy	AnyReferences	const Attrib::Vault&		attribdatabase.cpp	AnyReferences__Q26Attrib20DatabaseExportPolicyFRCQ26Attrib5Vault
+802d7778	704	Attrib::DatabaseExportPolicy	Initialize	Attrib::Vault&, const unsigned long long&, const unsigned long long&, void*, unsigned int		attribdatabase.cpp	Initialize__Q26Attrib20DatabaseExportPolicyFRQ26Attrib5VaultRCUxRCUxPvUi
+802d7a38	132	VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>	destructor			attribdatabase.cpp	__dt__64VecHashMap<Ux,Q26Attrib5Class,Q36Attrib5Class11TablePolicy,0,16>Fv
+802d7abc	108	Attrib::ClassTable	destructor			attribdatabase.cpp	__dt__Q26Attrib10ClassTableFv
+802d7b28	92	std::__vec_constructor<PCQ26Attrib8TypeDesc,Q23std31allocator<PCQ26Attrib8TypeDesc>,1>	destructor			attribdatabase.cpp	__dt__Q23std81__vec_constructor<PCQ26Attrib8TypeDesc,Q23std31allocator<PCQ26Attrib8TypeDesc>,1>Fv
+802d7b84	112	Attrib::TypeDescPtrVec	destructor			attribdatabase.cpp	__dt__Q26Attrib14TypeDescPtrVecFv
+802d7bf4	92	std::__tree<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>	destructor			attribdatabase.cpp	__dt__Q23std97__tree<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>Fv
+802d7c50	112	Attrib::TypeTable	destructor			attribdatabase.cpp	__dt__Q26Attrib9TypeTableFv
+802d7cc0	24	std::__list_imp<PCv,Q23std14allocator<PCv>>	constructor			attribdatabase.cpp	__ct__Q23std38__list_imp<PCv,Q23std14allocator<PCv>>Fv
+802d7cd8	144	std::__list_deleter<PCv,Q23std14allocator<PCv>>	destructor			attribdatabase.cpp	__dt__Q23std42__list_deleter<PCv,Q23std14allocator<PCv>>Fv
+802d7d68	92	std::list<PCQ26Attrib10Collection,Q23std34allocator<PCQ26Attrib10Collection>>	destructor			attribdatabase.cpp	__dt__Q23std72list<PCQ26Attrib10Collection,Q23std34allocator<PCQ26Attrib10Collection>>Fv
+802d7dc4	108	Attrib::CollectionList	destructor			attribdatabase.cpp	__dt__Q26Attrib14CollectionListFv
+802d7e30	92	std::list<PCQ26Attrib5Class,Q23std28allocator<PCQ26Attrib5Class>>	destructor			attribdatabase.cpp	__dt__Q23std60list<PCQ26Attrib5Class,Q23std28allocator<PCQ26Attrib5Class>>Fv
+802d7e8c	108	Attrib::ClassList	destructor			attribdatabase.cpp	__dt__Q26Attrib9ClassListFv
+802d7ef8	432	std::vector<PCQ26Attrib8TypeDesc,Q23std31allocator<PCQ26Attrib8TypeDesc>>	push_back	const const Attrib::TypeDesc*&		attribdatabase.cpp	push_back__Q23std68vector<PCQ26Attrib8TypeDesc,Q23std31allocator<PCQ26Attrib8TypeDesc>>FRCPCQ26Attrib8TypeDesc
+802d80a8	8	Attrib::DatabaseExportPolicy	IsExported	const unsigned long long&		attribdatabase.cpp	IsExported__Q26Attrib20DatabaseExportPolicyFRCUx
+802d80b0	220	Attrib::DatabasePrivate	destructor			attribdatabase.cpp	__dt__Q26Attrib15DatabasePrivateFv
+802d818c	16	std::__vec_deleter<Ul,Q23std13allocator<Ul>>	clear			attribdatabase.cpp	clear__Q23std39__vec_deleter<Ul,Q23std13allocator<Ul>>Fv
+802d819c	28	std::__list_deleter<PCv,Q23std14allocator<PCv>>	remove_nodes	std::__list_deleter<PCv,Q23std14allocator<PCv>>::node_base*, std::__list_deleter<PCv,Q23std14allocator<PCv>>::node_base*		attribdatabase.cpp	remove_nodes__Q23std42__list_deleter<PCv,Q23std14allocator<PCv>>FPQ33std42__list_deleter<PCv,Q23std14allocator<PCv>>9node_basePQ33std42__list_deleter<PCv,Q23std14allocator<PCv>>9node_base
+802d81b8	96	std::__tree_deleter<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>	destructor			attribdatabase.cpp	__dt__Q23std105__tree_deleter<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>Fv
+802d8218	100	std::__tree_deleter<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>	destroy	std::__tree_deleter<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>::node*		attribdatabase.cpp	destroy__Q23std105__tree_deleter<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>FPQ33std105__tree_deleter<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>4node
+802d827c	160	std::__red_black_tree<PQ23std39__tree_node_base<Q23std13allocator<Pv>>>	rotate_left	std::__tree_node_base<Q23std13allocator<Pv>>*, std::__tree_node_base<Q23std13allocator<Pv>>*&		attribdatabase.cpp	rotate_left__Q23std66__red_black_tree<PQ23std39__tree_node_base<Q23std13allocator<Pv>>>FPQ23std39__tree_node_base<Q23std13allocator<Pv>>RPQ23std39__tree_node_base<Q23std13allocator<Pv>>
+802d831c	160	std::__red_black_tree<PQ23std39__tree_node_base<Q23std13allocator<Pv>>>	rotate_right	std::__tree_node_base<Q23std13allocator<Pv>>*, std::__tree_node_base<Q23std13allocator<Pv>>*&		attribdatabase.cpp	rotate_right__Q23std66__red_black_tree<PQ23std39__tree_node_base<Q23std13allocator<Pv>>>FPQ23std39__tree_node_base<Q23std13allocator<Pv>>RPQ23std39__tree_node_base<Q23std13allocator<Pv>>
+802d83bc	40	std::__tree_node_base<Q23std13allocator<Pv>>	set_color	std::__tree_color		attribdatabase.cpp	set_color__Q23std39__tree_node_base<Q23std13allocator<Pv>>FQ23std12__tree_color
+802d83e4	24	std::__pointer_plus_bit<PQ23std39__tree_node_base<Q23std13allocator<Pv>>>	operator=	const std::__pointer_plus_bit<PQ23std39__tree_node_base<Q23std13allocator<Pv>>>&		attribdatabase.cpp	__as__Q23std68__pointer_plus_bit<PQ23std39__tree_node_base<Q23std13allocator<Pv>>>FRCQ23std68__pointer_plus_bit<PQ23std39__tree_node_base<Q23std13allocator<Pv>>>
+802d83fc	20	std::__pointer_plus_bit<PQ23std39__tree_node_base<Q23std13allocator<Pv>>>	operator=	std::__tree_node_base<Q23std13allocator<Pv>>*		attribdatabase.cpp	__as__Q23std68__pointer_plus_bit<PQ23std39__tree_node_base<Q23std13allocator<Pv>>>FPQ23std39__tree_node_base<Q23std13allocator<Pv>>
+802d8410	96	Metrowerks::alloc_ptr<Q33std105__tree_deleter<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>4node,RQ23std130allocator<Q33std105__tree_deleter<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>4node>,Q210Metrowerks12number<Ul,1>>	destructor			attribdatabase.cpp	__dt__Q210Metrowerks300alloc_ptr<Q33std105__tree_deleter<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>4node,RQ23std130allocator<Q33std105__tree_deleter<Q26Attrib8TypeDesc,Q23std24less<Q26Attrib8TypeDesc>,Q23std29allocator<Q26Attrib8TypeDesc>>4node>,Q210Metrowerks12number<Ul,1>>Fv
+802d8470	96	Metrowerks::alloc_ptr<Q33std42__list_deleter<PCv,Q23std14allocator<PCv>>4node,RQ23std66allocator<Q33std42__list_deleter<PCv,Q23std14allocator<PCv>>4node>,Q210Metrowerks12number<Ul,1>>	destructor			attribdatabase.cpp	__dt__Q210Metrowerks171alloc_ptr<Q33std42__list_deleter<PCv,Q23std14allocator<PCv>>4node,RQ23std66allocator<Q33std42__list_deleter<PCv,Q23std14allocator<PCv>>4node>,Q210Metrowerks12number<Ul,1>>Fv
+802d84d0	20	std	swap<PUl>	?FRPUlRPUl_v		attribdatabase.cpp	swap<PUl>__3stdFRPUlRPUl_v
+802d84e4	20	std	swap<Ul>	?FRUlRUl_v		attribdatabase.cpp	swap<Ul>__3stdFRUlRUl_v
+802d84f8	232	std::__vec_deleter<Ul,Q23std13allocator<Ul>>	grow_by	unsigned long		attribdatabase.cpp	grow_by__Q23std39__vec_deleter<Ul,Q23std13allocator<Ul>>FUl
+802d85e0	92	std::allocator<Ul>	allocate	unsigned long, const void*		attribdatabase.cpp	allocate__Q23std13allocator<Ul>FUlPCv
+802d863c	116		__sinit_\attribdatabase_cpp			attribdatabase.cpp	__sinit_\attribdatabase_cpp
+802d86b0	1828	Attrib	hash64	const unsigned char*, unsigned int, unsigned long long		attribhash64.cpp	hash64__6AttribFPCUcUiUx
+802d8dd4	104	Attrib	StringHash64	const char*		attribhash64.cpp	StringHash64__6AttribFPCc
+802d8e3c	24		__sinit_\attribhash64_cpp			attribhash64.cpp	__sinit_\attribhash64_cpp
+802d8e54	76	Attrib::Instance	constructor	const Attrib::Collection*, unsigned int		attribinstance.cpp	__ct__Q26Attrib8InstanceFPCQ26Attrib10CollectionUi
+802d8ea0	124	Attrib::Instance	destructor			attribinstance.cpp	__dt__Q26Attrib8InstanceFv
+802d8f1c	172	Attrib::Instance	Get	unsigned long long	const	attribinstance.cpp	Get__Q26Attrib8InstanceCFUx
+802d8fc8	24		__sinit_\attribinstance_cpp			attribinstance.cpp	__sinit_\attribinstance_cpp
+802d8fe0	4	Attrib	StringToAssetID	const char*		attribloadandgo.cpp	StringToAssetID__6AttribFPCc
+802d8fe4	4	Attrib	StringToTypeID	const char*		attribloadandgo.cpp	StringToTypeID__6AttribFPCc
+802d8fe8	64	Attrib::IGarbageCollector	destructor			attribloadandgo.cpp	__dt__Q26Attrib17IGarbageCollectorFv
+802d9028	64	Attrib::IExportPolicy	destructor			attribloadandgo.cpp	__dt__Q26Attrib13IExportPolicyFv
+802d9068	124	Attrib::ExportManager	constructor	unsigned int		attribloadandgo.cpp	__ct__Q26Attrib13ExportManagerFUi
+802d90e4	72	Attrib::ExportManager	AddExportPolicy	unsigned long long, Attrib::IExportPolicy*		attribloadandgo.cpp	AddExportPolicy__Q26Attrib13ExportManagerFUxPQ26Attrib13IExportPolicy
+802d912c	28	Attrib::ExportManager::ExportPolicyPair	operator=	const Attrib::ExportManager::ExportPolicyPair&		attribloadandgo.cpp	__as__Q36Attrib13ExportManager16ExportPolicyPairFRCQ36Attrib13ExportManager16ExportPolicyPair
+802d9148	56	Attrib::ExportManager	Seal			attribloadandgo.cpp	Seal__Q26Attrib13ExportManagerFv
+802d9180	1044	std	sort<PQ36Attrib13ExportManager16ExportPolicyPair,RQ33std6detail91less<Q36Attrib13ExportManager16ExportPolicyPair,Q36Attrib13ExportManager16ExportPolicyPair>>	?FPQ36Attrib13ExportManager16ExportPolicyPairPQ36Attrib13ExportManager16ExportPolicyPairRQ33std6detail91less<Q36Attrib13ExportManager16ExportPolicyPair,Q36Attrib13ExportManager16ExportPolicyPair>_v		attribloadandgo.cpp	sort<PQ36Attrib13ExportManager16ExportPolicyPair,RQ33std6detail91less<Q36Attrib13ExportManager16ExportPolicyPair,Q36Attrib13ExportManager16ExportPolicyPair>>__3stdFPQ36Attrib13ExportManager16ExportPolicyPairPQ36Attrib13ExportManager16ExportPolicyPairRQ33std6detail91less<Q36Attrib13ExportManager16ExportPolicyPair,Q36Attrib13ExportManager16ExportPolicyPair>_v
+802d9594	76	std	swap<Q36Attrib13ExportManager16ExportPolicyPair>	?FRQ36Attrib13ExportManager16ExportPolicyPairRQ36Attrib13ExportManager16ExportPolicyPair_v		attribloadandgo.cpp	swap<Q36Attrib13ExportManager16ExportPolicyPair>__3stdFRQ36Attrib13ExportManager16ExportPolicyPairRQ36Attrib13ExportManager16ExportPolicyPair_v
+802d95e0	116	Attrib::ExportManager	GetExportPolicy	unsigned long long	const	attribloadandgo.cpp	GetExportPolicy__Q26Attrib13ExportManagerCFUx
+802d9654	100	std	lower_bound<PQ36Attrib13ExportManager16ExportPolicyPair,Q36Attrib13ExportManager16ExportPolicyPair>	?FPQ36Attrib13ExportManager16ExportPolicyPairPQ36Attrib13ExportManager16ExportPolicyPairRCQ36Attrib13ExportManager16ExportPolicyPair_PQ36Attrib13ExportManager16ExportPolicyPair		attribloadandgo.cpp	lower_bound<PQ36Attrib13ExportManager16ExportPolicyPair,Q36Attrib13ExportManager16ExportPolicyPair>__3stdFPQ36Attrib13ExportManager16ExportPolicyPairPQ36Attrib13ExportManager16ExportPolicyPairRCQ36Attrib13ExportManager16ExportPolicyPair_PQ36Attrib13ExportManager16ExportPolicyPair
+802d96b8	40	Attrib::ExportManager	GetExportPolicyByIndex	unsigned int	const	attribloadandgo.cpp	GetExportPolicyByIndex__Q26Attrib13ExportManagerCFUi
+802d96e0	48	Attrib::ExportManager	GetExportPolicyTypeByIndex	unsigned int	const	attribloadandgo.cpp	GetExportPolicyTypeByIndex__Q26Attrib13ExportManagerCFUi
+802d9710	124	Attrib::ExportManager	GetExportPolicyIndex	unsigned long long	const	attribloadandgo.cpp	GetExportPolicyIndex__Q26Attrib13ExportManagerCFUx
+802d978c	116	Attrib::ExportManager	PrepareToDeinitialize	Attrib::Vault&	const	attribloadandgo.cpp	PrepareToDeinitialize__Q26Attrib13ExportManagerCFRQ26Attrib5Vault
+802d9800	784	Attrib::Vault	constructor	Attrib::ExportManager&, unsigned long long, void*, unsigned int, unsigned char, Attrib::IGarbageCollector*		attribloadandgo.cpp	__ct__Q26Attrib5VaultFRQ26Attrib13ExportManagerUxPvUiUcPQ26Attrib17IGarbageCollector
+802d9b10	24	Attrib::Vault::DataBlock	Set	void*, unsigned int, unsigned char		attribloadandgo.cpp	Set__Q36Attrib5Vault9DataBlockFPvUiUc
+802d9b28	240	Attrib::Vault	destructor			attribloadandgo.cpp	__dt__Q26Attrib5VaultFv
+802d9c18	16	Attrib::Vault	AddRef	unsigned long long	const	attribloadandgo.cpp	AddRef__Q26Attrib5VaultCFUx
+802d9c28	64	Attrib::Vault	Release	unsigned long long	const	attribloadandgo.cpp	Release__Q26Attrib5VaultCFUx
+802d9c68	24	Attrib::Vault	GetDependencyList	unsigned int&	const	attribloadandgo.cpp	GetDependencyList__Q26Attrib5VaultCFRUi
+802d9c80	36	Attrib::Vault	IsAssetDependency	unsigned int	const	attribloadandgo.cpp	IsAssetDependency__Q26Attrib5VaultCFUi
+802d9ca4	92	Attrib::Vault	ResolveDependency	unsigned int, void*, unsigned int, unsigned char		attribloadandgo.cpp	ResolveDependency__Q26Attrib5VaultFUiPvUiUc
+802d9d00	436	Attrib::Vault	Initialize			attribloadandgo.cpp	Initialize__Q26Attrib5VaultFv
+802d9eb4	140	Attrib::Vault::DataBlock	ReleaseAsset	unsigned long long, Attrib::IGarbageCollector*		attribloadandgo.cpp	ReleaseAsset__Q36Attrib5Vault9DataBlockFUxPQ26Attrib17IGarbageCollector
+802d9f40	284	Attrib::Vault	Deinitialize			attribloadandgo.cpp	Deinitialize__Q26Attrib5VaultFv
+802da05c	136	Attrib::Vault	Export	const unsigned long long&, const unsigned long long&, void*, unsigned int		attribloadandgo.cpp	Export__Q26Attrib5VaultFRCUxRCUxPvUi
+802da0e4	92	Attrib::Vault	ClearExport	const unsigned long long&		attribloadandgo.cpp	ClearExport__Q26Attrib5VaultFRCUx
+802da140	88	Attrib::Vault	FindExportID	unsigned long long	const	attribloadandgo.cpp	FindExportID__Q26Attrib5VaultCFUx
+802da198	16	Attrib::Vault	GetExportData	unsigned int	const	attribloadandgo.cpp	GetExportData__Q26Attrib5VaultCFUi
+802da1a8	24		__sinit_\attribloadandgo_cpp			attribloadandgo.cpp	__sinit_\attribloadandgo_cpp
+802da1c0	44	Attrib	AllocationAccounting	unsigned long, bool		attribsupport.cpp	AllocationAccounting__6AttribFUlb
+802da1ec	24	Attrib	GetCollectionParent	const Attrib::Collection*		attribsupport.cpp	GetCollectionParent__6AttribFPCQ26Attrib10Collection
+802da204	4	Attrib	AdjustHashTableSize	unsigned int		attribsupport.cpp	AdjustHashTableSize__6AttribFUi
+802da208	64	Attrib::RefSpec	constructor	const Attrib::RefSpec&		attribsupport.cpp	__ct__Q26Attrib7RefSpecFRCQ26Attrib7RefSpec
+802da248	120	Attrib::RefSpec	operator=	const Attrib::RefSpec&		attribsupport.cpp	__as__Q26Attrib7RefSpecFRCQ26Attrib7RefSpec
+802da2c0	76	Attrib::RefSpec	Clean		const	attribsupport.cpp	Clean__Q26Attrib7RefSpecCFv
+802da30c	64	Attrib::ITypeHandler	destructor			attribsupport.cpp	__dt__Q26Attrib12ITypeHandlerFv
+802da34c	24		__sinit_\attribsupport_cpp			attribsupport.cpp	__sinit_\attribsupport_cpp
+802da364	24	Attrib::Attribute	constructor			attribute.cpp	__ct__Q26Attrib9AttributeFv
+802da37c	36	Attrib::Attribute	constructor	const Attrib::Attribute&		attribute.cpp	__ct__Q26Attrib9AttributeFRCQ26Attrib9Attribute
+802da3a0	100	Attrib::Attribute	constructor	const Attrib::Instance&, const Attrib::Collection*, Attrib::Node*		attribute.cpp	__ct__Q26Attrib9AttributeFRCQ26Attrib8InstancePCQ26Attrib10CollectionPQ26Attrib4Node
+802da404	88	Attrib::Attribute	destructor			attribute.cpp	__dt__Q26Attrib9AttributeFv
+802da45c	108	Attrib::Attribute	GetLength		const	attribute.cpp	GetLength__Q26Attrib9AttributeCFv
+802da4c8	140	Attrib::Attribute	GetInternalPointer	unsigned int	const	attribute.cpp	GetInternalPointer__Q26Attrib9AttributeCFUi
+802da554	24		__sinit_\attribute_cpp			attribute.cpp	__sinit_\attribute_cpp
+802f33e4	184		AddDepFile	const char*, void*, unsigned int		attribasset.cpp	AddDepFile__FPCcPvUi
+802f349c	140	std::__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>	find	const unsigned long long&		attribasset.cpp	find__Q23std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>FRCUx
+802f3528	28	FileRecord	constructor	const FileRecord&		attribasset.cpp	__ct__10FileRecordFRC10FileRecord
+802f3544	476	std::map<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>	insert	const std::pair<CUx,10FileRecord>&		attribasset.cpp	insert__Q23std86map<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>FRCQ23std22pair<CUx,10FileRecord>
+802f3720	1024		AddVault	const char*, void*, unsigned int		attribasset.cpp	AddVault__FPCcPvUi
+802f3b20	132	std::__map_do_transform<Ux,PQ26Attrib5Vault,Q23std8less<Ux>,Q23std45allocator<Q23std26pair<CUx,PQ26Attrib5Vault>>,1>	find	const unsigned long long&		attribasset.cpp	find__Q23std111__map_do_transform<Ux,PQ26Attrib5Vault,Q23std8less<Ux>,Q23std45allocator<Q23std26pair<CUx,PQ26Attrib5Vault>>,1>FRCUx
+802f3ba4	12	std::__map_do_transform<Ux,PQ26Attrib5Vault,Q23std8less<Ux>,Q23std45allocator<Q23std26pair<CUx,PQ26Attrib5Vault>>,1>	end			attribasset.cpp	end__Q23std111__map_do_transform<Ux,PQ26Attrib5Vault,Q23std8less<Ux>,Q23std45allocator<Q23std26pair<CUx,PQ26Attrib5Vault>>,1>Fv
+802f3bb0	476	std::__red_black_tree<PQ23std39__tree_node_base<Q23std13allocator<Pv>>>	balance_insert	std::__tree_node_base<Q23std13allocator<Pv>>*, std::__tree_node_base<Q23std13allocator<Pv>>*		attribasset.cpp	balance_insert__Q23std66__red_black_tree<PQ23std39__tree_node_base<Q23std13allocator<Pv>>>FPQ23std39__tree_node_base<Q23std13allocator<Pv>>PQ23std39__tree_node_base<Q23std13allocator<Pv>>
+802f3d8c	12	std::__tree_node_base<Q23std13allocator<Pv>>	color		const	attribasset.cpp	color__Q23std39__tree_node_base<Q23std13allocator<Pv>>CFv
+802f3d98	96	Metrowerks::alloc_ptr<Q33std128__tree_deleter<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>4node,RQ23std153allocator<Q33std128__tree_deleter<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>4node>,Q210Metrowerks12number<Ul,1>>	destructor			attribasset.cpp	__dt__Q210Metrowerks346alloc_ptr<Q33std128__tree_deleter<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>4node,RQ23std153allocator<Q33std128__tree_deleter<Q23std12pair<CUx,Ul>,Q23std43__base_value_compare<Ux,Ul,Q23std8less<Ux>>,Q23std31allocator<Q23std12pair<CUx,Ul>>>4node>,Q210Metrowerks12number<Ul,1>>Fv
+802f3df8	96	Metrowerks::alloc_ptr<Q33std224__tree_deleter<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>4node,RQ23std249allocator<Q33std224__tree_deleter<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>4node>,Q210Metrowerks12number<Ul,1>>	destructor			attribasset.cpp	__dt__Q210Metrowerks538alloc_ptr<Q33std224__tree_deleter<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>4node,RQ23std249allocator<Q33std224__tree_deleter<Q23std22pair<CUx,10FileRecord>,Q33std103__map_do_transform<Ux,10FileRecord,Q23std8less<Ux>,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>,0>13value_compare,Q23std41allocator<Q23std22pair<CUx,10FileRecord>>>4node>,Q210Metrowerks12number<Ul,1>>Fv
+802f3e58	152		__sinit_\attribasset_cpp			attribasset.cpp	__sinit_\attribasset_cpp

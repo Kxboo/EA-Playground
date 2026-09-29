@@ -1,5 +1,8 @@
 # EA Playground — asset workbench and reconstruction research
 
+[HTML progress dashboard](https://kxboo.github.io/EA-Playground/) · [Publishing and local preview](GameMap/docs/11-progress-site.md)
+The dashboard is published by GitHub Pages after the GameMap branch is merged into `main` and its deployment succeeds.
+
 A native **Bevy asset viewer** and a shared, headless decoding toolkit for the Wii version of EA Playground. Browse archives, inspect formats, preview textured models and images, and play recovered animations on compatible skeletons and models.
 
 The long-term goal is an evidence-based reconstruction in Rust/Bevy. **Gameplay logic has not been ported yet.** Asset previews are usable; Wii rendering and animation semantics are still being researched.
@@ -31,6 +34,7 @@ This repository contains source, research notes, validation reports and existing
 | `Remaster/research/` | ELF-derived evidence, shader schemas, findings and corpus audits |
 | `Remaster/tests/` | Regression tests and corpus validation tools |
 | `_bevy/docs/captures/` | Actual viewer screenshots with JSON scene diagnostics |
+| `GameMap/` | Reference map of the executable for the future reconstruction: functions/classes by subsystem, state machine, input, menus, minigame rules, verified hashes and models |
 
 Keep `_bevy` and `Remaster` as siblings: the Python worker imports the shared decoders from `../Remaster/src`.
 

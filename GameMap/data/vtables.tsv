@@ -1,0 +1,1100 @@
+# class	slot	func_addr	func	implemented_in	vtable_addr (12-byte records; function pointer is word 3; words 1-2 unresolved)
+homebutton::gui::PaneManager	0	800b7e0c	homebutton::gui::Interface::create()	homebutton::gui::Interface	80463930
+homebutton::gui::PaneManager	1	800b7dfc	homebutton::gui::Interface::draw(?FRA3_A4_f)	homebutton::gui::Interface	80463930
+homebutton::gui::PaneManager	2	800b8670	homebutton::gui::Manager::addComponent(homebutton::gui::Component*)	homebutton::gui::Manager	80463930
+homebutton::gui::PaneManager	3	800b8768	homebutton::gui::Manager::update(int, float, float, unsigned long, unsigned long, unsigned long, void*)	homebutton::gui::Manager	80463930
+homebutton::gui::PaneManager	4	800b9744	homebutton::gui::Manager::setEventHandler(homebutton::gui::EventHandler*)	homebutton::gui::Manager	80463930
+homebutton::gui::PaneManager	5	800b93a0	homebutton::gui::PaneManager::getDrawInfo()	homebutton::gui::PaneManager	80463930
+homebutton::gui::PaneManager	6	800b8d1c	homebutton::gui::PaneManager::walkInChildren(nw4hbm::ut::LinkList<Q36nw4hbm3lyt4Pane,4>&)	homebutton::gui::PaneManager	80463930
+homebutton::gui::Manager	0	800b7e0c	homebutton::gui::Interface::create()	homebutton::gui::Interface	80463984
+homebutton::gui::Manager	1	800b7dfc	homebutton::gui::Interface::draw(?FRA3_A4_f)	homebutton::gui::Interface	80463984
+homebutton::gui::Manager	2	800b8670	homebutton::gui::Manager::addComponent(homebutton::gui::Component*)	homebutton::gui::Manager	80463984
+homebutton::gui::Manager	3	800b8768	homebutton::gui::Manager::update(int, float, float, unsigned long, unsigned long, unsigned long, void*)	homebutton::gui::Manager	80463984
+homebutton::gui::Manager	4	800b9744	homebutton::gui::Manager::setEventHandler(homebutton::gui::EventHandler*)	homebutton::gui::Manager	80463984
+homebutton::gui::Component	0	800b7e0c	homebutton::gui::Interface::create()	homebutton::gui::Interface	804639c0
+homebutton::gui::Component	1	800b7dfc	homebutton::gui::Interface::draw(?FRA3_A4_f)	homebutton::gui::Interface	804639c0
+homebutton::gui::Component	2	800b84dc	homebutton::gui::Component::getID()	homebutton::gui::Component	804639c0
+homebutton::gui::Component	3	800b84f0	homebutton::gui::Component::onPoint()	homebutton::gui::Component	804639c0
+homebutton::gui::Component	4	800b84b8	homebutton::gui::Component::onMove(float, float)	homebutton::gui::Component	804639c0
+homebutton::gui::Component	5	800b9730	homebutton::gui::Component::update(int, const KPADStatus*, float, float, void*)	homebutton::gui::Component	804639c0
+homebutton::gui::Component	6	800af92c	homebutton::gui::Component::setTriggerTarget(bool)	homebutton::gui::Component	804639c0
+homebutton::RemoteSpk	0	800ba58c	homebutton::RemoteSpk::destructor()	homebutton::RemoteSpk	80463a80
+nw4hbm::lyt::DrawInfo	0	800bf388	nw4hbm::lyt::DrawInfo::destructor()	nw4hbm::lyt::DrawInfo	80464700
+nw4hbm::lyt::Group	0	800bf4fc	nw4hbm::lyt::Group::destructor()	nw4hbm::lyt::Group	80464710
+nw4hbm::lyt::detail::PaneBase	0	800c4010	nw4hbm::lyt::detail::PaneBase::destructor()	nw4hbm::lyt::detail::PaneBase	80465278
+nw4hbm::lyt::Picture	0	800c5508	nw4hbm::lyt::Picture::destructor()	nw4hbm::lyt::Picture	804654f0
+nw4hbm::lyt::Picture	1	800c4aa4	nw4hbm::lyt::Pane::Draw(const nw4hbm::lyt::DrawInfo&)	nw4hbm::lyt::Pane	804654f0
+nw4hbm::lyt::Picture	2	800c4c70	nw4hbm::lyt::Pane::AnimateSelf(unsigned long)	nw4hbm::lyt::Pane	804654f0
+nw4hbm::lyt::Picture	3	800c44d0	nw4hbm::lyt::Pane::GetColorElement(unsigned long) const	nw4hbm::lyt::Pane	804654f0
+nw4hbm::lyt::Picture	4	800c596c	nw4hbm::lyt::Picture::SetVtxColorElement(unsigned long, unsigned char)	nw4hbm::lyt::Picture	804654f0
+nw4hbm::lyt::Picture	5	800c4d74	nw4hbm::lyt::Pane::BindAnimation(nw4hbm::lyt::AnimTransform*, bool)	nw4hbm::lyt::Pane	804654f0
+nw4hbm::lyt::Picture	6	800c4eb4	nw4hbm::lyt::Pane::UnbindAnimationSelf(nw4hbm::lyt::AnimTransform*)	nw4hbm::lyt::Pane	804654f0
+nw4hbm::lyt::Picture	7	800c5390	nw4hbm::lyt::Pane::GetMaterial() const	nw4hbm::lyt::Pane	804654f0
+nw4hbm::lyt::Picture	8	800c5624	nw4hbm::lyt::Picture::Append(const _GXTexObj&)	nw4hbm::lyt::Picture	804654f0
+nw4hbm::snd::SoundArchivePlayer	0	800de23c	nw4hbm::snd::SoundArchivePlayer::destructor()	nw4hbm::snd::SoundArchivePlayer	8046a800
+nw4hbm::snd::SoundArchivePlayer	2	800e1420	@12@detail_SetupSound__Q36nw4hbm3snd18SoundArchivePlayerFPQ36nw4hbm3snd11SoundHandleUlPQ56nw4hbm3snd6detail10BasicSound14AmbientArgInfoPQ46nw4hbm3snd6detail19ExternalSoundPlayerbPCQ46nw4hbm3snd14SoundStartable9StartInfo()		8046a800
+nw4hbm::snd::SoundArchivePlayer	3	800e1298	nw4hbm::snd::SoundArchivePlayer::detail_ConvertLabelStringToSoundId(const char*)	nw4hbm::snd::SoundArchivePlayer	8046a800
+nw4hbm::snd::SoundArchivePlayer::StrmCallback	0	800de054	nw4hbm::snd::SoundArchivePlayer::StrmCallback::destructor()	nw4hbm::snd::SoundArchivePlayer::StrmCallback	8046a880
+nw4hbm::snd::SoundArchivePlayer::StrmCallback	1	800e0878	nw4hbm::snd::SoundArchivePlayer::StrmCallback::CancelLoading(unsigned long, unsigned long) const	nw4hbm::snd::SoundArchivePlayer::StrmCallback	8046a880
+nw4hbm::snd::detail::StrmPlayer::StrmCallback	0	800de094	nw4hbm::snd::detail::StrmPlayer::StrmCallback::destructor()	nw4hbm::snd::detail::StrmPlayer::StrmCallback	8046a8f8
+nw4hbm::snd::detail::StrmPlayer::LoadCommand	0	800e68f0	nw4hbm::snd::detail::StrmPlayer::LoadCommand::NotifyAsyncEnd(bool)	nw4hbm::snd::detail::StrmPlayer::LoadCommand	8046bca8
+nw4hbm::snd::WavePlayer	0	800e80c0	nw4hbm::snd::WavePlayer::destructor()	nw4hbm::snd::WavePlayer	8046c51c
+nw4hbm::snd::WavePlayer::WavePacket	0	800e8bb8	nw4hbm::snd::WavePlayer::WavePacket::destructor()	nw4hbm::snd::WavePlayer::WavePacket	8046c528
+nw4hbm::snd::detail::WsdPlayer	0	800e8ce4	nw4hbm::snd::detail::WsdPlayer::destructor()	nw4hbm::snd::detail::WsdPlayer	8046ccfc
+nw4hbm::snd::detail::WsdPlayer	1	800e9a70	nw4hbm::snd::detail::WsdPlayer::Pause(bool)	nw4hbm::snd::detail::WsdPlayer	8046ccfc
+nw4hbm::snd::detail::WsdPlayer	2	800ea6cc	nw4hbm::snd::detail::WsdPlayer::IsStarted() const	nw4hbm::snd::detail::WsdPlayer	8046ccfc
+nw4hbm::snd::detail::WsdPlayer	3	800e9b44	nw4hbm::snd::detail::WsdPlayer::SetPitch(float)	nw4hbm::snd::detail::WsdPlayer	8046ccfc
+nw4hbm::snd::detail::WsdPlayer	4	800e9c3c	nw4hbm::snd::detail::WsdPlayer::SetPan2(float)	nw4hbm::snd::detail::WsdPlayer	8046ccfc
+nw4hbm::snd::detail::WsdPlayer	5	800ea69c	nw4hbm::snd::detail::WsdPlayer::GetVolume() const	nw4hbm::snd::detail::WsdPlayer	8046ccfc
+nw4hbm::snd::detail::WsdPlayer	6	800ea684	nw4hbm::snd::detail::WsdPlayer::GetSurroundPan() const	nw4hbm::snd::detail::WsdPlayer	8046ccfc
+nw4hbm::snd::detail::WsdPlayer	7	800ea66c	nw4hbm::snd::detail::WsdPlayer::GetLpfFreq() const	nw4hbm::snd::detail::WsdPlayer	8046ccfc
+nw4hbm::snd::detail::WsdPlayer	8	800e9cfc	nw4hbm::snd::detail::WsdPlayer::SetMainSend(float)	nw4hbm::snd::detail::WsdPlayer	8046ccfc
+nw4hbm::snd::detail::WsdPlayer	9	800e9fcc	nw4hbm::snd::detail::WsdPlayer::SetRemoteSend(int, float)	nw4hbm::snd::detail::WsdPlayer	8046ccfc
+nw4hbm::snd::detail::WsdPlayer	10	800ea254	nw4hbm::snd::detail::WsdPlayer::GetMainOutVolume() const	nw4hbm::snd::detail::WsdPlayer	8046ccfc
+nw4hbm::snd::detail::WsdPlayer	11	800e9f44	nw4hbm::snd::detail::WsdPlayer::GetRemoteOutVolume(int) const	nw4hbm::snd::detail::WsdPlayer	8046ccfc
+nw4hbm::snd::detail::WsdPlayer	13	800ea78c	@8@InvalidateData__Q46nw4hbm3snd6detail9WsdPlayerFPCvPCv()		8046ccfc
+nw4hbm::snd::detail::WsdPlayer	14	800ea668	nw4hbm::snd::detail::WsdPlayer::InvalidateWaveData(const void*, const void*)	nw4hbm::snd::detail::WsdPlayer	8046ccfc
+nw4r::lyt::Group	0	80100ee4	nw4r::lyt::Group::destructor()	nw4r::lyt::Group	8046ee28
+nw4r::lyt::DrawInfo	0	80108a68	nw4r::lyt::DrawInfo::destructor()	nw4r::lyt::DrawInfo	8046f0d8
+AIP::Broker	0	80114954	AIP::Broker::destructor()	AIP::Broker	80471074
+AIP::CmdComposer	0	80115808	AIP::CmdComposer::destructor()	AIP::CmdComposer	80471160
+AptScriptFunctionByteCodeBlock	0	8012f7a4	AptValue::AddRef()	AptValue	80472220
+AptScriptFunctionByteCodeBlock	1	8012f8ec	AptValueWithHash::ContainsNativeHashVirtual() const	AptValueWithHash	80472220
+AptScriptFunctionByteCodeBlock	2	8011ce7c	AptObject::objectMemberLookup(AptValue*, const EAStringC*) const	AptObject	80472220
+AptScriptFunctionByteCodeBlock	3	8011e254	AptScriptFunctionBase::PreDestroy()	AptScriptFunctionBase	80472220
+AptScriptFunctionByteCodeBlock	4	801106dc	AptValueGC::IsGarbageCollected() const	AptValueGC	80472220
+AptScriptFunctionByteCodeBlock	5	8011e7f4	AptScriptFunctionByteCodeBlock::Duplicate(AptCIH*)	AptScriptFunctionByteCodeBlock	80472220
+AptScriptFunctionByteCodeBlock	6	8011e818	AptScriptFunctionByteCodeBlock::GetByteCodeBase()	AptScriptFunctionByteCodeBlock	80472220
+AptScriptFunctionByteCodeBlock	7	8011e39c	AptScriptFunctionBase::SetupBeforeExecution(_AptScriptFunctionState*, AptValue*)	AptScriptFunctionBase	80472220
+AptScriptFunctionByteCodeBlock	8	8011e010	AptScriptFunctionBase::CreatingNestedFunction()	AptScriptFunctionBase	80472220
+AptScriptFunction2	0	8012f7a4	AptValue::AddRef()	AptValue	8047228c
+AptScriptFunction2	1	8012f8ec	AptValueWithHash::ContainsNativeHashVirtual() const	AptValueWithHash	8047228c
+AptScriptFunction2	2	8011ce7c	AptObject::objectMemberLookup(AptValue*, const EAStringC*) const	AptObject	8047228c
+AptScriptFunction2	3	8011e254	AptScriptFunctionBase::PreDestroy()	AptScriptFunctionBase	8047228c
+AptScriptFunction2	4	801106dc	AptValueGC::IsGarbageCollected() const	AptValueGC	8047228c
+AptScriptFunction2	5	8011e830	AptScriptFunction2::Duplicate(AptCIH*)	AptScriptFunction2	8047228c
+AptScriptFunction2	6	8011e93c	AptScriptFunction2::GetByteCodeBase()	AptScriptFunction2	8047228c
+AptScriptFunction2	7	8011e4a8	AptScriptFunction2::SetupBeforeExecution(_AptScriptFunctionState*, AptValue*)	AptScriptFunction2	8047228c
+AptScriptFunction2	8	8011e010	AptScriptFunctionBase::CreatingNestedFunction()	AptScriptFunctionBase	8047228c
+AptScriptFunction1	0	8012f7a4	AptValue::AddRef()	AptValue	804722f8
+AptScriptFunction1	1	8012f8ec	AptValueWithHash::ContainsNativeHashVirtual() const	AptValueWithHash	804722f8
+AptScriptFunction1	2	8011ce7c	AptObject::objectMemberLookup(AptValue*, const EAStringC*) const	AptObject	804722f8
+AptScriptFunction1	3	8011e254	AptScriptFunctionBase::PreDestroy()	AptScriptFunctionBase	804722f8
+AptScriptFunction1	4	801106dc	AptValueGC::IsGarbageCollected() const	AptValueGC	804722f8
+AptScriptFunction1	5	8011e960	AptScriptFunction1::Duplicate(AptCIH*)	AptScriptFunction1	804722f8
+AptScriptFunction1	6	8011ea4c	AptScriptFunction1::GetByteCodeBase()	AptScriptFunction1	804722f8
+AptScriptFunction1	7	8011e39c	AptScriptFunctionBase::SetupBeforeExecution(_AptScriptFunctionState*, AptValue*)	AptScriptFunctionBase	804722f8
+AptScriptFunction1	8	8011e010	AptScriptFunctionBase::CreatingNestedFunction()	AptScriptFunctionBase	804722f8
+AptScriptFunctionBase	0	8012f7a4	AptValue::AddRef()	AptValue	80472364
+AptScriptFunctionBase	1	8012f8ec	AptValueWithHash::ContainsNativeHashVirtual() const	AptValueWithHash	80472364
+AptScriptFunctionBase	2	8011ce7c	AptObject::objectMemberLookup(AptValue*, const EAStringC*) const	AptObject	80472364
+AptScriptFunctionBase	3	8011e254	AptScriptFunctionBase::PreDestroy()	AptScriptFunctionBase	80472364
+AptScriptFunctionBase	4	801106dc	AptValueGC::IsGarbageCollected() const	AptValueGC	80472364
+AptScriptFunctionBase	7	8011e39c	AptScriptFunctionBase::SetupBeforeExecution(_AptScriptFunctionState*, AptValue*)	AptScriptFunctionBase	80472364
+AptScriptFunctionBase	8	8011e010	AptScriptFunctionBase::CreatingNestedFunction()	AptScriptFunctionBase	80472364
+AptCharacterLevelInst	0	80145ab4	AptCharacterLevelInst::destructor()	AptCharacterLevelInst	8047bd08
+AptCharacterTextInst	0	801458d4	AptCharacterTextInst::destructor()	AptCharacterTextInst	8047bd14
+AptCharacterMorphInst	0	801459f4	AptCharacterMorphInst::destructor()	AptCharacterMorphInst	8047bd40
+AptCharacterStaticTextInst	0	80145994	AptCharacterStaticTextInst::destructor()	AptCharacterStaticTextInst	8047bd4c
+AptCharacterShapeInst	0	80145934	AptCharacterShapeInst::destructor()	AptCharacterShapeInst	8047bd58
+AptCharacterInst	0	80145164	AptCharacterInst::destructor()	AptCharacterInst	8047bd64
+AptRenderItemShape	0	8014fa7c	AptRenderItemShape::Clone(int, bool)	AptRenderItemShape	8047bda8
+AptRenderItemShape	1	8014e6b4	AptRenderItem::PopRenderData(AptRenderingContext*, AptMaskRenderOperation, int) const	AptRenderItem	8047bda8
+AptRenderItemShape	2	8014fad8	AptRenderItemShape::destructor()	AptRenderItemShape	8047bda8
+AptRenderItemMorph	0	8014fb38	AptRenderItemMorph::Clone(int, bool)	AptRenderItemMorph	8047bdcc
+AptRenderItemMorph	1	8014e6b4	AptRenderItem::PopRenderData(AptRenderingContext*, AptMaskRenderOperation, int) const	AptRenderItem	8047bdcc
+AptRenderItemMorph	2	8014fb94	AptRenderItemMorph::destructor()	AptRenderItemMorph	8047bdcc
+AptRenderItemStaticText	0	8014fbf4	AptRenderItemStaticText::Clone(int, bool)	AptRenderItemStaticText	8047bdf0
+AptRenderItemStaticText	1	8014e6b4	AptRenderItem::PopRenderData(AptRenderingContext*, AptMaskRenderOperation, int) const	AptRenderItem	8047bdf0
+AptRenderItemStaticText	2	8014fc50	AptRenderItemStaticText::destructor()	AptRenderItemStaticText	8047bdf0
+AptRenderItemDynamicText	0	8014fcb0	AptRenderItemDynamicText::Clone(int, bool)	AptRenderItemDynamicText	8047be14
+AptRenderItemDynamicText	1	8014e6b4	AptRenderItem::PopRenderData(AptRenderingContext*, AptMaskRenderOperation, int) const	AptRenderItem	8047be14
+AptRenderItemDynamicText	2	8014f0b8	AptRenderItemDynamicText::destructor()	AptRenderItemDynamicText	8047be14
+AptRenderItemButton	0	8014fd0c	AptRenderItemButton::Clone(int, bool)	AptRenderItemButton	8047be38
+AptRenderItemButton	1	8014ea34	AptRenderItemSprite::PopRenderData(AptRenderingContext*, AptMaskRenderOperation, int) const	AptRenderItemSprite	8047be38
+AptRenderItemButton	2	8014fd68	AptRenderItemButton::destructor()	AptRenderItemButton	8047be38
+AptRenderItemCustomControl	0	8014fdcc	AptRenderItemCustomControl::Clone(int, bool)	AptRenderItemCustomControl	8047be5c
+AptRenderItemCustomControl	1	8014ea34	AptRenderItemSprite::PopRenderData(AptRenderingContext*, AptMaskRenderOperation, int) const	AptRenderItemSprite	8047be5c
+AptRenderItemCustomControl	2	8014ecb0	AptRenderItemCustomControl::destructor()	AptRenderItemCustomControl	8047be5c
+AptRenderItemAnimation	0	8014fe28	AptRenderItemAnimation::Clone(int, bool)	AptRenderItemAnimation	8047be80
+AptRenderItemAnimation	1	8014ea34	AptRenderItemSprite::PopRenderData(AptRenderingContext*, AptMaskRenderOperation, int) const	AptRenderItemSprite	8047be80
+AptRenderItemAnimation	2	8014fe84	AptRenderItemAnimation::destructor()	AptRenderItemAnimation	8047be80
+AptRenderItemSprite	0	8014fee8	AptRenderItemSprite::Clone(int, bool)	AptRenderItemSprite	8047bea4
+AptRenderItemSprite	1	8014ea34	AptRenderItemSprite::PopRenderData(AptRenderingContext*, AptMaskRenderOperation, int) const	AptRenderItemSprite	8047bea4
+AptRenderItemSprite	2	8014eaec	AptRenderItemSprite::destructor()	AptRenderItemSprite	8047bea4
+AptRenderItemLevel	0	8014ff44	AptRenderItemLevel::Clone(int, bool)	AptRenderItemLevel	8047bec8
+AptRenderItemLevel	1	8014e6b4	AptRenderItem::PopRenderData(AptRenderingContext*, AptMaskRenderOperation, int) const	AptRenderItem	8047bec8
+AptRenderItemLevel	2	8014ffa0	AptRenderItemLevel::destructor()	AptRenderItemLevel	8047bec8
+AptRenderItem	1	8014e6b4	AptRenderItem::PopRenderData(AptRenderingContext*, AptMaskRenderOperation, int) const	AptRenderItem	8047beec
+AptRenderItem	2	8014e0fc	AptRenderItem::destructor()	AptRenderItem	8047beec
+hkBaseObject	0	80156500	hkBaseObject::destructor()	hkBaseObject	8047c994
+hkBinaryAction	0	8015687c	hkBinaryAction::destructor()	hkBinaryAction	8047c9a0
+hkBinaryAction	1	801567d4	hkBinaryAction::getEntities(hkArray<P8hkEntity>&)	hkBinaryAction	8047c9a0
+hkUnaryAction	0	80156a04	hkUnaryAction::destructor()	hkUnaryAction	8047c9e0
+hkUnaryAction	1	80156a88	hkUnaryAction::getEntities(hkArray<P8hkEntity>&)	hkUnaryAction	8047c9e0
+hkConstraintChainInstanceAction	0	8015f050	hkConstraintChainInstanceAction::destructor()	hkConstraintChainInstanceAction	8047d1a8
+hkConstraintChainInstanceAction	1	8015eed4	hkConstraintChainInstanceAction::getEntities(hkArray<P8hkEntity>&)	hkConstraintChainInstanceAction	8047d1a8
+hkConstraintChainInstanceAction	2	8015eeb8	hkConstraintChainInstanceAction::clone(const hkArray<P8hkEntity>&, const hkArray<P9hkPhantom>&) const	hkConstraintChainInstanceAction	8047d1a8
+hkSimpleContactConstraintData	0	80157724	hkSimpleContactConstraintData::destructor()	hkSimpleContactConstraintData	8047d428
+hkSimpleContactConstraintData	1	80164138	hkSimpleContactConstraintData::getType() const	hkSimpleContactConstraintData	8047d428
+hkSimpleContactConstraintData	2	80164140	hkConstraintData::addInstance(hkConstraintInstance*, void*, int) const	hkConstraintData	8047d428
+hkSimpleContactConstraintData	3	8015a07c	hkConstraintData::buildJacobianCallback(const hkConstraintQueryIn&)	hkConstraintData	8047d428
+hkSimpleContactConstraintData	4	80164038	hkSimpleContactConstraintData::collisionResponseEndCallback(const hkContactPoint&, float, hkSimpleConstraintInfoInitInput&, hkBodyVelocity&, hkSimpleConstraintInfoInitInput&, hkBodyVelocity&)	hkSimpleContactConstraintData	8047d428
+hkEntityDeactivator	0	80169a6c	hkEntityDeactivator::destructor()	hkEntityDeactivator	8047dbb0
+hkBroadPhaseBorder	0	80174fec	hkBroadPhaseBorder::destructor()	hkBroadPhaseBorder	8047e230
+hkBroadPhaseBorder	2	805fd140	hkBroadPhaseBorder::__RTTI()	hkBroadPhaseBorder	8047e230
+hkBroadPhaseBorder	3	80175280	@12@collidableRemovedCallback__18hkBroadPhaseBorderFRC24hkCollidableRemovedEvent()		8047e230
+hkBroadPhaseBorder	4	801751ac	hkBroadPhaseBorder::deactivate()	hkBroadPhaseBorder	8047e230
+hkBroadPhaseBorder	5	8017512c	hkBroadPhaseBorder::worldDeletedCallback(hkWorld*)	hkBroadPhaseBorder	8047e230
+hkPhysicsSystem	0	8017543c	hkPhysicsSystem::destructor()	hkPhysicsSystem	8047e2a0
+hkPhysicsSystem	1	80175bac	hkPhysicsSystem::hasContacts()	hkPhysicsSystem	8047e2a0
+hkWorldObject	0	801686c0	hkWorldObject::destructor()	hkWorldObject	8047e750
+hkBoxBoxAgent	0	8018aa44	hkBoxBoxAgent::destructor()	hkBoxBoxAgent	8047ea08
+hkBoxBoxAgent	1	8018b250	hkBoxBoxAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkBoxBoxAgent	8047ea08
+hkBoxBoxAgent	2	8018a9a4	hkBoxBoxAgent::cleanup(hkConstraintOwner&)	hkBoxBoxAgent	8047ea08
+hkBoxBoxAgent	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047ea08
+hkBoxBoxAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047ea08
+hkSymmetricAgent<9hkBvAgent>	0	8018d358	hkSymmetricAgent<9hkBvAgent>::destructor()	hkSymmetricAgent<9hkBvAgent>	8047ea98
+hkSymmetricAgent<9hkBvAgent>	1	8018ce44	hkSymmetricAgentLinearCast<9hkBvAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<9hkBvAgent>	8047ea98
+hkSymmetricAgent<9hkBvAgent>	2	8018bb24	hkBvAgent::cleanup(hkConstraintOwner&)	hkBvAgent	8047ea98
+hkSymmetricAgent<9hkBvAgent>	3	8018bc1c	hkBvAgent::warpTime(float, float, hkCollisionInput&)	hkBvAgent	8047ea98
+hkSymmetricAgent<9hkBvAgent>	4	8018bce4	hkBvAgent::createZombie(unsigned short)	hkBvAgent	8047ea98
+hkBvAgent	0	8018bad4	hkBvAgent::destructor()	hkBvAgent	8047eb24
+hkBvAgent	1	8018c53c	hkBvAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkBvAgent	8047eb24
+hkBvAgent	2	8018bb24	hkBvAgent::cleanup(hkConstraintOwner&)	hkBvAgent	8047eb24
+hkBvAgent	3	8018bc1c	hkBvAgent::warpTime(float, float, hkCollisionInput&)	hkBvAgent	8047eb24
+hkBvAgent	4	8018bce4	hkBvAgent::createZombie(unsigned short)	hkBvAgent	8047eb24
+hkSymmetricAgent<13hkBvTreeAgent>	0	8019098c	hkSymmetricAgent<13hkBvTreeAgent>::destructor()	hkSymmetricAgent<13hkBvTreeAgent>	8047eb80
+hkSymmetricAgent<13hkBvTreeAgent>	1	801905f8	hkSymmetricAgentLinearCast<13hkBvTreeAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<13hkBvTreeAgent>	8047eb80
+hkSymmetricAgent<13hkBvTreeAgent>	2	8018d7b0	hkBvTreeAgent::cleanup(hkConstraintOwner&)	hkBvTreeAgent	8047eb80
+hkSymmetricAgent<13hkBvTreeAgent>	3	8018d8cc	hkBvTreeAgent::warpTime(float, float, hkCollisionInput&)	hkBvTreeAgent	8047eb80
+hkSymmetricAgent<13hkBvTreeAgent>	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047eb80
+hkBvTreeAgent	0	8018d60c	hkBvTreeAgent::destructor()	hkBvTreeAgent	8047ec0c
+hkBvTreeAgent	1	8018fd30	hkBvTreeAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkBvTreeAgent	8047ec0c
+hkBvTreeAgent	2	8018d7b0	hkBvTreeAgent::cleanup(hkConstraintOwner&)	hkBvTreeAgent	8047ec0c
+hkBvTreeAgent	3	8018d8cc	hkBvTreeAgent::warpTime(float, float, hkCollisionInput&)	hkBvTreeAgent	8047ec0c
+hkBvTreeAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047ec0c
+hkSymmetricAgent<11hkMoppAgent>	0	80191500	hkSymmetricAgent<11hkMoppAgent>::destructor()	hkSymmetricAgent<11hkMoppAgent>	8047ec68
+hkSymmetricAgent<11hkMoppAgent>	1	8019116c	hkSymmetricAgentLinearCast<11hkMoppAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<11hkMoppAgent>	8047ec68
+hkSymmetricAgent<11hkMoppAgent>	2	8018d7b0	hkBvTreeAgent::cleanup(hkConstraintOwner&)	hkBvTreeAgent	8047ec68
+hkSymmetricAgent<11hkMoppAgent>	3	8018d8cc	hkBvTreeAgent::warpTime(float, float, hkCollisionInput&)	hkBvTreeAgent	8047ec68
+hkSymmetricAgent<11hkMoppAgent>	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047ec68
+hkMoppAgent	0	80190c24	hkMoppAgent::destructor()	hkMoppAgent	8047ed04
+hkMoppAgent	1	8018fd30	hkBvTreeAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkBvTreeAgent	8047ed04
+hkMoppAgent	2	8018d7b0	hkBvTreeAgent::cleanup(hkConstraintOwner&)	hkBvTreeAgent	8047ed04
+hkMoppAgent	3	8018d8cc	hkBvTreeAgent::warpTime(float, float, hkCollisionInput&)	hkBvTreeAgent	8047ed04
+hkMoppAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047ed04
+hkSymmetricAgent<22hkShapeCollectionAgent>	0	80192890	hkSymmetricAgent<22hkShapeCollectionAgent>::destructor()	hkSymmetricAgent<22hkShapeCollectionAgent>	8047ed68
+hkSymmetricAgent<22hkShapeCollectionAgent>	1	801923ec	hkSymmetricAgentLinearCast<22hkShapeCollectionAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<22hkShapeCollectionAgent>	8047ed68
+hkSymmetricAgent<22hkShapeCollectionAgent>	2	801a78f8	hkShapeCollectionAgent::cleanup(hkConstraintOwner&)	hkShapeCollectionAgent	8047ed68
+hkSymmetricAgent<22hkShapeCollectionAgent>	3	801a7a20	hkShapeCollectionAgent::warpTime(float, float, hkCollisionInput&)	hkShapeCollectionAgent	8047ed68
+hkSymmetricAgent<22hkShapeCollectionAgent>	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047ed68
+hkSymmetricAgent<19hkBvTreeStreamAgent>	0	801927fc	hkSymmetricAgent<19hkBvTreeStreamAgent>::destructor()	hkSymmetricAgent<19hkBvTreeStreamAgent>	8047edf4
+hkSymmetricAgent<19hkBvTreeStreamAgent>	1	80192618	hkSymmetricAgentLinearCast<19hkBvTreeStreamAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<19hkBvTreeStreamAgent>	8047edf4
+hkSymmetricAgent<19hkBvTreeStreamAgent>	2	80191ab8	hkBvTreeStreamAgent::cleanup(hkConstraintOwner&)	hkBvTreeStreamAgent	8047edf4
+hkSymmetricAgent<19hkBvTreeStreamAgent>	3	80192024	hkBvTreeStreamAgent::warpTime(float, float, hkCollisionInput&)	hkBvTreeStreamAgent	8047edf4
+hkSymmetricAgent<19hkBvTreeStreamAgent>	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047edf4
+hkBvTreeStreamAgent	0	80191878	hkBvTreeStreamAgent::destructor()	hkBvTreeStreamAgent	8047ee9c
+hkBvTreeStreamAgent	1	80191a8c	hkBvTreeStreamAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkBvTreeStreamAgent	8047ee9c
+hkBvTreeStreamAgent	2	80191ab8	hkBvTreeStreamAgent::cleanup(hkConstraintOwner&)	hkBvTreeStreamAgent	8047ee9c
+hkBvTreeStreamAgent	3	80192024	hkBvTreeStreamAgent::warpTime(float, float, hkCollisionInput&)	hkBvTreeStreamAgent	8047ee9c
+hkBvTreeStreamAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047ee9c
+hkCapsuleCapsuleAgent	0	80192b98	hkCapsuleCapsuleAgent::destructor()	hkCapsuleCapsuleAgent	8047eef8
+hkCapsuleCapsuleAgent	1	80192be8	hkCapsuleCapsuleAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkCapsuleCapsuleAgent	8047eef8
+hkCapsuleCapsuleAgent	2	80192af8	hkCapsuleCapsuleAgent::cleanup(hkConstraintOwner&)	hkCapsuleCapsuleAgent	8047eef8
+hkCapsuleCapsuleAgent	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047eef8
+hkCapsuleCapsuleAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047eef8
+hkSymmetricAgentLinearCast<22hkCapsuleTriangleAgent>	0	80197130	hkSymmetricAgentLinearCast<22hkCapsuleTriangleAgent>::destructor()	hkSymmetricAgentLinearCast<22hkCapsuleTriangleAgent>	8047ef68
+hkSymmetricAgentLinearCast<22hkCapsuleTriangleAgent>	1	80196744	hkSymmetricAgentLinearCast<22hkCapsuleTriangleAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<22hkCapsuleTriangleAgent>	8047ef68
+hkSymmetricAgentLinearCast<22hkCapsuleTriangleAgent>	2	801946dc	hkCapsuleTriangleAgent::cleanup(hkConstraintOwner&)	hkCapsuleTriangleAgent	8047ef68
+hkSymmetricAgentLinearCast<22hkCapsuleTriangleAgent>	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047ef68
+hkSymmetricAgentLinearCast<22hkCapsuleTriangleAgent>	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047ef68
+hkCapsuleTriangleAgent	0	801945e8	hkCapsuleTriangleAgent::destructor()	hkCapsuleTriangleAgent	8047efd0
+hkCapsuleTriangleAgent	1	8019477c	hkCapsuleTriangleAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkCapsuleTriangleAgent	8047efd0
+hkCapsuleTriangleAgent	2	801946dc	hkCapsuleTriangleAgent::cleanup(hkConstraintOwner&)	hkCapsuleTriangleAgent	8047efd0
+hkCapsuleTriangleAgent	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047efd0
+hkCapsuleTriangleAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047efd0
+hkSymmetricAgent<17hkConvexListAgent>	0	80199920	hkSymmetricAgent<17hkConvexListAgent>::destructor()	hkSymmetricAgent<17hkConvexListAgent>	8047f040
+hkSymmetricAgent<17hkConvexListAgent>	1	80199394	hkSymmetricAgentLinearCast<17hkConvexListAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<17hkConvexListAgent>	8047f040
+hkSymmetricAgent<17hkConvexListAgent>	2	801981c4	hkConvexListAgent::cleanup(hkConstraintOwner&)	hkConvexListAgent	8047f040
+hkSymmetricAgent<17hkConvexListAgent>	3	80197a24	hkConvexListAgent::warpTime(float, float, hkCollisionInput&)	hkConvexListAgent	8047f040
+hkSymmetricAgent<17hkConvexListAgent>	4	80197a64	hkConvexListAgent::createZombie(unsigned short)	hkConvexListAgent	8047f040
+hkConvexListAgent	0	801975f8	hkConvexListAgent::destructor()	hkConvexListAgent	8047f154
+hkConvexListAgent	1	80197dcc	hkConvexListAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkConvexListAgent	8047f154
+hkConvexListAgent	2	801981c4	hkConvexListAgent::cleanup(hkConstraintOwner&)	hkConvexListAgent	8047f154
+hkConvexListAgent	3	80197a24	hkConvexListAgent::warpTime(float, float, hkCollisionInput&)	hkConvexListAgent	8047f154
+hkConvexListAgent	4	80197a64	hkConvexListAgent::createZombie(unsigned short)	hkConvexListAgent	8047f154
+hkGskBaseAgent	0	80199ad4	hkGskBaseAgent::destructor()	hkGskBaseAgent	8047f250
+hkGskBaseAgent	1	8019a5ac	hkGskBaseAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkGskBaseAgent	8047f250
+hkGskBaseAgent	2	80199ab4	hkGskBaseAgent::cleanup(hkConstraintOwner&)	hkGskBaseAgent	8047f250
+hkGskBaseAgent	3	80199b24	hkGskBaseAgent::warpTime(float, float, hkCollisionInput&)	hkGskBaseAgent	8047f250
+hkGskBaseAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f250
+hkGskfAgent	0	80197234	hkGskfAgent::destructor()	hkGskfAgent	8047f290
+hkGskfAgent	1	8019a5ac	hkGskBaseAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkGskBaseAgent	8047f290
+hkGskfAgent	2	8019a85c	hkGskfAgent::cleanup(hkConstraintOwner&)	hkGskfAgent	8047f290
+hkGskfAgent	3	80199b24	hkGskBaseAgent::warpTime(float, float, hkCollisionInput&)	hkGskBaseAgent	8047f290
+hkGskfAgent	4	8019a938	hkGskfAgent::createZombie(unsigned short)	hkGskfAgent	8047f290
+hkPredGskfAgent	0	80197284	hkPredGskfAgent::destructor()	hkPredGskfAgent	8047f2d0
+hkPredGskfAgent	1	8019a5ac	hkGskBaseAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkGskBaseAgent	8047f2d0
+hkPredGskfAgent	2	8019a85c	hkGskfAgent::cleanup(hkConstraintOwner&)	hkGskfAgent	8047f2d0
+hkPredGskfAgent	3	80199b24	hkGskBaseAgent::warpTime(float, float, hkCollisionInput&)	hkGskBaseAgent	8047f2d0
+hkPredGskfAgent	4	8019a938	hkGskfAgent::createZombie(unsigned short)	hkGskfAgent	8047f2d0
+hkSymmetricAgent<18hkHeightFieldAgent>	0	8019e4d8	hkSymmetricAgent<18hkHeightFieldAgent>::destructor()	hkSymmetricAgent<18hkHeightFieldAgent>	8047f32c
+hkSymmetricAgent<18hkHeightFieldAgent>	1	8019daa0	hkSymmetricAgentLinearCast<18hkHeightFieldAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<18hkHeightFieldAgent>	8047f32c
+hkSymmetricAgent<18hkHeightFieldAgent>	2	8019bc30	hkHeightFieldAgent::cleanup(hkConstraintOwner&)	hkHeightFieldAgent	8047f32c
+hkSymmetricAgent<18hkHeightFieldAgent>	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047f32c
+hkSymmetricAgent<18hkHeightFieldAgent>	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f32c
+hkHeightFieldAgent	0	8019bba8	hkHeightFieldAgent::destructor()	hkHeightFieldAgent	8047f3b8
+hkHeightFieldAgent	1	8019c2f4	hkHeightFieldAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkHeightFieldAgent	8047f3b8
+hkHeightFieldAgent	2	8019bc30	hkHeightFieldAgent::cleanup(hkConstraintOwner&)	hkHeightFieldAgent	8047f3b8
+hkHeightFieldAgent	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047f3b8
+hkHeightFieldAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f3b8
+hkCollisionAgent	0	8018a904	hkCollisionAgent::destructor()	hkCollisionAgent	8047f420
+hkCollisionAgent	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047f420
+hkCollisionAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f420
+hkSymmetricAgent<11hkListAgent>	0	8019fd24	hkSymmetricAgent<11hkListAgent>::destructor()	hkSymmetricAgent<11hkListAgent>	8047f460
+hkSymmetricAgent<11hkListAgent>	1	8019fb40	hkSymmetricAgentLinearCast<11hkListAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<11hkListAgent>	8047f460
+hkSymmetricAgent<11hkListAgent>	2	8019f608	hkListAgent::cleanup(hkConstraintOwner&)	hkListAgent	8047f460
+hkSymmetricAgent<11hkListAgent>	3	8019f66c	hkListAgent::warpTime(float, float, hkCollisionInput&)	hkListAgent	8047f460
+hkSymmetricAgent<11hkListAgent>	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f460
+hkListAgent	0	8019f4a0	hkListAgent::destructor()	hkListAgent	8047f4ec
+hkListAgent	1	8019f8e4	hkListAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkListAgent	8047f4ec
+hkListAgent	2	8019f608	hkListAgent::cleanup(hkConstraintOwner&)	hkListAgent	8047f4ec
+hkListAgent	3	8019f66c	hkListAgent::warpTime(float, float, hkCollisionInput&)	hkListAgent	8047f4ec
+hkListAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f4ec
+hkSymmetricAgent<21hkMultiRayConvexAgent>	0	801a1a60	hkSymmetricAgent<21hkMultiRayConvexAgent>::destructor()	hkSymmetricAgent<21hkMultiRayConvexAgent>	8047f548
+hkSymmetricAgent<21hkMultiRayConvexAgent>	1	801a132c	hkSymmetricAgentLinearCast<21hkMultiRayConvexAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<21hkMultiRayConvexAgent>	8047f548
+hkSymmetricAgent<21hkMultiRayConvexAgent>	2	801a0238	hkMultiRayConvexAgent::cleanup(hkConstraintOwner&)	hkMultiRayConvexAgent	8047f548
+hkSymmetricAgent<21hkMultiRayConvexAgent>	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047f548
+hkSymmetricAgent<21hkMultiRayConvexAgent>	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f548
+hkMultiRayConvexAgent	0	801a013c	hkMultiRayConvexAgent::destructor()	hkMultiRayConvexAgent	8047f5e4
+hkMultiRayConvexAgent	1	801a02cc	hkMultiRayConvexAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkMultiRayConvexAgent	8047f5e4
+hkMultiRayConvexAgent	2	801a0238	hkMultiRayConvexAgent::cleanup(hkConstraintOwner&)	hkMultiRayConvexAgent	8047f5e4
+hkMultiRayConvexAgent	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047f5e4
+hkMultiRayConvexAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f5e4
+hkSymmetricAgent<18hkMultiSphereAgent>	0	801a4364	hkSymmetricAgent<18hkMultiSphereAgent>::destructor()	hkSymmetricAgent<18hkMultiSphereAgent>	8047f658
+hkSymmetricAgent<18hkMultiSphereAgent>	1	801a3fdc	hkSymmetricAgentLinearCast<18hkMultiSphereAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<18hkMultiSphereAgent>	8047f658
+hkSymmetricAgent<18hkMultiSphereAgent>	2	801a22ec	hkMultiSphereAgent::cleanup(hkConstraintOwner&)	hkMultiSphereAgent	8047f658
+hkSymmetricAgent<18hkMultiSphereAgent>	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047f658
+hkSymmetricAgent<18hkMultiSphereAgent>	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f658
+hkMultiSphereAgent	0	801a1ca8	hkMultiSphereAgent::destructor()	hkMultiSphereAgent	8047f6e4
+hkMultiSphereAgent	1	801a2794	hkMultiSphereAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkMultiSphereAgent	8047f6e4
+hkMultiSphereAgent	2	801a22ec	hkMultiSphereAgent::cleanup(hkConstraintOwner&)	hkMultiSphereAgent	8047f6e4
+hkMultiSphereAgent	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047f6e4
+hkMultiSphereAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f6e4
+hkSymmetricAgentLinearCast<26hkMultiSphereTriangleAgent>	0	801a6fe8	hkSymmetricAgentLinearCast<26hkMultiSphereTriangleAgent>::destructor()	hkSymmetricAgentLinearCast<26hkMultiSphereTriangleAgent>	8047f740
+hkSymmetricAgentLinearCast<26hkMultiSphereTriangleAgent>	1	801a65cc	hkSymmetricAgentLinearCast<26hkMultiSphereTriangleAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<26hkMultiSphereTriangleAgent>	8047f740
+hkSymmetricAgentLinearCast<26hkMultiSphereTriangleAgent>	2	801a4694	hkMultiSphereTriangleAgent::cleanup(hkConstraintOwner&)	hkMultiSphereTriangleAgent	8047f740
+hkSymmetricAgentLinearCast<26hkMultiSphereTriangleAgent>	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047f740
+hkSymmetricAgentLinearCast<26hkMultiSphereTriangleAgent>	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f740
+hkMultiSphereTriangleAgent	0	801a458c	hkMultiSphereTriangleAgent::destructor()	hkMultiSphereTriangleAgent	8047f7a8
+hkMultiSphereTriangleAgent	1	801a4734	hkMultiSphereTriangleAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkMultiSphereTriangleAgent	8047f7a8
+hkMultiSphereTriangleAgent	2	801a4694	hkMultiSphereTriangleAgent::cleanup(hkConstraintOwner&)	hkMultiSphereTriangleAgent	8047f7a8
+hkMultiSphereTriangleAgent	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047f7a8
+hkMultiSphereTriangleAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f7a8
+hkNullAgent	0	801a7090	hkNullAgent::destructor()	hkNullAgent	8047f820
+hkNullAgent	1	801a7088	hkNullAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkNullAgent	8047f820
+hkNullAgent	2	801a707c	hkNullAgent::cleanup(hkConstraintOwner&)	hkNullAgent	8047f820
+hkNullAgent	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047f820
+hkNullAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f820
+hkPhantomAgent	0	801a73dc	hkPhantomAgent::destructor()	hkPhantomAgent	8047f878
+hkPhantomAgent	1	801a7464	hkPhantomAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkPhantomAgent	8047f878
+hkPhantomAgent	2	801a7344	hkPhantomAgent::cleanup(hkConstraintOwner&)	hkPhantomAgent	8047f878
+hkPhantomAgent	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047f878
+hkPhantomAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f878
+hkShapeCollectionAgent	0	80191904	hkShapeCollectionAgent::destructor()	hkShapeCollectionAgent	8047f8d0
+hkShapeCollectionAgent	1	801a7c40	hkShapeCollectionAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkShapeCollectionAgent	8047f8d0
+hkShapeCollectionAgent	2	801a78f8	hkShapeCollectionAgent::cleanup(hkConstraintOwner&)	hkShapeCollectionAgent	8047f8d0
+hkShapeCollectionAgent	3	801a7a20	hkShapeCollectionAgent::warpTime(float, float, hkCollisionInput&)	hkShapeCollectionAgent	8047f8d0
+hkShapeCollectionAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f8d0
+hkSymmetricAgentLinearCast<16hkSphereBoxAgent>	0	801aa4dc	hkSymmetricAgentLinearCast<16hkSphereBoxAgent>::destructor()	hkSymmetricAgentLinearCast<16hkSphereBoxAgent>	8047f910
+hkSymmetricAgentLinearCast<16hkSphereBoxAgent>	1	801aa154	hkSymmetricAgentLinearCast<16hkSphereBoxAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<16hkSphereBoxAgent>	8047f910
+hkSymmetricAgentLinearCast<16hkSphereBoxAgent>	2	801a8b6c	hkSphereBoxAgent::cleanup(hkConstraintOwner&)	hkSphereBoxAgent	8047f910
+hkSymmetricAgentLinearCast<16hkSphereBoxAgent>	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047f910
+hkSymmetricAgentLinearCast<16hkSphereBoxAgent>	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f910
+hkSphereBoxAgent	0	801a8ab0	hkSphereBoxAgent::destructor()	hkSphereBoxAgent	8047f978
+hkSphereBoxAgent	1	801a921c	hkSphereBoxAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSphereBoxAgent	8047f978
+hkSphereBoxAgent	2	801a8b6c	hkSphereBoxAgent::cleanup(hkConstraintOwner&)	hkSphereBoxAgent	8047f978
+hkSphereBoxAgent	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047f978
+hkSphereBoxAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f978
+hkSymmetricAgentLinearCast<20hkSphereCapsuleAgent>	0	801aca84	hkSymmetricAgentLinearCast<20hkSphereCapsuleAgent>::destructor()	hkSymmetricAgentLinearCast<20hkSphereCapsuleAgent>	8047f9d8
+hkSymmetricAgentLinearCast<20hkSphereCapsuleAgent>	1	801ac05c	hkSymmetricAgentLinearCast<20hkSphereCapsuleAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<20hkSphereCapsuleAgent>	8047f9d8
+hkSymmetricAgentLinearCast<20hkSphereCapsuleAgent>	2	801aa720	hkSphereCapsuleAgent::cleanup(hkConstraintOwner&)	hkSphereCapsuleAgent	8047f9d8
+hkSymmetricAgentLinearCast<20hkSphereCapsuleAgent>	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047f9d8
+hkSymmetricAgentLinearCast<20hkSphereCapsuleAgent>	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047f9d8
+hkSphereCapsuleAgent	0	801aa664	hkSphereCapsuleAgent::destructor()	hkSphereCapsuleAgent	8047fa40
+hkSphereCapsuleAgent	1	801aa790	hkSphereCapsuleAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSphereCapsuleAgent	8047fa40
+hkSphereCapsuleAgent	2	801aa720	hkSphereCapsuleAgent::cleanup(hkConstraintOwner&)	hkSphereCapsuleAgent	8047fa40
+hkSphereCapsuleAgent	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047fa40
+hkSphereCapsuleAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047fa40
+hkSphereSphereAgent	0	801acc40	hkSphereSphereAgent::destructor()	hkSphereSphereAgent	8047fab0
+hkSphereSphereAgent	1	801acf84	hkSphereSphereAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSphereSphereAgent	8047fab0
+hkSphereSphereAgent	2	801acbc4	hkSphereSphereAgent::cleanup(hkConstraintOwner&)	hkSphereSphereAgent	8047fab0
+hkSphereSphereAgent	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047fab0
+hkSphereSphereAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047fab0
+hkSymmetricAgentLinearCast<21hkSphereTriangleAgent>	0	801af3a8	hkSymmetricAgentLinearCast<21hkSphereTriangleAgent>::destructor()	hkSymmetricAgentLinearCast<21hkSphereTriangleAgent>	8047fb10
+hkSymmetricAgentLinearCast<21hkSphereTriangleAgent>	1	801aeb54	hkSymmetricAgentLinearCast<21hkSphereTriangleAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<21hkSphereTriangleAgent>	8047fb10
+hkSymmetricAgentLinearCast<21hkSphereTriangleAgent>	2	801ad884	hkSphereTriangleAgent::cleanup(hkConstraintOwner&)	hkSphereTriangleAgent	8047fb10
+hkSymmetricAgentLinearCast<21hkSphereTriangleAgent>	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047fb10
+hkSymmetricAgentLinearCast<21hkSphereTriangleAgent>	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047fb10
+hkSphereTriangleAgent	0	801ad798	hkSphereTriangleAgent::destructor()	hkSphereTriangleAgent	8047fb78
+hkSphereTriangleAgent	1	801ad8f4	hkSphereTriangleAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSphereTriangleAgent	8047fb78
+hkSphereTriangleAgent	2	801ad884	hkSphereTriangleAgent::cleanup(hkConstraintOwner&)	hkSphereTriangleAgent	8047fb78
+hkSphereTriangleAgent	3	8019e684	hkCollisionAgent::warpTime(float, float, hkCollisionInput&)	hkCollisionAgent	8047fb78
+hkSphereTriangleAgent	4	8019e690	hkCollisionAgent::createZombie(unsigned short)	hkCollisionAgent	8047fb78
+hkSymmetricAgent<16hkTransformAgent>	0	801b0c48	hkSymmetricAgent<16hkTransformAgent>::destructor()	hkSymmetricAgent<16hkTransformAgent>	8047fc48
+hkSymmetricAgent<16hkTransformAgent>	1	801b08b4	hkSymmetricAgentLinearCast<16hkTransformAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<16hkTransformAgent>	8047fc48
+hkSymmetricAgent<16hkTransformAgent>	2	801af6c8	hkTransformAgent::cleanup(hkConstraintOwner&)	hkTransformAgent	8047fc48
+hkSymmetricAgent<16hkTransformAgent>	3	801b066c	hkTransformAgent::warpTime(float, float, hkCollisionInput&)	hkTransformAgent	8047fc48
+hkSymmetricAgent<16hkTransformAgent>	4	801b06a8	hkTransformAgent::createZombie(unsigned short)	hkTransformAgent	8047fc48
+hkSymmetricAgentLinearCast<16hkTransformAgent>	0	801afde8	hkSymmetricAgentLinearCast<16hkTransformAgent>::destructor()	hkSymmetricAgentLinearCast<16hkTransformAgent>	8047fcb0
+hkSymmetricAgentLinearCast<16hkTransformAgent>	1	801b08b4	hkSymmetricAgentLinearCast<16hkTransformAgent>::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkSymmetricAgentLinearCast<16hkTransformAgent>	8047fcb0
+hkSymmetricAgentLinearCast<16hkTransformAgent>	2	801af6c8	hkTransformAgent::cleanup(hkConstraintOwner&)	hkTransformAgent	8047fcb0
+hkSymmetricAgentLinearCast<16hkTransformAgent>	3	801b066c	hkTransformAgent::warpTime(float, float, hkCollisionInput&)	hkTransformAgent	8047fcb0
+hkSymmetricAgentLinearCast<16hkTransformAgent>	4	801b06a8	hkTransformAgent::createZombie(unsigned short)	hkTransformAgent	8047fcb0
+hkTransformAgent	0	801af724	hkTransformAgent::destructor()	hkTransformAgent	8047fd10
+hkTransformAgent	1	801b0314	hkTransformAgent::getClosestPoints(const hkCdBody&, const hkCdBody&, const hkCollisionInput&, hkCdPointCollector&)	hkTransformAgent	8047fd10
+hkTransformAgent	2	801af6c8	hkTransformAgent::cleanup(hkConstraintOwner&)	hkTransformAgent	8047fd10
+hkTransformAgent	3	801b066c	hkTransformAgent::warpTime(float, float, hkCollisionInput&)	hkTransformAgent	8047fd10
+hkTransformAgent	4	801b06a8	hkTransformAgent::createZombie(unsigned short)	hkTransformAgent	8047fd10
+hkCollisionFilterList	0	801b4794	hkCollisionFilterList::destructor()	hkCollisionFilterList	8047ff48
+hkCollisionFilterList	2	805fd488	hkCollisionFilterList::__RTTI()	hkCollisionFilterList	8047ff48
+hkCollisionFilterList	3	801b4b14	@12@__dt__21hkCollisionFilterListFv()		8047ff48
+hkCollisionFilterList	4	801b4b2c	@16@isCollisionEnabled__21hkCollisionFilterListCFRC19hkShapeRayCastInputRC7hkShapeRC16hkShapeContainerUi()		8047ff48
+hkCollisionFilterList	6	801b48bc	hkCollisionFilterList::isCollisionEnabled(const hkCollidable&, const hkCollidable&) const	hkCollisionFilterList	8047ff48
+hkCollisionFilterList	7	801b4a7c	hkCollisionFilterList::isCollisionEnabled(const hkWorldRayCastInput&, const hkCollidable&) const	hkCollisionFilterList	8047ff48
+hkNullCollisionFilter	0	801b4c98	hkNullCollisionFilter::destructor()	hkNullCollisionFilter	8047ffe8
+hkNullCollisionFilter	2	805fd490	hkNullCollisionFilter::__RTTI()	hkNullCollisionFilter	8047ffe8
+hkNullCollisionFilter	3	801b4d18	@12@__dt__21hkNullCollisionFilterFv()		8047ffe8
+hkNullCollisionFilter	4	801b4d30	@16@isCollisionEnabled__21hkNullCollisionFilterCFRC19hkShapeRayCastInputRC7hkShapeRC16hkShapeContainerUi()		8047ffe8
+hkNullCollisionFilter	6	801b4d00	hkNullCollisionFilter::isCollisionEnabled(const hkCollidable&, const hkCollidable&) const	hkNullCollisionFilter	8047ffe8
+hkNullCollisionFilter	7	801b4ce8	hkNullCollisionFilter::isCollisionEnabled(const hkWorldRayCastInput&, const hkCollidable&) const	hkNullCollisionFilter	8047ffe8
+hkSphereRepShape	0	801b4f9c	hkSphereRepShape::destructor()	hkSphereRepShape	80480120
+hkConvexPieceMeshShape	0	801b97d0	hkConvexPieceMeshShape::destructor()	hkConvexPieceMeshShape	80480358
+hkConvexPieceMeshShape	1	801b8214	hkShapeCollection::castRayWithCollector(const hkShapeRayCastInput&, const hkCdBody&, hkRayHitCollector&) const	hkShapeCollection	80480358
+hkConvexPieceMeshShape	2	801b9bd0	hkConvexPieceMeshShape::getAabbImpl(const hkTransform&, float, hkAabb&) const	hkConvexPieceMeshShape	80480358
+hkConvexPieceMeshShape	4	801b9f40	@16@getFirstKey__22hkConvexPieceMeshShapeCFv()		80480358
+hkConvexPieceMeshShape	5	801b9f28	@16@getChildShape__22hkConvexPieceMeshShapeCFUiRA512_c()		80480358
+hkConvexPieceMeshShape	6	801b98c4	hkConvexPieceMeshShape::getFirstKey() const	hkConvexPieceMeshShape	80480358
+hkConvexPieceMeshShape	7	801b9b7c	hkConvexPieceMeshShape::getCollisionFilterInfo(unsigned int) const	hkConvexPieceMeshShape	80480358
+hkSingleShapeContainer	0	801b5f08	hkSingleShapeContainer::destructor()	hkSingleShapeContainer	80480a28
+hkSingleShapeContainer	1	801c2c44	hkSingleShapeContainer::getNextKey(unsigned int) const	hkSingleShapeContainer	80480a28
+hkSingleShapeContainer	2	801b9674	hkShapeContainer::isWeldingEnabled() const	hkShapeContainer	80480a28
+hkMultiSphereShape	0	801c8390	hkMultiSphereShape::destructor()	hkMultiSphereShape	80481088
+hkMultiSphereShape	1	801c8184	hkMultiSphereShape::castRayWithCollector(const hkShapeRayCastInput&, const hkCdBody&, hkRayHitCollector&) const	hkMultiSphereShape	80481088
+hkMultiSphereShape	2	801c76d8	hkMultiSphereShape::getAabbImpl(const hkTransform&, float, hkAabb&) const	hkMultiSphereShape	80481088
+hkMultiSphereShape	3	801c7c04	hkMultiSphereShape::getCollisionSpheresImpl(hkSphere*) const	hkMultiSphereShape	80481088
+hkPlaneShape	0	801caac0	hkPlaneShape::destructor()	hkPlaneShape	80481150
+hkPlaneShape	1	801ca610	hkPlaneShape::castRayWithCollector(const hkShapeRayCastInput&, const hkCdBody&, hkRayHitCollector&) const	hkPlaneShape	80481150
+hkPlaneShape	2	801c9f0c	hkPlaneShape::getAabbImpl(const hkTransform&, float, hkAabb&) const	hkPlaneShape	80481150
+hkPlaneShape	3	801ca6c4	hkPlaneShape::castSphere(const hkHeightFieldShape::hkSphereCastInput&, const hkCdBody&, hkRayHitCollector&) const	hkPlaneShape	80481150
+hkAngularDashpotAction	0	801d5448	hkAngularDashpotAction::destructor()	hkAngularDashpotAction	80481810
+hkAngularDashpotAction	1	801567d4	hkBinaryAction::getEntities(hkArray<P8hkEntity>&)	hkBinaryAction	80481810
+hkAngularDashpotAction	2	801d5378	hkAngularDashpotAction::clone(const hkArray<P8hkEntity>&, const hkArray<P9hkPhantom>&) const	hkAngularDashpotAction	80481810
+hkDashpotAction	0	801d5a08	hkDashpotAction::destructor()	hkDashpotAction	80481858
+hkDashpotAction	1	801567d4	hkBinaryAction::getEntities(hkArray<P8hkEntity>&)	hkBinaryAction	80481858
+hkDashpotAction	2	801d58f8	hkDashpotAction::clone(const hkArray<P8hkEntity>&, const hkArray<P9hkPhantom>&) const	hkDashpotAction	80481858
+hkMotorAction	0	801d5ea4	hkMotorAction::destructor()	hkMotorAction	804818a0
+hkMotorAction	1	80156a88	hkUnaryAction::getEntities(hkArray<P8hkEntity>&)	hkUnaryAction	804818a0
+hkMotorAction	2	801d5df4	hkMotorAction::clone(const hkArray<P8hkEntity>&, const hkArray<P9hkPhantom>&) const	hkMotorAction	804818a0
+hkReorientAction	0	801d6810	hkReorientAction::destructor()	hkReorientAction	804818e8
+hkReorientAction	1	80156a88	hkUnaryAction::getEntities(hkArray<P8hkEntity>&)	hkUnaryAction	804818e8
+hkReorientAction	2	801d6764	hkReorientAction::clone(const hkArray<P8hkEntity>&, const hkArray<P9hkPhantom>&) const	hkReorientAction	804818e8
+hkSpringAction	0	801d6f14	hkSpringAction::destructor()	hkSpringAction	80481930
+hkSpringAction	1	801567d4	hkBinaryAction::getEntities(hkArray<P8hkEntity>&)	hkBinaryAction	80481930
+hkSpringAction	2	801d6e0c	hkSpringAction::clone(const hkArray<P8hkEntity>&, const hkArray<P9hkPhantom>&) const	hkSpringAction	80481930
+hkDisableEntityCollisionFilter	0	801ddba0	hkDisableEntityCollisionFilter::destructor()	hkDisableEntityCollisionFilter	80481c18
+hkDisableEntityCollisionFilter	2	805fd6c0	hkDisableEntityCollisionFilter::__RTTI()	hkDisableEntityCollisionFilter	80481c18
+hkDisableEntityCollisionFilter	3	801dde38	@12@__dt__30hkDisableEntityCollisionFilterFv()		80481c18
+hkDisableEntityCollisionFilter	4	801dde50	@16@isCollisionEnabled__30hkDisableEntityCollisionFilterCFRC19hkShapeRayCastInputRC7hkShapeRC16hkShapeContainerUi()		80481c18
+hkDisableEntityCollisionFilter	6	801ddcfc	hkDisableEntityCollisionFilter::isCollisionEnabled(const hkCollidable&, const hkCollidable&) const	hkDisableEntityCollisionFilter	80481c18
+hkDisableEntityCollisionFilter	7	801ddd54	hkDisableEntityCollisionFilter::isCollisionEnabled(const hkWorldRayCastInput&, const hkCollidable&) const	hkDisableEntityCollisionFilter	80481c18
+hkDisableEntityCollisionFilter	8	801dde78	@48@__dt__30hkDisableEntityCollisionFilterFv()		80481c18
+hkDisableEntityCollisionFilter	9	8016ba3c	hkEntityListener::entityShapeSetCallback(hkEntity*)	hkEntityListener	80481c18
+hkDisableEntityCollisionFilter	10	801dde24	hkDisableEntityCollisionFilter::entityDeletedCallback(hkEntity*)	hkDisableEntityCollisionFilter	80481c18
+hkGroupCollisionFilter	0	801de438	hkGroupCollisionFilter::destructor()	hkGroupCollisionFilter	80481cd8
+hkGroupCollisionFilter	2	805fd6c8	hkGroupCollisionFilter::__RTTI()	hkGroupCollisionFilter	80481cd8
+hkGroupCollisionFilter	3	801de498	@12@__dt__22hkGroupCollisionFilterFv()		80481cd8
+hkGroupCollisionFilter	4	801de4b0	@16@isCollisionEnabled__22hkGroupCollisionFilterCFRC19hkShapeRayCastInputRC7hkShapeRC16hkShapeContainerUi()		80481cd8
+hkGroupCollisionFilter	6	801de354	hkGroupCollisionFilter::isCollisionEnabled(const hkCollidable&, const hkCollidable&) const	hkGroupCollisionFilter	80481cd8
+hkGroupCollisionFilter	7	801de42c	hkGroupCollisionFilter::isCollisionEnabled(const hkWorldRayCastInput&, const hkCollidable&) const	hkGroupCollisionFilter	80481cd8
+hkPhysicsSystemWithContacts	0	801df5ac	hkPhysicsSystemWithContacts::destructor()	hkPhysicsSystemWithContacts	80481e90
+hkPhysicsSystemWithContacts	1	801df6b0	hkPhysicsSystemWithContacts::hasContacts()	hkPhysicsSystemWithContacts	80481e90
+hkMouseSpringAction	0	801e05dc	hkMouseSpringAction::destructor()	hkMouseSpringAction	80481ff8
+hkMouseSpringAction	1	80156a88	hkUnaryAction::getEntities(hkArray<P8hkEntity>&)	hkUnaryAction	80481ff8
+hkMouseSpringAction	2	801e04dc	hkMouseSpringAction::clone(const hkArray<P8hkEntity>&, const hkArray<P9hkPhantom>&) const	hkMouseSpringAction	80481ff8
+hkDefaultStreambufFactory	0	801e24fc	hkDefaultStreambufFactory::destructor()	hkDefaultStreambufFactory	804821d0
+hkDefaultStreambufFactory	1	801e1c68	hkDefaultStreambufFactory::openWriter(const char*)	hkDefaultStreambufFactory	804821d0
+hkStreambufFactory	0	801e1ac0	hkStreambufFactory::destructor()	hkStreambufFactory	804822a8
+hkThreadMemory	0	801e4dac	hkThreadMemory::alignedAllocate(int, int, HK_MEMORY_CLASS)	hkThreadMemory	80482728
+hkThreadMemory	1	801e4a78	hkThreadMemory::releaseCachedMemory()	hkThreadMemory	80482728
+hkThreadMemory	2	801e5080	hkThreadMemory::onStackUnderflow(void*)	hkThreadMemory	80482728
+hkNgcSystemClock	0	801e5bf0	hkNgcSystemClock::destructor()	hkNgcSystemClock	80482808
+hkNgcSystemClock	1	801e5bd8	hkNgcSystemClock::getTicksPerSecond()	hkNgcSystemClock	80482808
+hkSystemClock	0	801e5b88	hkSystemClock::destructor()	hkSystemClock	80482848
+hkVtableClassRegistry	0	80243260	hkVtableClassRegistry::destructor()	hkVtableClassRegistry	80483a00
+hkVtableClassRegistry	1	801e13c4	hkVtableClassRegistry::getClassFromVirtualInstance(const void*) const	hkVtableClassRegistry	80483a00
+hkVehicleDefaultAnalogDriverInput	0	80245e60	hkVehicleDefaultAnalogDriverInput::destructor()	hkVehicleDefaultAnalogDriverInput	80483d10
+hkVehicleDefaultAnalogDriverInput	1	80245734	hkVehicleDefaultAnalogDriverInput::calcAcceleratorInput(float, const hkVehicleInstance*, const hkVehicleDriverInputAnalogStatus*, hkVehicleDriverInput::FilteredDriverInputOutput&) const	hkVehicleDefaultAnalogDriverInput	80483d10
+hkVehicleDefaultAnalogDriverInput	2	802457d0	hkVehicleDefaultAnalogDriverInput::calcSteeringInput(float, const hkVehicleInstance*, const hkVehicleDriverInputAnalogStatus*, hkVehicleDriverInput::FilteredDriverInputOutput&) const	hkVehicleDefaultAnalogDriverInput	80483d10
+hkVehicleInstance	0	80246af4	hkVehicleInstance::destructor()	hkVehicleInstance	80483e18
+hkVehicleInstance	1	80156a88	hkUnaryAction::getEntities(hkArray<P8hkEntity>&)	hkUnaryAction	80483e18
+hkVehicleInstance	2	802492dc	hkVehicleInstance::clone(const hkArray<P8hkEntity>&, const hkArray<P9hkPhantom>&) const	hkVehicleInstance	80483e18
+hkVehicleInstance	3	802491f0	hkVehicleInstance::calcRPM() const	hkVehicleInstance	80483e18
+hkVehicleInstance	4	8024745c	hkVehicleInstance::handleFixedGroundAccum(hkRigidBody*, hkVelocityAccumulator&)	hkVehicleInstance	80483e18
+hkVehicleDefaultSteering	0	80249da0	hkVehicleDefaultSteering::destructor()	hkVehicleDefaultSteering	80483e78
+hkVehicleDefaultSteering	1	80249c50	hkVehicleDefaultSteering::calcMainSteeringAngle(float, const hkVehicleInstance*, const hkVehicleDriverInput::FilteredDriverInputOutput&, hkVehicleSteering::SteeringAnglesOutput&)	hkVehicleDefaultSteering	80483e78
+hkTyremarksInfo	0	8024aa0c	hkTyremarksInfo::destructor()	hkTyremarksInfo	80483f60
+hkTyremarksInfo	1	8024af2c	hkTyremarksInfo::getWheelTyremarksStrips(const hkVehicleInstance*, int, hkVector4*) const	hkTyremarksInfo	80483f60
+hkVehicleRaycastWheelCollide	0	8024b450	hkVehicleRaycastWheelCollide::destructor()	hkVehicleRaycastWheelCollide	80484000
+hkVehicleRaycastWheelCollide	1	8024b25c	hkVehicleRaycastWheelCollide::init(const hkVehicleInstance*)	hkVehicleRaycastWheelCollide	80484000
+hkVehicleRaycastWheelCollide	2	8024b4fc	hkVehicleRaycastWheelCollide::calcWheelsAABB(const hkVehicleInstance*, hkAabb&)	hkVehicleRaycastWheelCollide	80484000
+hkVehicleRaycastWheelCollide	3	8024b874	hkVehicleRaycastWheelCollide::updatePhantom(hkVehicleInstance*)	hkVehicleRaycastWheelCollide	80484000
+TRCIconLoader	0	8024d0d0	TRCIconLoader::destructor()	TRCIconLoader	80484288
+StandbyState	0	8024d7c4	StandbyState::destructor()	StandbyState	804843f8
+StandbyState	1	8024d7bc	StandbyState::SetError(int)	StandbyState	804843f8
+BootCheckState	0	8024e69c	BootCheckState::destructor()	BootCheckState	80484604
+BootCheckState	1	8024e688	BootCheckState::Accept(TRCVisitor*)	BootCheckState	80484604
+BootCheckState	2	8024e680	BootCheckState::SetExit()	BootCheckState	80484604
+TRCStateMachine	0	8024fa98	TRCStateMachine::destructor()	TRCStateMachine	804847b8
+MyEventObserver	0	80252328	MyEventObserver::onInput(textinput::CommandReceiver::INPUT_COMMAND, void*)	MyEventObserver	80484b8c
+MyEventObserver	1	8025232c	MyEventObserver::onSE(textinput::sound::SE)	MyEventObserver	80484b8c
+MyEventObserver	2	8025231c	textinput::EventObserver::onOutOfLength()	textinput::EventObserver	80484b8c
+textinput::EventObserver	0	802523e0	textinput::EventObserver::onInput(textinput::CommandReceiver::INPUT_COMMAND, void*)	textinput::EventObserver	80484bb0
+textinput::EventObserver	1	802523d8	textinput::EventObserver::onSE(textinput::sound::SE)	textinput::EventObserver	80484bb0
+textinput::EventObserver	2	8025231c	textinput::EventObserver::onOutOfLength()	textinput::EventObserver	80484bb0
+EA::Conga::AccelerometerAtRestInPast	0	8026102c	EA::Conga::AccelerometerAtRestInPast::destructor()	EA::Conga::AccelerometerAtRestInPast	804b914c
+EA::Conga::AccelerometerAtRestInPast	1	80260bd8	EA::Conga::AccelerometerAtRestInPast::Serialize(EA::Conga::Serializer&)	EA::Conga::AccelerometerAtRestInPast	804b914c
+EA::Conga::AccelerometerAtRestInPast	2	80260dec	EA::Conga::AccelerometerAtRestInPast::Run(int, EA::Conga::TransitionRuntimeData*) const	EA::Conga::AccelerometerAtRestInPast	804b914c
+EA::Conga::AccelerometerAtRestInPast	3	8025d4d4	EA::Conga::TransitionDefinition::GetChild(int)	EA::Conga::TransitionDefinition	804b914c
+EA::Conga::AtRestSetCriteria	0	80261074	EA::Conga::AtRestSetCriteria::destructor()	EA::Conga::AtRestSetCriteria	804b917c
+EA::Conga::AtRestSetCriteria	1	80260ad4	EA::Conga::AtRestSetCriteria::Serialize(EA::Conga::Serializer&)	EA::Conga::AtRestSetCriteria	804b917c
+EA::Conga::AtRestSetCriteria	2	80260b8c	EA::Conga::AtRestSetCriteria::Run(int, EA::Conga::TransitionRuntimeData*) const	EA::Conga::AtRestSetCriteria	804b917c
+EA::Conga::AtRestSetCriteria	3	8025d4d4	EA::Conga::TransitionDefinition::GetChild(int)	EA::Conga::TransitionDefinition	804b917c
+EA::Conga::DualDeviceTransition	0	802610c4	EA::Conga::DualDeviceTransition::destructor()	EA::Conga::DualDeviceTransition	804b91ac
+EA::Conga::DualDeviceTransition	1	802605dc	EA::Conga::DualDeviceTransition::Serialize(EA::Conga::Serializer&)	EA::Conga::DualDeviceTransition	804b91ac
+EA::Conga::DualDeviceTransition	2	802607e8	EA::Conga::DualDeviceTransition::Run(int, EA::Conga::TransitionRuntimeData*) const	EA::Conga::DualDeviceTransition	804b91ac
+EA::Conga::DualDeviceTransition	3	80260a64	EA::Conga::DualDeviceTransition::GetChild(int)	EA::Conga::DualDeviceTransition	804b91ac
+EA::Conga::AtRestResetDelay	0	80261120	EA::Conga::AtRestResetDelay::destructor()	EA::Conga::AtRestResetDelay	804b91dc
+EA::Conga::AtRestResetDelay	1	8025f868	EA::Conga::AtRestResetDelay::Serialize(EA::Conga::Serializer&)	EA::Conga::AtRestResetDelay	804b91dc
+EA::Conga::AtRestResetDelay	2	8025f8f0	EA::Conga::AtRestResetDelay::Run(int, EA::Conga::TransitionRuntimeData*) const	EA::Conga::AtRestResetDelay	804b91dc
+EA::Conga::AtRestResetDelay	3	8025d4d4	EA::Conga::TransitionDefinition::GetChild(int)	EA::Conga::TransitionDefinition	804b91dc
+EA::Conga::AccelerometerOrientation	0	80261168	EA::Conga::AccelerometerOrientation::destructor()	EA::Conga::AccelerometerOrientation	804b920c
+EA::Conga::AccelerometerOrientation	1	8025f58c	EA::Conga::AccelerometerOrientation::Serialize(EA::Conga::Serializer&)	EA::Conga::AccelerometerOrientation	804b920c
+EA::Conga::AccelerometerOrientation	2	8025f6e0	EA::Conga::AccelerometerOrientation::Run(int, EA::Conga::TransitionRuntimeData*) const	EA::Conga::AccelerometerOrientation	804b920c
+EA::Conga::AccelerometerOrientation	3	8025d4d4	EA::Conga::TransitionDefinition::GetChild(int)	EA::Conga::TransitionDefinition	804b920c
+EA::Conga::AccelerometerAtRest	0	802611b0	EA::Conga::AccelerometerAtRest::destructor()	EA::Conga::AccelerometerAtRest	804b923c
+EA::Conga::AccelerometerAtRest	1	8025f3c8	EA::Conga::AccelerometerAtRest::Serialize(EA::Conga::Serializer&)	EA::Conga::AccelerometerAtRest	804b923c
+EA::Conga::AccelerometerAtRest	2	8025f4c0	EA::Conga::AccelerometerAtRest::Run(int, EA::Conga::TransitionRuntimeData*) const	EA::Conga::AccelerometerAtRest	804b923c
+EA::Conga::AccelerometerAtRest	3	8025d4d4	EA::Conga::TransitionDefinition::GetChild(int)	EA::Conga::TransitionDefinition	804b923c
+EA::Conga::MagnitudeThreshold	0	802611f8	EA::Conga::MagnitudeThreshold::destructor()	EA::Conga::MagnitudeThreshold	804b926c
+EA::Conga::MagnitudeThreshold	1	8025ffd8	EA::Conga::MagnitudeThreshold::Serialize(EA::Conga::Serializer&)	EA::Conga::MagnitudeThreshold	804b926c
+EA::Conga::MagnitudeThreshold	2	802601d8	EA::Conga::MagnitudeThreshold::Run(int, EA::Conga::TransitionRuntimeData*) const	EA::Conga::MagnitudeThreshold	804b926c
+EA::Conga::MagnitudeThreshold	3	8025d4d4	EA::Conga::TransitionDefinition::GetChild(int)	EA::Conga::TransitionDefinition	804b926c
+EA::Conga::MagnitudePeak	0	80261240	EA::Conga::MagnitudePeak::destructor()	EA::Conga::MagnitudePeak	804b929c
+EA::Conga::MagnitudePeak	1	8025f914	EA::Conga::MagnitudePeak::Serialize(EA::Conga::Serializer&)	EA::Conga::MagnitudePeak	804b929c
+EA::Conga::MagnitudePeak	2	8025fab4	EA::Conga::MagnitudePeak::Run(int, EA::Conga::TransitionRuntimeData*) const	EA::Conga::MagnitudePeak	804b929c
+EA::Conga::MagnitudePeak	3	8025d4d4	EA::Conga::TransitionDefinition::GetChild(int)	EA::Conga::TransitionDefinition	804b929c
+EA::Conga::TransitionDefinition	0	802573b0	EA::Conga::TransitionDefinition::destructor()	EA::Conga::TransitionDefinition	804b9388
+EA::Conga::TransitionDefinition	2	8025f074	EA::Conga::TransitionDefinition::Run(int, EA::Conga::TransitionRuntimeData*) const	EA::Conga::TransitionDefinition	804b9388
+EA::Conga::TransitionDefinition	3	8025d4d4	EA::Conga::TransitionDefinition::GetChild(int)	EA::Conga::TransitionDefinition	804b9388
+Snd::CEALayer3	0	8028176c	Snd::CEALayer3::destructor()	Snd::CEALayer3	804ba8e8
+Snd::CEALayer3	1	802815f8	Snd::CMpegBase::Close()	Snd::CMpegBase	804ba8e8
+Snd::CEALayer3	2	802830f8	Snd::CEALayer3::Decode()	Snd::CEALayer3	804ba8e8
+RCMP::DECODER	0	802962b8	RCMP::DECODER::destructor()	RCMP::DECODER	804bbb60
+RCMP::RCMP_SYSTEM	0	80296558	RCMP::RCMP_SYSTEM::destructor()	RCMP::RCMP_SYSTEM	804bbb6c
+VP6_FRAME	0	80296754	VP6_FRAME::destructor()	VP6_FRAME	804bbc1c
+VP6_FRAME	1	80296548	RCMP::FRAME::GetHeight()	RCMP::FRAME	804bbc1c
+MAD_FRAME	0	8029730c	MAD_FRAME::destructor()	MAD_FRAME	804bbd3c
+MAD_FRAME	1	80296548	RCMP::FRAME::GetHeight()	RCMP::FRAME	804bbd3c
+textinput::extend::memo::SimpleAnmPane	0	802ab548	textinput::extend::memo::SimpleAnmPane::init()	textinput::extend::memo::SimpleAnmPane	804bcbe8
+textinput::extend::memo::SimpleAnmPane	1	802a963c	textinput::nw4rmanager::AnmPane::onAnmEvent(textinput::nw4rmanager::AnmPane::AnmPaneEvent)	textinput::nw4rmanager::AnmPane	804bcbe8
+textinput::extend::memo::SimpleAnmPane	2	802a95d0	textinput::nw4rmanager::AnmPane::searchAnimation(unsigned long)	textinput::nw4rmanager::AnmPane	804bcbe8
+textinput::extend::memo::ScrollButton	0	802a8914	textinput::extend::memo::ScrollButton::create(MEMAllocator*, nw4r::lyt::MultiArcResourceAccessor*)	textinput::extend::memo::ScrollButton	804bcc0c
+textinput::extend::memo::ScrollButton	1	802a8c04	textinput::extend::memo::ScrollButton::changeAnimation(bool, unsigned long)	textinput::extend::memo::ScrollButton	804bcc0c
+textinput::nw4rmanager::AnmPane	0	802ab6dc	textinput::nw4rmanager::AnmPane::init()	textinput::nw4rmanager::AnmPane	804bcf18
+textinput::nw4rmanager::AnmPane	1	802a963c	textinput::nw4rmanager::AnmPane::onAnmEvent(textinput::nw4rmanager::AnmPane::AnmPaneEvent)	textinput::nw4rmanager::AnmPane	804bcf18
+textinput::nw4rmanager::AnmPane	2	802a95d0	textinput::nw4rmanager::AnmPane::searchAnimation(unsigned long)	textinput::nw4rmanager::AnmPane	804bcf18
+gui::EventHandler	0	802ab6e0	gui::EventHandler::onEvent(unsigned long, unsigned long, void*)	gui::EventHandler	804bcf3c
+gui::EventHandler	1	802ab578	gui::EventHandler::getLatestEventCtrlNo()	gui::EventHandler	804bcf3c
+textinput::util::Animation	0	802a7ea4	textinput::util::Animation::startAnm(float, float, float, textinput::util::AnimObserver*, void*)	textinput::util::Animation	804bd32c
+textinput::util::Animation	1	802a7e9c	textinput::util::Animation::isActive()	textinput::util::Animation	804bd32c
+textinput::util::Animation	2	802af80c	textinput::util::Animation::stop()	textinput::util::Animation	804bd32c
+textinput::candidatebox::EventHandler	0	802bfffc	textinput::nw4rmanager::TiEventHandler::onEvent(unsigned long, unsigned long, void*)	textinput::nw4rmanager::TiEventHandler	804bd7b0
+textinput::candidatebox::EventHandler	1	802ab578	gui::EventHandler::getLatestEventCtrlNo()	gui::EventHandler	804bd7b0
+textinput::candidatebox::EventHandler	2	802b2c60	textinput::candidatebox::EventHandler::offWindow()	textinput::candidatebox::EventHandler	804bd7b0
+textinput::candidatebox::Base	0	802b037c	textinput::Base::create(MEMAllocator*)	textinput::Base	804bd8d4
+textinput::candidatebox::Base	1	802afb0c	textinput::candidatebox::Base::updateFromReceiver(unsigned long, void*)	textinput::candidatebox::Base	804bd8d4
+textinput::candidatebox::Base	2	802b2c70	textinput::candidatebox::Base::turnOn()	textinput::candidatebox::Base	804bd8d4
+textinput::candidatebox::Base	3	802afa8c	textinput::candidatebox::Base::setOnOff(bool)	textinput::candidatebox::Base	804bd8d4
+textinput::candidatebox::Base	4	802b0be4	textinput::candidatebox::Base::setLanguage(textinput::Language)	textinput::candidatebox::Base	804bd8d4
+textinput::candidatebox::CandidateBoxCaller	0	802ab070	textinput::candidatebox::CandidateBoxCaller::resetCandidate()	textinput::candidatebox::CandidateBoxCaller	804bd910
+textinput::candidatebox::CandidateBoxCaller	1	802afa10	textinput::candidatebox::CandidateBoxCaller::updateCandidate()	textinput::candidatebox::CandidateBoxCaller	804bd910
+textinput::keyboard::cellphonetype::LayoutByNW4R	0	802b3c20	textinput::keyboard::cellphonetype::LayoutByNW4R::create(MEMAllocator*)	textinput::keyboard::cellphonetype::LayoutByNW4R	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	2	802b5cf8	@4@setCommandReceiver__Q49textinput8keyboard13cellphonetype12LayoutByNW4RFPQ29textinput15CommandReceiver()		804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	3	802b3a94	textinput::keyboard::cellphonetype::LayoutByNW4R::destructor()	textinput::keyboard::cellphonetype::LayoutByNW4R	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	4	802b2eb8	textinput::keyboard::Base::getLanguage()	textinput::keyboard::Base	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	5	802b44cc	textinput::keyboard::cellphonetype::LayoutByNW4R::onKey(unsigned long, void*)	textinput::keyboard::cellphonetype::LayoutByNW4R	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	6	802ad058	textinput::keyboard::cellphonetype::Base::getInputMode()	textinput::keyboard::cellphonetype::Base	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	7	802b460c	textinput::keyboard::cellphonetype::LayoutByNW4R::changeInputMode(textinput::keyboard::cellphonetype::Base::InputMode)	textinput::keyboard::cellphonetype::LayoutByNW4R	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	8	802b5410	textinput::keyboard::cellphonetype::LayoutByNW4R::setUpperCaseJP(bool)	textinput::keyboard::cellphonetype::LayoutByNW4R	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	9	802b4bb4	textinput::keyboard::cellphonetype::LayoutByNW4R::changePredictLanguage()	textinput::keyboard::cellphonetype::LayoutByNW4R	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	10	802b3960	textinput::keyboard::cellphonetype::Base::isAtokActive()	textinput::keyboard::cellphonetype::Base	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	12	802c0400	textinput::nw4rmanager::Layout::createWithEventHandler(MEMAllocator*, textinput::nw4rmanager::TiEventHandler*)	textinput::nw4rmanager::Layout	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	13	802b5d10	@48@draw__Q49textinput8keyboard13cellphonetype12LayoutByNW4RFv()		804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	14	802a7674	textinput::nw4rmanager::Layout::getLayout()	textinput::nw4rmanager::Layout	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	15	802a766c	textinput::nw4rmanager::Layout::setAnimOn(bool)	textinput::nw4rmanager::Layout	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	16	802c0bfc	textinput::nw4rmanager::Layout::setRootPaneScaleFor4x3()	textinput::nw4rmanager::Layout	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	17	802a75b8	textinput::nw4rmanager::Layout::initPaneLastDrawReceived()	textinput::nw4rmanager::Layout	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	18	802c009c	textinput::nw4rmanager::Layout::searchAnmPane(const char*)	textinput::nw4rmanager::Layout	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	19	802c0d40	textinput::nw4rmanager::Layout::AdjustPaneMtx(?FRA3_A4_fRCQ34nw4r3lyt8DrawInfoRCQ34nw4r4math5MTX34)	textinput::nw4rmanager::Layout	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	20	802b5c9c	textinput::keyboard::cellphonetype::LayoutByNW4R::setSignWindow(textinput::keyboard::signwindow::LayoutByNW4R*)	textinput::keyboard::cellphonetype::LayoutByNW4R	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	21	802b51a0	textinput::keyboard::cellphonetype::LayoutByNW4R::setPredictLanguageButton(bool)	textinput::keyboard::cellphonetype::LayoutByNW4R	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	22	802b4ac0	textinput::keyboard::cellphonetype::LayoutByNW4R::throwReleaseForAll()	textinput::keyboard::cellphonetype::LayoutByNW4R	804bdeec
+textinput::keyboard::cellphonetype::LayoutByNW4R	23	802b4958	textinput::keyboard::cellphonetype::LayoutByNW4R::changeSpaceKeyTop(const textinput::keyboard::cellphonetype::PaneNameToCharCode*)	textinput::keyboard::cellphonetype::LayoutByNW4R	804bdeec
+gui::Component	0	802b8564	gui::Interface::create()	gui::Interface	804c2094
+gui::Component	1	802b8560	gui::Interface::draw(?FRA3_A4_f)	gui::Interface	804c2094
+gui::Component	2	802b7528	gui::Component::getID()	gui::Component	804c2094
+gui::Component	3	802b7530	gui::Component::setPointed(int, bool)	gui::Component	804c2094
+gui::Component	4	802b7564	gui::Component::onDrag(float, float)	gui::Component	804c2094
+gui::Component	5	802b7be4	gui::Component::setDraggingButton(unsigned long)	gui::Component	804c2094
+gui::Component	6	802b7948	gui::Component::isTriggerTarger()	gui::Component	804c2094
+gui::Component	7	802b747c	gui::Component::isVisible()	gui::Component	804c2094
+textinput::inputform::LayoutByNW4R	0	802bcbbc	textinput::inputform::LayoutByNW4R::create(MEMAllocator*)	textinput::inputform::LayoutByNW4R	804c235c
+textinput::inputform::LayoutByNW4R	1	802bd80c	textinput::inputform::LayoutByNW4R::onCommand(textinput::CommandReceiver::INPUT_COMMAND, void*)	textinput::inputform::LayoutByNW4R	804c235c
+textinput::inputform::LayoutByNW4R	3	802be748	@16@draw__Q39textinput9inputform12LayoutByNW4RFv()		804c235c
+textinput::inputform::LayoutByNW4R	4	802ab5a8	textinput::textdrawer::Base::setVIWidth(float)	textinput::textdrawer::Base	804c235c
+textinput::inputform::LayoutByNW4R	5	802ca358	textinput::textdrawer::Base::getLineHeight()	textinput::textdrawer::Base	804c235c
+textinput::inputform::LayoutByNW4R	6	802a7f34	textinput::textdrawer::Base::getLine()	textinput::textdrawer::Base	804c235c
+textinput::inputform::LayoutByNW4R	7	802ab71c	@16@doBeforeDrawProcess__Q39textinput9inputform4BaseFPCwUlRCQ49textinput10textdrawer4Base8DrawInfo()		804c235c
+textinput::inputform::LayoutByNW4R	8	802be730	@16@finishDraw__Q39textinput9inputform4BaseFUl()		804c235c
+textinput::inputform::LayoutByNW4R	9	802ab6ec	@16@onCursor__Q39textinput9inputform4BaseFPQ49textinput10textdrawer4Base9CursorPos()		804c235c
+textinput::inputform::LayoutByNW4R	11	802ab5b8	textinput::candidatebox::CandidateBoxCaller::addCandidate(const wchar_t*)	textinput::candidatebox::CandidateBoxCaller	804c235c
+textinput::inputform::LayoutByNW4R	12	802bca9c	textinput::inputform::LayoutByNW4R::destructor()	textinput::inputform::LayoutByNW4R	804c235c
+textinput::inputform::LayoutByNW4R	13	802ab674	textinput::inputform::Base::getString()	textinput::inputform::Base	804c235c
+textinput::inputform::LayoutByNW4R	14	802bc03c	textinput::inputform::Base::getCursorPos()	textinput::inputform::Base	804c235c
+textinput::inputform::LayoutByNW4R	15	802b8c18	textinput::inputform::Base::setDistination(textinput::Distination)	textinput::inputform::Base	804c235c
+textinput::inputform::LayoutByNW4R	16	802ab628	textinput::inputform::Base::doWordWrap(bool)	textinput::inputform::Base	804c235c
+textinput::inputform::LayoutByNW4R	17	802b8d90	textinput::inputform::Base::getPredictMode()	textinput::inputform::Base	804c235c
+textinput::inputform::LayoutByNW4R	18	802bca10	textinput::inputform::Base::setAtokDictionary(void*, int, void*, int, void*, int)	textinput::inputform::Base	804c235c
+textinput::inputform::LayoutByNW4R	19	802ab604	textinput::inputform::Base::enableSpaceByRight(bool)	textinput::inputform::Base	804c235c
+textinput::inputform::LayoutByNW4R	20	802bd15c	textinput::inputform::LayoutByNW4R::draw()	textinput::inputform::LayoutByNW4R	804c235c
+textinput::inputform::LayoutByNW4R	21	802ab588	textinput::inputform::Base::doAfterDrawProcess(const wchar_t*, unsigned long, const textinput::textdrawer::Base::DrawInfo&)	textinput::inputform::Base	804c235c
+textinput::inputform::LayoutByNW4R	22	802bb874	textinput::inputform::Base::doLineFeed()	textinput::inputform::Base	804c235c
+textinput::inputform::LayoutByNW4R	23	802bc704	textinput::inputform::Base::doScroll(textinput::CommandReceiver::Scroll*)	textinput::inputform::Base	804c235c
+textinput::inputform::LayoutByNW4R	24	802bacfc	textinput::inputform::Base::drawFixString(unsigned long)	textinput::inputform::Base	804c235c
+textinput::inputform::LayoutByNW4R	25	802bc1cc	textinput::inputform::Base::calcCursorPos(float, float)	textinput::inputform::Base	804c235c
+textinput::inputform::LayoutByNW4R	27	802c0400	textinput::nw4rmanager::Layout::createWithEventHandler(MEMAllocator*, textinput::nw4rmanager::TiEventHandler*)	textinput::nw4rmanager::Layout	804c235c
+textinput::inputform::LayoutByNW4R	28	802be768	@6508@draw__Q39textinput9inputform12LayoutByNW4RFv()		804c235c
+textinput::inputform::LayoutByNW4R	29	802a7674	textinput::nw4rmanager::Layout::getLayout()	textinput::nw4rmanager::Layout	804c235c
+textinput::inputform::LayoutByNW4R	30	802a766c	textinput::nw4rmanager::Layout::setAnimOn(bool)	textinput::nw4rmanager::Layout	804c235c
+textinput::inputform::LayoutByNW4R	31	802ab74c	@6508@setRootPaneScaleFor4x3__Q39textinput9inputform12LayoutByNW4RFv()		804c235c
+textinput::inputform::LayoutByNW4R	32	802a75b8	textinput::nw4rmanager::Layout::initPaneLastDrawReceived()	textinput::nw4rmanager::Layout	804c235c
+textinput::inputform::LayoutByNW4R	33	802c009c	textinput::nw4rmanager::Layout::searchAnmPane(const char*)	textinput::nw4rmanager::Layout	804c235c
+textinput::inputform::LayoutByNW4R	34	802c0d40	textinput::nw4rmanager::Layout::AdjustPaneMtx(?FRA3_A4_fRCQ34nw4r3lyt8DrawInfoRCQ34nw4r4math5MTX34)	textinput::nw4rmanager::Layout	804c235c
+textinput::inputform::LayoutByNW4R	35	802ab684	textinput::inputform::LayoutByNW4R::isAbleToDown()	textinput::inputform::LayoutByNW4R	804c235c
+textinput::inputform::LayoutByNW4R	36	802ab67c	textinput::inputform::LayoutByNW4R::visibleSeparator(bool)	textinput::inputform::LayoutByNW4R	804c235c
+textinput::tistring::WithZi	0	802c8598	textinput::tistring::Base::create(MEMAllocator*)	textinput::tistring::Base	804c2658
+textinput::tistring::WithZi	1	802ab0e8	textinput::tistring::Decolated::clear()	textinput::tistring::Decolated	804c2658
+textinput::tistring::WithZi	2	802c87cc	textinput::tistring::Base::insert(unsigned short, const wchar_t*)	textinput::tistring::Base	804c2658
+textinput::tistring::WithZi	3	802bb094	textinput::tistring::Decolated::set(const wchar_t*)	textinput::tistring::Decolated	804c2658
+textinput::tistring::WithZi	4	802badfc	textinput::tistring::Base::getWCString() const	textinput::tistring::Base	804c2658
+textinput::tistring::WithZi	5	802a7ef4	textinput::tistring::Base::hasCandidate() const	textinput::tistring::Base	804c2658
+textinput::tistring::WithZi	6	802c8e28	textinput::tistring::Decolated::inputString(const wchar_t*)	textinput::tistring::Decolated	804c2658
+textinput::tistring::WithZi	7	802be57c	textinput::tistring::WithZi::backSpace()	textinput::tistring::WithZi	804c2658
+textinput::tistring::WithZi	8	802be568	textinput::tistring::WithZi::moveCursorLeft()	textinput::tistring::WithZi	804c2658
+textinput::tistring::WithZi	9	802c9194	textinput::tistring::Decolated::offSustain()	textinput::tistring::Decolated	804c2658
+textinput::tistring::WithZi	10	802c91b4	textinput::tistring::Decolated::isBackSpace()	textinput::tistring::Decolated	804c2658
+textinput::tistring::WithZi	11	802c9274	textinput::tistring::Decolated::replaceAtCursor(wchar_t)	textinput::tistring::Decolated	804c2658
+textinput::tistring::WithZi	12	802c9374	textinput::tistring::Decolated::isHandaku()	textinput::tistring::Decolated	804c2658
+textinput::tistring::WithZi	13	802c9468	textinput::tistring::Decolated::isSmall()	textinput::tistring::Decolated	804c2658
+textinput::tistring::WithZi	14	802c95b8	textinput::tistring::Decolated::setTranslateMode(textinput::tistring::Decolated::TranslateMode)	textinput::tistring::Decolated	804c2658
+textinput::tistring::WithZi	15	802a7f04	textinput::tistring::Decolated::isKanaFix()	textinput::tistring::Decolated	804c2658
+textinput::tistring::WithZi	16	802ba71c	textinput::tistring::WithZi::getCurrentNumPredicted()	textinput::tistring::WithZi	804c2658
+textinput::tistring::WithZi	17	802ba6c4	textinput::tistring::WithZi::getCurrentSelected()	textinput::tistring::WithZi	804c2658
+textinput::tistring::WithZi	18	802ba714	textinput::tistring::WithZi::setSelectedCandidate(unsigned long)	textinput::tistring::WithZi	804c2658
+textinput::tistring::WithZi	19	802ba6e8	textinput::tistring::WithZi::setCellPhoneHoldingkey(void*)	textinput::tistring::WithZi	804c2658
+textinput::Manager	0	802be914	textinput::Manager::create(MEMAllocator*)	textinput::Manager	804c2f84
+textinput::Manager	1	802bedb4	textinput::Manager::calc()	textinput::Manager	804c2f84
+textinput::Manager	2	802bf2fc	textinput::Manager::getWCString() const	textinput::Manager	804c2f84
+textinput::Manager	3	802bf3fc	textinput::Manager::setDistination(textinput::Distination)	textinput::Manager	804c2f84
+textinput::Manager	4	802bf42c	textinput::Manager::setAnimationOn(bool)	textinput::Manager	804c2f84
+textinput::Manager	5	802af77c	textinput::Manager::setFixedPreditionJP(int, const char**)	textinput::Manager	804c2f84
+textinput::Manager	6	802ad310	textinput::Manager::getInputForm()	textinput::Manager	804c2f84
+textinput::Manager	7	802ae4b0	textinput::Manager::getSignKeyboard()	textinput::Manager	804c2f84
+textinput::Manager	8	802ae48c	textinput::Manager::getPredictLanguageSelectDialog()	textinput::Manager	804c2f84
+textinput::Manager	9	802bf88c	textinput::Manager::createInputForm()	textinput::Manager	804c2f84
+textinput::Manager	10	802bfb40	textinput::Manager::createPredictLanguageDialog()	textinput::Manager	804c2f84
+textinput::Manager	11	802bf5c0	textinput::Manager::setLayoutScaleFor4x3()	textinput::Manager	804c2f84
+textinput::toolbar::Sample	0	802cae84	textinput::toolbar::LayoutByNW4R::create(MEMAllocator*)	textinput::toolbar::LayoutByNW4R	804c31fc
+textinput::toolbar::Sample	1	802cb5b0	textinput::toolbar::LayoutByNW4R::setQwerty(bool)	textinput::toolbar::LayoutByNW4R	804c31fc
+textinput::toolbar::Sample	3	802c0400	textinput::nw4rmanager::Layout::createWithEventHandler(MEMAllocator*, textinput::nw4rmanager::TiEventHandler*)	textinput::nw4rmanager::Layout	804c31fc
+textinput::toolbar::Sample	4	802bff84	@12@draw__Q39textinput7toolbar12LayoutByNW4RFv()		804c31fc
+textinput::toolbar::Sample	5	802a7674	textinput::nw4rmanager::Layout::getLayout()	textinput::nw4rmanager::Layout	804c31fc
+textinput::toolbar::Sample	6	802a766c	textinput::nw4rmanager::Layout::setAnimOn(bool)	textinput::nw4rmanager::Layout	804c31fc
+textinput::toolbar::Sample	7	802c0bfc	textinput::nw4rmanager::Layout::setRootPaneScaleFor4x3()	textinput::nw4rmanager::Layout	804c31fc
+textinput::toolbar::Sample	8	802a75b8	textinput::nw4rmanager::Layout::initPaneLastDrawReceived()	textinput::nw4rmanager::Layout	804c31fc
+textinput::toolbar::Sample	9	802c009c	textinput::nw4rmanager::Layout::searchAnmPane(const char*)	textinput::nw4rmanager::Layout	804c31fc
+textinput::toolbar::Sample	10	802c0d40	textinput::nw4rmanager::Layout::AdjustPaneMtx(?FRA3_A4_fRCQ34nw4r3lyt8DrawInfoRCQ34nw4r4math5MTX34)	textinput::nw4rmanager::Layout	804c31fc
+textinput::toolbar::Sample	11	802cb3cc	textinput::toolbar::LayoutByNW4R::onOK()	textinput::toolbar::LayoutByNW4R	804c31fc
+textinput::toolbar::Sample	12	802cb724	textinput::toolbar::LayoutByNW4R::enableKeytopChange(bool)	textinput::toolbar::LayoutByNW4R	804c31fc
+textinput::toolbar::Sample	13	802cb148	textinput::toolbar::LayoutByNW4R::setOKButtonVisible(bool)	textinput::toolbar::LayoutByNW4R	804c31fc
+textinput::toolbar::Sample	14	802cb19c	textinput::toolbar::LayoutByNW4R::setCancelButtonCaption(const wchar_t*)	textinput::toolbar::LayoutByNW4R	804c31fc
+textinput::inputform::Sample	0	802bcbbc	textinput::inputform::LayoutByNW4R::create(MEMAllocator*)	textinput::inputform::LayoutByNW4R	804c32d0
+textinput::inputform::Sample	1	802bd80c	textinput::inputform::LayoutByNW4R::onCommand(textinput::CommandReceiver::INPUT_COMMAND, void*)	textinput::inputform::LayoutByNW4R	804c32d0
+textinput::inputform::Sample	3	802be748	@16@draw__Q39textinput9inputform12LayoutByNW4RFv()		804c32d0
+textinput::inputform::Sample	4	802ab5a8	textinput::textdrawer::Base::setVIWidth(float)	textinput::textdrawer::Base	804c32d0
+textinput::inputform::Sample	5	802ca358	textinput::textdrawer::Base::getLineHeight()	textinput::textdrawer::Base	804c32d0
+textinput::inputform::Sample	6	802a7f34	textinput::textdrawer::Base::getLine()	textinput::textdrawer::Base	804c32d0
+textinput::inputform::Sample	7	802ab71c	@16@doBeforeDrawProcess__Q39textinput9inputform4BaseFPCwUlRCQ49textinput10textdrawer4Base8DrawInfo()		804c32d0
+textinput::inputform::Sample	8	802be730	@16@finishDraw__Q39textinput9inputform4BaseFUl()		804c32d0
+textinput::inputform::Sample	9	802ab6ec	@16@onCursor__Q39textinput9inputform4BaseFPQ49textinput10textdrawer4Base9CursorPos()		804c32d0
+textinput::inputform::Sample	11	802ab5b8	textinput::candidatebox::CandidateBoxCaller::addCandidate(const wchar_t*)	textinput::candidatebox::CandidateBoxCaller	804c32d0
+textinput::inputform::Sample	12	802bfdf4	textinput::inputform::Sample::destructor()	textinput::inputform::Sample	804c32d0
+textinput::inputform::Sample	13	802ab674	textinput::inputform::Base::getString()	textinput::inputform::Base	804c32d0
+textinput::inputform::Sample	14	802bc03c	textinput::inputform::Base::getCursorPos()	textinput::inputform::Base	804c32d0
+textinput::inputform::Sample	15	802b8c18	textinput::inputform::Base::setDistination(textinput::Distination)	textinput::inputform::Base	804c32d0
+textinput::inputform::Sample	16	802ab628	textinput::inputform::Base::doWordWrap(bool)	textinput::inputform::Base	804c32d0
+textinput::inputform::Sample	17	802b8d90	textinput::inputform::Base::getPredictMode()	textinput::inputform::Base	804c32d0
+textinput::inputform::Sample	18	802bca10	textinput::inputform::Base::setAtokDictionary(void*, int, void*, int, void*, int)	textinput::inputform::Base	804c32d0
+textinput::inputform::Sample	19	802ab604	textinput::inputform::Base::enableSpaceByRight(bool)	textinput::inputform::Base	804c32d0
+textinput::inputform::Sample	20	802bd15c	textinput::inputform::LayoutByNW4R::draw()	textinput::inputform::LayoutByNW4R	804c32d0
+textinput::inputform::Sample	21	802ab588	textinput::inputform::Base::doAfterDrawProcess(const wchar_t*, unsigned long, const textinput::textdrawer::Base::DrawInfo&)	textinput::inputform::Base	804c32d0
+textinput::inputform::Sample	22	802bb874	textinput::inputform::Base::doLineFeed()	textinput::inputform::Base	804c32d0
+textinput::inputform::Sample	23	802bc704	textinput::inputform::Base::doScroll(textinput::CommandReceiver::Scroll*)	textinput::inputform::Base	804c32d0
+textinput::inputform::Sample	24	802bacfc	textinput::inputform::Base::drawFixString(unsigned long)	textinput::inputform::Base	804c32d0
+textinput::inputform::Sample	25	802bc1cc	textinput::inputform::Base::calcCursorPos(float, float)	textinput::inputform::Base	804c32d0
+textinput::inputform::Sample	27	802c0400	textinput::nw4rmanager::Layout::createWithEventHandler(MEMAllocator*, textinput::nw4rmanager::TiEventHandler*)	textinput::nw4rmanager::Layout	804c32d0
+textinput::inputform::Sample	28	802be768	@6508@draw__Q39textinput9inputform12LayoutByNW4RFv()		804c32d0
+textinput::inputform::Sample	29	802a7674	textinput::nw4rmanager::Layout::getLayout()	textinput::nw4rmanager::Layout	804c32d0
+textinput::inputform::Sample	30	802a766c	textinput::nw4rmanager::Layout::setAnimOn(bool)	textinput::nw4rmanager::Layout	804c32d0
+textinput::inputform::Sample	31	802ab74c	@6508@setRootPaneScaleFor4x3__Q39textinput9inputform12LayoutByNW4RFv()		804c32d0
+textinput::inputform::Sample	32	802a75b8	textinput::nw4rmanager::Layout::initPaneLastDrawReceived()	textinput::nw4rmanager::Layout	804c32d0
+textinput::inputform::Sample	33	802c009c	textinput::nw4rmanager::Layout::searchAnmPane(const char*)	textinput::nw4rmanager::Layout	804c32d0
+textinput::inputform::Sample	34	802c0d40	textinput::nw4rmanager::Layout::AdjustPaneMtx(?FRA3_A4_fRCQ34nw4r3lyt8DrawInfoRCQ34nw4r4math5MTX34)	textinput::nw4rmanager::Layout	804c32d0
+textinput::inputform::Sample	35	802ab684	textinput::inputform::LayoutByNW4R::isAbleToDown()	textinput::inputform::LayoutByNW4R	804c32d0
+textinput::inputform::Sample	36	802ab67c	textinput::inputform::LayoutByNW4R::visibleSeparator(bool)	textinput::inputform::LayoutByNW4R	804c32d0
+textinput::keyboard::cellphonetype::Sample	0	802b3c20	textinput::keyboard::cellphonetype::LayoutByNW4R::create(MEMAllocator*)	textinput::keyboard::cellphonetype::LayoutByNW4R	804c358c
+textinput::keyboard::cellphonetype::Sample	2	802b5cf8	@4@setCommandReceiver__Q49textinput8keyboard13cellphonetype12LayoutByNW4RFPQ29textinput15CommandReceiver()		804c358c
+textinput::keyboard::cellphonetype::Sample	3	802bfd44	textinput::keyboard::cellphonetype::Sample::destructor()	textinput::keyboard::cellphonetype::Sample	804c358c
+textinput::keyboard::cellphonetype::Sample	4	802b2eb8	textinput::keyboard::Base::getLanguage()	textinput::keyboard::Base	804c358c
+textinput::keyboard::cellphonetype::Sample	5	802b44cc	textinput::keyboard::cellphonetype::LayoutByNW4R::onKey(unsigned long, void*)	textinput::keyboard::cellphonetype::LayoutByNW4R	804c358c
+textinput::keyboard::cellphonetype::Sample	6	802ad058	textinput::keyboard::cellphonetype::Base::getInputMode()	textinput::keyboard::cellphonetype::Base	804c358c
+textinput::keyboard::cellphonetype::Sample	7	802b460c	textinput::keyboard::cellphonetype::LayoutByNW4R::changeInputMode(textinput::keyboard::cellphonetype::Base::InputMode)	textinput::keyboard::cellphonetype::LayoutByNW4R	804c358c
+textinput::keyboard::cellphonetype::Sample	8	802b5410	textinput::keyboard::cellphonetype::LayoutByNW4R::setUpperCaseJP(bool)	textinput::keyboard::cellphonetype::LayoutByNW4R	804c358c
+textinput::keyboard::cellphonetype::Sample	9	802b4bb4	textinput::keyboard::cellphonetype::LayoutByNW4R::changePredictLanguage()	textinput::keyboard::cellphonetype::LayoutByNW4R	804c358c
+textinput::keyboard::cellphonetype::Sample	10	802b3960	textinput::keyboard::cellphonetype::Base::isAtokActive()	textinput::keyboard::cellphonetype::Base	804c358c
+textinput::keyboard::cellphonetype::Sample	12	802c0400	textinput::nw4rmanager::Layout::createWithEventHandler(MEMAllocator*, textinput::nw4rmanager::TiEventHandler*)	textinput::nw4rmanager::Layout	804c358c
+textinput::keyboard::cellphonetype::Sample	13	802b5d10	@48@draw__Q49textinput8keyboard13cellphonetype12LayoutByNW4RFv()		804c358c
+textinput::keyboard::cellphonetype::Sample	14	802a7674	textinput::nw4rmanager::Layout::getLayout()	textinput::nw4rmanager::Layout	804c358c
+textinput::keyboard::cellphonetype::Sample	15	802a766c	textinput::nw4rmanager::Layout::setAnimOn(bool)	textinput::nw4rmanager::Layout	804c358c
+textinput::keyboard::cellphonetype::Sample	16	802c0bfc	textinput::nw4rmanager::Layout::setRootPaneScaleFor4x3()	textinput::nw4rmanager::Layout	804c358c
+textinput::keyboard::cellphonetype::Sample	17	802a75b8	textinput::nw4rmanager::Layout::initPaneLastDrawReceived()	textinput::nw4rmanager::Layout	804c358c
+textinput::keyboard::cellphonetype::Sample	18	802c009c	textinput::nw4rmanager::Layout::searchAnmPane(const char*)	textinput::nw4rmanager::Layout	804c358c
+textinput::keyboard::cellphonetype::Sample	19	802c0d40	textinput::nw4rmanager::Layout::AdjustPaneMtx(?FRA3_A4_fRCQ34nw4r3lyt8DrawInfoRCQ34nw4r4math5MTX34)	textinput::nw4rmanager::Layout	804c358c
+textinput::keyboard::cellphonetype::Sample	20	802b5c9c	textinput::keyboard::cellphonetype::LayoutByNW4R::setSignWindow(textinput::keyboard::signwindow::LayoutByNW4R*)	textinput::keyboard::cellphonetype::LayoutByNW4R	804c358c
+textinput::keyboard::cellphonetype::Sample	21	802b51a0	textinput::keyboard::cellphonetype::LayoutByNW4R::setPredictLanguageButton(bool)	textinput::keyboard::cellphonetype::LayoutByNW4R	804c358c
+textinput::keyboard::cellphonetype::Sample	22	802b4ac0	textinput::keyboard::cellphonetype::LayoutByNW4R::throwReleaseForAll()	textinput::keyboard::cellphonetype::LayoutByNW4R	804c358c
+textinput::keyboard::cellphonetype::Sample	23	802b4958	textinput::keyboard::cellphonetype::LayoutByNW4R::changeSpaceKeyTop(const textinput::keyboard::cellphonetype::PaneNameToCharCode*)	textinput::keyboard::cellphonetype::LayoutByNW4R	804c358c
+textinput::keyboard::signwindow::Base	0	802c6f4c	textinput::keyboard::signwindow::Base::create(MEMAllocator*)	textinput::keyboard::signwindow::Base	804c8160
+textinput::keyboard::signwindow::Base	2	802caca0	textinput::CommandSender::setCommandReceiver(textinput::CommandReceiver*)	textinput::CommandSender	804c8160
+textinput::keyboard::signwindow::Base	3	802bfcb4	textinput::keyboard::signwindow::Base::destructor()	textinput::keyboard::signwindow::Base	804c8160
+textinput::keyboard::signwindow::Base	4	802b2eb8	textinput::keyboard::Base::getLanguage()	textinput::keyboard::Base	804c8160
+textinput::keyboard::signwindow::Base	5	802c6fac	textinput::keyboard::signwindow::Base::onKey(unsigned long, void*)	textinput::keyboard::signwindow::Base	804c8160
+textinput::keyboard::signwindow::Base	6	802ad048	textinput::keyboard::signwindow::Base::getPage()	textinput::keyboard::signwindow::Base	804c8160
+textinput::keyboard::signwindow::Base	7	802c70c4	textinput::keyboard::signwindow::Base::close()	textinput::keyboard::signwindow::Base	804c8160
+textinput::toolbar::LayoutByNW4R	0	802cae84	textinput::toolbar::LayoutByNW4R::create(MEMAllocator*)	textinput::toolbar::LayoutByNW4R	804ca1a8
+textinput::toolbar::LayoutByNW4R	1	802cb5b0	textinput::toolbar::LayoutByNW4R::setQwerty(bool)	textinput::toolbar::LayoutByNW4R	804ca1a8
+textinput::toolbar::LayoutByNW4R	3	802c0400	textinput::nw4rmanager::Layout::createWithEventHandler(MEMAllocator*, textinput::nw4rmanager::TiEventHandler*)	textinput::nw4rmanager::Layout	804ca1a8
+textinput::toolbar::LayoutByNW4R	4	802bff84	@12@draw__Q39textinput7toolbar12LayoutByNW4RFv()		804ca1a8
+textinput::toolbar::LayoutByNW4R	5	802a7674	textinput::nw4rmanager::Layout::getLayout()	textinput::nw4rmanager::Layout	804ca1a8
+textinput::toolbar::LayoutByNW4R	6	802a766c	textinput::nw4rmanager::Layout::setAnimOn(bool)	textinput::nw4rmanager::Layout	804ca1a8
+textinput::toolbar::LayoutByNW4R	7	802c0bfc	textinput::nw4rmanager::Layout::setRootPaneScaleFor4x3()	textinput::nw4rmanager::Layout	804ca1a8
+textinput::toolbar::LayoutByNW4R	8	802a75b8	textinput::nw4rmanager::Layout::initPaneLastDrawReceived()	textinput::nw4rmanager::Layout	804ca1a8
+textinput::toolbar::LayoutByNW4R	9	802c009c	textinput::nw4rmanager::Layout::searchAnmPane(const char*)	textinput::nw4rmanager::Layout	804ca1a8
+textinput::toolbar::LayoutByNW4R	10	802c0d40	textinput::nw4rmanager::Layout::AdjustPaneMtx(?FRA3_A4_fRCQ34nw4r3lyt8DrawInfoRCQ34nw4r4math5MTX34)	textinput::nw4rmanager::Layout	804ca1a8
+textinput::toolbar::LayoutByNW4R	11	802cb3cc	textinput::toolbar::LayoutByNW4R::onOK()	textinput::toolbar::LayoutByNW4R	804ca1a8
+textinput::toolbar::LayoutByNW4R	12	802cb724	textinput::toolbar::LayoutByNW4R::enableKeytopChange(bool)	textinput::toolbar::LayoutByNW4R	804ca1a8
+textinput::toolbar::LayoutByNW4R	13	802cb148	textinput::toolbar::LayoutByNW4R::setOKButtonVisible(bool)	textinput::toolbar::LayoutByNW4R	804ca1a8
+textinput::toolbar::LayoutByNW4R	14	802cb19c	textinput::toolbar::LayoutByNW4R::setCancelButtonCaption(const wchar_t*)	textinput::toolbar::LayoutByNW4R	804ca1a8
+AncientEvil	0	802ccf4c	AncientEvil::destructor()	AncientEvil	804ca6ec
+MoveToPointCompulsion	0	802cf024	MoveToPointCompulsion::destructor()	MoveToPointCompulsion	804ca72c
+MoveToPointCompulsion	1	802cf068	MoveToPointCompulsion::HasExpired(AIThinkLoD) const	MoveToPointCompulsion	804ca72c
+MoveToPointCompulsion	2	802cf1a0	MoveToPointCompulsion::Deactivate()	MoveToPointCompulsion	804ca72c
+StaticAnimCompulsion	0	802cedfc	StaticAnimCompulsion::destructor()	StaticAnimCompulsion	804ca750
+StaticAnimCompulsion	1	802cee64	StaticAnimCompulsion::HasExpired(AIThinkLoD) const	StaticAnimCompulsion	804ca750
+StaticAnimCompulsion	2	802cf1cc	StaticAnimCompulsion::Deactivate()	StaticAnimCompulsion	804ca750
+WanderCompulsion	0	802cd680	WanderCompulsion::destructor()	WanderCompulsion	804ca7f8
+WanderCompulsion	1	802cd784	WanderCompulsion::HasExpired(AIThinkLoD) const	WanderCompulsion	804ca7f8
+WanderCompulsion	2	802cd778	WanderCompulsion::Deactivate()	WanderCompulsion	804ca7f8
+Compulsion	0	802cd3a8	Compulsion::destructor()	Compulsion	804ca81c
+Compulsion	2	802cca38	Compulsion::Deactivate()	Compulsion	804ca81c
+MetaWorldPlayAICharacterListener	0	802cf328	MetaWorldPlayAICharacterListener::destructor()	MetaWorldPlayAICharacterListener	804ca8bc
+MetaWorldPlayAICharacterListener	1	802cf4f8	PhysicsCharacterListener::ContactAddedCallback(const PhysicsUserData*, const PhysicsContactPoint*)	PhysicsCharacterListener	804ca8bc
+MetaWorldPlayAICharacterListener	2	802cf4f0	PhysicsCharacterListener::OverlapRemovedCallback(const PhysicsUserData*, bool)	PhysicsCharacterListener	804ca8bc
+PoIGroup	0	802d1164	PoIGroup::destructor()	PoIGroup	804cabf4
+PoIInterpreter	0	802d1960	PoIInterpreter::destructor()	PoIInterpreter	804cac00
+PoIManager	0	802d2628	PoIManager::destructor()	PoIManager	804cac40
+Attrib::DatabasePrivate	0	802d80b0	Attrib::DatabasePrivate::destructor()	Attrib::DatabasePrivate	804cad54
+Attrib::Database	0	802d5c60	Attrib::Database::destructor()	Attrib::Database	804cad60
+AuAEMSManager	0	802db2c0	AuAEMSManager::destructor()	AuAEMSManager	804cbe1c
+AuAEMSQueueLoader	0	802e0930	AuAEMSQueueLoader::destructor()	AuAEMSQueueLoader	804cbea4
+Audio	0	802e10e4	Audio::destructor()	Audio	804cbf48
+AuEnvironmentManager	0	802e2678	AuEnvironmentManager::destructor()	AuEnvironmentManager	804cc0b8
+AuMusicManager	0	802e3b1c	AuMusicManager::destructor()	AuMusicManager	804cc164
+AuSpeechManager	0	802e66c8	AuSpeechManager::destructor()	AuSpeechManager	804cc650
+AuWiimoteManager	0	802e6fa8	AuWiimoteManager::destructor()	AuWiimoteManager	804cc688
+NPCAnimationEventHandler	0	802eb878	NPCAnimationEventHandler::HandleEvent(const CString&, void*)	NPCAnimationEventHandler	804cc9d0
+PlayerCharacterAnimationEventHandler	0	802eb730	PlayerCharacterAnimationEventHandler::HandleEvent(const CString&, void*)	PlayerCharacterAnimationEventHandler	804cc9dc
+CharacterRenderEntity	0	802e8814	CharacterRenderEntity::destructor()	CharacterRenderEntity	804cca30
+CharacterRenderEntity	1	802edf6c	CharacterRenderEntity::SetNearPlaneFadeEnabled(bool)	CharacterRenderEntity	804cca30
+NPCRenderEntity	0	802f02fc	NPCRenderEntity::destructor()	NPCRenderEntity	804cce18
+NPCRenderEntity	1	802f0b88	NPCRenderEntity::SetNearPlaneFadeEnabled(bool)	NPCRenderEntity	804cce18
+ShadowRenderEntity	0	802f0c40	ShadowRenderEntity::destructor()	ShadowRenderEntity	804cce30
+ShadowRenderEntity	1	802edf6c	CharacterRenderEntity::SetNearPlaneFadeEnabled(bool)	CharacterRenderEntity	804cce30
+cLionPostProPluginFastTint	0	803112b0	cLionPostProPluginFastTint::AppInit(EA::Allocator::ITaggedAllocator*)	cLionPostProPluginFastTint	804d3d58
+cLionPostProPluginFastTint	1	80311400	cLionPostProPluginFastTint::GetpName() const	cLionPostProPluginFastTint	804d3d58
+cLionPostProPluginFastTint	2	80315030	cLionPostProPluginFastTint::CustomDataDeInit(cLionPostProDescriptor*)	cLionPostProPluginFastTint	804d3d58
+cLionPostProPluginFastTint	3	80310ad0	cLionPostProPlugin::IsMixable() const	cLionPostProPlugin	804d3d58
+cLionPostProBehaviourFastTint	0	80311240	cLionPostProBehaviourFastTint::Init()	cLionPostProBehaviourFastTint	804d3d88
+cLionPostProBehaviourFastTint	1	803112a8	cLionPostProBehaviourFastTint::GetSize()	cLionPostProBehaviourFastTint	804d3d88
+cLionPostProBehaviourFastTint	2	8031402c	cLionPostProBehaviourFastTint::destructor()	cLionPostProBehaviourFastTint	804d3d88
+cLionPostProPluginMotionBlur	0	80311898	cLionPostProPluginMotionBlur::AppInit(EA::Allocator::ITaggedAllocator*)	cLionPostProPluginMotionBlur	804d3dac
+cLionPostProPluginMotionBlur	1	803119e8	cLionPostProPluginMotionBlur::GetpName() const	cLionPostProPluginMotionBlur	804d3dac
+cLionPostProPluginMotionBlur	2	80315054	cLionPostProPluginMotionBlur::CustomDataDeInit(cLionPostProDescriptor*)	cLionPostProPluginMotionBlur	804d3dac
+cLionPostProPluginMotionBlur	3	80310ad0	cLionPostProPlugin::IsMixable() const	cLionPostProPlugin	804d3dac
+cLionPostProBehaviourMotionBlur	0	80311854	cLionPostProBehaviourMotionBlur::Init()	cLionPostProBehaviourMotionBlur	804d3ddc
+cLionPostProBehaviourMotionBlur	1	80311890	cLionPostProBehaviourMotionBlur::GetSize()	cLionPostProBehaviourMotionBlur	804d3ddc
+cLionPostProBehaviourMotionBlur	2	8031406c	cLionPostProBehaviourMotionBlur::destructor()	cLionPostProBehaviourMotionBlur	804d3ddc
+cLionPostProPluginGloom	0	80311638	cLionPostProPluginGloom::AppInit(EA::Allocator::ITaggedAllocator*)	cLionPostProPluginGloom	804d3e00
+cLionPostProPluginGloom	1	803117ec	cLionPostProPluginGloom::GetpName() const	cLionPostProPluginGloom	804d3e00
+cLionPostProPluginGloom	2	80315048	cLionPostProPluginGloom::CustomDataDeInit(cLionPostProDescriptor*)	cLionPostProPluginGloom	804d3e00
+cLionPostProPluginGloom	3	80310ad0	cLionPostProPlugin::IsMixable() const	cLionPostProPlugin	804d3e00
+cLionPostProBehaviourGloom	0	803117fc	cLionPostProBehaviourGloom::Init()	cLionPostProBehaviourGloom	804d3e30
+cLionPostProBehaviourGloom	1	8031184c	cLionPostProBehaviourGloom::GetSize()	cLionPostProBehaviourGloom	804d3e30
+cLionPostProBehaviourGloom	2	803140ac	cLionPostProBehaviourGloom::destructor()	cLionPostProBehaviourGloom	804d3e30
+cLionPostProPluginFlexibleTint	0	803114d4	cLionPostProPluginFlexibleTint::AppInit(EA::Allocator::ITaggedAllocator*)	cLionPostProPluginFlexibleTint	804d3e54
+cLionPostProPluginFlexibleTint	1	80311624	cLionPostProPluginFlexibleTint::GetpName() const	cLionPostProPluginFlexibleTint	804d3e54
+cLionPostProPluginFlexibleTint	2	8031503c	cLionPostProPluginFlexibleTint::CustomDataDeInit(cLionPostProDescriptor*)	cLionPostProPluginFlexibleTint	804d3e54
+cLionPostProPluginFlexibleTint	3	80314114	cLionPostProPluginFlexibleTint::IsMixable() const	cLionPostProPluginFlexibleTint	804d3e54
+cLionPostProBehaviourFlexibleTint	0	80311414	cLionPostProBehaviourFlexibleTint::Init()	cLionPostProBehaviourFlexibleTint	804d3e84
+cLionPostProBehaviourFlexibleTint	1	803114cc	cLionPostProBehaviourFlexibleTint::GetSize()	cLionPostProBehaviourFlexibleTint	804d3e84
+cLionPostProBehaviourFlexibleTint	2	8031411c	cLionPostProBehaviourFlexibleTint::destructor()	cLionPostProBehaviourFlexibleTint	804d3e84
+cLionPostProPluginBulge	0	803110e0	cLionPostProPluginBulge::AppInit(EA::Allocator::ITaggedAllocator*)	cLionPostProPluginBulge	804d3ea8
+cLionPostProPluginBulge	1	80311230	cLionPostProPluginBulge::GetpName() const	cLionPostProPluginBulge	804d3ea8
+cLionPostProPluginBulge	2	80315024	cLionPostProPluginBulge::CustomDataDeInit(cLionPostProDescriptor*)	cLionPostProPluginBulge	804d3ea8
+cLionPostProPluginBulge	3	8031415c	cLionPostProPluginBulge::IsMixable() const	cLionPostProPluginBulge	804d3ea8
+cLionPostProBehaviourBulge	0	80310f7c	cLionPostProBehaviourBulge::Init()	cLionPostProBehaviourBulge	804d3ed8
+cLionPostProBehaviourBulge	1	803110d0	cLionPostProBehaviourBulge::GetSize()	cLionPostProBehaviourBulge	804d3ed8
+cLionPostProBehaviourBulge	2	80314164	cLionPostProBehaviourBulge::destructor()	cLionPostProBehaviourBulge	804d3ed8
+cLionPostProPluginBloom	0	80310d60	cLionPostProPluginBloom::AppInit(EA::Allocator::ITaggedAllocator*)	cLionPostProPluginBloom	804d3efc
+cLionPostProPluginBloom	1	80310f14	cLionPostProPluginBloom::GetpName() const	cLionPostProPluginBloom	804d3efc
+cLionPostProPluginBloom	2	80315018	cLionPostProPluginBloom::CustomDataDeInit(cLionPostProDescriptor*)	cLionPostProPluginBloom	804d3efc
+cLionPostProPluginBloom	3	80310ad0	cLionPostProPlugin::IsMixable() const	cLionPostProPlugin	804d3efc
+cLionPostProBehaviourBloom	0	80310f24	cLionPostProBehaviourBloom::Init()	cLionPostProBehaviourBloom	804d3f2c
+cLionPostProBehaviourBloom	1	80310f74	cLionPostProBehaviourBloom::GetSize()	cLionPostProBehaviourBloom	804d3f2c
+cLionPostProBehaviourBloom	2	803141a4	cLionPostProBehaviourBloom::destructor()	cLionPostProBehaviourBloom	804d3f2c
+cLionGeomPluginSphere	0	8030e4e0	cLionGeomPluginSphere::AppInit(EA::Allocator::ITaggedAllocator*)	cLionGeomPluginSphere	804d3f50
+cLionGeomPluginSphere	1	8030e630	cLionGeomPluginSphere::GetpName() const	cLionGeomPluginSphere	804d3f50
+cLionGeomPluginSphere	2	8030e5c4	cLionGeomPluginSphere::BehaviourDestroy(cLionGeomBehaviour*)	cLionGeomPluginSphere	804d3f50
+cLionGeomBehaviourSphere	0	8030e4a0	cLionGeomBehaviourSphere::Init()	cLionGeomBehaviourSphere	804d3f74
+cLionGeomBehaviourSphere	1	8030e4d8	cLionGeomBehaviourSphere::GetSize() const	cLionGeomBehaviourSphere	804d3f74
+cLionGeomBehaviourSphere	2	8031420c	cLionGeomBehaviourSphere::destructor()	cLionGeomBehaviourSphere	804d3f74
+cLionGeomPluginSpline	0	8030e33c	cLionGeomPluginSpline::AppInit(EA::Allocator::ITaggedAllocator*)	cLionGeomPluginSpline	804d3f98
+cLionGeomPluginSpline	1	8030e48c	cLionGeomPluginSpline::GetpName() const	cLionGeomPluginSpline	804d3f98
+cLionGeomPluginSpline	2	8030e420	cLionGeomPluginSpline::BehaviourDestroy(cLionGeomBehaviour*)	cLionGeomPluginSpline	804d3f98
+cLionGeomBehaviourSpline	0	8030e30c	cLionGeomBehaviourSpline::Init()	cLionGeomBehaviourSpline	804d3fbc
+cLionGeomBehaviourSpline	1	8030e334	cLionGeomBehaviourSpline::GetSize() const	cLionGeomBehaviourSpline	804d3fbc
+cLionGeomBehaviourSpline	2	8031424c	cLionGeomBehaviourSpline::destructor()	cLionGeomBehaviourSpline	804d3fbc
+cLionGeomPluginQuad	0	8030e1ac	cLionGeomPluginQuad::AppInit(EA::Allocator::ITaggedAllocator*)	cLionGeomPluginQuad	804d3fe0
+cLionGeomPluginQuad	1	8030e2fc	cLionGeomPluginQuad::GetpName() const	cLionGeomPluginQuad	804d3fe0
+cLionGeomPluginQuad	2	8030e290	cLionGeomPluginQuad::BehaviourDestroy(cLionGeomBehaviour*)	cLionGeomPluginQuad	804d3fe0
+cLionGeomBehaviourQuad	0	8030e17c	cLionGeomBehaviourQuad::Init()	cLionGeomBehaviourQuad	804d4004
+cLionGeomBehaviourQuad	1	8030e1a4	cLionGeomBehaviourQuad::GetSize() const	cLionGeomBehaviourQuad	804d4004
+cLionGeomBehaviourQuad	2	8031428c	cLionGeomBehaviourQuad::destructor()	cLionGeomBehaviourQuad	804d4004
+cLionGeomPluginCylinder	0	8030e018	cLionGeomPluginCylinder::AppInit(EA::Allocator::ITaggedAllocator*)	cLionGeomPluginCylinder	804d4028
+cLionGeomPluginCylinder	1	8030e168	cLionGeomPluginCylinder::GetpName() const	cLionGeomPluginCylinder	804d4028
+cLionGeomPluginCylinder	2	8030e0fc	cLionGeomPluginCylinder::BehaviourDestroy(cLionGeomBehaviour*)	cLionGeomPluginCylinder	804d4028
+cLionGeomBehaviourCylinder	0	8030dfe8	cLionGeomBehaviourCylinder::Init()	cLionGeomBehaviourCylinder	804d404c
+cLionGeomBehaviourCylinder	1	8030e010	cLionGeomBehaviourCylinder::GetSize() const	cLionGeomBehaviourCylinder	804d404c
+cLionGeomBehaviourCylinder	2	803142cc	cLionGeomBehaviourCylinder::destructor()	cLionGeomBehaviourCylinder	804d404c
+cLionGeomPluginCube	0	8030de88	cLionGeomPluginCube::AppInit(EA::Allocator::ITaggedAllocator*)	cLionGeomPluginCube	804d4070
+cLionGeomPluginCube	1	8030dfd8	cLionGeomPluginCube::GetpName() const	cLionGeomPluginCube	804d4070
+cLionGeomPluginCube	2	8030df6c	cLionGeomPluginCube::BehaviourDestroy(cLionGeomBehaviour*)	cLionGeomPluginCube	804d4070
+cLionGeomBehaviourCube	0	8030de60	cLionGeomBehaviourCube::Init()	cLionGeomBehaviourCube	804d4094
+cLionGeomBehaviourCube	1	8030de80	cLionGeomBehaviourCube::GetSize() const	cLionGeomBehaviourCube	804d4094
+cLionGeomBehaviourCube	2	8031430c	cLionGeomBehaviourCube::destructor()	cLionGeomBehaviourCube	804d4094
+cParticleStatsAllocator	0	80309148	cParticleStatsAllocator::Alloc(unsigned long, const EA::TagValuePair&)	cParticleStatsAllocator	804d4128
+cParticleStatsAllocator	1	803143f0	cParticleStatsAllocator::Release()	cParticleStatsAllocator	804d4128
+cParticleStatsAllocator	2	80314408	cParticleStatsAllocator::Alloc(unsigned long, const char*, unsigned int, unsigned int, unsigned int)	cParticleStatsAllocator	804d4128
+cParticleRender	0	80314f24	cParticleRender::destructor()	cParticleRender	804d41cc
+cLionPostProPlugin	3	80310ad0	cLionPostProPlugin::IsMixable() const	cLionPostProPlugin	804d41d8
+BossEndGameHandlers	0	803151ac	BossEndGameHandlers::destructor()	BossEndGameHandlers	804d42e0
+ConversationHandlers	0	80315760	ConversationHandlers::destructor()	ConversationHandlers	804d4468
+CreditScreenHandlers	0	80315ca4	CreditScreenHandlers::destructor()	CreditScreenHandlers	804d4548
+EndTourneyHandlers	0	8031604c	EndTourneyHandlers::destructor()	EndTourneyHandlers	804d45f4
+GlobalHandlers	0	803163cc	GlobalHandlers::destructor()	GlobalHandlers	804d4814
+LoadingScreenHandlers	0	80316e0c	LoadingScreenHandlers::destructor()	LoadingScreenHandlers	804d48dc
+MainMenuHandlers	0	80317210	MainMenuHandlers::destructor()	MainMenuHandlers	804d4a00
+MinigameHandlers	0	80317908	MinigameHandlers::destructor()	MinigameHandlers	804d5084
+MultiPlayerHandlers	0	80319d5c	MultiPlayerHandlers::destructor()	MultiPlayerHandlers	804d5848
+PaperAirplaneHandlers	0	8031d724	PaperAirplaneHandlers::destructor()	PaperAirplaneHandlers	804d5918
+PauseMenuHandlers	0	8031db48	PauseMenuHandlers::destructor()	PauseMenuHandlers	804d59d8
+PostGameHandlers	0	8031e17c	PostGameHandlers::destructor()	PostGameHandlers	804d5cd8
+PreGameHandlers	0	8031f36c	PreGameHandlers::destructor()	PreGameHandlers	804d5fc8
+ProfileHandlers	0	803202fc	ProfileHandlers::destructor()	ProfileHandlers	804d61ec
+ReportCardHandlers	0	8032115c	ReportCardHandlers::destructor()	ReportCardHandlers	804d62ec
+StickerBookHandlers	0	80321808	StickerBookHandlers::destructor()	StickerBookHandlers	804d68ac
+StickerStoreHandlers	0	80322e78	StickerStoreHandlers::destructor()	StickerStoreHandlers	804d6b40
+WorldHudHandlers	0	80323814	WorldHudHandlers::destructor()	WorldHudHandlers	804d6dbc
+SelectableCharacter	0	80327ea4	SelectableCharacter::destructor()	SelectableCharacter	804d724c
+VideoCapture::ScreenCapture	0	803293bc	VideoCapture::ScreenCapture::destructor()	VideoCapture::ScreenCapture	804d72b4
+PGConga	0	8032e498	PGConga::destructor()	PGConga	804d88fc
+FreeThrowCharacterCollisionListener	0	80334874	FreeThrowCharacterCollisionListener::destructor()	FreeThrowCharacterCollisionListener	804d8d70
+FreeThrowCharacterCollisionListener	1	802cf4f8	PhysicsCharacterListener::ContactAddedCallback(const PhysicsUserData*, const PhysicsContactPoint*)	PhysicsCharacterListener	804d8d70
+FreeThrowCharacterCollisionListener	2	803348dc	FreeThrowCharacterCollisionListener::OverlapRemovedCallback(const PhysicsUserData*, bool)	FreeThrowCharacterCollisionListener	804d8d70
+MGFreeThrow	0	80334c58	MGFreeThrow::destructor()	MGFreeThrow	804d8ea8
+MGFreeThrow	1	80335558	MGFreeThrow::UnInitialize()	MGFreeThrow	804d8ea8
+MGFreeThrow	2	803e1694	World::HandleControllerDisconnect()	World	804d8ea8
+MGFreeThrow	3	80334d04	MGFreeThrow::Initialize(const World*)	MGFreeThrow	804d8ea8
+MGFreeThrow	4	80335b04	MGFreeThrow::OnPauseContinue()	MGFreeThrow	804d8ea8
+MGFreeThrow	5	803ab420	Minigame::SetDareType(Enums::MiniGameDareType)	Minigame	804d8ea8
+MGFreeThrow	6	803abea8	Minigame::GetArrayIndexFromDiffLevel(Enums::MiniGameDifficultyLevel)	Minigame	804d8ea8
+DartShootoutIdleCompulsion	0	80338c1c	DartShootoutIdleCompulsion::destructor()	DartShootoutIdleCompulsion	804d8f88
+DartShootoutIdleCompulsion	1	80338c58	DartShootoutIdleCompulsion::HasExpired(AIThinkLoD) const	DartShootoutIdleCompulsion	804d8f88
+DartShootoutIdleCompulsion	2	80338cbc	DartShootoutIdleCompulsion::Deactivate()	DartShootoutIdleCompulsion	804d8f88
+DartShootoutRunStopShootCompulsion	0	803389e8	DartShootoutRunStopShootCompulsion::destructor()	DartShootoutRunStopShootCompulsion	804d8fac
+DartShootoutRunStopShootCompulsion	1	80338a64	DartShootoutRunStopShootCompulsion::HasExpired(AIThinkLoD) const	DartShootoutRunStopShootCompulsion	804d8fac
+DartShootoutRunStopShootCompulsion	2	80338ce8	DartShootoutRunStopShootCompulsion::Deactivate()	DartShootoutRunStopShootCompulsion	804d8fac
+DartShootoutShootCompulsion	0	80338738	DartShootoutShootCompulsion::destructor()	DartShootoutShootCompulsion	804d8fd0
+DartShootoutShootCompulsion	1	80338780	DartShootoutShootCompulsion::HasExpired(AIThinkLoD) const	DartShootoutShootCompulsion	804d8fd0
+DartShootoutShootCompulsion	2	80338d08	DartShootoutShootCompulsion::Deactivate()	DartShootoutShootCompulsion	804d8fd0
+DartShootoutMegashotCompulsion	0	8033862c	DartShootoutMegashotCompulsion::destructor()	DartShootoutMegashotCompulsion	804d8ff4
+DartShootoutMegashotCompulsion	1	80338674	DartShootoutMegashotCompulsion::HasExpired(AIThinkLoD) const	DartShootoutMegashotCompulsion	804d8ff4
+DartShootoutMegashotCompulsion	2	80338d28	DartShootoutMegashotCompulsion::Deactivate()	DartShootoutMegashotCompulsion	804d8ff4
+DartShootoutEnterCompulsion	0	80338518	DartShootoutEnterCompulsion::destructor()	DartShootoutEnterCompulsion	804d9018
+DartShootoutEnterCompulsion	1	80338554	DartShootoutEnterCompulsion::HasExpired(AIThinkLoD) const	DartShootoutEnterCompulsion	804d9018
+DartShootoutEnterCompulsion	2	80338d48	DartShootoutEnterCompulsion::Deactivate()	DartShootoutEnterCompulsion	804d9018
+DSTargetCharacter	0	80342950	DSTargetCharacter::UnInitialize()	DSTargetCharacter	804d95f4
+DSTargetCharacter	2	80345370	DSTargetCharacter::HandleEvent(const CString&, void*)	DSTargetCharacter	804d95f4
+MGDartShootout	0	80347e90	MGDartShootout::destructor()	MGDartShootout	804d9a40
+MGDartShootout	1	8034849c	MGDartShootout::UnInitialize()	MGDartShootout	804d9a40
+MGDartShootout	2	80349efc	MGDartShootout::HandleControllerDisconnect()	MGDartShootout	804d9a40
+MGDartShootout	3	80347f00	MGDartShootout::Initialize(const World*)	MGDartShootout	804d9a40
+MGDartShootout	4	80349e04	MGDartShootout::OnPauseContinue()	MGDartShootout	804d9a40
+MGDartShootout	5	8034b8ac	MGDartShootout::SetDareType(Enums::MiniGameDareType)	MGDartShootout	804d9a40
+MGDartShootout	6	803abea8	Minigame::GetArrayIndexFromDiffLevel(Enums::MiniGameDifficultyLevel)	Minigame	804d9a40
+DodgeballIdleCompulsion	0	8034da74	DodgeballIdleCompulsion::destructor()	DodgeballIdleCompulsion	804d9e28
+DodgeballIdleCompulsion	1	8034dab0	DodgeballIdleCompulsion::HasExpired(AIThinkLoD) const	DodgeballIdleCompulsion	804d9e28
+DodgeballIdleCompulsion	2	8034e0c8	DodgeballIdleCompulsion::Deactivate()	DodgeballIdleCompulsion	804d9e28
+DodgeballReactToFakeCompulsion	0	8034d830	DodgeballReactToFakeCompulsion::destructor()	DodgeballReactToFakeCompulsion	804d9e4c
+DodgeballReactToFakeCompulsion	1	8034d86c	DodgeballReactToFakeCompulsion::HasExpired(AIThinkLoD) const	DodgeballReactToFakeCompulsion	804d9e4c
+DodgeballReactToFakeCompulsion	2	8034e0f4	DodgeballReactToFakeCompulsion::Deactivate()	DodgeballReactToFakeCompulsion	804d9e4c
+DodgeballBoostCompulsion	0	8034d660	DodgeballBoostCompulsion::destructor()	DodgeballBoostCompulsion	804d9e70
+DodgeballBoostCompulsion	1	8034d69c	DodgeballBoostCompulsion::HasExpired(AIThinkLoD) const	DodgeballBoostCompulsion	804d9e70
+DodgeballBoostCompulsion	2	8034e120	DodgeballBoostCompulsion::Deactivate()	DodgeballBoostCompulsion	804d9e70
+DodgeballThrowCompulsion	0	8034d1dc	DodgeballThrowCompulsion::destructor()	DodgeballThrowCompulsion	804d9e94
+DodgeballThrowCompulsion	1	8034d46c	DodgeballThrowCompulsion::HasExpired(AIThinkLoD) const	DodgeballThrowCompulsion	804d9e94
+DodgeballThrowCompulsion	2	8034e14c	DodgeballThrowCompulsion::Deactivate()	DodgeballThrowCompulsion	804d9e94
+DodgeballReactCompulsion	0	8034cec0	DodgeballReactCompulsion::destructor()	DodgeballReactCompulsion	804d9eb8
+DodgeballReactCompulsion	1	8034cefc	DodgeballReactCompulsion::HasExpired(AIThinkLoD) const	DodgeballReactCompulsion	804d9eb8
+DodgeballReactCompulsion	2	8034e16c	DodgeballReactCompulsion::Deactivate()	DodgeballReactCompulsion	804d9eb8
+DodgeballPowerMeter	0	80350b98	DodgeballPowerMeter::destructor()	DodgeballPowerMeter	804da19c
+DodgeballCharacter	0	80350708	DodgeballCharacter::destructor()	DodgeballCharacter	804da1a8
+DodgeballCharacterCollisionListener	0	80355ee0	DodgeballCharacterCollisionListener::destructor()	DodgeballCharacterCollisionListener	804da200
+DodgeballCharacterCollisionListener	1	802cf4f8	PhysicsCharacterListener::ContactAddedCallback(const PhysicsUserData*, const PhysicsContactPoint*)	PhysicsCharacterListener	804da200
+DodgeballCharacterCollisionListener	2	8035600c	DodgeballCharacterCollisionListener::OverlapRemovedCallback(const PhysicsUserData*, bool)	DodgeballCharacterCollisionListener	804da200
+DodgeballCourt	0	80356540	DodgeballCourt::destructor()	DodgeballCourt	804da290
+MGDodgeball	0	803576bc	MGDodgeball::destructor()	MGDodgeball	804da528
+MGDodgeball	1	80357b4c	MGDodgeball::UnInitialize()	MGDodgeball	804da528
+MGDodgeball	2	8035c1b4	MGDodgeball::HandleControllerDisconnect()	MGDodgeball	804da528
+MGDodgeball	3	803577f4	MGDodgeball::Initialize(const World*)	MGDodgeball	804da528
+MGDodgeball	4	80357fac	MGDodgeball::OnPauseContinue()	MGDodgeball	804da528
+MGDodgeball	5	803ab420	Minigame::SetDareType(Enums::MiniGameDareType)	Minigame	804da528
+MGDodgeball	6	803abea8	Minigame::GetArrayIndexFromDiffLevel(Enums::MiniGameDifficultyLevel)	Minigame	804da528
+FootieShotCompulsion	0	8035e660	FootieShotCompulsion::destructor()	FootieShotCompulsion	804da944
+FootieShotCompulsion	1	8035e69c	FootieShotCompulsion::HasExpired(AIThinkLoD) const	FootieShotCompulsion	804da944
+FootieShotCompulsion	2	8035e7e4	FootieShotCompulsion::Deactivate()	FootieShotCompulsion	804da944
+FootieJumpCompulsion	0	8035e4cc	FootieJumpCompulsion::destructor()	FootieJumpCompulsion	804da968
+FootieJumpCompulsion	1	8035e508	FootieJumpCompulsion::HasExpired(AIThinkLoD) const	FootieJumpCompulsion	804da968
+FootieJumpCompulsion	2	8035e810	FootieJumpCompulsion::Deactivate()	FootieJumpCompulsion	804da968
+FootieServeCompulsion	0	8035e300	FootieServeCompulsion::destructor()	FootieServeCompulsion	804da98c
+FootieServeCompulsion	1	8035e33c	FootieServeCompulsion::HasExpired(AIThinkLoD) const	FootieServeCompulsion	804da98c
+FootieServeCompulsion	2	8035e83c	FootieServeCompulsion::Deactivate()	FootieServeCompulsion	804da98c
+FootieJuggleCompulsion	0	8035e144	FootieJuggleCompulsion::destructor()	FootieJuggleCompulsion	804da9b0
+FootieJuggleCompulsion	1	8035e180	FootieJuggleCompulsion::HasExpired(AIThinkLoD) const	FootieJuggleCompulsion	804da9b0
+FootieJuggleCompulsion	2	8035e868	FootieJuggleCompulsion::Deactivate()	FootieJuggleCompulsion	804da9b0
+FootieBlockShotCompulsion	0	8035dfa0	FootieBlockShotCompulsion::destructor()	FootieBlockShotCompulsion	804da9d4
+FootieBlockShotCompulsion	1	8035dfdc	FootieBlockShotCompulsion::HasExpired(AIThinkLoD) const	FootieBlockShotCompulsion	804da9d4
+FootieBlockShotCompulsion	2	8035e894	FootieBlockShotCompulsion::Deactivate()	FootieBlockShotCompulsion	804da9d4
+FootieBlockCompulsion	0	8035de10	FootieBlockCompulsion::destructor()	FootieBlockCompulsion	804da9f8
+FootieBlockCompulsion	1	8035de4c	FootieBlockCompulsion::HasExpired(AIThinkLoD) const	FootieBlockCompulsion	804da9f8
+FootieBlockCompulsion	2	8035e8c0	FootieBlockCompulsion::Deactivate()	FootieBlockCompulsion	804da9f8
+FootieDiveSaveCompulsion	0	8035dc50	FootieDiveSaveCompulsion::destructor()	FootieDiveSaveCompulsion	804daa1c
+FootieDiveSaveCompulsion	1	8035dc8c	FootieDiveSaveCompulsion::HasExpired(AIThinkLoD) const	FootieDiveSaveCompulsion	804daa1c
+FootieDiveSaveCompulsion	2	8035e8ec	FootieDiveSaveCompulsion::Deactivate()	FootieDiveSaveCompulsion	804daa1c
+FootiePositionCompulsion	0	8035d790	FootiePositionCompulsion::destructor()	FootiePositionCompulsion	804daa40
+FootiePositionCompulsion	1	8035d7cc	FootiePositionCompulsion::HasExpired(AIThinkLoD) const	FootiePositionCompulsion	804daa40
+FootiePositionCompulsion	2	8035e918	FootiePositionCompulsion::Deactivate()	FootiePositionCompulsion	804daa40
+FootieAIDifficultyInfo	0	8035c3e4	FootieAIDifficultyInfo::destructor()	FootieAIDifficultyInfo	804daa78
+FootieCharacter	0	80361844	FootieCharacter::destructor()	FootieCharacter	804dae90
+FootieCharacterCollisionListener	0	80365f20	FootieCharacterCollisionListener::destructor()	FootieCharacterCollisionListener	804daea0
+FootieCharacterCollisionListener	1	802cf4f8	PhysicsCharacterListener::ContactAddedCallback(const PhysicsUserData*, const PhysicsContactPoint*)	PhysicsCharacterListener	804daea0
+FootieCharacterCollisionListener	2	80365fa8	FootieCharacterCollisionListener::OverlapRemovedCallback(const PhysicsUserData*, bool)	FootieCharacterCollisionListener	804daea0
+FootieField	0	803660c4	FootieField::destructor()	FootieField	804daf0c
+FootiePowerMeter	0	80368240	FootiePowerMeter::destructor()	FootiePowerMeter	804daf68
+MGFootie	0	80368a64	MGFootie::destructor()	MGFootie	804db36c
+MGFootie	1	80368fe4	MGFootie::UnInitialize()	MGFootie	804db36c
+MGFootie	2	803e1694	World::HandleControllerDisconnect()	World	804db36c
+MGFootie	3	80368b98	MGFootie::Initialize(const World*)	MGFootie	804db36c
+MGFootie	4	80369a20	MGFootie::OnPauseContinue()	MGFootie	804db36c
+MGFootie	5	803ab420	Minigame::SetDareType(Enums::MiniGameDareType)	Minigame	804db36c
+MGFootie	6	803abea8	Minigame::GetArrayIndexFromDiffLevel(Enums::MiniGameDifficultyLevel)	Minigame	804db36c
+MGPaperAirplanes	0	8036e344	MGPaperAirplanes::destructor()	MGPaperAirplanes	804db5d0
+MGPaperAirplanes	1	8036ed6c	MGPaperAirplanes::UnInitialize()	MGPaperAirplanes	804db5d0
+MGPaperAirplanes	2	80372274	MGPaperAirplanes::HandleControllerDisconnect()	MGPaperAirplanes	804db5d0
+MGPaperAirplanes	3	8036e39c	MGPaperAirplanes::Initialize(const World*)	MGPaperAirplanes	804db5d0
+MGPaperAirplanes	4	8036f9ec	MGPaperAirplanes::OnPauseContinue()	MGPaperAirplanes	804db5d0
+MGPaperAirplanes	5	80371d20	MGPaperAirplanes::SetDareType(Enums::MiniGameDareType)	MGPaperAirplanes	804db5d0
+MGPaperAirplanes	6	803abea8	Minigame::GetArrayIndexFromDiffLevel(Enums::MiniGameDifficultyLevel)	Minigame	804db5d0
+PaperAirplane	0	80373acc	PaperAirplane::destructor()	PaperAirplane	804db86c
+PaperAirplaneCourse	0	80379298	PaperAirplaneCourse::destructor()	PaperAirplaneCourse	804db9a0
+RcQuickBoostCompulsion	0	8037de68	RcQuickBoostCompulsion::destructor()	RcQuickBoostCompulsion	804dbca4
+RcQuickBoostCompulsion	1	8037cd30	RcDrivingCompulsion::HasExpired(AIThinkLoD) const	RcDrivingCompulsion	804dbca4
+RcQuickBoostCompulsion	2	8037cd24	RcDrivingCompulsion::Deactivate()	RcDrivingCompulsion	804dbca4
+RcUseShieldCompulsion	0	8037dd60	RcUseShieldCompulsion::destructor()	RcUseShieldCompulsion	804dbcc8
+RcUseShieldCompulsion	1	8037cd30	RcDrivingCompulsion::HasExpired(AIThinkLoD) const	RcDrivingCompulsion	804dbcc8
+RcUseShieldCompulsion	2	8037cd24	RcDrivingCompulsion::Deactivate()	RcDrivingCompulsion	804dbcc8
+RcChangeLaneCompulsion	0	8037dc4c	RcChangeLaneCompulsion::destructor()	RcChangeLaneCompulsion	804dbcec
+RcChangeLaneCompulsion	1	8037cd30	RcDrivingCompulsion::HasExpired(AIThinkLoD) const	RcDrivingCompulsion	804dbcec
+RcChangeLaneCompulsion	2	8037cd24	RcDrivingCompulsion::Deactivate()	RcDrivingCompulsion	804dbcec
+RcByPassCompulsion	0	8037dab8	RcByPassCompulsion::destructor()	RcByPassCompulsion	804dbd10
+RcByPassCompulsion	1	8037cd30	RcDrivingCompulsion::HasExpired(AIThinkLoD) const	RcDrivingCompulsion	804dbd10
+RcByPassCompulsion	2	8037daa8	RcByPassCompulsion::Deactivate()	RcByPassCompulsion	804dbd10
+RcPushBackCompulsion	0	8037d744	RcPushBackCompulsion::destructor()	RcPushBackCompulsion	804dbd34
+RcPushBackCompulsion	1	8037cd30	RcDrivingCompulsion::HasExpired(AIThinkLoD) const	RcDrivingCompulsion	804dbd34
+RcPushBackCompulsion	2	8037cd24	RcDrivingCompulsion::Deactivate()	RcDrivingCompulsion	804dbd34
+RcCollisionCourseCompulsion	0	8037d4d4	RcCollisionCourseCompulsion::destructor()	RcCollisionCourseCompulsion	804dbd58
+RcCollisionCourseCompulsion	1	8037cd30	RcDrivingCompulsion::HasExpired(AIThinkLoD) const	RcDrivingCompulsion	804dbd58
+RcCollisionCourseCompulsion	2	8037d528	RcCollisionCourseCompulsion::Deactivate()	RcCollisionCourseCompulsion	804dbd58
+RcUsePowerupCompulsion	0	8037d28c	RcUsePowerupCompulsion::destructor()	RcUsePowerupCompulsion	804dbd7c
+RcUsePowerupCompulsion	1	8037cd30	RcDrivingCompulsion::HasExpired(AIThinkLoD) const	RcDrivingCompulsion	804dbd7c
+RcUsePowerupCompulsion	2	8037cd24	RcDrivingCompulsion::Deactivate()	RcDrivingCompulsion	804dbd7c
+RcSlowDownCompulsion	0	8037d1ec	RcSlowDownCompulsion::destructor()	RcSlowDownCompulsion	804dbda0
+RcSlowDownCompulsion	1	8037cd30	RcDrivingCompulsion::HasExpired(AIThinkLoD) const	RcDrivingCompulsion	804dbda0
+RcSlowDownCompulsion	2	8037cd24	RcDrivingCompulsion::Deactivate()	RcDrivingCompulsion	804dbda0
+RcSpeedUpCompulsion	0	8037d124	RcSpeedUpCompulsion::destructor()	RcSpeedUpCompulsion	804dbdc4
+RcSpeedUpCompulsion	1	8037cd30	RcDrivingCompulsion::HasExpired(AIThinkLoD) const	RcDrivingCompulsion	804dbdc4
+RcSpeedUpCompulsion	2	8037cd24	RcDrivingCompulsion::Deactivate()	RcDrivingCompulsion	804dbdc4
+RcDrivingCompulsion	0	8037ccdc	RcDrivingCompulsion::destructor()	RcDrivingCompulsion	804dbde8
+RcDrivingCompulsion	1	8037cd30	RcDrivingCompulsion::HasExpired(AIThinkLoD) const	RcDrivingCompulsion	804dbde8
+RcDrivingCompulsion	2	8037cd24	RcDrivingCompulsion::Deactivate()	RcDrivingCompulsion	804dbde8
+MGRcCars	0	8037e138	MGRcCars::destructor()	MGRcCars	804dc4cc
+MGRcCars	1	8037f05c	MGRcCars::UnInitialize()	MGRcCars	804dc4cc
+MGRcCars	2	8038365c	MGRcCars::HandleControllerDisconnect()	MGRcCars	804dc4cc
+MGRcCars	3	8037e190	MGRcCars::Initialize(const World*)	MGRcCars	804dc4cc
+MGRcCars	4	80383368	MGRcCars::OnPauseContinue()	MGRcCars	804dc4cc
+MGRcCars	5	803ab420	Minigame::SetDareType(Enums::MiniGameDareType)	Minigame	804dc4cc
+MGRcCars	6	8038347c	MGRcCars::GetArrayIndexFromDiffLevel(Enums::MiniGameDifficultyLevel)	MGRcCars	804dc4cc
+TetherballHitCompulsion	0	80395ca8	TetherballHitCompulsion::destructor()	TetherballHitCompulsion	804dcb58
+TetherballHitCompulsion	1	80396214	TetherballHitCompulsion::HasExpired(AIThinkLoD) const	TetherballHitCompulsion	804dcb58
+TetherballHitCompulsion	2	80396380	TetherballHitCompulsion::Deactivate()	TetherballHitCompulsion	804dcb58
+TetherballMoveCompulsion	0	8039589c	TetherballMoveCompulsion::destructor()	TetherballMoveCompulsion	804dcb7c
+TetherballMoveCompulsion	1	803958d8	TetherballMoveCompulsion::HasExpired(AIThinkLoD) const	TetherballMoveCompulsion	804dcb7c
+TetherballMoveCompulsion	2	803963a0	TetherballMoveCompulsion::Deactivate()	TetherballMoveCompulsion	804dcb7c
+MGTetherball	0	8039666c	MGTetherball::destructor()	MGTetherball	804dd1fc
+MGTetherball	1	803973d8	MGTetherball::UnInitialize()	MGTetherball	804dd1fc
+MGTetherball	2	803e1694	World::HandleControllerDisconnect()	World	804dd1fc
+MGTetherball	3	803966c4	MGTetherball::Initialize(const World*)	MGTetherball	804dd1fc
+MGTetherball	4	803abc30	Minigame::OnPauseContinue()	Minigame	804dd1fc
+MGTetherball	5	8039cd48	MGTetherball::SetDareType(Enums::MiniGameDareType)	MGTetherball	804dd1fc
+MGTetherball	6	803abea8	Minigame::GetArrayIndexFromDiffLevel(Enums::MiniGameDifficultyLevel)	Minigame	804dd1fc
+Tetherball	0	8039d398	Tetherball::destructor()	Tetherball	804dd39c
+WallballIdleCompulsion	0	8039f704	WallballIdleCompulsion::destructor()	WallballIdleCompulsion	804dd4b4
+WallballIdleCompulsion	1	8039f740	WallballIdleCompulsion::HasExpired(AIThinkLoD) const	WallballIdleCompulsion	804dd4b4
+WallballIdleCompulsion	2	8039f83c	WallballIdleCompulsion::Deactivate()	WallballIdleCompulsion	804dd4b4
+WallballHitBallCompulsion	0	8039f1c0	WallballHitBallCompulsion::destructor()	WallballHitBallCompulsion	804dd4d8
+WallballHitBallCompulsion	1	8039f1fc	WallballHitBallCompulsion::HasExpired(AIThinkLoD) const	WallballHitBallCompulsion	804dd4d8
+WallballHitBallCompulsion	2	8039f868	WallballHitBallCompulsion::Deactivate()	WallballHitBallCompulsion	804dd4d8
+WallballServeCompulsion	0	8039efe4	WallballServeCompulsion::destructor()	WallballServeCompulsion	804dd4fc
+WallballServeCompulsion	1	8039f020	WallballServeCompulsion::HasExpired(AIThinkLoD) const	WallballServeCompulsion	804dd4fc
+WallballServeCompulsion	2	8039f894	WallballServeCompulsion::Deactivate()	WallballServeCompulsion	804dd4fc
+MGWallball	0	8039fb4c	MGWallball::destructor()	MGWallball	804dd990
+MGWallball	1	803a04cc	MGWallball::UnInitialize()	MGWallball	804dd990
+MGWallball	2	803e1694	World::HandleControllerDisconnect()	World	804dd990
+MGWallball	3	8039fc80	MGWallball::Initialize(const World*)	MGWallball	804dd990
+MGWallball	4	803a07dc	MGWallball::OnPauseContinue()	MGWallball	804dd990
+MGWallball	5	803ab420	Minigame::SetDareType(Enums::MiniGameDareType)	Minigame	804dd990
+MGWallball	6	803abea8	Minigame::GetArrayIndexFromDiffLevel(Enums::MiniGameDifficultyLevel)	Minigame	804dd990
+WallballPowerMeter	0	803a5898	WallballPowerMeter::destructor()	WallballPowerMeter	804ddcc8
+WallballCharacter	0	803a54f4	WallballCharacter::destructor()	WallballCharacter	804ddcd4
+WallballCourt	0	803a9190	WallballCourt::destructor()	WallballCourt	804ddce0
+Minigame	0	803ab388	Minigame::destructor()	Minigame	804dddc0
+Minigame	1	803ab524	Minigame::UnInitialize()	Minigame	804dddc0
+Minigame	2	803e1694	World::HandleControllerDisconnect()	World	804dddc0
+Minigame	3	803ab430	Minigame::Initialize(const World*)	Minigame	804dddc0
+Minigame	4	803abc30	Minigame::OnPauseContinue()	Minigame	804dddc0
+Minigame	5	803ab420	Minigame::SetDareType(Enums::MiniGameDareType)	Minigame	804dddc0
+Minigame	6	803abea8	Minigame::GetArrayIndexFromDiffLevel(Enums::MiniGameDifficultyLevel)	Minigame	804dddc0
+InternalCharacterListener	0	803b5534	InternalCharacterListener::destructor()	InternalCharacterListener	804e9314
+InternalCharacterListener	1	803b5978	InternalCharacterListener::contactPointRemovedCallback(const hkRootCdPoint&)	InternalCharacterListener	804e9314
+InternalCharacterListener	3	803b5d2c	@4@collidableRemovedCallback__25InternalCharacterListenerFRC24hkCollidableRemovedEvent()		804e9314
+InternalCharacterListener	4	803b5b0c	InternalCharacterListener::collidableRemovedCallback(const hkCollidableRemovedEvent&)	InternalCharacterListener	804e9314
+PhysicsCharacterListener	0	803b5c80	PhysicsCharacterListener::destructor()	PhysicsCharacterListener	804e9350
+PhysicsCharacterListener	1	802cf4f8	PhysicsCharacterListener::ContactAddedCallback(const PhysicsUserData*, const PhysicsContactPoint*)	PhysicsCharacterListener	804e9350
+PhysicsCharacterListener	2	802cf4f0	PhysicsCharacterListener::OverlapRemovedCallback(const PhysicsUserData*, bool)	PhysicsCharacterListener	804e9350
+PhysicsManager	0	803b6d04	PhysicsManager::destructor()	PhysicsManager	804e93f4
+PhysicsMemory	0	803b90e8	PhysicsMemory::destructor()	PhysicsMemory	804e9468
+PhysicsMemory	1	803b93f4	PhysicsMemory::allocateChunk(int, HK_MEMORY_CLASS)	PhysicsMemory	804e9468
+PhysicsMemory	2	803b920c	PhysicsMemory::deallocateRuntimeBlock(void*, int, HK_MEMORY_CLASS)	PhysicsMemory	804e9468
+PhysicsMemory	3	803b9180	PhysicsMemory::freeRuntimeBlocks()	PhysicsMemory	804e9468
+PhysicsMemory	4	801e451c	hkMemory::releaseUnusedPagesToSystemMemory()	hkMemory	804e9468
+PhysicsMemory	5	801e4514	hkMemory::isDebugMemory()	hkMemory	804e9468
+PhysicsMemory	6	801e4508	hkMemory::lockBlock(void*)	hkMemory	804e9468
+PhysicsMemory	7	803b94a4	PhysicsMemory::deallocate(void*)	PhysicsMemory	804e9468
+PhysicsMemory	8	803b9178	PhysicsMemory::getStatSynopsis(hkMemoryStatistics*)	PhysicsMemory	804e9468
+PhysicsPhantom	0	803b956c	PhysicsPhantom::destructor()	PhysicsPhantom	804e94e8
+PhysicsRigidBody	0	803b99e8	PhysicsRigidBody::destructor()	PhysicsRigidBody	804e956c
+PhysicsUserData	0	80333444	PhysicsUserData::destructor()	PhysicsUserData	804e9658
+PhysicsVehicleWheelCollide	0	803bc944	PhysicsVehicleWheelCollide::destructor()	PhysicsVehicleWheelCollide	804e9668
+PhysicsVehicleWheelCollide	1	8024b25c	hkVehicleRaycastWheelCollide::init(const hkVehicleInstance*)	hkVehicleRaycastWheelCollide	804e9668
+PhysicsVehicleWheelCollide	2	8024b4fc	hkVehicleRaycastWheelCollide::calcWheelsAABB(const hkVehicleInstance*, hkAabb&)	hkVehicleRaycastWheelCollide	804e9668
+PhysicsVehicleWheelCollide	3	8024b874	hkVehicleRaycastWheelCollide::updatePhantom(hkVehicleInstance*)	hkVehicleRaycastWheelCollide	804e9668
+CameraManager	0	803bebbc	CameraManager::destructor()	CameraManager	804e97a0
+AssetManager	0	803ca2c0	AssetManager::destructor()	AssetManager	804eb704
+DebugMenu	0	803cde14	DebugMenu::destructor()	DebugMenu	804eb748
+LionAllocator	0	803cf5a0	LionAllocator::Alloc(unsigned long, const EA::TagValuePair&)	LionAllocator	804eb828
+LionAllocator	1	803cf630	LionAllocator::Release()	LionAllocator	804eb828
+LionAllocator	2	803cf584	LionAllocator::Alloc(unsigned long, const char*, unsigned int, unsigned int, unsigned int)	LionAllocator	804eb828
+GameMenuRenderer	0	803d446c	GameMenuRenderer::destructor()	GameMenuRenderer	804ec2ec
+GameMenuRenderer	1	803d47a4	GameMenuRenderer::GetStringSize(const char*, int*, int*) const	GameMenuRenderer	804ec2ec
+SlotPool	0	803d56f4	SlotPool::destructor()	SlotPool	804ec38c
+PlaceableAnimationEventHandler	0	803d8004	PlaceableAnimationEventHandler::HandleEvent(const CString&, void*)	PlaceableAnimationEventHandler	804ec67c
+PlaygroundWorld	0	803dbbd0	PlaygroundWorld::destructor()	PlaygroundWorld	804ecdb8
+PlaygroundWorld	1	803dc878	PlaygroundWorld::UnInitialize()	PlaygroundWorld	804ecdb8
+PlaygroundWorld	2	803e1694	World::HandleControllerDisconnect()	World	804ecdb8
+World	0	803e159c	World::destructor()	World	804ecf18
+World	2	803e1694	World::HandleControllerDisconnect()	World	804ecf18
+EAGL::RenderContext	0	803e5f14	EAGL::RenderContext::BeginFrame()	EAGL::RenderContext	804ed398
+EAGL::RenderContext	1	803e5fc8	EAGL::RenderContext::destructor()	EAGL::RenderContext	804ed398
+EAGL::RenderContextBase	1	803e6258	EAGL::RenderContextBase::destructor()	EAGL::RenderContextBase	804ed3b0
+EAGLInternal::RenderContextPrivate	0	803e41d8	EAGLInternal::RenderContextPrivate::destructor()	EAGLInternal::RenderContextPrivate	804ed3c8
+EAGL::RenderContextExtension	0	803e4158	EAGL::RenderContextExtension::destructor()	EAGL::RenderContextExtension	804ed3d4
+EAGLInternal::RenderContextPrivateBase	0	803e4330	EAGLInternal::RenderContextPrivateBase::destructor()	EAGLInternal::RenderContextPrivateBase	804ed3e0
+EAGL::RenderContextExtensionBase	0	803e4198	EAGL::RenderContextExtensionBase::destructor()	EAGL::RenderContextExtensionBase	804ed3ec
+EAGLAnim::FnDeltaQ	0	80405bcc	EAGLAnim::FnDeltaQ::destructor()	EAGLAnim::FnDeltaQ	804ee038
+EAGLAnim::FnDeltaQ	1	80405b4c	EAGLAnim::FnDeltaQ::Eval(float, float, float*)	EAGLAnim::FnDeltaQ	804ee038
+EAGLAnim::FnDeltaQ	2	80404aa0	EAGLAnim::FnDeltaQ::EvalSQT(float, float*, const EAGLAnim::BoneMask*)	EAGLAnim::FnDeltaQ	804ee038
+EAGLAnim::FnDeltaQ	3	803f4e70	EAGLAnim::FnAnim::EvalEvent(float, float, EAGLAnim::EventHandler**, void*)	EAGLAnim::FnAnim	804ee038
+EAGLAnim::FnDeltaQ	4	803f4e88	EAGLAnim::FnAnim::EvalPose(float, const EAGLAnim::PosePaletteBank*, float*)	EAGLAnim::FnAnim	804ee038
+EAGLAnim::FnDeltaQ	5	803fcbdc	EAGLAnim::FnAnim::GetAttributes() const	EAGLAnim::FnAnim	804ee038
+EAGLAnim::FnDeltaQ	6	80405bc4	EAGLAnim::FnDeltaQ::SetAnimMemoryMap(EAGLAnim::AnimMemoryMap*)	EAGLAnim::FnDeltaQ	804ee038
+EAGLAnim::FnDeltaQ	7	804038a0	EAGLAnim::FnDeltaQ::EvalSQTMasked(float, const EAGLAnim::BoneMask*, float*)	EAGLAnim::FnDeltaQ	804ee038
+EAGLAnim::FnDeltaSingleQ	0	80409bb8	EAGLAnim::FnDeltaSingleQ::destructor()	EAGLAnim::FnDeltaSingleQ	804ee0f8
+EAGLAnim::FnDeltaSingleQ	1	80409b38	EAGLAnim::FnDeltaSingleQ::Eval(float, float, float*)	EAGLAnim::FnDeltaSingleQ	804ee0f8
+EAGLAnim::FnDeltaSingleQ	2	80408994	EAGLAnim::FnDeltaSingleQ::EvalSQT(float, float*, const EAGLAnim::BoneMask*)	EAGLAnim::FnDeltaSingleQ	804ee0f8
+EAGLAnim::FnDeltaSingleQ	3	803f4e70	EAGLAnim::FnAnim::EvalEvent(float, float, EAGLAnim::EventHandler**, void*)	EAGLAnim::FnAnim	804ee0f8
+EAGLAnim::FnDeltaSingleQ	4	803f4e88	EAGLAnim::FnAnim::EvalPose(float, const EAGLAnim::PosePaletteBank*, float*)	EAGLAnim::FnAnim	804ee0f8
+EAGLAnim::FnDeltaSingleQ	5	803fcbdc	EAGLAnim::FnAnim::GetAttributes() const	EAGLAnim::FnAnim	804ee0f8
+EAGLAnim::FnDeltaSingleQ	6	80409bb0	EAGLAnim::FnDeltaSingleQ::SetAnimMemoryMap(EAGLAnim::AnimMemoryMap*)	EAGLAnim::FnDeltaSingleQ	804ee0f8
+EAGLAnim::FnDeltaSingleQ	7	80407524	EAGLAnim::FnDeltaSingleQ::EvalSQTMasked(float, const EAGLAnim::BoneMask*, float*)	EAGLAnim::FnDeltaSingleQ	804ee0f8

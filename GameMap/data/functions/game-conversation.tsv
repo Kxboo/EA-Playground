@@ -1,0 +1,58 @@
+# addr	size	class	method	args	const	source_unit	mangled
+802f0e50	68	ConversationPool	constructor			conversationmanager.cpp	__ct__16ConversationPoolFv
+802f0e94	64	ConversationPool	destructor			conversationmanager.cpp	__dt__16ConversationPoolFv
+802f0ed4	104	ConversationPool	AddConversation	unsigned int		conversationmanager.cpp	AddConversation__16ConversationPoolFUi
+802f0f3c	36	ConversationPool	GetConversation	int		conversationmanager.cpp	GetConversation__16ConversationPoolFi
+802f0f60	92	ConversationPool	Load	const char*, bool		conversationmanager.cpp	Load__16ConversationPoolFPCcb
+802f0fbc	80	ConversationManager	Create			conversationmanager.cpp	Create__19ConversationManagerFv
+802f100c	80	ConversationManager	ShowScreen			conversationmanager.cpp	ShowScreen__19ConversationManagerFv
+802f105c	8	ConversationManager	Get			conversationmanager.cpp	Get__19ConversationManagerFv
+802f1064	132	ConversationManager	constructor			conversationmanager.cpp	__ct__19ConversationManagerFv
+802f10e8	4	ConversationManager	GenerateConversationId	const char*		conversationmanager.cpp	GenerateConversationId__19ConversationManagerFPCc
+802f10ec	440	ConversationManager	LoadConversationFiles	const char*		conversationmanager.cpp	LoadConversationFiles__19ConversationManagerFPCc
+802f12a4	128	ConversationManager	GetPool	const char*, bool		conversationmanager.cpp	GetPool__19ConversationManagerFPCcb
+802f1324	92	ConversationManager	FreePool	ConversationPool*		conversationmanager.cpp	FreePool__19ConversationManagerFP16ConversationPool
+802f1380	188	CameraViewInfo	constructor	const CameraViewInfo&		conversationmanager.cpp	__ct__14CameraViewInfoFRC14CameraViewInfo
+802f143c	4	ConversationManager	CameraFinishedTransitionCallback	void*		conversationmanager.cpp	CameraFinishedTransitionCallback__19ConversationManagerFPv
+802f1440	568	ConversationManager	BeginConversation	ConversationPool*, rmVector3, rmVector3, Character*, const char*, unsigned long long, ConversationBranchType		conversationmanager.cpp	BeginConversation__19ConversationManagerFP16ConversationPool9rmVector39rmVector3P9CharacterPCcUx22ConversationBranchType
+802f1678	356	ConversationManager	GetText	wchar_t*, int		conversationmanager.cpp	GetText__19ConversationManagerFPwi
+802f17dc	156	ConversationManager	GetResponse	int, wchar_t*, int		conversationmanager.cpp	GetResponse__19ConversationManagerFiPwi
+802f1878	112	ConversationManager	GetNumResponses			conversationmanager.cpp	GetNumResponses__19ConversationManagerFv
+802f18e8	832	ConversationManager	ProcessPlayerResponse	int		conversationmanager.cpp	ProcessPlayerResponse__19ConversationManagerFi
+802f1c28	12	ConversationResponse	GetChildId	int	const	conversationmanager.cpp	GetChildId__20ConversationResponseCFi
+802f1c34	476	ConversationManager	ExitConversation	ResponseActionTypes		conversationmanager.cpp	ExitConversation__19ConversationManagerF19ResponseActionTypes
+802f1e10	356	ConversationManager	FinishConversationStoreExit			conversationmanager.cpp	FinishConversationStoreExit__19ConversationManagerFv
+802f1f74	112	ConversationManager	DoNextText			conversationmanager.cpp	DoNextText__19ConversationManagerFv
+802f1fe4	48	ConversationManager	GetGenderAudioId	Enums::CharacterGender		conversationmanager.cpp	GetGenderAudioId__19ConversationManagerFQ25Enums15CharacterGender
+802f2014	92	ConversationManager	GetPersonalityAudioId	Enums::CharacterPersonality		conversationmanager.cpp	GetPersonalityAudioId__19ConversationManagerFQ25Enums20CharacterPersonality
+802f2070	176		__sinit_\conversationmanager_cpp			conversationmanager.cpp	__sinit_\conversationmanager_cpp
+802f2120	60	MGID	constructor	const char*		conversationnode.cpp	__ct__4MGIDFPCc
+802f215c	88	ConversationNode	GetText	wchar_t*, int	const	conversationnode.cpp	GetText__16ConversationNodeCFPwi
+802f21b4	88	ConversationNode	GetText	char*, int	const	conversationnode.cpp	GetText__16ConversationNodeCFPci
+802f220c	36	ConversationRoot	constructor			conversationnode.cpp	__ct__16ConversationRootFv
+802f2230	120	ConversationRoot	destructor			conversationnode.cpp	__dt__16ConversationRootFv
+802f22a8	168	ConversationRoot	Load	char**		conversationnode.cpp	Load__16ConversationRootFPPc
+802f2350	36	ConversationDialog	constructor			conversationnode.cpp	__ct__18ConversationDialogFv
+802f2374	112	ConversationDialog	destructor			conversationnode.cpp	__dt__18ConversationDialogFv
+802f23e4	152	ConversationDialog	Load	char**		conversationnode.cpp	Load__18ConversationDialogFPPc
+802f247c	36	ConversationResponse	constructor			conversationnode.cpp	__ct__20ConversationResponseFv
+802f24a0	64	ConversationResponse	destructor			conversationnode.cpp	__dt__20ConversationResponseFv
+802f24e0	140	ConversationResponse	GetText	wchar_t*, int	const	conversationnode.cpp	GetText__20ConversationResponseCFPwi
+802f256c	140	ConversationResponse	GetText	char*, int	const	conversationnode.cpp	GetText__20ConversationResponseCFPci
+802f25f8	88	ConversationResponse	Load	char**		conversationnode.cpp	Load__20ConversationResponseFPPc
+802f2650	8	ConversationResponse	GetNumChild		const	conversationnode.cpp	GetNumChild__20ConversationResponseCFv
+802f2658	44	ConversationDialog	GetChildId	int	const	conversationnode.cpp	GetChildId__18ConversationDialogCFi
+802f2684	12	ConversationDialog	GetNumChild		const	conversationnode.cpp	GetNumChild__18ConversationDialogCFv
+802f2690	44	ConversationRoot	GetChildId	int	const	conversationnode.cpp	GetChildId__16ConversationRootCFi
+802f26bc	12	ConversationRoot	GetNumChild		const	conversationnode.cpp	GetNumChild__16ConversationRootCFv
+802f26c8	24		__sinit_\conversationnode_cpp			conversationnode.cpp	__sinit_\conversationnode_cpp
+802f26e0	48	Conversation	constructor			conversationtree.cpp	__ct__12ConversationFv
+802f2710	548	Conversation	Load	void*		conversationtree.cpp	Load__12ConversationFPv
+802f2934	24		__sinit_\conversationtree_cpp			conversationtree.cpp	__sinit_\conversationtree_cpp
+802f294c	24		ReadByte	char**		conversationutil.cpp	ReadByte__FPPc
+802f2964	128		geti	const void*, int		conversationutil.cpp	geti__FPCvi
+802f29e4	76		ReadInt	char**		conversationutil.cpp	ReadInt__FPPc
+802f2a30	76		ReadUInt	char**		conversationutil.cpp	ReadUInt__FPPc
+802f2a7c	120		ReadString	char**, int, char*, int		conversationutil.cpp	ReadString__FPPciPci
+802f2af4	48		ComputeHash32	const char*		conversationutil.cpp	ComputeHash32__FPCc
+802f2b24	24		__sinit_\conversationutil_cpp			conversationutil.cpp	__sinit_\conversationutil_cpp

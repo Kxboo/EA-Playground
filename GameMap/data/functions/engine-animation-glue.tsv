@@ -1,0 +1,49 @@
+# addr	size	class	method	args	const	source_unit	mangled
+803c7a7c	412	AnimationManager	LoadAnimationAssets	const char*		animationmanager.cpp	LoadAnimationAssets__16AnimationManagerFPCc
+803c7c18	264	AnimationManager	LoadAnimationAssets	const AnimationAssets*, const char*		animationmanager.cpp	LoadAnimationAssets__16AnimationManagerFPC15AnimationAssetsPCc
+803c7d20	112	AnimationManager	UnLoadAssets	AnimationAssets*		animationmanager.cpp	UnLoadAssets__16AnimationManagerFP15AnimationAssets
+803c7d90	24		__sinit_\animationmanager_cpp			animationmanager.cpp	__sinit_\animationmanager_cpp
+803c7da8	228	AnimationState	constructor			animationstate.cpp	__ct__14AnimationStateFv
+803c7e8c	276	AnimationState	destructor			animationstate.cpp	__dt__14AnimationStateFv
+803c7fa0	224	AnimationState	Initialize	AnimationAssets*, EAGLAnim::Skeleton*		animationstate.cpp	Initialize__14AnimationStateFP15AnimationAssetsPQ28EAGLAnim8Skeleton
+803c8080	48	AnimationState	AddEventHandler	AnimationEventHandler*, void*		animationstate.cpp	AddEventHandler__14AnimationStateFP21AnimationEventHandlerPv
+803c80b0	172	AnimationState	RemoveEventHandler	AnimationEventHandler*		animationstate.cpp	RemoveEventHandler__14AnimationStateFP21AnimationEventHandler
+803c815c	8	AnimationState	AddProceduralAnimHandler	ProceduralAnimationHandler*		animationstate.cpp	AddProceduralAnimHandler__14AnimationStateFP26ProceduralAnimationHandler
+803c8164	24	AnimationState	RemoveProceduralAnimHandler	ProceduralAnimationHandler*		animationstate.cpp	RemoveProceduralAnimHandler__14AnimationStateFP26ProceduralAnimationHandler
+803c817c	260	AnimationState	InitializeMarkers	MarkerSetData*		animationstate.cpp	InitializeMarkers__14AnimationStateFP13MarkerSetData
+803c8280	120	AnimationState	GetMarkerPosition	int	const	animationstate.cpp	GetMarkerPosition__14AnimationStateCFi
+803c82f8	16	AnimationState	GetMarkerMatrix	int	const	animationstate.cpp	GetMarkerMatrix__14AnimationStateCFi
+803c8308	16	AnimationState	GetMarkerID	int	const	animationstate.cpp	GetMarkerID__14AnimationStateCFi
+803c8318	484	AnimationState	SetNextAnim	AnimationStateGraph::AnimStates		animationstate.cpp	SetNextAnim__14AnimationStateFQ219AnimationStateGraph10AnimStates
+803c84fc	20	EAGLAnim::FnDefaultAnimBank	GetAnim	int		animationstate.cpp	GetAnim__Q28EAGLAnim17FnDefaultAnimBankFi
+803c8510	8	EAGLAnim::FnAnim	GetLength	float&	const	animationstate.cpp	GetLength__Q28EAGLAnim6FnAnimCFRf
+803c8518	4	EAGLAnim::FnAnim	UseFPS	bool		animationstate.cpp	UseFPS__Q28EAGLAnim6FnAnimFb
+803c851c	1152	AnimationState	Update	float, bool, bool		animationstate.cpp	Update__14AnimationStateFfbb
+803c899c	8	EAGLAnim::FnAnim	EvalSQT	float, float*, const EAGLAnim::BoneMask*		animationstate.cpp	EvalSQT__Q28EAGLAnim6FnAnimFfPfPCQ28EAGLAnim8BoneMask
+803c89a4	460	AnimationState	ProcessAnimEvents	float		animationstate.cpp	ProcessAnimEvents__14AnimationStateFf
+803c8b70	8	AnimationState	SetNextAnimState	AnimationStateGraph::AnimStates, bool, int		animationstate.cpp	SetNextAnimState__14AnimationStateFQ219AnimationStateGraph10AnimStatesbi
+803c8b78	268	AnimationState	SetNextAnimState	AnimationStateGraph::AnimStates, float, bool, int		animationstate.cpp	SetNextAnimState__14AnimationStateFQ219AnimationStateGraph10AnimStatesfbi
+803c8c84	80	AnimationState	SetStateTime	float		animationstate.cpp	SetStateTime__14AnimationStateFf
+803c8cd4	64	AnimationState	GetStateTime			animationstate.cpp	GetStateTime__14AnimationStateFv
+803c8d14	20	AnimationState	GetCurrentBonePos	int, rmMatrix4&		animationstate.cpp	GetCurrentBonePos__14AnimationStateFiR9rmMatrix4
+803c8d28	128	AnimationState	GetAssociatedProp	Enums::CharacterSkeleton, AnimationStateGraph::AnimStates		animationstate.cpp	GetAssociatedProp__14AnimationStateFQ25Enums17CharacterSkeletonQ219AnimationStateGraph10AnimStates
+803c8da8	24		__sinit_\animationstate_cpp			animationstate.cpp	__sinit_\animationstate_cpp
+803c8dc0	144	AnimationStateGraph	constructor	char*, int, EAGLAnim::FnAnimBank*		animationstategraph.cpp	__ct__19AnimationStateGraphFPciPQ28EAGLAnim10FnAnimBank
+803c8e50	104	AnimationStateGraph::AnimStateInfo	constructor			animationstategraph.cpp	__ct__Q219AnimationStateGraph13AnimStateInfoFv
+803c8eb8	48	AnimationStateGraph::AnimEventInfo	constructor			animationstategraph.cpp	__ct__Q219AnimationStateGraph13AnimEventInfoFv
+803c8ee8	88	AnimationStateGraph::AnimEventInfo	destructor			animationstategraph.cpp	__dt__Q219AnimationStateGraph13AnimEventInfoFv
+803c8f40	152	AnimationStateGraph::AnimStateInfo	destructor			animationstategraph.cpp	__dt__Q219AnimationStateGraph13AnimStateInfoFv
+803c8fd8	336	AnimationStateGraph	constructor	const AnimationStateGraph*, char*, int, EAGLAnim::FnAnimBank*		animationstategraph.cpp	__ct__19AnimationStateGraphFPC19AnimationStateGraphPciPQ28EAGLAnim10FnAnimBank
+803c9128	76	AnimationStateGraph::AnimEventInfo	operator=	const AnimationStateGraph::AnimEventInfo&		animationstategraph.cpp	__as__Q219AnimationStateGraph13AnimEventInfoFRCQ219AnimationStateGraph13AnimEventInfo
+803c9174	136	AnimationStateGraph	constructor	pgDBCollection*, EAGLAnim::FnAnimBank*		animationstategraph.cpp	__ct__19AnimationStateGraphFP14pgDBCollectionPQ28EAGLAnim10FnAnimBank
+803c91fc	100	AnimationStateGraph	destructor			animationstategraph.cpp	__dt__19AnimationStateGraphFv
+803c9260	120	AnimationStateGraph	ConvertStringToState	const CString&		animationstategraph.cpp	ConvertStringToState__19AnimationStateGraphFRC7CString
+803c92d8	1244	AnimationStateGraph	InitializeStateGraph	char*, int, EAGLAnim::FnAnimBank*		animationstategraph.cpp	InitializeStateGraph__19AnimationStateGraphFPciPQ28EAGLAnim10FnAnimBank
+803c97b4	784	AnimationStateGraph	InitializeStateGraph	pgDBCollection*, EAGLAnim::FnAnimBank*		animationstategraph.cpp	InitializeStateGraph__19AnimationStateGraphFP14pgDBCollectionPQ28EAGLAnim10FnAnimBank
+803c9ac4	24		__sinit_\animationstategraph_cpp			animationstategraph.cpp	__sinit_\animationstategraph_cpp
+803c9adc	12	Marker	constructor			marker.cpp	__ct__6MarkerFv
+803c9ae8	72	Marker	destructor			marker.cpp	__dt__6MarkerFv
+803c9b30	180	Marker	Initialize	int, int, rmMatrix4		marker.cpp	Initialize__6MarkerFii9rmMatrix4
+803c9be4	12	Marker	UnInitialize			marker.cpp	UnInitialize__6MarkerFv
+803c9bf0	780	Marker	Update	AnimationState*		marker.cpp	Update__6MarkerFP14AnimationState
+803c9efc	24		__sinit_\marker_cpp			marker.cpp	__sinit_\marker_cpp

@@ -1,0 +1,224 @@
+# addr	size	class	method	args	const	source_unit	mangled
+803d5a34	52	AccessibilityManager	constructor			accessibilitymanager.cpp	__ct__20AccessibilityManagerFv
+803d5a68	68	AccessibilityManager	Create			accessibilitymanager.cpp	Create__20AccessibilityManagerFv
+803d5aac	52	AccessibilityManager	Destroy			accessibilitymanager.cpp	Destroy__20AccessibilityManagerFv
+803d5ae0	124	AccessibilityManager	EvaluatePopup	Enums::AccessibilityPopupType, int		accessibilitymanager.cpp	EvaluatePopup__20AccessibilityManagerFQ25Enums22AccessibilityPopupTypei
+803d5b5c	44	AccessibilityManager	ShowPopup	Enums::AccessibilityPopupType, int		accessibilitymanager.cpp	ShowPopup__20AccessibilityManagerFQ25Enums22AccessibilityPopupTypei
+803d5b88	16	AccessibilityManager	SetData	unsigned int, int		accessibilitymanager.cpp	SetData__20AccessibilityManagerFUii
+803d5b98	40	AccessibilityManager	ResumePendingOpen			accessibilitymanager.cpp	ResumePendingOpen__20AccessibilityManagerFv
+803d5bc0	80	AccessibilityManager	OpenPopup			accessibilitymanager.cpp	OpenPopup__20AccessibilityManagerFv
+803d5c10	108	AccessibilityManager	PopupClosed			accessibilitymanager.cpp	PopupClosed__20AccessibilityManagerFv
+803d5c7c	248	AccessibilityManager	GetText	wchar_t*, wchar_t*, int		accessibilitymanager.cpp	GetText__20AccessibilityManagerFPwPwi
+803d5d74	24		__sinit_\accessibilitymanager_cpp			accessibilitymanager.cpp	__sinit_\accessibilitymanager_cpp
+803d5d8c	100	AreaDrawManager	constructor			areadrawmanager.cpp	__ct__15AreaDrawManagerFv
+803d5df0	120	AreaDrawManager	destructor			areadrawmanager.cpp	__dt__15AreaDrawManagerFv
+803d5e68	280	AreaDrawManager	Initialize			areadrawmanager.cpp	Initialize__15AreaDrawManagerFv
+803d5f80	100	AreaDrawManager	UnInitialize			areadrawmanager.cpp	UnInitialize__15AreaDrawManagerFv
+803d5fe4	1780	AreaDrawManager	LoadModelSet	const char*, int		areadrawmanager.cpp	LoadModelSet__15AreaDrawManagerFPCci
+803d66d8	20	rmOBB	SetExtents	const rmVector3&		areadrawmanager.cpp	SetExtents__5rmOBBFRC9rmVector3
+803d66ec	16	rmOBB	SetCenter	const rmVector3&		areadrawmanager.cpp	SetCenter__5rmOBBFRC9rmVector3
+803d66fc	116	rmOBB	SetAxes	const rmVector3&, const rmVector3&, const rmVector3&		areadrawmanager.cpp	SetAxes__5rmOBBFRC9rmVector3RC9rmVector3RC9rmVector3
+803d6770	4	FadeableGeometry	constructor			areadrawmanager.cpp	__ct__16FadeableGeometryFv
+803d6774	184	AreaDrawManager	UnLoadModelSet	int		areadrawmanager.cpp	UnLoadModelSet__15AreaDrawManagerFi
+803d682c	8	AreaDrawManager	SetTextureData	char*		areadrawmanager.cpp	SetTextureData__15AreaDrawManagerFPc
+803d6834	116	AreaDrawManager	Draw	Ren::SceneContext&		areadrawmanager.cpp	Draw__15AreaDrawManagerFRQ23Ren12SceneContext
+803d68a8	152	AreaDrawManager	DrawModelSet	Ren::SceneContext&, int		areadrawmanager.cpp	DrawModelSet__15AreaDrawManagerFRQ23Ren12SceneContexti
+803d6940	144	AreaDrawManager	DrawRegularModel	Ren::SceneContext&, AreaDrawManager::ModelContainer*		areadrawmanager.cpp	DrawRegularModel__15AreaDrawManagerFRQ23Ren12SceneContextPQ215AreaDrawManager14ModelContainer
+803d69d0	284		IsGeometryVisible	Ren::SceneContext&, EAGL::Geometry*		areadrawmanager.cpp	IsGeometryVisible__FRQ23Ren12SceneContextPQ24EAGL8Geometry
+803d6aec	136	EAGL::Geometry	GetBoundingBox	COORD3&, COORD3&		areadrawmanager.cpp	GetBoundingBox__Q24EAGL8GeometryFR6COORD3R6COORD3
+803d6b74	4	Ren::BoundingBox	constructor			areadrawmanager.cpp	__ct__Q23Ren11BoundingBoxFv
+803d6b78	184	AreaDrawManager	DrawAlphaModel	Ren::SceneContext&, AreaDrawManager::ModelContainer*		areadrawmanager.cpp	DrawAlphaModel__15AreaDrawManagerFRQ23Ren12SceneContextPQ215AreaDrawManager14ModelContainer
+803d6c30	112		CalcCenterPoint	EAGL::Geometry*, rmVector3&		areadrawmanager.cpp	CalcCenterPoint__FPQ24EAGL8GeometryR9rmVector3
+803d6ca0	76	AreaDrawManager	SetFadeState	FadeableGeometry*, AreaDrawManager::GeometryFadeState, float		areadrawmanager.cpp	SetFadeState__15AreaDrawManagerFP16FadeableGeometryQ215AreaDrawManager17GeometryFadeStatef
+803d6cec	932	AreaDrawManager	DrawFadeableModel	Ren::SceneContext&, AreaDrawManager::ModelContainer*, bool		areadrawmanager.cpp	DrawFadeableModel__15AreaDrawManagerFRQ23Ren12SceneContextPQ215AreaDrawManager14ModelContainerb
+803d7090	224		IsGeometryIntersectingLine	const FadeableGeometry&, const rmVector3&, const rmVector3&		areadrawmanager.cpp	IsGeometryIntersectingLine__FRC16FadeableGeometryRC9rmVector3RC9rmVector3
+803d7170	28	rmAABB	constructor	float, float, float, float, float, float		areadrawmanager.cpp	__ct__6rmAABBFffffff
+803d718c	96	AreaDrawManager	AlphaDrawCallback	Ren::SceneContext&, Ren::SceneOrderTableEntry&		areadrawmanager.cpp	AlphaDrawCallback__15AreaDrawManagerFRQ23Ren12SceneContextRQ23Ren20SceneOrderTableEntry
+803d71ec	112	AreaDrawManager	FadedDrawCallback	Ren::SceneContext&, Ren::SceneOrderTableEntry&		areadrawmanager.cpp	FadedDrawCallback__15AreaDrawManagerFRQ23Ren12SceneContextRQ23Ren20SceneOrderTableEntry
+803d725c	140	AreaDrawManager	AlphaFadedDrawCallback	Ren::SceneContext&, Ren::SceneOrderTableEntry&		areadrawmanager.cpp	AlphaFadedDrawCallback__15AreaDrawManagerFRQ23Ren12SceneContextRQ23Ren20SceneOrderTableEntry
+803d72e8	4	AreaDrawManager	Update	int		areadrawmanager.cpp	Update__15AreaDrawManagerFi
+803d72ec	296	AreaDrawManager	UpdateFadeables	int		areadrawmanager.cpp	UpdateFadeables__15AreaDrawManagerFi
+803d7414	144	AreaDrawManager	SetOverrideVisibilityLine	const rmVector3&, const rmVector3&		areadrawmanager.cpp	SetOverrideVisibilityLine__15AreaDrawManagerFRC9rmVector3RC9rmVector3
+803d74a4	12	AreaDrawManager	ClearOverrideVisibilityLine			areadrawmanager.cpp	ClearOverrideVisibilityLine__15AreaDrawManagerFv
+803d74b0	40	AreaDrawManager	IsGeometryIntersectingOverrideLine	const FadeableGeometry&		areadrawmanager.cpp	IsGeometryIntersectingOverrideLine__15AreaDrawManagerFRC16FadeableGeometry
+803d74d8	24		__sinit_\areadrawmanager_cpp			areadrawmanager.cpp	__sinit_\areadrawmanager_cpp
+803d74f0	84	AreaManager	constructor			areamanager.cpp	__ct__11AreaManagerFv
+803d7544	108	AreaManager	destructor			areamanager.cpp	__dt__11AreaManagerFv
+803d75b0	84	AreaManager	Initialize			areamanager.cpp	Initialize__11AreaManagerFv
+803d7604	276	AreaManager	InitArea			areamanager.cpp	InitArea__11AreaManagerFv
+803d7718	160	AreaManager	UnInitialize			areamanager.cpp	UnInitialize__11AreaManagerFv
+803d77b8	72	AreaManager	Update	int		areamanager.cpp	Update__11AreaManagerFi
+803d7800	92	AreaManager	SetScene	Ren::Scene*		areamanager.cpp	SetScene__11AreaManagerFPQ23Ren5Scene
+803d785c	92	AreaManager	UnSetScene			areamanager.cpp	UnSetScene__11AreaManagerFv
+803d78b8	524	AreaManager	CalcRenderingModelMatrix	const rmVector3&, rmMatrix4&		areamanager.cpp	CalcRenderingModelMatrix__11AreaManagerFRC9rmVector3R9rmMatrix4
+803d7ac4	304	AreaManager	CalcRenderingPosUp	const rmVector3&, rmVector3&, rmVector3&		areamanager.cpp	CalcRenderingPosUp__11AreaManagerFRC9rmVector3R9rmVector3R9rmVector3
+803d7bf4	40	AreaManager	SetCurvedWorldRadius	unsigned int		areamanager.cpp	SetCurvedWorldRadius__11AreaManagerFUi
+803d7c1c	324	AreaManager	IsPointVisible	const rmVector3&, const rmVector3&		areamanager.cpp	IsPointVisible__11AreaManagerFRC9rmVector3RC9rmVector3
+803d7d60	220	AreaManager	IsBoundingBoxVisible	const rmVector3&, const rmVector3&, const rmVector3&		areamanager.cpp	IsBoundingBoxVisible__11AreaManagerFRC9rmVector3RC9rmVector3RC9rmVector3
+803d7e3c	432	AreaManager	IsBoundingBoxVisible	const rmVector3&, const rmVector3&, const rmVector3&, const rmMatrix4&		areamanager.cpp	IsBoundingBoxVisible__11AreaManagerFRC9rmVector3RC9rmVector3RC9rmVector3RC9rmMatrix4
+803d7fec	24		__sinit_\areamanager_cpp			areamanager.cpp	__sinit_\areamanager_cpp
+803d8004	140	PlaceableAnimationEventHandler	HandleEvent	const CString&, void*		placeables.cpp	HandleEvent__30PlaceableAnimationEventHandlerFRC7CStringPv
+803d8090	116	Placeable	constructor			placeables.cpp	__ct__9PlaceableFv
+803d8104	104	Placeable	destructor			placeables.cpp	__dt__9PlaceableFv
+803d816c	132	Placeable	Update	int		placeables.cpp	Update__9PlaceableFi
+803d81f0	188	Placeable	SetRotation	float		placeables.cpp	SetRotation__9PlaceableFf
+803d82ac	76	Placeable	IsActive	Enums::AreaType	const	placeables.cpp	IsActive__9PlaceableCFQ25Enums8AreaType
+803d82f8	156	Placeable	SetTextureMatrix	int, const rmMatrix4&		placeables.cpp	SetTextureMatrix__9PlaceableFiRC9rmMatrix4
+803d8394	76	Placeable	SetFadeState	Placeable::FadeState, float		placeables.cpp	SetFadeState__9PlaceableFQ29Placeable9FadeStatef
+803d83e0	28	PlaceableManager::PlaceableShadowEntity	constructor	PlaceableManager*		placeables.cpp	__ct__Q216PlaceableManager21PlaceableShadowEntityFP16PlaceableManager
+803d83fc	88	PlaceableManager::PlaceableShadowEntity	destructor			placeables.cpp	__dt__Q216PlaceableManager21PlaceableShadowEntityFv
+803d8454	552	PlaceableManager::PlaceableShadowEntity	Draw	Ren::SceneContext&		placeables.cpp	Draw__Q216PlaceableManager21PlaceableShadowEntityFRQ23Ren12SceneContext
+803d867c	100	PlaceableManager	constructor			placeables.cpp	__ct__16PlaceableManagerFv
+803d86e0	120	PlaceableManager	destructor			placeables.cpp	__dt__16PlaceableManagerFv
+803d8758	3708	PlaceableManager	Initialize			placeables.cpp	Initialize__16PlaceableManagerFv
+803d95d4	48	PlaceableAsset	constructor			placeables.cpp	__ct__14PlaceableAssetFv
+803d9604	88	PlaceableAsset	destructor			placeables.cpp	__dt__14PlaceableAssetFv
+803d965c	348	PlaceableManager	InitTextureAnimData	PlaceableAsset*		placeables.cpp	InitTextureAnimData__16PlaceableManagerFP14PlaceableAsset
+803d97b8	768	PlaceableManager	UnInitialize			placeables.cpp	UnInitialize__16PlaceableManagerFv
+803d9ab8	4	Marker	operator delete[]	void*		placeables.cpp	__dla__6MarkerFPv
+803d9abc	4	PlaceableAsset	operator delete[]	void*		placeables.cpp	__dla__14PlaceableAssetFPv
+803d9ac0	4	Placeable	operator delete[]	void*		placeables.cpp	__dla__9PlaceableFPv
+803d9ac4	1020	PlaceableManager	Draw	Ren::SceneContext&		placeables.cpp	Draw__16PlaceableManagerFRQ23Ren12SceneContext
+803d9ec0	160	PlaceableManager	PlaceableOrderTableCallback	Ren::SceneContext&, Ren::SceneOrderTableEntry&		placeables.cpp	PlaceableOrderTableCallback__16PlaceableManagerFRQ23Ren12SceneContextRQ23Ren20SceneOrderTableEntry
+803d9f60	204	PlaceableManager	Update	int		placeables.cpp	Update__16PlaceableManagerFi
+803da02c	132	PlaceableManager	GetPlaceable	const char*		placeables.cpp	GetPlaceable__16PlaceableManagerFPCc
+803da0b0	8	PlaceableManager	SetCurrentArea	Enums::AreaType		placeables.cpp	SetCurrentArea__16PlaceableManagerFQ25Enums8AreaType
+803da0b8	60		__sinit_\placeables_cpp			placeables.cpp	__sinit_\placeables_cpp
+803da0f4	16	PlaceableAnimationEventHandler	constructor			playgroundGate.cpp	__ct__30PlaceableAnimationEventHandlerFv
+803da104	116	PlaygroundGate	constructor			playgroundGate.cpp	__ct__14PlaygroundGateFv
+803da178	148	PlaygroundGate	destructor			playgroundGate.cpp	__dt__14PlaygroundGateFv
+803da20c	112	PlaygroundGate	GetTargetPosition			playgroundGate.cpp	GetTargetPosition__14PlaygroundGateFv
+803da27c	112	PlaygroundGate	GetTargetDirection			playgroundGate.cpp	GetTargetDirection__14PlaygroundGateFv
+803da2ec	112	PlaygroundGate	GetStickerKidEnterPosition			playgroundGate.cpp	GetStickerKidEnterPosition__14PlaygroundGateFv
+803da35c	112	PlaygroundGate	GetStickerKidConversationPosition			playgroundGate.cpp	GetStickerKidConversationPosition__14PlaygroundGateFv
+803da3cc	112	PlaygroundGate	GetStickerKidExitPosition			playgroundGate.cpp	GetStickerKidExitPosition__14PlaygroundGateFv
+803da43c	828	PlaygroundGate	SetKey	unsigned long long		playgroundGate.cpp	SetKey__14PlaygroundGateFUx
+803da778	112	PlaygroundGate	GetTargetArea			playgroundGate.cpp	GetTargetArea__14PlaygroundGateFv
+803da7e8	552	PlaygroundGate	LockGate			playgroundGate.cpp	LockGate__14PlaygroundGateFv
+803daa10	540	PlaygroundGate	UnlockGate			playgroundGate.cpp	UnlockGate__14PlaygroundGateFv
+803dac2c	204	PlaygroundGate	StartGateNIS	AreaManager*, Enums::AreaType		playgroundGate.cpp	StartGateNIS__14PlaygroundGateFP11AreaManagerQ25Enums8AreaType
+803dacf8	32	PlaygroundGate	FinishGateNIS			playgroundGate.cpp	FinishGateNIS__14PlaygroundGateFv
+803dad18	12	PlaygroundGate	StartAreaNIS			playgroundGate.cpp	StartAreaNIS__14PlaygroundGateFv
+803dad24	16	PlaygroundGate	FinishAreaNIS			playgroundGate.cpp	FinishAreaNIS__14PlaygroundGateFv
+803dad34	164	PlaygroundGate	CheckForNewGateUnlock	int		playgroundGate.cpp	CheckForNewGateUnlock__14PlaygroundGateFi
+803dadd8	484	PlaygroundGate	RunAreaNIS	int		playgroundGate.cpp	RunAreaNIS__14PlaygroundGateFi
+803dafbc	1540	PlaygroundGate	RunGateNIS	int		playgroundGate.cpp	RunGateNIS__14PlaygroundGateFi
+803db5c0	24	Ren::FadeToColourEffect	IsFinished			playgroundGate.cpp	IsFinished__Q23Ren18FadeToColourEffectFv
+803db5d8	564	PlaygroundGate	CheckForAreaTransition			playgroundGate.cpp	CheckForAreaTransition__14PlaygroundGateFv
+803db80c	24		__sinit_\playgroundGate_cpp			playgroundGate.cpp	__sinit_\playgroundGate_cpp
+803db824	36	MarbleShadowRenderEntity	constructor			playgroundWorld.cpp	__ct__24MarbleShadowRenderEntityFv
+803db848	500	MarbleShadowRenderEntity	Draw	Ren::SceneContext&		playgroundWorld.cpp	Draw__24MarbleShadowRenderEntityFRQ23Ren12SceneContext
+803dba3c	64		PlayerEnteredCallBack	void*		playgroundWorld.cpp	PlayerEnteredCallBack__FPv
+803dba7c	12		StickerKidStartConversationCallBack	void*		playgroundWorld.cpp	StickerKidStartConversationCallBack__FPv
+803dba88	12		StickerKidFinishedCallBack	void*		playgroundWorld.cpp	StickerKidFinishedCallBack__FPv
+803dba94	316	PlaygroundWorld	constructor			playgroundWorld.cpp	__ct__15PlaygroundWorldFv
+803dbbd0	140	PlaygroundWorld	destructor			playgroundWorld.cpp	__dt__15PlaygroundWorldFv
+803dbc5c	184	PlaygroundWorld	LoadInitialEntryPosition			playgroundWorld.cpp	LoadInitialEntryPosition__15PlaygroundWorldFv
+803dbd14	52	PlaygroundWorld	Initialize			playgroundWorld.cpp	Initialize__15PlaygroundWorldFv
+803dbd48	744	PlaygroundWorld	InitializeScene			playgroundWorld.cpp	InitializeScene__15PlaygroundWorldFv
+803dc030	960	PlaygroundWorld	InitializeCharacters			playgroundWorld.cpp	InitializeCharacters__15PlaygroundWorldFv
+803dc3f0	356	PlaygroundWorld	UnInitializeScene			playgroundWorld.cpp	UnInitializeScene__15PlaygroundWorldFv
+803dc554	260	PlaygroundWorld	UnInitializeCharacters			playgroundWorld.cpp	UnInitializeCharacters__15PlaygroundWorldFv
+803dc658	64	PlaygroundWorld	UnSpawnCurrentArea			playgroundWorld.cpp	UnSpawnCurrentArea__15PlaygroundWorldFv
+803dc698	76	PlaygroundWorld	SpawnCurrentArea			playgroundWorld.cpp	SpawnCurrentArea__15PlaygroundWorldFv
+803dc6e4	152	PlaygroundWorld	CleanCurrentArea			playgroundWorld.cpp	CleanCurrentArea__15PlaygroundWorldFv
+803dc77c	252	PlaygroundWorld	RefillCurrentArea			playgroundWorld.cpp	RefillCurrentArea__15PlaygroundWorldFv
+803dc878	52	PlaygroundWorld	UnInitialize			playgroundWorld.cpp	UnInitialize__15PlaygroundWorldFv
+803dc8ac	160	PlaygroundWorld	CheckForNewGateUnlocks			playgroundWorld.cpp	CheckForNewGateUnlocks__15PlaygroundWorldFv
+803dc94c	84	PlaygroundWorld	Cheat_UnlockAllGates			playgroundWorld.cpp	Cheat_UnlockAllGates__15PlaygroundWorldFv
+803dc9a0	260	PlaygroundWorld	SpawnMarbleIcons			playgroundWorld.cpp	SpawnMarbleIcons__15PlaygroundWorldFv
+803dcaa4	152	PlaygroundWorld	UnSpawnMarbleIcons			playgroundWorld.cpp	UnSpawnMarbleIcons__15PlaygroundWorldFv
+803dcb3c	232	PlaygroundWorld	GetStickerKid			playgroundWorld.cpp	GetStickerKid__15PlaygroundWorldFv
+803dcc24	3000	PlaygroundWorld	Update	int		playgroundWorld.cpp	Update__15PlaygroundWorldFi
+803dd7dc	364	PlaygroundWorld	CheckForStickerKidNis			playgroundWorld.cpp	CheckForStickerKidNis__15PlaygroundWorldFv
+803dd948	336	PlaygroundWorld	UpdateWorldHuds	int		playgroundWorld.cpp	UpdateWorldHuds__15PlaygroundWorldFi
+803dda98	320	PlaygroundWorld	UpdateMicroGameBugHunt	int		playgroundWorld.cpp	UpdateMicroGameBugHunt__15PlaygroundWorldFi
+803ddbd8	612	PlaygroundWorld	UpdateMicroGameFreeThrow	int		playgroundWorld.cpp	UpdateMicroGameFreeThrow__15PlaygroundWorldFi
+803dde3c	200	PlaygroundWorld	UpdateMicroGameHighFive	int		playgroundWorld.cpp	UpdateMicroGameHighFive__15PlaygroundWorldFi
+803ddf04	412	PlaygroundWorld	UpdateMicroGameDribbling	int		playgroundWorld.cpp	UpdateMicroGameDribbling__15PlaygroundWorldFi
+803de0a0	128	PlaygroundWorld	StartBugHunt			playgroundWorld.cpp	StartBugHunt__15PlaygroundWorldFv
+803de120	88	PlaygroundWorld	StartFreeThrow			playgroundWorld.cpp	StartFreeThrow__15PlaygroundWorldFv
+803de178	64	PlaygroundWorld	StartDribbling			playgroundWorld.cpp	StartDribbling__15PlaygroundWorldFv
+803de1b8	140	PlaygroundWorld	AccessibilityPopupClosed	Enums::AccessibilityPopupType, void*		playgroundWorld.cpp	AccessibilityPopupClosed__15PlaygroundWorldFQ25Enums22AccessibilityPopupTypePv
+803de244	732	PlaygroundWorld	HandleActions	int		playgroundWorld.cpp	HandleActions__15PlaygroundWorldFi
+803de520	144	PlaygroundWorld	UpdateAreaTriggers			playgroundWorld.cpp	UpdateAreaTriggers__15PlaygroundWorldFv
+803de5b0	72	PlaygroundWorld	Draw	Ren::SceneContext&		playgroundWorld.cpp	Draw__15PlaygroundWorldFRQ23Ren12SceneContext
+803de5f8	8	PlaygroundWorld	GetCurrentAreaPhysical		const	playgroundWorld.cpp	GetCurrentAreaPhysical__15PlaygroundWorldCFv
+803de600	8	PlaygroundWorld	GetCurrentAreaAbstract		const	playgroundWorld.cpp	GetCurrentAreaAbstract__15PlaygroundWorldCFv
+803de608	80	PlaygroundWorld	ConvertAreaAbstractToPhysical	Enums::AreaType	const	playgroundWorld.cpp	ConvertAreaAbstractToPhysical__15PlaygroundWorldCFQ25Enums8AreaType
+803de658	172	PlaygroundWorld	SetupMarblesForArea	Enums::AreaType		playgroundWorld.cpp	SetupMarblesForArea__15PlaygroundWorldFQ25Enums8AreaType
+803de704	144	PlaygroundWorld	UnLoadAllMarbles			playgroundWorld.cpp	UnLoadAllMarbles__15PlaygroundWorldFv
+803de794	376	PlaygroundWorld	LoadMarbleInfoFromProfileAndDB	const char*		playgroundWorld.cpp	LoadMarbleInfoFromProfileAndDB__15PlaygroundWorldFPCc
+803de90c	52	rmAngle	operator=	float		playgroundWorld.cpp	__as__7rmAngleFf
+803de940	440	PlaygroundWorld	LoadMicrogameModels			playgroundWorld.cpp	LoadMicrogameModels__15PlaygroundWorldFv
+803deaf8	112	PlaygroundWorld	LoadWorldPropModels			playgroundWorld.cpp	LoadWorldPropModels__15PlaygroundWorldFv
+803deb68	152	PlaygroundWorld	UnLoadMicrogameModels			playgroundWorld.cpp	UnLoadMicrogameModels__15PlaygroundWorldFv
+803dec00	88	MarbleShadowRenderEntity	destructor			playgroundWorld.cpp	__dt__24MarbleShadowRenderEntityFv
+803dec58	640	PlaygroundWorld	UpdateMarbles	int		playgroundWorld.cpp	UpdateMarbles__15PlaygroundWorldFi
+803deed8	124	PlaygroundWorld	AddMarblesEvent	int, int		playgroundWorld.cpp	AddMarblesEvent__15PlaygroundWorldFii
+803def54	244	PlaygroundWorld	SetPlaygroundHudsVisible	bool		playgroundWorld.cpp	SetPlaygroundHudsVisible__15PlaygroundWorldFb
+803df048	240	PlaygroundWorld	StartGauntletNIS			playgroundWorld.cpp	StartGauntletNIS__15PlaygroundWorldFv
+803df138	680	PlaygroundWorld	UpdateGauntletNIS	int		playgroundWorld.cpp	UpdateGauntletNIS__15PlaygroundWorldFi
+803df3e0	264	PlaygroundWorld	StartEndgameNIS			playgroundWorld.cpp	StartEndgameNIS__15PlaygroundWorldFv
+803df4e8	1896	PlaygroundWorld	UpdateEndgameNIS	int		playgroundWorld.cpp	UpdateEndgameNIS__15PlaygroundWorldFi
+803dfc50	408	PlaygroundWorld	StartAreaTransition	Enums::AreaType, Enums::AreaType, int		playgroundWorld.cpp	StartAreaTransition__15PlaygroundWorldFQ25Enums8AreaTypeQ25Enums8AreaTypei
+803dfde8	252	PlaygroundWorld	LoadAreaPhysics			playgroundWorld.cpp	LoadAreaPhysics__15PlaygroundWorldFv
+803dfee4	152	PlaygroundWorld	UnloadAreaPhysics			playgroundWorld.cpp	UnloadAreaPhysics__15PlaygroundWorldFv
+803dff7c	272	PlaygroundWorld	LoadAreaPhysics	int		playgroundWorld.cpp	LoadAreaPhysics__15PlaygroundWorldFi
+803e008c	232	PlaygroundWorld	UnloadAreaPhysics	int		playgroundWorld.cpp	UnloadAreaPhysics__15PlaygroundWorldFi
+803e0174	68	PlaygroundWorld	StartMinigameFadeOutEffect	int		playgroundWorld.cpp	StartMinigameFadeOutEffect__15PlaygroundWorldFi
+803e01b8	116	PlaygroundWorld	StartMinigameFadeInEffect	int		playgroundWorld.cpp	StartMinigameFadeInEffect__15PlaygroundWorldFi
+803e022c	12	PlaygroundWorld	EnableFadeOutEffectRenders	bool, bool		playgroundWorld.cpp	EnableFadeOutEffectRenders__15PlaygroundWorldFbb
+803e0238	8	PlaygroundWorld	IsMinigameFadeEffectComplete			playgroundWorld.cpp	IsMinigameFadeEffectComplete__15PlaygroundWorldFv
+803e0240	12	PlaygroundWorld	StartGauntletModeAfterConversation			playgroundWorld.cpp	StartGauntletModeAfterConversation__15PlaygroundWorldFv
+803e024c	12	PlaygroundWorld	StartEndgameNISAfterConversation			playgroundWorld.cpp	StartEndgameNISAfterConversation__15PlaygroundWorldFv
+803e0258	80	PlaygroundWorld	SetMinigameArea	Enums::AreaType		playgroundWorld.cpp	SetMinigameArea__15PlaygroundWorldFQ25Enums8AreaType
+803e02a8	72	PlaygroundWorld	RestoreMinigameArea			playgroundWorld.cpp	RestoreMinigameArea__15PlaygroundWorldFv
+803e02f0	12	PlaygroundWorld	IsBugHuntGameActive		const	playgroundWorld.cpp	IsBugHuntGameActive__15PlaygroundWorldCFv
+803e02fc	20	PlaygroundWorld	IsDribblingGameActive		const	playgroundWorld.cpp	IsDribblingGameActive__15PlaygroundWorldCFv
+803e0310	40	PlaygroundWorld	IsInDribblingGame		const	playgroundWorld.cpp	IsInDribblingGame__15PlaygroundWorldCFv
+803e0338	8	World	IsMiniGame			playgroundWorld.cpp	IsMiniGame__5WorldFv
+803e0340	88		__sinit_\playgroundWorld_cpp			playgroundWorld.cpp	__sinit_\playgroundWorld_cpp
+803e0398	112	SpawnManager	constructor			spawnmanager.cpp	__ct__12SpawnManagerFv
+803e0408	152	SpawnManager	destructor			spawnmanager.cpp	__dt__12SpawnManagerFv
+803e04a0	24	SpawnManager	Initialize	CharacterManager*		spawnmanager.cpp	Initialize__12SpawnManagerFP16CharacterManager
+803e04b8	640	SpawnManager	SetupArea	Enums::AreaType		spawnmanager.cpp	SetupArea__12SpawnManagerFQ25Enums8AreaType
+803e0738	100	SpawnManager	DestroyCurrentSpawnRegions			spawnmanager.cpp	DestroyCurrentSpawnRegions__12SpawnManagerFv
+803e079c	52	SpawnManager	UnInitialize			spawnmanager.cpp	UnInitialize__12SpawnManagerFv
+803e07d0	104	SpawnManager	Update	unsigned int		spawnmanager.cpp	Update__12SpawnManagerFUi
+803e0838	468	SpawnManager	Draw	Ren::SceneContext&		spawnmanager.cpp	Draw__12SpawnManagerFRQ23Ren12SceneContext
+803e0a0c	24		__sinit_\spawnmanager_cpp			spawnmanager.cpp	__sinit_\spawnmanager_cpp
+803e0a24	192	SpawnRegion	constructor			spawnregion.cpp	__ct__11SpawnRegionFv
+803e0ae4	96	SpawnRegion	destructor			spawnregion.cpp	__dt__11SpawnRegionFv
+803e0b44	764	SpawnRegion	Initialize	CharacterManager*		spawnregion.cpp	Initialize__11SpawnRegionFP16CharacterManager
+803e0e40	120	SpawnRegion	UnInitialize			spawnregion.cpp	UnInitialize__11SpawnRegionFv
+803e0eb8	4	SpawnRegion	Update	unsigned int		spawnregion.cpp	Update__11SpawnRegionFUi
+803e0ebc	24	SpawnRegion	Despawn	unsigned int		spawnregion.cpp	Despawn__11SpawnRegionFUi
+803e0ed4	564	SpawnRegion	AddToSpawnQueue	unsigned int		spawnregion.cpp	AddToSpawnQueue__11SpawnRegionFUi
+803e1108	988	SpawnRegion	GetSpawnLocation	rmVector3*, float	const	spawnregion.cpp	GetSpawnLocation__11SpawnRegionCFP9rmVector3f
+803e14e4	104	SpawnRegion	GetDefaultPoIKey	GUID	const	spawnregion.cpp	GetDefaultPoIKey__11SpawnRegionCF4GUID
+803e154c	24		__sinit_\spawnregion_cpp			spawnregion.cpp	__sinit_\spawnregion_cpp
+803e1564	56	World	constructor			World.cpp	__ct__5WorldFv
+803e159c	88	World	destructor			World.cpp	__dt__5WorldFv
+803e15f4	4	World	Initialize			World.cpp	Initialize__5WorldFv
+803e15f8	156	World	Update	int		World.cpp	Update__5WorldFi
+803e1694	4	World	HandleControllerDisconnect			World.cpp	HandleControllerDisconnect__5WorldFv
+803e1698	24		__sinit_\World_cpp			World.cpp	__sinit_\World_cpp
+803e16b0	132	WorldMan	constructor			WorldManager.cpp	__ct__8WorldManFv
+803e1734	92	WorldMan	destructor			WorldManager.cpp	__dt__8WorldManFv
+803e1790	732	WorldMan	StartMinigame	unsigned long long, Enums::MiniGameDareType		WorldManager.cpp	StartMinigame__8WorldManFUxQ25Enums16MiniGameDareType
+803e1a6c	52	WorldMan	StartMinigame	MGID, int, Enums::MiniGameDifficultyLevel, const Teams&, const int*		WorldManager.cpp	StartMinigame__8WorldManF4MGIDiQ25Enums23MiniGameDifficultyLevelRC5TeamsPCi
+803e1aa0	140	WorldMan	StartMinigame	MGID, int, Enums::MiniGameDifficultyLevel, const Teams&, Enums::MiniGameDareType		WorldManager.cpp	StartMinigame__8WorldManF4MGIDiQ25Enums23MiniGameDifficultyLevelRC5TeamsQ25Enums16MiniGameDareType
+803e1b2c	1812	WorldMan	StartMinigameFadeComplete			WorldManager.cpp	StartMinigameFadeComplete__8WorldManFv
+803e2240	20	WorldMan	AddMarblesEvent	int, int		WorldManager.cpp	AddMarblesEvent__8WorldManFii
+803e2254	668	WorldMan	EndMinigame	bool		WorldManager.cpp	EndMinigame__8WorldManFb
+803e24f0	280	WorldMan	Update	int		WorldManager.cpp	Update__8WorldManFi
+803e2608	104	WorldMan	Initialize	WorldMan::WorldInitType		WorldManager.cpp	Initialize__8WorldManFQ28WorldMan13WorldInitType
+803e2670	92	WorldMan	InitializeWorldScene			WorldManager.cpp	InitializeWorldScene__8WorldManFv
+803e26cc	20	WorldMan	InitializeWorldCharacters			WorldManager.cpp	InitializeWorldCharacters__8WorldManFv
+803e26e0	60	WorldMan	GetMinigameType	MGID		WorldManager.cpp	GetMinigameType__8WorldManF4MGID
+803e271c	144	WorldMan	UnInitialize	WorldMan::WorldInitType		WorldManager.cpp	UnInitialize__8WorldManFQ28WorldMan13WorldInitType
+803e27ac	8	WorldMan	GetCurrentAreaAbstract			WorldManager.cpp	GetCurrentAreaAbstract__8WorldManFv
+803e27b4	8	WorldMan	GetCurrentAreaPhysical			WorldManager.cpp	GetCurrentAreaPhysical__8WorldManFv
+803e27bc	32	WorldMan	HandleControllerDisconnect			WorldManager.cpp	HandleControllerDisconnect__8WorldManFv
+803e27dc	208		__sinit_\WorldManager_cpp			WorldManager.cpp	__sinit_\WorldManager_cpp

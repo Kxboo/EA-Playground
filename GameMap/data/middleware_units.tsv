@@ -1,0 +1,15 @@
+# subsystem	units	code_bytes	funcs (SDK/middleware, deliberately not itemised)
+havok	426	1008664	3885
+wii-sdk-crt	107	526372	2082
+nw4r-hbm	69	397228	1423
+apt-ui-runtime	56	289784	1535
+ea-audio-sndlib	36	199328	794
+text-input	19	118568	683
+ea-animation	29	112312	276
+video-vp6-mp3	18	102692	482
+exposure-conga	3	67080	416
+lua	11	46468	193
+ea-core-libs	21	40308	227
+trc-wii-requirements	7	30908	166
+ea-fonts-shapes-mem	21	29044	177
+other-cpp	2	9676	41

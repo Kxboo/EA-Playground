@@ -1,0 +1,398 @@
+# addr	size	class	method	args	const	source_unit	mangled
+800063c8	36		__init_hardware			Gouraud.cpp	__init_hardware
+800063ec	52		__flush_cache			Gouraud.cpp	__flush_cache
+80013d00	308		RenderGouraud	EAGL::GeoPrim*		Gouraud.cpp	RenderGouraud__FPQ24EAGL7GeoPrim
+80013e34	592		ModelRenderGouraud	EAGL::GeoPrim*		Gouraud.cpp	ModelRenderGouraud__FPQ24EAGL7GeoPrim
+80014084	4		GeomRenderGouraud	EAGL::GeoPrim*		Gouraud.cpp	GeomRenderGouraud__FPQ24EAGL7GeoPrim
+80014088	4		CleanupGouraud	EAGL::GeoPrim*		Gouraud.cpp	CleanupGouraud__FPQ24EAGL7GeoPrim
+8001408c	108		__sinit_\Gouraud_cpp			Gouraud.cpp	__sinit_\Gouraud_cpp
+800140f8	296		RenderGouraudApt	EAGL::GeoPrim*		GouraudApt.cpp	RenderGouraudApt__FPQ24EAGL7GeoPrim
+80014220	952		ModelRenderGouraudApt	EAGL::GeoPrim*		GouraudApt.cpp	ModelRenderGouraudApt__FPQ24EAGL7GeoPrim
+800145d8	4		GeomRenderGouraudApt	EAGL::GeoPrim*		GouraudApt.cpp	GeomRenderGouraudApt__FPQ24EAGL7GeoPrim
+800145dc	4		CleanupGouraudApt	EAGL::GeoPrim*		GouraudApt.cpp	CleanupGouraudApt__FPQ24EAGL7GeoPrim
+800145e0	108		__sinit_\GouraudApt_cpp			GouraudApt.cpp	__sinit_\GouraudApt_cpp
+8001464c	560		RenderPlaygroundAnimatedTexture	EAGL::GeoPrim*		PlaygroundAnimatedTexture.cpp	RenderPlaygroundAnimatedTexture__FPQ24EAGL7GeoPrim
+8001487c	772		ModelRenderPlaygroundAnimatedTexture	EAGL::GeoPrim*		PlaygroundAnimatedTexture.cpp	ModelRenderPlaygroundAnimatedTexture__FPQ24EAGL7GeoPrim
+80014b80	4		GeomRenderPlaygroundAnimatedTexture	EAGL::GeoPrim*		PlaygroundAnimatedTexture.cpp	GeomRenderPlaygroundAnimatedTexture__FPQ24EAGL7GeoPrim
+80014b84	4		CleanupPlaygroundAnimatedTexture	EAGL::GeoPrim*		PlaygroundAnimatedTexture.cpp	CleanupPlaygroundAnimatedTexture__FPQ24EAGL7GeoPrim
+80014b88	108		__sinit_\PlaygroundAnimatedTexture_cpp			PlaygroundAnimatedTexture.cpp	__sinit_\PlaygroundAnimatedTexture_cpp
+80014bf4	420		RenderPlaygroundCharFaceToonShade_HWSkin	EAGL::GeoPrim*		PlaygroundCharFaceToonShade_HWSkin.cpp	RenderPlaygroundCharFaceToonShade_HWSkin__FPQ24EAGL7GeoPrim
+80014d98	704		ModelRenderPlaygroundCharFaceToonShade_HWSkin	EAGL::GeoPrim*		PlaygroundCharFaceToonShade_HWSkin.cpp	ModelRenderPlaygroundCharFaceToonShade_HWSkin__FPQ24EAGL7GeoPrim
+80015058	4		GeomRenderPlaygroundCharFaceToonShade_HWSkin	EAGL::GeoPrim*		PlaygroundCharFaceToonShade_HWSkin.cpp	GeomRenderPlaygroundCharFaceToonShade_HWSkin__FPQ24EAGL7GeoPrim
+8001505c	4		CleanupPlaygroundCharFaceToonShade_HWSkin	EAGL::GeoPrim*		PlaygroundCharFaceToonShade_HWSkin.cpp	CleanupPlaygroundCharFaceToonShade_HWSkin__FPQ24EAGL7GeoPrim
+80015060	108		__sinit_\PlaygroundCharFaceToonShade_HWSkin_cpp			PlaygroundCharFaceToonShade_HWSkin.cpp	__sinit_\PlaygroundCharFaceToonShade_HWSkin_cpp
+800150cc	316		RenderPlaygroundCompressPlaceableShadow_HWSkin	EAGL::GeoPrim*		PlaygroundCompressPlaceableShadow_HWSkin.cpp	RenderPlaygroundCompressPlaceableShadow_HWSkin__FPQ24EAGL7GeoPrim
+80015208	664		ModelRenderPlaygroundCompressPlaceableShadow_HWSkin	EAGL::GeoPrim*		PlaygroundCompressPlaceableShadow_HWSkin.cpp	ModelRenderPlaygroundCompressPlaceableShadow_HWSkin__FPQ24EAGL7GeoPrim
+800154a0	4		GeomRenderPlaygroundCompressPlaceableShadow_HWSkin	EAGL::GeoPrim*		PlaygroundCompressPlaceableShadow_HWSkin.cpp	GeomRenderPlaygroundCompressPlaceableShadow_HWSkin__FPQ24EAGL7GeoPrim
+800154a4	4		CleanupPlaygroundCompressPlaceableShadow_HWSkin	EAGL::GeoPrim*		PlaygroundCompressPlaceableShadow_HWSkin.cpp	CleanupPlaygroundCompressPlaceableShadow_HWSkin__FPQ24EAGL7GeoPrim
+800154a8	108		__sinit_\PlaygroundCompressPlaceableShadow_HWSkin_cpp			PlaygroundCompressPlaceableShadow_HWSkin.cpp	__sinit_\PlaygroundCompressPlaceableShadow_HWSkin_cpp
+80015514	316		RenderPlaygroundCompressShadow_HWSkin	EAGL::GeoPrim*		PlaygroundCompressShadow_HWSkin.cpp	RenderPlaygroundCompressShadow_HWSkin__FPQ24EAGL7GeoPrim
+80015650	664		ModelRenderPlaygroundCompressShadow_HWSkin	EAGL::GeoPrim*		PlaygroundCompressShadow_HWSkin.cpp	ModelRenderPlaygroundCompressShadow_HWSkin__FPQ24EAGL7GeoPrim
+800158e8	4		GeomRenderPlaygroundCompressShadow_HWSkin	EAGL::GeoPrim*		PlaygroundCompressShadow_HWSkin.cpp	GeomRenderPlaygroundCompressShadow_HWSkin__FPQ24EAGL7GeoPrim
+800158ec	4		CleanupPlaygroundCompressShadow_HWSkin	EAGL::GeoPrim*		PlaygroundCompressShadow_HWSkin.cpp	CleanupPlaygroundCompressShadow_HWSkin__FPQ24EAGL7GeoPrim
+800158f0	108		__sinit_\PlaygroundCompressShadow_HWSkin_cpp			PlaygroundCompressShadow_HWSkin.cpp	__sinit_\PlaygroundCompressShadow_HWSkin_cpp
+8001595c	420		RenderPlaygroundCompressToonShade_HWSkin	EAGL::GeoPrim*		PlaygroundCompressToonShade_HWSkin.cpp	RenderPlaygroundCompressToonShade_HWSkin__FPQ24EAGL7GeoPrim
+80015b00	704		ModelRenderPlaygroundCompressToonShade_HWSkin	EAGL::GeoPrim*		PlaygroundCompressToonShade_HWSkin.cpp	ModelRenderPlaygroundCompressToonShade_HWSkin__FPQ24EAGL7GeoPrim
+80015dc0	4		GeomRenderPlaygroundCompressToonShade_HWSkin	EAGL::GeoPrim*		PlaygroundCompressToonShade_HWSkin.cpp	GeomRenderPlaygroundCompressToonShade_HWSkin__FPQ24EAGL7GeoPrim
+80015dc4	4		CleanupPlaygroundCompressToonShade_HWSkin	EAGL::GeoPrim*		PlaygroundCompressToonShade_HWSkin.cpp	CleanupPlaygroundCompressToonShade_HWSkin__FPQ24EAGL7GeoPrim
+80015dc8	108		__sinit_\PlaygroundCompressToonShade_HWSkin_cpp			PlaygroundCompressToonShade_HWSkin.cpp	__sinit_\PlaygroundCompressToonShade_HWSkin_cpp
+80015e34	392		RenderPlaygroundLitPlaceable_HWSkin	EAGL::GeoPrim*		PlaygroundLitPlaceable_HWSkin.cpp	RenderPlaygroundLitPlaceable_HWSkin__FPQ24EAGL7GeoPrim
+80015fbc	704		ModelRenderPlaygroundLitPlaceable_HWSkin	EAGL::GeoPrim*		PlaygroundLitPlaceable_HWSkin.cpp	ModelRenderPlaygroundLitPlaceable_HWSkin__FPQ24EAGL7GeoPrim
+8001627c	4		GeomRenderPlaygroundLitPlaceable_HWSkin	EAGL::GeoPrim*		PlaygroundLitPlaceable_HWSkin.cpp	GeomRenderPlaygroundLitPlaceable_HWSkin__FPQ24EAGL7GeoPrim
+80016280	4		CleanupPlaygroundLitPlaceable_HWSkin	EAGL::GeoPrim*		PlaygroundLitPlaceable_HWSkin.cpp	CleanupPlaygroundLitPlaceable_HWSkin__FPQ24EAGL7GeoPrim
+80016284	108		__sinit_\PlaygroundLitPlaceable_HWSkin_cpp			PlaygroundLitPlaceable_HWSkin.cpp	__sinit_\PlaygroundLitPlaceable_HWSkin_cpp
+800162f0	308		RenderPlaygroundShadow	EAGL::GeoPrim*		PlaygroundShadow.cpp	RenderPlaygroundShadow__FPQ24EAGL7GeoPrim
+80016424	788		ModelRenderPlaygroundShadow	EAGL::GeoPrim*		PlaygroundShadow.cpp	ModelRenderPlaygroundShadow__FPQ24EAGL7GeoPrim
+80016738	4		GeomRenderPlaygroundShadow	EAGL::GeoPrim*		PlaygroundShadow.cpp	GeomRenderPlaygroundShadow__FPQ24EAGL7GeoPrim
+8001673c	4		CleanupPlaygroundShadow	EAGL::GeoPrim*		PlaygroundShadow.cpp	CleanupPlaygroundShadow__FPQ24EAGL7GeoPrim
+80016740	108		__sinit_\PlaygroundShadow_cpp			PlaygroundShadow.cpp	__sinit_\PlaygroundShadow_cpp
+800167ac	316		RenderPlaygroundShadow_HWSkin	EAGL::GeoPrim*		PlaygroundShadow_HWSkin.cpp	RenderPlaygroundShadow_HWSkin__FPQ24EAGL7GeoPrim
+800168e8	688		ModelRenderPlaygroundShadow_HWSkin	EAGL::GeoPrim*		PlaygroundShadow_HWSkin.cpp	ModelRenderPlaygroundShadow_HWSkin__FPQ24EAGL7GeoPrim
+80016b98	4		GeomRenderPlaygroundShadow_HWSkin	EAGL::GeoPrim*		PlaygroundShadow_HWSkin.cpp	GeomRenderPlaygroundShadow_HWSkin__FPQ24EAGL7GeoPrim
+80016b9c	4		CleanupPlaygroundShadow_HWSkin	EAGL::GeoPrim*		PlaygroundShadow_HWSkin.cpp	CleanupPlaygroundShadow_HWSkin__FPQ24EAGL7GeoPrim
+80016ba0	108		__sinit_\PlaygroundShadow_HWSkin_cpp			PlaygroundShadow_HWSkin.cpp	__sinit_\PlaygroundShadow_HWSkin_cpp
+80016c0c	448		RenderPlaygroundTexture	EAGL::GeoPrim*		PlaygroundTexture.cpp	RenderPlaygroundTexture__FPQ24EAGL7GeoPrim
+80016dcc	772		ModelRenderPlaygroundTexture	EAGL::GeoPrim*		PlaygroundTexture.cpp	ModelRenderPlaygroundTexture__FPQ24EAGL7GeoPrim
+800170d0	4		GeomRenderPlaygroundTexture	EAGL::GeoPrim*		PlaygroundTexture.cpp	GeomRenderPlaygroundTexture__FPQ24EAGL7GeoPrim
+800170d4	4		CleanupPlaygroundTexture	EAGL::GeoPrim*		PlaygroundTexture.cpp	CleanupPlaygroundTexture__FPQ24EAGL7GeoPrim
+800170d8	108		__sinit_\PlaygroundTexture_cpp			PlaygroundTexture.cpp	__sinit_\PlaygroundTexture_cpp
+80017144	516		RenderPlaygroundTextureAlphaDXT	EAGL::GeoPrim*		PlaygroundTextureAlphaDXT.cpp	RenderPlaygroundTextureAlphaDXT__FPQ24EAGL7GeoPrim
+80017348	852		ModelRenderPlaygroundTextureAlphaDXT	EAGL::GeoPrim*		PlaygroundTextureAlphaDXT.cpp	ModelRenderPlaygroundTextureAlphaDXT__FPQ24EAGL7GeoPrim
+8001769c	4		GeomRenderPlaygroundTextureAlphaDXT	EAGL::GeoPrim*		PlaygroundTextureAlphaDXT.cpp	GeomRenderPlaygroundTextureAlphaDXT__FPQ24EAGL7GeoPrim
+800176a0	4		CleanupPlaygroundTextureAlphaDXT	EAGL::GeoPrim*		PlaygroundTextureAlphaDXT.cpp	CleanupPlaygroundTextureAlphaDXT__FPQ24EAGL7GeoPrim
+800176a4	108		__sinit_\PlaygroundTextureAlphaDXT_cpp			PlaygroundTextureAlphaDXT.cpp	__sinit_\PlaygroundTextureAlphaDXT_cpp
+80017710	604		RenderPlaygroundTextureAlphaDXTBase	EAGL::GeoPrim*		PlaygroundTextureAlphaDXTBase.cpp	RenderPlaygroundTextureAlphaDXTBase__FPQ24EAGL7GeoPrim
+8001796c	1104		ModelRenderPlaygroundTextureAlphaDXTBase	EAGL::GeoPrim*		PlaygroundTextureAlphaDXTBase.cpp	ModelRenderPlaygroundTextureAlphaDXTBase__FPQ24EAGL7GeoPrim
+80017dbc	4		GeomRenderPlaygroundTextureAlphaDXTBase	EAGL::GeoPrim*		PlaygroundTextureAlphaDXTBase.cpp	GeomRenderPlaygroundTextureAlphaDXTBase__FPQ24EAGL7GeoPrim
+80017dc0	4		CleanupPlaygroundTextureAlphaDXTBase	EAGL::GeoPrim*		PlaygroundTextureAlphaDXTBase.cpp	CleanupPlaygroundTextureAlphaDXTBase__FPQ24EAGL7GeoPrim
+80017dc4	108		__sinit_\PlaygroundTextureAlphaDXTBase_cpp			PlaygroundTextureAlphaDXTBase.cpp	__sinit_\PlaygroundTextureAlphaDXTBase_cpp
+80017e30	604		RenderPlaygroundTextureAlphaDXTBaseShadow	EAGL::GeoPrim*		PlaygroundTextureAlphaDXTBaseShadow.cpp	RenderPlaygroundTextureAlphaDXTBaseShadow__FPQ24EAGL7GeoPrim
+8001808c	1600		ModelRenderPlaygroundTextureAlphaDXTBaseShadow	EAGL::GeoPrim*		PlaygroundTextureAlphaDXTBaseShadow.cpp	ModelRenderPlaygroundTextureAlphaDXTBaseShadow__FPQ24EAGL7GeoPrim
+800186cc	4		GeomRenderPlaygroundTextureAlphaDXTBaseShadow	EAGL::GeoPrim*		PlaygroundTextureAlphaDXTBaseShadow.cpp	GeomRenderPlaygroundTextureAlphaDXTBaseShadow__FPQ24EAGL7GeoPrim
+800186d0	4		CleanupPlaygroundTextureAlphaDXTBaseShadow	EAGL::GeoPrim*		PlaygroundTextureAlphaDXTBaseShadow.cpp	CleanupPlaygroundTextureAlphaDXTBaseShadow__FPQ24EAGL7GeoPrim
+800186d4	108		__sinit_\PlaygroundTextureAlphaDXTBaseShadow_cpp			PlaygroundTextureAlphaDXTBaseShadow.cpp	__sinit_\PlaygroundTextureAlphaDXTBaseShadow_cpp
+80018740	516		RenderPlaygroundTextureAlphaDXTShadow	EAGL::GeoPrim*		PlaygroundTextureAlphaDXTShadow.cpp	RenderPlaygroundTextureAlphaDXTShadow__FPQ24EAGL7GeoPrim
+80018944	1368		ModelRenderPlaygroundTextureAlphaDXTShadow	EAGL::GeoPrim*		PlaygroundTextureAlphaDXTShadow.cpp	ModelRenderPlaygroundTextureAlphaDXTShadow__FPQ24EAGL7GeoPrim
+80018e9c	4		GeomRenderPlaygroundTextureAlphaDXTShadow	EAGL::GeoPrim*		PlaygroundTextureAlphaDXTShadow.cpp	GeomRenderPlaygroundTextureAlphaDXTShadow__FPQ24EAGL7GeoPrim
+80018ea0	4		CleanupPlaygroundTextureAlphaDXTShadow	EAGL::GeoPrim*		PlaygroundTextureAlphaDXTShadow.cpp	CleanupPlaygroundTextureAlphaDXTShadow__FPQ24EAGL7GeoPrim
+80018ea4	108		__sinit_\PlaygroundTextureAlphaDXTShadow_cpp			PlaygroundTextureAlphaDXTShadow.cpp	__sinit_\PlaygroundTextureAlphaDXTShadow_cpp
+80018f10	420		RenderPlaygroundTextureBakedLight	EAGL::GeoPrim*		PlaygroundTextureBakedLight.cpp	RenderPlaygroundTextureBakedLight__FPQ24EAGL7GeoPrim
+800190b4	772		ModelRenderPlaygroundTextureBakedLight	EAGL::GeoPrim*		PlaygroundTextureBakedLight.cpp	ModelRenderPlaygroundTextureBakedLight__FPQ24EAGL7GeoPrim
+800193b8	4		GeomRenderPlaygroundTextureBakedLight	EAGL::GeoPrim*		PlaygroundTextureBakedLight.cpp	GeomRenderPlaygroundTextureBakedLight__FPQ24EAGL7GeoPrim
+800193bc	4		CleanupPlaygroundTextureBakedLight	EAGL::GeoPrim*		PlaygroundTextureBakedLight.cpp	CleanupPlaygroundTextureBakedLight__FPQ24EAGL7GeoPrim
+800193c0	108		__sinit_\PlaygroundTextureBakedLight_cpp			PlaygroundTextureBakedLight.cpp	__sinit_\PlaygroundTextureBakedLight_cpp
+8001942c	396		RenderPlaygroundTextureBakedLightShadow	EAGL::GeoPrim*		PlaygroundTextureBakedLightShadow.cpp	RenderPlaygroundTextureBakedLightShadow__FPQ24EAGL7GeoPrim
+800195b8	1340		ModelRenderPlaygroundTextureBakedLightShadow	EAGL::GeoPrim*		PlaygroundTextureBakedLightShadow.cpp	ModelRenderPlaygroundTextureBakedLightShadow__FPQ24EAGL7GeoPrim
+80019af4	4		GeomRenderPlaygroundTextureBakedLightShadow	EAGL::GeoPrim*		PlaygroundTextureBakedLightShadow.cpp	GeomRenderPlaygroundTextureBakedLightShadow__FPQ24EAGL7GeoPrim
+80019af8	4		CleanupPlaygroundTextureBakedLightShadow	EAGL::GeoPrim*		PlaygroundTextureBakedLightShadow.cpp	CleanupPlaygroundTextureBakedLightShadow__FPQ24EAGL7GeoPrim
+80019afc	108		__sinit_\PlaygroundTextureBakedLightShadow_cpp			PlaygroundTextureBakedLightShadow.cpp	__sinit_\PlaygroundTextureBakedLightShadow_cpp
+80019b68	396		RenderPlaygroundTextureBakedLightShadowDouble	EAGL::GeoPrim*		PlaygroundTextureBakedLightShadowDouble.cpp	RenderPlaygroundTextureBakedLightShadowDouble__FPQ24EAGL7GeoPrim
+80019cf4	1368		ModelRenderPlaygroundTextureBakedLightShadowDouble	EAGL::GeoPrim*		PlaygroundTextureBakedLightShadowDouble.cpp	ModelRenderPlaygroundTextureBakedLightShadowDouble__FPQ24EAGL7GeoPrim
+8001a24c	4		GeomRenderPlaygroundTextureBakedLightShadowDouble	EAGL::GeoPrim*		PlaygroundTextureBakedLightShadowDouble.cpp	GeomRenderPlaygroundTextureBakedLightShadowDouble__FPQ24EAGL7GeoPrim
+8001a250	4		CleanupPlaygroundTextureBakedLightShadowDouble	EAGL::GeoPrim*		PlaygroundTextureBakedLightShadowDouble.cpp	CleanupPlaygroundTextureBakedLightShadowDouble__FPQ24EAGL7GeoPrim
+8001a254	108		__sinit_\PlaygroundTextureBakedLightShadowDouble_cpp			PlaygroundTextureBakedLightShadowDouble.cpp	__sinit_\PlaygroundTextureBakedLightShadowDouble_cpp
+8001a2c0	424		RenderPlaygroundTextureShadow	EAGL::GeoPrim*		PlaygroundTextureShadow.cpp	RenderPlaygroundTextureShadow__FPQ24EAGL7GeoPrim
+8001a468	1368		ModelRenderPlaygroundTextureShadow	EAGL::GeoPrim*		PlaygroundTextureShadow.cpp	ModelRenderPlaygroundTextureShadow__FPQ24EAGL7GeoPrim
+8001a9c0	4		GeomRenderPlaygroundTextureShadow	EAGL::GeoPrim*		PlaygroundTextureShadow.cpp	GeomRenderPlaygroundTextureShadow__FPQ24EAGL7GeoPrim
+8001a9c4	4		CleanupPlaygroundTextureShadow	EAGL::GeoPrim*		PlaygroundTextureShadow.cpp	CleanupPlaygroundTextureShadow__FPQ24EAGL7GeoPrim
+8001a9c8	108		__sinit_\PlaygroundTextureShadow_cpp			PlaygroundTextureShadow.cpp	__sinit_\PlaygroundTextureShadow_cpp
+8001aa34	536		RenderPlaygroundTextureStaticShadow	EAGL::GeoPrim*		PlaygroundTextureStaticShadow.cpp	RenderPlaygroundTextureStaticShadow__FPQ24EAGL7GeoPrim
+8001ac4c	1700		ModelRenderPlaygroundTextureStaticShadow	EAGL::GeoPrim*		PlaygroundTextureStaticShadow.cpp	ModelRenderPlaygroundTextureStaticShadow__FPQ24EAGL7GeoPrim
+8001b2f0	4		GeomRenderPlaygroundTextureStaticShadow	EAGL::GeoPrim*		PlaygroundTextureStaticShadow.cpp	GeomRenderPlaygroundTextureStaticShadow__FPQ24EAGL7GeoPrim
+8001b2f4	4		CleanupPlaygroundTextureStaticShadow	EAGL::GeoPrim*		PlaygroundTextureStaticShadow.cpp	CleanupPlaygroundTextureStaticShadow__FPQ24EAGL7GeoPrim
+8001b2f8	108		__sinit_\PlaygroundTextureStaticShadow_cpp			PlaygroundTextureStaticShadow.cpp	__sinit_\PlaygroundTextureStaticShadow_cpp
+8001b364	428		RenderPlaygroundTexture_HWSkin	EAGL::GeoPrim*		PlaygroundTexture_HWSkin.cpp	RenderPlaygroundTexture_HWSkin__FPQ24EAGL7GeoPrim
+8001b510	652		ModelRenderPlaygroundTexture_HWSkin	EAGL::GeoPrim*		PlaygroundTexture_HWSkin.cpp	ModelRenderPlaygroundTexture_HWSkin__FPQ24EAGL7GeoPrim
+8001b79c	4		GeomRenderPlaygroundTexture_HWSkin	EAGL::GeoPrim*		PlaygroundTexture_HWSkin.cpp	GeomRenderPlaygroundTexture_HWSkin__FPQ24EAGL7GeoPrim
+8001b7a0	4		CleanupPlaygroundTexture_HWSkin	EAGL::GeoPrim*		PlaygroundTexture_HWSkin.cpp	CleanupPlaygroundTexture_HWSkin__FPQ24EAGL7GeoPrim
+8001b7a4	108		__sinit_\PlaygroundTexture_HWSkin_cpp			PlaygroundTexture_HWSkin.cpp	__sinit_\PlaygroundTexture_HWSkin_cpp
+8001b810	352		RenderPlaygroundToonShade	EAGL::GeoPrim*		PlaygroundToonShade.cpp	RenderPlaygroundToonShade__FPQ24EAGL7GeoPrim
+8001b970	1064		ModelRenderPlaygroundToonShade	EAGL::GeoPrim*		PlaygroundToonShade.cpp	ModelRenderPlaygroundToonShade__FPQ24EAGL7GeoPrim
+8001bd98	4		GeomRenderPlaygroundToonShade	EAGL::GeoPrim*		PlaygroundToonShade.cpp	GeomRenderPlaygroundToonShade__FPQ24EAGL7GeoPrim
+8001bd9c	4		CleanupPlaygroundToonShade	EAGL::GeoPrim*		PlaygroundToonShade.cpp	CleanupPlaygroundToonShade__FPQ24EAGL7GeoPrim
+8001bda0	108		__sinit_\PlaygroundToonShade_cpp			PlaygroundToonShade.cpp	__sinit_\PlaygroundToonShade_cpp
+8001be0c	392		RenderPlaygroundToonShade_HWSkin	EAGL::GeoPrim*		PlaygroundToonShade_HWSkin.cpp	RenderPlaygroundToonShade_HWSkin__FPQ24EAGL7GeoPrim
+8001bf94	728		ModelRenderPlaygroundToonShade_HWSkin	EAGL::GeoPrim*		PlaygroundToonShade_HWSkin.cpp	ModelRenderPlaygroundToonShade_HWSkin__FPQ24EAGL7GeoPrim
+8001c26c	4		GeomRenderPlaygroundToonShade_HWSkin	EAGL::GeoPrim*		PlaygroundToonShade_HWSkin.cpp	GeomRenderPlaygroundToonShade_HWSkin__FPQ24EAGL7GeoPrim
+8001c270	4		CleanupPlaygroundToonShade_HWSkin	EAGL::GeoPrim*		PlaygroundToonShade_HWSkin.cpp	CleanupPlaygroundToonShade_HWSkin__FPQ24EAGL7GeoPrim
+8001c274	108		__sinit_\PlaygroundToonShade_HWSkin_cpp			PlaygroundToonShade_HWSkin.cpp	__sinit_\PlaygroundToonShade_HWSkin_cpp
+8001c2e0	416		RenderPlaygroundWater2	EAGL::GeoPrim*		PlaygroundWater2.cpp	RenderPlaygroundWater2__FPQ24EAGL7GeoPrim
+8001c480	1632		ModelRenderPlaygroundWater2	EAGL::GeoPrim*		PlaygroundWater2.cpp	ModelRenderPlaygroundWater2__FPQ24EAGL7GeoPrim
+8001cae0	4		GeomRenderPlaygroundWater2	EAGL::GeoPrim*		PlaygroundWater2.cpp	GeomRenderPlaygroundWater2__FPQ24EAGL7GeoPrim
+8001cae4	4		CleanupPlaygroundWater2	EAGL::GeoPrim*		PlaygroundWater2.cpp	CleanupPlaygroundWater2__FPQ24EAGL7GeoPrim
+8001cae8	108		__sinit_\PlaygroundWater2_cpp			PlaygroundWater2.cpp	__sinit_\PlaygroundWater2_cpp
+8001cb54	1384		RenderTextureApt	EAGL::GeoPrim*		TextureApt.cpp	RenderTextureApt__FPQ24EAGL7GeoPrim
+8001d0bc	820		ModelRenderTextureApt	EAGL::GeoPrim*		TextureApt.cpp	ModelRenderTextureApt__FPQ24EAGL7GeoPrim
+8001d3f0	132		GeomRenderTextureApt	EAGL::GeoPrim*		TextureApt.cpp	GeomRenderTextureApt__FPQ24EAGL7GeoPrim
+8001d474	4		CleanupTextureApt	EAGL::GeoPrim*		TextureApt.cpp	CleanupTextureApt__FPQ24EAGL7GeoPrim
+8001d478	108		__sinit_\TextureApt_cpp			TextureApt.cpp	__sinit_\TextureApt_cpp
+803e28ac	12	Attrib	DefaultDataArea	unsigned int		codegen.cpp	DefaultDataArea__6AttribFUi
+803e28b8	8	Attrib::ClassStaticDesc	GetStatic	unsigned long long		codegen.cpp	GetStatic__Q26Attrib15ClassStaticDescFUx
+803e28c0	120	Attrib::TypeDesc	Lookup	unsigned long long		codegen.cpp	Lookup__Q26Attrib8TypeDescFUx
+803e2938	4	Attrib::TypeDesc	NameToType	const char*		codegen.cpp	NameToType__Q26Attrib8TypeDescFPCc
+803e293c	84		__sinit_\codegen_cpp			codegen.cpp	__sinit_\codegen_cpp
+803e2990	16	Attrib::Attrib_RefSpec_TypeHandler	constructor			model.cpp	__ct__Q26Attrib26Attrib_RefSpec_TypeHandlerFv
+803e29a0	88	Attrib::Attrib_RefSpec_TypeHandler	destructor			model.cpp	__dt__Q26Attrib26Attrib_RefSpec_TypeHandlerFv
+803e29f8	8	Attrib::Attrib_RefSpec_TypeHandler	Release	void*		model.cpp	Release__Q26Attrib26Attrib_RefSpec_TypeHandlerFPv
+803e2a00	8	Attrib::Attrib_RefSpec_TypeHandler	Clean	void*		model.cpp	Clean__Q26Attrib26Attrib_RefSpec_TypeHandlerFPv
+803e2a08	80	Attrib::Attrib_RefSpec_TypeHandler	Clone	void*		model.cpp	Clone__Q26Attrib26Attrib_RefSpec_TypeHandlerFPv
+803e2a58	8	Attrib::Attrib_RefSpec_TypeHandler	Retain	void*		model.cpp	Retain__Q26Attrib26Attrib_RefSpec_TypeHandlerFPv
+803e2a60	24	EAGL::Model::Variable	IsModifiable		const	model.cpp	IsModifiable__Q34EAGL5Model8VariableCFv
+803e2a78	148	EAGL::Model::VariableTable	find_end	const char*	const	model.cpp	find_end__Q34EAGL5Model13VariableTableCFPCc
+803e2b0c	124	EAGL::Model::VariableTable	find_first	const char*	const	model.cpp	find_first__Q34EAGL5Model13VariableTableCFPCc
+803e2b88	36	EAGL::Model	GetOffset			model.cpp	GetOffset__Q24EAGL5ModelFv
+803e2bac	204	EAGL::Model	Optimize			model.cpp	Optimize__Q24EAGL5ModelFv
+803e2c78	1512	EAGL::Model	Draw	const MATRIX4&		model.cpp	Draw__Q24EAGL5ModelFRC7MATRIX4
+803e3260	480	EAGL::Model	SetTexture	const char*, SHAPE*		model.cpp	SetTexture__Q24EAGL5ModelFPCcP5SHAPE
+803e3440	496	EAGL::Model	SetTextures	const char*		model.cpp	SetTextures__Q24EAGL5ModelFPCc
+803e3630	192	EAGL	RobustShapeLocate	const char*, const char*		model.cpp	RobustShapeLocate__4EAGLFPCcPCc
+803e36f0	132	EAGL::Model	GetGeometry	const char*		model.cpp	GetGeometry__Q24EAGL5ModelFPCc
+803e3774	4	EAGLInternal	ModelDestructor	void*		model.cpp	ModelDestructor__12EAGLInternalFPv
+803e3778	16	EAGLInternal	ModelConstructor	void*, EAGL::DynamicLoader*, const char*		model.cpp	ModelConstructor__12EAGLInternalFPvPQ24EAGL13DynamicLoaderPCc
+803e3788	32		__sinit_\model_cpp			model.cpp	__sinit_\model_cpp
+803e37a8	28	EAGL::Model	CheckIfSafeToDelete			symbolinit.cpp	CheckIfSafeToDelete__Q24EAGL5ModelFv
+803e37c4	184	EAGL	SymbolInit			symbolinit.cpp	SymbolInit__4EAGLFv
+803e387c	240	EAGL::Device	Init			device.cpp	Init__Q24EAGL6DeviceFv
+803e396c	304	EAGL::Device	destructor			device.cpp	__dt__Q24EAGL6DeviceFv
+803e3a9c	24	EAGL::Device	constructor			device.cpp	__ct__Q24EAGL6DeviceFv
+803e3ab4	32		__sinit_\device_cpp			device.cpp	__sinit_\device_cpp
+803e3ad4	12	EAGLInternal::DevicePrivate	SetCurrentRenderContext	EAGL::RenderContext*		device_cmn.cpp	SetCurrentRenderContext__Q212EAGLInternal13DevicePrivateFPQ24EAGL13RenderContext
+803e3ae0	8	EAGL::Device	Get			device_cmn.cpp	Get__Q24EAGL6DeviceFv
+803e3ae8	8	EAGL::Device	SetDeleteOverride	void(*)(void*, unsigned long)*		device_cmn.cpp	SetDeleteOverride__Q24EAGL6DeviceFPFPvUl_v
+803e3af0	24	EAGL::Device	SetNewOverride	void*(*)(unsigned long, const char*)*, void*(*)(unsigned long, const char*)*		device_cmn.cpp	SetNewOverride__Q24EAGL6DeviceFPFUlPCc_PvPFUlPCc_Pv
+803e3b08	8	EAGL::Device	GetCurrentContext		const	device_cmn.cpp	GetCurrentContext__Q24EAGL6DeviceCFv
+803e3b10	8	EAGL::Device	GetCurrentTextureRenderContext		const	device_cmn.cpp	GetCurrentTextureRenderContext__Q24EAGL6DeviceCFv
+803e3b18	8	EAGL::Device	GetCurrentRenderContext		const	device_cmn.cpp	GetCurrentRenderContext__Q24EAGL6DeviceCFv
+803e3b20	200	EAGL::Device	RemoveRenderContext	EAGL::RenderContextBase*		device_cmn.cpp	RemoveRenderContext__Q24EAGL6DeviceFPQ24EAGL17RenderContextBase
+803e3be8	264	EAGL::Device	DeleteRenderContext	EAGL::RenderContext*		device_cmn.cpp	DeleteRenderContext__Q24EAGL6DeviceFPQ24EAGL13RenderContext
+803e3cf0	100	EAGL::Device	NewRenderContext			device_cmn.cpp	NewRenderContext__Q24EAGL6DeviceFv
+803e3d54	32		__sinit_\device_cmn_cpp			device_cmn.cpp	__sinit_\device_cmn_cpp
+803e3d74	292	EAGL::RenderContextExtension	GetEfbAsTar	EAGL::TAR*, EAGL::ClearAfterCopy, EAGL::WaitForCopy, EAGL::AddBlur		rendercontext.cpp	GetEfbAsTar__Q24EAGL22RenderContextExtensionFPQ24EAGL3TARQ24EAGL14ClearAfterCopyQ24EAGL11WaitForCopyQ24EAGL7AddBlur
+803e3e98	124	EAGL::RenderContextExtension	SetEfbCopy	int, int, int, int, int, int, _GXTexFmt, EAGL::EfbCopySize		rendercontext.cpp	SetEfbCopy__Q24EAGL22RenderContextExtensionFiiiiii9_GXTexFmtQ24EAGL11EfbCopySize
+803e3f14	24	EAGL::RenderContextExtension	SetFifoSize	unsigned int		rendercontext.cpp	SetFifoSize__Q24EAGL22RenderContextExtensionFUi
+803e3f2c	20	EAGL::RenderContextExtension	GetScreenClearOptimizationEnable			rendercontext.cpp	GetScreenClearOptimizationEnable__Q24EAGL22RenderContextExtensionFv
+803e3f40	24	EAGL::RenderContextExtension	GetXfbInformation	void*&, _GXRenderModeObj*&	const	rendercontext.cpp	GetXfbInformation__Q24EAGL22RenderContextExtensionCFRPvRP16_GXRenderModeObj
+803e3f58	20	EAGL::RenderContextExtension	SetViSize	int, int		rendercontext.cpp	SetViSize__Q24EAGL22RenderContextExtensionFii
+803e3f6c	8	EAGL::RenderContextExtensionBase	GetDestinationAlphaEnable		const	rendercontext.cpp	GetDestinationAlphaEnable__Q24EAGL26RenderContextExtensionBaseCFv
+803e3f74	12	EAGL::RenderContextExtensionBase	GetMaxAnisotropyOverride	EAGL::AnisotropyOverride&		rendercontext.cpp	GetMaxAnisotropyOverride__Q24EAGL26RenderContextExtensionBaseFRQ24EAGL18AnisotropyOverride
+803e3f80	16	EAGL::RenderContextExtensionBase	GetMipMapModeOverride	EAGL::MipMapModeOverride&		rendercontext.cpp	GetMipMapModeOverride__Q24EAGL26RenderContextExtensionBaseFRQ24EAGL18MipMapModeOverride
+803e3f90	16	EAGL::RenderContextExtensionBase	GetAlphaWritesOverride	EAGL::AlphaWritesOverride&		rendercontext.cpp	GetAlphaWritesOverride__Q24EAGL26RenderContextExtensionBaseFRQ24EAGL19AlphaWritesOverride
+803e3fa0	16	EAGL::RenderContextExtensionBase	GetFilterModeOverride	EAGL::FilterModeOverride&		rendercontext.cpp	GetFilterModeOverride__Q24EAGL26RenderContextExtensionBaseFRQ24EAGL18FilterModeOverride
+803e3fb0	16	EAGL::RenderContextExtensionBase	GetMipmapLODBiasOverride	float&		rendercontext.cpp	GetMipmapLODBiasOverride__Q24EAGL26RenderContextExtensionBaseFRf
+803e3fc0	164	EAGL::RenderContextExtension	TakeSnapShot	char*		rendercontext.cpp	TakeSnapShot__Q24EAGL22RenderContextExtensionFPc
+803e4064	12	EAGL::RenderContextExtension	SetAutoVSyncOffEnable	bool		rendercontext.cpp	SetAutoVSyncOffEnable__Q24EAGL22RenderContextExtensionFb
+803e4070	16	EAGL::RenderContextExtensionBase	EndScreenSpaceOrthographicView			rendercontext.cpp	EndScreenSpaceOrthographicView__Q24EAGL26RenderContextExtensionBaseFv
+803e4080	216	EAGL::RenderContextExtensionBase	BeginScreenSpaceOrthographicView			rendercontext.cpp	BeginScreenSpaceOrthographicView__Q24EAGL26RenderContextExtensionBaseFv
+803e4158	64	EAGL::RenderContextExtension	destructor			rendercontext.cpp	__dt__Q24EAGL22RenderContextExtensionFv
+803e4198	64	EAGL::RenderContextExtensionBase	destructor			rendercontext.cpp	__dt__Q24EAGL26RenderContextExtensionBaseFv
+803e41d8	120	EAGLInternal::RenderContextPrivate	destructor			rendercontext.cpp	__dt__Q212EAGLInternal20RenderContextPrivateFv
+803e4250	224	EAGLInternal::RenderContextPrivate	constructor	EAGL::RenderContext*		rendercontext.cpp	__ct__Q212EAGLInternal20RenderContextPrivateFPQ24EAGL13RenderContext
+803e4330	64	EAGLInternal::RenderContextPrivateBase	destructor			rendercontext.cpp	__dt__Q212EAGLInternal24RenderContextPrivateBaseFv
+803e4370	4548	EAGL::RenderContext	SetupFrameBuffers			rendercontext.cpp	SetupFrameBuffers__Q24EAGL13RenderContextFv
+803e5534	40	EAGL::RenderContextExtension	StopDataStuffing			rendercontext.cpp	StopDataStuffing__Q24EAGL22RenderContextExtensionFv
+803e555c	496	EAGL::RenderContextExtension	StuffData	const void*, unsigned int		rendercontext.cpp	StuffData__Q24EAGL22RenderContextExtensionFPCvUi
+803e574c	76	EAGL::RenderContextExtension	StartDataStuffing	void*, unsigned int		rendercontext.cpp	StartDataStuffing__Q24EAGL22RenderContextExtensionFPvUi
+803e5798	20	EAGL::RenderContextExtension	GetCurrentVolatileBuffer			rendercontext.cpp	GetCurrentVolatileBuffer__Q24EAGL22RenderContextExtensionFv
+803e57ac	20	EAGL::RenderContextExtension	SetVolatileBufferSize	unsigned int		rendercontext.cpp	SetVolatileBufferSize__Q24EAGL22RenderContextExtensionFUi
+803e57c0	76	EAGL::RenderContextExtension	IsInsideBeginEndFrame			rendercontext.cpp	IsInsideBeginEndFrame__Q24EAGL22RenderContextExtensionFv
+803e580c	44	EAGL::RenderContextExtension	WaitForDrawsToComplete			rendercontext.cpp	WaitForDrawsToComplete__Q24EAGL22RenderContextExtensionFv
+803e5838	8	EAGL::RenderContextExtensionBase	SetColourWritesEnable	bool		rendercontext.cpp	SetColourWritesEnable__Q24EAGL26RenderContextExtensionBaseFb
+803e5840	28	EAGL::RenderContext	SetFlipRate	int		rendercontext.cpp	SetFlipRate__Q24EAGL13RenderContextFi
+803e585c	52	EAGL::RenderContext	SetCullDirection	EAGL::CullDirection		rendercontext.cpp	SetCullDirection__Q24EAGL13RenderContextFQ24EAGL13CullDirection
+803e5890	44	EAGL::RenderContext	SetZWritesEnable	bool		rendercontext.cpp	SetZWritesEnable__Q24EAGL13RenderContextFb
+803e58bc	12	EAGL::RenderContext	SetSyncToVBL	bool		rendercontext.cpp	SetSyncToVBL__Q24EAGL13RenderContextFb
+803e58c8	20	EAGL::RenderContext	GetSize	float&, float&	const	rendercontext.cpp	GetSize__Q24EAGL13RenderContextCFRfRf
+803e58dc	12	EAGL::RenderContext	SetSize	float, float		rendercontext.cpp	SetSize__Q24EAGL13RenderContextFff
+803e58e8	36	EAGLInternal::RenderContextPrivate	ProcessGPBreakPoint			rendercontext.cpp	ProcessGPBreakPoint__Q212EAGLInternal20RenderContextPrivateFv
+803e590c	96	EAGLInternal::RenderContextPrivate	BreakPtCallback	unsigned int		rendercontext.cpp	BreakPtCallback__Q212EAGLInternal20RenderContextPrivateFUi
+803e596c	284	EAGLInternal::RenderContextPrivate	ReceiveToken	unsigned short		rendercontext.cpp	ReceiveToken__Q212EAGLInternal20RenderContextPrivateFUs
+803e5a88	380	EAGLInternal::RenderContextPrivate	VSyncCallback	unsigned long		rendercontext.cpp	VSyncCallback__Q212EAGLInternal20RenderContextPrivateFUl
+803e5c04	324	EAGLInternal::RenderContextPrivate	ProcessEndFrame			rendercontext.cpp	ProcessEndFrame__Q212EAGLInternal20RenderContextPrivateFv
+803e5d48	460	EAGL::RenderContext	EndFrame			rendercontext.cpp	EndFrame__Q24EAGL13RenderContextFv
+803e5f14	180	EAGL::RenderContext	BeginFrame			rendercontext.cpp	BeginFrame__Q24EAGL13RenderContextFv
+803e5fc8	472	EAGL::RenderContext	destructor			rendercontext.cpp	__dt__Q24EAGL13RenderContextFv
+803e61a0	184	EAGL::RenderContext	constructor	EAGL::Device*		rendercontext.cpp	__ct__Q24EAGL13RenderContextFPQ24EAGL6Device
+803e6258	120	EAGL::RenderContextBase	destructor			rendercontext.cpp	__dt__Q24EAGL17RenderContextBaseFv
+803e62d0	196		__sinit_\rendercontext_cpp			rendercontext.cpp	__sinit_\rendercontext_cpp
+803e6394	88	EAGLInternal::InternalProfilerRegion	destructor			rendercontext_cmn.cpp	__dt__Q212EAGLInternal22InternalProfilerRegionFv
+803e63ec	8	EAGLInternal::RenderContextPrivateBase	SetCurrentViewPort	EAGL::ViewPort*		rendercontext_cmn.cpp	SetCurrentViewPort__Q212EAGLInternal24RenderContextPrivateBaseFPQ24EAGL8ViewPort
+803e63f4	12	EAGL::RenderContextBase	GetCurrentViewPort		const	rendercontext_cmn.cpp	GetCurrentViewPort__Q24EAGL17RenderContextBaseCFv
+803e6400	164	EAGL::RenderContextBase	DeleteViewPort	EAGL::ViewPort*		rendercontext_cmn.cpp	DeleteViewPort__Q24EAGL17RenderContextBaseFPQ24EAGL8ViewPort
+803e64a4	96	EAGL::RenderContextBase	NewViewPort			rendercontext_cmn.cpp	NewViewPort__Q24EAGL17RenderContextBaseFv
+803e6504	56		__sinit_\rendercontext_cmn_cpp			rendercontext_cmn.cpp	__sinit_\rendercontext_cmn_cpp
+803e653c	8	EAGL::GeoPrim	Optimize	int		rendermethod.cpp	Optimize__Q24EAGL7GeoPrimFi
+803e6544	740	EAGL::RenderMethod	IncrementArrays	unsigned int		rendermethod.cpp	IncrementArrays__Q24EAGL12RenderMethodFUi
+803e6828	96	EAGL::RenderMethod	SetArray	_GXAttr, void*, unsigned char		rendermethod.cpp	SetArray__Q24EAGL12RenderMethodF7_GXAttrPvUc
+803e6888	60	EAGL::RenderMethod	constructor	void(*)(EAGL::GeoPrim*)*, void(*)(EAGL::GeoPrim*)*, void(*)(EAGL::GeoPrim*)*, void(*)(EAGL::GeoPrim*)*, char**, int*, char*, EAGLInternal::PCodeData&		rendermethod.cpp	__ct__Q24EAGL12RenderMethodFPFPQ24EAGL7GeoPrim_vPFPQ24EAGL7GeoPrim_vPFPQ24EAGL7GeoPrim_vPFPQ24EAGL7GeoPrim_vPPcPiPcRQ212EAGLInternal9PCodeData
+803e68c4	108	EAGLInternal	ModelSetScale	const COORD4&, const COORD4&		rendermethod.cpp	ModelSetScale__12EAGLInternalFRC6COORD4RC6COORD4
+803e6930	324		__sinit_\rendermethod_cpp			rendermethod.cpp	__sinit_\rendermethod_cpp
+803e6a74	4	EAGL::GeoPrimStateExtension	SetAttributeFormat	int, _GXAttr, _GXCompCnt, _GXCompType, unsigned char		state.cpp	SetAttributeFormat__Q24EAGL21GeoPrimStateExtensionFi7_GXAttr10_GXCompCnt11_GXCompTypeUc
+803e6a78	20	EAGL::GeoPrimStateExtension	GetCurrentVertex	unsigned int&, unsigned int&		state.cpp	GetCurrentVertex__Q24EAGL21GeoPrimStateExtensionFRUiRUi
+803e6a8c	540	EAGL::GeoPrimStateExtension	SetCurrentVertex	unsigned int, unsigned int		state.cpp	SetCurrentVertex__Q24EAGL21GeoPrimStateExtensionFUiUi
+803e6ca8	852	EAGL::GeoPrimStateExtension	Use		const	state.cpp	Use__Q24EAGL21GeoPrimStateExtensionCFv
+803e6ffc	236	EAGL::GeoPrimStateExtension	GetBlendMode	_GXBlendMode&, _GXBlendFactor&, _GXBlendFactor&, _GXLogicOp&	const	state.cpp	GetBlendMode__Q24EAGL21GeoPrimStateExtensionCFR12_GXBlendModeR14_GXBlendFactorR14_GXBlendFactorR10_GXLogicOp
+803e70e8	164	EAGL::GeoPrimStateExtension	SetRenderContextStates			state.cpp	SetRenderContextStates__Q24EAGL21GeoPrimStateExtensionFv
+803e718c	32	EAGL::GeoPrimStateExtension	SetZWritesEnable	bool		state.cpp	SetZWritesEnable__Q24EAGL21GeoPrimStateExtensionFb
+803e71ac	408	EAGL::GeoPrimStateExtension	RestoreStates			state.cpp	RestoreStates__Q24EAGL21GeoPrimStateExtensionFv
+803e7344	76	EAGL::GeoPrimStateExtension	constructor			state.cpp	__ct__Q24EAGL21GeoPrimStateExtensionFv
+803e7390	8	EAGL::GeoPrimState	SetChromaColour	EAGL::Colour		state.cpp	SetChromaColour__Q24EAGL12GeoPrimStateFQ24EAGL6Colour
+803e7398	36	EAGL::GeoPrimState	SetTransparencyMethod	EAGL::TransparencyMethod		state.cpp	SetTransparencyMethod__Q24EAGL12GeoPrimStateFQ24EAGL18TransparencyMethod
+803e73bc	8	EAGL::GeoPrimState	SetTextureCoordType	EAGL::TextureCoordType		state.cpp	SetTextureCoordType__Q24EAGL12GeoPrimStateFQ24EAGL16TextureCoordType
+803e73c4	8	EAGL::GeoPrimState	SetTextureEnable	bool		state.cpp	SetTextureEnable__Q24EAGL12GeoPrimStateFb
+803e73cc	20	EAGL::GeoPrimState	SetAlphaTestMethod	EAGL::AlphaTestMethod		state.cpp	SetAlphaTestMethod__Q24EAGL12GeoPrimStateFQ24EAGL15AlphaTestMethod
+803e73e0	20	EAGL::GeoPrimState	SetAlphaCompareValue	int		state.cpp	SetAlphaCompareValue__Q24EAGL12GeoPrimStateFi
+803e73f4	20	EAGL::GeoPrimState	SetAlphaTestEnable	bool		state.cpp	SetAlphaTestEnable__Q24EAGL12GeoPrimStateFb
+803e7408	20	EAGL::GeoPrimState	SetAlphaBlendMode	EAGL::AlphaBlendMode		state.cpp	SetAlphaBlendMode__Q24EAGL12GeoPrimStateFQ24EAGL14AlphaBlendMode
+803e741c	20	EAGL::GeoPrimState	SetDepthTestMethod	EAGL::DepthTestMethod		state.cpp	SetDepthTestMethod__Q24EAGL12GeoPrimStateFQ24EAGL15DepthTestMethod
+803e7430	20	EAGL::GeoPrimState	SetCullEnable	bool		state.cpp	SetCullEnable__Q24EAGL12GeoPrimStateFb
+803e7444	8	EAGL::GeoPrimState	SetShading	EAGL::Shading		state.cpp	SetShading__Q24EAGL12GeoPrimStateFQ24EAGL7Shading
+803e744c	32	EAGL::GeoPrimState	GetPrimitiveType	EAGL::PrimitiveType&	const	state.cpp	GetPrimitiveType__Q24EAGL12GeoPrimStateCFRQ24EAGL13PrimitiveType
+803e746c	100	EAGL::GeoPrimState	SetPrimitiveType	EAGL::PrimitiveType		state.cpp	SetPrimitiveType__Q24EAGL12GeoPrimStateFQ24EAGL13PrimitiveType
+803e74d0	80	EAGL::GeoPrimState	destructor			state.cpp	__dt__Q24EAGL12GeoPrimStateFv
+803e7520	48	EAGL::GeoPrimState	constructor			state.cpp	__ct__Q24EAGL12GeoPrimStateFv
+803e7550	32	EAGLInternal	RuntimeAllocGeoPrimStateDestructor	void*, int		state.cpp	RuntimeAllocGeoPrimStateDestructor__12EAGLInternalFPvi
+803e7570	2176	EAGLInternal	RuntimeAllocGeoPrimStateConstructor	const char*, EAGL::DynamicLoader*, int&, bool&, const char*		state.cpp	RuntimeAllocGeoPrimStateConstructor__12EAGLInternalFPCcPQ24EAGL13DynamicLoaderRiRbPCc
+803e7df0	24	EAGLInternal::Property	operator delete[]	void*, unsigned long		state.cpp	__dla__Q212EAGLInternal8PropertyFPvUl
+803e7e08	12	EAGLInternal::PropertyValue	constructor			state.cpp	__ct__Q212EAGLInternal13PropertyValueFv
+803e7e14	132	EAGLInternal::Property	destructor			state.cpp	__dt__Q212EAGLInternal8PropertyFv
+803e7e98	24	EAGLInternal::PropertyValue	operator delete[]	void*, unsigned long		state.cpp	__dla__Q212EAGLInternal13PropertyValueFPvUl
+803e7eb0	20	EAGLInternal::Property	constructor			state.cpp	__ct__Q212EAGLInternal8PropertyFv
+803e7ec4	124		__sinit_\state_cpp			state.cpp	__sinit_\state_cpp
+803e7f40	624	EAGL::TARExtension	operator=	const EAGL::TARExtension&		tar.cpp	__as__Q24EAGL12TARExtensionFRCQ24EAGL12TARExtension
+803e81b0	128	EAGL::TARExtension	RestoreTexCoordGens			tar.cpp	RestoreTexCoordGens__Q24EAGL12TARExtensionFv
+803e8230	148	EAGL::TARExtension	ResetTexCoordGens			tar.cpp	ResetTexCoordGens__Q24EAGL12TARExtensionFv
+803e82c4	60	EAGL::TARExtension	SetTexCoordGen	_GXTexCoordID, _GXTexGenType, _GXTexGenSrc, unsigned int, unsigned char, unsigned int		tar.cpp	SetTexCoordGen__Q24EAGL12TARExtensionF13_GXTexCoordID13_GXTexGenType12_GXTexGenSrcUiUcUi
+803e8300	12	EAGL::TARExtension	SetNumTexGens	int		tar.cpp	SetNumTexGens__Q24EAGL12TARExtensionFi
+803e830c	604	EAGL::TARExtension	SetTextureLODStates			tar.cpp	SetTextureLODStates__Q24EAGL12TARExtensionFv
+803e8568	180	EAGL::TARExtension	SetClut	const SHAPE*		tar.cpp	SetClut__Q24EAGL12TARExtensionFPC5SHAPE
+803e861c	600	EAGL::TARExtension	InitFromShape	const SHAPE*		tar.cpp	InitFromShape__Q24EAGL12TARExtensionFPC5SHAPE
+803e8874	8	EAGL::TAR	SwapShape	const SHAPE*		tar.cpp	SwapShape__Q24EAGL3TARFPC5SHAPE
+803e887c	12	EAGL::TAR	SetMIPMAPMode	EAGL::MIPMAPMode		tar.cpp	SetMIPMAPMode__Q24EAGL3TARFQ24EAGL10MIPMAPMode
+803e8888	60	EAGL::TAR	SetMIPMAPLODBias	float		tar.cpp	SetMIPMAPLODBias__Q24EAGL3TARFf
+803e88c4	28	EAGL::TAR	SetFilterMode	EAGL::FilterMode		tar.cpp	SetFilterMode__Q24EAGL3TARFQ24EAGL10FilterMode
+803e88e0	280	EAGL::TARExtension	Use	_GXTexMapID, unsigned int		tar.cpp	Use__Q24EAGL12TARExtensionF11_GXTexMapIDUi
+803e89f8	100	EAGL::TAR	SetClampMode	EAGL::ClampMode		tar.cpp	SetClampMode__Q24EAGL3TARFQ24EAGL9ClampMode
+803e8a5c	8	EAGL::TAR	GetShape		const	tar.cpp	GetShape__Q24EAGL3TARCFv
+803e8a64	16	EAGL::TAR	Use			tar.cpp	Use__Q24EAGL3TARFv
+803e8a74	140	EAGL::TAR	destructor			tar.cpp	__dt__Q24EAGL3TARFv
+803e8b00	164	EAGL::TAR	constructor	const SHAPE*		tar.cpp	__ct__Q24EAGL3TARFPC5SHAPE
+803e8ba4	164	EAGLInternal	RuntimeAllocTARDestructor	void*, int		tar.cpp	RuntimeAllocTARDestructor__12EAGLInternalFPvi
+803e8c48	2916	EAGLInternal	RuntimeAllocTARConstructor	const char*, EAGL::DynamicLoader*, int&, bool&, const char*		tar.cpp	RuntimeAllocTARConstructor__12EAGLInternalFPCcPQ24EAGL13DynamicLoaderRiRbPCc
+803e97ac	280		__sinit_\tar_cpp			tar.cpp	__sinit_\tar_cpp
+803e98c4	12	EAGL::TevStage	InvalidateCachedTevStages			tevstage.cpp	InvalidateCachedTevStages__Q24EAGL8TevStageFv
+803e98d0	700	EAGL::TevStage	ResetToDefault			tevstage.cpp	ResetToDefault__Q24EAGL8TevStageFv
+803e9b8c	16	EAGL::TevStage	SetNumActiveStages	unsigned char		tevstage.cpp	SetNumActiveStages__Q24EAGL8TevStageFUc
+803e9b9c	60	EAGL::TevStage	SetAllTevsToDirect			tevstage.cpp	SetAllTevsToDirect__Q24EAGL8TevStageFv
+803e9bd8	412	EAGL::TevStage	SetHardware			tevstage.cpp	SetHardware__Q24EAGL8TevStageFv
+803e9d74	44	EAGL::TevStage	SetPS2StyleOverBright	bool, bool		tevstage.cpp	SetPS2StyleOverBright__Q24EAGL8TevStageFbb
+803e9da0	20	EAGL::TevStage	SetTextureMapAndUVs	_GXTexMapID, _GXTexCoordID		tevstage.cpp	SetTextureMapAndUVs__Q24EAGL8TevStageF11_GXTexMapID13_GXTexCoordID
+803e9db4	16	EAGL::TevStage	SetKAlphaSel	_GXTevKAlphaSel		tevstage.cpp	SetKAlphaSel__Q24EAGL8TevStageF15_GXTevKAlphaSel
+803e9dc4	16	EAGL::TevStage	SetKColourSel	_GXTevKColorSel		tevstage.cpp	SetKColourSel__Q24EAGL8TevStageF15_GXTevKColorSel
+803e9dd4	32	EAGL::TevStage	SetColourOp	_GXTevOp, _GXTevBias, _GXTevScale, unsigned char, _GXTevRegID		tevstage.cpp	SetColourOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+803e9df4	28	EAGL::TevStage	SetColourIn	_GXTevColorArg, _GXTevColorArg, _GXTevColorArg, _GXTevColorArg		tevstage.cpp	SetColourIn__Q24EAGL8TevStageF14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg14_GXTevColorArg
+803e9e10	32	EAGL::TevStage	SetAlphaOp	_GXTevOp, _GXTevBias, _GXTevScale, unsigned char, _GXTevRegID		tevstage.cpp	SetAlphaOp__Q24EAGL8TevStageF8_GXTevOp10_GXTevBias11_GXTevScaleUc11_GXTevRegID
+803e9e30	28	EAGL::TevStage	SetAlphaIn	_GXTevAlphaArg, _GXTevAlphaArg, _GXTevAlphaArg, _GXTevAlphaArg		tevstage.cpp	SetAlphaIn__Q24EAGL8TevStageF14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg14_GXTevAlphaArg
+803e9e4c	140	EAGL::TevStage	constructor			tevstage.cpp	__ct__Q24EAGL8TevStageFv
+803e9ed8	32		__sinit_\tevstage_cpp			tevstage.cpp	__sinit_\tevstage_cpp
+803e9ef8	940		MultMatrix	const MATRIX4*, const MATRIX4*, MATRIX4*		transform.cpp	MultMatrix__FPC7MATRIX4PC7MATRIX4P7MATRIX4
+803ea2a4	324	EAGL::Transform	BuildSQT	float, float, float, float, float, float, float, float, float, float		transform.cpp	BuildSQT__Q24EAGL9TransformFffffffffff
+803ea3e8	300	EAGL::Transform	TransformPoint	const COORD3&, COORD3&	const	transform.cpp	TransformPoint__Q24EAGL9TransformCFRC6COORD3R6COORD3
+803ea514	224	EAGL::Transform	PrependMatrix	const MATRIX4*		transform.cpp	PrependMatrix__Q24EAGL9TransformFPC7MATRIX4
+803ea5f4	220	EAGL::Transform	AppendMatrix	const MATRIX4*		transform.cpp	AppendMatrix__Q24EAGL9TransformFPC7MATRIX4
+803ea6d0	96	EAGL::Transform	AppendTranslate	float, float, float		transform.cpp	AppendTranslate__Q24EAGL9TransformFfff
+803ea730	1140	EAGL::Transform	Invert	const EAGL::Transform&, EAGL::Transform&		transform.cpp	Invert__Q24EAGL9TransformFRCQ24EAGL9TransformRQ24EAGL9Transform
+803eaba4	312	EAGL::Transform	Transpose	const EAGL::Transform&, EAGL::Transform&		transform.cpp	Transpose__Q24EAGL9TransformFRCQ24EAGL9TransformRQ24EAGL9Transform
+803eacdc	100	EAGL::Transform	Transpose			transform.cpp	Transpose__Q24EAGL9TransformFv
+803ead40	184	EAGL::Transform	Inverse			transform.cpp	Inverse__Q24EAGL9TransformFv
+803eadf8	704	EAGL::Transform	ExtractQuatTrans	COORD4*, COORD4*	const	transform.cpp	ExtractQuatTrans__Q24EAGL9TransformCFP6COORD4P6COORD4
+803eb0b8	172	EAGL::Transform	BuildMatrix	const MATRIX4*		transform.cpp	BuildMatrix__Q24EAGL9TransformFPC7MATRIX4
+803eb164	76	EAGL::Transform	BuildIdentity			transform.cpp	BuildIdentity__Q24EAGL9TransformFv
+803eb1b0	76	EAGL::Transform	BuildTranslate	float, float, float		transform.cpp	BuildTranslate__Q24EAGL9TransformFfff
+803eb1fc	72	EAGL::Transform	BuildScale	float, float, float, float		transform.cpp	BuildScale__Q24EAGL9TransformFffff
+803eb244	64	EAGL::Transform	PostMult	const EAGL::Transform&		transform.cpp	PostMult__Q24EAGL9TransformFRCQ24EAGL9Transform
+803eb284	160	EAGLInternal::TextureRenderContextPrivate	GetPhysicalXOffset		const	transform.cpp	GetPhysicalXOffset__Q212EAGLInternal27TextureRenderContextPrivateCFv
+803eb324	32		__sinit_\texturerc_cpp			texturerc.cpp	__sinit_\texturerc_cpp
+803eb344	52	EAGLInternal::ViewPortPrivate	ResetHardwareClearColour			viewport.cpp	ResetHardwareClearColour__Q212EAGLInternal15ViewPortPrivateFv
+803eb378	64	EAGL::ViewPortExtension	destructor			viewport.cpp	__dt__Q24EAGL17ViewPortExtensionFv
+803eb3b8	16	EAGL::ViewPortExtension	constructor	EAGL::ViewPort*		viewport.cpp	__ct__Q24EAGL17ViewPortExtensionFPQ24EAGL8ViewPort
+803eb3c8	152	EAGLInternal::ViewPortPrivate	constructor	EAGL::ViewPort*		viewport.cpp	__ct__Q212EAGLInternal15ViewPortPrivateFPQ24EAGL8ViewPort
+803eb460	384	EAGL::ViewPort	IsSphereInView	const COORD3&, float		viewport.cpp	IsSphereInView__Q24EAGL8ViewPortFRC6COORD3f
+803eb5e0	716	EAGL::ViewPort	ClearViewPort	EAGL::ClearFlags		viewport.cpp	ClearViewPort__Q24EAGL8ViewPortFQ24EAGL10ClearFlags
+803eb8ac	96	EAGL::ViewPort	EndView			viewport.cpp	EndView__Q24EAGL8ViewPortFv
+803eb90c	2144	EAGL::ViewPort	BeginView			viewport.cpp	BeginView__Q24EAGL8ViewPortFv
+803ec16c	184	EAGL::ViewPort	SetOrthographicScreenSpace	float, float		viewport.cpp	SetOrthographicScreenSpace__Q24EAGL8ViewPortFff
+803ec224	180	EAGL::ViewPort	SetOrthographic	float, float, float		viewport.cpp	SetOrthographic__Q24EAGL8ViewPortFfff
+803ec2d8	488	EAGL::ViewPort	SetPerspective	float, float, float, float		viewport.cpp	SetPerspective__Q24EAGL8ViewPortFffff
+803ec4c0	256	EAGL::ViewPort	SetViewMatrix	const MATRIX4&		viewport.cpp	SetViewMatrix__Q24EAGL8ViewPortFRC7MATRIX4
+803ec5c0	52	EAGL::ViewPort	GetShape	float&, float&, float&, float&, float&, float&	const	viewport.cpp	GetShape__Q24EAGL8ViewPortCFRfRfRfRfRfRf
+803ec5f4	684	EAGL::ViewPort	SetShape	float, float, float, float, float, float		viewport.cpp	SetShape__Q24EAGL8ViewPortFffffff
+803ec8a0	220		__sinit_\viewport_cpp			viewport.cpp	__sinit_\viewport_cpp
+803ec97c	8	EAGL::ViewPort	GetViewProjectionMatrix			viewport_cmn.cpp	GetViewProjectionMatrix__Q24EAGL8ViewPortFv
+803ec984	8	EAGL::ViewPort	GetProjectionMatrix		const	viewport_cmn.cpp	GetProjectionMatrix__Q24EAGL8ViewPortCFv
+803ec98c	8	EAGL::ViewPort	GetViewMatrix			viewport_cmn.cpp	GetViewMatrix__Q24EAGL8ViewPortFv
+803ec994	12	EAGL::ViewPort	SetBackgroundColour	EAGL::Colour		viewport_cmn.cpp	SetBackgroundColour__Q24EAGL8ViewPortFQ24EAGL6Colour
+803ec9a0	8	EAGL::ViewPort	GetProjectionType		const	viewport_cmn.cpp	GetProjectionType__Q24EAGL8ViewPortCFv
+803ec9a8	36	EAGL::ViewPort	GetFrustum	float&, float&, float&, float&	const	viewport_cmn.cpp	GetFrustum__Q24EAGL8ViewPortCFRfRfRfRf
+803ec9cc	108	EAGL::ViewPort	destructor			viewport_cmn.cpp	__dt__Q24EAGL8ViewPortFv
+803eca38	8	EAGL::ViewPort	GetEnableModelSphereCull			viewport_cmn.cpp	GetEnableModelSphereCull__Q24EAGL8ViewPortFv
+803eca40	480	EAGL::ViewPort	constructor	EAGL::RenderContextBase*		viewport_cmn.cpp	__ct__Q24EAGL8ViewPortFPQ24EAGL17RenderContextBase
+803ecc20	32		__sinit_\viewport_cmn_cpp			viewport_cmn.cpp	__sinit_\viewport_cmn_cpp
+803ecc40	64	EAGLInternal::InternalProfiler	destructor			profiler_cmn.cpp	__dt__Q212EAGLInternal16InternalProfilerFv
+803ecc80	208	EAGL::Profiler	destructor			profiler_cmn.cpp	__dt__Q24EAGL8ProfilerFv
+803ecd50	436	EAGL::Profiler	ProcessProfile			profiler_cmn.cpp	ProcessProfile__Q24EAGL8ProfilerFv
+803ecf04	1660	EAGL::ProfilerRegion	DrawRegion	float, float, unsigned int, int, float&		profiler_cmn.cpp	DrawRegion__Q24EAGL14ProfilerRegionFffUiiRf
+803ed580	700	EAGL::ProfilerRegion	DrawRegions			profiler_cmn.cpp	DrawRegions__Q24EAGL14ProfilerRegionFv
+803ed83c	324	EAGL::ProfilerRegion	ProcessRegions	unsigned int		profiler_cmn.cpp	ProcessRegions__Q24EAGL14ProfilerRegionFUi
+803ed980	136	EAGL::ProfilerRegion	destructor			profiler_cmn.cpp	__dt__Q24EAGL14ProfilerRegionFv
+803eda08	220	EAGL::ProfilerRegion	constructor	const char*, unsigned int		profiler_cmn.cpp	__ct__Q24EAGL14ProfilerRegionFPCcUi
+803edae4	776		__sinit_\profiler_cmn_cpp			profiler_cmn.cpp	__sinit_\profiler_cmn_cpp
+803eddec	72	EAGL::EAGLFont	enddraw	FONT*		fonteagl.cpp	enddraw__Q24EAGL8EAGLFontFP4FONT
+803ede34	572	EAGL::EAGLFont	startdraw	FONT*		fonteagl.cpp	startdraw__Q24EAGL8EAGLFontFP4FONT
+803ee070	80	EAGL::EAGLFont	destroyfont	FONT*		fonteagl.cpp	destroyfont__Q24EAGL8EAGLFontFP4FONT
+803ee0c0	760	EAGL::EAGLFont	createfont	FONT*		fonteagl.cpp	createfont__Q24EAGL8EAGLFontFP4FONT
+803ee3b8	564	EAGL::EAGLFont	drawarray	FONT*, FONTCHARBUF*, int		fonteagl.cpp	drawarray__Q24EAGL8EAGLFontFP4FONTP11FONTCHARBUFi
+803ee5ec	64	EAGL::EAGLFont	draw	FONT*, const FONTCHAR*, float, float		fonteagl.cpp	draw__Q24EAGL8EAGLFontFP4FONTPC8FONTCHARff
+803ee62c	252		__sinit_\fonteagl_cpp			fonteagl.cpp	__sinit_\fonteagl_cpp
+803ee728	2764	EAGLInternal	DrawHandBuilt	int, unsigned int, unsigned int, unsigned int		pcode.cpp	DrawHandBuilt__12EAGLInternalFiUiUiUi
+803ef1f4	88	EAGLInternal	CallDisplayList	const void*, unsigned int, bool		pcode.cpp	CallDisplayList__12EAGLInternalFPCvUib
+803ef24c	1108	EAGLInternal	ProcessPCode	EAGL::GeoPrim*, EAGLInternal::PCodeNewRenderMethodFlag		pcode.cpp	ProcessPCode__12EAGLInternalFPQ24EAGL7GeoPrimQ212EAGLInternal24PCodeNewRenderMethodFlag
+803ef6a0	932	EAGL::PositionalLightBlock	Use	const MATRIX4*		positionallight.cpp	Use__Q24EAGL20PositionalLightBlockFPC7MATRIX4
+803efa44	120	EAGL::PositionalLightBlock	SetColour	int, const EAGL::FloatColour&		positionallight.cpp	SetColour__Q24EAGL20PositionalLightBlockFiRCQ24EAGL11FloatColour
+803efabc	28	EAGL::PositionalLightBlock	SetPointLight	int		positionallight.cpp	SetPointLight__Q24EAGL20PositionalLightBlockFi
+803efad8	36	EAGL::PositionalLightBlock	SetPosition	int, const COORD3&		positionallight.cpp	SetPosition__Q24EAGL20PositionalLightBlockFiRC6COORD3
+803efafc	16	EAGL::PositionalLightBlock	Enable	int, bool		positionallight.cpp	Enable__Q24EAGL20PositionalLightBlockFib
+803efb0c	112	EAGL::PositionalLightBlock	SetAmbientColour	const EAGL::FloatColour&		positionallight.cpp	SetAmbientColour__Q24EAGL20PositionalLightBlockFRCQ24EAGL11FloatColour
+803efb7c	404	EAGL::PositionalLightBlock	constructor			positionallight.cpp	__ct__Q24EAGL20PositionalLightBlockFv
+803efd10	4	EAGL::DrawTextured	SetState	const EAGL::GeoPrimState&		positionallight.cpp	SetState__Q24EAGL12DrawTexturedFRCQ24EAGL12GeoPrimState
+803efd14	200	EAGL::DrawTextured	AddVertex	const COORD3&, const EAGL::Colour&, const COORD2&		positionallight.cpp	AddVertex__Q24EAGL12DrawTexturedFRC6COORD3RCQ24EAGL6ColourRC6COORD2
+803efddc	4	EAGL::DrawTextured	End			positionallight.cpp	End__Q24EAGL12DrawTexturedFv
+803efde0	4	EAGL::DrawTextured	Begin	EAGL::PrimitiveType		positionallight.cpp	Begin__Q24EAGL12DrawTexturedFQ24EAGL13PrimitiveType
+803efde4	4	EAGL::DrawTextured	SetTexture	EAGL::TAR*		positionallight.cpp	SetTexture__Q24EAGL12DrawTexturedFPQ24EAGL3TAR
+803efde8	184	EAGL::DrawTextured	Init	unsigned int		positionallight.cpp	Init__Q24EAGL12DrawTexturedFUi
+803efea0	4	EAGL::DrawTextured	GetState			positionallight.cpp	GetState__Q24EAGL12DrawTexturedFv
+803efea4	4	EAGL::DrawTextured	SetModelMatrix	MATRIX4&		positionallight.cpp	SetModelMatrix__Q24EAGL12DrawTexturedFR7MATRIX4
+803efea8	4	EAGL::DrawTextured	SetModelMatrix	const MATRIX4&		positionallight.cpp	SetModelMatrix__Q24EAGL12DrawTexturedFRC7MATRIX4
+803efeac	112	EAGL::DrawTextured	destructor			positionallight.cpp	__dt__Q24EAGL12DrawTexturedFv
+803eff1c	56	EAGL::DrawTextured	constructor			positionallight.cpp	__ct__Q24EAGL12DrawTexturedFv
+803eff54	4	EAGL::DrawGouraud	SetState	const EAGL::GeoPrimState&		positionallight.cpp	SetState__Q24EAGL11DrawGouraudFRCQ24EAGL12GeoPrimState
+803eff58	140	EAGL::DrawGouraud	AddVertex	const COORD3&, const EAGL::Colour&		positionallight.cpp	AddVertex__Q24EAGL11DrawGouraudFRC6COORD3RCQ24EAGL6Colour
+803effe4	180	EAGL::DrawGouraud	AddVertex	const COORD4&, const EAGL::Colour&		positionallight.cpp	AddVertex__Q24EAGL11DrawGouraudFRC6COORD4RCQ24EAGL6Colour
+803f0098	4	EAGL::DrawGouraud	End			positionallight.cpp	End__Q24EAGL11DrawGouraudFv
+803f009c	4	EAGL::DrawGouraud	Begin	EAGL::PrimitiveType		positionallight.cpp	Begin__Q24EAGL11DrawGouraudFQ24EAGL13PrimitiveType
+803f00a0	172	EAGL::DrawGouraud	Init	unsigned int		positionallight.cpp	Init__Q24EAGL11DrawGouraudFUi
+803f014c	4	EAGL::DrawGouraud	GetState			positionallight.cpp	GetState__Q24EAGL11DrawGouraudFv
+803f0150	4	EAGL::DrawGouraud	SetModelMatrix	MATRIX4&		positionallight.cpp	SetModelMatrix__Q24EAGL11DrawGouraudFR7MATRIX4
+803f0154	4	EAGL::DrawGouraud	SetModelMatrix	const MATRIX4&		positionallight.cpp	SetModelMatrix__Q24EAGL11DrawGouraudFRC7MATRIX4
+803f0158	112	EAGL::DrawGouraud	destructor			positionallight.cpp	__dt__Q24EAGL11DrawGouraudFv
+803f01c8	56	EAGL::DrawGouraud	constructor			positionallight.cpp	__ct__Q24EAGL11DrawGouraudFv
+803f0200	160	EAGL::DrawImmediate	SetLocalMatrix	const MATRIX4*		drawimmediate.cpp	SetLocalMatrix__Q24EAGL13DrawImmediateFPC7MATRIX4
+803f02a0	20	EAGL::DrawImmediate	SetTexture	EAGL::TAR*		drawimmediate.cpp	SetTexture__Q24EAGL13DrawImmediateFPQ24EAGL3TAR
+803f02b4	8	EAGL::DrawImmediate	SetVertexType	int		drawimmediate.cpp	SetVertexType__Q24EAGL13DrawImmediateFi
+803f02bc	12	EAGL::DrawImmediate	GetState			drawimmediate.cpp	GetState__Q24EAGL13DrawImmediateFv
+803f02c8	48	EAGL::DrawImmediate	SetState	const EAGL::GeoPrimState*		drawimmediate.cpp	SetState__Q24EAGL13DrawImmediateFPCQ24EAGL12GeoPrimState
+803f02f8	1056	EAGL::DrawImmediate	End			drawimmediate.cpp	End__Q24EAGL13DrawImmediateFv
+803f0718	276	EAGL::DrawImmediate	Begin	EAGL::PrimitiveType		drawimmediate.cpp	Begin__Q24EAGL13DrawImmediateFQ24EAGL13PrimitiveType
+803f082c	904	EAGL::DrawImmediate	SetVertexDescription			drawimmediate.cpp	SetVertexDescription__Q24EAGL13DrawImmediateFv
+803f0bb4	96	EAGL::DrawImmediate	constructor			drawimmediate.cpp	__ct__Q24EAGL13DrawImmediateFv
+803f0c14	2156	EAGLInternal	HandleDefaultStateProp	EAGL::GeoPrimState&, const EAGLInternal::Property&		drawimmediate.cpp	HandleDefaultStateProp__12EAGLInternalFRQ24EAGL12GeoPrimStateRCQ212EAGLInternal8Property
+803f1480	632	EAGLInternal	HandleDefaultTARProp	EAGL::TAR&, const EAGLInternal::Property&		drawimmediate.cpp	HandleDefaultTARProp__12EAGLInternalFRQ24EAGL3TARRCQ212EAGLInternal8Property

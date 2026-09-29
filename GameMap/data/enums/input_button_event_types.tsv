@@ -1,0 +1,9 @@
+# value	token	notes  # controls*.csv column: button event kind ; parser ConvertStringToControllerEvent__F7CString @8032c048 ; recovered from the code, not string order
+0	BUTTON_UP	
+1	BUTTON_DOWN	
+2	BUTTON_DOUBLEDOWN	
+3	BUTTON_PRESSED	
+4	BUTTON_SECOND	
+5	BUTTON_TAP	
+6	BUTTON_HOLD	
+7	BUTTON_HOLDPRESSED	default/invalid=9

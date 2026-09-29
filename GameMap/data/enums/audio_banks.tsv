@@ -1,0 +1,22 @@
+# value	token	notes  # AEMS audio bank id -> .abk file ; table kAEMSBankFilenames @804cb758
+0	FE_UI.abk	
+1	FE_Specific.abk	
+2	World_SFX.abk	
+3	Footsteps.abk	
+4	AMB_Schoolyard.abk	
+5	AMB_Park.abk	
+6	AMB_Stadium.abk	
+7	AMB_NatureForest.abk	
+8	NIS.abk	
+9	Common SFX.abk	
+10	MG_Tetherball.abk	
+11	MG_RC_Cars_OffRoad.abk	
+12	MG_RC_Cars_Touring.abk	
+13	MG_Dodgeball.abk	
+14	MG_PaperAirplanes.abk	
+15	MG_DartShootout.abk	
+16	MG_Footie.abk	
+17	MG_WallBall.abk	
+18	MW_FreeThrow.abk	
+19	MW_BugCatch.abk	
+20	MW_BBall_Dribble.abk	

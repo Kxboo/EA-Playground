@@ -1,0 +1,146 @@
+# addr	size	class	method	args	const	source_unit	mangled
+803bd274	52	EAGL::Model	GetBoundingBox	COORD3&, COORD3&	const	boundingbox.cpp	GetBoundingBox__Q24EAGL5ModelCFR6COORD3R6COORD3
+803bd2a8	72	Ren::BoundingBox	Init	const EAGL::Model*		boundingbox.cpp	Init__Q23Ren11BoundingBoxFPCQ24EAGL5Model
+803bd2f0	160	Ren::BoundingBox	InitCoords	const COORD3&, const COORD3&		boundingbox.cpp	InitCoords__Q23Ren11BoundingBoxFRC6COORD3RC6COORD3
+803bd390	28	Ren::CachedAnimatedModel	constructor			cachedanimatedmodel.cpp	__ct__Q23Ren19CachedAnimatedModelFv
+803bd3ac	132	Ren::CachedAnimatedModel	destructor			cachedanimatedmodel.cpp	__dt__Q23Ren19CachedAnimatedModelFv
+803bd430	4	Ren::CachedListConfig	operator delete[]	void*		cachedanimatedmodel.cpp	__dla__Q23Ren16CachedListConfigFPv
+803bd434	120	Ren::CachedAnimatedModel	Initialize	int, int, unsigned int*		cachedanimatedmodel.cpp	Initialize__Q23Ren19CachedAnimatedModelFiiPUi
+803bd4ac	16	Ren::CachedAnimatedModel	SetModel	EAGL::Model*, int		cachedanimatedmodel.cpp	SetModel__Q23Ren19CachedAnimatedModelFPQ24EAGL5Modeli
+803bd4bc	8	Ren::CachedAnimatedModel	SetBoneMatrices	rmMatrix4*		cachedanimatedmodel.cpp	SetBoneMatrices__Q23Ren19CachedAnimatedModelFP9rmMatrix4
+803bd4c4	92	Ren::CachedAnimatedModel	DrawAll	const rmMatrix4&		cachedanimatedmodel.cpp	DrawAll__Q23Ren19CachedAnimatedModelFRC9rmMatrix4
+803bd520	76	Ren::CachedAnimatedModel	Draw	const rmMatrix4&, int		cachedanimatedmodel.cpp	Draw__Q23Ren19CachedAnimatedModelFRC9rmMatrix4i
+803bd56c	12	Ren::CachedListConfig	constructor			cachedanimatedmodel.cpp	__ct__Q23Ren16CachedListConfigFv
+803bd578	64	Ren::CachedListConfig	destructor			cachedanimatedmodel.cpp	__dt__Q23Ren16CachedListConfigFv
+803bd5b8	24		__sinit_\cachedanimatedmodel_cpp			cachedanimatedmodel.cpp	__sinit_\cachedanimatedmodel_cpp
+803bd5d0	36	Ren::CachedModel	constructor			cachedmodel.cpp	__ct__Q23Ren11CachedModelFv
+803bd5f4	112	Ren::CachedModel	destructor			cachedmodel.cpp	__dt__Q23Ren11CachedModelFv
+803bd664	304	Ren::CachedModel	SetScaleMatrix			cachedmodel.cpp	SetScaleMatrix__Q23Ren11CachedModelFv
+803bd794	656	Ren::CachedModel	Draw	const rmMatrix4&, bool		cachedmodel.cpp	Draw__Q23Ren11CachedModelFRC9rmMatrix4b
+803bda24	24		__sinit_\cachedmodel_cpp			cachedmodel.cpp	__sinit_\cachedmodel_cpp
+803beed0	68	Ren::Engine	Create			engine.cpp	Create__Q23Ren6EngineFv
+803bef14	56	Ren::Engine	Destroy			engine.cpp	Destroy__Q23Ren6EngineFv
+803bef4c	76	Ren::Engine	constructor			engine.cpp	__ct__Q23Ren6EngineFv
+803bef98	96	Ren::Engine	destructor			engine.cpp	__dt__Q23Ren6EngineFv
+803beff8	24	Ren	RenEngineNewOverride	unsigned long, const char*		engine.cpp	RenEngineNewOverride__3RenFUlPCc
+803bf010	4	Ren	RenEngineDeleteOverride	void*, unsigned long		engine.cpp	RenEngineDeleteOverride__3RenFPvUl
+803bf014	28	Ren	REALShapeAlloc	const char*, int, int		engine.cpp	REALShapeAlloc__3RenFPCcii
+803bf030	36	Ren	REALShapeAllocAlign	const char*, int, int, int, int		engine.cpp	REALShapeAllocAlign__3RenFPCciiii
+803bf054	8	Ren::Engine	SetVSync	bool		engine.cpp	SetVSync__Q23Ren6EngineFb
+803bf05c	36	Ren	REALShapeFree	void*		engine.cpp	REALShapeFree__3RenFPv
+803bf080	348	Ren::Engine	Initialize			engine.cpp	Initialize__Q23Ren6EngineFv
+803bf1dc	92	Ren::Engine	UnInitialize			engine.cpp	UnInitialize__Q23Ren6EngineFv
+803bf238	208	Ren::Engine	BeginFrame			engine.cpp	BeginFrame__Q23Ren6EngineFv
+803bf308	64	Ren::Engine	EndFrame			engine.cpp	EndFrame__Q23Ren6EngineFv
+803bf348	160	Ren::Engine	CreateScene	const Ren::SceneOptions&		engine.cpp	CreateScene__Q23Ren6EngineFRCQ23Ren12SceneOptions
+803bf3e8	60	Ren::Engine	DestroyScene	Ren::Scene*		engine.cpp	DestroyScene__Q23Ren6EngineFPQ23Ren5Scene
+803bf424	20	Ren::Engine	WaitForDrawsToComplete			engine.cpp	WaitForDrawsToComplete__Q23Ren6EngineFv
+803bf438	84		__sinit_\engine_cpp			engine.cpp	__sinit_\engine_cpp
+803bf48c	4	rmMatrix4	constructor			entity.cpp	__ct__9rmMatrix4Fv
+803bf490	64	Ren::Entity	destructor			entity.cpp	__dt__Q23Ren6EntityFv
+803bf4d0	24		__sinit_\entity_cpp			entity.cpp	__sinit_\entity_cpp
+803bf4e8	68	Ren::FadeToColourEffect	constructor			fadetocoloureffect.cpp	__ct__Q23Ren18FadeToColourEffectFv
+803bf52c	64	Ren::FadeToColourEffect	destructor			fadetocoloureffect.cpp	__dt__Q23Ren18FadeToColourEffectFv
+803bf56c	28	Ren::FadeToColourEffect	SetFadeColour	const rmVector3&		fadetocoloureffect.cpp	SetFadeColour__Q23Ren18FadeToColourEffectFRC9rmVector3
+803bf588	64	Ren::FadeToColourEffect	StartFadeIn	int		fadetocoloureffect.cpp	StartFadeIn__Q23Ren18FadeToColourEffectFi
+803bf5c8	64	Ren::FadeToColourEffect	StartFadeOut	int		fadetocoloureffect.cpp	StartFadeOut__Q23Ren18FadeToColourEffectFi
+803bf608	116	Ren::FadeToColourEffect	Update	int		fadetocoloureffect.cpp	Update__Q23Ren18FadeToColourEffectFi
+803bf67c	504	Ren::FadeToColourEffect	DrawPreHUD	Ren::SceneContext&		fadetocoloureffect.cpp	DrawPreHUD__Q23Ren18FadeToColourEffectFRQ23Ren12SceneContext
+803bf874	20	EAGL::FloatColour	constructor	float, float, float, float		fadetocoloureffect.cpp	__ct__Q24EAGL11FloatColourFffff
+803bf888	148	EAGL::Colour	constructor	EAGL::FloatColour		fadetocoloureffect.cpp	__ct__Q24EAGL6ColourFQ24EAGL11FloatColour
+803bf91c	504	Ren::FadeToColourEffect	DrawPostHUD	Ren::SceneContext&		fadetocoloureffect.cpp	DrawPostHUD__Q23Ren18FadeToColourEffectFRQ23Ren12SceneContext
+803bfb14	24		__sinit_\fadetocoloureffect_cpp			fadetocoloureffect.cpp	__sinit_\fadetocoloureffect_cpp
+803c1028	1860	Ren::FrustumTest	Init	EAGL::RenderContext*, EAGL::ViewPort*		frustumtest.cpp	Init__Q23Ren11FrustumTestFPQ24EAGL13RenderContextPQ24EAGL8ViewPort
+803c176c	284	Ren::FrustumTest	IsBoundingBoxInView	const Ren::BoundingBox&		frustumtest.cpp	IsBoundingBoxInView__Q23Ren11FrustumTestFRCQ23Ren11BoundingBox
+803c1888	168	Ren	IsOutsidePlane	unsigned int, const rmVector4*, const Ren::Plane&		frustumtest.cpp	IsOutsidePlane__3RenFUiPC9rmVector4RCQ23Ren5Plane
+803c1930	300	Ren::FrustumTest	IsBoundingBoxInView	const Ren::BoundingBox&, const rmMatrix4&		frustumtest.cpp	IsBoundingBoxInView__Q23Ren11FrustumTestFRCQ23Ren11BoundingBoxRC9rmMatrix4
+803c1a5c	268	Ren::FrustumTest	IsBoundingBoxIntersectingNearPlane	const Ren::BoundingBox&, const rmMatrix4&		frustumtest.cpp	IsBoundingBoxIntersectingNearPlane__Q23Ren11FrustumTestFRCQ23Ren11BoundingBoxRC9rmMatrix4
+803c1b68	8	Ren::FrustumTest	IsBoundingBoxIntersectingNearPlane	const rmOBB&, const rmMatrix4&		frustumtest.cpp	IsBoundingBoxIntersectingNearPlane__Q23Ren11FrustumTestFRC5rmOBBRC9rmMatrix4
+803c1b70	716	Ren::FrustumTest	UpdateNearPlaneOBB			frustumtest.cpp	UpdateNearPlaneOBB__Q23Ren11FrustumTestFv
+803c1e3c	24		__sinit_\frustumtest_cpp			frustumtest.cpp	__sinit_\frustumtest_cpp
+803c1e54	68	Ren::FullScreenEffectsManager	Create			fullscreeneffectsmanager.cpp	Create__Q23Ren24FullScreenEffectsManagerFv
+803c1e98	56	Ren::FullScreenEffectsManager	Destroy			fullscreeneffectsmanager.cpp	Destroy__Q23Ren24FullScreenEffectsManagerFv
+803c1ed0	112	Ren::FullScreenEffectsManager	constructor			fullscreeneffectsmanager.cpp	__ct__Q23Ren24FullScreenEffectsManagerFv
+803c1f40	88	Ren::FullScreenEffectsManager::FullScreenEffectsManagerEntity	destructor			fullscreeneffectsmanager.cpp	__dt__Q33Ren24FullScreenEffectsManager30FullScreenEffectsManagerEntityFv
+803c1f98	116	Ren::FullScreenEffectsManager	destructor			fullscreeneffectsmanager.cpp	__dt__Q23Ren24FullScreenEffectsManagerFv
+803c200c	32	Ren::FullScreenEffectsManager	AddEffect	Ren::FullScreenEffect*		fullscreeneffectsmanager.cpp	AddEffect__Q23Ren24FullScreenEffectsManagerFPQ23Ren16FullScreenEffect
+803c202c	112	Ren::FullScreenEffectsManager	RemoveEffect	Ren::FullScreenEffect*		fullscreeneffectsmanager.cpp	RemoveEffect__Q23Ren24FullScreenEffectsManagerFPQ23Ren16FullScreenEffect
+803c209c	108	Ren::FullScreenEffectsManager	DrawPostHUDCallback	Ren::SceneContext&		fullscreeneffectsmanager.cpp	DrawPostHUDCallback__Q23Ren24FullScreenEffectsManagerFRQ23Ren12SceneContext
+803c2108	108	Ren::FullScreenEffectsManager	DrawPreHUDCallback	Ren::SceneContext&		fullscreeneffectsmanager.cpp	DrawPreHUDCallback__Q23Ren24FullScreenEffectsManagerFRQ23Ren12SceneContext
+803c2174	108	Ren::FullScreenEffectsManager	DrawPostWorldCallback	Ren::SceneContext&		fullscreeneffectsmanager.cpp	DrawPostWorldCallback__Q23Ren24FullScreenEffectsManagerFRQ23Ren12SceneContext
+803c21e0	108	Ren::FullScreenEffectsManager	Update	int		fullscreeneffectsmanager.cpp	Update__Q23Ren24FullScreenEffectsManagerFi
+803c224c	32	Ren::FullScreenEffectsManager::FullScreenEffectsManagerEntity	constructor	Ren::FullScreenEffectsManager*, Ren::FullScreenEffectsManager::FullScreenEffectsManagerEntity::EffectEntityType		fullscreeneffectsmanager.cpp	__ct__Q33Ren24FullScreenEffectsManager30FullScreenEffectsManagerEntityFPQ23Ren24FullScreenEffectsManagerQ43Ren24FullScreenEffectsManager30FullScreenEffectsManagerEntity16EffectEntityType
+803c226c	196	Ren::FullScreenEffectsManager::FullScreenEffectsManagerEntity	Draw	Ren::SceneContext&		fullscreeneffectsmanager.cpp	Draw__Q33Ren24FullScreenEffectsManager30FullScreenEffectsManagerEntityFRQ23Ren12SceneContext
+803c2330	24		__sinit_\fullscreeneffectsmanager_cpp			fullscreeneffectsmanager.cpp	__sinit_\fullscreeneffectsmanager_cpp
+803c2f34	60	Ren::LightManager	Create			lightmanager.cpp	Create__Q23Ren12LightManagerFv
+803c2f70	56	Ren::LightManager	Destroy			lightmanager.cpp	Destroy__Q23Ren12LightManagerFv
+803c2fa8	1364	Ren::LightManager	Update			lightmanager.cpp	Update__Q23Ren12LightManagerFv
+803c34fc	24		__sinit_\lightmanager_cpp			lightmanager.cpp	__sinit_\lightmanager_cpp
+803c437c	296	Ren::Scene	constructor			scene.cpp	__ct__Q23Ren5SceneFv
+803c44a4	96	Ren::Scene	destructor			scene.cpp	__dt__Q23Ren5SceneFv
+803c4504	152	Ren::Scene	Initialize	EAGL::RenderContext*, const Ren::SceneOptions&		scene.cpp	Initialize__Q23Ren5SceneFPQ24EAGL13RenderContextRCQ23Ren12SceneOptions
+803c459c	424	Ren::Scene	InitializeBase	EAGL::RenderContextBase*, const Ren::SceneOptions&		scene.cpp	InitializeBase__Q23Ren5SceneFPQ24EAGL17RenderContextBaseRCQ23Ren12SceneOptions
+803c4744	200	Ren::Scene	UnInitialize			scene.cpp	UnInitialize__Q23Ren5SceneFv
+803c480c	656	Ren::Scene	Draw	int, bool, bool, int, int, bool		scene.cpp	Draw__Q23Ren5SceneFibbiib
+803c4a9c	16	Ren::Scene	GetViewPort	int		scene.cpp	GetViewPort__Q23Ren5SceneFi
+803c4aac	308	Ren::Scene	SetViewPort	int, const Ren::SceneOptions&		scene.cpp	SetViewPort__Q23Ren5SceneFiRCQ23Ren12SceneOptions
+803c4be0	8	Ren::Scene	SetNumActiveViewPorts	int		scene.cpp	SetNumActiveViewPorts__Q23Ren5SceneFi
+803c4be8	16	Ren::Scene	GetSceneOptions	int	const	scene.cpp	GetSceneOptions__Q23Ren5SceneCFi
+803c4bf8	48	Ren::Scene	AddEntity	int, Ren::Entity*		scene.cpp	AddEntity__Q23Ren5SceneFiPQ23Ren6Entity
+803c4c28	132	Ren::Scene	RemoveEntity	int, Ren::Entity*		scene.cpp	RemoveEntity__Q23Ren5SceneFiPQ23Ren6Entity
+803c4cac	260	Ren::Scene	SetViewMatrix	const rmMatrix4&, int		scene.cpp	SetViewMatrix__Q23Ren5SceneFRC9rmMatrix4i
+803c4db0	80	Ren::Scene	CalcWidescreenFOV	float		scene.cpp	CalcWidescreenFOV__Q23Ren5SceneFf
+803c4e00	32	Ren::SceneContext	constructor	Ren::Scene*, EAGL::ViewPort*, int		scene.cpp	__ct__Q23Ren12SceneContextFPQ23Ren5ScenePQ24EAGL8ViewPorti
+803c4e20	260	Ren::SceneContext	AddOrderTableEntry	const Ren::SceneOrderTableEntry&, const rmVector3&		scene.cpp	AddOrderTableEntry__Q23Ren12SceneContextFRCQ23Ren20SceneOrderTableEntryRC9rmVector3
+803c4f24	40	Ren	CompareSceneEntry	const void*, const void*		scene.cpp	CompareSceneEntry__3RenFPCvPCv
+803c4f4c	8	Ren::SceneContext	GetViewPort			scene.cpp	GetViewPort__Q23Ren12SceneContextFv
+803c4f54	24		__sinit_\scene_cpp			scene.cpp	__sinit_\scene_cpp
+803c4f6c	140	Ren::ShadowViewOptions	constructor			shadowmanager.cpp	__ct__Q23Ren17ShadowViewOptionsFv
+803c4ff8	68	Ren::ShadowManager	Create			shadowmanager.cpp	Create__Q23Ren13ShadowManagerFv
+803c503c	156	Ren::ShadowManager	constructor			shadowmanager.cpp	__ct__Q23Ren13ShadowManagerFv
+803c50d8	120	Ren::ShadowManager	destructor			shadowmanager.cpp	__dt__Q23Ren13ShadowManagerFv
+803c5150	892	Ren::ShadowManager	Initialize			shadowmanager.cpp	Initialize__Q23Ren13ShadowManagerFv
+803c54cc	28	EAGL::Colour	constructor	int, int, int, int		shadowmanager.cpp	__ct__Q24EAGL6ColourFiiii
+803c54e8	172	Ren::ShadowManager	UnInitialize			shadowmanager.cpp	UnInitialize__Q23Ren13ShadowManagerFv
+803c5594	148	Ren::ShadowManager	SetViewport	Ren::ShadowManager::ShadowViewMode, const Ren::ShadowViewOptions&		shadowmanager.cpp	SetViewport__Q23Ren13ShadowManagerFQ33Ren13ShadowManager14ShadowViewModeRCQ23Ren17ShadowViewOptions
+803c5628	1572	Ren::ShadowManager	UpdateViewport	const Ren::ShadowViewOptions&		shadowmanager.cpp	UpdateViewport__Q23Ren13ShadowManagerFRCQ23Ren17ShadowViewOptions
+803c5c4c	72	Ren	GetGXTextureFormat	SHAPE*		shadowmanager.cpp	GetGXTextureFormat__3RenFP5SHAPE
+803c5c94	1808	Ren::ShadowManager	Update			shadowmanager.cpp	Update__Q23Ren13ShadowManagerFv
+803c63a4	4	Ren::ShadowManager	Draw	Ren::SceneContext&		shadowmanager.cpp	Draw__Q23Ren13ShadowManagerFRQ23Ren12SceneContext
+803c63a8	120		__sinit_\shadowmanager_cpp			shadowmanager.cpp	__sinit_\shadowmanager_cpp
+803c6420	88	SkyDome	constructor			skydome.cpp	__ct__7SkyDomeFv
+803c6478	88	SkyDome	destructor			skydome.cpp	__dt__7SkyDomeFv
+803c64d0	168	SkyDome	Initialise			skydome.cpp	Initialise__7SkyDomeFv
+803c6578	284	SkyDome	LoadGeometry			skydome.cpp	LoadGeometry__7SkyDomeFv
+803c6694	144	SkyDome	Update	int		skydome.cpp	Update__7SkyDomeFi
+803c6724	888	SkyDome	Draw	Ren::SceneContext&		skydome.cpp	Draw__7SkyDomeFRQ23Ren12SceneContext
+803c6a9c	144	SkyDome	SetPos	const rmVector3&		skydome.cpp	SetPos__7SkyDomeFRC9rmVector3
+803c6b2c	56		CreateSkyDome			skydome.cpp	CreateSkyDome__Fv
+803c6b64	96		__sinit_\skydome_cpp			skydome.cpp	__sinit_\skydome_cpp
+803c7054	12	TarManager	constructor			tarmanager.cpp	__ct__10TarManagerFv
+803c7060	72	TarManager	destructor			tarmanager.cpp	__dt__10TarManagerFv
+803c70a8	228	TarManager	Initialize	CString&		tarmanager.cpp	Initialize__10TarManagerFR7CString
+803c718c	136	TarManager	UnInitialize			tarmanager.cpp	UnInitialize__10TarManagerFv
+803c7214	120	TarManager	GetTar	const char*		tarmanager.cpp	GetTar__10TarManagerFPCc
+803c728c	24		__sinit_\tarmanager_cpp			tarmanager.cpp	__sinit_\tarmanager_cpp
+803c7510	68	Ren::WorldLightManager	Create			worldlightmanager.cpp	Create__Q23Ren17WorldLightManagerFv
+803c7554	56	Ren::WorldLightManager	Destroy			worldlightmanager.cpp	Destroy__Q23Ren17WorldLightManagerFv
+803c758c	152	Ren	GetShape	char*, const char*		worldlightmanager.cpp	GetShape__3RenFPcPCc
+803c7624	524	Ren::WorldLightManager	constructor			worldlightmanager.cpp	__ct__Q23Ren17WorldLightManagerFv
+803c7830	212	Ren::WorldLightManager	destructor			worldlightmanager.cpp	__dt__Q23Ren17WorldLightManagerFv
+803c7904	88	Ren::WorldLightManager	SetSpecmapColour	Ren::SpecMapColour		worldlightmanager.cpp	SetSpecmapColour__Q23Ren17WorldLightManagerFQ23Ren13SpecMapColour
+803c795c	264	Ren::WorldLightManager	Update			worldlightmanager.cpp	Update__Q23Ren17WorldLightManagerFv
+803c7a64	24		__sinit_\worldlightmanager_cpp			worldlightmanager.cpp	__sinit_\worldlightmanager_cpp
+803d5188	52	RenderTextureEntity	constructor			rendertexture.cpp	__ct__19RenderTextureEntityFv
+803d51bc	88	RenderTextureEntity	destructor			rendertexture.cpp	__dt__19RenderTextureEntityFv
+803d5214	40	RenderTextureEntity	Update	int		rendertexture.cpp	Update__19RenderTextureEntityFi
+803d523c	24	RenderTextureEntity	IsFadeFinished			rendertexture.cpp	IsFadeFinished__19RenderTextureEntityFv
+803d5254	644	RenderTextureEntity	Draw	Ren::SceneContext&		rendertexture.cpp	Draw__19RenderTextureEntityFRQ23Ren12SceneContext
+803d54d8	28	RenderTextureUtil	StartFadeIn	int		rendertexture.cpp	StartFadeIn__17RenderTextureUtilFi
+803d54f4	28	RenderTextureUtil	StartFadeOut	int		rendertexture.cpp	StartFadeOut__17RenderTextureUtilFi
+803d5510	8	RenderTextureUtil	Update	int		rendertexture.cpp	Update__17RenderTextureUtilFi
+803d5518	8	RenderTextureUtil	IsFadeFinished			rendertexture.cpp	IsFadeFinished__17RenderTextureUtilFv
+803d5520	200	RenderTextureUtil	constructor			rendertexture.cpp	__ct__17RenderTextureUtilFv
+803d55e8	160	RenderTextureUtil	destructor			rendertexture.cpp	__dt__17RenderTextureUtilFv
+803d5688	40	RenderTextureUtil	Draw	EAGL::TAR*		rendertexture.cpp	Draw__17RenderTextureUtilFPQ24EAGL3TAR
+803d56b0	24		__sinit_\rendertexture_cpp			rendertexture.cpp	__sinit_\rendertexture_cpp
