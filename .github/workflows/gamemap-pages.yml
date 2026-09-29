@@ -8,20 +8,38 @@ on:
   push:
     branches: [main, master]
     paths: ["GameMap/site/**", ".github/workflows/gamemap-pages.yml"]
+  pull_request:
+    branches: [main, master]
+    paths: ["GameMap/site/**", ".github/workflows/gamemap-pages.yml"]
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: gamemap-pages
+  group: gamemap-pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  validate:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate static site
+        run: |
+          test -s GameMap/site/index.html
+          test -s GameMap/site/style.css
+          node --check GameMap/site/app.js
+          node --check GameMap/site/data.js
+          if [ -d GameMap/site/code ]; then echo "site/code must not be published"; exit 1; fi
+  deploy:
+    needs: validate
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

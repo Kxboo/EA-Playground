@@ -58,4 +58,11 @@ python3 GameMap/tools/build_site.py --snapshot "label"          # rebuilds site/
 The workflow refuses to publish if a `site/code/` folder is present. The URL will be
 `https://<user>.github.io/<repo>/`.
 
+For this repository, the configured address is **https://kxboo.github.io/EA-Playground/**.
+Pull requests validate the HTML entry point, stylesheet and JavaScript syntax without deploying.
+After merging into `main`, the deployment job uploads only `GameMap/site/` and publishes through
+the `github-pages` environment. A manual dispatch also deploys only from `main` or `master`.
+The site is not live until that first deployment succeeds. Check the **GameMap progress site**
+workflow in Actions for deployment status; no npm install or HTML build is required.
+
 Any static host works too: upload the contents of `GameMap/site/` (without `code/`).
