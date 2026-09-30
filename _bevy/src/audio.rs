@@ -25,8 +25,12 @@ pub fn parse_header(d:&[u8])->Result<(Header,usize),String>{
 pub fn parse_tags(body:&[u8])->Header{parse_tags_len(body).0}
 /// Like `parse_tags`, also returning the number of bytes up to and including the 0xFF terminator.
 pub fn parse_tags_len(body:&[u8])->(Header,usize){
-    // Speech streams ("GSTR" platform tag) carry four more bytes before the tags than the "PT.." music headers.
-    let mut p=if body.starts_with(b"GSTR"){8usize}else{4};let mut h=Header{channels:1,..Default::default()};
+    // Speech/movie streams ("GSTR" platform tag) carry four more bytes before the tags than the "PT.." music headers.
+    // `SNDI_patchtohdrgen` (0x80279cbc) presets 1 channel, 48000 Hz and codec 0x0a (EA-XA R2) for GSTR headers before
+    // reading the tags; the "PT" path (`SNDI_patchtohdr` 0x8027aaf4) leaves the codec to tag 0xA0.
+    let gstr=body.starts_with(b"GSTR");
+    let mut p=if gstr{8usize}else{4};
+    let mut h=if gstr{Header{channels:1,sample_rate:48000,codec:0x0a,..Default::default()}}else{Header{channels:1,..Default::default()}};
     while p<body.len(){
         let tag=body[p];p+=1;
         match tag{
@@ -410,6 +414,14 @@ mod tests{
         let total:usize=blocks.iter().map(|&(s,_)|be32(&d[s..],0).unwrap() as usize).sum();
         eprintln!("header samples {} vs sum of block counts {total}",h.samples);
         assert_eq!(total as u32,h.samples,"block sample counts must add up to the header total");
+    }
+    #[test] fn gstr_header_defaults(){
+        // EA-logo movie audio header: GSTR tags without 0xA0; SNDI_patchtohdrgen presets codec 0x0a and 48000 Hz.
+        let body=[b"GSTR".as_slice(),&[1,0,0,0, 0,4,0x1d,0xf8,0x51,0xe0, 6,1,0x65, 0xfd, 0x80,1,3, 0x85,3,0x01,0x36,0xef, 0x82,1,2, 0x84,2,0x7d,0], &[0xff]].concat();
+        let h=parse_tags(&body);
+        assert_eq!((h.codec,h.channels,h.sample_rate,h.samples),(0x0a,2,32000,79599));
+        let h=parse_tags(&[b"GSTR".as_slice(),&[1,0,0,0,0xff]].concat());
+        assert_eq!((h.codec,h.channels,h.sample_rate),(0x0a,1,48000));
     }
     #[test] fn decodes_the_start_of_a_track(){
         let Some(d)=music("dartshootout.asf") else{eprintln!("DATA absent; skipped");return};
