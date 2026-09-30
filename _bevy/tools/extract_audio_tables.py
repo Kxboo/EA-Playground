@@ -69,7 +69,8 @@ def build():
     assert sorted(inter)==list(range(257)),('window prototype incomplete',[j for j in range(257) if j not in inter][:10])
     intwin=[int(round(inter[j])) for j in range(257)]
     assert all(abs(inter[j]-intwin[j])<1e-6 for j in range(257)) and intwin[256]==75038 and intwin[1]==-1
-    return dict(trees=trees,table_ref=table_ref,linbits=linbits,counts=counts,slen=slen,numsfb=numsfb,pretab=pretab,rates=rates,long=long_,short=short,intwin=intwin),hashlib.sha256(Path(rf.__file__).parent.joinpath('../../Remaster/reference/playgroundz.elf').resolve().read_bytes()).hexdigest()
+    xaf=list(struct.unpack('>8f',rd('xafilterf__3Snd')));xat=list(struct.unpack('>256f',rd('xatablef__3Snd')))
+    return dict(xaf=xaf,xat=xat,trees=trees,table_ref=table_ref,linbits=linbits,counts=counts,slen=slen,numsfb=numsfb,pretab=pretab,rates=rates,long=long_,short=short,intwin=intwin),hashlib.sha256(Path(rf.__file__).parent.joinpath('../../Remaster/reference/playgroundz.elf').resolve().read_bytes()).hexdigest()
 
 def arr(name,ty,vals,per=16):
     body=',\n    '.join(', '.join(str(v) for v in vals[i:i+per]) for i in range(0,len(vals),per))
@@ -92,6 +93,11 @@ def render(t,sha):
     out.append('pub const SFB_LONG: [[u16; 23]; 9] = ['+', '.join('['+', '.join(map(str,r))+']' for r in t['long'])+'];')
     out.append('/// Short-block boundaries (per window) per sample-rate index.')
     out.append('pub const SFB_SHORT: [[u16; 14]; 9] = ['+', '.join('['+', '.join(map(str,r))+']' for r in t['short'])+'];')
+    def farr(name,vals,per):
+        body=(','+chr(10)+'    ').join(', '.join(repr(v) for v in vals[k:k+per]) for k in range(0,len(vals),per))
+        return 'pub const '+name+': [f32; '+str(len(vals))+'] = ['+chr(10)+'    '+body+chr(10)+'];'+chr(10)
+    out.append('/// EA-XA (`decodexac` 0x80280dfc): predictor coefficients (`xafilterf`) and per-shift nibble table (`xatablef`, 16 x 16).')
+    out.append(farr('XA_FILTER',t['xaf'],4));out.append(farr('XA_TABLE',t['xat'],8))
     out.append(arr('SYNTH_WINDOW_INT','i32',t['intwin'],11))
     return '\n'.join(out)+'\n'
 

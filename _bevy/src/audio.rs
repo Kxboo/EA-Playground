@@ -17,15 +17,21 @@ pub fn parse_header(d:&[u8])->Result<(Header,usize),String>{
     if d.get(..4)!=Some(b"SCHl"){return Err("Not an EA SCHl stream".into())}
     let size=le32(d,4)?;
     let body=d.get(8..size).ok_or("SCHl block exceeds file")?;
-    // body: two platform bytes ("PT"), platform id, flags, then entries.
+    Ok((parse_tags(body),size))
+}
+
+/// Parse a header body: two platform bytes ("PT"), platform id, flags, then `tag, length, value` entries up to 0xFF.
+pub fn parse_tags(body:&[u8])->Header{parse_tags_len(body).0}
+/// Like `parse_tags`, also returning the number of bytes up to and including the 0xFF terminator.
+pub fn parse_tags_len(body:&[u8])->(Header,usize){
     let mut p=4usize;let mut h=Header{channels:1,..Default::default()};
     while p<body.len(){
         let tag=body[p];p+=1;
         match tag{
             0xFF=>break,
-            0xFD|0xFE=>continue, // stream section delimiters carry no value
+            0xFC|0xFD|0xFE=>continue, // stream section delimiters carry no value
             _=>{
-                let n=*body.get(p).ok_or("truncated header entry")? as usize;p+=1;
+                let Some(&n)=body.get(p) else{break};let n=n as usize;p+=1;
                 if n>4||p+n>body.len(){ // long entries (e.g. 0x13, speech tables) are skipped by length
                     p=(p+n).min(body.len());continue
                 }
@@ -35,7 +41,7 @@ pub fn parse_header(d:&[u8])->Result<(Header,usize),String>{
             }
         }
     }
-    Ok((h,size))
+    (h,p)
 }
 
 /// Payload ranges (start,end) of every `SCDl` block.
@@ -141,6 +147,77 @@ pub fn decode(d:&[u8],max_blocks:Option<usize>)->Result<Pcm,String>{
     Ok(Pcm{sample_rate:sd.header.sample_rate,channels:sd.channels(),samples,frames:sd.frames,stats:sd.stats()})
 }
 
+/// One sound of a `BNKb` bank (`banks/*.bnk`): 'BNKb', u8 version, u8 0, u16 count, u32 file size, 8 zero bytes, then `count`
+/// u32 values (4 + 0x24 * i, not used by the loader path decoded here) then the 0x28-byte sound headers in the same tag format as `SCHl` (tag 0x88 = data offset).
+pub struct BankSound{pub header:Header,pub data_offset:usize}
+pub fn parse_bank(d:&[u8])->Result<Vec<BankSound>,String>{
+    if d.get(..4)!=Some(b"BNKb"){return Err("Not a BNKb bank".into())}
+    let count=u16::from_be_bytes([d[6],d[7]]) as usize;let mut out=vec![];let mut pos=0x14+count*4;
+    for _ in 0..count{
+        // Sound headers follow the table back to back; each ends with a 0xFF tag and is padded to 4 bytes.
+        let body=d.get(pos..).ok_or("sound header outside bank")?;
+        let (header,used)=parse_tags_len(body);pos+=(used+3)&!3;
+        let data_offset=header.entries.iter().find(|e|e.0==0x88).map(|e|e.1 as usize).ok_or("sound without a data offset")?;
+        out.push(BankSound{header,data_offset});
+    }
+    Ok(out)
+}
+/// Decode sound `i` of a bank (EA-XA only).
+pub fn decode_bank_sound(d:&[u8],i:usize)->Result<Pcm,String>{
+    let sounds=parse_bank(d)?;let s=sounds.get(i).ok_or("no such sound")?;
+    if s.header.codec!=0x0a{return Err(format!("codec {:#x} is not EA-XA",s.header.codec))}
+    let mut pos=s.data_offset;let mut hist=(0f32,0f32);
+    let samples=xa_run(d,&mut pos,s.header.samples as usize,&mut hist)?;
+    Ok(Pcm{sample_rate:s.header.sample_rate,channels:1,samples,frames:0,stats:mp3::Stats::default()})
+}
+
+/// EA-XA ADPCM (`decodexac` 0x80280dfc): codec 0x0A.  A block is 15 bytes -> 28 samples: header byte (high nibble selects
+/// the predictor pair in `XA_FILTER`, low nibble the shift row in `XA_TABLE`), then 14 bytes of two 4-bit codes
+/// (high nibble first): `s = table[row][nibble] + prev * c1 + prev2 * c2`.  A block starting with 0xEE is raw:
+/// `[EE][i16 prev][i16 prev2][28 x i16]` (`process_raw_block` 0x80280ce4).  Mono streams only.
+/// Decode `want` samples of EA-XA blocks starting at `pos` (predictor state carried in `hist`).
+pub fn xa_run(data:&[u8],pos:&mut usize,want:usize,hist:&mut (f32,f32))->Result<Vec<i16>,String>{
+    use crate::mp3_tables::{XA_FILTER,XA_TABLE};
+    let s16=|d:&[u8],o:usize|->Result<f32,String>{d.get(o..o+2).map(|b|i16::from_be_bytes([b[0],b[1]]) as f32).ok_or_else(||"EA-XA raw block truncated".to_string())};
+    let clamp=|v:f32|v.round().clamp(-32768.,32767.) as i16;
+    let (mut h1,mut h2)=*hist;let mut run:Vec<i16>=Vec::with_capacity(want+28);
+    while run.len()<want{
+        let Some(&first)=data.get(*pos) else{return Err("EA-XA data ends early".into())};
+        if first==0xEE{
+            h1=s16(data,*pos+1)?;h2=s16(data,*pos+3)?;
+            for k in 0..28{run.push(clamp(s16(data,*pos+5+k*2)?));}
+            *pos+=61;
+        }else{
+            let hdr=first as usize;let (c1,c2)=(XA_FILTER[hdr>>4&3],XA_FILTER[4+(hdr>>4&3)]);let row=(hdr&15)*16;
+            let bytes=data.get(*pos+1..*pos+15).ok_or("EA-XA block truncated")?;
+            for &b in bytes{for nib in [b>>4,b&15]{
+                let v=XA_TABLE[row+nib as usize]+h1*c1+h2*c2;h2=h1;h1=v;run.push(clamp(v));
+            }}
+            *pos+=15;
+        }
+    }
+    run.truncate(want);*hist=(h1,h2);Ok(run)
+}
+
+pub fn decode_xa(d:&[u8])->Result<Pcm,String>{
+    let (h,_)=parse_header(d)?;
+    if h.codec!=0x0a{return Err(format!("codec {:#x} is not EA-XA",h.codec))}
+    let ch=h.channels.max(1) as usize;
+    // Stereo blocks hold each channel's run of ADPCM blocks one after the other; every channel keeps its own predictor.
+    let mut out:Vec<i16>=vec![];let mut hist=vec![(0f32,0f32);ch];
+    for (bi,(s,e)) in data_blocks(d)?.into_iter().enumerate(){
+        let payload=&d[s..e];let want=be32(payload,0)? as usize;
+        // After the sample count come one u32 offset per channel (relative to the data that follows them).
+        let data=payload.get(4+4*ch..).ok_or("short SCDl block")?;let mut runs:Vec<Vec<i16>>=vec![];
+        for c in 0..ch{
+            let mut pos=be32(payload,4+4*c)? as usize;
+            runs.push(xa_run(data,&mut pos,want,&mut hist[c]).map_err(|er|format!("block {bi}: {er}"))?);
+        }
+        for i in 0..want{for r in &runs{out.push(r[i]);}}
+    }
+    Ok(Pcm{sample_rate:h.sample_rate,channels:ch,samples:out,frames:0,stats:mp3::Stats::default()})
+}
+
 /// RIFF/WAVE (16-bit PCM) bytes for a decoded stream.
 pub fn to_wav(p:&Pcm)->Vec<u8>{
     let data_len=(p.samples.len()*2) as u32;let mut w=Vec::with_capacity(44+data_len as usize);
@@ -218,5 +295,46 @@ mod tests{
         }
         eprintln!("{ok} ambience streams decoded, {other} use another codec");
         assert!(ok>=8);
+    }
+
+    /// Every EA-XA ambience stream decodes to exactly the header's sample count without clipping or filter blow-up.
+    #[test] fn xa_streams(){
+        let dir=crate::bridge::data_root().join("files").join("data").join("audio").join("aems");
+        if !dir.exists(){eprintln!("DATA absent; skipped");return}
+        let mut n=0;let mut seconds=0f64;
+        for name in ["amb_natureforest.ast","amb_park.ast","amb_stadium.ast","amb_schoolyard.ast","mg_paperairplanes.ast"]{
+            let d=std::fs::read(dir.join(name)).unwrap();
+            for (a,b) in streams(&d){
+                let (h,_)=parse_header(&d[a..b]).unwrap();if h.codec!=0x0a{continue}
+                let p=decode_xa(&d[a..b]).unwrap_or_else(|e|panic!("{name}: {e}"));
+                assert_eq!((p.samples.len()/p.channels) as u32,h.samples,"{name}: sample count");
+                let clipped=p.samples.iter().filter(|&&s|s==i16::MAX||s==i16::MIN).count();
+                assert!((clipped as f64)/(p.samples.len() as f64)<1e-3,"{name}: clipped {clipped}");
+                n+=1;seconds+=p.samples.len() as f64/p.sample_rate as f64;
+            }
+        }
+        eprintln!("{n} EA-XA streams, {seconds:.0} s");
+        assert!(n>=30);
+    }
+
+    /// Every sound of every `.bnk` bank decodes as EA-XA to its header's sample count.
+    #[test] fn bank_sounds(){
+        let dir=crate::bridge::data_root().join("files").join("data").join("audio").join("banks");
+        let Ok(rd)=std::fs::read_dir(&dir) else{eprintln!("DATA absent; skipped");return};
+        let (mut banks,mut sounds,mut other)=(0,0,0);
+        for e in rd.filter_map(|e|e.ok()){
+            let p=e.path();if p.extension().is_none_or(|x|x!="bnk"){continue}
+            let d=std::fs::read(&p).unwrap();banks+=1;
+            for (i,snd) in parse_bank(&d).unwrap_or_else(|er|panic!("{}: {er}",p.display())).iter().enumerate(){
+                if snd.header.codec!=0x0a{other+=1;continue}
+                let pcm=decode_bank_sound(&d,i).unwrap_or_else(|er|panic!("{} sound {i}: {er}",p.display()));
+                assert_eq!(pcm.samples.len() as u32,snd.header.samples);
+                let clipped=pcm.samples.iter().filter(|&&s|s==i16::MAX||s==i16::MIN).count();
+                assert!((clipped as f64)/(pcm.samples.len().max(1) as f64)<2e-3,"{} sound {i}: {clipped} clipped",p.display());
+                sounds+=1;
+            }
+        }
+        eprintln!("{banks} banks, {sounds} EA-XA sounds decoded, {other} with another codec");
+        assert_eq!(banks,10);assert!(sounds>=50);
     }
 }

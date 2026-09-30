@@ -55,10 +55,16 @@ fn main(){
         let out=arg("--out").expect("--out <file.wav>");
         let d=std::fs::read(&input).expect("input");
         // A file may hold several streams (.ast banks): --stream <n> picks one (default 0).
+        if input.to_lowercase().ends_with(".bnk"){
+            let which=arg("--stream").and_then(|s|s.parse::<usize>().ok()).unwrap_or(0);
+            match audio::decode_bank_sound(&d,which){Ok(p)=>{std::fs::write(&out,audio::to_wav(&p)).expect("write");eprintln!("{} samples at {} Hz",p.samples.len(),p.sample_rate);}Err(e)=>{eprintln!("{e}");std::process::exit(1)}}
+            return
+        }
         let list=audio::streams(&d);let which=arg("--stream").and_then(|s|s.parse::<usize>().ok()).unwrap_or(0);
         eprintln!("{} stream(s) in {input}",list.len());
         let (a,b)=*list.get(which).expect("no such stream");
-        match audio::decode(&d[a..b],arg("--blocks").and_then(|b|b.parse().ok())){
+        let res=match audio::parse_header(&d[a..b]).map(|h|h.0.codec){Ok(0x0a)=>audio::decode_xa(&d[a..b]),_=>audio::decode(&d[a..b],arg("--blocks").and_then(|b|b.parse().ok()))};
+        match res{
             Ok(p)=>{std::fs::write(&out,audio::to_wav(&p)).expect("write");eprintln!("{} samples/ch at {} Hz, {} channels, {} frames, stats {:?}",p.samples.len()/p.channels,p.sample_rate,p.channels,p.frames,p.stats);}
             Err(e)=>{eprintln!("{e}");std::process::exit(1)}
         }
