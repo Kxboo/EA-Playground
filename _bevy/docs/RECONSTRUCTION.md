@@ -51,7 +51,10 @@ All 836 distinct model files are now accounted for: 828 geometry exports and eig
 | Attrib database (`db.vlt`/`db.bin`) | `src/vlt.rs` | `hash64` golden vectors from the original machine code; 908 collections / 7,683 attributes cross-checked against the Python loader |
 | Havok 4.6 collision (`*.hkx`) | `src/havok.rs` | Python reference; identical bodies, triangles and vertex sums on four areas |
 | Player locomotion | `src/locomotion.rs` | Constants generated from the ELF; unit tests |
+| Skeletons (`.ske`) | `src/skeleton.rs` | Python reference: all 181 bones of 4 rigs (bind pose, world transforms); the file's own cached world rotations agree with the composed chain |
+| Animation banks (`.anm`), 6 codecs + `sBoneMask` | `src/anim.rs` | Python reference: all 266 decodable clips (player 265 + RC car 1) match per bone and channel; the 2 prop banks the reference cannot decode fail in both.  `BONE_MASK` is read from the ELF by `tools/extract_constants.py` |
+| Playable character | `src/character.rs` | `alicia.o` (62 skinned parts, 2,877 triangles, same as the reference) + 68 joint entities + inverse bind poses + Bevy `AnimationClip`s; no glTF, no Python in game mode; self-test checks joint pose changes
 
 The model decoder is schema-driven: every shader family is a struct of (count, pointer) fields whose offsets come from the executable, and PCode (`ProcessPCode`, complete opcode set from its jump table) gives the GX vertex attributes and display list.  This replaces the earlier layout-scoring heuristics and also fixes three defects those had: duplicated meshes (`playground-high`, `world-low-all`: 4,553 phantom triangles), a missed animated-rope primitive (`tetherball_pole`), and family-specific degenerate-triangle rules.
 
-Still Python: skeleton and animation decoding (character path), TPL/APT/audio formats, and the asset viewer's worker.
+Still Python: TPL/APT/audio formats and the asset viewer's worker (its model/animation preview still goes through a glTF file produced by the Python exporter; game mode no longer does).

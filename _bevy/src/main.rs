@@ -14,6 +14,7 @@ mod model;
 mod assets;
 mod skeleton;
 mod anim;
+mod character;
 
 use bevy::{prelude::*,render::view::window::screenshot::{Screenshot,save_to_disk},winit::WinitSettings};
 use bevy_egui::{EguiPlugin,EguiPrimaryContextPass};

@@ -2,12 +2,12 @@
 //! recovered locomotion (see `locomotion.rs`) drive a character.  Evidence per subsystem is shown
 //! in the HUD and written by `--selftest`; nothing here is labelled original unless it traces to
 //! the executable or a data file.
-use bevy::{camera::visibility::RenderLayers,prelude::*,render::view::window::screenshot::{Screenshot,save_to_disk},input::mouse::{AccumulatedMouseMotion,AccumulatedMouseScroll},window::{PrimaryWindow,RequestRedraw},winit::{WinitSettings,UpdateMode},world_serialization::WorldInstanceReady};
+use bevy::{camera::visibility::RenderLayers,prelude::*,render::view::window::screenshot::{Screenshot,save_to_disk},input::mouse::{AccumulatedMouseMotion,AccumulatedMouseScroll},window::{PrimaryWindow,RequestRedraw},winit::{WinitSettings,UpdateMode},};
 use bevy_egui::{egui,EguiContexts,EguiTextureHandle};
 use serde::{Deserialize,Serialize};
 use serde_json::{Value,json};
-use std::{collections::{HashMap,VecDeque},path::PathBuf,time::Instant};
-use crate::{archive,assets,bridge::{self,Bridge},gsh,locomotion::{InputKind,Locomotion,TICK_HZ},menu::AppMode,model,recovered as k};
+use std::{collections::{HashMap},path::PathBuf,time::Instant};
+use crate::{archive,assets,bridge,character,gsh,locomotion::{InputKind,Locomotion,TICK_HZ},menu::AppMode,model,recovered as k};
 use std::sync::{Mutex,mpsc};
 
 #[derive(Component,Debug,Clone,Serialize,Deserialize)]
@@ -26,7 +26,7 @@ const PROVISIONAL_JUMP_SPEED:f32=4.5;
 const CHARACTER_HEIGHT:f32=1.0;
 const STEP_UP:f32=0.6;
 const MIN_BOOT_SECONDS:f32=2.5;
-const CLIPS:[(&str,usize);3]=[("S_idle",250),("S_walk",263),("S_run",253)];
+use character::CLIPS;
 const WORLD_SUFFIXES:[&str;4]=["","-alpha","-fade","-alphafade"];
 
 /// World display curvature: the decoded world meshes are baked onto a sphere of radius `R` (world.csv RADIUS)
@@ -48,9 +48,10 @@ const SKY_MODELS:[(&str,bool);3]=[("skybox",false),("skybox_mountain_city_ring",
 
 #[derive(Resource,Default)] pub struct GameInput{pub x:f32,pub y:f32,pub jump:bool,pub scripted:bool}
 
-struct Job{key:String,req:Value}
+/// Decoded player assets waiting for the build step.
+struct PlayerAsset{up:assets::Uploaded,skeleton:crate::skeleton::Skeleton,source:String}
 /// What the loader thread hands to the main thread (CPU-side only; Bevy assets are created on the main thread).
-enum LoadMsg{Boot(Vec<u8>,usize,usize),Csv(&'static str,Vec<Vec<String>>),Expect{models:usize},Model{kind:ModelKind,result:Result<assets::BuiltModel,String>},Log(String)}
+enum LoadMsg{Boot(Vec<u8>,usize,usize),Csv(&'static str,Vec<Vec<String>>),Expect{models:usize},Model{kind:ModelKind,result:Result<assets::BuiltModel,String>},Player(Result<character::CharacterData,String>),Log(String)}
 #[derive(Clone)] enum ModelKind{Layer(String),Sky{clouds:bool},Prop(String)}
 
 fn parse_csv(d:&[u8])->Vec<Vec<String>>{
@@ -66,6 +67,7 @@ fn loader(tx:mpsc::Sender<LoadMsg>,placeables:Vec<Placeable>){
         Ok((rgba,w,h))=>{let _=tx.send(LoadMsg::Boot(rgba,w,h));}
         Err(e)=>{let _=tx.send(LoadMsg::Log(format!("boot screen: {e}")));}
     }
+    let _=tx.send(LoadMsg::Player(character::load(&p("characters"),&schemas)));
     let big=p("world/world.big");
     let mut layers:Vec<String>=vec![];
     for (key,source) in [("filelist",format!("{big}::worldfilelist.csv")),("bounds",format!("{big}::world.csv")),("controls",format!("{}::controls.csv",p("csvs.viv")))]{
@@ -152,7 +154,7 @@ fn seg_cross(p:Vec2,q:Vec2,r:Vec2,s:Vec2)->bool{
 
 #[derive(Resource)]
 pub struct Game{
-    bridge:Bridge,jobs:VecDeque<Job>,pending:Option<(u64,String)>,results:HashMap<String,Value>,rx:Mutex<mpsc::Receiver<LoadMsg>>,filelist:Vec<(String,bool)>,models_expected:Option<usize>,models_received:usize,
+    player_asset:Option<PlayerAsset>,results:HashMap<String,Value>,rx:Mutex<mpsc::Receiver<LoadMsg>>,filelist:Vec<(String,bool)>,models_expected:Option<usize>,models_received:usize,
     phase:Phase,started:Instant,pub log:Vec<String>,boot_image:Option<Handle<Image>>,boot_egui:Option<egui::TextureId>,
     layers:Vec<(String,String)>,layers_expected:usize,layers_ready:usize,layers_empty:usize,clip_handles:Vec<Handle<AnimationClip>>,
     ground:Option<Ground>,build_wait:u32,player:Option<Entity>,pub spawn:Vec3,pub gravity:f32,pub world_radius:f32,sky_expected:usize,sky_ready:usize,sky_angle:f32,pub placeables:Vec<Placeable>,pub props_spawned:usize,pub props_failed:usize,pub collision_bodies:usize,pub collision_files:usize,
@@ -180,10 +182,6 @@ impl Game{
         if let Some(l)=r.get("start_location").and_then(v3){self.results.insert("db_start".into(),json!([l.x,l.y,l.z]));self.spawn_from_db=true;}
     }
     pub fn new(selftest:Option<SelfTest>)->Self{
-        let mut jobs=VecDeque::new();
-        let model=format!("{}::alicia.viv::alicia.o",src("characters/models/characters.viv"));
-        let skel=format!("{}::player_skel.ske",src("characters/player_anims.viv"));let bank=format!("{}::player_anims.anm",src("characters/player_anims.viv"));
-        for (name,index) in CLIPS{jobs.push_back(Job{key:format!("clip:{name}"),req:json!({"command":"preview","source":model,"skeleton":skel,"bank":bank,"index":index})});}
         // Player start from the game's own Attrib database (character_info/player), read by the Rust vault loader.
         let mut db_results=HashMap::new();
         let dir=bridge::data_root().join("files").join("data").join("db");
@@ -210,7 +208,7 @@ impl Game{
             _=>log.push("db.vlt/db.bin not found".into()),
         }
         let (tx,rx)=mpsc::channel();
-        let mut g=Self{bridge:Bridge::start(),jobs,pending:None,results:HashMap::new(),rx:Mutex::new(rx),filelist:vec![],models_expected:None,models_received:0,phase:Phase::Loading,started:Instant::now(),log,
+        let mut g=Self{player_asset:None,results:HashMap::new(),rx:Mutex::new(rx),filelist:vec![],models_expected:None,models_received:0,phase:Phase::Loading,started:Instant::now(),log,
             boot_image:None,boot_egui:None,layers:vec![],layers_expected:0,layers_ready:0,layers_empty:0,clip_handles:vec![],ground:None,build_wait:0,player:None,spawn:Vec3::ZERO,
             gravity:9.81,world_radius:0.,sky_expected:0,sky_ready:0,sky_angle:0.,placeables:vec![],props_spawned:0,props_failed:0,collision_bodies:0,collision_files:0,db_summary:String::new(),start_dir:Vec3::Z,spawn_from_db:false,tri_count:0,controls_rows:0,combat_bindings:0,world_bounds:None,boot_shown:None,boot_shot:false,load_seconds:0.,selftest};
         // (fields set below)
@@ -228,9 +226,8 @@ pub fn plugin(app:&mut App){
         .add_systems(FixedUpdate,movement.run_if(in_game));
 }
 
-fn scene_path(v:&Value)->Option<String>{v["asset"].as_str().map(|s|s.to_owned())}
 
-fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,assets_srv:Res<AssetServer>,mut meshes:ResMut<Assets<Mesh>>,mut materials:ResMut<Assets<StandardMaterial>>,mut images:ResMut<Assets<Image>>,mut settings:ResMut<WinitSettings>,mut redraw:MessageWriter<RequestRedraw>){
+fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,mut meshes:ResMut<Assets<Mesh>>,mut materials:ResMut<Assets<StandardMaterial>>,mut images:ResMut<Assets<Image>>,mut clips:ResMut<Assets<AnimationClip>>,mut settings:ResMut<WinitSettings>,mut redraw:MessageWriter<RequestRedraw>){
     let Some(g)=g.as_mut() else{return};let g=&mut **g;
     settings.focused_mode=UpdateMode::Continuous;settings.unfocused_mode=UpdateMode::Continuous;redraw.write(RequestRedraw);
     if g.phase!=Phase::Loading{return}
@@ -252,6 +249,15 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,assets_srv:Res<AssetSer
                     _=>{}
                 }
             }
+            LoadMsg::Player(Ok(d))=>{
+                let up=assets::upload_skinned(&d.model,&mut meshes,&mut materials,&mut images);
+                for c in &d.clips{
+                    match character::animation_clip(c){Ok(a)=>g.clip_handles.push(clips.add(a)),Err(e)=>{g.log.push(format!("FAILED clip {}: {e}",c.name));g.phase=Phase::Failed(e);return}}
+                }
+                g.log.push(format!("player: {} bones, {} skinned parts, clips {}",d.skeleton.bones.len(),up.parts.len(),d.clips.iter().map(|c|format!("{} ({} samples)",c.name,c.sample_count)).collect::<Vec<_>>().join(", ")));
+                g.player_asset=Some(PlayerAsset{up,skeleton:d.skeleton,source:d.source});
+            }
+            LoadMsg::Player(Err(e))=>{g.log.push(format!("FAILED player: {e}"));g.phase=Phase::Failed(format!("player: {e}"));return}
             LoadMsg::Expect{models}=>{g.models_expected=Some(models);g.sky_expected=SKY_MODELS.len();}
             LoadMsg::Model{kind,result}=>{
                 g.models_received+=1;
@@ -289,28 +295,9 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,assets_srv:Res<AssetSer
             }
         }
     }
-    // Python worker: only the character clips remain (skeleton/animation decoders are not ported yet).
-    let responses:Vec<Value>=g.bridge.rx.lock().unwrap().try_iter().collect();
-    for r in responses{
-        let Some((id,key))=g.pending.clone() else{continue};
-        if r["id"].as_u64()!=Some(id){continue}
-        g.pending=None;
-        if r["ok"]!=true{let e=format!("{key}: {}",r["error"].as_str().unwrap_or("decoder error"));g.log.push(format!("FAILED {e}"));g.phase=Phase::Failed(e);return}
-        let value=r["value"].clone();
-        g.log.push(format!("loaded {key}"));
-        if key.starts_with("clip:"){
-            let p=scene_path(&value).unwrap_or_default();
-            g.clip_handles.push(assets_srv.load(GltfAssetLabel::Animation(0).from_asset(p.clone())));
-            g.results.insert(format!("scene:{}",key),json!(p));
-        }
-        g.results.insert(key,value);
-    }
-    if g.pending.is_none(){
-        if let Some(job)=g.jobs.pop_front(){let id=g.bridge.request(job.req);g.pending=Some((id,job.key));}
-        else if g.models_expected.is_some_and(|n|g.models_received>=n) && g.clip_handles.len()==CLIPS.len(){
-            let boot_done=g.boot_shown.map(|t|t.elapsed().as_secs_f32()>=MIN_BOOT_SECONDS).unwrap_or(g.boot_image.is_none());
-            if boot_done{g.phase=Phase::Building;g.log.push("world and player assets ready".into());}
-        }
+    if g.models_expected.is_some_and(|n|g.models_received>=n) && g.player_asset.is_some(){
+        let boot_done=g.boot_shown.map(|t|t.elapsed().as_secs_f32()>=MIN_BOOT_SECONDS).unwrap_or(g.boot_image.is_none());
+        if boot_done{g.phase=Phase::Building;g.log.push("world and player assets ready".into());}
     }
 }
 
@@ -325,7 +312,7 @@ fn sky_update(g:Option<ResMut<Game>>,time:Res<Time>,mut layers:Query<(&SkyLayer,
 }
 
 
-fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>,mut graphs:ResMut<Assets<AnimationGraph>>,cam:Query<Entity,With<GameCamera>>){
+fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,mut ibp:ResMut<Assets<bevy::mesh::skinning::SkinnedMeshInverseBindposes>>,mut graphs:ResMut<Assets<AnimationGraph>>,cam:Query<Entity,With<GameCamera>>){
     let Some(g)=g.as_mut() else{return};let g=&mut **g;
     if g.phase!=Phase::Building{return}
     g.build_wait+=1;if g.build_wait<3{return} // let transforms propagate
@@ -381,20 +368,16 @@ fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer
     let mut graph=AnimationGraph::new();
     let nodes:Vec<AnimationNodeIndex>=g.clip_handles.iter().map(|c|graph.add_clip(c.clone(),1.,graph.root)).collect();
     let handle=graphs.add(graph);
-    let idle_scene=g.results.get("scene:clip:S_idle").and_then(|v|v.as_str()).map(|s|s.to_owned()).unwrap_or_default();
-    let source=g.results["clip:S_idle"]["source"].as_str().unwrap_or("").to_string();
-    let dv=g.results["clip:S_idle"]["decoder_version"].as_str().unwrap_or("").to_string();
-    let player=commands.spawn((GameEntity,Player{loco:Locomotion::default(),vy:0.,grounded:true,speed:0.,facing:g.start_dir,weights:[1.,0.,0.],anim_ready:false},Transform::from_translation(g.spawn),Visibility::default(),
-        OriginalAsset{evidence:EvidenceLevel::AssetDerived,source,decoder_version:dv})).id();
-    let nodes2=nodes.clone();let h2=handle.clone();
-    commands.spawn((GameEntity,PlayerModel,ChildOf(player),WorldAssetRoot(assets.load(GltfAssetLabel::Scene(0).from_asset(idle_scene))),Transform::default()))
-        .observe(move|ev:On<WorldInstanceReady>,mut commands:Commands,children:Query<&Children>,mut players:Query<&mut AnimationPlayer>,mut pq:Query<&mut Player>|{
-            for c in children.iter_descendants(ev.entity){if let Ok(mut p)=players.get_mut(c){
-                for (i,n) in nodes2.iter().enumerate(){let a=p.play(*n);a.repeat();a.set_weight(if i==0{1.}else{0.});}
-                commands.entity(c).insert(AnimationGraphHandle(h2.clone()));
-                for mut pl in &mut pq{pl.anim_ready=true;}
-            }}
-        });
+    let asset=g.player_asset.take().expect("player asset");
+    let player=commands.spawn((GameEntity,Player{loco:Locomotion::default(),vy:0.,grounded:true,speed:0.,facing:g.start_dir,weights:[1.,0.,0.],anim_ready:true},Transform::from_translation(g.spawn),Visibility::default(),
+        OriginalAsset{evidence:EvidenceLevel::AssetDerived,source:asset.source.clone(),decoder_version:"rust-model-1 / rust-anim-1".into()})).id();
+    // The model entity owns the AnimationPlayer; joints point at it through AnimatedBy (see character.rs).
+    let model=commands.spawn((GameEntity,PlayerModel,ChildOf(player),Transform::default(),Visibility::default())).id();
+    let mut ap=AnimationPlayer::default();
+    for (i,n) in nodes.iter().enumerate(){let a=ap.play(*n);a.repeat();a.set_weight(if i==0{1.}else{0.});}
+    commands.entity(model).insert((ap,AnimationGraphHandle(handle.clone())));
+    let joints=character::spawn_rig(&mut commands,&mut ibp,&asset.skeleton,&asset.up,model,model);
+    g.log.push(format!("player rig: {} joints, {} skinned parts",joints.len(),asset.up.parts.len()));
     g.player=Some(player);
     if cam.is_empty(){
         // Sky camera (order -1) draws the sky layer first; the world camera keeps that colour buffer and adds the world on top.
@@ -531,7 +514,7 @@ fn hud(images:Res<Assets<Image>>,mut contexts:EguiContexts,mut g:Option<ResMut<G
     Ok(())
 }
 
-fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<GameInput>,time:Res<Time>,player:Query<(&Player,&Transform)>,cam:Query<&Transform,With<GameCamera>>,meshes:Query<&Mesh3d>,players:Query<&AnimationPlayer>,mut exit:MessageWriter<AppExit>,_window:Query<&Window,With<PrimaryWindow>>){
+fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<GameInput>,time:Res<Time>,player:Query<(&Player,&Transform)>,cam:Query<&Transform,With<GameCamera>>,meshes:Query<&Mesh3d>,players:Query<&AnimationPlayer>,joints:Query<(&bevy::animation::AnimationTargetId,&Transform)>,skins:Query<&bevy::mesh::skinning::SkinnedMesh>,mut exit:MessageWriter<AppExit>,_window:Query<&Window,With<PrimaryWindow>>){
     let Some(g)=g.as_mut() else{return};let g=&mut **g;
     if g.selftest.is_none(){return}
     let elapsed=g.started.elapsed().as_secs_f32();
@@ -554,7 +537,9 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
     let st=g.selftest.as_mut().unwrap();
     let Ok((p,t))=player.single() else{return};
     st.t+=time.delta_secs();
-    let record=|st:&mut SelfTest,name:&str|{st.samples.push(json!({"step":name,"t":st.t,"pos":[t.translation.x,t.translation.y,t.translation.z],"speed":p.speed,"grounded":p.grounded,"weights":p.weights}));};
+    // Checksum of every animated joint rotation: changes whenever the decoded clips move the rig.
+    let pose:f32=joints.iter().map(|(_,t)|t.rotation.x+2.*t.rotation.y+3.*t.rotation.z).sum();
+    let record=|st:&mut SelfTest,name:&str|{st.samples.push(json!({"step":name,"t":st.t,"pos":[t.translation.x,t.translation.y,t.translation.z],"speed":p.speed,"grounded":p.grounded,"weights":p.weights,"pose":pose}));};
     input.scripted=true;
     // Scripted input sequence: settle, walk forward, run diagonally, jump, settle.
     let script=[(0.,0.,0.,false,1.5,"settle"),(0.,1.,0.,false,2.5,"forward"),(-1.,0.,0.,false,2.5,"left"),(-1.,1.,0.,false,2.0,"diagonal"),(0.,0.,0.,true,0.4,"jump"),(0.,0.,0.,false,1.0,"land")];
@@ -583,6 +568,10 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
                 check("gravity read from hkWorldCinfo",(g.gravity-9.81).abs()<0.01,format!("gravity {:.3}",g.gravity));
                 check("world curvature radius from world.csv",g.world_radius>0.,format!("radius {}",g.world_radius));
                 check("player model + 3 clips loaded",g.clip_handles.len()==CLIPS.len()&&p.anim_ready,format!("{} clips, anim player bound: {}",g.clip_handles.len(),p.anim_ready));
+                check("player rig built in Rust: 68 joints, skinned parts bound",joints.iter().count()==68&&skins.iter().count()==62&&skins.iter().all(|s|s.joints.len()==68),format!("{} joints, {} skinned mesh parts",joints.iter().count(),skins.iter().count()));
+                let poses:Vec<f64>=st.samples.iter().filter_map(|s|s["pose"].as_f64()).collect();
+                let (lo,hi)=poses.iter().fold((f64::MAX,f64::MIN),|a,&x|(a.0.min(x),a.1.max(x)));
+                check("decoded clips animate the skeleton (joint pose changes idle -> walk/run)",poses.len()>=3&&hi-lo>0.05,format!("joint rotation checksum ranged {lo:.3}..{hi:.3} over {} samples",poses.len()));
                 check("player spawn read from db.vlt (character_info/player)",g.spawn_from_db&&(g.spawn.x-12.).abs()<1.&&(g.spawn.z+53.).abs()<1.&&g.spawn.y.abs()<1.5,format!("start_location (12,0,-53) -> ground-snapped spawn {:.1},{:.1},{:.1}",g.spawn.x,g.spawn.y,g.spawn.z));
                 check("controls.csv parsed",g.combat_bindings>=8,format!("{} rows, {} STATE_COMBAT",g.controls_rows,g.combat_bindings));
                 check("mesh entities in scene",meshes.iter().count()>100,format!("{} Mesh3d entities",meshes.iter().count()));

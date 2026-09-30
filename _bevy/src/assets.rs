@@ -151,7 +151,9 @@ pub fn build(source:&str,schemas:&model::Schemas)->Result<BuiltModel,String>{
             p.verts.iter().map(|v|{let a=acc.get(&v.pos_index).copied().unwrap_or([0.,1.,0.]);let l=(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]).sqrt();let l=if l==0.{1.}else{l};let n=[(a[0]/l) as f32,(a[1]/l) as f32,(a[2]/l) as f32];if apt{[n[0],-n[1],n[2]]}else{n}}).collect()};
         let colors=has_colors.then(||p.verts.iter().map(|v|{let c=v.clr.unwrap();[c[0] as f32/255.,c[1] as f32/255.,c[2] as f32/255.,c[3] as f32/255.]}).collect());
         let (joints,weights)=if p.verts.iter().all(|v|v.weight.is_some())&&!p.verts.is_empty(){
-            (Some(p.verts.iter().map(|v|{let b=v.weight.unwrap().1;[b[0] as u16,b[1] as u16,b[2] as u16,0]}).collect()),Some(p.verts.iter().map(|v|{let w=v.weight.unwrap().0;[w[0],w[1],w[2],0.]}).collect()))
+            (Some(p.verts.iter().map(|v|{let b=v.weight.unwrap().1;[b[0] as u16,b[1] as u16,b[2] as u16,0]}).collect()),Some(p.verts.iter().map(|v|{
+                // Weights are renormalised to sum 1 (all-zero -> first bone only), as the reference exporter does.
+                let w=v.weight.unwrap().0;let t=w[0]+w[1]+w[2];if t>0.{[w[0]/t,w[1]/t,w[2]/t,0.]}else{[1.,0.,0.,0.]}}).collect()))
         }else{(None,None)};
         let _=&mut indices;
         prims.push(BuiltPrim{family:p.family.clone(),positions,normals,uvs,colors,indices,material:mi,joints,weights});
@@ -167,6 +169,14 @@ fn address(w:Wrap)->ImageAddressMode{match w{Wrap::Clamp=>ImageAddressMode::Clam
 
 /// Turn CPU buffers into Bevy assets.  `force_unlit`/`force_double_sided` are used for the sky layers.
 pub fn upload(b:&BuiltModel,meshes:&mut Assets<Mesh>,materials:&mut Assets<StandardMaterial>,images:&mut Assets<Image>,force_unlit:bool)->Uploaded{
+    upload_with(b,meshes,materials,images,force_unlit,false)
+}
+/// Like `upload`, but keeps hardware-skin joint indices/weights on the meshes: only for models spawned with a
+/// `SkinnedMesh` (the character rig).  Static instances of skinned models are drawn in bind pose without them.
+pub fn upload_skinned(b:&BuiltModel,meshes:&mut Assets<Mesh>,materials:&mut Assets<StandardMaterial>,images:&mut Assets<Image>)->Uploaded{
+    upload_with(b,meshes,materials,images,false,true)
+}
+fn upload_with(b:&BuiltModel,meshes:&mut Assets<Mesh>,materials:&mut Assets<StandardMaterial>,images:&mut Assets<Image>,force_unlit:bool,skinned:bool)->Uploaded{
     let mut image_handles:HashMap<(usize,Wrap,Wrap),Handle<Image>>=HashMap::new();
     let mut mat_handles:Vec<Handle<StandardMaterial>>=vec![];
     for m in &b.materials{
@@ -188,6 +198,10 @@ pub fn upload(b:&BuiltModel,meshes:&mut Assets<Mesh>,materials:&mut Assets<Stand
         mesh.insert_attribute(Mesh::ATTRIBUTE_NORMAL,p.normals.clone());
         mesh.insert_attribute(Mesh::ATTRIBUTE_UV_0,p.uvs.clone());
         if let Some(c)=&p.colors{mesh.insert_attribute(Mesh::ATTRIBUTE_COLOR,c.clone());}
+        if let (true,Some(j),Some(w))=(skinned,&p.joints,&p.weights){
+            mesh.insert_attribute(Mesh::ATTRIBUTE_JOINT_INDEX,bevy::mesh::VertexAttributeValues::Uint16x4(j.iter().map(|x|*x).collect()));
+            mesh.insert_attribute(Mesh::ATTRIBUTE_JOINT_WEIGHT,w.clone());
+        }
         mesh.insert_indices(Indices::U32(p.indices.clone()));
         (meshes.add(mesh),mat_handles[p.material].clone())
     }).collect();
