@@ -241,6 +241,8 @@ def main():
                              ('tetherball_ai_init_oracle.py','Original tetherball AI character spawning and shared startup stores'),
                              ('tetherball_additional_player_oracle.py','Original tetherball additional player spawning and controller setup'),
                              ('tetherball_ball_init_oracle.py','Original tetherball ball assets, shadows and initial tuning'),
+                             ('tetherball_startup_oracle.py','Original enclosing tetherball startup with composed animation, distance, state and shadow helpers'),
+                             ('tetherball_shadow_setup_oracle.py','Original tetherball shadow options and native static initialization'),
                              ('mp3_lsf_oracle.py','MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC')]:
             args=[] if script=='mp3_lsf_oracle.py' else ['--check']
             r=subprocess.run([sys.executable,str(HERE/script),*args],cwd=BEVY,capture_output=True,text=True)
@@ -293,6 +295,8 @@ def main():
                 ('tetherball_ai_init::tests','Rust tetherball AI character startup matches original calls'),
                 ('tetherball_additional_player::tests','Rust tetherball additional player startup matches original calls'),
                 ('tetherball_ball_init::tests','Rust tetherball ball initialization matches original resources and state'),
+                ('tetherball_startup::tests','Rust enclosing tetherball startup matches original stores and ordered calls'),
+                ('tetherball_shadow_setup::tests','Rust tetherball shadow setup matches original viewport options'),
                 ('mp3::tests','MPEG-2 side information and scale-factor regression checks')]
         for name,label in suites:
             r=subprocess.run(['cargo','test','--release','--offline','--locked',name],cwd=BEVY,capture_output=True,text=True)

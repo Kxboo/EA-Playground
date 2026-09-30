@@ -37,6 +37,8 @@ mod tetherball_player_init;
 mod tetherball_ai_init;
 mod tetherball_additional_player;
 mod tetherball_ball_init;
+mod tetherball_startup;
+mod tetherball_shadow_setup;
 mod recovered;
 mod vlt;
 mod havok;
