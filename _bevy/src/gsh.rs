@@ -19,11 +19,11 @@ fn be16(d:&[u8],o:usize)->usize{u16::from_be_bytes([d[o],d[o+1]]) as usize}
 fn format_info(id:u8)->Option<(usize,usize,Fmt)>{Some(match id{20=>(16,8,Fmt::Rgb565),30=>(1,2,Fmt::Cmpr),25=>(1,1,Fmt::Pal8),24=>(4,8,Fmt::Pal4),22=>(32,8,Fmt::Rgba8),21=>(16,8,Fmt::Rgb5a3),_=>return None})}
 #[derive(Clone,Copy,PartialEq,Debug)] enum Fmt{Rgb565,Cmpr,Pal8,Pal4,Rgba8,Rgb5a3}
 
-fn rgb565(v:u16)->[u8;4]{
+pub(crate) fn rgb565(v:u16)->[u8;4]{
     let (r,g,b)=(((v>>11)&0x1f) as u8,((v>>5)&0x3f) as u8,(v&0x1f) as u8);
     [(r<<3)|(r>>2),(g<<2)|(g>>4),(b<<3)|(b>>2),255]
 }
-fn rgb5a3(v:u16)->[u8;4]{
+pub(crate) fn rgb5a3(v:u16)->[u8;4]{
     if v&0x8000!=0{
         let (r,g,b)=(((v>>10)&0x1f) as u8,((v>>5)&0x1f) as u8,(v&0x1f) as u8);
         [(r<<3)|(r>>2),(g<<3)|(g>>2),(b<<3)|(b>>2),255]
@@ -144,7 +144,7 @@ fn gather(idx:&[u8],pal:&[[u8;4]])->Result<Vec<u8>,String>{
 }
 
 /// RGBA8: 4x4 tiles of 64 bytes = 32 bytes of (A,R) pairs then 32 bytes of (G,B) pairs.
-fn detile_rgba8(b:&[u8],w:usize,h:usize)->Vec<u8>{
+pub(crate) fn detile_rgba8(b:&[u8],w:usize,h:usize)->Vec<u8>{
     let (nx,ny)=(w.div_ceil(4),h.div_ceil(4));let mut out=vec![0u8;w*h*4];
     for ty in 0..ny{for tx in 0..nx{
         let base=(ty*nx+tx)*64;
@@ -158,7 +158,7 @@ fn detile_rgba8(b:&[u8],w:usize,h:usize)->Vec<u8>{
 }
 
 /// 16-bit formats: 4x4 tiles of 32 bytes, texels big-endian.
-fn detile_16(b:&[u8],w:usize,h:usize,f:fn(u16)->[u8;4])->Vec<u8>{
+pub(crate) fn detile_16(b:&[u8],w:usize,h:usize,f:fn(u16)->[u8;4])->Vec<u8>{
     let (nx,ny)=(w.div_ceil(4),h.div_ceil(4));let mut out=vec![0u8;w*h*4];
     for ty in 0..ny{for tx in 0..nx{
         let base=(ty*nx+tx)*32;
@@ -172,7 +172,7 @@ fn detile_16(b:&[u8],w:usize,h:usize,f:fn(u16)->[u8;4])->Vec<u8>{
 }
 
 /// CMPR: big-endian DXT1 in 2x2 arrangements of 4x4 sub-blocks per 8x8 tile.
-fn decode_cmpr(b:&[u8],w:usize,h:usize)->Vec<u8>{
+pub(crate) fn decode_cmpr(b:&[u8],w:usize,h:usize)->Vec<u8>{
     let (nx,ny)=(w.div_ceil(8),h.div_ceil(8));let mut out=vec![0u8;w*h*4];let mut pos=0usize;
     for ty in 0..ny{for tx in 0..nx{for sub in 0..4{
         let (sx,sy)=(tx*8+(sub%2)*4,ty*8+(sub/2)*4);

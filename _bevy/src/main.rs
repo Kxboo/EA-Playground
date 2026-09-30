@@ -10,6 +10,7 @@ mod havok;
 mod sha256;
 mod archive;
 mod gsh;
+mod tpl;
 mod model;
 mod assets;
 mod skeleton;

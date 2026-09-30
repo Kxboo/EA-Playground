@@ -1,7 +1,7 @@
 //! Native (pure Rust) previews for the asset viewer: models, skeletons, animation banks and GSH texture banks are
 //! decoded on a worker thread with the same decoders the game uses.  Anything else (or a file the Rust decoders
 //! reject) returns `FALLBACK` and the viewer asks the Python inspection worker instead.
-use crate::{anim::{Bank,Clip},archive,assets,gsh,model,skeleton::Skeleton};
+use crate::{anim::{Bank,Clip},archive,assets,gsh,model,skeleton::Skeleton,tpl};
 use std::time::Instant;
 
 pub const FALLBACK:&str="fallback";
@@ -37,6 +37,15 @@ pub fn run(r:&Request)->Result<Output,String>{
             if w*h>16_777_216{return Err("Image exceeds interactive pixel limit".into())}
             let items=g.entries.iter().map(|e|(e.index,e.full_name.clone().unwrap_or_else(||e.name.clone()))).collect();
             Ok(Output::Image{name:format!("{name} ({})",e.full_name.clone().unwrap_or_else(||e.name.clone())),rgba,w,h,items})
+        }
+        "tpl"=>{
+            let (d,_)=archive::read_virtual(&r.source)?;
+            let entries=tpl::parse(&d).map_err(|_|FALLBACK.to_string())?;
+            let e=entries.get(r.index).ok_or("texture index out of range")?;
+            let (rgba,w,h)=tpl::decode(&d,e)?;
+            if w*h>16_777_216{return Err("Image exceeds interactive pixel limit".into())}
+            let items=entries.iter().map(|e|(e.index,format!("{} {}x{} {}",e.index,e.width,e.height,e.format_name))).collect();
+            Ok(Output::Image{name:format!("{name} (entry {}, {})",e.index,e.format_name),rgba,w,h,items})
         }
         "ske"=>Ok(Output::Skeleton{name,rig:Rig{skeleton:load_skeleton(&r.source)?,clip:None},items:vec![],ms:ms()}),
         "anm"=>{
