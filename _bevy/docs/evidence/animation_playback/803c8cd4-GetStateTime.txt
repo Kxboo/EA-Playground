@@ -1,0 +1,17 @@
+GetStateTime__14AnimationStateFv @ 0x803c8cd4 size=64
+803c8cd4: c0230048  lfs f1, 0x48(r3)
+803c8cd8: c0030058  lfs f0, 0x58(r3)
+803c8cdc: 80030054  lwz r0, 0x54(r3)
+803c8ce0: ec210028  fsubs f1, f1, f0
+803c8ce4: c003004c  lfs f0, 0x4c(r3)
+803c8ce8: 80630004  lwz r3, 4(r3)
+803c8cec: 1c00004c  mulli r0, r0, 0x4c
+803c8cf0: ec210024  fdivs f1, f1, f0
+803c8cf4: 80630004  lwz r3, 4(r3)
+803c8cf8: 7c630214  add r3, r3, r0
+803c8cfc: 88030031  lbz r0, 0x31(r3)
+803c8d00: 2c000000  cmpwi r0, 0
+803c8d04: 4d820020  beqlr 
+803c8d08: c002d324  lfs f0, -0x2cdc(r2) ; f32 1.0 @0x80607864
+803c8d0c: ec200828  fsubs f1, f0, f1
+803c8d10: 4e800020  blr 

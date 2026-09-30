@@ -15,3 +15,5 @@ Clip lookup/allocation/release, RNG results, function length/mode, pose-mask con
 Validation: regenerate/check with `py -3.14 tools/animation_playback_oracle.py --check`; run `cargo test --release --offline --locked animation_playback` from `_bevy`. The oracle is registered in `tools/prove.py`.
 
 Validation on 2026-09-30: native fixture regeneration and check passed; Python syntax checks, changed-Rust formatting and diff whitespace checks passed. The full offline locked release suite passed 116 tests.
+
+The generated [function comparison index](evidence/animation_playback/README.md) links each of the six native symbols and instruction listings to its Rust method and direct fixture cases. Its JSON includes per-function machine-code hashes, source/emulator hashes, case IDs and installed hooks. `animation_playback_evidence.py --check` asserts these function bodies are not hooked and detects stale mappings. This is currently a six-function index, not a complete repository inventory.

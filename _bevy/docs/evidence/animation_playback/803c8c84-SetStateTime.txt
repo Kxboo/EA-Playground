@@ -1,0 +1,21 @@
+SetStateTime__14AnimationStateFf @ 0x803c8c84 size=80
+803c8c84: 80030054  lwz r0, 0x54(r3)
+803c8c88: 80830004  lwz r4, 4(r3)
+803c8c8c: 1c00004c  mulli r0, r0, 0x4c
+803c8c90: 80840004  lwz r4, 4(r4)
+803c8c94: 7c840214  add r4, r4, r0
+803c8c98: 88040031  lbz r0, 0x31(r4)
+803c8c9c: 2c000000  cmpwi r0, 0
+803c8ca0: 41820020  beq 0x803c8cc0
+803c8ca4: c002d324  lfs f0, -0x2cdc(r2) ; f32 1.0 @0x80607864
+803c8ca8: c043004c  lfs f2, 0x4c(r3)
+803c8cac: ec200828  fsubs f1, f0, f1
+803c8cb0: c0030058  lfs f0, 0x58(r3)
+803c8cb4: ec0100ba  fmadds f0, f1, f2, f0
+803c8cb8: d0030048  stfs f0, 0x48(r3)
+803c8cbc: 4e800020  blr 
+803c8cc0: c043004c  lfs f2, 0x4c(r3)
+803c8cc4: c0030058  lfs f0, 0x58(r3)
+803c8cc8: ec0100ba  fmadds f0, f1, f2, f0
+803c8ccc: d0030048  stfs f0, 0x48(r3)
+803c8cd0: 4e800020  blr 

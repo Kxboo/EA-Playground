@@ -1,0 +1,116 @@
+ProcessAnimEvents__14AnimationStateFf @ 0x803c89a4 size=460
+803c89a4: 9421ffa0  stwu r1, -0x60(r1)
+803c89a8: 7c0802a6  mflr r0
+803c89ac: 90010064  stw r0, 0x64(r1)
+803c89b0: dbe10050  stfd f31, 0x50(r1)
+803c89b4: f3e10058  .long 0xf3e10058
+803c89b8: dbc10040  stfd f30, 0x40(r1)
+803c89bc: f3c10048  .long 0xf3c10048
+803c89c0: dba10030  stfd f29, 0x30(r1)
+803c89c4: f3a10038  .long 0xf3a10038
+803c89c8: 39610030  addi r11, r1, 0x30
+803c89cc: 4bc6ccad  bl 0x80035678 ; _savegpr_25
+803c89d0: 34030008  addic. r0, r3, 8
+803c89d4: 7c7f1b78  mr r31, r3
+803c89d8: 41820168  beq 0x803c8b40
+803c89dc: 80030054  lwz r0, 0x54(r3)
+803c89e0: 80830004  lwz r4, 4(r3)
+803c89e4: 1c00004c  mulli r0, r0, 0x4c
+803c89e8: 80840004  lwz r4, 4(r4)
+803c89ec: 7f840214  add r28, r4, r0
+803c89f0: 881c0031  lbz r0, 0x31(r28)
+803c89f4: 2c000000  cmpwi r0, 0
+803c89f8: 41820038  beq 0x803c8a30
+803c89fc: c3a30048  lfs f29, 0x48(r3)
+803c8a00: c002d320  lfs f0, -0x2ce0(r2) ; f32 0.0 @0x80607860
+803c8a04: efdd0828  fsubs f30, f29, f1
+803c8a08: fc1e0040  .long 0xfc1e0040
+803c8a0c: 40800054  bge 0x803c8a60
+803c8a10: 881c0030  lbz r0, 0x30(r28)
+803c8a14: 2c000000  cmpwi r0, 0
+803c8a18: 41820010  beq 0x803c8a28
+803c8a1c: c003004c  lfs f0, 0x4c(r3)
+803c8a20: efde002a  fadds f30, f30, f0
+803c8a24: 4800003c  b 0x803c8a60 ; 
+803c8a28: ffc00090  fmr f30, f0
+803c8a2c: 48000034  b 0x803c8a60 ; 
+803c8a30: c3c30048  lfs f30, 0x48(r3)
+803c8a34: c003004c  lfs f0, 0x4c(r3)
+803c8a38: efbe082a  fadds f29, f30, f1
+803c8a3c: fc1d0040  .long 0xfc1d0040
+803c8a40: 4c411382  cror cr0eq, cr0gt, cr0eq
+803c8a44: 4082001c  bne 0x803c8a60
+803c8a48: 881c0030  lbz r0, 0x30(r28)
+803c8a4c: 2c000000  cmpwi r0, 0
+803c8a50: 4182000c  beq 0x803c8a5c
+803c8a54: efbd0028  fsubs f29, f29, f0
+803c8a58: 48000008  b 0x803c8a60 ; 
+803c8a5c: ffa00090  fmr f29, f0
+803c8a60: c3e2d320  lfs f31, -0x2ce0(r2) ; f32 0.0 @0x80607860
+803c8a64: 3b400000  li r26, 0
+803c8a68: 3bc00000  li r30, 0
+803c8a6c: 7c7cf214  add r3, r28, r30
+803c8a70: 88030020  lbz r0, 0x20(r3)
+803c8a74: 2c000000  cmpwi r0, 0
+803c8a78: 418200b8  beq 0x803c8b30
+803c8a7c: fc1ee840  .long 0xfc1ee840
+803c8a80: c023001c  lfs f1, 0x1c(r3)
+803c8a84: 4c401382  cror cr0eq, cr0lt, cr0eq
+803c8a88: 40820024  bne 0x803c8aac
+803c8a8c: fc01f040  .long 0xfc01f040
+803c8a90: 38000000  li r0, 0
+803c8a94: 4c411382  cror cr0eq, cr0gt, cr0eq
+803c8a98: 40820048  bne 0x803c8ae0
+803c8a9c: fc01e840  .long 0xfc01e840
+803c8aa0: 40800040  bge 0x803c8ae0
+803c8aa4: 38000001  li r0, 1
+803c8aa8: 48000038  b 0x803c8ae0 ; 
+803c8aac: fc01f040  .long 0xfc01f040
+803c8ab0: 38000000  li r0, 0
+803c8ab4: 4c411382  cror cr0eq, cr0gt, cr0eq
+803c8ab8: 40820010  bne 0x803c8ac8
+803c8abc: c01f004c  lfs f0, 0x4c(r31)
+803c8ac0: fc010040  .long 0xfc010040
+803c8ac4: 41800018  blt 0x803c8adc
+803c8ac8: fc01f840  .long 0xfc01f840
+803c8acc: 4c411382  cror cr0eq, cr0gt, cr0eq
+803c8ad0: 40820010  bne 0x803c8ae0
+803c8ad4: fc01e840  .long 0xfc01e840
+803c8ad8: 40800008  bge 0x803c8ae0
+803c8adc: 38000001  li r0, 1
+803c8ae0: 2c000000  cmpwi r0, 0
+803c8ae4: 4182004c  beq 0x803c8b30
+803c8ae8: 7c7cf214  add r3, r28, r30
+803c8aec: 3b200000  li r25, 0
+803c8af0: 3b630018  addi r27, r3, 0x18
+803c8af4: 3ba00000  li r29, 0
+803c8af8: 4800002c  b 0x803c8b24 ; 
+803c8afc: 7cbfea14  add r5, r31, r29
+803c8b00: 7f64db78  mr r4, r27
+803c8b04: 80650008  lwz r3, 8(r5)
+803c8b08: 80a5000c  lwz r5, 0xc(r5)
+803c8b0c: 81830000  lwz r12, 0(r3)
+803c8b10: 818c0008  lwz r12, 8(r12)
+803c8b14: 7d8903a6  mtctr r12
+803c8b18: 4e800421  bctrl 
+803c8b1c: 3b390001  addi r25, r25, 1
+803c8b20: 3bbd0008  addi r29, r29, 8
+803c8b24: 801f0028  lwz r0, 0x28(r31)
+803c8b28: 7c190000  cmpw r25, r0
+803c8b2c: 4180ffd0  blt 0x803c8afc
+803c8b30: 3b5a0001  addi r26, r26, 1
+803c8b34: 3bde000c  addi r30, r30, 0xc
+803c8b38: 2c1a0002  cmpwi r26, 2
+803c8b3c: 4180ff30  blt 0x803c8a6c
+803c8b40: e3e10058  .long 0xe3e10058
+803c8b44: cbe10050  lfd f31, 0x50(r1)
+803c8b48: e3c10048  .long 0xe3c10048
+803c8b4c: cbc10040  lfd f30, 0x40(r1)
+803c8b50: e3a10038  .long 0xe3a10038
+803c8b54: 39610030  addi r11, r1, 0x30
+803c8b58: cba10030  lfd f29, 0x30(r1)
+803c8b5c: 4bc6cb69  bl 0x800356c4 ; _restgpr_25
+803c8b60: 80010064  lwz r0, 0x64(r1)
+803c8b64: 7c0803a6  mtlr r0
+803c8b68: 38210060  addi r1, r1, 0x60
+803c8b6c: 4e800020  blr 

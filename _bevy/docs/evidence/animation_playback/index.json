@@ -1,0 +1,800 @@
+{
+  "elf_path": "Remaster/reference/playgroundz.elf",
+  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
+  "functions": [
+    {
+      "name": "SetNextAnim",
+      "symbol": "SetNextAnim__14AnimationStateFQ219AnimationStateGraph10AnimStates",
+      "address": "0x803c8318",
+      "size_bytes": 484,
+      "instruction_bytes_sha256": "43300322660918ecb815a2ba68bb90e78b52aea41e79a0b5e7d445ff3ab260aa",
+      "disassembly": "803c8318-SetNextAnim.txt",
+      "rust": {
+        "path": "_bevy/src/animation_playback.rs",
+        "method": "select",
+        "line": 78
+      },
+      "status": "ported + finite differential comparison",
+      "oracle_operation": "select",
+      "direct_fixture_cases": 52,
+      "fixture_case_ids": [
+        0,
+        5,
+        10,
+        15,
+        20,
+        25,
+        30,
+        35,
+        40,
+        45,
+        50,
+        55,
+        60,
+        65,
+        70,
+        75,
+        80,
+        85,
+        90,
+        95,
+        100,
+        105,
+        110,
+        115,
+        120,
+        125,
+        130,
+        135,
+        140,
+        145,
+        150,
+        155,
+        160,
+        165,
+        170,
+        175,
+        180,
+        185,
+        190,
+        195,
+        200,
+        205,
+        210,
+        215,
+        220,
+        225,
+        230,
+        235,
+        240,
+        245,
+        250,
+        255
+      ],
+      "comparison": "projected state float bits and ordered service effects"
+    },
+    {
+      "name": "Update",
+      "symbol": "Update__14AnimationStateFfbb",
+      "address": "0x803c851c",
+      "size_bytes": 1152,
+      "instruction_bytes_sha256": "bdb8b2af44c619d8d2fcbdecf9529c46cc0f2cf040d199a0dfc750ed9be51365",
+      "disassembly": "803c851c-Update.txt",
+      "rust": {
+        "path": "_bevy/src/animation_playback.rs",
+        "method": "update",
+        "line": 245
+      },
+      "status": "ported + finite differential comparison",
+      "oracle_operation": "update",
+      "direct_fixture_cases": 51,
+      "fixture_case_ids": [
+        2,
+        7,
+        12,
+        17,
+        22,
+        27,
+        32,
+        37,
+        42,
+        47,
+        52,
+        57,
+        62,
+        67,
+        72,
+        77,
+        82,
+        87,
+        92,
+        97,
+        102,
+        107,
+        112,
+        117,
+        122,
+        127,
+        132,
+        137,
+        142,
+        147,
+        152,
+        157,
+        162,
+        167,
+        172,
+        177,
+        182,
+        187,
+        192,
+        197,
+        202,
+        207,
+        212,
+        217,
+        222,
+        227,
+        232,
+        237,
+        242,
+        247,
+        252
+      ],
+      "comparison": "projected state float bits and ordered service effects"
+    },
+    {
+      "name": "ProcessAnimEvents",
+      "symbol": "ProcessAnimEvents__14AnimationStateFf",
+      "address": "0x803c89a4",
+      "size_bytes": 460,
+      "instruction_bytes_sha256": "e3e3dcf68d7047be38acb4b04de9423e73d7a400eeeeb27648a26dcc7c5aa5c9",
+      "disassembly": "803c89a4-ProcessAnimEvents.txt",
+      "rust": {
+        "path": "_bevy/src/animation_playback.rs",
+        "method": "events",
+        "line": 188
+      },
+      "status": "ported + finite differential comparison",
+      "oracle_operation": "events",
+      "direct_fixture_cases": 51,
+      "fixture_case_ids": [
+        3,
+        8,
+        13,
+        18,
+        23,
+        28,
+        33,
+        38,
+        43,
+        48,
+        53,
+        58,
+        63,
+        68,
+        73,
+        78,
+        83,
+        88,
+        93,
+        98,
+        103,
+        108,
+        113,
+        118,
+        123,
+        128,
+        133,
+        138,
+        143,
+        148,
+        153,
+        158,
+        163,
+        168,
+        173,
+        178,
+        183,
+        188,
+        193,
+        198,
+        203,
+        208,
+        213,
+        218,
+        223,
+        228,
+        233,
+        238,
+        243,
+        248,
+        253
+      ],
+      "comparison": "projected state float bits and ordered service effects"
+    },
+    {
+      "name": "SetNextAnimState",
+      "symbol": "SetNextAnimState__14AnimationStateFQ219AnimationStateGraph10AnimStatesfbi",
+      "address": "0x803c8b78",
+      "size_bytes": 268,
+      "instruction_bytes_sha256": "2590948b899cde887677b67c2afa269ae6a9499a5ae33404b08aa16c74b87579",
+      "disassembly": "803c8b78-SetNextAnimState.txt",
+      "rust": {
+        "path": "_bevy/src/animation_playback.rs",
+        "method": "set_next",
+        "line": 129
+      },
+      "status": "ported + finite differential comparison",
+      "oracle_operation": "set_next",
+      "direct_fixture_cases": 51,
+      "fixture_case_ids": [
+        1,
+        6,
+        11,
+        16,
+        21,
+        26,
+        31,
+        36,
+        41,
+        46,
+        51,
+        56,
+        61,
+        66,
+        71,
+        76,
+        81,
+        86,
+        91,
+        96,
+        101,
+        106,
+        111,
+        116,
+        121,
+        126,
+        131,
+        136,
+        141,
+        146,
+        151,
+        156,
+        161,
+        166,
+        171,
+        176,
+        181,
+        186,
+        191,
+        196,
+        201,
+        206,
+        211,
+        216,
+        221,
+        226,
+        231,
+        236,
+        241,
+        246,
+        251
+      ],
+      "comparison": "projected state float bits and ordered service effects"
+    },
+    {
+      "name": "SetStateTime",
+      "symbol": "SetStateTime__14AnimationStateFf",
+      "address": "0x803c8c84",
+      "size_bytes": 80,
+      "instruction_bytes_sha256": "b6fca67980e7a75520b7a787160605f8d761cdd555319410f508ceec6e7aef06",
+      "disassembly": "803c8c84-SetStateTime.txt",
+      "rust": {
+        "path": "_bevy/src/animation_playback.rs",
+        "method": "set_state_time",
+        "line": 169
+      },
+      "status": "ported + finite differential comparison",
+      "oracle_operation": "time",
+      "direct_fixture_cases": 51,
+      "fixture_case_ids": [
+        4,
+        9,
+        14,
+        19,
+        24,
+        29,
+        34,
+        39,
+        44,
+        49,
+        54,
+        59,
+        64,
+        69,
+        74,
+        79,
+        84,
+        89,
+        94,
+        99,
+        104,
+        109,
+        114,
+        119,
+        124,
+        129,
+        134,
+        139,
+        144,
+        149,
+        154,
+        159,
+        164,
+        169,
+        174,
+        179,
+        184,
+        189,
+        194,
+        199,
+        204,
+        209,
+        214,
+        219,
+        224,
+        229,
+        234,
+        239,
+        244,
+        249,
+        254
+      ],
+      "comparison": "projected state float bits and ordered service effects"
+    },
+    {
+      "name": "GetStateTime",
+      "symbol": "GetStateTime__14AnimationStateFv",
+      "address": "0x803c8cd4",
+      "size_bytes": 64,
+      "instruction_bytes_sha256": "360f45ab5b204f7e498ed96aff1e4fdb6e07083ec1866f4cda96de5c86c92fb9",
+      "disassembly": "803c8cd4-GetStateTime.txt",
+      "rust": {
+        "path": "_bevy/src/animation_playback.rs",
+        "method": "state_time",
+        "line": 178
+      },
+      "status": "ported + finite differential comparison",
+      "oracle_operation": "time",
+      "direct_fixture_cases": 51,
+      "fixture_case_ids": [
+        4,
+        9,
+        14,
+        19,
+        24,
+        29,
+        34,
+        39,
+        44,
+        49,
+        54,
+        59,
+        64,
+        69,
+        74,
+        79,
+        84,
+        89,
+        94,
+        99,
+        104,
+        109,
+        114,
+        119,
+        124,
+        129,
+        134,
+        139,
+        144,
+        149,
+        154,
+        159,
+        164,
+        169,
+        174,
+        179,
+        184,
+        189,
+        194,
+        199,
+        204,
+        209,
+        214,
+        219,
+        224,
+        229,
+        234,
+        239,
+        244,
+        249,
+        254
+      ],
+      "comparison": "projected state float bits and ordered service effects"
+    }
+  ],
+  "fixture_cases_total": 256,
+  "source_sha256": {
+    "_bevy/src/animation_playback.rs": "2aae9f4fb832934410ba8fe8108933ad5fcea30d2daef3c208bb928caf6c32cc",
+    "_bevy/src/animation_playback_tests.rs": "48b77ca4dd984baaa651ef209282a2c554bb539a1c8ebf14c91fd5354752ab29",
+    "_bevy/tools/animation_playback_oracle.py": "3c0e364180c79180bdbce8d35f4ec8ee7386e36de4a681d2e4dfac65cd65b78f",
+    "_bevy/tools/ppc_emu2.py": "461b3b3f6a7d61355812cec57c950892b394c5091e9304675fb0491beb4be378",
+    "_bevy/tools/animation_graph_oracle.py": "062d15d608223c9f8ffe8a57a06825dd9c2a1daefdb632c19f3934e5f690091a",
+    "_bevy/tests/data/animation_playback_golden.json": "ff385416fd9865d217a332c44c1be133510740b9eb7736e76e57430df1255d28",
+    "_bevy/tests/data/animation_graph_golden.json": "16608baf92599b3aea24a18b6ebe035c9e908c2164229232fd3d8f515e2024a3",
+    "_bevy/tools/animation_playback_evidence.py": "9b097b575ebdb9d55fa64deee5b1aaf963873118b4b4e93c31a8d5f06d5c8f45",
+    "_bevy/tools/character_input_oracle.py": "46b6a44466522fd47a10f988f4969c974b1dd0e4ee9e2be1c5e3d2b9e884b606",
+    "_bevy/tools/re_functions.py": "96cd412c32d2f8d9cb2576c75f48283af41e5f3db0e701b46739ef9ec23891e5",
+    "_bevy/tools/tetherball_lifecycle_oracle.py": "339c0399faf78003480ed8c6662eb8db95189b12be6fc71b13f4006e8e9f9d25",
+    "_bevy/tools/tetherball_match_oracle.py": "42195443d56babff271a931ff9bee81f3a675e20778cc0223802f99e07b68b02",
+    "_bevy/tools/tetherball_reset_oracle.py": "f8b6b92a37601ac32a90035c8d361ea9c107e0ac0df821ebe5ce62af25f38295",
+    "_bevy/tools/tetherball_scene_oracle.py": "87779aa0f074d3a26c54fbc7e16c3946c8a19b2697770e9f6e43050b82ab3179",
+    "_bevy/tools/tetherball_startup_oracle.py": "b04e2004b4f6bd73bbe1f5de1bb6defdb0d81e249a0d7762011e0a1f9f2d46a0"
+  },
+  "installed_hooks": [
+    {
+      "address": "0x71406000",
+      "symbol": "synthetic service"
+    },
+    {
+      "address": "0x74500010",
+      "symbol": "synthetic service"
+    },
+    {
+      "address": "0x74500018",
+      "symbol": "synthetic service"
+    },
+    {
+      "address": "0x74500020",
+      "symbol": "synthetic service"
+    },
+    {
+      "address": "0x74500100",
+      "symbol": "synthetic service"
+    },
+    {
+      "address": "0x74500104",
+      "symbol": "synthetic service"
+    },
+    {
+      "address": "0x74500200",
+      "symbol": "synthetic service"
+    },
+    {
+      "address": "0x74500204",
+      "symbol": "synthetic service"
+    },
+    {
+      "address": "0x8002451c",
+      "symbol": "sprintf"
+    },
+    {
+      "address": "0x80025f14",
+      "symbol": "strcmp"
+    },
+    {
+      "address": "0x802e1124",
+      "symbol": "Instance__5AudioFv"
+    },
+    {
+      "address": "0x802e190c",
+      "symbol": "PlaySFX__5AudioF17AUDIOAEMSFEHUDSFXii"
+    },
+    {
+      "address": "0x802e19a4",
+      "symbol": "PlaySFX__5AudioF14AUDIOAEMSBESFXii"
+    },
+    {
+      "address": "0x802e7910",
+      "symbol": "SetAIEntity__18AICharacterControlFP8AIEntity"
+    },
+    {
+      "address": "0x802e979c",
+      "symbol": "SwitchToAIControl__9CharacterFv"
+    },
+    {
+      "address": "0x802ed23c",
+      "symbol": "__pl__FRC7CStringRC7CString"
+    },
+    {
+      "address": "0x802f2c84",
+      "symbol": "__ct__10cCSVParserFPci"
+    },
+    {
+      "address": "0x802f2cf0",
+      "symbol": "__dt__10cCSVParserFv"
+    },
+    {
+      "address": "0x802f2e00",
+      "symbol": "NextRecord__10cCSVParserFv"
+    },
+    {
+      "address": "0x802f2eb0",
+      "symbol": "GetStringField__10cCSVParserFPCcR7CString"
+    },
+    {
+      "address": "0x802f2f80",
+      "symbol": "GetFloatField__10cCSVParserFPCcRf"
+    },
+    {
+      "address": "0x802f3054",
+      "symbol": "GetIntField__10cCSVParserFPCcRi"
+    },
+    {
+      "address": "0x802f45e4",
+      "symbol": "GetKey__11pgIDatabaseFPCc"
+    },
+    {
+      "address": "0x802f46bc",
+      "symbol": "GetCollection__11pgIDatabaseFPCcPCc"
+    },
+    {
+      "address": "0x802f4794",
+      "symbol": "GetCollection__11pgIDatabaseFUxUx"
+    },
+    {
+      "address": "0x802f4900",
+      "symbol": "DestroyCollection__11pgIDatabaseFP14pgDBCollection"
+    },
+    {
+      "address": "0x802f4fe8",
+      "symbol": "GetUInt32FromArray__14pgDBCollectionFPCcUi"
+    },
+    {
+      "address": "0x802f50e4",
+      "symbol": "GetFloatFromArray__14pgDBCollectionFPCcUi"
+    },
+    {
+      "address": "0x802f5de8",
+      "symbol": "GetArrayCount__14pgDBCollectionFPCc"
+    },
+    {
+      "address": "0x802f78a4",
+      "symbol": "CreatePartFx__13PartFxManagerFPCcRC9rmVector3"
+    },
+    {
+      "address": "0x802f7abc",
+      "symbol": "DisableAndDestroyPartFx__13PartFxManagerF4GUIDi"
+    },
+    {
+      "address": "0x803176fc",
+      "symbol": "ClearMinigameHandlers__16MinigameHandlersFv"
+    },
+    {
+      "address": "0x80317878",
+      "symbol": "GetInstance__16MinigameHandlersFv"
+    },
+    {
+      "address": "0x803179f8",
+      "symbol": "ServeBubble_SetVisible__16MinigameHandlersFiii"
+    },
+    {
+      "address": "0x80317a94",
+      "symbol": "WinLose_SetVisible__16MinigameHandlersFii"
+    },
+    {
+      "address": "0x80317b24",
+      "symbol": "MultiplayerWin_SetVisible__16MinigameHandlersFii"
+    },
+    {
+      "address": "0x80317c0c",
+      "symbol": "Round_SetVisible__16MinigameHandlersFiii"
+    },
+    {
+      "address": "0x80317ca8",
+      "symbol": "Timer_SetVisible__16MinigameHandlersFi"
+    },
+    {
+      "address": "0x80318468",
+      "symbol": "MegaMeter_SetVisible__16MinigameHandlersFii"
+    },
+    {
+      "address": "0x803184dc",
+      "symbol": "MegaMeter_SetValue__16MinigameHandlersFii"
+    },
+    {
+      "address": "0x80318550",
+      "symbol": "Scoreboard_SetVisible__16MinigameHandlersFiiii"
+    },
+    {
+      "address": "0x8031922c",
+      "symbol": "Scoreboard_Reset__16MinigameHandlersFv"
+    },
+    {
+      "address": "0x80324388",
+      "symbol": "GetInstance__9FEManagerFv"
+    },
+    {
+      "address": "0x8032713c",
+      "symbol": "CloseAptScreen__9FEManagerFv"
+    },
+    {
+      "address": "0x80328104",
+      "symbol": "SetPos__14CharacterStateFPC9rmVector3"
+    },
+    {
+      "address": "0x8032c608",
+      "symbol": "Get__10ControllerFi"
+    },
+    {
+      "address": "0x8032dc20",
+      "symbol": "PopState__10ControllerFv"
+    },
+    {
+      "address": "0x8032dc38",
+      "symbol": "SetCurrentControllerState__10ControllerF16EControllerState"
+    },
+    {
+      "address": "0x80395354",
+      "symbol": "Initialize__18TetherballAIEntityFb26AITetherballDifficultyType7rmAngle"
+    },
+    {
+      "address": "0x80397390",
+      "symbol": "SetPositionOffset__19BehindTheBackCameraFPC9rmVector3"
+    },
+    {
+      "address": "0x803973a4",
+      "symbol": "SetTargetOffset__19BehindTheBackCameraFPC9rmVector3"
+    },
+    {
+      "address": "0x803973b8",
+      "symbol": "SetBackwardsOffset__19BehindTheBackCameraFf"
+    },
+    {
+      "address": "0x803973c4",
+      "symbol": "SetStartPos__19BehindTheBackCameraFPC9rmVector3"
+    },
+    {
+      "address": "0x80399afc",
+      "symbol": "CreateAIEntity<18TetherballAIEntity>__11AncientEvilFP9Character_P18TetherballAIEntity"
+    },
+    {
+      "address": "0x8039be84",
+      "symbol": "InitializePlayerAnimations__12MGTetherballFv"
+    },
+    {
+      "address": "0x8039c1d8",
+      "symbol": "InitializeAptHud__12MGTetherballFv"
+    },
+    {
+      "address": "0x803ab6fc",
+      "symbol": "OpenPostGameScreen__8MinigameFQ25Enums12MinigameTypeP12PostGameInfo"
+    },
+    {
+      "address": "0x803b2344",
+      "symbol": "rmRandRange__Fii"
+    },
+    {
+      "address": "0x803b2394",
+      "symbol": "rmfRandRange__Fff"
+    },
+    {
+      "address": "0x803bcd5c",
+      "symbol": "SetDir__19BehindTheBackCameraFPC9rmVector3"
+    },
+    {
+      "address": "0x803bcf10",
+      "symbol": "SetDesiredPositionOffset__19BehindTheBackCameraFPC9rmVector3Ui"
+    },
+    {
+      "address": "0x803bd000",
+      "symbol": "SetDesiredTargetOffset__19BehindTheBackCameraFPC9rmVector3Ui"
+    },
+    {
+      "address": "0x803bd0b0",
+      "symbol": "SetDesiredRotationAboutTarget__19BehindTheBackCameraFfUi"
+    },
+    {
+      "address": "0x803becb0",
+      "symbol": "GetBehindTheBackCamera__13CameraManagerFUi"
+    },
+    {
+      "address": "0x803c82f8",
+      "symbol": "GetMarkerMatrix__14AnimationStateCFi"
+    },
+    {
+      "address": "0x803c8308",
+      "symbol": "GetMarkerID__14AnimationStateCFi"
+    },
+    {
+      "address": "0x803c84fc",
+      "symbol": "GetAnim__Q28EAGLAnim17FnDefaultAnimBankFi"
+    },
+    {
+      "address": "0x803c9bf0",
+      "symbol": "Update__6MarkerFP14AnimationState"
+    },
+    {
+      "address": "0x803ccc08",
+      "symbol": "__ct__7CStringFv"
+    },
+    {
+      "address": "0x803ccc78",
+      "symbol": "__ct__7CStringFPCc"
+    },
+    {
+      "address": "0x803ccd20",
+      "symbol": "__ct__7CStringFRC7CString"
+    },
+    {
+      "address": "0x803ccd84",
+      "symbol": "__as__7CStringFRC7CString"
+    },
+    {
+      "address": "0x803cce0c",
+      "symbol": "__as__7CStringFPCc"
+    },
+    {
+      "address": "0x803cce94",
+      "symbol": "__dt__7CStringFv"
+    },
+    {
+      "address": "0x803cd064",
+      "symbol": "substr__7CStringCFUlUl"
+    },
+    {
+      "address": "0x803cd13c",
+      "symbol": "erase__7CStringFUlUl"
+    },
+    {
+      "address": "0x803cd20c",
+      "symbol": "find__7CStringCFcUl"
+    },
+    {
+      "address": "0x803cd38c",
+      "symbol": "compare__7CStringCFPCc"
+    },
+    {
+      "address": "0x803cd454",
+      "symbol": "c_str__7CStringCFv"
+    },
+    {
+      "address": "0x803d82f8",
+      "symbol": "SetTextureMatrix__9PlaceableFiRC9rmMatrix4"
+    },
+    {
+      "address": "0x803e01b8",
+      "symbol": "StartMinigameFadeInEffect__15PlaygroundWorldFi"
+    },
+    {
+      "address": "0x803f3fe0",
+      "symbol": "GetStillPose__Q28EAGLAnim8SkeletonCFPfPCQ28EAGLAnim8BoneMask"
+    },
+    {
+      "address": "0x803f4418",
+      "symbol": "PoseSQTToSkin__Q28EAGLAnim8SkeletonFPfPQ24EAGL9TransformPQ28EAGLAnim8BoneMask"
+    },
+    {
+      "address": "0x803f6f68",
+      "symbol": "Blend__Q28EAGLAnim13FnPoseBlenderFifPCfPCfPfPCQ28EAGLAnim8BoneMask"
+    },
+    {
+      "address": "0x803fc9d4",
+      "symbol": "SetBone__Q28EAGLAnim8BoneMaskFib"
+    },
+    {
+      "address": "0x803fca44",
+      "symbol": "__ct__Q28EAGLAnim8BoneMaskFb"
+    },
+    {
+      "address": "0x8041af54",
+      "symbol": "MEM_copy"
+    }
+  ],
+  "hook_inventory_scope": "installed hooks, including inherited hooks; not an executed-callee ledger",
+  "native_source": "symbol-bearing compiled PowerPC executable",
+  "decompiled_cpp": "not supplied or generated by this evidence bundle",
+  "scope": "finite-input differential comparison through a local PowerPC interpreter; engine services hooked",
+  "test": "_bevy/src/animation_playback_tests.rs::original_animation_state_calls"
+}
