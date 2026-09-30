@@ -24,7 +24,8 @@ pub fn parse_header(d:&[u8])->Result<(Header,usize),String>{
 pub fn parse_tags(body:&[u8])->Header{parse_tags_len(body).0}
 /// Like `parse_tags`, also returning the number of bytes up to and including the 0xFF terminator.
 pub fn parse_tags_len(body:&[u8])->(Header,usize){
-    let mut p=4usize;let mut h=Header{channels:1,..Default::default()};
+    // Speech streams ("GSTR" platform tag) carry four more bytes before the tags than the "PT.." music headers.
+    let mut p=if body.starts_with(b"GSTR"){8usize}else{4};let mut h=Header{channels:1,..Default::default()};
     while p<body.len(){
         let tag=body[p];p+=1;
         match tag{
@@ -218,6 +219,44 @@ pub fn decode_xa(d:&[u8])->Result<Pcm,String>{
     Ok(Pcm{sample_rate:h.sample_rate,channels:ch,samples:out,frames:0,stats:mp3::Stats::default()})
 }
 
+/// EA MicroTalk speech (codec 0x04, `spchdat.viv` `.dat` files).  Derived from `CMTBLKDec::Feed/Decode` (0x80287874/0x80287914)
+/// and checked against the data: an `SCDl` block is `[u32 samples][u32 0][u8 header flag]` followed by chunks
+/// `[type 0x00|0xEE][one byte-aligned 432-sample frame]`; a 0xEE chunk continues with `[u16 offset][u16 count][count x i16]`
+/// raw samples that replace `frame[offset..]`.  The first block's flag is 1: the 15 header bits (reduced bandwidth,
+/// multipulse threshold, gain base and step) precede its first frame.  Decoder state carries over between blocks.
+pub fn decode_utk(d:&[u8])->Result<Pcm,String>{
+    let (h,_)=parse_header(d)?;
+    if h.codec!=0x04{return Err(format!("codec {:#x} is not MicroTalk",h.codec))}
+    let mut utk:Option<crate::utk::Utk>=None;let mut out:Vec<i16>=vec![];
+    for (bi,(s,e)) in data_blocks(d)?.into_iter().enumerate(){
+        let pl=&d[s..e];let want=be32(pl,0)? as usize;
+        let mut t=9usize;let mut done=0usize;
+        while done<want{
+            let ty=*pl.get(t).ok_or_else(||format!("block {bi}: data ends after {done} of {want} samples"))?;
+            if ty!=0&&ty!=0xEE{return Err(format!("block {bi}: chunk type {ty:#x} at {t}"))}
+            match utk.as_mut(){
+                None=>utk=Some(crate::utk::Utk::new(pl.to_vec(),t+1,pl[8]!=0)?),
+                Some(u)=>{if done==0{u.load(pl.to_vec())}u.seek(t+1)?}
+            }
+            let u=utk.as_mut().unwrap();
+            u.decode_frame()?;
+            let p=u.position()-1;
+            if ty==0xEE{
+                let off=u16::from_be_bytes(pl.get(p..p+2).ok_or("PCM header truncated")?.try_into().unwrap()) as usize;
+                let cnt=u16::from_be_bytes(pl.get(p+2..p+4).ok_or("PCM header truncated")?.try_into().unwrap()) as usize;
+                let raw=pl.get(p+4..p+4+cnt*2).ok_or("PCM splice truncated")?;
+                let fr=u.frame_mut();if off+cnt>fr.len(){return Err("PCM splice outside the frame".into())}
+                for i in 0..cnt{fr[off+i]=i16::from_be_bytes([raw[2*i],raw[2*i+1]]) as f32;}
+                t=p+4+cnt*2;
+            }else{t=p}
+            let n=(want-done).min(crate::utk::FRAME);
+            out.extend(u.frame()[..n].iter().map(|&v|v.round().clamp(-32768.,32767.) as i16));
+            done+=n;
+        }
+    }
+    Ok(Pcm{sample_rate:h.sample_rate,channels:1,samples:out,frames:0,stats:mp3::Stats::default()})
+}
+
 /// RIFF/WAVE (16-bit PCM) bytes for a decoded stream.
 pub fn to_wav(p:&Pcm)->Vec<u8>{
     let data_len=(p.samples.len()*2) as u32;let mut w=Vec::with_capacity(44+data_len as usize);
@@ -336,5 +375,33 @@ mod tests{
         }
         eprintln!("{banks} banks, {sounds} EA-XA sounds decoded, {other} with another codec");
         assert_eq!(banks,10);assert!(sounds>=50);
+    }
+
+    /// Every speech file in `spchdat.viv` decodes: chunk framing holds through every block (types 0/0xEE, frames end
+    /// on the declared sample counts), the sample total matches the header, the output stays finite and unclipped.
+    #[test] fn speech_streams(){
+        let p=crate::bridge::data_root().join("files").join("data").join("audio").join("speech").join("spchdat.viv");
+        let Ok(bytes)=std::fs::read(&p) else{eprintln!("DATA absent; skipped");return};
+        let data=crate::archive::decompress(&bytes).unwrap();
+        let entries=crate::archive::entries(&data).unwrap().unwrap();
+        let mut n=0;
+        for ent in entries.iter().filter(|e|e.name.ends_with(".dat")){
+            let d=crate::archive::decompress(&data[ent.offset..ent.offset+ent.size]).unwrap();
+            let (h,_)=parse_header(&d).unwrap();
+            if h.codec!=0x04{continue}
+            let pcm=decode_utk(&d).unwrap_or_else(|e|panic!("{}: {e}",ent.name));
+            assert_eq!(pcm.samples.len() as u32,h.samples,"{}",ent.name);
+            let rms=(pcm.samples.iter().map(|&s|(s as f64).powi(2)).sum::<f64>()/pcm.samples.len() as f64).sqrt();
+            let clipped=pcm.samples.iter().filter(|&&s|s==i16::MAX||s==i16::MIN).count();
+            eprintln!("{}: {} samples @ {} Hz, rms {rms:.0}, clipped {clipped}",ent.name,pcm.samples.len(),h.sample_rate);
+            // Speech is low-pass; white noise (a mis-framed stream) would give a first-difference ratio near sqrt(2).
+            let diff=(pcm.samples.windows(2).map(|w|((w[1]-w[0]) as f64).powi(2)).sum::<f64>()/pcm.samples.len() as f64).sqrt();
+            eprintln!("   first-difference / rms = {:.2}",diff/rms);
+            assert!(diff/rms<1.0,"{} looks like noise",ent.name);
+            assert!(rms>20.&&rms<12000.,"{} rms {rms}",ent.name);
+            assert!(clipped*200<pcm.samples.len(),"{} clipped {clipped}",ent.name);
+            n+=1;
+        }
+        assert!(n>0);
     }
 }

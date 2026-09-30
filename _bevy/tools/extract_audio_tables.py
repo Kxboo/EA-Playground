@@ -70,7 +70,9 @@ def build():
     intwin=[int(round(inter[j])) for j in range(257)]
     assert all(abs(inter[j]-intwin[j])<1e-6 for j in range(257)) and intwin[256]==75038 and intwin[1]==-1
     xaf=list(struct.unpack('>8f',rd('xafilterf__3Snd')));xat=list(struct.unpack('>256f',rd('xatablef__3Snd')))
-    return dict(xaf=xaf,xat=xat,trees=trees,table_ref=table_ref,linbits=linbits,counts=counts,slen=slen,numsfb=numsfb,pretab=pretab,rates=rates,long=long_,short=short,intwin=intwin),hashlib.sha256(Path(rf.__file__).parent.joinpath('../../Remaster/reference/playgroundz.elf').resolve().read_bytes()).hexdigest()
+    utk_coeff=list(struct.unpack('>64f',rd('coeff_table__3Snd')));utk_index=list(rd('index_table__3Snd'))
+    dt=rd('decode_table__3Snd');utk_decode=[struct.unpack('>iif',dt[i*12:i*12+12]) for i in range(len(dt)//12)]
+    return dict(utk_coeff=utk_coeff,utk_index=utk_index,utk_decode=utk_decode,xaf=xaf,xat=xat,trees=trees,table_ref=table_ref,linbits=linbits,counts=counts,slen=slen,numsfb=numsfb,pretab=pretab,rates=rates,long=long_,short=short,intwin=intwin),hashlib.sha256(Path(rf.__file__).parent.joinpath('../../Remaster/reference/playgroundz.elf').resolve().read_bytes()).hexdigest()
 
 def arr(name,ty,vals,per=16):
     body=',\n    '.join(', '.join(str(v) for v in vals[i:i+per]) for i in range(0,len(vals),per))
@@ -98,6 +100,9 @@ def render(t,sha):
         return 'pub const '+name+': [f32; '+str(len(vals))+'] = ['+chr(10)+'    '+body+chr(10)+'];'+chr(10)
     out.append('/// EA-XA (`decodexac` 0x80280dfc): predictor coefficients (`xafilterf`) and per-shift nibble table (`xatablef`, 16 x 16).')
     out.append(farr('XA_FILTER',t['xaf'],4));out.append(farr('XA_TABLE',t['xat'],8))
+    out.append('/// EA MicroTalk / UTK speech codec (`decodemut` 0x80287208, `readsamples` 0x8028692c): reflection-coefficient table, pulse-code state table (2 states x 256) and entry table (next state, bits, value).')
+    out.append(farr('UTK_COEFF',t['utk_coeff'],8));out.append(arr('UTK_INDEX','u8',t['utk_index'],32))
+    out.append('pub const UTK_DECODE: [(i32, i32, f32); '+str(len(t['utk_decode']))+'] = ['+', '.join('('+str(a)+', '+str(b)+', '+repr(c)+')' for a,b,c in t['utk_decode'])+'];')
     out.append(arr('SYNTH_WINDOW_INT','i32',t['intwin'],11))
     return '\n'.join(out)+'\n'
 

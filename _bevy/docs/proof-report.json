@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-29 22:22",
+ "generated": "2026-09-29 23:44",
  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
  "passed": true,
- "passed_count": 39,
- "total": 39,
+ "passed_count": 40,
+ "total": 40,
  "checks": [
   {
    "name": "Symbol-bearing ELF matches the pinned hash",
@@ -181,9 +181,14 @@
    "detail": "test result: ok. 2 passed; 0 failed"
   },
   {
-   "name": "EA Layer 3 audio: 14 music tracks (44 min, 409,582 channel-granules) decode with every granule ending on its declared length; ambience streams decode",
+   "name": "Audio: EA Layer 3 (14 music tracks, every granule ends on its declared length), EA-XA streams and bank sounds, MicroTalk speech (8 files, exact chunk framing, low-pass output)",
    "ok": true,
-   "detail": "test result: ok. 4 passed; 0 failed"
+   "detail": "test result: ok. 7 passed; 0 failed"
+  },
+  {
+   "name": "Conga gesture machines: conga.gsm parses (34 sequences, transition counts consistent)",
+   "ok": true,
+   "detail": "test result: ok. 2 passed; 0 failed"
   },
   {
    "name": "Locomotion constants and behaviour",
@@ -198,7 +203,7 @@
   {
    "name": "Game self-test report (boot -> world -> player -> scripted walk)",
    "ok": true,
-   "detail": "20/20 in-game checks passed, load 3.0s, report 0.6 h old"
+   "detail": "20/20 in-game checks passed, load 3.0s, report 2.0 h old"
   }
  ],
  "scope": [
