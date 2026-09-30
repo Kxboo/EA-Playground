@@ -61,6 +61,16 @@ mod skeleton;
 mod anim;
 mod preview;
 mod character;
+mod apt;
+mod export;
+mod corpus;
+mod formats;
+mod formats2;
+mod nw4r;
+mod aems;
+mod ppc;
+mod vp6;
+mod vp6_tables;
 
 use bevy::{prelude::*,render::view::window::screenshot::{Screenshot,save_to_disk},winit::WinitSettings};
 use bevy_egui::{EguiPlugin,EguiPrimaryContextPass};
@@ -103,6 +113,33 @@ fn main(){
         let res=match audio::parse_header(&d[a..b]).map(|h|h.0.codec){Ok(0x0a)=>audio::decode_xa(&d[a..b]),Ok(0x04)=>audio::decode_utk(&d[a..b]),_=>audio::decode(&d[a..b],arg("--blocks").and_then(|b|b.parse().ok()))};
         match res{
             Ok(p)=>{std::fs::write(&out,audio::to_wav(&p)).expect("write");eprintln!("{} samples/ch at {} Hz, {} channels, {} frames, stats {:?}",p.samples.len()/p.channels,p.sample_rate,p.channels,p.frames,p.stats);}
+            Err(e)=>{eprintln!("{e}");std::process::exit(1)}
+        }
+        return
+    }
+    if let Some(input)=arg("--vp6-debug"){
+        // --vp6-debug <movie.vp6> --out <dir> [--frames N]: decode frames to PNG until the first error.
+        let out=std::path::PathBuf::from(arg("--out").expect("--out <dir>"));std::fs::create_dir_all(&out).unwrap();
+        let limit=arg("--frames").and_then(|s|s.parse::<usize>().ok()).unwrap_or(usize::MAX);
+        let d=std::fs::read(&input).expect("input");let m=vp6::movie(&d).expect("movie");
+        let mut dec=vp6::Decoder::new();let mut n=0;
+        for (tag,at,size) in &m.chunks{
+            if !(tag==b"MV0K"||tag==b"MV0F"){continue}
+            if n>=limit{break}
+            match dec.decode(&d[at+8..at+size]){
+                Ok(k)=>{let c=dec.current().unwrap();let (w,h)=dec.display;std::fs::write(out.join(format!("{n:05}.png")),export::png(&c.rgba(w,h),w,h).unwrap()).unwrap();eprintln!("frame {n} ok key={k} consumed {:?}",dec.consumed);}
+                Err(e)=>{eprintln!("frame {n}: {e}");break}
+            }
+            n+=1;
+        }
+        return
+    }
+    if let Some(out)=arg("--decode-all"){
+        // --decode-all <out dir> [--data <DATA>] [--only ext,ext]: native decode of the complete game data.
+        let data=arg("--data").map(std::path::PathBuf::from).unwrap_or_else(bridge::data_root);
+        let only=arg("--only").map(|s|s.split(',').map(|e|e.trim().trim_start_matches('.').to_lowercase()).collect());
+        match corpus::run(&data,std::path::Path::new(&out),only){
+            Ok(r)=>{let bad=r.iter().filter(|x|x.duplicate_of.is_none()&&matches!(x.status,corpus::Status::Failed|corpus::Status::Unsupported)).count();eprintln!("{} records written to {out}; {bad} distinct records not decoded (see REPORT.md)",r.len());}
             Err(e)=>{eprintln!("{e}");std::process::exit(1)}
         }
         return
