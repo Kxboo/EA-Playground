@@ -6,7 +6,7 @@
       "ok": true
     },
     {
-      "detail": "3/3 layers ready; cloud angle 0.1677 rad after the run",
+      "detail": "3/3 layers ready; cloud angle 0.1710 rad after the run",
       "name": "SkyDome layers (skybox, mountain/city ring, clouds) loaded",
       "ok": true
     },
@@ -41,13 +41,18 @@
       "ok": true
     },
     {
-      "detail": "joint rotation checksum ranged -7.798..-0.076 over 6 samples",
+      "detail": "joint rotation checksum ranged -7.802..-0.068 over 6 samples",
       "name": "decoded clips animate the skeleton (joint pose changes idle -> walk/run)",
       "ok": true
     },
     {
       "detail": "start_location (12,0,-53) -> ground-snapped spawn 12.0,-0.0,-53.0",
       "name": "player spawn read from db.vlt (character_info/player)",
+      "ok": true
+    },
+    {
+      "detail": "world_schoolyard.asf: state Some(1), 518175 samples queued",
+      "name": "area music streams from the Rust EA Layer 3 decoder",
       "ok": true
     },
     {
@@ -101,7 +106,7 @@
     "locomotion": "ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs",
     "terrain": "AssetDerived display mesh"
   },
-  "load_seconds": 2.5975871086120605,
+  "load_seconds": 3.0064799785614014,
   "log": [
     "Boot: reading original data files",
     "db.vlt: 75 types, 32 classes, 908 collections",
@@ -133,10 +138,10 @@
         -0.04999999701976776,
         -53.0
       ],
-      "pose": -3.410947799682617,
+      "pose": -3.4069223403930664,
       "speed": 0.0,
       "step": "settle",
-      "t": 1.5019901990890503,
+      "t": 1.501535415649414,
       "weights": [
         1.0,
         0.0,
@@ -150,13 +155,13 @@
         -0.04999999701976776,
         -49.68337631225586
       ],
-      "pose": -7.798412322998047,
+      "pose": -7.801743507385254,
       "speed": 5.0,
       "step": "forward",
-      "t": 4.001643657684326,
+      "t": 4.001166343688965,
       "weights": [
-        4.758662353054888e-10,
-        3.6552522120203434e-10,
+        4.771467665420914e-10,
+        3.655494795751224e-10,
         0.9999998211860657
       ]
     },
@@ -167,13 +172,13 @@
         -0.04999999701976776,
         -49.08609390258789
       ],
-      "pose": -0.07560352981090546,
+      "pose": -0.0682106465101242,
       "speed": 5.0,
       "step": "left",
-      "t": 6.501562595367432,
+      "t": 6.500777244567871,
       "weights": [
-        2.2573391855175305e-19,
-        1.7339193271744348e-19,
+        2.2719872616961375e-19,
+        1.7406046267344826e-19,
         0.9999998807907104
       ]
     },
@@ -184,14 +189,14 @@
         0.03734006732702255,
         -41.93865203857422
       ],
-      "pose": -6.929096221923828,
+      "pose": -6.929296493530273,
       "speed": 7.071067810058594,
       "step": "diagonal",
-      "t": 8.500934600830078,
+      "t": 8.50008487701416,
       "weights": [
-        7.32695318401638e-27,
-        5.628016809548523e-27,
-        0.9999999403953552
+        7.950923671118734e-27,
+        6.091325835504105e-27,
+        0.9999998807907104
       ]
     },
     {
@@ -201,14 +206,14 @@
         1.019840121269226,
         -41.66643142700195
       ],
-      "pose": -5.336309432983398,
+      "pose": -5.351820945739746,
       "speed": 0.0,
       "step": "jump",
-      "t": 8.900583267211914,
+      "t": 8.900774002075195,
       "weights": [
-        0.8990474939346313,
-        0.02463410049676895,
-        0.07631836086511612
+        0.8994948863983154,
+        0.02495274879038334,
+        0.07555233687162399
       ]
     },
     {
@@ -218,14 +223,14 @@
         0.670899510383606,
         -41.66643142700195
       ],
-      "pose": -4.906335830688477,
+      "pose": -5.499746322631836,
       "speed": 0.0,
       "step": "final",
-      "t": 9.900376319885254,
+      "t": 9.916848182678223,
       "weights": [
-        0.9999811053276062,
-        4.603771685651736e-6,
-        0.000014262846889323555
+        0.9999837279319763,
+        4.038414772367105e-6,
+        0.000012227582374180201
       ]
     }
   ]

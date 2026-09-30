@@ -154,7 +154,7 @@ fn seg_cross(p:Vec2,q:Vec2,r:Vec2,s:Vec2)->bool{
 
 #[derive(Resource)]
 pub struct Game{
-    player_asset:Option<PlayerAsset>,results:HashMap<String,Value>,rx:Mutex<mpsc::Receiver<LoadMsg>>,filelist:Vec<(String,bool)>,models_expected:Option<usize>,models_received:usize,
+    player_asset:Option<PlayerAsset>,pub music:Option<crate::playback::Music>,pub music_name:String,results:HashMap<String,Value>,rx:Mutex<mpsc::Receiver<LoadMsg>>,filelist:Vec<(String,bool)>,models_expected:Option<usize>,models_received:usize,
     phase:Phase,started:Instant,pub log:Vec<String>,boot_image:Option<Handle<Image>>,boot_egui:Option<egui::TextureId>,
     layers:Vec<(String,String)>,layers_expected:usize,layers_ready:usize,layers_empty:usize,clip_handles:Vec<Handle<AnimationClip>>,
     ground:Option<Ground>,build_wait:u32,player:Option<Entity>,pub spawn:Vec3,pub gravity:f32,pub world_radius:f32,sky_expected:usize,sky_ready:usize,sky_angle:f32,pub placeables:Vec<Placeable>,pub props_spawned:usize,pub props_failed:usize,pub collision_bodies:usize,pub collision_files:usize,
@@ -208,7 +208,7 @@ impl Game{
             _=>log.push("db.vlt/db.bin not found".into()),
         }
         let (tx,rx)=mpsc::channel();
-        let mut g=Self{player_asset:None,results:HashMap::new(),rx:Mutex::new(rx),filelist:vec![],models_expected:None,models_received:0,phase:Phase::Loading,started:Instant::now(),log,
+        let mut g=Self{player_asset:None,music:None,music_name:String::new(),results:HashMap::new(),rx:Mutex::new(rx),filelist:vec![],models_expected:None,models_received:0,phase:Phase::Loading,started:Instant::now(),log,
             boot_image:None,boot_egui:None,layers:vec![],layers_expected:0,layers_ready:0,layers_empty:0,clip_handles:vec![],ground:None,build_wait:0,player:None,spawn:Vec3::ZERO,
             gravity:9.81,world_radius:0.,sky_expected:0,sky_ready:0,sky_angle:0.,placeables:vec![],props_spawned:0,props_failed:0,collision_bodies:0,collision_files:0,db_summary:String::new(),start_dir:Vec3::Z,spawn_from_db:false,tri_count:0,controls_rows:0,combat_bindings:0,world_bounds:None,boot_shown:None,boot_shot:false,load_seconds:0.,selftest};
         // (fields set below)
@@ -379,6 +379,13 @@ fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,mut ibp:ResMut<Assets<
     let joints=character::spawn_rig(&mut commands,&mut ibp,&asset.skeleton,&asset.up,model,model);
     g.log.push(format!("player rig: {} joints, {} skinned parts",joints.len(),asset.up.parts.len()));
     g.player=Some(player);
+    // Area music: the executable names world_nature/park/schoolyard/stadium.asf; the start area is the schoolyard hub
+    // (provisional mapping - the original's area -> track selection was not traced).
+    if !std::env::args().any(|a|a=="--mute"){
+        let track="world_schoolyard.asf";
+        g.music=Some(crate::playback::Music::start(bridge::data_root().join("files").join("data").join("audio").join("music").join(track),0.4));
+        g.music_name=track.into();
+    }
     if cam.is_empty(){
         // Sky camera (order -1) draws the sky layer first; the world camera keeps that colour buffer and adds the world on top.
         commands.spawn((GameEntity,SkyCamera,Camera3d::default(),Camera{order:-1,..default()},RenderLayers::layer(SKY_LAYER),Transform::from_translation(g.spawn+Vec3::new(0.,2.,4.))));
@@ -500,6 +507,7 @@ fn hud(images:Res<Assets<Image>>,mut contexts:EguiContexts,mut g:Option<ResMut<G
                     ui.label(format!("pos {:.1}, {:.1}, {:.1}   speed {:.2}/{:.1}   {:.0} fps",pos.x,pos.y,pos.z,speed,k::STATE_MAX_SPEED,1./time.delta_secs().max(1e-4)));
                     ui.label(format!("collision: {} Havok files, {} bodies, {} triangles • gravity {:.2} • loaded in {:.1}s",g.collision_files,g.collision_bodies,g.tri_count,g.gravity,g.load_seconds));
                     ui.label(format!("db.vlt: {} • spawn {}",g.db_summary,if g.spawn_from_db{"from character_info/player"}else{"provisional"}));
+                    if let Some(m)=&g.music{ui.label(format!("music: {} (EA Layer 3 decoded in Rust) • {} • {} s queued",g.music_name,m.status.describe(),m.status.samples_played.load(std::sync::atomic::Ordering::Relaxed)/44100));}
                     if let Some((x,z,r))=g.world_bounds{ui.label(format!("world.csv bounds: min ({x}, {z}) radius {r}"));}
                     ui.label(format!("controls.csv: {} bindings ({} in STATE_COMBAT)",g.controls_rows,g.combat_bindings));
                     ui.separator();
@@ -573,6 +581,8 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
                 let (lo,hi)=poses.iter().fold((f64::MAX,f64::MIN),|a,&x|(a.0.min(x),a.1.max(x)));
                 check("decoded clips animate the skeleton (joint pose changes idle -> walk/run)",poses.len()>=3&&hi-lo>0.05,format!("joint rotation checksum ranged {lo:.3}..{hi:.3} over {} samples",poses.len()));
                 check("player spawn read from db.vlt (character_info/player)",g.spawn_from_db&&(g.spawn.x-12.).abs()<1.&&(g.spawn.z+53.).abs()<1.&&g.spawn.y.abs()<1.5,format!("start_location (12,0,-53) -> ground-snapped spawn {:.1},{:.1},{:.1}",g.spawn.x,g.spawn.y,g.spawn.z));
+                let music_state=g.music.as_ref().map(|m|(m.status.state.load(std::sync::atomic::Ordering::Relaxed),m.status.samples_played.load(std::sync::atomic::Ordering::Relaxed)));
+                check("area music streams from the Rust EA Layer 3 decoder",music_state.is_none_or(|(s,q)|(s==crate::playback::Status::PLAYING&&q>44100)||s==crate::playback::Status::NO_DEVICE),format!("{}: state {:?}, {} samples queued",g.music_name,music_state.map(|m|m.0),music_state.map(|m|m.1).unwrap_or(0)));
                 check("controls.csv parsed",g.combat_bindings>=8,format!("{} rows, {} STATE_COMBAT",g.controls_rows,g.combat_bindings));
                 check("mesh entities in scene",meshes.iter().count()>100,format!("{} Mesh3d entities",meshes.iter().count()));
                 check("animation players active",players.iter().count()>=1,format!("{} players",players.iter().count()));

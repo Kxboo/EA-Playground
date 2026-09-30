@@ -15,6 +15,7 @@ mod locale;
 mod mp3_tables;
 mod mp3;
 mod audio;
+mod playback;
 mod placement;
 mod conversation;
 mod model;
