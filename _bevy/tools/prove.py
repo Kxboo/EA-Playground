@@ -216,6 +216,7 @@ def main():
                 ('locale::tests','Localisation: 10 .loc files + string.idx decode, TRCLocale hash routine reproduced, keys from the executable resolve'),
                 ('conversation::tests','Conversation trees: all 32 .con files parse exactly; 376/429 node texts resolve through the locale'),
                 ('placement::tests','Level placement: 49 marker sets (304 markers) and 10 RC checkpoint files (20 lanes) parse exactly'),
+                ('audio::tests','EA Layer 3 audio: 14 music tracks (44 min, 409,582 channel-granules) decode with every granule ending on its declared length; ambience streams decode'),
                 ('locomotion::tests','Locomotion constants and behaviour')]
         for name,label in suites:
             r=subprocess.run(['cargo','test','--release','--offline',name],cwd=BEVY,capture_output=True,text=True)

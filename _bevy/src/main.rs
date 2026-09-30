@@ -12,6 +12,9 @@ mod archive;
 mod gsh;
 mod tpl;
 mod locale;
+mod mp3_tables;
+mod mp3;
+mod audio;
 mod placement;
 mod conversation;
 mod model;
@@ -43,6 +46,20 @@ fn main(){
         if args.iter().any(|a|a=="--deep"){req["deep"]=json!(true);}
         if let Some(i)=arg("--index"){req["index"]=json!(i.parse::<usize>().unwrap_or(0));}
         match bridge::headless(req){Ok(v)=>{println!("{}",serde_json::to_string_pretty(&v).unwrap());if v["ok"]!=true || v["value"]["exit_code"].as_u64().unwrap_or(0)!=0{std::process::exit(2)}},Err(e)=>{eprintln!("{e}");std::process::exit(1)}}
+        return
+    }
+    if let Some(input)=arg("--decode-audio"){
+        // --decode-audio <in.asf/.ast> --out <out.wav>: decode an EA Layer 3 stream to a WAV file.
+        let out=arg("--out").expect("--out <file.wav>");
+        let d=std::fs::read(&input).expect("input");
+        // A file may hold several streams (.ast banks): --stream <n> picks one (default 0).
+        let list=audio::streams(&d);let which=arg("--stream").and_then(|s|s.parse::<usize>().ok()).unwrap_or(0);
+        eprintln!("{} stream(s) in {input}",list.len());
+        let (a,b)=*list.get(which).expect("no such stream");
+        match audio::decode(&d[a..b],arg("--blocks").and_then(|b|b.parse().ok())){
+            Ok(p)=>{std::fs::write(&out,audio::to_wav(&p)).expect("write");eprintln!("{} samples/ch at {} Hz, {} channels, {} frames, stats {:?}",p.samples.len()/p.channels,p.sample_rate,p.channels,p.frames,p.stats);}
+            Err(e)=>{eprintln!("{e}");std::process::exit(1)}
+        }
         return
     }
     if let Some(out)=arg("--vlt-dump"){
