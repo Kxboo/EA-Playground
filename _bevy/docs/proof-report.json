@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-30 04:38",
+ "generated": "2026-09-30 05:26",
  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
  "passed": true,
- "passed_count": 79,
- "total": 79,
+ "passed_count": 91,
+ "total": 91,
  "checks": [
   {
    "name": "Symbol-bearing ELF matches the pinned hash",
@@ -211,6 +211,36 @@
    "detail": "Verified 2086 original tetherball rally/hit/indicator calls"
   },
   {
+   "name": "Original tetherball reset with decoded AI construction and initialization",
+   "ok": true,
+   "detail": "Verified 24 original resets with AI construction and initialization"
+  },
+  {
+   "name": "Original tetherball AI entity predicates, tuning and complete compulsion selection",
+   "ok": true,
+   "detail": "Verified AI entity original execution: {'transforms': 64, 'swinging': 113, 'gameplay': 37, 'positions': 160, 'evaluations': 240, 'initializations': 96, 'hit_tables': 16}"
+  },
+  {
+   "name": "Original tetherball AI movement compulsion",
+   "ok": true,
+   "detail": "Verified original MoveCompulsion: 96 Think and 7 HasExpired cases"
+  },
+  {
+   "name": "Original tetherball AI hit compulsion",
+   "ok": true,
+   "detail": "Verified 1865 original TetherballHitCompulsion vectors"
+  },
+  {
+   "name": "Original tetherball player animation initialization",
+   "ok": true,
+   "detail": "Verified 48 original animation initialization calls"
+  },
+  {
+   "name": "Original tetherball reset with decoded animation initialization",
+   "ok": true,
+   "detail": "Verified 288 original composed ResetRound calls"
+  },
+  {
    "name": "MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC",
    "ok": true,
    "detail": "Verified 1536 LSF scale-factor vectors (all 512 compression values x long/short/mixed), original PowerPC\nVerified 72 spectral scaling and 48 reorder vectors (576 lines each), MPEG-1/MPEG-2 bands, original PowerPC\nELF sha256 5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c"
@@ -386,6 +416,36 @@
    "detail": "test result: ok. 5 passed; 0 failed"
   },
   {
+   "name": "Rust tetherball reset with decoded AI construction and initialization",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Rust tetherball AI entity predicates, tuning and complete compulsion selection",
+   "ok": true,
+   "detail": "test result: ok. 4 passed; 0 failed"
+  },
+  {
+   "name": "Rust tetherball AI movement compulsion",
+   "ok": true,
+   "detail": "test result: ok. 2 passed; 0 failed"
+  },
+  {
+   "name": "Rust tetherball AI hit compulsion",
+   "ok": true,
+   "detail": "test result: ok. 2 passed; 0 failed"
+  },
+  {
+   "name": "Rust tetherball player animation initialization",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Rust tetherball reset with decoded animation initialization",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
    "name": "MPEG-2 side information and scale-factor regression checks",
    "ok": true,
    "detail": "test result: ok. 3 passed; 0 failed"
@@ -398,13 +458,13 @@
   {
    "name": "Game self-test report (boot -> world -> player -> scripted walk)",
    "ok": true,
-   "detail": "22/22 in-game checks passed, load 3.0s, report 0.1 h old"
+   "detail": "22/22 in-game checks passed, load 3.1s, report 0.1 h old"
   }
  ],
  "scope": [
   "This proves: the executable in use is the retail binary with symbols; extracted data is consistent across three copies; the decoders reproduce recorded results; the game slice boots from the original files and moves a character using constants read from the executable.",
   "This does NOT prove: a full decompilation or matching gameplay on a running console. Locomotion, frame/physics timing, controller events, character input/grounded/airborne velocity, multiplayer scoring and tetherball Update/winner decisions are recovered subsets; many executable functions remain unported. Character normalization uses the documented reciprocal-square-root instruction model.",
   "Provisional: character step/slide solver, desktop direction adapter, support query and camera framing. Native character input and grounded/airborne states prepare world velocity; full Havok proxy dynamics remain unported. The original playground jump command is inert and the port adds no jump impulse. Spawn and gravity come from the database and Havok world settings; terrain uses decoded Havok collision. World display uses the original AreaManager matrix.",
-  "Not reconstructed: AI, full minigame gameplay, conversation execution, Havok dynamics, video, APT menu scripting, save data and audio-event graphs. Rust audio decoders cover music/speech and all 471 embedded bank sounds; console PCM equality remains unverified."
+  "Not reconstructed: full AI scheduling, full minigame gameplay, conversation execution, Havok dynamics, video, APT menu scripting, save data and audio-event graphs. Rust audio decoders cover music/speech and all 471 embedded bank sounds; console PCM equality remains unverified."
  ]
 }

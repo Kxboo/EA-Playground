@@ -23,7 +23,7 @@ fn words<const N: usize>(v: &Value) -> [u32; N] {
 /// Engine calls are compared separately from explicit modeled engine-memory
 /// writes. Neither is dropped: direct writes update the independently seeded
 /// auxiliary snapshot and are asserted against the original memory capture.
-fn effect_trace(effects: Vec<ResetEffect>, aux: &mut Value, handles: &Value) -> Vec<Value> {
+pub(crate) fn effect_trace(effects: Vec<ResetEffect>, aux: &mut Value, handles: &Value) -> Vec<Value> {
     let mut trace = Vec::new();
     for e in effects {
         match e {
@@ -216,7 +216,7 @@ fn effect_trace(effects: Vec<ResetEffect>, aux: &mut Value, handles: &Value) -> 
     trace
 }
 
-fn seed(c: &Value, f: &Value) -> (Lifecycle, ResetState, BallMotion, ResetInputs) {
+pub(crate) fn seed(c: &Value, f: &Value) -> (Lifecycle, ResetState, BallMotion, ResetInputs) {
     let lifecycle = serde_json::from_value(c["initial"].clone()).unwrap();
     let a = &c["aux"];
     let i = &c["inputs"];
@@ -308,7 +308,7 @@ fn seed(c: &Value, f: &Value) -> (Lifecycle, ResetState, BallMotion, ResetInputs
     )
 }
 
-fn snapshot(s: &ResetState, mut aux: Value) -> Value {
+pub(crate) fn snapshot(s: &ResetState, mut aux: Value) -> Value {
     for (n, v) in [
         ("game_mode_044", s.game_mode_044),
         ("base_player_count_070", s.base_player_count_070),

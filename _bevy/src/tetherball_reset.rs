@@ -821,4 +821,4 @@ fn direction_from_angle(angle: f32) -> [f32; 3] {
 
 #[cfg(test)]
 #[path = "tetherball_reset_tests.rs"]
-mod tests;
+pub(crate) mod tests;

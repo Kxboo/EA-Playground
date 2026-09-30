@@ -113,6 +113,42 @@ fn float(db: &Database, c: &Collection, name: &str, index: usize) -> Result<f32,
         .ok_or_else(|| format!("{name} is not a float"))
 }
 
+/// AI Initialize uses the raw unsigned difficulty index, unlike the minigame
+/// initializer's clamped difficulty selector.
+pub fn ai_difficulty(
+    db: &Database,
+    session_mode: i32,
+    dare: i32,
+    index: u32,
+) -> Result<[u8; 7], String> {
+    let name = collection_name(session_mode, dare).ok_or("native null tuning collection")?;
+    let collection = db
+        .find_collection("mg_tetherball", name)
+        .ok_or("missing AI tuning collection")?;
+    let mut values = [0; 7];
+    for (i, field) in AI_FIELDS.iter().enumerate() {
+        values[i] = int(db, collection, field, index as usize)? as u8;
+    }
+    Ok(values)
+}
+
+/// HitCompulsion::Activate selects the dare collection for these arrays;
+/// MGTetherball's separate initialization uses the regular collection instead.
+pub fn ai_hit_angles(db: &Database, session_mode: i32, dare: i32) -> Result<[[f32; 3]; 4], String> {
+    let name = collection_name(session_mode, dare).ok_or("native null tuning collection")?;
+    let collection = db
+        .find_collection("mg_tetherball", name)
+        .ok_or("missing AI tuning collection")?;
+    let mut values = [[0.; 3]; 4];
+    for (i, field) in ANGLE_FIELDS.iter().enumerate() {
+        for index in 0..3 {
+            values[i][index] =
+                (int(db, collection, field, index)? as i16 as f32) * f32::from_bits(0x3c8efa35);
+        }
+    }
+    Ok(values)
+}
+
 #[derive(Debug, Clone, PartialEq)]
 pub struct TetherballTuning {
     pub collection: &'static str,

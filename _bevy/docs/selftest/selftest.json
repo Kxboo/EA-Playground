@@ -1,7 +1,7 @@
 {
   "checks": [
     {
-      "detail": "703 frames, 11361 simulation ms, maximum 60 simulation ms / 372 uncapped input ms",
+      "detail": "704 frames, 11360 simulation ms, maximum 60 simulation ms / 454 uncapped input ms",
       "name": "recovered integer-ms simulation clock drives the game",
       "ok": true
     },
@@ -46,7 +46,7 @@
       "ok": true
     },
     {
-      "detail": "joint rotation checksum ranged -7.585..0.046 over 6 samples",
+      "detail": "joint rotation checksum ranged -7.148..0.175 over 6 samples",
       "name": "decoded clips animate the skeleton (joint pose changes idle -> walk/run)",
       "ok": true
     },
@@ -56,17 +56,17 @@
       "ok": true
     },
     {
-      "detail": "world_schoolyard.asf: state Some(1), 551250 samples queued",
+      "detail": "world_schoolyard.asf: state Some(1), 540225 samples queued",
       "name": "area music streams from the Rust EA Layer 3 decoder",
       "ok": true
     },
     {
-      "detail": "58 bindings, 703 input frames, 432 movement / 25 jump frames, uncapped maximum 372 ms",
+      "detail": "58 bindings, 704 input frames, 433 movement / 25 jump frames, uncapped maximum 454 ms",
       "name": "original controls.csv drives movement and jump events",
       "ok": true
     },
     {
-      "detail": "703 prepared frames; recovered grounded/airborne velocity, state Grounded; provisional collision support",
+      "detail": "704 prepared frames; recovered grounded/airborne velocity, state Grounded; provisional collision support",
       "name": "native character input and movement states drive positive world frames",
       "ok": true
     },
@@ -81,12 +81,12 @@
       "ok": true
     },
     {
-      "detail": "moved 15.79 m from the start (5 m/s max)",
+      "detail": "moved 15.89 m from the start (5 m/s max)",
       "name": "player walked on recovered locomotion",
       "ok": true
     },
     {
-      "detail": "forward run of 2.5 s (12.5 m if unobstructed) ended after 3.3 m",
+      "detail": "forward run of 2.5 s (12.5 m if unobstructed) ended after 3.4 m",
       "name": "Havok collision stops the player at a solid prop",
       "ok": true
     },
@@ -121,7 +121,7 @@
     "timing": "ExecutableDerived: GameState::Update 0x803acdc4, variable integer ms capped at 60; once per host frame",
     "world_display": "ExecutableDerived: AreaManager::CalcRenderingModelMatrix 0x803d78b8; camera framing remains provisional"
   },
-  "load_seconds": 2.999852180480957,
+  "load_seconds": 3.092881202697754,
   "log": [
     "Boot: reading original data files",
     "db.vlt: 75 types, 32 classes, 908 collections",
@@ -154,10 +154,10 @@
         -0.04999999701976776,
         -53.0
       ],
-      "pose": -3.612844467163086,
+      "pose": -3.7201099395751953,
       "speed": 0.0,
       "step": "settle",
-      "t": 1.5099998712539673,
+      "t": 1.5149999856948853,
       "velocity": [
         0.0,
         0.0,
@@ -175,20 +175,20 @@
       "pos": [
         12.0,
         -0.04999999701976776,
-        -49.650882720947266
+        -49.62921905517578
       ],
-      "pose": -7.584603309631348,
+      "pose": -7.14791202545166,
       "speed": 5.0,
       "step": "forward",
-      "t": 4.006003379821777,
+      "t": 4.015003204345703,
       "velocity": [
         -2.980232238769531e-7,
         0.0,
         5.0
       ],
       "weights": [
-        5.949351011835802e-10,
-        4.435647404932297e-10,
+        5.739318464925702e-10,
+        4.467175518385602e-10,
         0.9999998211860657
       ]
     },
@@ -196,22 +196,22 @@
       "grounded": true,
       "movement_state": "Grounded",
       "pos": [
-        14.981178283691406,
+        14.985690116882324,
         -0.04999999701976776,
-        -49.126895904541016
+        -49.11916732788086
       ],
-      "pose": 0.04603715240955353,
+      "pose": 0.17458434402942657,
       "speed": 5.0,
       "step": "left",
-      "t": 6.506987571716309,
+      "t": 6.514986515045166,
       "velocity": [
         4.999999523162842,
         0.0,
         7.549789415861596e-7
       ],
       "weights": [
-        2.9504051279482144e-19,
-        2.199728382298685e-19,
+        2.8723552087810664e-19,
+        2.235687215996072e-19,
         0.9999998211860657
       ]
     },
@@ -219,69 +219,69 @@
       "grounded": true,
       "movement_state": "Grounded",
       "pos": [
-        23.217931747436523,
-        0.03441376984119415,
-        -41.891666412353516
+        23.365800857543945,
+        0.03585013747215271,
+        -41.93724822998047
       ],
-      "pose": -7.2035417556762695,
+      "pose": -6.920940399169922,
       "speed": 7.071067810058594,
       "step": "diagonal",
-      "t": 8.521976470947266,
+      "t": 8.501973152160645,
       "velocity": [
         4.951516628265381,
         0.0,
         4.951517105102539
       ],
       "weights": [
-        8.163716589186168e-27,
-        6.086609233070301e-27,
-        0.9999998807907104
+        1.1625749768289197e-26,
+        9.048861665674898e-27,
+        0.9999998211860657
       ]
     },
     {
       "grounded": true,
       "movement_state": "Grounded",
       "pos": [
-        23.227834701538086,
-        0.03402438387274742,
-        -41.891666412353516
+        23.403961181640625,
+        0.03434966504573822,
+        -41.93724822998047
       ],
-      "pose": -5.501023292541504,
+      "pose": -5.4361772537231445,
       "speed": 0.0,
       "step": "jump",
-      "t": 8.908977508544922,
+      "t": 8.904973983764648,
       "velocity": [
         0.0,
         0.0,
         0.0
       ],
       "weights": [
-        0.8776237964630127,
-        0.04049653559923172,
-        0.0818796455860138
+        0.8893083930015564,
+        0.037303175777196884,
+        0.07338842004537582
       ]
     },
     {
       "grounded": true,
       "movement_state": "Grounded",
       "pos": [
-        23.227834701538086,
-        0.03402438387274742,
-        -41.891666412353516
+        23.403961181640625,
+        0.03434966504573822,
+        -41.93724822998047
       ],
-      "pose": -5.171855926513672,
+      "pose": -5.091805458068848,
       "speed": 0.0,
       "step": "final",
-      "t": 9.906974792480469,
+      "t": 9.9049711227417,
       "velocity": [
         0.0,
         0.0,
         0.0
       ],
       "weights": [
-        0.9999762773513794,
-        7.854723662603647e-6,
-        0.000015881403669482097
+        0.9999788999557495,
+        7.102602467057295e-6,
+        0.000013973306522530038
       ]
     }
   ]

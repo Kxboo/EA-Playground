@@ -227,6 +227,12 @@ def main():
                              ('tetherball_rally_rules_oracle.py','Original tetherball AI hit attempts, charge and ball-drop rules'),
                              ('tetherball_hit_animation_oracle.py','Original tetherball hit animations and hit windows'),
                              ('tetherball_rally_oracle.py','Original complete tetherball return, accelerate, hit and indicator graph'),
+                             ('tetherball_ai_reset_oracle.py','Original tetherball reset with decoded AI construction and initialization'),
+                             ('tetherball_ai_oracle.py','Original tetherball AI entity predicates, tuning and complete compulsion selection'),
+                             ('tetherball_ai_move_oracle.py','Original tetherball AI movement compulsion'),
+                             ('tetherball_ai_hit_oracle.py','Original tetherball AI hit compulsion'),
+                             ('tetherball_animation_init_oracle.py','Original tetherball player animation initialization'),
+                             ('tetherball_reset_runtime_oracle.py','Original tetherball reset with decoded animation initialization'),
                              ('mp3_lsf_oracle.py','MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC')]:
             args=[] if script=='mp3_lsf_oracle.py' else ['--check']
             r=subprocess.run([sys.executable,str(HERE/script),*args],cwd=BEVY,capture_output=True,text=True)
@@ -266,6 +272,12 @@ def main():
                 ('tetherball_rally_rules::tests','Native tetherball rally rules match original PowerPC vectors'),
                 ('tetherball_hit_animation::tests','Native tetherball hit animations and ranges match original PowerPC vectors'),
                 ('tetherball_rally::tests','Native complete tetherball return and accelerate graph matches original PowerPC vectors'),
+                ('tetherball_ai_reset::tests','Rust tetherball reset with decoded AI construction and initialization'),
+                ('tetherball_ai::tests','Rust tetherball AI entity predicates, tuning and complete compulsion selection'),
+                ('tetherball_ai_move::tests','Rust tetherball AI movement compulsion'),
+                ('tetherball_ai_hit::tests','Rust tetherball AI hit compulsion'),
+                ('tetherball_animation_init::tests','Rust tetherball player animation initialization'),
+                ('tetherball_reset_runtime::tests','Rust tetherball reset with decoded animation initialization'),
                 ('mp3::tests','MPEG-2 side information and scale-factor regression checks')]
         for name,label in suites:
             r=subprocess.run(['cargo','test','--release','--offline','--locked',name],cwd=BEVY,capture_output=True,text=True)
@@ -279,7 +291,7 @@ def main():
     scope=['This proves: the executable in use is the retail binary with symbols; extracted data is consistent across three copies; the decoders reproduce recorded results; the game slice boots from the original files and moves a character using constants read from the executable.',
            'This does NOT prove: a full decompilation or matching gameplay on a running console. Locomotion, frame/physics timing, controller events, character input/grounded/airborne velocity, multiplayer scoring and tetherball Update/winner decisions are recovered subsets; many executable functions remain unported. Character normalization uses the documented reciprocal-square-root instruction model.',
            'Provisional: character step/slide solver, desktop direction adapter, support query and camera framing. Native character input and grounded/airborne states prepare world velocity; full Havok proxy dynamics remain unported. The original playground jump command is inert and the port adds no jump impulse. Spawn and gravity come from the database and Havok world settings; terrain uses decoded Havok collision. World display uses the original AreaManager matrix.',
-           'Not reconstructed: AI, full minigame gameplay, conversation execution, Havok dynamics, video, APT menu scripting, save data and audio-event graphs. Rust audio decoders cover music/speech and all 471 embedded bank sounds; console PCM equality remains unverified.']
+           'Not reconstructed: full AI scheduling, full minigame gameplay, conversation execution, Havok dynamics, video, APT menu scripting, save data and audio-event graphs. Rust audio decoders cover music/speech and all 471 embedded bank sounds; console PCM equality remains unverified.']
     rep=dict(generated=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'),elf_sha256=PINNED_ELF,passed=passed==len(checks),passed_count=passed,total=len(checks),checks=checks,scope=scope)
     (BEVY/'docs'/'proof-report.json').write_text(json.dumps(rep,indent=1),encoding='utf-8')
     print(f'\n{passed}/{len(checks)} checks passed');sys.exit(0 if passed==len(checks) else 1)
