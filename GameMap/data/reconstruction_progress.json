@@ -1,6 +1,6 @@
 {
   "updated": "2026-09-30",
-  "summary": "Rust / Bevy reconstruction: original controller events now drive the playground, all 471 embedded bank sounds decode, and tetherball serve/motion and score arithmetic are ported. The latest completed validation passed 53 / 53 checks; full minigame gameplay remains unfinished.",
+  "summary": "Rust / Bevy reconstruction now includes original character-input preparation in the playable world, tetherball hit/motion arithmetic, and match winner decisions. The latest validation passed 57 / 57 checks. Complete minigame gameplay and Havok dynamics remain unfinished.",
   "metrics": [
     {
       "label": "Controller events",
@@ -14,8 +14,18 @@
     },
     {
       "label": "Tetherball core",
-      "value": "1,344",
-      "detail": "Motion/serve transitions and score comparisons"
+      "value": "2,552",
+      "detail": "2,416 transitions, 8 angle cases and 128 scores; Update prefix only"
+    },
+    {
+      "label": "Match decisions",
+      "value": "900",
+      "detail": "Original best-of / time-survival transitions"
+    },
+    {
+      "label": "Character input",
+      "value": "182",
+      "detail": "Exact original outputs; 24 cases include impulse setup"
     },
     {
       "label": "Embedded audio",
@@ -24,8 +34,8 @@
     },
     {
       "label": "Game self-test",
-      "value": "21 / 21",
-      "detail": "Workbench game checks passed"
+      "value": "22 / 22",
+      "detail": "Rendered game checks, including native character input"
     },
     {
       "label": "Mode hops",
@@ -34,34 +44,39 @@
     }
   ],
   "details": [
-    "Verified baseline: b093582. Controller button edges, tap/hold/double/repeat timers, modifiers and context transitions drive the Bevy keyboard adapter from controls.csv, with the original frame ordering.",
-    "Playground jump behavior is decoded: the original executable queues the jump command but never handles it. The Rust adapter preserves that behavior; Footie has a separate jump path.",
-    "MPEG Layer 3: 1,536 LSF mappings, 72 spectral scaling vectors and 48 reorder vectors compared with original PowerPC. Full console PCM equality remains unverified.",
-    "Verified tetherball arithmetic covers serve/toss timing, radius/velocity changes, zones and score calculation. Complete AI, gesture/animation timing and game states remain unfinished.",
-    "In progress: tetherball Hit and per-frame ball motion; best-of-rounds and time-survival match rules; character support, gravity and impulse input. These changes are still being decoded and validated and are not included in the passing totals.",
-    "Existing frame/physics timing (412 cases) and tournament scoring (210 transitions) remain covered. Native ports do not promote entire surrounding functions to proven status."
+    "Verified source: 33c13c9. The world consumes native character-input speed clamps, direction and gravity each frame. Collision support, the desktop yaw adapter and the character solver remain provisional.",
+    "Character input: 182 original PowerPC captures, including 24 ApplyVelocity calls. All 40 output words and subsequent impulse, decay and timer state match exactly for the tested cases.",
+    "Tetherball: Hit, angle wrapping, spin-down and the numeric Update prefix are now ported. Later model transforms feed back into ball radius and height and remain to be decoded.",
+    "Tetherball match decisions: 900 comparisons cover signed-byte counters, equal-win thresholds, timeout precedence, result fields and ordered UI/state requests. Complete round entry, animation and post-game execution remain unfinished.",
+    "Controller coverage remains 303 frames and 506 bindings across 14 tables. The original playground jump command is inert; Footie has a separate jump path.",
+    "All 471 embedded bank sounds decode. MPEG Layer 3 has 1,536 LSF, 72 spectral and 48 reorder comparisons; complete console PCM equality remains unverified.",
+    "Next: ball transform feedback, tuning selection/inheritance, round and gesture/animation callbacks, and Havok character-state movement. These are outside the passing native-port totals."
   ],
   "scope": "Native reconstruction evidence is tracked separately from the whole-function decompilation and lifter percentages below.",
   "links": [
     {
-      "label": "Controller evidence",
-      "url": "https://github.com/kxboo/EA-Playground/blob/main/_bevy/docs/CONTROLLER.md"
+      "label": "Character input evidence",
+      "url": "https://github.com/Kxboo/EA-Playground/blob/main/_bevy/docs/CHARACTER_INPUT.md"
     },
     {
-      "label": "Tetherball evidence",
-      "url": "https://github.com/kxboo/EA-Playground/blob/main/_bevy/docs/TETHERBALL.md"
+      "label": "Tetherball motion evidence",
+      "url": "https://github.com/Kxboo/EA-Playground/blob/main/_bevy/docs/TETHERBALL.md"
+    },
+    {
+      "label": "Tetherball match evidence",
+      "url": "https://github.com/Kxboo/EA-Playground/blob/main/_bevy/docs/TETHERBALL_MATCH.md"
+    },
+    {
+      "label": "Controller evidence",
+      "url": "https://github.com/Kxboo/EA-Playground/blob/main/_bevy/docs/CONTROLLER.md"
     },
     {
       "label": "Bank audio evidence",
-      "url": "https://github.com/kxboo/EA-Playground/blob/main/_bevy/docs/BANK_AUDIO.md"
-    },
-    {
-      "label": "Playground jump evidence",
-      "url": "https://github.com/Kxboo/EA-Playground/blob/main/_bevy/docs/PLAYGROUND_JUMP.md"
+      "url": "https://github.com/Kxboo/EA-Playground/blob/main/_bevy/docs/BANK_AUDIO.md"
     },
     {
       "label": "Verified source revision",
-      "url": "https://github.com/Kxboo/EA-Playground/commit/b0935824bb68175e13c12d286090058fb7108abb"
+      "url": "https://github.com/Kxboo/EA-Playground/commit/33c13c952c2773dee6fb6951c96925eb0f28b57d"
     }
   ]
 }
