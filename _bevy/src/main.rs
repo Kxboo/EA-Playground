@@ -56,9 +56,10 @@ fn main(){
         let out=arg("--out").expect("--out <file.wav>");
         let d=std::fs::read(&input).expect("input");
         // A file may hold several streams (.ast banks): --stream <n> picks one (default 0).
-        if input.to_lowercase().ends_with(".bnk"){
+        if input.to_lowercase().ends_with(".bnk")||input.to_lowercase().ends_with(".abk"){
             let which=arg("--stream").and_then(|s|s.parse::<usize>().ok()).unwrap_or(0);
-            match audio::decode_bank_sound(&d,which){Ok(p)=>{std::fs::write(&out,audio::to_wav(&p)).expect("write");eprintln!("{} samples at {} Hz",p.samples.len(),p.sample_rate);}Err(e)=>{eprintln!("{e}");std::process::exit(1)}}
+            let bank=if input.to_lowercase().ends_with(".abk"){match audio::abk_bank(&d){Ok(Some(b))=>b,Ok(None)=>{eprintln!("module bank without samples");std::process::exit(1)}Err(e)=>{eprintln!("{e}");std::process::exit(1)}}}else{&d[..]};
+            match audio::decode_bank_sound(bank,which){Ok(p)=>{std::fs::write(&out,audio::to_wav(&p)).expect("write");eprintln!("{} samples at {} Hz",p.samples.len(),p.sample_rate);}Err(e)=>{eprintln!("{e}");std::process::exit(1)}}
             return
         }
         let list=audio::streams(&d);let which=arg("--stream").and_then(|s|s.parse::<usize>().ok()).unwrap_or(0);

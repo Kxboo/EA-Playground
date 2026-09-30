@@ -9,7 +9,8 @@ use crate::mp3::{self,Layer3};
 use crate::skeleton::be32;
 
 #[derive(Debug,Clone,Default)]
-pub struct Header{pub samples:u32,pub channels:u8,pub sample_rate:u32,pub codec:u8,pub entries:Vec<(u8,u32)>}
+pub struct Header{pub samples:u32,pub channels:u8,pub sample_rate:u32,pub codec:u8,pub entries:Vec<(u8,u32)>,/// Entries longer than four bytes (tag, raw bytes), e.g. 0x8f = codec 0x12 coefficients.
+    pub long:Vec<(u8,Vec<u8>)>}
 
 fn le32(d:&[u8],o:usize)->Result<usize,String>{d.get(o..o+4).map(|b|u32::from_le_bytes(b.try_into().unwrap()) as usize).ok_or_else(||format!("read past end at {o:#x}"))}
 
@@ -33,8 +34,8 @@ pub fn parse_tags_len(body:&[u8])->(Header,usize){
             0xFC|0xFD|0xFE=>continue, // stream section delimiters carry no value
             _=>{
                 let Some(&n)=body.get(p) else{break};let n=n as usize;p+=1;
-                if n>4||p+n>body.len(){ // long entries (e.g. 0x13, speech tables) are skipped by length
-                    p=(p+n).min(body.len());continue
+                if n>4||p+n>body.len(){ // long entries (e.g. speech tables, 0x8f) are kept raw
+                    let end=(p+n).min(body.len());h.long.push((tag,body[p..end].to_vec()));p=end;continue
                 }
                 let v=body[p..p+n].iter().fold(0u32,|a,&b|(a<<8)|b as u32);p+=n;
                 h.entries.push((tag,v));
@@ -157,16 +158,54 @@ pub fn parse_bank(d:&[u8])->Result<Vec<BankSound>,String>{
     for _ in 0..count{
         // Sound headers follow the table back to back; each ends with a 0xFF tag and is padded to 4 bytes.
         let body=d.get(pos..).ok_or("sound header outside bank")?;
+        // `count` also covers trailing table entries in AEMS banks; real headers begin with the "PT" platform tag.
+        if !body.starts_with(b"PT"){break}
         let (header,used)=parse_tags_len(body);pos+=(used+3)&!3;
         let data_offset=header.entries.iter().find(|e|e.0==0x88).map(|e|e.1 as usize).ok_or("sound without a data offset")?;
         out.push(BankSound{header,data_offset});
     }
     Ok(out)
 }
-/// Decode sound `i` of a bank (EA-XA only).
+/// The `BNKb` sound bank inside an AEMS module bank (`aems/*.abk`, magic `ABKC`): `AddModuleBank` (0x802764dc) hands
+/// `SNDbankadd` the bytes at header word 0x20 (offset), of size word 0x24; `resolvemodulebank` (0x8027620c) then relocates the
+/// module-graph part.  Returns `None` for banks without samples (the `amb_*.abk` ones stream from `.ast` files).
+pub fn abk_bank(d:&[u8])->Result<Option<&[u8]>,String>{
+    if d.get(..4)!=Some(b"ABKC"){return Err("Not an ABKC module bank".into())}
+    let off=be32(d,0x20)? as usize;let size=be32(d,0x24)? as usize;
+    if off==0{return Ok(None)}
+    d.get(off..off+size).map(Some).ok_or_else(||"sound bank outside the module bank".into())
+}
+/// GameCube/Wii DSP-ADPCM (codec 0x12): 8-byte frames -> 14 samples; the first byte is `predictor << 4 | scale`, then 14 signed
+/// nibbles (high first): `s = (nibble << scale << 11 + 1024 + c1*h1 + c2*h2) >> 11`.  The eight coefficient pairs (Q11, big-endian
+/// i16) are the first 32 bytes of the sound header's tag 0x8f entry.
+pub fn decode_dsp(data:&[u8],coefs:&[u8],samples:usize)->Result<Vec<i16>,String>{
+    if coefs.len()<32{return Err("DSP-ADPCM sound without coefficients".into())}
+    let c:Vec<i32>=(0..16).map(|i|i16::from_be_bytes([coefs[2*i],coefs[2*i+1]]) as i32).collect();
+    let (mut h1,mut h2)=(0i32,0i32);let mut out=Vec::with_capacity(samples+14);
+    for frame in data.chunks(8){
+        if out.len()>=samples{break}
+        if frame.len()<8{return Err("DSP-ADPCM data ends inside a frame".into())}
+        let (pred,scale)=((frame[0]>>4) as usize&7,(frame[0]&15) as u32);
+        let (c1,c2)=(c[pred*2],c[pred*2+1]);
+        for k in 0..14{
+            let b=frame[1+k/2];let nib=if k%2==0{b>>4}else{b&15};let nib=((nib as i32)<<28)>>28;
+            let v=(((nib<<scale)<<11)+1024+c1*h1+c2*h2)>>11;let v=v.clamp(-32768,32767);
+            h2=h1;h1=v;out.push(v as i16);
+        }
+    }
+    if out.len()<samples{return Err("DSP-ADPCM data too short".into())}
+    out.truncate(samples);Ok(out)
+}
+/// Decode sound `i` of a bank (EA-XA and DSP-ADPCM).
 pub fn decode_bank_sound(d:&[u8],i:usize)->Result<Pcm,String>{
     let sounds=parse_bank(d)?;let s=sounds.get(i).ok_or("no such sound")?;
-    if s.header.codec!=0x0a{return Err(format!("codec {:#x} is not EA-XA",s.header.codec))}
+    if s.header.codec==0x12{
+        let coefs=s.header.long.iter().find(|e|e.0==0x8f).map(|e|e.1.as_slice()).ok_or("no coefficient entry")?;
+        let data=d.get(s.data_offset..).ok_or("sound data outside bank")?;
+        let samples=decode_dsp(data,coefs,s.header.samples as usize)?;
+        return Ok(Pcm{sample_rate:s.header.sample_rate,channels:1,samples,frames:0,stats:mp3::Stats::default()})
+    }
+    if s.header.codec!=0x0a{return Err(format!("codec {:#x} has no bank decoder",s.header.codec))}
     let mut pos=s.data_offset;let mut hist=(0f32,0f32);
     let samples=xa_run(d,&mut pos,s.header.samples as usize,&mut hist)?;
     Ok(Pcm{sample_rate:s.header.sample_rate,channels:1,samples,frames:0,stats:mp3::Stats::default()})
@@ -403,5 +442,29 @@ mod tests{
             n+=1;
         }
         assert!(n>0);
+    }
+
+    /// Sound banks embedded in the `.abk` module banks: list codecs, decode what has a decoder.
+    #[test] fn abk_banks(){
+        let dir=crate::bridge::data_root().join("files").join("data").join("audio").join("aems");
+        if !dir.exists(){eprintln!("DATA absent; skipped");return}
+        let mut codecs=std::collections::BTreeMap::<u8,usize>::new();let (mut ok,mut dsp,mut smooth,mut loud)=(0,0,0,0);
+        for e in std::fs::read_dir(&dir).unwrap().flatten(){
+            let p=e.path();if p.extension().is_none_or(|x|x!="abk"){continue}
+            let d=std::fs::read(&p).unwrap();
+            let Some(bank)=abk_bank(&d).unwrap() else{continue};
+            let sounds=parse_bank(bank).unwrap();
+            for (i,s) in sounds.iter().enumerate(){
+                *codecs.entry(s.header.codec).or_default()+=1;
+                if s.header.codec==0x0a||s.header.codec==0x12{let pcm=decode_bank_sound(bank,i).unwrap_or_else(|er|panic!("{} #{i}: {er}",p.display()));assert_eq!(pcm.samples.len() as u32,s.header.samples);
+                    let n=pcm.samples.len() as f64;let rms=(pcm.samples.iter().map(|&x|(x as f64).powi(2)).sum::<f64>()/n).sqrt();
+                    let clipped=pcm.samples.iter().filter(|&&x|x==i16::MAX||x==i16::MIN).count();
+                    assert!(rms<20000.&&clipped*20<pcm.samples.len(),"{} #{i}: rms {rms:.0} clipped {clipped}",p.display());
+                    if s.header.codec==0x12{dsp+=1;if rms>30.{let d=(pcm.samples.windows(2).map(|w|((w[1]-w[0]) as f64).powi(2)).sum::<f64>()/n).sqrt();smooth+=(d/rms<1.2) as usize;loud+=1}}
+                    ok+=1}
+            }
+        }
+        eprintln!("abk sound codecs {codecs:?}: {ok} sounds decoded ({dsp} DSP-ADPCM, {smooth}/{loud} audible ones not noise-like)");
+        assert!(dsp>200&&smooth*10>=loud*9);
     }
 }
