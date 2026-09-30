@@ -9,7 +9,8 @@ use serde_json::{Value,json};
 use std::{collections::{HashMap},path::PathBuf,time::Instant};
 use crate::{archive,assets,bridge,character,gsh,locomotion::{InputKind,Locomotion},menu::AppMode,model,recovered as k,sim_time::{FramePolicy,FrameStep}};
 use std::sync::{Mutex,mpsc};
-use crate::character_input::{CharacterInputState,SurfaceSupport,CHARACTER_SPEED};
+use crate::character_input::{CharacterInputState,SurfaceSupport};
+use crate::character_movement::CharacterMovementState;
 
 #[derive(Component,Debug,Clone,Serialize,Deserialize)]
 pub struct OriginalAsset {
@@ -27,13 +28,15 @@ const MIN_BOOT_SECONDS:f32=2.5;
 use character::CLIPS;
 const WORLD_SUFFIXES:[&str;4]=["","-alpha","-fade","-alphafade"];
 
-/// World display curvature: the decoded world meshes are baked onto a sphere of radius `R` (world.csv RADIUS)
-/// while collision/gameplay coordinates are flat.  Vertical drop at flat position (x,z): R - sqrt(R^2 - r^2).
-pub fn bend(radius:f32,x:f32,z:f32)->f32{if radius<=0.{return 0.}let r2=(x*x+z*z).min(radius*radius*0.99);radius-(radius*radius-r2).sqrt()}
+/// Convert the original row-vector matrix to Bevy's column-vector convention.
+/// A missing radius uses the original disabled-curvature path while loading.
+fn display_matrix(radius:f32,position:Vec3)->Mat4{
+    Mat4::from_cols_array(&crate::area_transform::AreaTransform{radius,disabled:radius<=0.}.model_matrix(position.to_array()))
+}
 
 #[derive(Component)] pub struct GameEntity;
 #[derive(Component)] pub struct GameCamera{pub yaw:f32,pub pitch:f32,pub distance:f32}
-#[derive(Component)] pub struct Player{loco:Locomotion,physics_input:CharacterInputState,physics_frames:u64,vy:f32,grounded:bool,speed:f32,facing:Vec3,weights:[f32;3],anim_ready:bool}
+#[derive(Component)] pub struct Player{loco:Locomotion,physics_input:CharacterInputState,movement:CharacterMovementState,physics_frames:u64,velocity:Vec3,support_normal:Vec3,grounded:bool,speed:f32,facing:Vec3,weights:[f32;3],anim_ready:bool}
 #[derive(Component)] struct WorldLayer(String);
 #[derive(Component)] struct PlayerModel;
 #[derive(Clone,Debug)] pub struct Placeable{pub id:String,pub asset:String,pub pos:Vec3,pub orientation_deg:f32,pub physics:Option<String>}
@@ -133,7 +136,10 @@ impl Ground {
     }
     /// Highest walkable surface at (x,z) not above `max_y`.
     pub fn height(&self,x:f32,z:f32,max_y:f32)->Option<f32>{
-        let idx=self.index(x,z)?;let mut best:Option<f32>=None;let p=Vec2::new(x,z);
+        self.surface(x,z,max_y).map(|(height,_)|height)
+    }
+    fn surface(&self,x:f32,z:f32,max_y:f32)->Option<(f32,Vec3)>{
+        let idx=self.index(x,z)?;let mut best:Option<(f32,Vec3)>=None;let p=Vec2::new(x,z);
         for &i in &self.cells[idx]{
             let t=&self.tris[i as usize];
             let (a,b,cc)=(t[0].xz(),t[1].xz(),t[2].xz());
@@ -141,7 +147,7 @@ impl Ground {
             let l1=((b.y-cc.y)*(p.x-cc.x)+(cc.x-b.x)*(p.y-cc.y))/d;let l2=((cc.y-a.y)*(p.x-cc.x)+(a.x-cc.x)*(p.y-cc.y))/d;let l3=1.-l1-l2;
             if l1< -1e-4||l2< -1e-4||l3< -1e-4{continue}
             let y=l1*t[0].y+l2*t[1].y+l3*t[2].y;
-            if y<=max_y && best.is_none_or(|b|y>b){best=Some(y);}
+            if y<=max_y && best.is_none_or(|b|y>b.0){best=Some((y,(t[1]-t[0]).cross(t[2]-t[0]).normalize_or_zero()));}
         }
         best
     }
@@ -306,8 +312,7 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,mut meshes:ResMut<Asset
                         let up=assets::upload(&b,&mut meshes,&mut materials,&mut images,false);
                         let radius=g.world_radius;
                         for q in g.placeables.clone().into_iter().filter(|q|q.asset==asset){
-                            // Positions are flat gameplay coordinates; the display is bent like the world.
-                            let t=Transform::from_xyz(q.pos.x,q.pos.y-bend(radius,q.pos.x,q.pos.z),q.pos.z).with_rotation(Quat::from_rotation_y(q.orientation_deg.to_radians()));
+                            let t=Transform::from_matrix(display_matrix(radius,q.pos)*Mat4::from_quat(Quat::from_rotation_y(q.orientation_deg.to_radians())));
                             assets::spawn(&mut commands,&up,(GameEntity,PlaceableProp,Name::new(q.id.clone()),t,OriginalAsset{evidence:EvidenceLevel::AssetDerived,source:asset.clone(),decoder_version:"rust-model-1".into()}),None);
                             g.props_spawned+=1;
                         }
@@ -396,7 +401,8 @@ fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,mut ibp:ResMut<Assets<
     let handle=graphs.add(graph);
     let asset=g.player_asset.take().expect("player asset");
     let physics_input=CharacterInputState{speed:0.,orientation:0.,gravity:[0.,-g.gravity,0.],gravity_override:None,impulse:[0.;3],impulse_decay:[0.;3],impulse_ms:0};
-    let player=commands.spawn((GameEntity,Player{loco:Locomotion::default(),physics_input,physics_frames:0,vy:0.,grounded:true,speed:0.,facing:g.start_dir,weights:[1.,0.,0.],anim_ready:true},Transform::from_translation(g.spawn),Visibility::default(),
+    let support_normal=g.ground.as_ref().and_then(|ground|ground.surface(g.spawn.x,g.spawn.z,g.spawn.y+STEP_UP)).map(|(_,normal)|normal).unwrap_or(Vec3::Y);
+    let player=commands.spawn((GameEntity,Player{loco:Locomotion::default(),physics_input,movement:CharacterMovementState::default(),physics_frames:0,velocity:Vec3::ZERO,support_normal,grounded:true,speed:0.,facing:g.start_dir,weights:[1.,0.,0.],anim_ready:true},Transform::from_translation(g.spawn),Visibility::default(),
         OriginalAsset{evidence:EvidenceLevel::AssetDerived,source:asset.source.clone(),decoder_version:"rust-model-1 / rust-anim-1".into()})).id();
     // The model entity owns the AnimationPlayer; joints point at it through AnimatedBy (see character.rs).
     let model=commands.spawn((GameEntity,PlayerModel,ChildOf(player),Transform::default(),Visibility::default())).id();
@@ -462,20 +468,19 @@ fn movement(g:Option<Res<Game>>,clock:Res<SimulationClock>,cam:Query<&GameCamera
         // -forward / -(forward cross up), so desired +Z corresponds to yaw zero.
         p.physics_input.speed=step.speed;
         p.physics_input.orientation=p.facing.x.atan2(p.facing.z);
-        // The current step/slide solver supplies an approximate stationary support.
-        // Original Havok support queries and character-state dynamics remain unported.
-        let support=SurfaceSupport{kind:if p.grounded{2}else{0},normal:[0.,1.,0.,0.],velocity:[0.;4]};
+        // PhysicsDynamicCharacter::Update skips preparation and integration at dt <= 0.
+        if dt_ms<=0 {continue}
+        // Original Havok support queries remain a boundary supplied by the host
+        // step/slide solver, using the decoded contact triangle's normal.
+        let support=SurfaceSupport{kind:if p.grounded{2}else{0},normal:p.support_normal.extend(0.).to_array(),velocity:[0.;4]};
         let position=[t.translation.x,t.translation.y,t.translation.z,0.];
-        let velocity=[0.,p.vy,0.,0.];
+        let velocity=p.velocity.extend(0.).to_array();
         let prepared=p.physics_input.build(dt_ms,support,position,velocity);
+        let output=p.movement.update(&prepared);
+        p.velocity=Vec3::new(output.velocity[0],output.velocity[1],output.velocity[2]);
         p.physics_frames+=1;
-        if prepared.input_ud!=0.||prepared.input_lr!=0.{
-            let forward=Vec3::new(prepared.forward[0],prepared.forward[1],prepared.forward[2]).normalize_or_zero();
-            let side=forward.cross(Vec3::Y).normalize_or_zero();
-            // Both original OnGround and InAir states use speed 20. The signs
-            // follow calculateMovement (0x801dd11c) on flat support. Acceleration,
-            // slope projection and proxy constraints still use this host solver.
-            let delta=-(forward*prepared.input_ud+side*prepared.input_lr)*CHARACTER_SPEED*dt;
+        if p.velocity.x!=0.||p.velocity.z!=0.{
+            let delta=Vec3::new(p.velocity.x,0.,p.velocity.z)*dt;
             let ny=t.translation.y;
             // Horizontal move against the Havok collision: needs walkable ground within step-up height and no
             // steep face crossing the character's body (slides along one axis if the diagonal is blocked).
@@ -488,14 +493,13 @@ fn movement(g:Option<Res<Game>>,clock:Res<SimulationClock>,cam:Query<&GameCamera
         // Original LocalCharacterControl ignores queued command 4 (Jump), and
         // PhysicsDynamicCharacter::BuildCharacterInput writes wantJump=false.
         // The controller still emits the event, but it adds no vertical impulse.
-        p.vy+=prepared.gravity[1]*dt*(!prepared.supported) as i32 as f32;
-        let mut y=t.translation.y+p.vy*dt;
-        match ground.height(t.translation.x,t.translation.z,y+STEP_UP){
-            Some(gy) if y<=gy+0.02&&p.vy<=0.||p.grounded&&gy>=t.translation.y-0.5=>{y=gy;p.vy=0.;p.grounded=true}
+        let mut y=t.translation.y+p.velocity.y*dt;
+        match ground.surface(t.translation.x,t.translation.z,y+STEP_UP){
+            Some((gy,normal)) if y<=gy+0.02&&p.velocity.y<=0.||p.grounded&&gy>=t.translation.y-0.5=>{y=gy;p.velocity.y=0.;p.support_normal=normal;p.grounded=true}
             _=>{p.grounded=false}
         }
         t.translation.y=y;
-        if y<g.spawn.y-40.{t.translation=g.spawn;p.vy=0.;}
+        if y<g.spawn.y-40.{t.translation=g.spawn;p.velocity=Vec3::ZERO;p.grounded=false;p.movement=CharacterMovementState::default();}
     }
 }
 
@@ -511,8 +515,8 @@ fn camera(g:Option<Res<Game>>,mut c:Query<(&mut GameCamera,&mut Transform),Witho
     let target=pt.translation+Vec3::Y*k::FRAME_CAMERA_HEIGHT;
     let off=Vec3::new(cam.yaw.sin()*cam.pitch.cos(),cam.pitch.sin(),cam.yaw.cos()*cam.pitch.cos())*cam.distance;
     let eye=target+off;
-    // Everything the world draws sits on the curved display surface: drop camera points by the same bend.
-    let (tb,eb)=(target-Vec3::Y*bend(radius,target.x,target.z),eye-Vec3::Y*bend(radius,eye.x,eye.z));
+    // Host orbit framing in the recovered curved rendering coordinate system.
+    let (tb,eb)=(display_matrix(radius,target).w_axis.truncate(),display_matrix(radius,eye).w_axis.truncate());
     *ct=Transform::from_translation(eb).looking_at(tb,Vec3::Y);
 }
 
@@ -530,8 +534,9 @@ fn animate(g:Option<Res<Game>>,mut q:Query<(&mut Player,&Children,&Transform),Wi
         for kid in kids.iter(){
             if let Ok(mut m)=models.get_mut(kid){
                 // Model +Z is treated as forward until orientation is compared against the game.
-                m.rotation=Quat::from_rotation_y(p.facing.x.atan2(p.facing.z));
-                m.translation.y=-bend(radius,pt.translation.x,pt.translation.z);
+                *m=Transform::from_matrix(display_matrix(radius,pt.translation)*Mat4::from_quat(Quat::from_rotation_y(p.facing.x.atan2(p.facing.z))));
+                // The player parent retains flat collision coordinates.
+                m.translation-=pt.translation;
             }
             for d in std::iter::once(kid).chain(children.iter_descendants(kid)){if let Ok(mut pl)=players.get_mut(d){
                 for (i,weight) in w.iter().enumerate(){if let Some(a)=pl.animation_mut(AnimationNodeIndex::new(i+1)){a.set_weight(*weight);a.set_speed(playback_speed);}}
@@ -612,7 +617,7 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
     st.t+=clock.frame.seconds();
     // Checksum of every animated joint rotation: changes whenever the decoded clips move the rig.
     let pose:f32=joints.iter().map(|(_,t)|t.rotation.x+2.*t.rotation.y+3.*t.rotation.z).sum();
-    let record=|st:&mut SelfTest,name:&str|{st.samples.push(json!({"step":name,"t":st.t,"pos":[t.translation.x,t.translation.y,t.translation.z],"speed":p.speed,"grounded":p.grounded,"weights":p.weights,"pose":pose}));};
+    let record=|st:&mut SelfTest,name:&str|{st.samples.push(json!({"step":name,"t":st.t,"pos":[t.translation.x,t.translation.y,t.translation.z],"speed":p.speed,"grounded":p.grounded,"weights":p.weights,"pose":pose,"velocity":p.velocity.to_array(),"movement_state":format!("{:?}",p.movement.state)}));};
     input.scripted=true;
     // Scripted input sequence: settle, walk forward, run diagonally, jump, settle.
     let script=[(0.,0.,0.,false,1.5,"settle"),(0.,1.,0.,false,2.5,"forward"),(-1.,0.,0.,false,2.5,"left"),(-1.,1.,0.,false,2.0,"diagonal"),(0.,0.,0.,true,0.4,"jump"),(0.,0.,0.,false,1.0,"land")];
@@ -650,7 +655,7 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
                 let music_state=g.music.as_ref().map(|m|(m.status.state.load(std::sync::atomic::Ordering::Relaxed),m.status.samples_played.load(std::sync::atomic::Ordering::Relaxed)));
                 check("area music streams from the Rust EA Layer 3 decoder",music_state.is_none_or(|(s,q)|(s==crate::playback::Status::PLAYING&&q>44100)||s==crate::playback::Status::NO_DEVICE),format!("{}: state {:?}, {} samples queued",g.music_name,music_state.map(|m|m.0),music_state.map(|m|m.1).unwrap_or(0)));
                 check("original controls.csv drives movement and jump events",g.combat_bindings>=8&&g.input_frames==clock.frames&&g.input_moves>0&&g.input_jumps>0&&g.input_max_ms==clock.max_input_ms,format!("{} bindings, {} input frames, {} movement / {} jump frames, uncapped maximum {} ms",g.controls_rows,g.input_frames,g.input_moves,g.input_jumps,g.input_max_ms));
-                check("native character input builder drives each world frame",p.physics_frames==clock.frames&&p.physics_frames>0,format!("{} prepared frames; recovered speed clamp/forward/gravity with provisional collision support",p.physics_frames));
+                check("native character input and movement states drive positive world frames",p.physics_frames<=clock.frames&&p.physics_frames>0&&p.velocity.is_finite(),format!("{} prepared frames; recovered grounded/airborne velocity, state {:?}; provisional collision support",p.physics_frames,p.movement.state));
                 check("mesh entities in scene",meshes.iter().count()>100,format!("{} Mesh3d entities",meshes.iter().count()));
                 check("animation players active",players.iter().count()>=1,format!("{} players",players.iter().count()));
                 check("player walked on recovered locomotion",moved>5.,format!("moved {:.2} m from the start (5 m/s max)",moved));
@@ -662,7 +667,7 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
                 check("original playground jump command has no upward impulse",jump_ignored,"jump event dispatched while player remains grounded, matching original command 4".into());
                 check("camera follows player",cam.single().map(|c|c.translation.distance(t.translation)<15.).unwrap_or(false),"camera within 15 m".into());
                 let passed=checks.iter().all(|c|c["ok"]==true);
-                let report=json!({"passed":passed,"load_seconds":g.load_seconds,"checks":checks,"samples":st.samples,"log":g.log,"evidence":{"locomotion":"ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs","timing":"ExecutableDerived: GameState::Update 0x803acdc4, variable integer ms capped at 60; once per host frame","terrain":"DataDerived Havok collision meshes; provisional character solver","character_input":"ExecutableDerived: BuildCharacterInput; desktop yaw adapter and provisional support boundary, forward/gravity consumed; Havok state dynamics remain unported","gravity":"DataDerived hkWorldCinfo through original character input builder","jump":"ExecutableDerived: LocalCharacterControl command 4 ignored; PhysicsDynamicCharacter wantJump=false","input":"ExecutableDerived: original CSV bindings and Controller event predicates; desktop logical-button adapter"}});
+                let report=json!({"passed":passed,"load_seconds":g.load_seconds,"checks":checks,"samples":st.samples,"log":g.log,"evidence":{"locomotion":"ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs","timing":"ExecutableDerived: GameState::Update 0x803acdc4, variable integer ms capped at 60; once per host frame","terrain":"DataDerived Havok collision meshes; provisional character solver","character_input":"ExecutableDerived: BuildCharacterInput and Grounded/InAir calculateMovement consume prior velocity, surface normal and gravity; desktop yaw adapter and proxy collision/support remain provisional","world_display":"ExecutableDerived: AreaManager::CalcRenderingModelMatrix 0x803d78b8; camera framing remains provisional","gravity":"DataDerived hkWorldCinfo through original input and airborne velocity preparation","jump":"ExecutableDerived: LocalCharacterControl command 4 ignored; PhysicsDynamicCharacter wantJump=false","input":"ExecutableDerived: original CSV bindings and Controller event predicates; desktop logical-button adapter"}});
                 let _=std::fs::write(st.out.join("selftest.json"),serde_json::to_string_pretty(&report).unwrap());
                 exit.write(if passed{AppExit::Success}else{AppExit::from_code(1)});
             }

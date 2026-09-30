@@ -5,7 +5,7 @@
     "5.6s: game torn down (no entities, no loader) -> Viewer",
     "7.6s: viewer loaded 'basketball.o • 0 ms • native Rust decoder' -> Menu",
     "8.6s: viewer closed -> Game",
-    "11.6s: game playing again after re-entry"
+    "11.7s: game playing again after re-entry"
   ],
   "passed": true
 }

@@ -213,9 +213,11 @@ def main():
                              ('controller_oracle.py','Controller event vectors reproduced by executing original PowerPC'),
                              ('jump_command_oracle.py','Original playground jump command leaves movement unchanged'),
                              ('character_input_oracle.py','Character input, support/gravity and impulse vectors reproduced by original PowerPC'),
+                             ('character_movement_oracle.py','Grounded/airborne velocity and state transitions match original PowerPC under the documented instruction model'),
                              ('control_bindings_oracle.py','All 14 control tables loaded by the original PowerPC parser'),
                              ('tetherball_oracle.py','Tetherball serve/hit/motion-prefix/scoring vectors reproduced by original PowerPC'),
                              ('tetherball_match_oracle.py','Tetherball winner decisions and common state stores reproduced by original PowerPC'),
+                             ('tetherball_scene_oracle.py','Original area matrices and complete tetherball Update state, transforms and effect requests'),
                              ('mp3_lsf_oracle.py','MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC')]:
             args=[] if script=='mp3_lsf_oracle.py' else ['--check']
             r=subprocess.run([sys.executable,str(HERE/script),*args],cwd=BEVY,capture_output=True,text=True)
@@ -242,8 +244,10 @@ def main():
                 ('controller::tests','Controller edge/timer/modifier/context rules match original PowerPC vectors'),
                 ('control_bindings::tests','Native control tables match all 14 original parser outputs'),
                 ('character_input::tests','Native character input preparation matches original PowerPC vectors'),
+                ('character_movement::tests','Native grounded/airborne velocity and state transitions match original PowerPC vectors'),
                 ('tetherball::tests','Tetherball serve/hit/motion-prefix/scoring arithmetic matches original PowerPC vectors'),
                 ('tetherball_match::tests','Tetherball winner decisions, counters and effects match original PowerPC vectors'),
+                ('tetherball_scene::tests','Native area matrices and complete ball Update match original PowerPC vectors'),
                 ('mp3::tests','MPEG-2 side information and scale-factor regression checks')]
         for name,label in suites:
             r=subprocess.run(['cargo','test','--release','--offline','--locked',name],cwd=BEVY,capture_output=True,text=True)
@@ -255,8 +259,8 @@ def main():
     recorded_checks()
     passed=sum(c['ok'] for c in checks)
     scope=['This proves: the executable in use is the retail binary with symbols; extracted data is consistent across three copies; the decoders reproduce recorded results; the game slice boots from the original files and moves a character using constants read from the executable.',
-           'This does NOT prove: a full decompilation or matching gameplay on a running console. Locomotion, frame/physics timing, controller events, character input, multiplayer scoring and tetherball hit/motion-prefix/winner decisions are recovered subsets; many executable functions remain unported.',
-           'Provisional: character step/slide solver, desktop direction adapter, support query and camera framing. Native character input prepares speed/forward/gravity for the world; full Havok character states/dynamics remain unported. The original playground jump command is inert and the port adds no jump impulse. Spawn and gravity come from the database and Havok world settings; terrain uses decoded Havok collision. World display curvature is a fit against the assets.',
+           'This does NOT prove: a full decompilation or matching gameplay on a running console. Locomotion, frame/physics timing, controller events, character input/grounded/airborne velocity, multiplayer scoring and tetherball Update/winner decisions are recovered subsets; many executable functions remain unported. Character normalization uses the documented reciprocal-square-root instruction model.',
+           'Provisional: character step/slide solver, desktop direction adapter, support query and camera framing. Native character input and grounded/airborne states prepare world velocity; full Havok proxy dynamics remain unported. The original playground jump command is inert and the port adds no jump impulse. Spawn and gravity come from the database and Havok world settings; terrain uses decoded Havok collision. World display uses the original AreaManager matrix.',
            'Not reconstructed: AI, full minigame gameplay, conversation execution, Havok dynamics, video, APT menu scripting, save data and audio-event graphs. Rust audio decoders cover music/speech and all 471 embedded bank sounds; console PCM equality remains unverified.']
     rep=dict(generated=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'),elf_sha256=PINNED_ELF,passed=passed==len(checks),passed_count=passed,total=len(checks),checks=checks,scope=scope)
     (BEVY/'docs'/'proof-report.json').write_text(json.dumps(rep,indent=1),encoding='utf-8')

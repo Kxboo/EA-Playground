@@ -54,7 +54,7 @@ fn wrap(mut x: f32) -> f32 {
 }
 
 // EA::Math::fSinCos's original polynomial, rather than host f32 trigonometry.
-fn ea_sin_cos(x: f32) -> (f32, f32) {
+pub(crate) fn ea_sin_cos(x: f32) -> (f32, f32) {
     let q = ((0.6366197466850281_f32 * x) + if x < 0.0 { -0.5 } else { 0.5 }) as i32;
     let r = -1.5707963705062866_f32.mul_add(q as f32, -x);
     let r2 = r * r;

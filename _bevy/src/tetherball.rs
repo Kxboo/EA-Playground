@@ -201,12 +201,12 @@ pub fn calc_score(stats: ScoreStats, weights: ScoreWeights) -> i32 {
 }
 
 #[cfg(test)]
-mod tests {
+pub(crate) mod tests {
     use super::*;
     use serde_json::Value;
     fn number(v: &Value, key: &str) -> i32 { v[key].as_i64().unwrap() as i32 }
     fn float(v: &Value, key: &str) -> f32 { f32::from_bits(v[key].as_u64().unwrap() as u32) }
-    fn ball(v: &Value) -> BallMotion {
+    pub(crate) fn ball(v: &Value) -> BallMotion {
         BallMotion {
             angle:float(v,"angle"),hit_angle:float(v,"hit_angle"),secondary_angle:float(v,"secondary_angle"),
             target_velocity:float(v,"target_velocity"),secondary_target_velocity:float(v,"secondary_target_velocity"),
@@ -257,7 +257,7 @@ mod tests {
             assert_eq!(calc_score(ScoreStats{power_hits:weights[0],mega_hits:weights[1],accuracy_percent:weights[2]},ScoreWeights{accuracy_points:stat[0],power_hit_points:stat[1],mega_hit_points:stat[2]}),row["result"].as_i64().unwrap() as i32);
         }
     }
-    fn assert_bits(a:&BallMotion,b:&BallMotion,case:usize,step:usize) {
+    pub(crate) fn assert_bits(a:&BallMotion,b:&BallMotion,case:usize,step:usize) {
         macro_rules! check { ($($field:ident),*)=>{$(assert_eq!(a.$field.to_bits(),b.$field.to_bits(),"case={case} step={step} field={}",stringify!($field));)*}; }
         check!(angle,hit_angle,secondary_angle,target_velocity,secondary_target_velocity,spin_acceleration,vertical_velocity,angular_velocity,acceleration,secondary_acceleration,secondary_velocity,radius,desired_radius,height,target_height,base_hit_speed,power_modifier,mega_modifier,pole_height);
         assert_eq!((a.hit_direction,a.grabbed),(b.hit_direction,b.grabbed));

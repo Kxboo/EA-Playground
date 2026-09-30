@@ -118,3 +118,13 @@ Zero-filled output storage makes padding comparisons deterministic.
 and checks all 40 output words, impulse vector, decay vector and timer against
 the captured PPC values with **zero tolerance**. Rust's module test performs the
 same comparisons and verifies consumption of the gravity override.
+
+## World integration continuation
+
+The world now feeds this input into the recovered Grounded/InAir state and
+velocity utility in [character_movement.rs](../src/character_movement.rs).
+Prior XYZ velocity and state persist across positive-delta frames. The host
+solver supplies support normals from the decoded contact triangles; support
+query, collision integration and desktop yaw remain provisional. See
+[character movement evidence](CHARACTER_MOVEMENT.md) for transition latency,
+normalization and the instruction-model boundary.

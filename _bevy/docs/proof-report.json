@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-30 01:50",
+ "generated": "2026-09-30 02:20",
  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
  "passed": true,
- "passed_count": 57,
- "total": 57,
+ "passed_count": 61,
+ "total": 61,
  "checks": [
   {
    "name": "Symbol-bearing ELF matches the pinned hash",
@@ -141,6 +141,11 @@
    "detail": "Verified 182 original character input vectors"
   },
   {
+   "name": "Grounded/airborne velocity and state transitions match original PowerPC under the documented instruction model",
+   "ok": true,
+   "detail": "Verified 262 original PPC movement vectors"
+  },
+  {
    "name": "All 14 control tables loaded by the original PowerPC parser",
    "ok": true,
    "detail": "csv: 37 original bindings\ncontrolsmgdribbling.csv: 24 original bindings\ncontrolsmgfootie.csv: 34 original bindings\ncontrolsmgpaperairplanes.csv: 33 original bindings\ncontrolsmgquickdraw.csv: 25 original bindings\ncontrolsmgrccars.csv: 82 original bindings\ncontrolsmgtemplate.csv: 23 original bindings\ncontrolsmgtetherball.csv: 29 original bindings\ncontrolsmgwallball.csv: 31 original bindings\ncontrolsmgfreethrow.csv: 33 original bindings\nAll 14 control tables match original PowerPC binding fixtures"
@@ -154,6 +159,11 @@
    "name": "Tetherball winner decisions and common state stores reproduced by original PowerPC",
    "ok": true,
    "detail": "Tetherball match: 900 original predicate/state-store transitions match"
+  },
+  {
+   "name": "Original area matrices and complete tetherball Update state, transforms and effect requests",
+   "ok": true,
+   "detail": "Verified 72 area matrices and 360 complete tetherball Update transitions"
   },
   {
    "name": "MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC",
@@ -266,12 +276,22 @@
    "detail": "test result: ok. 1 passed; 0 failed"
   },
   {
+   "name": "Native grounded/airborne velocity and state transitions match original PowerPC vectors",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
    "name": "Tetherball serve/hit/motion-prefix/scoring arithmetic matches original PowerPC vectors",
    "ok": true,
    "detail": "test result: ok. 1 passed; 0 failed"
   },
   {
    "name": "Tetherball winner decisions, counters and effects match original PowerPC vectors",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Native area matrices and complete ball Update match original PowerPC vectors",
    "ok": true,
    "detail": "test result: ok. 1 passed; 0 failed"
   },
@@ -293,8 +313,8 @@
  ],
  "scope": [
   "This proves: the executable in use is the retail binary with symbols; extracted data is consistent across three copies; the decoders reproduce recorded results; the game slice boots from the original files and moves a character using constants read from the executable.",
-  "This does NOT prove: a full decompilation or matching gameplay on a running console. Locomotion, frame/physics timing, controller events, character input, multiplayer scoring and tetherball hit/motion-prefix/winner decisions are recovered subsets; many executable functions remain unported.",
-  "Provisional: character step/slide solver, desktop direction adapter, support query and camera framing. Native character input prepares speed/forward/gravity for the world; full Havok character states/dynamics remain unported. The original playground jump command is inert and the port adds no jump impulse. Spawn and gravity come from the database and Havok world settings; terrain uses decoded Havok collision. World display curvature is a fit against the assets.",
+  "This does NOT prove: a full decompilation or matching gameplay on a running console. Locomotion, frame/physics timing, controller events, character input/grounded/airborne velocity, multiplayer scoring and tetherball Update/winner decisions are recovered subsets; many executable functions remain unported. Character normalization uses the documented reciprocal-square-root instruction model.",
+  "Provisional: character step/slide solver, desktop direction adapter, support query and camera framing. Native character input and grounded/airborne states prepare world velocity; full Havok proxy dynamics remain unported. The original playground jump command is inert and the port adds no jump impulse. Spawn and gravity come from the database and Havok world settings; terrain uses decoded Havok collision. World display uses the original AreaManager matrix.",
   "Not reconstructed: AI, full minigame gameplay, conversation execution, Havok dynamics, video, APT menu scripting, save data and audio-event graphs. Rust audio decoders cover music/speech and all 471 embedded bank sounds; console PCM equality remains unverified."
  ]
 }

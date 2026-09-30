@@ -56,8 +56,9 @@ Decoded behavior:
   and stops before instruction 0x8039dc84. It does not replace any math helper;
   original rmAngle addition and Wrap execute too. The full function later derives
   radius/height again from transformed ball coordinates at 0x8039dfd8–0x8039e024.
-  That transform feedback is outside this port: update_motion is an exact prefix,
-  not a claim of complete ball physics. Original Update/model/rope transforms and
+  The separate `tetherball_scene.rs` now completes that feedback (grabbed balls
+  only), model/rope matrices and ordered effect requests; see [scene evidence](TETHERBALL_SCENE.md).
+  `update_motion` alone remains an exact prefix. Original
   particle effects remain required for complete gameplay.
 - Toss sets vertical velocity to 3.6, the timer to 400 and the tossed flag.
 - Serve converts speed to angular velocity using desired radius. Its secondary
@@ -113,7 +114,8 @@ multiplayer or dare -1, speed_rounds for dares 0–2, time for 3–5 and enduran
 tuning and does not implement database selection or the MGTetherball state machine.
 
 Direction and Zone enums restrict raw indexing to original valid values zero/one.
-The ball's transform feedback, collision geometry, gestures, AI, animation
+The complete Update state/matrix/effect-request port is in `tetherball_scene.rs`.
+Collision geometry, gestures, AI, animation
 callbacks, database tuning import and full game states remain outside this slice.
 The separate tetherball_match module decodes winner predicates and emits ordered
 UI/state-entry requests; it does not implement the complete match.
