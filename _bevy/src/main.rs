@@ -11,6 +11,7 @@ mod sha256;
 mod archive;
 mod gsh;
 mod tpl;
+mod locale;
 mod model;
 mod assets;
 mod skeleton;
