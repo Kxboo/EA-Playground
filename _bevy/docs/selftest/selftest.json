@@ -6,13 +6,18 @@
       "ok": true
     },
     {
-      "detail": "3/3 layers ready; cloud angle 0.1728 rad after the run",
+      "detail": "3/3 layers ready; cloud angle 0.1824 rad after the run",
       "name": "SkyDome layers (skybox, mountain/city ring, clouds) loaded",
       "ok": true
     },
     {
-      "detail": "4 files, 881 bodies, 21207 triangles",
+      "detail": "10 files, 885 bodies, 21255 triangles",
       "name": "Havok collision decoded from physics/*.hkx",
+      "ok": true
+    },
+    {
+      "detail": "15 spawned / 15 listed in the placeables class, 0 failed",
+      "name": "placeables from the database spawned at their positions",
       "ok": true
     },
     {
@@ -41,7 +46,7 @@
       "ok": true
     },
     {
-      "detail": "1954 Mesh3d entities",
+      "detail": "2080 Mesh3d entities",
       "name": "mesh entities in scene",
       "ok": true
     },
@@ -86,7 +91,7 @@
     "locomotion": "ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs",
     "terrain": "AssetDerived display mesh"
   },
-  "load_seconds": 3.0932862758636475,
+  "load_seconds": 3.921238899230957,
   "log": [
     "Boot: reading original data files",
     "db.vlt: 75 types, 32 classes, 908 collections",
@@ -103,29 +108,40 @@
     "loaded clip:S_idle",
     "loaded clip:S_walk",
     "loaded clip:S_run",
+    "loaded prop:nature_gate_left",
+    "loaded prop:nature_gate_right",
+    "loaded prop:rc_track_car",
+    "loaded prop:schoolGate_left",
+    "loaded prop:schoolGate_right",
+    "loaded prop:stadium_gate_left",
+    "loaded prop:stadium_gate_right",
+    "loaded prop:swingset",
+    "loaded prop:teeter_totter",
+    "loaded prop:tetherball_pole_nature_w_ballrope",
+    "loaded prop:tetherball_pole_w_ball",
     "loaded layer:playground-high.o",
-    "loaded layer:playground-high-alpha.o",
     "world layer ready (1)",
-    "world layer ready (2)",
+    "loaded layer:playground-high-alpha.o",
     "loaded layer:playground-high-fade.o",
-    "world layer ready (3)",
+    "world layer ready (2)",
     "loaded layer:playground-high-alphafade.o",
     "playground-high-alphafade.o has an empty draw list; skipped",
+    "world layer ready (3)",
     "loaded layer:playground_nature-high.o",
     "loaded layer:playground_nature-high-alpha.o",
-    "world layer ready (4)",
     "loaded layer:playground_nature-high-fade.o",
-    "world layer ready (5)",
+    "world layer ready (4)",
     "loaded layer:playground_nature-high-alphafade.o",
-    "loaded layer:playground_park-high.o",
+    "world layer ready (5)",
     "world layer ready (6)",
     "world layer ready (7)",
-    "world layer ready (8)",
+    "loaded layer:playground_park-high.o",
     "loaded layer:playground_park-high-alpha.o",
+    "world layer ready (8)",
     "loaded layer:playground_park-high-fade.o",
     "playground_park-high-fade.o has an empty draw list; skipped",
-    "loaded layer:playground_park-high-alphafade.o",
     "world layer ready (9)",
+    "loaded layer:playground_park-high-alphafade.o",
     "loaded layer:playground_stadium-high.o",
     "world layer ready (10)",
     "loaded layer:playground_stadium-high-alpha.o",
@@ -137,16 +153,22 @@
     "world layer ready (14)",
     "loaded layer:world-low-all.o",
     "loaded layer:world-low-all-alpha.o",
-    "world layer ready (15)",
     "loaded layer:world-low-all-fade.o",
+    "world layer ready (15)",
     "loaded layer:world-low-all-alphafade.o",
     "world layer ready (16)",
     "world layer ready (17)",
     "world layer ready (18)",
     "world and player assets ready",
-    "collision: 4 files, 881 bodies, 21207 triangles; gravity 9.81",
+    "gate1_right collision: +0 triangles",
+    "nature_gate_right collision: +12 triangles",
+    "stadium_gate_right collision: +12 triangles",
+    "gate1_left collision: +0 triangles",
+    "stadium_gate_left collision: +12 triangles",
+    "nature_gate_left collision: +12 triangles",
+    "collision: 10 files, 885 bodies, 21255 triangles; gravity 9.81",
     "ground coverage around start: 2983/3600 samples",
-    "ground: 21207 triangles; spawn 12.0,-0.0,-53.0"
+    "ground: 21255 triangles; spawn 12.0,-0.0,-53.0"
   ],
   "passed": true,
   "samples": [
@@ -159,7 +181,7 @@
       ],
       "speed": 0.0,
       "step": "settle",
-      "t": 1.5016534328460693,
+      "t": 1.5054293870925903,
       "weights": [
         1.0,
         0.0,
@@ -175,10 +197,10 @@
       ],
       "speed": 5.0,
       "step": "forward",
-      "t": 4.0013556480407715,
+      "t": 4.0045599937438965,
       "weights": [
-        4.752346294267795e-10,
-        3.6866767971766023e-10,
+        4.739156844735248e-10,
+        3.6311670337241253e-10,
         0.9999998211860657
       ]
     },
@@ -191,11 +213,11 @@
       ],
       "speed": 5.0,
       "step": "left",
-      "t": 6.501228332519531,
+      "t": 6.504467010498047,
       "weights": [
-        2.1909339014235977e-19,
-        1.699637989909911e-19,
-        0.9999999403953552
+        2.2330831480301786e-19,
+        1.7109994448702976e-19,
+        0.9999998807907104
       ]
     },
     {
@@ -207,11 +229,11 @@
       ],
       "speed": 7.071067810058594,
       "step": "diagonal",
-      "t": 8.501734733581543,
+      "t": 8.50401496887207,
       "weights": [
-        7.550515902332828e-27,
-        5.8573865918332876e-27,
-        0.9999999403953552
+        7.784708213198338e-27,
+        5.964678993477134e-27,
+        0.9999998807907104
       ]
     },
     {
@@ -223,11 +245,11 @@
       ],
       "speed": 0.0,
       "step": "jump",
-      "t": 8.900711059570312,
+      "t": 8.903695106506348,
       "weights": [
-        0.8984487056732178,
-        0.02560126967728138,
-        0.0759500041604042
+        0.8985668420791626,
+        0.025197476148605347,
+        0.07623568177223206
       ]
     },
     {
@@ -239,11 +261,11 @@
       ],
       "speed": 0.0,
       "step": "final",
-      "t": 9.901041984558105,
+      "t": 9.904829025268555,
       "weights": [
-        0.999981164932251,
-        4.750120297103422e-6,
-        0.000014091942830418702
+        0.9999812841415405,
+        4.652571078622714e-6,
+        0.000014076485967962071
       ]
     }
   ]

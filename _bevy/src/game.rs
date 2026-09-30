@@ -37,6 +37,8 @@ pub fn bend(radius:f32,x:f32,z:f32)->f32{if radius<=0.{return 0.}let r2=(x*x+z*z
 #[derive(Component)] pub struct Player{loco:Locomotion,vy:f32,grounded:bool,speed:f32,facing:Vec3,weights:[f32;3],anim_ready:bool}
 #[derive(Component)] struct WorldLayer(String);
 #[derive(Component)] struct PlayerModel;
+#[derive(Clone,Debug)] pub struct Placeable{pub id:String,pub asset:String,pub pos:Vec3,pub orientation_deg:f32,pub physics:Option<String>}
+#[derive(Component)] struct PlaceableProp;
 /// SkyDome layers (`SkyDome::LoadGeometry` 0x803c6578): skybox, mountain/city ring, clouds; only the clouds turn.
 #[derive(Component)] struct SkyLayer{clouds:bool}
 #[derive(Component)] struct SkyCamera;
@@ -112,7 +114,7 @@ pub struct Game{
     bridge:Bridge,jobs:VecDeque<Job>,pending:Option<(u64,String)>,results:HashMap<String,Value>,
     phase:Phase,started:Instant,pub log:Vec<String>,boot_image:Option<Handle<Image>>,boot_egui:Option<egui::TextureId>,
     layers:Vec<(String,String)>,layers_expected:usize,layers_ready:usize,layers_empty:usize,clip_handles:Vec<Handle<AnimationClip>>,
-    ground:Option<Ground>,build_wait:u32,player:Option<Entity>,pub spawn:Vec3,pub gravity:f32,pub world_radius:f32,sky_expected:usize,sky_ready:usize,sky_angle:f32,pub collision_bodies:usize,pub collision_files:usize,
+    ground:Option<Ground>,build_wait:u32,player:Option<Entity>,pub spawn:Vec3,pub gravity:f32,pub world_radius:f32,sky_expected:usize,sky_ready:usize,sky_angle:f32,pub placeables:Vec<Placeable>,pub props_spawned:usize,pub props_failed:usize,pub collision_bodies:usize,pub collision_files:usize,
     pub db_summary:String,pub start_dir:Vec3,pub spawn_from_db:bool,pub tri_count:usize,pub controls_rows:usize,pub combat_bindings:usize,pub world_bounds:Option<(f32,f32,f32)>,
     boot_shown:Option<Instant>,boot_shot:bool,pub load_seconds:f32,
     pub selftest:Option<SelfTest>,
@@ -128,6 +130,17 @@ impl Game{
         if let Some(s)=r.get("summary").and_then(|v|v.as_str()){self.db_summary=s.to_string();}
         let v3=|v:&Value|v.as_array().filter(|a|a.len()==3).map(|a|Vec3::new(a[0].as_f64().unwrap_or(0.) as f32,a[1].as_f64().unwrap_or(0.) as f32,a[2].as_f64().unwrap_or(0.) as f32));
         if let Some(d)=r.get("start_direction").and_then(v3){self.start_dir=d;}
+        if let Some(list)=r.get("placeables").and_then(|v|v.as_array()){
+            for p in list{
+                let a=p["pos"].as_array().unwrap();
+                self.placeables.push(Placeable{id:p["id"].as_str().unwrap_or("").into(),asset:p["asset"].as_str().unwrap_or("").into(),pos:Vec3::new(a[0].as_f64().unwrap() as f32,a[1].as_f64().unwrap() as f32,a[2].as_f64().unwrap() as f32),orientation_deg:p["orient"].as_f64().unwrap_or(0.) as f32,physics:p["physics"].as_str().map(String::from)});
+            }
+            let mut assets:Vec<String>=self.placeables.iter().map(|p|p.asset.clone()).collect();assets.sort();assets.dedup();
+            for a in assets{
+                let viv=src(&format!("placeables/{}.viv",a.to_lowercase()));
+                self.jobs.push_back(Job{key:format!("prop:{a}"),req:json!({"command":"preview","source":format!("{viv}::{a}.o")})});
+            }
+        }
         if let Some(l)=r.get("start_location").and_then(v3){self.results.insert("db_start".into(),json!([l.x,l.y,l.z]));self.spawn_from_db=true;}
     }
     pub fn new(selftest:Option<SelfTest>)->Self{
@@ -153,6 +166,13 @@ impl Game{
                     let loc=start.and_then(|c|db.attribute(c,"start_location"));let dir_=start.and_then(|c|db.attribute(c,"start_direction"));
                     log.push(format!("db.vlt: {} types, {} classes, {} collections",db.types.len(),db.classes.len(),db.collections.len()));
                     db_results.insert("summary".to_string(),json!(format!("{} types / {} classes / {} collections",db.types.len(),db.classes.len(),db.collections.len())));
+                    let pk=crate::vlt::string_hash64("placeables");
+                    let list:Vec<Value>=db.collections.iter().filter(|c|c.class_key==pk).filter_map(|c|{
+                        let pos=db.attribute(c,"position")?;let asset=db.attribute(c,"asset_name")?;
+                        if db.attribute(c,"default_visible").and_then(|v|v.as_bool())==Some(false){return None}
+                        Some(json!({"id":db.attribute(c,"id").unwrap_or(json!("")),"asset":asset,"pos":pos,"orient":db.attribute(c,"orientation").unwrap_or(json!(0)),"physics":db.attribute(c,"physics_name").unwrap_or(Value::Null)}))
+                    }).collect();
+                    db_results.insert("placeables".into(),Value::Array(list));
                     if let Some(l)=loc{db_results.insert("start_location".into(),l);}
                     if let Some(d)=dir_{db_results.insert("start_direction".into(),d);}
                 }
@@ -162,7 +182,7 @@ impl Game{
         }
         let mut g=Self{bridge:Bridge::start(),jobs,pending:None,results:HashMap::new(),phase:Phase::Loading,started:Instant::now(),log,
             boot_image:None,boot_egui:None,layers:vec![],layers_expected:0,layers_ready:0,layers_empty:0,clip_handles:vec![],ground:None,build_wait:0,player:None,spawn:Vec3::ZERO,
-            gravity:9.81,world_radius:0.,sky_expected:0,sky_ready:0,sky_angle:0.,collision_bodies:0,collision_files:0,db_summary:String::new(),start_dir:Vec3::Z,spawn_from_db:false,tri_count:0,controls_rows:0,combat_bindings:0,world_bounds:None,boot_shown:None,boot_shot:false,load_seconds:0.,selftest};
+            gravity:9.81,world_radius:0.,sky_expected:0,sky_ready:0,sky_angle:0.,placeables:vec![],props_spawned:0,props_failed:0,collision_bodies:0,collision_files:0,db_summary:String::new(),start_dir:Vec3::Z,spawn_from_db:false,tri_count:0,controls_rows:0,combat_bindings:0,world_bounds:None,boot_shown:None,boot_shot:false,load_seconds:0.,selftest};
         // (fields set below)
         g.apply_db(db_results);g
     }
@@ -187,7 +207,11 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>
         let Some((id,key))=g.pending.clone() else{continue};
         if r["id"].as_u64()!=Some(id){continue}
         g.pending=None;
-        if r["ok"]!=true{let e=format!("{key}: {}",r["error"].as_str().unwrap_or("decoder error"));g.log.push(format!("FAILED {e}"));g.phase=Phase::Failed(e);return}
+        if r["ok"]!=true{
+            let e=format!("{key}: {}",r["error"].as_str().unwrap_or("decoder error"));g.log.push(format!("FAILED {e}"));
+            if key.starts_with("prop:"){g.props_failed+=g.placeables.iter().filter(|p|key=="prop:".to_string()+&p.asset).count();continue} // a missing prop must not stop the game
+            g.phase=Phase::Failed(e);return
+        }
         let value=r["value"].clone();
         g.log.push(format!("loaded {key}"));
         match key.as_str(){
@@ -218,6 +242,20 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>
                     let e=commands.spawn((GameEntity,WorldLayer(name.clone()),WorldAssetRoot(assets.load(GltfAssetLabel::Scene(0).from_asset(p.clone()))),Transform::IDENTITY,
                         OriginalAsset{evidence:EvidenceLevel::AssetDerived,source:value["source"].as_str().unwrap_or("").into(),decoder_version:value["decoder_version"].as_str().unwrap_or("").into()})).observe(layer_ready).id();
                     let _=e;g.layers.push((name,p));
+                }
+            }
+            k if k.starts_with("prop:")=>{
+                let asset=k.trim_start_matches("prop:").to_string();
+                if let Some(p)=scene_path(&value){
+                    let radius=g.world_radius;
+                    let list:Vec<Placeable>=g.placeables.iter().filter(|q|q.asset==asset).cloned().collect();
+                    for q in list{
+                        // Positions are flat gameplay coordinates; the display is bent like the world.
+                        let t=Transform::from_xyz(q.pos.x,q.pos.y-bend(radius,q.pos.x,q.pos.z),q.pos.z).with_rotation(Quat::from_rotation_y(q.orientation_deg.to_radians()));
+                        commands.spawn((GameEntity,PlaceableProp,Name::new(q.id.clone()),WorldAssetRoot(assets.load(GltfAssetLabel::Scene(0).from_asset(p.clone()))),t,
+                            OriginalAsset{evidence:EvidenceLevel::AssetDerived,source:value["source"].as_str().unwrap_or("").into(),decoder_version:value["decoder_version"].as_str().unwrap_or("").into()}));
+                        g.props_spawned+=1;
+                    }
                 }
             }
             k if k.starts_with("sky:")=>{
@@ -297,6 +335,16 @@ fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer
             }
             Err(e)=>g.log.push(format!("{area}.hkx: {e}")),
         }
+    }
+    // Placeables that name their own Havok file (gates): place its collision at the database position/orientation.
+    for q in g.placeables.clone(){
+        let Some(name)=q.physics.as_deref() else{continue};
+        let Ok(bytes)=std::fs::read(dir.join(format!("{name}.hkx"))) else{continue};
+        let Ok(pf)=crate::havok::Packfile::parse(&bytes,&classes) else{continue};
+        let c=crate::havok::Collision::load(&pf);let rot=Quat::from_rotation_y(q.orientation_deg.to_radians());
+        let before=tris.len();
+        tris.extend(c.triangles().map(|t|[0,1,2].map(|i|rot*Vec3::from(t[i])+q.pos)));
+        g.collision_bodies+=c.bodies.len();g.collision_files+=1;g.log.push(format!("{} collision: +{} triangles",q.id,tris.len()-before));
     }
     g.tri_count=tris.len();
     if tris.is_empty(){let m="no Havok collision loaded".to_string();g.log.push(m.clone());g.phase=Phase::Failed(m);return}
@@ -515,7 +563,8 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
                 let mut check=|name:&str,ok:bool,detail:String|checks.push(json!({"name":name,"ok":ok,"detail":detail}));
                 check("world layers spawned from worldfilelist.csv",g.layers_ready==g.layers_expected&&g.layers_expected+g.layers_empty==WORLD_SUFFIXES.len()*5,format!("{}/{} layers ready, {} empty draw lists skipped",g.layers_ready,g.layers_expected,g.layers_empty));
                 check("SkyDome layers (skybox, mountain/city ring, clouds) loaded",g.sky_expected==3&&g.sky_ready==3,format!("{}/{} layers ready; cloud angle {:.4} rad after the run",g.sky_ready,g.sky_expected,g.sky_angle));
-                check("Havok collision decoded from physics/*.hkx",g.tri_count>20_000&&g.collision_bodies>=500&&g.collision_files==4,format!("{} files, {} bodies, {} triangles",g.collision_files,g.collision_bodies,g.tri_count));
+                check("Havok collision decoded from physics/*.hkx",g.tri_count>20_000&&g.collision_bodies>=500&&g.collision_files>=4,format!("{} files, {} bodies, {} triangles",g.collision_files,g.collision_bodies,g.tri_count));
+                check("placeables from the database spawned at their positions",g.placeables.len()>=15&&g.props_failed==0&&g.props_spawned==g.placeables.len(),format!("{} spawned / {} listed in the placeables class, {} failed",g.props_spawned,g.placeables.len(),g.props_failed));
                 check("gravity read from hkWorldCinfo",(g.gravity-9.81).abs()<0.01,format!("gravity {:.3}",g.gravity));
                 check("world curvature radius from world.csv",g.world_radius>0.,format!("radius {}",g.world_radius));
                 check("player model + 3 clips loaded",g.clip_handles.len()==CLIPS.len()&&p.anim_ready,format!("{} clips, anim player bound: {}",g.clip_handles.len(),p.anim_ready));
