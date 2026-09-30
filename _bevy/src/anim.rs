@@ -32,9 +32,10 @@ pub struct ClipBlock{pub index:usize,pub rel:usize,pub abs:usize,pub container_t
 pub struct Bank{data:Vec<u8>,reloc:HashMap<usize,usize>,data_start:usize,pub blocks:Vec<ClipBlock>,pub names:Vec<String>}
 
 #[derive(Debug,Clone)]
-pub struct Clip{pub index:usize,pub name:String,pub sample_count:usize,pub codec:&'static str,
+pub struct Clip{pub index:usize,pub name:String,pub sample_count:usize,pub native_timing:Option<crate::animation_function::CompoundFunction>,pub codec:&'static str,
     pub rot:BTreeMap<usize,Samples<[f64;4]>>,pub trans:BTreeMap<usize,Samples<[f64;3]>>,pub scale:BTreeMap<usize,Samples<[f64;3]>>,pub caveats:Vec<String>}
-impl Clip{pub fn duration(&self)->f64{(self.sample_count.saturating_sub(1)) as f64/CLIP_FPS}}
+impl Clip{pub fn sample_rate(&self)->f64{self.native_timing.as_ref().map_or(CLIP_FPS,|t|t.fps as f64)}
+    pub fn duration(&self)->f64{let count=self.native_timing.as_ref().map_or(self.sample_count,|t|t.samples as usize);(count.saturating_sub(1)) as f64/self.sample_rate()}}
 
 fn rd_be16(d:&[u8],o:usize)->Result<usize,String>{Ok(be16(d,o)? as usize)}
 fn byte(d:&[u8],o:usize)->Result<u8,String>{d.get(o).copied().ok_or_else(||format!("read past end at {o:#x}"))}
@@ -52,6 +53,24 @@ fn parse_marker_in(d:&[u8],reloc:&HashMap<usize,usize>,data_start:usize,rel:usiz
 }
 
 impl Bank{
+    /// Compound map +0xa is length; +4 relocates the sorted AttributeBlock.
+    /// Attribute ID 1 supplies FPS (native UseFPS/GetLength/GetAttributes).
+    pub fn compound_function(&self,index:usize)->Result<crate::animation_function::CompoundFunction,String>{
+        let cb=self.blocks.get(index).ok_or("compound clip index outside bank")?;
+        if cb.container_tag!=0x0f{return Err("clip is not FnCompoundChannel".into())}
+        let mut attributes=vec![];
+        if let Some(rel)=self.reloc.get(&(cb.rel+4)){
+            let p=self.data_start+rel;
+            let count=be32(&self.data,p)? as usize;
+            if count>65536{return Err("attribute block count exceeds ID domain".into())}
+            for i in 0..count{let entry=p+4+i*8;attributes.push((be16(&self.data,entry)?,byte(&self.data,entry+4)?));}
+            if attributes.windows(2).any(|a|a[0].0>a[1].0){return Err("attribute block is not sorted".into())}
+        }
+        // Explicit fresh timing instance; native allocator defaults are not inferred.
+        let mut function=crate::animation_function::CompoundFunction{samples:be16(&self.data,cb.abs+10)?,use_fps:false,fps:0};
+        function.set_use_fps(true,&attributes);
+        Ok(function)
+    }
     pub fn parse(data:Vec<u8>)->Result<Self,String>{
         let (reloc,data_start,data_size,bank_off)={
             let c=Container::parse(&data)?;
@@ -407,14 +426,16 @@ impl Bank{
         for v in rot.values_mut(){let last=v.last().copied().flatten().unwrap_or([0.,0.,0.,1.]);v.resize(samples,Some(last))}
         codecs.reverse();
         let codec:&'static str=Box::leak(format!("FnCompoundChannel({})",codecs.join("+")).into_boxed_str());
-        Ok(Clip{index:cb.index,name,sample_count:samples,codec,rot,trans,scale,caveats})
+        let timing=self.compound_function(cb.index)?;
+        if samples!=timing.samples as usize{caveats.push(format!("native container length {} differs from decoded child timeline {samples}; delta sparse time evaluation remains unverified",timing.samples));}
+        Ok(Clip{index:cb.index,name,sample_count:samples,native_timing:Some(timing),codec,rot,trans,scale,caveats})
     }
 
     fn decode_raw(&self,skel:&Skeleton,cb:&ClipBlock)->Result<Clip,String>{
         let d=&self.data[..];let ds=self.data_start;let n_bones=skel.bones.len();
         let name=self.names.get(cb.index).cloned().unwrap_or_else(||format!("clip_{}",cb.index));
         let mut caveats:Vec<String>=vec![];let mut scale:Vec3s=BTreeMap::new();
-        let clip=|codec,sample_count,rot,trans,scale,caveats|Clip{index:cb.index,name:name.clone(),sample_count,codec,rot,trans,scale,caveats};
+        let clip=|codec,sample_count,rot,trans,scale,caveats|Clip{index:cb.index,name:name.clone(),sample_count,native_timing:None,codec,rot,trans,scale,caveats};
         let some=|v:&[[f64;4]]|->Samples<[f64;4]>{v.iter().map(|x|Some(*x)).collect()};
         let some3=|v:&[[f64;3]]|->Samples<[f64;3]>{v.iter().map(|x|Some(*x)).collect()};
         if cb.whole_clip{

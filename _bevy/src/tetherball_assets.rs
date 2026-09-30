@@ -87,7 +87,7 @@ impl Decoded {
             clips.insert(index, crate::character::animation_clip(&clip)?);
             clip_report.insert(
                 index,
-                json!({"name":clip.name,"samples":clip.sample_count,"caveats":clip.caveats}),
+                json!({"name":clip.name,"samples":clip.sample_count,"sample_rate":clip.sample_rate(),"native_timing":clip.native_timing,"caveats":clip.caveats}),
             );
         }
         Ok(Self {

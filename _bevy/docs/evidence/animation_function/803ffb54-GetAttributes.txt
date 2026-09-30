@@ -1,0 +1,4 @@
+GetAttributes__Q28EAGLAnim17FnCompoundChannelCFv @ 0x803ffb54 size=12
+803ffb54: 8063000c  lwz r3, 0xc(r3)
+803ffb58: 80630004  lwz r3, 4(r3)
+803ffb5c: 4e800020  blr

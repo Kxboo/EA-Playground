@@ -1,0 +1,24 @@
+FindAttribute__Q28EAGLAnim14AttributeBlockCFQ28EAGLAnim11AttributeId @ 0x803fc478 size=92
+803fc478: 80a30000  lwz r5, 0(r3)
+803fc47c: 38e00000  li r7, 0
+803fc480: a0c40000  lhz r6, 0(r4)
+803fc484: 3905ffff  addi r8, r5, -1
+803fc488: 4800003c  b 0x803fc4c4 ;
+803fc48c: 7c074214  add r0, r7, r8
+803fc490: 54041038  rlwinm r4, r0, 2, 0, 0x1c
+803fc494: 7c832214  add r4, r3, r4
+803fc498: 7c050e70  srawi r5, r0, 1
+803fc49c: a0040004  lhz r0, 4(r4)
+803fc4a0: 7c060040  cmplw r6, r0
+803fc4a4: 4081000c  ble 0x803fc4b0
+803fc4a8: 38e50001  addi r7, r5, 1
+803fc4ac: 48000018  b 0x803fc4c4 ;
+803fc4b0: 4080000c  bge 0x803fc4bc
+803fc4b4: 3905ffff  addi r8, r5, -1
+803fc4b8: 4800000c  b 0x803fc4c4 ;
+803fc4bc: 38640004  addi r3, r4, 4
+803fc4c0: 4e800020  blr
+803fc4c4: 7c074000  cmpw r7, r8
+803fc4c8: 4081ffc4  ble 0x803fc48c
+803fc4cc: 38600000  li r3, 0
+803fc4d0: 4e800020  blr

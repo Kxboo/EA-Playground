@@ -1,0 +1,23 @@
+GetAttribute__Q28EAGLAnim14AttributeBlockCFQ28EAGLAnim11AttributeIdRUc @ 0x803fce60 size=88
+803fce60: 9421ffe0  stwu r1, -0x20(r1)
+803fce64: 7c0802a6  mflr r0
+803fce68: 90010024  stw r0, 0x24(r1)
+803fce6c: a0040000  lhz r0, 0(r4)
+803fce70: 38810008  addi r4, r1, 8
+803fce74: 93e1001c  stw r31, 0x1c(r1)
+803fce78: 7cbf2b78  mr r31, r5
+803fce7c: 38a1000c  addi r5, r1, 0xc
+803fce80: b0010008  sth r0, 8(r1)
+803fce84: 4bfff5a1  bl 0x803fc424 ; GetAttribute__Q28EAGLAnim14AttributeBlockCFQ28EAGLAnim11AttributeIdRPv
+803fce88: 2c030000  cmpwi r3, 0
+803fce8c: 41820014  beq 0x803fcea0
+803fce90: 8801000c  lbz r0, 0xc(r1)
+803fce94: 38600001  li r3, 1
+803fce98: 981f0000  stb r0, 0(r31)
+803fce9c: 48000008  b 0x803fcea4 ;
+803fcea0: 38600000  li r3, 0
+803fcea4: 80010024  lwz r0, 0x24(r1)
+803fcea8: 83e1001c  lwz r31, 0x1c(r1)
+803fceac: 7c0803a6  mtlr r0
+803fceb0: 38210020  addi r1, r1, 0x20
+803fceb4: 4e800020  blr

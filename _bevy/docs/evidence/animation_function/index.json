@@ -1,0 +1,114 @@
+{
+  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
+  "bank_sha256": "4655987cd9fd96cb521e78bc36c9642efa2d608b94c9e02da7f9b4cb4e5127f2",
+  "functions": [
+    {
+      "address": "0x803fecac",
+      "symbol": "UseFPS__Q28EAGLAnim17FnCompoundChannelFb",
+      "size": 72,
+      "code_sha256": "7e377369b0132a3c1841fffc57dc159e875901057d2a67e03125dd5fe6790357",
+      "rust": {
+        "path": "_bevy/src/animation_function.rs",
+        "method": "set_use_fps",
+        "line": 31
+      },
+      "disassembly": "803fecac-UseFPS.txt",
+      "status": "finite differential projection; native routine unhooked"
+    },
+    {
+      "address": "0x803ffaf8",
+      "symbol": "GetLength__Q28EAGLAnim17FnCompoundChannelCFRf",
+      "size": 92,
+      "code_sha256": "f37f2e64edc2049fb22ef429f460c59d2f853ed0355ffcc4ebda27e0b5d42088",
+      "rust": {
+        "path": "_bevy/src/animation_function.rs",
+        "method": "length",
+        "line": 40
+      },
+      "disassembly": "803ffaf8-GetLength.txt",
+      "status": "finite differential projection; native routine unhooked"
+    },
+    {
+      "address": "0x803ffb54",
+      "symbol": "GetAttributes__Q28EAGLAnim17FnCompoundChannelCFv",
+      "size": 12,
+      "code_sha256": "2d9715ce68e512c3fb6a52249d24596ce4ce816a62b1e11b753480dd8131ef34",
+      "rust": {
+        "path": "_bevy/src/anim.rs",
+        "method": "compound_function",
+        "line": 58
+      },
+      "disassembly": "803ffb54-GetAttributes.txt",
+      "status": "finite differential projection; native routine unhooked"
+    },
+    {
+      "address": "0x803fcdf8",
+      "symbol": "GetAttribute__Q28EAGLAnim6FnAnimCFQ28EAGLAnim11AttributeIdRUc",
+      "size": 104,
+      "code_sha256": "607d161650545bbab863531817050794f3540ecda7a390a3f3966e21fe955458",
+      "rust": {
+        "path": "_bevy/src/animation_function.rs",
+        "method": "attribute_byte",
+        "line": 12
+      },
+      "disassembly": "803fcdf8-GetAttribute.txt",
+      "status": "finite differential projection; native routine unhooked"
+    },
+    {
+      "address": "0x803fce60",
+      "symbol": "GetAttribute__Q28EAGLAnim14AttributeBlockCFQ28EAGLAnim11AttributeIdRUc",
+      "size": 88,
+      "code_sha256": "b5e55457bcb46cd74dd4cdbc93ab8ffe1ed13a45d8828f3e4c716a236aa6bcda",
+      "rust": {
+        "path": "_bevy/src/animation_function.rs",
+        "method": "attribute_byte",
+        "line": 12
+      },
+      "disassembly": "803fce60-GetAttribute.txt",
+      "status": "finite differential projection; native routine unhooked"
+    },
+    {
+      "address": "0x803fc424",
+      "symbol": "GetAttribute__Q28EAGLAnim14AttributeBlockCFQ28EAGLAnim11AttributeIdRPv",
+      "size": 84,
+      "code_sha256": "073e463a812c5a9a8fd5f9c2a4cfdd2c0cd6049ae13e5d3ff2482e5bdaac1485",
+      "rust": {
+        "path": "_bevy/src/animation_function.rs",
+        "method": "attribute_byte",
+        "line": 12
+      },
+      "disassembly": "803fc424-GetAttribute.txt",
+      "status": "finite differential projection; native routine unhooked"
+    },
+    {
+      "address": "0x803fc478",
+      "symbol": "FindAttribute__Q28EAGLAnim14AttributeBlockCFQ28EAGLAnim11AttributeId",
+      "size": 92,
+      "code_sha256": "50340856fe8c5aaad35728c7bd385b6f1c2d0403dc4dcebcf0f4e345bd876537",
+      "rust": {
+        "path": "_bevy/src/animation_function.rs",
+        "method": "attribute_byte",
+        "line": 12
+      },
+      "disassembly": "803fc478-FindAttribute.txt",
+      "status": "finite differential projection; native routine unhooked"
+    }
+  ],
+  "fixture_cases": 349,
+  "installed_hooks": [],
+  "source_sha256": {
+    "_bevy/src/animation_function.rs": "b9c8da51ab920df5dac2108e1b2002fa3507c96d18fa4d23741ad8a5767134be",
+    "_bevy/src/anim.rs": "018caf5b534c23050dc5979acb6bb50e65bf4f96b9c4d32d7608cb878fa4d5eb",
+    "_bevy/src/character.rs": "bbb110b0f3217ca9744c6e8d60a84f47bfb8a8777e912b84cb019d6a16fc79d5",
+    "_bevy/tools/animation_function_oracle.py": "b7ca64dd678433b5c3b0fdf2eeb9aa283d1a1eb60297461c968d25d9a80062fe",
+    "_bevy/tools/ppc_emu2.py": "461b3b3f6a7d61355812cec57c950892b394c5091e9304675fb0491beb4be378",
+    "_bevy/tools/re_functions.py": "96cd412c32d2f8d9cb2576c75f48283af41e5f3db0e701b46739ef9ec23891e5",
+    "_bevy/tests/data/animation_function_golden.json": "3af1df4637f5af885e84c6133c07472108ab0cfb14e2a54e8677552a6314812e"
+  },
+  "comparison": "flag/FPS stores and finite length float bits; original-bank Rust test verifies metadata and Bevy durations",
+  "limits": [
+    "zero-FPS length division not executed by oracle",
+    "pose evaluation and interpolation unverified",
+    "native allocator defaults not established"
+  ]
+}

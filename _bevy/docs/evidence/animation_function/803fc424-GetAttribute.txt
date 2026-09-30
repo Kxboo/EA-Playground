@@ -1,0 +1,22 @@
+GetAttribute__Q28EAGLAnim14AttributeBlockCFQ28EAGLAnim11AttributeIdRPv @ 0x803fc424 size=84
+803fc424: 9421ffe0  stwu r1, -0x20(r1)
+803fc428: 7c0802a6  mflr r0
+803fc42c: 90010024  stw r0, 0x24(r1)
+803fc430: a0040000  lhz r0, 0(r4)
+803fc434: 38810008  addi r4, r1, 8
+803fc438: 93e1001c  stw r31, 0x1c(r1)
+803fc43c: 7cbf2b78  mr r31, r5
+803fc440: b0010008  sth r0, 8(r1)
+803fc444: 48000035  bl 0x803fc478 ; FindAttribute__Q28EAGLAnim14AttributeBlockCFQ28EAGLAnim11AttributeId
+803fc448: 2c030000  cmpwi r3, 0
+803fc44c: 41820014  beq 0x803fc460
+803fc450: 80030004  lwz r0, 4(r3)
+803fc454: 38600001  li r3, 1
+803fc458: 901f0000  stw r0, 0(r31)
+803fc45c: 48000008  b 0x803fc464 ;
+803fc460: 38600000  li r3, 0
+803fc464: 80010024  lwz r0, 0x24(r1)
+803fc468: 83e1001c  lwz r31, 0x1c(r1)
+803fc46c: 7c0803a6  mtlr r0
+803fc470: 38210020  addi r1, r1, 0x20
+803fc474: 4e800020  blr

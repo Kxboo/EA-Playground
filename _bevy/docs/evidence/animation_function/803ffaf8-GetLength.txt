@@ -1,0 +1,24 @@
+GetLength__Q28EAGLAnim17FnCompoundChannelCFRf @ 0x803ffaf8 size=92
+803ffaf8: 9421fff0  stwu r1, -0x10(r1)
+803ffafc: 3ca04330  lis r5, 0x4330
+803ffb00: 80c3000c  lwz r6, 0xc(r3)
+803ffb04: 88030014  lbz r0, 0x14(r3)
+803ffb08: a0c6000a  lhz r6, 0xa(r6)
+803ffb0c: 90a10008  stw r5, 8(r1)
+803ffb10: 2c000000  cmpwi r0, 0
+803ffb14: c842d728  lfd f2, -0x28d8(r2) ; f64 4503599627370496.0 @0x80607c68
+803ffb18: 90c1000c  stw r6, 0xc(r1)
+803ffb1c: c8010008  lfd f0, 8(r1)
+803ffb20: ec201028  fsubs f1, f0, f2
+803ffb24: d0240000  stfs f1, 0(r4)
+803ffb28: 41820020  beq 0x803ffb48
+803ffb2c: 88030015  lbz r0, 0x15(r3)
+803ffb30: 90a10008  stw r5, 8(r1)
+803ffb34: 9001000c  stw r0, 0xc(r1)
+803ffb38: c8010008  lfd f0, 8(r1)
+803ffb3c: ec001028  fsubs f0, f0, f2
+803ffb40: ec010024  fdivs f0, f1, f0
+803ffb44: d0040000  stfs f0, 0(r4)
+803ffb48: 38600001  li r3, 1
+803ffb4c: 38210010  addi r1, r1, 0x10
+803ffb50: 4e800020  blr

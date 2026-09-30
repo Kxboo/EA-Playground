@@ -1,0 +1,19 @@
+UseFPS__Q28EAGLAnim17FnCompoundChannelFb @ 0x803fecac size=72
+803fecac: 9421fff0  stwu r1, -0x10(r1)
+803fecb0: 7c0802a6  mflr r0
+803fecb4: 90010014  stw r0, 0x14(r1)
+803fecb8: 88030015  lbz r0, 0x15(r3)
+803fecbc: 98830014  stb r4, 0x14(r3)
+803fecc0: 2c000000  cmpwi r0, 0
+803fecc4: 40820020  bne 0x803fece4
+803fecc8: 5480063f  clrlwi. r0, r4, 0x18
+803feccc: 41820018  beq 0x803fece4
+803fecd0: 38000001  li r0, 1
+803fecd4: 38810008  addi r4, r1, 8
+803fecd8: b0010008  sth r0, 8(r1)
+803fecdc: 38a30015  addi r5, r3, 0x15
+803fece0: 4bffe119  bl 0x803fcdf8 ; GetAttribute__Q28EAGLAnim6FnAnimCFQ28EAGLAnim11AttributeIdRUc
+803fece4: 80010014  lwz r0, 0x14(r1)
+803fece8: 7c0803a6  mtlr r0
+803fecec: 38210010  addi r1, r1, 0x10
+803fecf0: 4e800020  blr

@@ -1,9 +1,9 @@
 //! The playable character built entirely from the original data with the Rust decoders: `alicia.o` (hardware-skinned
 //! model), `player_skel.ske` (68-bone rig) and clips from `player_anims.anm`.  No glTF is generated: the bone hierarchy
 //! becomes joint entities (bind pose = local quaternion/translation/scale from the `.ske`), the inverse bind matrices
-//! come from the composed world bind pose, and every decoded clip becomes a Bevy `AnimationClip` sampled at 30 Hz.
+//! come from the composed world bind pose, and compound clips use their original FPS attribute in Bevy curves; other codecs retain the existing 30 Hz convention.
 use bevy::{animation::{animated_field,prelude::*,AnimatedBy,AnimationTargetId},mesh::skinning::{SkinnedMesh,SkinnedMeshInverseBindposes},prelude::*};
-use crate::{anim::{self,Bank,Clip,CLIP_FPS},archive,assets,skeleton::Skeleton};
+use crate::{anim::{self,Bank,Clip},archive,assets,skeleton::Skeleton};
 
 /// Clips the game plays (bank indices found by name in `player_anims.anm`; `Bank::decode` names are checked on load).
 pub const CLIPS:[(&str,usize);3]=[("S_idle",250),("S_walk",263),("S_run",253)];
@@ -28,30 +28,34 @@ pub fn load(viv_dir:&str,schemas:&crate::model::Schemas)->Result<CharacterData,S
     Ok(CharacterData{model,skeleton,clips,source:model_src})
 }
 
-/// One decoded clip -> Bevy animation: rotation/translation/scale curves per animated bone (`i / 30` s), unit
+/// One decoded clip -> Bevy animation: rotation/translation/scale curves per animated bone (`i / clip FPS` s), unit
 /// quaternions with continuous sign.
 pub fn animation_clip(clip:&Clip)->Result<AnimationClip,String>{
     let mut out=AnimationClip::default();
+    let fps=clip.sample_rate();
+    if fps<=0. {return Err(format!("clip {} has no valid FPS attribute",clip.name))}
+
     // Bevy needs two keyframes per curve; a one-sample clip holds its pose.
     let pad=|n:usize|(0..n.max(2)).map(move|i|(i,i.min(n.saturating_sub(1))));
     for (bone,samples) in &clip.rot{
         let q=anim::normalized(samples)?;
-        let curve=AnimatableKeyframeCurve::new(pad(q.len()).map(|(t,i)|(pad_time(t),Quat::from_xyzw(q[i][0],q[i][1],q[i][2],q[i][3])))).map_err(|e|format!("{e:?}"))?;
+        let curve=AnimatableKeyframeCurve::new(pad(q.len()).map(|(t,i)|(pad_time(t,fps),Quat::from_xyzw(q[i][0],q[i][1],q[i][2],q[i][3])))).map_err(|e|format!("{e:?}"))?;
         out.add_curve_to_target(target(*bone),AnimatableCurve::new(animated_field!(Transform::rotation),curve));
     }
     for (bone,samples) in &clip.trans{
         let v:Vec<Vec3>=samples.iter().map(|s|s.map(|v|Vec3::new(v[0] as f32,v[1] as f32,v[2] as f32)).unwrap_or(Vec3::ZERO)).collect();
-        let curve=AnimatableKeyframeCurve::new(pad(v.len()).map(|(t,i)|(pad_time(t),v[i]))).map_err(|e|format!("{e:?}"))?;
+        let curve=AnimatableKeyframeCurve::new(pad(v.len()).map(|(t,i)|(pad_time(t,fps),v[i]))).map_err(|e|format!("{e:?}"))?;
         out.add_curve_to_target(target(*bone),AnimatableCurve::new(animated_field!(Transform::translation),curve));
     }
     for (bone,samples) in &clip.scale{
         let v:Vec<Vec3>=samples.iter().map(|s|s.map(|v|Vec3::new(v[0] as f32,v[1] as f32,v[2] as f32)).unwrap_or(Vec3::ONE)).collect();
-        let curve=AnimatableKeyframeCurve::new(pad(v.len()).map(|(t,i)|(pad_time(t),v[i]))).map_err(|e|format!("{e:?}"))?;
+        let curve=AnimatableKeyframeCurve::new(pad(v.len()).map(|(t,i)|(pad_time(t,fps),v[i]))).map_err(|e|format!("{e:?}"))?;
         out.add_curve_to_target(target(*bone),AnimatableCurve::new(animated_field!(Transform::scale),curve));
     }
+    if clip.native_timing.is_some(){out.set_duration(clip.duration() as f32);}
     Ok(out)
 }
-fn pad_time(i:usize)->f32{(i as f64/CLIP_FPS) as f32}
+fn pad_time(i:usize,fps:f64)->f32{(i as f64/fps) as f32}
 fn joint_name(bone:usize)->Name{Name::new(format!("bone{bone}"))}
 fn target(bone:usize)->AnimationTargetId{AnimationTargetId::from_name(&joint_name(bone))}
 

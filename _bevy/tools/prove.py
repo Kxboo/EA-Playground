@@ -244,6 +244,7 @@ def main():
                              ('tetherball_ball_init_oracle.py','Original tetherball ball assets, shadows and initial tuning'),
                              ('tetherball_server_oracle.py','Original live server selection, marker timing and ball Grab'),
                              ('animation_graph_oracle.py','Original CSV animation graph mapping, gender overlay and alternate/failure semantics'),
+                             ('animation_function_oracle.py','Original compound animation FPS/length and unhooked attribute lookup'),
                              ('animation_playback_oracle.py','Original AnimationState selection, timing, events and ordered pose/marker services'),
                              ('animation_playback_evidence.py','Function-addressed animation playback listings and source hashes'),
                              ('minigame_entry_oracle.py','Original shared area conversion and pregame entry'),
@@ -257,7 +258,8 @@ def main():
             r=subprocess.run([sys.executable,str(HERE/script),*args],cwd=BEVY,capture_output=True,text=True)
             check(label,r.returncode==0,(r.stdout or r.stderr)[-500:].strip())
         # Differential tests: each Rust decoder must reproduce the Python reference / recorded hashes on the whole corpus.
-        suites=[('animation_playback::tests','Rust animation playback matches native function state and ordered service traces'),
+        suites=[('animation_function::tests','Rust compound timing and native rates reach original-bank Bevy curves'),
+                ('animation_playback::tests','Rust animation playback matches native function state and ordered service traces'),
                 ('animation_graph::tests','Rust animation graph matches native mapping and archive clip loading'),
                 ('archive::tests::matches_recorded_corpus_hashes','Rust archive reader: all recorded corpus records match their SHA-256'),
                 ('gsh::tests::corpus_matches_python_decoder','Rust GSH texture decoder: every image of every bank matches the Python pixels'),
