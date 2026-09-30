@@ -25,7 +25,7 @@ class Emu:
         self.e=exe or rf.load();self.cs=capstone.Cs(capstone.CS_ARCH_PPC,capstone.CS_MODE_32|capstone.CS_MODE_BIG_ENDIAN)
         self.r=[0]*32;self.ca=0;self.ctr=0;self.lr=0;self.cr=[0,0,0]  # lt,gt,eq of cr0
         self.mem={}  # sparse writes
-        self.cache={}
+        self.cache={};self.hooks={}  # hooks: call-target address -> fn(emu); the call is skipped after the hook runs
     def rd(self,a,n):
         out=bytearray()
         for i in range(n):
@@ -46,6 +46,9 @@ class Emu:
         self.r=[0]*32
         for i,a in enumerate(args):self.r[3+i]=a&M32
         self.r[1]=0x7FFF0000;self.lr=end_lr;steps=0
+        sy=self.e.symbols
+        if '_SDA2_BASE_' in sy:self.r[2]=sy['_SDA2_BASE_']['value']
+        if '_SDA_BASE_' in sy:self.r[13]=sy['_SDA_BASE_']['value']
         while pc!=end_lr:
             steps+=1
             if steps>max_steps:raise RuntimeError('step limit')
@@ -96,6 +99,12 @@ class Emu:
         elif mm in('stw','stwu'):
             off,base=ops[1].split('(');b=R(base.rstrip(')'));a=(r[b]+imm(off))&M32;self.wr(a,struct.pack('>I',r[R(ops[0])]))
             if mm=='stwu':r[b]=a
+        elif mm in('stmw','lmw'):
+            off,base=ops[1].split('(');a=(r[R(base.rstrip(')'))]+imm(off))&M32
+            for i in range(R(ops[0]),32):
+                if mm=='stmw':self.wr(a,struct.pack('>I',r[i]))
+                else:r[i]=struct.unpack('>I',self.rd(a,4))[0]
+                a+=4
         elif mm=='divwu':r[R(ops[0])]=r[R(ops[1])]//r[R(ops[2])] if r[R(ops[2])] else 0
         elif mm=='cmplwi':
             a=r[R(ops[0])];b=imm(ops[1])&0xFFFF;self.cr=[a<b,a>b,a==b]
@@ -106,7 +115,9 @@ class Emu:
         elif mm=='bctr':return self.ctr
         elif mm in('b','bl'):
             t=imm(o)
-            if mm=='bl':
+            if mm=='bl' and t in self.hooks:
+                self.hooks[t](self)
+            elif mm=='bl':
                 name=self.e.addresses.get(t,'')
                 if not (name.startswith('_savegpr') or name.startswith('_restgpr')):raise RuntimeError(f'call to {name or hex(t)} not emulated')
             else:return t

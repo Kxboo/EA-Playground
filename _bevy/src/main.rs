@@ -6,6 +6,7 @@ mod menu;
 mod locomotion;
 mod recovered;
 mod vlt;
+mod havok;
 
 use bevy::{prelude::*,render::view::window::screenshot::{Screenshot,save_to_disk},winit::WinitSettings};
 use bevy_egui::{EguiPlugin,EguiPrimaryContextPass};
