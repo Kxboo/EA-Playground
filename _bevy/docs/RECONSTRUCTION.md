@@ -38,3 +38,20 @@ All 836 distinct model files are now accounted for: 828 geometry exports and eig
 | AI, minigames, conversations, Havok physics, audio/video, APT menu scripts, save data | Not reconstructed | Formats are recognised but behaviour is not recovered. |
 
 `--selftest` (11 in-game checks), `--flow-test` (six mode hops) and `tools/prove.py` (17 checks) are the repeatable proofs. None of them is a comparison against the running original game, so nothing is promoted to `GameplayCompared`.
+
+
+## Decoders reimplemented in Rust (with differential proofs)
+
+| Component | Rust module | Verified against |
+| --- | --- | --- |
+| Archives (BIGF/BIG4/VIV, U8) and RefPack | `src/archive.rs` | SHA-256 of all 5,267 corpus records (`cargo test archive`) |
+| GSH textures (SHPG, GX C4/C8/RGB565/RGB5A3/RGBA8/CMPR) | `src/gsh.rs` | Python decoder, pixel hash of all 3,574 images in 736 files |
+| Model geometry (all shader families) | `src/model.rs` | Python reference `Remaster/src/model_unified.py`, vertex/triangle hash of all 12,451 primitives in 836 models |
+| Materials, alpha, wrap, Bevy meshes | `src/assets.rs` | `world-low-all.o`: 162 materials, 161 textures, 0 warnings, 100,576 triangles (matches the recorded audit) |
+| Attrib database (`db.vlt`/`db.bin`) | `src/vlt.rs` | `hash64` golden vectors from the original machine code; 908 collections / 7,683 attributes cross-checked against the Python loader |
+| Havok 4.6 collision (`*.hkx`) | `src/havok.rs` | Python reference; identical bodies, triangles and vertex sums on four areas |
+| Player locomotion | `src/locomotion.rs` | Constants generated from the ELF; unit tests |
+
+The model decoder is schema-driven: every shader family is a struct of (count, pointer) fields whose offsets come from the executable, and PCode (`ProcessPCode`, complete opcode set from its jump table) gives the GX vertex attributes and display list.  This replaces the earlier layout-scoring heuristics and also fixes three defects those had: duplicated meshes (`playground-high`, `world-low-all`: 4,553 phantom triangles), a missed animated-rope primitive (`tetherball_pole`), and family-specific degenerate-triangle rules.
+
+Still Python: skeleton and animation decoding (character path), TPL/APT/audio formats, and the asset viewer's worker.
