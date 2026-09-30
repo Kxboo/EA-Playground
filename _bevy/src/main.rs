@@ -7,6 +7,8 @@ mod locomotion;
 mod recovered;
 mod vlt;
 mod havok;
+mod sha256;
+mod archive;
 
 use bevy::{prelude::*,render::view::window::screenshot::{Screenshot,save_to_disk},winit::WinitSettings};
 use bevy_egui::{EguiPlugin,EguiPrimaryContextPass};
