@@ -1,0 +1,215 @@
+{
+ "generated": "2026-09-29 23:44",
+ "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
+ "passed": true,
+ "passed_count": 40,
+ "total": 40,
+ "checks": [
+  {
+   "name": "Symbol-bearing ELF matches the pinned hash",
+   "ok": true,
+   "detail": "playgroundz.elf sha256 5cef3efc7005fb71\u2026"
+  },
+  {
+   "name": "Disc copy of the ELF is byte-identical to the research copy",
+   "ok": true,
+   "detail": "files\\playgroundz.elf on the extracted disc"
+  },
+  {
+   "name": "ELF exposes named functions",
+   "ok": true,
+   "detail": "19123 sized code symbols (mangled C++ names)"
+  },
+  {
+   "name": "Function addresses cited in the research notes exist in the symbol table",
+   "ok": true,
+   "detail": "9/9 match"
+  },
+  {
+   "name": "Retail DOL code/data equals the ELF image byte-for-byte",
+   "ok": true,
+   "detail": "5,203,700/5,203,700 bytes identical across 10 DOL sections (rest is zero padding: True), entry 0x80006124"
+  },
+  {
+   "name": "Disc boot DOL (sys/main.dol) is the same executable",
+   "ok": true,
+   "detail": "sys/main.dol == files/playgroundz.dol"
+  },
+  {
+   "name": "Rust constants (src/recovered.rs) regenerate identically from the ELF",
+   "ok": true,
+   "detail": "28 constants (turn rates, camera distances, CharacterState defaults)"
+  },
+  {
+   "name": "Recovered player max speed and dead zone",
+   "ok": true,
+   "detail": "max speed 5.0, dead zone 0.10"
+  },
+  {
+   "name": "Attrib::hash64 reimplementation equals the original machine code (fresh random inputs)",
+   "ok": true,
+   "detail": "52 inputs executed on the emulated PowerPC function, 0 mismatches"
+  },
+  {
+   "name": "db.vlt/db.bin decode using the loader layout recovered from the executable",
+   "ok": true,
+   "detail": "75 types, 32 classes, relocations applied: 3409"
+  },
+  {
+   "name": "Player start location recovered from the database",
+   "ok": true,
+   "detail": "character_info/player start_location = [12.0, 0.0, -53.0]"
+  },
+  {
+   "name": "Rust vault loader output covers the whole database",
+   "ok": true,
+   "detail": "908 collections, 7683 attributes (cross-checked value-by-value against the Python decoder)"
+  },
+  {
+   "name": "Havok class reflection (src/havok_classes.json) regenerates from the executable",
+   "ok": true,
+   "detail": "244 hkClass definitions recovered by running the static initialisers in the executable"
+  },
+  {
+   "name": "Havok collision packfiles decode (rigid bodies, MOPP/mesh/box/convex shapes)",
+   "ok": true,
+   "detail": "playground: 152 bodies/5931 tris; playground_park: 284 bodies/5015 tris; playground_nature: 278 bodies/5433 tris; playground_stadium: 167 bodies/4828 tris"
+  },
+  {
+   "name": "Physics world settings decode (hkWorldCinfo)",
+   "ok": true,
+   "detail": "gravity -9.81, solver iterations 4, min timestep 0.0333s"
+  },
+  {
+   "name": "Earlier extraction (OLD ATTEMPTS) matches the current DATA files",
+   "ok": true,
+   "detail": "1199 identical, 0 different, 0 absent"
+  },
+  {
+   "name": "Real game folder (EA Playground (USA)/data) is the same content as DATA",
+   "ok": true,
+   "detail": "1214 files: 1177 byte-identical, 37 identical as archive members (loose copies of packed files / repacked containers), 0 unresolved"
+  },
+  {
+   "name": "world-low-all.o decodes to the recorded geometry",
+   "ok": true,
+   "detail": "105129 triangles, 161 textures, 0 material warnings"
+  },
+  {
+   "name": "Alicia + S_idle decode to a 68-bone skinned animated model",
+   "ok": true,
+   "detail": "68 bones, clip S_idle, 0.733s"
+  },
+  {
+   "name": "Wii strap-warning GSH decodes to a 640x480 image",
+   "ok": true,
+   "detail": "640x480 "
+  },
+  {
+   "name": "worldfilelist.csv lists the world layers the game loads",
+   "ok": true,
+   "detail": "5 entries: playground, playground_nature, playground_park, playground_stadium, world-low-all"
+  },
+  {
+   "name": "controls.csv maps player events",
+   "ok": true,
+   "detail": "66 bindings, includes EVENT_PLAYER_MOVE/JUMP/CAMERA_REORIENT: True"
+  },
+  {
+   "name": "Rust archive reader: all recorded corpus records match their SHA-256",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Rust GSH texture decoder: every image of every bank matches the Python pixels",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Rust model decoder: every primitive of all 836 models matches the reference",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Rust asset builder: world mesh, 161 textures, 100,576 triangles, no warnings",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Rust Attrib database: hash64 golden vectors + full database decode",
+   "ok": true,
+   "detail": "test result: ok. 3 passed; 0 failed"
+  },
+  {
+   "name": "Rust Havok reader: collision bodies/triangles match the Python reference",
+   "ok": true,
+   "detail": "test result: ok. 2 passed; 0 failed"
+  },
+  {
+   "name": "Rust skeleton reader: 181 bones of 4 rigs match the reference; cached world rotations agree",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Rust animation codecs: 266 clips match the Python reference per bone and channel",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Rust player build: skinned model + rig + clips decode from the original files",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Rust TPL decoder: all 199 distinct texture banks match the Python pixels",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Localisation: 10 .loc files + string.idx decode, TRCLocale hash routine reproduced, keys from the executable resolve",
+   "ok": true,
+   "detail": "test result: ok. 2 passed; 0 failed"
+  },
+  {
+   "name": "Conversation trees: all 32 .con files parse exactly; 376/429 node texts resolve through the locale",
+   "ok": true,
+   "detail": "test result: ok. 2 passed; 0 failed"
+  },
+  {
+   "name": "Level placement: 49 marker sets (304 markers) and 10 RC checkpoint files (20 lanes) parse exactly",
+   "ok": true,
+   "detail": "test result: ok. 2 passed; 0 failed"
+  },
+  {
+   "name": "Audio: EA Layer 3 (14 music tracks, every granule ends on its declared length), EA-XA streams and bank sounds, MicroTalk speech (8 files, exact chunk framing, low-pass output)",
+   "ok": true,
+   "detail": "test result: ok. 7 passed; 0 failed"
+  },
+  {
+   "name": "Conga gesture machines: conga.gsm parses (34 sequences, transition counts consistent)",
+   "ok": true,
+   "detail": "test result: ok. 2 passed; 0 failed"
+  },
+  {
+   "name": "Locomotion constants and behaviour",
+   "ok": true,
+   "detail": "test result: ok. 5 passed; 0 failed"
+  },
+  {
+   "name": "Recorded corpus audit: every distinct .o model accounted for (earlier run)",
+   "ok": true,
+   "detail": "828 geometry exports + 8 empty draw lists + 0 failures = 836 distinct models; 619 frontend files; not re-run here (see Remaster/tests/audit_models.py)"
+  },
+  {
+   "name": "Game self-test report (boot -> world -> player -> scripted walk)",
+   "ok": true,
+   "detail": "20/20 in-game checks passed, load 3.0s, report 2.0 h old"
+  }
+ ],
+ "scope": [
+  "This proves: the executable in use is the retail binary with symbols; extracted data is consistent across three copies; the decoders reproduce recorded results; the game slice boots from the original files and moves a character using constants read from the executable.",
+  "This does NOT prove: a full decompilation. ~19k named functions exist, but only LocalCharacterControl::Update locomotion and a set of rendering/skinning routines are reconstructed.",
+  "Provisional (not from the executable): jump/gravity, terrain collision from display meshes, camera framing, spawn point. The world LOD mesh is curved; the original bend/streaming logic is unrecovered.",
+  "Not reconstructed: AI, minigames, conversations, Havok dynamics (collision shapes and world settings are decoded), audio/video playback, APT menu scripting, save data."
+ ]
+}

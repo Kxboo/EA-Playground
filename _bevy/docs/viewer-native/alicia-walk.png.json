@@ -1,0 +1,21 @@
+{
+  "animation_players": 1,
+  "animation_time": 0.1731083244085312,
+  "loaded": true,
+  "mesh_entities": 62,
+  "preview": {
+    "animation": "S_walk",
+    "decode_ms": 6.7517000000000005,
+    "decoder_version": "rust-model-1",
+    "frontend": false,
+    "kind": "model",
+    "materials": 3,
+    "meshes": 62,
+    "name": "alicia.o",
+    "skinned": true,
+    "textures": 3,
+    "triangles": 2877,
+    "warnings": []
+  },
+  "status": "alicia.o • 7 ms • native Rust decoder"
+}

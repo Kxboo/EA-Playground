@@ -1,0 +1,21 @@
+{
+  "animation_players": 0,
+  "animation_time": 0.0,
+  "loaded": true,
+  "mesh_entities": 1,
+  "preview": {
+    "animation": "",
+    "decode_ms": 0.0029000000000000002,
+    "decoder_version": "rust-model-1",
+    "frontend": false,
+    "kind": "model",
+    "materials": 1,
+    "meshes": 1,
+    "name": "basketball.o",
+    "skinned": false,
+    "textures": 1,
+    "triangles": 384,
+    "warnings": []
+  },
+  "status": "basketball.o • 0 ms • native Rust decoder"
+}

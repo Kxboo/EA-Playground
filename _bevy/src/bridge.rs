@@ -11,6 +11,17 @@ pub fn root()->PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 }
 
+/// Extracted game DATA folder: `EAGL_DATA` override, else the research layout beside the workspace.
+pub fn data_root()->PathBuf {
+    if let Ok(p)=std::env::var("EAGL_DATA") {return PathBuf::from(p)}
+    let rel=Path::new("eagl EA PLAYGROUND").join("extra").join("more").join("eaplayground files").join("DATA");
+    for p in root().ancestors() {
+        let c=p.join(&rel);
+        if c.exists() {return c}
+    }
+    PathBuf::from(r"D:\_eagl\eagl EA PLAYGROUND\extra\more\eaplayground files\DATA")
+}
+
 fn command(base:&Path)->Command {
     let packaged=base.join("EAGL-Decoder.exe");
     let mut c=if packaged.exists(){Command::new(packaged)}else{

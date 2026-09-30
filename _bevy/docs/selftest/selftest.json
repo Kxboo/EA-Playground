@@ -1,0 +1,237 @@
+{
+  "checks": [
+    {
+      "detail": "18/18 layers ready, 2 empty draw lists skipped",
+      "name": "world layers spawned from worldfilelist.csv",
+      "ok": true
+    },
+    {
+      "detail": "3/3 layers ready; cloud angle 0.1710 rad after the run",
+      "name": "SkyDome layers (skybox, mountain/city ring, clouds) loaded",
+      "ok": true
+    },
+    {
+      "detail": "10 files, 885 bodies, 21255 triangles",
+      "name": "Havok collision decoded from physics/*.hkx",
+      "ok": true
+    },
+    {
+      "detail": "15 spawned / 15 listed in the placeables class, 0 failed",
+      "name": "placeables from the database spawned at their positions",
+      "ok": true
+    },
+    {
+      "detail": "gravity 9.810",
+      "name": "gravity read from hkWorldCinfo",
+      "ok": true
+    },
+    {
+      "detail": "radius 250",
+      "name": "world curvature radius from world.csv",
+      "ok": true
+    },
+    {
+      "detail": "3 clips, anim player bound: true",
+      "name": "player model + 3 clips loaded",
+      "ok": true
+    },
+    {
+      "detail": "68 joints, 62 skinned mesh parts",
+      "name": "player rig built in Rust: 68 joints, skinned parts bound",
+      "ok": true
+    },
+    {
+      "detail": "joint rotation checksum ranged -7.802..-0.068 over 6 samples",
+      "name": "decoded clips animate the skeleton (joint pose changes idle -> walk/run)",
+      "ok": true
+    },
+    {
+      "detail": "start_location (12,0,-53) -> ground-snapped spawn 12.0,-0.0,-53.0",
+      "name": "player spawn read from db.vlt (character_info/player)",
+      "ok": true
+    },
+    {
+      "detail": "world_schoolyard.asf: state Some(1), 518175 samples queued",
+      "name": "area music streams from the Rust EA Layer 3 decoder",
+      "ok": true
+    },
+    {
+      "detail": "58 rows, 15 STATE_COMBAT",
+      "name": "controls.csv parsed",
+      "ok": true
+    },
+    {
+      "detail": "2056 Mesh3d entities",
+      "name": "mesh entities in scene",
+      "ok": true
+    },
+    {
+      "detail": "1 players",
+      "name": "animation players active",
+      "ok": true
+    },
+    {
+      "detail": "moved 16.28 m from the start (5 m/s max)",
+      "name": "player walked on recovered locomotion",
+      "ok": true
+    },
+    {
+      "detail": "forward run of 2.5 s (12.5 m if unobstructed) ended after 3.3 m",
+      "name": "Havok collision stops the player at a solid prop",
+      "ok": true
+    },
+    {
+      "detail": "peak walk+run weight 1.00 (full stick = run)",
+      "name": "walk/run clip blended in while moving",
+      "ok": true
+    },
+    {
+      "detail": "y=0.67",
+      "name": "player grounded on world surface",
+      "ok": true
+    },
+    {
+      "detail": "jump/land samples recorded",
+      "name": "jump script executed",
+      "ok": true
+    },
+    {
+      "detail": "camera within 15 m",
+      "name": "camera follows player",
+      "ok": true
+    }
+  ],
+  "evidence": {
+    "jump_gravity": "provisional",
+    "locomotion": "ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs",
+    "terrain": "AssetDerived display mesh"
+  },
+  "load_seconds": 3.0064799785614014,
+  "log": [
+    "Boot: reading original data files",
+    "db.vlt: 75 types, 32 classes, 908 collections",
+    "decoded boot screen",
+    "player: 68 bones, 62 skinned parts, clips S_idle (23 samples), S_walk (15 samples), S_run (11 samples)",
+    "loaded filelist.csv (6 rows)",
+    "loaded bounds.csv (2 rows)",
+    "loaded controls.csv (59 rows)",
+    "playground-high-alphafade.o has an empty draw list; skipped",
+    "playground_park-high-fade.o has an empty draw list; skipped",
+    "world and player assets ready",
+    "gate1_right collision: +0 triangles",
+    "nature_gate_right collision: +12 triangles",
+    "stadium_gate_right collision: +12 triangles",
+    "gate1_left collision: +0 triangles",
+    "stadium_gate_left collision: +12 triangles",
+    "nature_gate_left collision: +12 triangles",
+    "collision: 10 files, 885 bodies, 21255 triangles; gravity 9.81",
+    "ground coverage around start: 2983/3600 samples",
+    "player rig: 68 joints, 62 skinned parts",
+    "ground: 21255 triangles; spawn 12.0,-0.0,-53.0"
+  ],
+  "passed": true,
+  "samples": [
+    {
+      "grounded": true,
+      "pos": [
+        12.0,
+        -0.04999999701976776,
+        -53.0
+      ],
+      "pose": -3.4069223403930664,
+      "speed": 0.0,
+      "step": "settle",
+      "t": 1.501535415649414,
+      "weights": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "grounded": true,
+      "pos": [
+        12.0,
+        -0.04999999701976776,
+        -49.68337631225586
+      ],
+      "pose": -7.801743507385254,
+      "speed": 5.0,
+      "step": "forward",
+      "t": 4.001166343688965,
+      "weights": [
+        4.771467665420914e-10,
+        3.655494795751224e-10,
+        0.9999998211860657
+      ]
+    },
+    {
+      "grounded": true,
+      "pos": [
+        15.08327865600586,
+        -0.04999999701976776,
+        -49.08609390258789
+      ],
+      "pose": -0.0682106465101242,
+      "speed": 5.0,
+      "step": "left",
+      "t": 6.500777244567871,
+      "weights": [
+        2.2719872616961375e-19,
+        1.7406046267344826e-19,
+        0.9999998807907104
+      ]
+    },
+    {
+      "grounded": true,
+      "pos": [
+        23.333587646484375,
+        0.03734006732702255,
+        -41.93865203857422
+      ],
+      "pose": -6.929296493530273,
+      "speed": 7.071067810058594,
+      "step": "diagonal",
+      "t": 8.50008487701416,
+      "weights": [
+        7.950923671118734e-27,
+        6.091325835504105e-27,
+        0.9999998807907104
+      ]
+    },
+    {
+      "grounded": false,
+      "pos": [
+        23.680253982543945,
+        1.019840121269226,
+        -41.66643142700195
+      ],
+      "pose": -5.351820945739746,
+      "speed": 0.0,
+      "step": "jump",
+      "t": 8.900774002075195,
+      "weights": [
+        0.8994948863983154,
+        0.02495274879038334,
+        0.07555233687162399
+      ]
+    },
+    {
+      "grounded": true,
+      "pos": [
+        23.680253982543945,
+        0.670899510383606,
+        -41.66643142700195
+      ],
+      "pose": -5.499746322631836,
+      "speed": 0.0,
+      "step": "final",
+      "t": 9.916848182678223,
+      "weights": [
+        0.9999837279319763,
+        4.038414772367105e-6,
+        0.000012227582374180201
+      ]
+    }
+  ]
+}

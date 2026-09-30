@@ -3,7 +3,19 @@ use bevy_egui::{egui,EguiContexts,EguiTextureHandle,EguiGlobalSettings,PrimaryEg
 use serde::Deserialize;
 use serde_json::{Value,json};
 use std::{time::Duration,sync::Arc};
-use crate::{bridge::Bridge,game::OriginalAsset};
+use crate::{bridge::Bridge,character,game::OriginalAsset,menu::AppMode,preview::{self,Output}};
+use std::sync::{Mutex,mpsc,atomic::{AtomicU64,Ordering}};
+
+/// Native (Rust) preview worker: requests run on a thread, results come back here; `FALLBACK` goes to Python.
+#[derive(Resource)]
+pub struct Native{tx:mpsc::Sender<(u64,Result<Output,String>)>,rx:Mutex<mpsc::Receiver<(u64,Result<Output,String>)>>,next:AtomicU64}
+impl Native{
+    pub fn new()->Self{let (tx,rx)=mpsc::channel();Self{tx,rx:Mutex::new(rx),next:AtomicU64::new(1<<40)}}
+    fn submit(&self,r:preview::Request)->u64{
+        let id=self.next.fetch_add(1,Ordering::Relaxed);let tx=self.tx.clone();
+        std::thread::spawn(move||{let _=tx.send((id,preview::run(&r)));});id
+    }
+}
 
 #[derive(Clone,Deserialize)]
 pub struct AssetRow {pub id:usize,pub name:String,pub source:String,pub kind:String,pub status:String,pub size:u64,#[serde(default)]pub family:String}
@@ -16,18 +28,19 @@ pub struct Viewer {
     pub playing:bool,pub speed:f32,pub position:f32,pub duration:f32,pub seek:Option<f32>,pub bones:bool,pub z_up:bool,pub unlit:bool,
     pub image:Option<Handle<Image>>,pub image_id:Option<egui::TextureId>,pub zoom:f32,
     pub authored_unlit:std::collections::HashMap<AssetId<StandardMaterial>,bool>,
-    pub loaded:bool,pub inspector:bool,pub old_images:Vec<AssetId<Image>>,pub startup_asset:Option<String>,pub startup_bank:Option<String>,pub startup_clip:usize,pub capture:Option<String>,pub capture_at:f32,pub captured:bool,
+    pub fallback:Option<Value>,pub loaded:bool,pub inspector:bool,pub old_images:Vec<AssetId<Image>>,pub startup_asset:Option<String>,pub startup_bank:Option<String>,pub startup_clip:usize,pub capture:Option<String>,pub capture_at:f32,pub captured:bool,
 }
 impl Default for Viewer {fn default()->Self{Self{
     assets:Arc::new(vec![]),selected:None,query:String::new(),category:"Model".into(),model:None,skeleton:None,bank:None,texture:None,with_model:true,with_animation:false,
     index:0,items:vec![],item_filter:String::new(),busy:true,latest:0,status:"Reading asset catalog…".into(),detail:String::new(),report:Value::Null,
-    playing:true,speed:1.,position:0.,duration:0.,seek:None,bones:false,z_up:false,unlit:false,image:None,image_id:None,zoom:1.,loaded:false,inspector:false,old_images:vec![],
+    playing:true,speed:1.,position:0.,duration:0.,seek:None,bones:false,z_up:false,unlit:false,image:None,image_id:None,zoom:1.,fallback:None,loaded:false,inspector:false,old_images:vec![],
     startup_asset:None,startup_bank:None,startup_clip:0,capture:None,capture_at:15.,captured:false,
     authored_unlit:std::collections::HashMap::new(),
 }}}
 
 #[derive(Component)] pub struct PreviewRoot;
 #[derive(Component)] pub struct PreviewCamera;
+#[derive(Component)] pub struct PreviewLight;
 #[derive(Component)] pub struct ClipGraph{handle:Handle<AnimationGraph>,index:AnimationNodeIndex}
 #[derive(Resource)] pub struct Orbit{pub target:Vec3,pub distance:f32,pub yaw:f32,pub pitch:f32,pub radius:f32}
 impl Default for Orbit{fn default()->Self{Self{target:Vec3::ZERO,distance:4.,yaw:0.6,pitch:0.2,radius:1.}}}
@@ -36,20 +49,25 @@ pub fn setup(mut commands:Commands,mut egui_settings:ResMut<EguiGlobalSettings>)
     egui_settings.auto_create_primary_context=false;
     commands.spawn((Camera3d::default(),PreviewCamera,Transform::from_xyz(3.,2.,4.).looking_at(Vec3::ZERO,Vec3::Y)));
     commands.spawn((PrimaryEguiContext,Camera2d,RenderLayers::none(),Camera{order:1,output_mode:CameraOutputMode::Write{blend_state:Some(BlendState::ALPHA_BLENDING),clear_color:ClearColorConfig::None},clear_color:ClearColorConfig::Custom(Color::NONE),..default()}));
-    commands.spawn((DirectionalLight{illuminance:8000.,shadow_maps_enabled:false,..default()},Transform::from_rotation(Quat::from_euler(EulerRot::XYZ,-0.7,-0.6,0.))));
+    commands.spawn((PreviewLight,DirectionalLight{illuminance:8000.,shadow_maps_enabled:false,..default()},Transform::from_rotation(Quat::from_euler(EulerRot::XYZ,-0.7,-0.6,0.))));
 }
 
 fn source(v:&Viewer,id:Option<usize>)->Option<String>{id.and_then(|i|v.assets.get(i)).map(|a|a.source.clone())}
-fn request(v:&mut Viewer,bridge:&Bridge){
+fn request(v:&mut Viewer,_bridge:&Bridge,native:&Native){
     let Some(row)=v.selected.and_then(|i|v.assets.get(i)).cloned() else{return};
     let mut req=json!({"command":"select","source":row.source,"index":v.index});
     if let Some(s)=source(v,v.skeleton){req["skeleton"]=json!(s);}
     if let Some(s)=source(v,v.texture){req["textures"]=json!([s]);}
     if row.kind=="Animation" && v.with_model {if let Some(s)=source(v,v.model){req["model"]=json!(s);}}
     if row.kind=="Model" && v.with_animation {if let Some(s)=source(v,v.bank){req["bank"]=json!(s);}}
-    v.latest=bridge.request(req);v.busy=true;v.loaded=false;v.status=format!("Decoding {}…",row.name);
+    let r=preview::Request{source:row.source.clone(),index:v.index,skeleton:source(v,v.skeleton),
+        model:if row.kind=="Animation"{source(v,v.model)}else{None},bank:if row.kind=="Model"{source(v,v.bank)}else{None},
+        textures:source(v,v.texture).into_iter().collect(),with_model:v.with_model,with_animation:v.with_animation};
+    // Rust decoders first; unsupported formats (or files they reject) fall back to the Python inspection worker.
+    v.latest=native.submit(r);v.fallback=Some(req);
+    v.busy=true;v.loaded=false;v.status=format!("Decoding {}…",row.name);
 }
-fn select(v:&mut Viewer,id:usize,bridge:&Bridge){
+fn select(v:&mut Viewer,id:usize,bridge:&Bridge,native:&Native){
     v.selected=Some(id);v.index=0;v.items.clear();v.item_filter.clear();v.detail.clear();v.inspector=false;
     if v.category!="All"{v.category=v.assets[id].kind.clone();}
     let row=&v.assets[id];let parent=row.source.rsplit_once("::").map(|x|x.0.to_string()).unwrap_or_else(||std::path::Path::new(&row.source).parent().unwrap().to_string_lossy().into_owned());
@@ -58,10 +76,75 @@ fn select(v:&mut Viewer,id:usize,bridge:&Bridge){
     else if row.source.to_lowercase().contains("characters") || row.name.starts_with("player_") {v.skeleton=v.assets.iter().find(|a|a.name=="player_skel.ske").map(|a|a.id);}
     else if row.kind=="Model"{v.skeleton=None;v.with_animation=false;}
     match row.kind.as_str(){"Model"=>v.model=Some(id),"Skeleton"=>v.skeleton=Some(id),"Animation"=>{v.bank=Some(id);v.with_animation=true;},_=>{}}
-    request(v,bridge);
+    request(v,bridge,native);
 }
 
-pub fn receive(mut commands:Commands,bridge:Res<Bridge>,mut v:ResMut<Viewer>,assets:Res<AssetServer>,mut graphs:ResMut<Assets<AnimationGraph>>,roots:Query<Entity,With<PreviewRoot>>,mut orbit:ResMut<Orbit>){
+pub fn receive(mut commands:Commands,bridge:Res<Bridge>,native:Res<Native>,mut v:ResMut<Viewer>,assets:Res<AssetServer>,mut graphs:ResMut<Assets<AnimationGraph>>,roots:Query<Entity,With<PreviewRoot>>,mut orbit:ResMut<Orbit>,
+    mut meshes:ResMut<Assets<Mesh>>,mut materials:ResMut<Assets<StandardMaterial>>,mut images:ResMut<Assets<Image>>,mut ibp:ResMut<Assets<bevy::mesh::skinning::SkinnedMeshInverseBindposes>>,mut anim_clips:ResMut<Assets<AnimationClip>>){
+    let results:Vec<_>=native.rx.lock().unwrap().try_iter().collect();
+    for (id,result) in results{
+        if id!=v.latest{continue}
+        match result{
+            Err(e) if e==preview::FALLBACK=>{if let Some(req)=v.fallback.take(){v.latest=bridge.request(req);}}
+            Err(e)=>{
+                v.busy=false;v.loaded=false;v.duration=0.;v.report=Value::Null;
+                for r in &roots{commands.entity(r).despawn();}
+                if let Some(image)=v.image.take(){v.old_images.push(image.id());}v.image_id=None;
+                v.status=e;
+            }
+            Ok(out)=>{
+                v.fallback=None;v.busy=false;v.inspector=false;v.position=0.;v.duration=0.;v.bones=false;
+                for r in &roots{commands.entity(r).despawn();}
+                if let Some(image)=v.image.take(){v.old_images.push(image.id());}v.image_id=None;
+                let z=Transform::from_rotation(if v.z_up{Quat::from_rotation_x(-std::f32::consts::FRAC_PI_2)}else{Quat::IDENTITY});
+                let items=|l:&[(usize,String)]|l.iter().map(|(i,n)|json!({"index":i,"name":n})).collect::<Vec<_>>();
+                match out{
+                    Output::Image{name,rgba,w,h,items:list}=>{
+                        v.items=items(&list);
+                        v.image=Some(images.add(Image::new(bevy::render::render_resource::Extent3d{width:w as u32,height:h as u32,depth_or_array_layers:1},bevy::render::render_resource::TextureDimension::D2,rgba,bevy::render::render_resource::TextureFormat::Rgba8UnormSrgb,bevy::asset::RenderAssetUsages::default())));
+                        v.zoom=1.;v.loaded=true;v.report=json!({"kind":"image","name":name,"width":w,"height":h,"decoder_version":"rust-gsh-1"});
+                        v.status=format!("{name} • native Rust decoder");
+                    }
+                    Output::Model{name,built,rig,items:list,frontend,ms}=>{
+                        v.items=items(&list);
+                        let skinned=rig.is_some();
+                        let up=if skinned{crate::assets::upload_skinned(&built,&mut meshes,&mut materials,&mut images)}else{crate::assets::upload(&built,&mut meshes,&mut materials,&mut images,false)};
+                        let evidence=OriginalAsset{evidence:crate::game::EvidenceLevel::AssetDerived,source:name.clone(),decoder_version:"rust-model-1".into()};
+                        let summary=crate::assets::summary(&built);
+                        let mut animation=String::new();
+                        match rig{
+                            Some(rig)=>{
+                                let root=commands.spawn((PreviewRoot,z,Visibility::default(),evidence)).id();
+                                character::spawn_rig(&mut commands,&mut ibp,&rig.skeleton,&up,root,root);
+                                if let Some(c)=&rig.clip{spawn_clip(&mut commands,root,c,&mut anim_clips,&mut graphs,&mut v);animation=c.name.clone();}
+                                v.bones=true;
+                            }
+                            None=>{crate::assets::spawn(&mut commands,&up,(PreviewRoot,z,evidence),None);}
+                        }
+                        let (lo,hi)=(Vec3::from(built.bounds[0]),Vec3::from(built.bounds[1]));
+                        frame(&mut orbit,z,lo,hi);if frontend{orbit.yaw=0.;orbit.pitch=0.;}
+                        apply_unlit(&mut v,&mut materials);
+                        v.report=json!({"kind":"model","name":name,"triangles":summary["triangles"],"meshes":summary["prims"],"materials":summary["materials"],"textures":summary["textures"],"warnings":built.warnings,"frontend":false,"skinned":skinned,"animation":animation,"decode_ms":ms,"decoder_version":"rust-model-1"});
+                        v.detail=serde_json::to_string_pretty(&v.report).unwrap_or_default();v.loaded=true;
+                        v.status=format!("{name} • {ms:.0} ms • native Rust decoder");
+                    }
+                    Output::Skeleton{name,rig,items:list,ms}=>{
+                        v.items=items(&list);
+                        let root=commands.spawn((PreviewRoot,z,Visibility::default(),OriginalAsset{evidence:crate::game::EvidenceLevel::AssetDerived,source:name.clone(),decoder_version:"rust-anim-1".into()})).id();
+                        character::spawn_rig(&mut commands,&mut ibp,&rig.skeleton,&crate::assets::Uploaded{parts:vec![]},root,root);
+                        let mut animation=String::new();
+                        if let Some(c)=&rig.clip{spawn_clip(&mut commands,root,c,&mut anim_clips,&mut graphs,&mut v);animation=c.name.clone();}
+                        let pts:Vec<Vec3>=rig.skeleton.bones.iter().map(|b|Vec3::new(b.world_translation[0] as f32,b.world_translation[1] as f32,b.world_translation[2] as f32)).collect();
+                        let (lo,hi)=pts.iter().fold((Vec3::splat(f32::MAX),Vec3::splat(f32::MIN)),|a,p|(a.0.min(*p),a.1.max(*p)));
+                        frame(&mut orbit,z,lo,hi);v.bones=true;
+                        v.report=json!({"kind":"skeleton","name":name,"bones":rig.skeleton.bones.len(),"animation":animation,"decode_ms":ms,"decoder_version":"rust-anim-1"});
+                        v.detail=serde_json::to_string_pretty(&v.report).unwrap_or_default();v.loaded=true;
+                        v.status=format!("{name} • {ms:.0} ms • native Rust decoder");
+                    }
+                }
+            }
+        }
+    }
     let responses:Vec<_>=bridge.rx.lock().unwrap().try_iter().collect();
     for response in responses {
         let id=response["id"].as_u64().unwrap_or(0);
@@ -76,8 +159,8 @@ pub fn receive(mut commands:Commands,bridge:Res<Bridge>,mut v:ResMut<Viewer>,ass
         if id==0 {
             v.assets=Arc::new(serde_json::from_value(value["assets"].clone()).unwrap_or_default());v.busy=false;v.status=format!("{} distinct assets • select an asset to preview",v.assets.len());
             if let Some(name)=v.startup_asset.take(){if let Some(i)=v.assets.iter().position(|a|a.name==name){
-                select(&mut v,i,&bridge);
-                if let Some(bank)=v.startup_bank.take(){v.bank=v.assets.iter().find(|a|a.name==bank).map(|a|a.id);v.with_animation=true;v.index=v.startup_clip;request(&mut v,&bridge);}
+                select(&mut v,i,&bridge,&native);
+                if let Some(bank)=v.startup_bank.take(){v.bank=v.assets.iter().find(|a|a.name==bank).map(|a|a.id);v.with_animation=true;v.index=v.startup_clip;request(&mut v,&bridge,&native);}
             }}
             continue
         }
@@ -109,6 +192,28 @@ pub fn receive(mut commands:Commands,bridge:Res<Bridge>,mut v:ResMut<Viewer>,ass
     }
 }
 
+fn frame(orbit:&mut Orbit,z:Transform,lo:Vec3,hi:Vec3){
+    orbit.target=z.rotation*((lo+hi)*0.5);orbit.radius=(hi-lo).length().max(0.001)*0.5;orbit.distance=orbit.radius*3.;
+}
+fn spawn_clip(commands:&mut Commands,root:Entity,clip:&crate::anim::Clip,clips:&mut Assets<AnimationClip>,graphs:&mut Assets<AnimationGraph>,v:&mut Viewer){
+    match character::animation_clip(clip){
+        Ok(a)=>{
+            let (graph,index)=AnimationGraph::from_clip(clips.add(a));
+            let handle=graphs.add(graph);
+            let mut player=AnimationPlayer::default();player.play(index).repeat();
+            commands.entity(root).insert((player,AnimationGraphHandle(handle.clone()),ClipGraph{handle,index}));
+            v.duration=clip.duration() as f32;
+        }
+        Err(e)=>v.status=format!("clip: {e}"),
+    }
+}
+/// Force-unlit toggle applied to every material, remembering each material's authored setting.
+fn apply_unlit(v:&mut Viewer,materials:&mut Assets<StandardMaterial>){
+    v.authored_unlit.retain(|id,_|materials.get(*id).is_some());
+    let force=v.unlit;
+    for (id,material) in materials.iter_mut(){let authored=*v.authored_unlit.entry(id).or_insert(material.unlit);material.unlit=force||authored;}
+}
+
 fn scene_ready(event:On<WorldInstanceReady>,mut commands:Commands,children:Query<&Children>,graphs:Query<&ClipGraph>,mut players:Query<&mut AnimationPlayer>,mut v:ResMut<Viewer>,mut materials:ResMut<Assets<StandardMaterial>>){
     if let Ok(graph)=graphs.get(event.entity){
         for child in children.iter_descendants(event.entity){if let Ok(mut player)=players.get_mut(child){
@@ -129,13 +234,14 @@ fn chooser(ui:&mut egui::Ui,label:&str,value:&mut Option<usize>,rows:&[AssetRow]
     });changed
 }
 
-pub fn ui(mut contexts:EguiContexts,mut v:ResMut<Viewer>,bridge:Res<Bridge>,mut orbit:ResMut<Orbit>,mut camera:Single<(&mut Camera,&mut Transform,&mut Projection),With<PreviewCamera>>,window:Single<&Window,With<PrimaryWindow>>,mut roots:Query<&mut Transform,(With<PreviewRoot>,Without<PreviewCamera>)>,mut materials:ResMut<Assets<StandardMaterial>>)->Result {
+pub fn ui(mut contexts:EguiContexts,mut v:ResMut<Viewer>,bridge:Res<Bridge>,native:Res<Native>,mut orbit:ResMut<Orbit>,mut camera:Single<(&mut Camera,&mut Transform,&mut Projection),With<PreviewCamera>>,window:Single<&Window,With<PrimaryWindow>>,mut roots:Query<&mut Transform,(With<PreviewRoot>,Without<PreviewCamera>)>,mut materials:ResMut<Assets<StandardMaterial>>,mut mode:ResMut<AppMode>)->Result {
     for id in v.old_images.drain(..){contexts.remove_image(id);}
     if v.image_id.is_none(){if let Some(image)=v.image.clone(){v.image_id=Some(contexts.add_image(EguiTextureHandle::Strong(image)));}}
     let ctx=contexts.ctx_mut()?;
     let mut root=egui::Ui::new(ctx.clone(),"workbench".into(),egui::UiBuilder::new().layer_id(egui::LayerId::background()).max_rect(ctx.viewport_rect()));
     let mut reload=false;let mut selected=None;
     egui::Panel::top("header").show(&mut root,|ui|{ui.horizontal(|ui|{
+        if ui.button("< Menu").clicked(){*mode=AppMode::Menu;}
         ui.heading("EA Playground");ui.label(egui::RichText::new("ASSET WORKBENCH").small().color(egui::Color32::from_rgb(104,200,170)));
         ui.separator();ui.label("Bevy • local files");
         if v.busy{ui.spinner();} ui.label(&v.status);
@@ -224,7 +330,7 @@ pub fn ui(mut contexts:EguiContexts,mut v:ResMut<Viewer>,bridge:Res<Bridge>,mut 
             else{egui::ScrollArea::both().show(&mut panel,|ui|{ui.add(egui::Label::new(egui::RichText::new(&v.detail).monospace()).selectable(true));});}
         }
     });
-    if let Some(id)=selected{select(&mut v,id,&bridge);}else if reload{request(&mut v,&bridge);}
+    if let Some(id)=selected{select(&mut v,id,&bridge,&native);}else if reload{request(&mut v,&bridge,&native);}
     let eye=orbit.target+Vec3::new(orbit.yaw.sin()*orbit.pitch.cos(),orbit.pitch.sin(),orbit.yaw.cos()*orbit.pitch.cos())*orbit.distance;
     *camera.1=Transform::from_translation(eye).looking_at(orbit.target,Vec3::Y);
     if let Projection::Perspective(p)=&mut *camera.2{p.near=(orbit.radius*0.001).max(0.00001);p.far=(orbit.radius*1000.).max(100.);}
