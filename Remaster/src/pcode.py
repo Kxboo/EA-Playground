@@ -1,7 +1,7 @@
-"""Bounded subset of EAGL ProcessPCode (ELF 0x803ef24c).
+"""Bounded reimplementation of EAGL ProcessPCode (ELF 0x803ef24c; jump table at 0x804ed6d8, skip lengths at 0x804ed6c8).
 
-Opcodes 8/9/10 set GX INDEX8/INDEX16/DIRECT respectively; their operand
-is the attribute ID. Opcode 11 sets position fractional bits.
+Opcodes: 0 end, 2 array base offset, 3/5/6 allocation lists, 4 flag, 7 display list,
+8/9/10 set GX INDEX8/INDEX16/DIRECT (operand = attribute ID), 11 sets position fractional bits.
 Unknown operations fail explicitly rather than guessing a vertex stride.
 """
 import struct
@@ -19,7 +19,27 @@ def decode(raw, start, relocations, end=None):
         if op==0:
             if 'offset' not in result:raise ValueError('PCode has no display list')
             return result
-        if op==4:
+        if op==2:
+            # 0x803ef348: u8 slot, u32 count -> arrays[slot].base += count * element size (6 bytes total).
+            slot=read(cursor+1,1)[0];count=struct.unpack('>I',read(cursor+2,4))[0]
+            result.setdefault('array_offsets',{})[slot]=count;cursor+=6
+        elif op==3:
+            # 0x803ef388: 2-byte entries terminated by 0xff (+1 pad byte).
+            cursor+=1
+            for _ in range(64):
+                entry=read(cursor,2)
+                if entry[0]==0xff:cursor+=2;break
+                cursor+=2
+            else:raise ValueError('Unterminated PCode op 3 list')
+        elif op==6:
+            # 0x803ef550: 2-byte entries terminated by 0xff (+1 pad byte).
+            cursor+=1
+            for _ in range(64):
+                entry=read(cursor,2)
+                if entry[0]==0xff:cursor+=2;break
+                cursor+=2
+            else:raise ValueError('Unterminated PCode op 6 list')
+        elif op==4:
             read(cursor,2);cursor+=2
         elif op==5:
             cursor+=1

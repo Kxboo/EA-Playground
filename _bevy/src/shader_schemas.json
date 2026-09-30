@@ -1,0 +1,1705 @@
+{
+  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
+  "schemas": {
+    "Gouraud": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 40,
+        "pointer_offset": 44
+      }
+    ],
+    "GouraudApt": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "ScaleMatrix",
+        "element_size": 64,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 6,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "ColourModulator",
+        "element_size": 16,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "ColourTranslate",
+        "element_size": 16,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "MatDiffuseColour",
+        "element_size": 4,
+        "count_offset": 64,
+        "pointer_offset": 68
+      }
+    ],
+    "PlaygroundAnimatedTexture": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "textureMatrixPalette",
+        "element_size": 4,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 72,
+        "pointer_offset": 76
+      }
+    ],
+    "PlaygroundCharFaceToonShade_HWSkin": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "PalletMatrixPtr",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "Weights",
+        "element_size": 16,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "ViewMatrix",
+        "element_size": 64,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 6,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "Normals",
+        "element_size": 6,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 72,
+        "pointer_offset": 76
+      },
+      {
+        "name": "SpecularMap",
+        "element_size": 4,
+        "count_offset": 80,
+        "pointer_offset": 84
+      },
+      {
+        "name": "LightBlock",
+        "element_size": 448,
+        "count_offset": 88,
+        "pointer_offset": 92
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 96,
+        "pointer_offset": 100
+      },
+      {
+        "name": "CullEnabled",
+        "element_size": 4,
+        "count_offset": 104,
+        "pointer_offset": 108
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 112,
+        "pointer_offset": 116
+      }
+    ],
+    "PlaygroundCompressPlaceableShadow_HWSkin": [
+      {
+        "name": "PalletMatrixPtr",
+        "element_size": 64,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "Weights",
+        "element_size": 16,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 6,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 56,
+        "pointer_offset": 60
+      }
+    ],
+    "PlaygroundCompressShadow_HWSkin": [
+      {
+        "name": "PalletMatrixPtr",
+        "element_size": 64,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "Weights",
+        "element_size": 16,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 6,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 56,
+        "pointer_offset": 60
+      }
+    ],
+    "PlaygroundCompressToonShade_HWSkin": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "PalletMatrixPtr",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "Weights",
+        "element_size": 16,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "ScaleMatrix",
+        "element_size": 64,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "ViewMatrix",
+        "element_size": 64,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 6,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "Normals",
+        "element_size": 6,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 72,
+        "pointer_offset": 76
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 80,
+        "pointer_offset": 84
+      },
+      {
+        "name": "SpecularMap",
+        "element_size": 4,
+        "count_offset": 88,
+        "pointer_offset": 92
+      },
+      {
+        "name": "LightBlock",
+        "element_size": 448,
+        "count_offset": 96,
+        "pointer_offset": 100
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 104,
+        "pointer_offset": 108
+      },
+      {
+        "name": "CullEnabled",
+        "element_size": 4,
+        "count_offset": 112,
+        "pointer_offset": 116
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 120,
+        "pointer_offset": 124
+      }
+    ],
+    "PlaygroundLitPlaceable_HWSkin": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "PalletMatrixPtr",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "Weights",
+        "element_size": 16,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "ViewMatrix",
+        "element_size": 64,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 6,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "Normals",
+        "element_size": 6,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 72,
+        "pointer_offset": 76
+      },
+      {
+        "name": "SpecularMap",
+        "element_size": 4,
+        "count_offset": 80,
+        "pointer_offset": 84
+      },
+      {
+        "name": "LightBlock",
+        "element_size": 448,
+        "count_offset": 88,
+        "pointer_offset": 92
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 96,
+        "pointer_offset": 100
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 104,
+        "pointer_offset": 108
+      }
+    ],
+    "PlaygroundShadow": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 48,
+        "pointer_offset": 52
+      }
+    ],
+    "PlaygroundShadow_HWSkin": [
+      {
+        "name": "PalletMatrixPtr",
+        "element_size": 64,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "Weights",
+        "element_size": 16,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 56,
+        "pointer_offset": 60
+      }
+    ],
+    "PlaygroundTexture": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "IsBackFaceCulled",
+        "element_size": 4,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 72,
+        "pointer_offset": 76
+      }
+    ],
+    "PlaygroundTextureAlphaDXT": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "Texture1",
+        "element_size": 92,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "IsBackFaceCulled",
+        "element_size": 4,
+        "count_offset": 72,
+        "pointer_offset": 76
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 80,
+        "pointer_offset": 84
+      }
+    ],
+    "PlaygroundTextureAlphaDXTBase": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "UVs1",
+        "element_size": 8,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "Texture1",
+        "element_size": 92,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "Texture2",
+        "element_size": 92,
+        "count_offset": 72,
+        "pointer_offset": 76
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 80,
+        "pointer_offset": 84
+      },
+      {
+        "name": "IsBackFaceCulled",
+        "element_size": 4,
+        "count_offset": 88,
+        "pointer_offset": 92
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 96,
+        "pointer_offset": 100
+      }
+    ],
+    "PlaygroundTextureAlphaDXTBaseShadow": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "MMatrix",
+        "element_size": 64,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "UVs1",
+        "element_size": 8,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "Texture1",
+        "element_size": 92,
+        "count_offset": 72,
+        "pointer_offset": 76
+      },
+      {
+        "name": "Texture2",
+        "element_size": 92,
+        "count_offset": 80,
+        "pointer_offset": 84
+      },
+      {
+        "name": "Texture3",
+        "element_size": 92,
+        "count_offset": 88,
+        "pointer_offset": 92
+      },
+      {
+        "name": "ShadowProjection",
+        "element_size": 16,
+        "count_offset": 96,
+        "pointer_offset": 100
+      },
+      {
+        "name": "ShadowView",
+        "element_size": 64,
+        "count_offset": 104,
+        "pointer_offset": 108
+      },
+      {
+        "name": "ShadowColour",
+        "element_size": 4,
+        "count_offset": 112,
+        "pointer_offset": 116
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 120,
+        "pointer_offset": 124
+      },
+      {
+        "name": "IsBackFaceCulled",
+        "element_size": 4,
+        "count_offset": 128,
+        "pointer_offset": 132
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 136,
+        "pointer_offset": 140
+      }
+    ],
+    "PlaygroundTextureAlphaDXTShadow": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "MMatrix",
+        "element_size": 64,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "Texture1",
+        "element_size": 92,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "Texture2",
+        "element_size": 92,
+        "count_offset": 72,
+        "pointer_offset": 76
+      },
+      {
+        "name": "ShadowProjection",
+        "element_size": 16,
+        "count_offset": 80,
+        "pointer_offset": 84
+      },
+      {
+        "name": "ShadowView",
+        "element_size": 64,
+        "count_offset": 88,
+        "pointer_offset": 92
+      },
+      {
+        "name": "ShadowColour",
+        "element_size": 4,
+        "count_offset": 96,
+        "pointer_offset": 100
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 104,
+        "pointer_offset": 108
+      },
+      {
+        "name": "IsBackFaceCulled",
+        "element_size": 4,
+        "count_offset": 112,
+        "pointer_offset": 116
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 120,
+        "pointer_offset": 124
+      }
+    ],
+    "PlaygroundTextureBakedLight": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 64,
+        "pointer_offset": 68
+      }
+    ],
+    "PlaygroundTextureBakedLightShadow": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "MMatrix",
+        "element_size": 64,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "Texture1",
+        "element_size": 92,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "ShadowProjection",
+        "element_size": 16,
+        "count_offset": 72,
+        "pointer_offset": 76
+      },
+      {
+        "name": "ShadowView",
+        "element_size": 64,
+        "count_offset": 80,
+        "pointer_offset": 84
+      },
+      {
+        "name": "ShadowColour",
+        "element_size": 4,
+        "count_offset": 88,
+        "pointer_offset": 92
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 96,
+        "pointer_offset": 100
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 104,
+        "pointer_offset": 108
+      }
+    ],
+    "PlaygroundTextureBakedLightShadowDouble": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "MMatrix",
+        "element_size": 64,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "Texture1",
+        "element_size": 92,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "ShadowProjection",
+        "element_size": 16,
+        "count_offset": 72,
+        "pointer_offset": 76
+      },
+      {
+        "name": "ShadowView",
+        "element_size": 64,
+        "count_offset": 80,
+        "pointer_offset": 84
+      },
+      {
+        "name": "ShadowColour",
+        "element_size": 4,
+        "count_offset": 88,
+        "pointer_offset": 92
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 96,
+        "pointer_offset": 100
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 104,
+        "pointer_offset": 108
+      }
+    ],
+    "PlaygroundTextureShadow": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "MMatrix",
+        "element_size": 64,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "Texture1",
+        "element_size": 92,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "ShadowProjection",
+        "element_size": 16,
+        "count_offset": 72,
+        "pointer_offset": 76
+      },
+      {
+        "name": "ShadowView",
+        "element_size": 64,
+        "count_offset": 80,
+        "pointer_offset": 84
+      },
+      {
+        "name": "ShadowColour",
+        "element_size": 4,
+        "count_offset": 88,
+        "pointer_offset": 92
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 96,
+        "pointer_offset": 100
+      },
+      {
+        "name": "IsBackFaceCulled",
+        "element_size": 4,
+        "count_offset": 104,
+        "pointer_offset": 108
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 112,
+        "pointer_offset": 116
+      }
+    ],
+    "PlaygroundTextureStaticShadow": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "MMatrix",
+        "element_size": 64,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "UVs1",
+        "element_size": 8,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "Texture1",
+        "element_size": 92,
+        "count_offset": 72,
+        "pointer_offset": 76
+      },
+      {
+        "name": "Texture2",
+        "element_size": 92,
+        "count_offset": 80,
+        "pointer_offset": 84
+      },
+      {
+        "name": "ShadowProjection",
+        "element_size": 16,
+        "count_offset": 88,
+        "pointer_offset": 92
+      },
+      {
+        "name": "ShadowView",
+        "element_size": 64,
+        "count_offset": 96,
+        "pointer_offset": 100
+      },
+      {
+        "name": "ShadowColour",
+        "element_size": 4,
+        "count_offset": 104,
+        "pointer_offset": 108
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 112,
+        "pointer_offset": 116
+      },
+      {
+        "name": "IsBackFaceCulled",
+        "element_size": 4,
+        "count_offset": 120,
+        "pointer_offset": 124
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 128,
+        "pointer_offset": 132
+      }
+    ],
+    "PlaygroundTexture_HWSkin": [
+      {
+        "name": "PalletMatrixPtr",
+        "element_size": 64,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "Weights",
+        "element_size": 16,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 6,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 72,
+        "pointer_offset": 76
+      }
+    ],
+    "PlaygroundToonShade": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "ViewMatrix",
+        "element_size": 64,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "Normals",
+        "element_size": 6,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "SpecularMap",
+        "element_size": 4,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "LightBlock",
+        "element_size": 448,
+        "count_offset": 72,
+        "pointer_offset": 76
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 80,
+        "pointer_offset": 84
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 88,
+        "pointer_offset": 92
+      }
+    ],
+    "PlaygroundToonShade_HWSkin": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "PalletMatrixPtr",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "Weights",
+        "element_size": 16,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "ViewMatrix",
+        "element_size": 64,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "Normals",
+        "element_size": 6,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 72,
+        "pointer_offset": 76
+      },
+      {
+        "name": "SpecularMap",
+        "element_size": 4,
+        "count_offset": 80,
+        "pointer_offset": 84
+      },
+      {
+        "name": "LightBlock",
+        "element_size": 448,
+        "count_offset": 88,
+        "pointer_offset": 92
+      },
+      {
+        "name": "AlphaScaleValue",
+        "element_size": 4,
+        "count_offset": 96,
+        "pointer_offset": 100
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 104,
+        "pointer_offset": 108
+      }
+    ],
+    "PlaygroundWater2": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "MMatrix",
+        "element_size": 64,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "ViewMatrix",
+        "element_size": 64,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 12,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "Normals",
+        "element_size": 6,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "Colours",
+        "element_size": 4,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "UVs",
+        "element_size": 8,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 72,
+        "pointer_offset": 76
+      },
+      {
+        "name": "Texture1",
+        "element_size": 92,
+        "count_offset": 80,
+        "pointer_offset": 84
+      },
+      {
+        "name": "TextureMatrix1",
+        "element_size": 64,
+        "count_offset": 88,
+        "pointer_offset": 92
+      },
+      {
+        "name": "TextureMatrix2",
+        "element_size": 64,
+        "count_offset": 96,
+        "pointer_offset": 100
+      },
+      {
+        "name": "LightBlock",
+        "element_size": 448,
+        "count_offset": 104,
+        "pointer_offset": 108
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 112,
+        "pointer_offset": 116
+      }
+    ],
+    "TextureApt": [
+      {
+        "name": "Parameters",
+        "element_size": 16,
+        "count_offset": 8,
+        "pointer_offset": 12
+      },
+      {
+        "name": "MVMatrix",
+        "element_size": 64,
+        "count_offset": 16,
+        "pointer_offset": 20
+      },
+      {
+        "name": "ScaleMatrix",
+        "element_size": 64,
+        "count_offset": 24,
+        "pointer_offset": 28
+      },
+      {
+        "name": "State",
+        "element_size": 8,
+        "count_offset": 32,
+        "pointer_offset": 36
+      },
+      {
+        "name": "Texture",
+        "element_size": 92,
+        "count_offset": 40,
+        "pointer_offset": 44
+      },
+      {
+        "name": "GeomName_TextureMatrix",
+        "element_size": 64,
+        "count_offset": 48,
+        "pointer_offset": 52
+      },
+      {
+        "name": "Coordinates",
+        "element_size": 6,
+        "count_offset": 56,
+        "pointer_offset": 60
+      },
+      {
+        "name": "ColourModulator",
+        "element_size": 16,
+        "count_offset": 64,
+        "pointer_offset": 68
+      },
+      {
+        "name": "ColourTranslate",
+        "element_size": 16,
+        "count_offset": 72,
+        "pointer_offset": 76
+      },
+      {
+        "name": "MatDiffuseColour",
+        "element_size": 4,
+        "count_offset": 80,
+        "pointer_offset": 84
+      }
+    ]
+  }
+}
