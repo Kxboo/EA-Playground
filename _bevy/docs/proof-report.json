@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-29 20:48",
+ "generated": "2026-09-29 22:22",
  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
  "passed": true,
- "passed_count": 34,
- "total": 34,
+ "passed_count": 39,
+ "total": 39,
  "checks": [
   {
    "name": "Symbol-bearing ELF matches the pinned hash",
@@ -161,6 +161,31 @@
    "detail": "test result: ok. 1 passed; 0 failed"
   },
   {
+   "name": "Rust TPL decoder: all 199 distinct texture banks match the Python pixels",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Localisation: 10 .loc files + string.idx decode, TRCLocale hash routine reproduced, keys from the executable resolve",
+   "ok": true,
+   "detail": "test result: ok. 2 passed; 0 failed"
+  },
+  {
+   "name": "Conversation trees: all 32 .con files parse exactly; 376/429 node texts resolve through the locale",
+   "ok": true,
+   "detail": "test result: ok. 2 passed; 0 failed"
+  },
+  {
+   "name": "Level placement: 49 marker sets (304 markers) and 10 RC checkpoint files (20 lanes) parse exactly",
+   "ok": true,
+   "detail": "test result: ok. 2 passed; 0 failed"
+  },
+  {
+   "name": "EA Layer 3 audio: 14 music tracks (44 min, 409,582 channel-granules) decode with every granule ending on its declared length; ambience streams decode",
+   "ok": true,
+   "detail": "test result: ok. 4 passed; 0 failed"
+  },
+  {
    "name": "Locomotion constants and behaviour",
    "ok": true,
    "detail": "test result: ok. 5 passed; 0 failed"
@@ -173,7 +198,7 @@
   {
    "name": "Game self-test report (boot -> world -> player -> scripted walk)",
    "ok": true,
-   "detail": "19/19 in-game checks passed, load 2.6s, report 0.2 h old"
+   "detail": "20/20 in-game checks passed, load 3.0s, report 0.6 h old"
   }
  ],
  "scope": [

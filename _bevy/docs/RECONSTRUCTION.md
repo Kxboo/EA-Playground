@@ -63,3 +63,8 @@ All 836 distinct model files are now accounted for: 828 geometry exports and eig
 The model decoder is schema-driven: every shader family is a struct of (count, pointer) fields whose offsets come from the executable, and PCode (`ProcessPCode`, complete opcode set from its jump table) gives the GX vertex attributes and display list.  This replaces the earlier layout-scoring heuristics and also fixes three defects those had: duplicated meshes (`playground-high`, `world-low-all`: 4,553 phantom triangles), a missed animated-rope primitive (`tetherball_pole`), and family-specific degenerate-triangle rules.
 
 Still Python: TPL/APT/audio formats and the asset viewer's worker (its model/animation preview still goes through a glTF file produced by the Python exporter; game mode no longer does).
+
+## Audio: what is and is not decoded
+
+* Decoded: EA Layer 3 streams (`SCHl` codec 0xA0 = 0x17): the 14 music tracks and 8 ambience streams.
+* Not decoded: the remaining 42 ambience streams (codec 0x0A, mono, blocks start with `EE` raw-PCM chunks and 0x17/0x27 frame bytes), speech (`spchdat.viv`, codec 0x04) and the `.abk`/`.bnk` sound-effect banks.  The executable registers three further decoders besides EA Layer 3 - EA-XA (`CEAXABLKDec`, `xafilterf`/`xatablef`), MicroTalk (`CMTBLKDec`, `decodemut`/`filter`, `coeff_table`) and raw PCM - via `MIXI_initunpack16/mt/xa` (table at 0x805975e8, three function pointers per group); the codec-id to decoder mapping has not been traced.
