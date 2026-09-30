@@ -1,0 +1,1787 @@
+{
+  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
+  "function": "InitializeAI__12MGTetherballFPC9rmVector3fUx",
+  "address": "0x8039bbec",
+  "engine_boundary": "SpawnCharacter, AI slot allocation/constructor/registration/binding, and CharacterState::SetDir are hooked; native math and all game-owned stores execute.",
+  "cases": [
+    {
+      "input": {
+        "player_count": 0,
+        "session_mode": -1,
+        "ball_handle": 305397760,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          3645195480,
+          3606022418
+        ],
+        "position_bits": [
+          3209198017,
+          1089266490,
+          1082425037
+        ],
+        "heading_bits": 3251179483
+      },
+      "events": [
+        [
+          "spawn_character",
+          3645195480,
+          3606022418,
+          [
+            3209198017,
+            1089266490,
+            1082425037
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            897581056,
+            0,
+            1065353216
+          ]
+        ]
+      ],
+      "player_count": 1,
+      "session_mode": 4294967295,
+      "player_handles": [
+        1895833600,
+        3149594624
+      ],
+      "ai_handles": [
+        1895845888,
+        3722248192
+      ],
+      "flags_130": [
+        1,
+        90
+      ],
+      "ai_ball_handle_60": 305397760
+    },
+    {
+      "input": {
+        "player_count": 0,
+        "session_mode": 2,
+        "ball_handle": 305397760,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          3778819480,
+          3782412576
+        ],
+        "position_bits": [
+          1093983687,
+          1094759053,
+          1092818474
+        ],
+        "heading_bits": 3234402267
+      },
+      "events": [
+        [
+          "spawn_character",
+          3778819480,
+          3782412576,
+          [
+            1093983687,
+            1094759053,
+            1092818474
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            2147483648,
+            0,
+            1065353216
+          ]
+        ]
+      ],
+      "player_count": 1,
+      "session_mode": 2,
+      "player_handles": [
+        1895833600,
+        3149594624
+      ],
+      "ai_handles": [
+        1895845888,
+        3722248192
+      ],
+      "flags_130": [
+        1,
+        90
+      ],
+      "ai_ball_handle_60": 305397760
+    },
+    {
+      "input": {
+        "player_count": 0,
+        "session_mode": 2147483647,
+        "ball_handle": 305397760,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          44329351,
+          59316689
+        ],
+        "position_bits": [
+          3248271907,
+          1086817304,
+          3230350919
+        ],
+        "heading_bits": 3226013659
+      },
+      "events": [
+        [
+          "spawn_character",
+          44329351,
+          59316689,
+          [
+            3248271907,
+            1086817304,
+            3230350919
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            0,
+            0,
+            3212836864
+          ]
+        ]
+      ],
+      "player_count": 1,
+      "session_mode": 2147483647,
+      "player_handles": [
+        1895833600,
+        3149594624
+      ],
+      "ai_handles": [
+        1895845888,
+        3722248192
+      ],
+      "flags_130": [
+        1,
+        90
+      ],
+      "ai_ball_handle_60": 305397760
+    },
+    {
+      "input": {
+        "player_count": 0,
+        "session_mode": -1,
+        "ball_handle": 305397760,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          858351554,
+          1889058680
+        ],
+        "position_bits": [
+          3241874902,
+          3244797335,
+          1090654331
+        ],
+        "heading_bits": 2147483648
+      },
+      "events": [
+        [
+          "spawn_character",
+          858351554,
+          1889058680,
+          [
+            3241874902,
+            3244797335,
+            1090654331
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            2147483648,
+            0,
+            1065353216
+          ]
+        ]
+      ],
+      "player_count": 1,
+      "session_mode": 4294967295,
+      "player_handles": [
+        1895833600,
+        3149594624
+      ],
+      "ai_handles": [
+        1895845888,
+        3722248192
+      ],
+      "flags_130": [
+        1,
+        90
+      ],
+      "ai_ball_handle_60": 305397760
+    },
+    {
+      "input": {
+        "player_count": 0,
+        "session_mode": 1,
+        "ball_handle": 305397760,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          2369787621,
+          2692152886
+        ],
+        "position_bits": [
+          3236052955,
+          1100127973,
+          3240197175
+        ],
+        "heading_bits": 0
+      },
+      "events": [
+        [
+          "spawn_character",
+          2369787621,
+          2692152886,
+          [
+            3236052955,
+            1100127973,
+            3240197175
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            2147483648,
+            0,
+            1065353216
+          ]
+        ]
+      ],
+      "player_count": 1,
+      "session_mode": 1,
+      "player_handles": [
+        1895833600,
+        3149594624
+      ],
+      "ai_handles": [
+        1895845888,
+        3722248192
+      ],
+      "flags_130": [
+        1,
+        90
+      ],
+      "ai_ball_handle_60": 305397760
+    },
+    {
+      "input": {
+        "player_count": 0,
+        "session_mode": 2147483647,
+        "ball_handle": 305397760,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          3868538996,
+          4009452873
+        ],
+        "position_bits": [
+          1099984623,
+          1089361062,
+          3238262725
+        ],
+        "heading_bits": 1070141403
+      },
+      "events": [
+        [
+          "spawn_character",
+          3868538996,
+          4009452873,
+          [
+            1099984623,
+            1089361062,
+            3238262725
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            1065353216,
+            0,
+            0
+          ]
+        ]
+      ],
+      "player_count": 1,
+      "session_mode": 2147483647,
+      "player_handles": [
+        1895833600,
+        3149594624
+      ],
+      "ai_handles": [
+        1895845888,
+        3722248192
+      ],
+      "flags_130": [
+        1,
+        90
+      ],
+      "ai_ball_handle_60": 305397760
+    },
+    {
+      "input": {
+        "player_count": 0,
+        "session_mode": 1,
+        "ball_handle": 305397760,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          3455868537,
+          1701836488
+        ],
+        "position_bits": [
+          3225692089,
+          1090928323,
+          3242925052
+        ],
+        "heading_bits": 1090519040
+      },
+      "events": [
+        [
+          "spawn_character",
+          3455868537,
+          1701836488,
+          [
+            3225692089,
+            1090928323,
+            3242925052
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            1065174678,
+            0,
+            3189046760
+          ]
+        ]
+      ],
+      "player_count": 1,
+      "session_mode": 1,
+      "player_handles": [
+        1895833600,
+        3149594624
+      ],
+      "ai_handles": [
+        1895845888,
+        3722248192
+      ],
+      "flags_130": [
+        1,
+        90
+      ],
+      "ai_ball_handle_60": 305397760
+    },
+    {
+      "input": {
+        "player_count": 0,
+        "session_mode": 2147483647,
+        "ball_handle": 305397760,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          3268378064,
+          900513087
+        ],
+        "position_bits": [
+          3244562397,
+          1085785281,
+          3245743460
+        ],
+        "heading_bits": 1100480512
+      },
+      "events": [
+        [
+          "spawn_character",
+          3268378064,
+          900513087,
+          [
+            3244562397,
+            1085785281,
+            3245743460
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            1041856807,
+            0,
+            1065163713
+          ]
+        ]
+      ],
+      "player_count": 1,
+      "session_mode": 2147483647,
+      "player_handles": [
+        1895833600,
+        3149594624
+      ],
+      "ai_handles": [
+        1895845888,
+        3722248192
+      ],
+      "flags_130": [
+        1,
+        90
+      ],
+      "ai_ball_handle_60": 305397760
+    },
+    {
+      "input": {
+        "player_count": 0,
+        "session_mode": -1,
+        "ball_handle": 305397760,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          3525730863,
+          312783818
+        ],
+        "position_bits": [
+          1090643170,
+          1090553697,
+          3246590227
+        ],
+        "heading_bits": 1120403456
+      },
+      "events": [
+        [
+          "spawn_character",
+          3525730863,
+          312783818,
+          [
+            1090643170,
+            1090553697,
+            3246590227
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            3204555191,
+            0,
+            1063043229
+          ]
+        ]
+      ],
+      "player_count": 1,
+      "session_mode": 4294967295,
+      "player_handles": [
+        1895833600,
+        3149594624
+      ],
+      "ai_handles": [
+        1895845888,
+        3722248192
+      ],
+      "flags_130": [
+        1,
+        90
+      ],
+      "ai_ball_handle_60": 305397760
+    },
+    {
+      "input": {
+        "player_count": 1,
+        "session_mode": -1,
+        "ball_handle": 305397761,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          4221439654,
+          1452554806
+        ],
+        "position_bits": [
+          1085740409,
+          3247676964,
+          3233819058
+        ],
+        "heading_bits": 3251179483
+      },
+      "events": [
+        [
+          "spawn_character",
+          4221439654,
+          1452554806,
+          [
+            1085740409,
+            3247676964,
+            3233819058
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            897581056,
+            0,
+            1065353216
+          ]
+        ]
+      ],
+      "player_count": 2,
+      "session_mode": 4294967295,
+      "player_handles": [
+        2863267840,
+        1895833600
+      ],
+      "ai_handles": [
+        3435921408,
+        1895845888
+      ],
+      "flags_130": [
+        165,
+        1
+      ],
+      "ai_ball_handle_60": 305397761
+    },
+    {
+      "input": {
+        "player_count": 1,
+        "session_mode": 1,
+        "ball_handle": 305397761,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          1113271061,
+          3999704968
+        ],
+        "position_bits": [
+          1089244961,
+          3244459720,
+          3238912690
+        ],
+        "heading_bits": 3234402267
+      },
+      "events": [
+        [
+          "spawn_character",
+          1113271061,
+          3999704968,
+          [
+            1089244961,
+            3244459720,
+            3238912690
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            2147483648,
+            0,
+            1065353216
+          ]
+        ]
+      ],
+      "player_count": 2,
+      "session_mode": 1,
+      "player_handles": [
+        2863267840,
+        1895833600
+      ],
+      "ai_handles": [
+        3435921408,
+        1895845888
+      ],
+      "flags_130": [
+        165,
+        1
+      ],
+      "ai_ball_handle_60": 305397761
+    },
+    {
+      "input": {
+        "player_count": 1,
+        "session_mode": -1,
+        "ball_handle": 305397761,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          2796844153,
+          81284669
+        ],
+        "position_bits": [
+          1078232169,
+          1085904179,
+          3238490959
+        ],
+        "heading_bits": 3226013659
+      },
+      "events": [
+        [
+          "spawn_character",
+          2796844153,
+          81284669,
+          [
+            1078232169,
+            1085904179,
+            3238490959
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            0,
+            0,
+            3212836864
+          ]
+        ]
+      ],
+      "player_count": 2,
+      "session_mode": 4294967295,
+      "player_handles": [
+        2863267840,
+        1895833600
+      ],
+      "ai_handles": [
+        3435921408,
+        1895845888
+      ],
+      "flags_130": [
+        165,
+        1
+      ],
+      "ai_ball_handle_60": 305397761
+    },
+    {
+      "input": {
+        "player_count": 1,
+        "session_mode": 2147483647,
+        "ball_handle": 305397761,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          1947158068,
+          703471293
+        ],
+        "position_bits": [
+          3202255013,
+          1091615756,
+          3241773627
+        ],
+        "heading_bits": 2147483648
+      },
+      "events": [
+        [
+          "spawn_character",
+          1947158068,
+          703471293,
+          [
+            3202255013,
+            1091615756,
+            3241773627
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            2147483648,
+            0,
+            1065353216
+          ]
+        ]
+      ],
+      "player_count": 2,
+      "session_mode": 2147483647,
+      "player_handles": [
+        2863267840,
+        1895833600
+      ],
+      "ai_handles": [
+        3435921408,
+        1895845888
+      ],
+      "flags_130": [
+        165,
+        1
+      ],
+      "ai_ball_handle_60": 305397761
+    },
+    {
+      "input": {
+        "player_count": 1,
+        "session_mode": 0,
+        "ball_handle": 305397761,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          990301494,
+          3697770003
+        ],
+        "position_bits": [
+          1100462286,
+          3248057198,
+          1094235608
+        ],
+        "heading_bits": 0
+      },
+      "events": [
+        [
+          "spawn_character",
+          990301494,
+          3697770003,
+          [
+            1100462286,
+            3248057198,
+            1094235608
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            2147483648,
+            0,
+            1065353216
+          ]
+        ]
+      ],
+      "player_count": 2,
+      "session_mode": 0,
+      "player_handles": [
+        2863267840,
+        1895833600
+      ],
+      "ai_handles": [
+        3435921408,
+        1895845888
+      ],
+      "flags_130": [
+        165,
+        1
+      ],
+      "ai_ball_handle_60": 305397761
+    },
+    {
+      "input": {
+        "player_count": 1,
+        "session_mode": 1,
+        "ball_handle": 305397761,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          3065179922,
+          124739362
+        ],
+        "position_bits": [
+          1097223430,
+          1065826930,
+          3240303052
+        ],
+        "heading_bits": 1070141403
+      },
+      "events": [
+        [
+          "spawn_character",
+          3065179922,
+          124739362,
+          [
+            1097223430,
+            1065826930,
+            3240303052
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            1065353216,
+            0,
+            0
+          ]
+        ]
+      ],
+      "player_count": 2,
+      "session_mode": 1,
+      "player_handles": [
+        2863267840,
+        1895833600
+      ],
+      "ai_handles": [
+        3435921408,
+        1895845888
+      ],
+      "flags_130": [
+        165,
+        1
+      ],
+      "ai_ball_handle_60": 305397761
+    },
+    {
+      "input": {
+        "player_count": 1,
+        "session_mode": 1,
+        "ball_handle": 305397761,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          3139239291,
+          3169650039
+        ],
+        "position_bits": [
+          3245563302,
+          1092309122,
+          3239041504
+        ],
+        "heading_bits": 1090519040
+      },
+      "events": [
+        [
+          "spawn_character",
+          3139239291,
+          3169650039,
+          [
+            3245563302,
+            1092309122,
+            3239041504
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            1065174678,
+            0,
+            3189046760
+          ]
+        ]
+      ],
+      "player_count": 2,
+      "session_mode": 1,
+      "player_handles": [
+        2863267840,
+        1895833600
+      ],
+      "ai_handles": [
+        3435921408,
+        1895845888
+      ],
+      "flags_130": [
+        165,
+        1
+      ],
+      "ai_ball_handle_60": 305397761
+    },
+    {
+      "input": {
+        "player_count": 1,
+        "session_mode": 2147483647,
+        "ball_handle": 305397761,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          2828674346,
+          1342902946
+        ],
+        "position_bits": [
+          1094185402,
+          1088545670,
+          3246032591
+        ],
+        "heading_bits": 1100480512
+      },
+      "events": [
+        [
+          "spawn_character",
+          2828674346,
+          1342902946,
+          [
+            1094185402,
+            1088545670,
+            3246032591
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            1041856807,
+            0,
+            1065163713
+          ]
+        ]
+      ],
+      "player_count": 2,
+      "session_mode": 2147483647,
+      "player_handles": [
+        2863267840,
+        1895833600
+      ],
+      "ai_handles": [
+        3435921408,
+        1895845888
+      ],
+      "flags_130": [
+        165,
+        1
+      ],
+      "ai_ball_handle_60": 305397761
+    },
+    {
+      "input": {
+        "player_count": 1,
+        "session_mode": 2147483647,
+        "ball_handle": 305397761,
+        "player_handles": [
+          2863267840,
+          3149594624
+        ],
+        "ai_handles": [
+          3435921408,
+          3722248192
+        ],
+        "flags_130": [
+          165,
+          90
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          510188340,
+          2180984403
+        ],
+        "position_bits": [
+          3248461205,
+          3245107672,
+          1094221746
+        ],
+        "heading_bits": 1120403456
+      },
+      "events": [
+        [
+          "spawn_character",
+          510188340,
+          2180984403,
+          [
+            3248461205,
+            3245107672,
+            1094221746
+          ],
+          0,
+          0,
+          0,
+          [
+            0,
+            -1
+          ]
+        ],
+        [
+          "allocate_ai_slot"
+        ],
+        [
+          "construct_tetherball_ai",
+          1895845888,
+          1895833600
+        ],
+        [
+          "add_ai_entity",
+          1895845888
+        ],
+        [
+          "set_ai_control_entity",
+          1895837696,
+          1895845888
+        ],
+        [
+          "set_character_state_direction",
+          1895833600,
+          [
+            3204555191,
+            0,
+            1063043229
+          ]
+        ]
+      ],
+      "player_count": 2,
+      "session_mode": 2147483647,
+      "player_handles": [
+        2863267840,
+        1895833600
+      ],
+      "ai_handles": [
+        3435921408,
+        1895845888
+      ],
+      "flags_130": [
+        165,
+        1
+      ],
+      "ai_ball_handle_60": 305397761
+    },
+    {
+      "input": {
+        "player_count": 2,
+        "session_mode": 0,
+        "ball_handle": 305419896,
+        "player_handles": [
+          286331153,
+          572662306
+        ],
+        "ai_handles": [
+          858993459,
+          1145324612
+        ],
+        "flags_130": [
+          85,
+          102
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          1,
+          2
+        ],
+        "position_bits": [
+          1065353216,
+          1073741824,
+          1077936128
+        ],
+        "heading_bits": 3239051264
+      },
+      "events": [],
+      "player_count": 2,
+      "session_mode": 0,
+      "player_handles": [
+        286331153,
+        572662306
+      ],
+      "ai_handles": [
+        858993459,
+        1145324612
+      ],
+      "flags_130": [
+        85,
+        102
+      ],
+      "ai_ball_handle_60": 0
+    },
+    {
+      "input": {
+        "player_count": 3,
+        "session_mode": -1,
+        "ball_handle": 305419896,
+        "player_handles": [
+          286331153,
+          572662306
+        ],
+        "ai_handles": [
+          858993459,
+          1145324612
+        ],
+        "flags_130": [
+          85,
+          102
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          1,
+          2
+        ],
+        "position_bits": [
+          1065353216,
+          1073741824,
+          1077936128
+        ],
+        "heading_bits": 3239051264
+      },
+      "events": [],
+      "player_count": 3,
+      "session_mode": 4294967295,
+      "player_handles": [
+        286331153,
+        572662306
+      ],
+      "ai_handles": [
+        858993459,
+        1145324612
+      ],
+      "flags_130": [
+        85,
+        102
+      ],
+      "ai_ball_handle_60": 0
+    },
+    {
+      "input": {
+        "player_count": 255,
+        "session_mode": 1,
+        "ball_handle": 305419896,
+        "player_handles": [
+          286331153,
+          572662306
+        ],
+        "ai_handles": [
+          858993459,
+          1145324612
+        ],
+        "flags_130": [
+          85,
+          102
+        ],
+        "control_handle": 1895837696,
+        "ai_entity_handle": 1895845888,
+        "identity_words": [
+          1,
+          2
+        ],
+        "position_bits": [
+          1065353216,
+          1073741824,
+          1077936128
+        ],
+        "heading_bits": 3239051264
+      },
+      "events": [],
+      "player_count": 255,
+      "session_mode": 1,
+      "player_handles": [
+        286331153,
+        572662306
+      ],
+      "ai_handles": [
+        858993459,
+        1145324612
+      ],
+      "flags_130": [
+        85,
+        102
+      ],
+      "ai_ball_handle_60": 0
+    }
+  ]
+}

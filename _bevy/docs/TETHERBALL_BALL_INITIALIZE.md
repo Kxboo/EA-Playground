@@ -1,0 +1,13 @@
+# Tetherball ball initialization
+
+`tetherball_ball_init.rs` ports `Tetherball::Initialize` at `0x8039d3d8` (912 bytes). This is the ball object's initialization, separate from the still-unported 3,276-byte `MGTetherball::Initialize` orchestration routine.
+
+The port loads the original `teatherball` / `teatherball_rope` assets, attaches their textures, allocates four cached models and two shadow entities, and registers only the ball shadow in scene layer zero. The spelling of these asset names is intentional. `BallResources` retains native object references and asset IDs; `BallScene` retains the shadow-presence projection needed by Update.
+
+The shared motion and scene owners receive the original direction, zone, anchor, wrapped heading plus pi, four speed tunables, pole height, initial height, spin flags and +0x15c byte. Difficulty is passed as a raw unsigned index to the regular `mg_tetherball/tunables` collection without the minigame selector's clamp. Ball height comes from Placeable+0xf4 plus the zone-zero offset 0.5; anchor comes from the independent supplied world vector. Existing radius, velocities, hit state, trails, attachment, position and matrices are not initialized by this body and must retain their constructor/caller state.
+
+The 48-case machine oracle executes the complete initializer plus original vector stores and angle wrapping. It hooks CString storage, asset/memory/renderer services and database collection access. Fixtures compare full represented motion, preserved scene values, resource fields and ordered engine calls across varied headings, raw difficulty indices, tuning values, asset IDs, pool IDs and all four null/non-null shadow combinations. Rust reproduces each fixture exactly. Null cached-model allocation is excluded because the original immediately dereferences it; shadow allocation skips construction when null, but even a null ball shadow is passed to AddEntity. The real scene service's treatment of that request is outside this test.
+
+These are synchronous service boundaries without reentry. Cached-model construction and scale calculation, shadow geometry, renderer registration, real asset lifetime management and VLT accessor internals remain external to this module. The routine accepts an existing ball rather than inventing a game-ready default. Interactive Bevy startup and the full enclosing minigame initializer remain unfinished.
+
+Run `py -3.14 tools/tetherball_ball_init_oracle.py --check` from `_bevy` and `cargo test --release --offline --locked tetherball_ball_init::tests`. The pinned ELF SHA-256 is `5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c`.

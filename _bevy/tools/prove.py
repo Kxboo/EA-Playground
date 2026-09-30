@@ -238,6 +238,9 @@ def main():
                              ('tetherball_runtime_reset_oracle.py','Original combined tetherball runtime resets with live queue, trails, AI and HUD'),
                              ('tetherball_initialize_oracle.py','Original tetherball game-logic initialization and prior-limit arithmetic'),
                              ('tetherball_player_init_oracle.py','Original tetherball player reuse/spawn and ordered startup services'),
+                             ('tetherball_ai_init_oracle.py','Original tetherball AI character spawning and shared startup stores'),
+                             ('tetherball_additional_player_oracle.py','Original tetherball additional player spawning and controller setup'),
+                             ('tetherball_ball_init_oracle.py','Original tetherball ball assets, shadows and initial tuning'),
                              ('mp3_lsf_oracle.py','MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC')]:
             args=[] if script=='mp3_lsf_oracle.py' else ['--check']
             r=subprocess.run([sys.executable,str(HERE/script),*args],cwd=BEVY,capture_output=True,text=True)
@@ -287,6 +290,9 @@ def main():
                 ('tetherball_runtime::reset_tests','Rust combined tetherball runtime resets preserve shared owners and effect order'),
                 ('tetherball_initialize::tests','Rust tetherball game-logic initialization matches original shared stores'),
                 ('tetherball_player_init::tests','Rust tetherball player reuse/spawn initialization matches original calls'),
+                ('tetherball_ai_init::tests','Rust tetherball AI character startup matches original calls'),
+                ('tetherball_additional_player::tests','Rust tetherball additional player startup matches original calls'),
+                ('tetherball_ball_init::tests','Rust tetherball ball initialization matches original resources and state'),
                 ('mp3::tests','MPEG-2 side information and scale-factor regression checks')]
         for name,label in suites:
             r=subprocess.run(['cargo','test','--release','--offline','--locked',name],cwd=BEVY,capture_output=True,text=True)

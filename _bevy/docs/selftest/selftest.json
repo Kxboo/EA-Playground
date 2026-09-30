@@ -1,7 +1,7 @@
 {
   "checks": [
     {
-      "detail": "706 frames, 11359 simulation ms, maximum 60 simulation ms / 476 uncapped input ms",
+      "detail": "704 frames, 11356 simulation ms, maximum 60 simulation ms / 474 uncapped input ms",
       "name": "recovered integer-ms simulation clock drives the game",
       "ok": true
     },
@@ -46,7 +46,7 @@
       "ok": true
     },
     {
-      "detail": "joint rotation checksum ranged -7.800..0.152 over 6 samples",
+      "detail": "joint rotation checksum ranged -7.712..0.137 over 6 samples",
       "name": "decoded clips animate the skeleton (joint pose changes idle -> walk/run)",
       "ok": true
     },
@@ -61,12 +61,12 @@
       "ok": true
     },
     {
-      "detail": "58 bindings, 706 input frames, 435 movement / 25 jump frames, uncapped maximum 476 ms",
+      "detail": "58 bindings, 704 input frames, 433 movement / 24 jump frames, uncapped maximum 474 ms",
       "name": "original controls.csv drives movement and jump events",
       "ok": true
     },
     {
-      "detail": "706 prepared frames; recovered grounded/airborne velocity, state Grounded; provisional collision support",
+      "detail": "704 prepared frames; recovered grounded/airborne velocity, state Grounded; provisional collision support",
       "name": "native character input and movement states drive positive world frames",
       "ok": true
     },
@@ -81,7 +81,7 @@
       "ok": true
     },
     {
-      "detail": "moved 15.81 m from the start (5 m/s max)",
+      "detail": "moved 15.84 m from the start (5 m/s max)",
       "name": "player walked on recovered locomotion",
       "ok": true
     },
@@ -121,7 +121,7 @@
     "timing": "ExecutableDerived: GameState::Update 0x803acdc4, variable integer ms capped at 60; once per host frame",
     "world_display": "ExecutableDerived: AreaManager::CalcRenderingModelMatrix 0x803d78b8; camera framing remains provisional"
   },
-  "load_seconds": 3.1303470134735107,
+  "load_seconds": 3.1676437854766846,
   "log": [
     "Boot: reading original data files",
     "db.vlt: 75 types, 32 classes, 908 collections",
@@ -154,10 +154,10 @@
         -0.04999999701976776,
         -53.0
       ],
-      "pose": -3.393644332885742,
+      "pose": -3.7413673400878906,
       "speed": 0.0,
       "step": "settle",
-      "t": 1.5010000467300415,
+      "t": 1.5159999132156372,
       "velocity": [
         0.0,
         0.0,
@@ -175,20 +175,20 @@
       "pos": [
         12.0,
         -0.04999999701976776,
-        -49.62594223022461
+        -49.63511276245117
       ],
-      "pose": -7.799797058105469,
+      "pose": -7.712379455566406,
       "speed": 5.0,
       "step": "forward",
-      "t": 4.000003337860107,
+      "t": 4.002003192901611,
       "velocity": [
         -2.980232238769531e-7,
         0.0,
         5.0
       ],
       "weights": [
-        5.79979841930367e-10,
-        4.2312658932175395e-10,
+        6.521945761228665e-10,
+        4.758111682434674e-10,
         0.9999998211860657
       ]
     },
@@ -196,92 +196,92 @@
       "grounded": true,
       "movement_state": "Grounded",
       "pos": [
-        15.044955253601074,
+        14.982624053955078,
         -0.04999999701976776,
-        -49.12416076660156
+        -49.12532043457031
       ],
-      "pose": 0.15181060135364532,
+      "pose": 0.13706918060779572,
       "speed": 5.0,
       "step": "left",
-      "t": 6.513981342315674,
+      "t": 6.512990474700928,
       "velocity": [
         4.999999523162842,
         0.0,
         7.549789415861596e-7
       ],
       "weights": [
-        2.570057401032617e-19,
-        1.8749956268802073e-19,
-        0.9999998807907104
+        2.949088101316665e-19,
+        2.1515180990005924e-19,
+        0.9999998211860657
       ]
     },
     {
       "grounded": true,
       "movement_state": "Grounded",
       "pos": [
-        23.251123428344727,
-        0.03377431631088257,
-        -41.895851135253906
+        23.278696060180664,
+        0.03518833592534065,
+        -41.911556243896484
       ],
-      "pose": -6.8997602462768555,
+      "pose": -6.8896484375,
       "speed": 7.071067810058594,
       "step": "diagonal",
-      "t": 8.50796127319336,
+      "t": 8.516980171203613,
       "velocity": [
         4.951516628265381,
         0.0,
         4.951517105102539
       ],
       "weights": [
-        9.860205877066686e-27,
-        7.19355634272032e-27,
-        0.9999998807907104
+        1.030950761453674e-26,
+        7.521339604419316e-27,
+        0.9999998211860657
       ]
     },
     {
       "grounded": true,
       "movement_state": "Grounded",
       "pos": [
-        23.251123428344727,
-        0.03377431631088257,
-        -41.895851135253906
+        23.30668830871582,
+        0.03408768028020859,
+        -41.911556243896484
       ],
-      "pose": -5.635265350341797,
+      "pose": -5.453261375427246,
       "speed": 0.0,
       "step": "jump",
-      "t": 8.911957740783691,
+      "t": 8.904977798461914,
       "velocity": [
         0.0,
         0.0,
         0.0
       ],
       "weights": [
-        0.8892711400985718,
-        0.037983138114213943,
-        0.07274574041366577
+        0.873028039932251,
+        0.043554987758398056,
+        0.08341701328754425
       ]
     },
     {
       "grounded": true,
       "movement_state": "Grounded",
       "pos": [
-        23.251123428344727,
-        0.03377431631088257,
-        -41.895851135253906
+        23.30668830871582,
+        0.03408768028020859,
+        -41.911556243896484
       ],
-      "pose": -5.384954452514648,
+      "pose": -5.176605224609375,
       "speed": 0.0,
       "step": "final",
-      "t": 9.911948204040527,
+      "t": 9.905973434448242,
       "velocity": [
         0.0,
         0.0,
         0.0
       ],
       "weights": [
-        0.9999788999557495,
-        7.237534646264976e-6,
-        0.000013861412298865616
+        0.9999760389328003,
+        8.219629307859577e-6,
+        0.000015742332834634
       ]
     }
   ]
