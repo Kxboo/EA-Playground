@@ -41,11 +41,11 @@ pub(crate) mod tests {
             _ball: &mut BallMotion,
             code: u32,
             ms: i32,
-        ) -> bool {
+        ) -> u32 {
             self.events.push(json!(["handler", code, ms]));
             // Explicit callback-boundary return value, not a model of the handler.
             state.paused = code == 9;
-            code % 2 == 1
+            if code == 9 { 2 } else { code % 2 }
         }
         fn pole_indicator(&mut self, offset: f32) {
             self.events.push(json!(["indicator", offset.to_bits()]));
@@ -168,17 +168,26 @@ pub(crate) mod tests {
             let arg = c["command"][1].as_i64().unwrap();
             let mut intro: IntroState = serde_json::from_value(c["intro"].clone()).unwrap();
             let result = match c["command"][0].as_str().unwrap() {
-                "intro" => Some(state.update_intro(&mut intro, rules, &mut ball, &mut recorder)),
+                "intro" => Some(u32::from(state.update_intro(
+                    &mut intro,
+                    rules,
+                    &mut ball,
+                    &mut recorder,
+                ))),
                 "change" => {
                     state.change_state(arg as u32, rules, &mut ball, &mut recorder);
                     None
                 }
-                "resetting" => Some(state.update_resetting(rules, &mut ball, &mut recorder)),
+                "resetting" => Some(u32::from(state.update_resetting(
+                    rules,
+                    &mut ball,
+                    &mut recorder,
+                ))),
                 "win_animations" => {
                     state.initialize_win_animations(&mut recorder);
                     None
                 }
-                "celebrations" => Some(state.celebrations_finished()),
+                "celebrations" => Some(u32::from(state.celebrations_finished())),
                 "distance" => {
                     state.update_player_distance(&mut ball, &mut recorder);
                     None
@@ -187,7 +196,11 @@ pub(crate) mod tests {
                     state.adjust_camera_height(arg as i32, &mut recorder);
                     None
                 }
-                "round_end" => Some(state.update_round_end(rules, &mut ball, &mut recorder)),
+                "round_end" => Some(u32::from(state.update_round_end(
+                    rules,
+                    &mut ball,
+                    &mut recorder,
+                ))),
                 "update" => state.update(arg as i32, &mut ball, &mut recorder),
                 other => panic!("unknown command {other}"),
             };
@@ -210,7 +223,7 @@ pub(crate) mod tests {
             );
             if let Some(result) = result {
                 assert_eq!(
-                    u32::from(result),
+                    result,
                     c["returned"].as_u64().unwrap() as u32,
                     "return case {i}"
                 );
@@ -247,6 +260,8 @@ pub struct Player {
 pub struct Lifecycle {
     pub match_state: MatchState,
     pub paused: bool,
+    /// Base +0x40 word: human-player helpers increment it. Existing rule ports
+    /// use 1 for single-player and >1 for multiplayer; preserve the raw word.
     pub session_mode: i32,
     pub game_type: i32,
     pub variant: i32,
@@ -344,7 +359,7 @@ pub trait FrameServices: Services {
         ball: &mut BallMotion,
         code: u32,
         ms: i32,
-    ) -> bool;
+    ) -> u32;
     fn pole_indicator(&mut self, offset: f32);
     fn base_update(&mut self, ms: i32);
 }
@@ -357,7 +372,7 @@ impl Lifecycle {
         ms: i32,
         ball: &mut BallMotion,
         s: &mut impl FrameServices,
-    ) -> Option<bool> {
+    ) -> Option<u32> {
         self.match_state.previous_state_ms = self.match_state.state_ms;
         self.match_state.state_ms = self.match_state.state_ms.wrapping_add(ms as u32);
         if !self.paused {

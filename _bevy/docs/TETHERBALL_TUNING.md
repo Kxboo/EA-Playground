@@ -2,7 +2,7 @@
 
 The pinned `playgroundz.elf` SHA-256 is `5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c`. `tetherball_tuning.rs` reads the original `db.vlt` / `db.bin` through the existing Rust VLT loader. No tuning defaults were fitted to the desktop simulation.
 
-`GetTunablesCollectionName` (0x8039ce38) compares the session mode at +0x40 as a signed integer. Session mode >1 selects `tunables`. Otherwise dare +0x48 selects `tunables` for -1, `dares_speed_rounds` for 0..2, `dares_time` for 3..5, and `dares_endurance` for 6..8. Other values return a null pointer. The Rust selector preserves that result as `None`; loading an invalid selection returns an error.
+`GetTunablesCollectionName` (0x8039ce38) compares the base word at +0x40 as a signed integer. This word is incremented by human-player initialization and retains the name `session_mode` in the existing projection; it is distinct from tetherball character count +0x210. Session mode >1 selects `tunables`. Otherwise dare +0x48 selects `tunables` for -1, `dares_speed_rounds` for 0..2, `dares_time` for 3..5, and `dares_endurance` for 6..8. Other values return a null pointer. The Rust selector preserves that result as `None`; loading an invalid selection returns an error.
 
 `Minigame::GetArrayIndexFromDiffLevel` (0x803abea8) maps enum values 0..3 to indices 0..3 and all other values to 0. The main initializer separately selects AI/ball indices 0..3 at 0x80396cf0..0x80396d30 for the supported difficulty domain. Its invalid-enum path does not assign r29; this module does not claim that undefined lifecycle input has a recovered default.
 

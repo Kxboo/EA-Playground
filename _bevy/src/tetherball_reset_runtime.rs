@@ -20,6 +20,31 @@ pub fn reset_round_with_animations(
 ) -> Vec<ResetEffect> {
     let original_lose = lifecycle.lose_animations;
     let effects = crate::tetherball_reset::reset_round(lifecycle, reset, ball, input);
+    apply_animations(lifecycle, reset, serve, animations, original_lose, effects)
+}
+
+/// ResetMiniGame uses the same native animation initializer inside ResetRound.
+pub fn reset_minigame_with_animations(
+    lifecycle: &mut Lifecycle,
+    reset: &mut ResetState,
+    ball: &mut BallMotion,
+    input: &ResetInputs,
+    serve: &mut ServeState,
+    animations: &mut HitAnimations,
+) -> Vec<ResetEffect> {
+    let original_lose = lifecycle.lose_animations;
+    let effects = crate::tetherball_reset::reset_minigame(lifecycle, reset, ball, input);
+    apply_animations(lifecycle, reset, serve, animations, original_lose, effects)
+}
+
+fn apply_animations(
+    lifecycle: &mut Lifecycle,
+    reset: &ResetState,
+    serve: &mut ServeState,
+    animations: &mut HitAnimations,
+    original_lose: [i32; 2],
+    effects: Vec<ResetEffect>,
+) -> Vec<ResetEffect> {
     // The existing projection supplies +190/+194 externally. Preserve the
     // pre-call table instead, so count 0/1 retain unprocessed native entries.
     lifecycle.lose_animations = original_lose;
@@ -85,13 +110,24 @@ mod tests {
         }
     }
     #[test]
-    fn original_reset_round_with_native_animation_initialization() {
+    fn original_resets_with_native_animation_initialization() {
         let f: Value = serde_json::from_str(include_str!(
             "../tests/data/tetherball_reset_runtime_golden.json"
         ))
         .unwrap();
         assert_eq!(f["elf_sha256"], crate::recovered::ELF_SHA256);
-        assert_eq!(f["cases"].as_array().unwrap().len(), 288);
+        assert_eq!(f["cases"].as_array().unwrap().len(), 576);
+        for operation in ["round", "minigame"] {
+            assert_eq!(
+                f["cases"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .filter(|c| c["operation"] == operation)
+                    .count(),
+                288
+            );
+        }
         for (i, c) in f["cases"].as_array().unwrap().iter().enumerate() {
             let (mut life, mut reset, mut ball, mut input) =
                 crate::tetherball_reset::tests::seed(c, &f);
@@ -122,7 +158,12 @@ mod tests {
                 hit_power: pair(w, "0x198"),
                 hit_zone_zero: pair(w, "0x1b0"),
             };
-            let effects = reset_round_with_animations(
+            let reset_fn = match c["operation"].as_str().unwrap() {
+                "round" => reset_round_with_animations,
+                "minigame" => reset_minigame_with_animations,
+                _ => panic!("unsupported reset operation"),
+            };
+            let effects = reset_fn(
                 &mut life,
                 &mut reset,
                 &mut ball,

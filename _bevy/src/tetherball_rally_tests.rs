@@ -39,6 +39,97 @@ impl HitServices for Host {
     }
 }
 
+impl crate::tetherball_scene::SceneServices for Host {
+    fn create_trail(&mut self, kind: crate::tetherball_scene::Trail, p: [f32; 3]) -> u32 {
+        self.create_part_fx(kind.name(), p)
+    }
+    fn destroy_trail(&mut self, id: u32, fade: i32) {
+        self.disable_and_destroy_part_fx(id, fade);
+    }
+    fn move_trail(&mut self, id: u32, p: [f32; 3]) {
+        let pointer = self.get_part_fx(id);
+        self.set_part_fx_position(pointer, p);
+    }
+    fn shadow_matrix(&mut self, rope: bool, matrix: [f32; 16]) {
+        self.trace
+            .events
+            .push(json!(["shadow", rope, matrix.map(f32::to_bits)]));
+    }
+}
+impl crate::tetherball_lifecycle::IntroServices for Host {
+    fn reset_scoreboard(&mut self) {
+        self.trace.events.push(json!(["reset_scoreboard"]));
+    }
+}
+impl crate::tetherball_frontend::FrontendServices for Host {
+    fn clear_pregame_handlers(&mut self) {
+        self.trace.events.push(json!(["clear_pregame"]));
+    }
+    fn clear_postgame_handlers(&mut self) {
+        self.trace.events.push(json!(["clear_postgame"]));
+    }
+    fn start_fade_out(&mut self, ms: i32) {
+        self.trace.events.push(json!(["fade_out", ms]));
+    }
+    fn fade_out_renders(&mut self, a: bool, b: bool) {
+        self.trace
+            .events
+            .push(json!(["fade_renders", u32::from(a), u32::from(b)]));
+    }
+    fn setup_minigame_handlers(&mut self, kind: i32) {
+        self.trace.events.push(json!(["setup", kind]));
+    }
+    fn open_apt_screen(&mut self, name: &str) {
+        self.trace.events.push(json!(["open_screen", name]));
+    }
+    fn reset_minigame(&mut self, _: &mut Lifecycle, _: &mut crate::tetherball::BallMotion) {
+        panic!("runtime owns reset");
+    }
+    fn close_apt_overlay(&mut self) {
+        self.trace.events.push(json!(["close_overlay"]));
+    }
+    fn audio_unpause(&mut self) {
+        self.trace.events.push(json!(["audio_unpause"]));
+    }
+    fn minigame_fade_complete(&mut self) -> bool {
+        let value = self.input["fade_complete"].as_bool().unwrap();
+        self.trace.events.push(json!(["fade_complete", value]));
+        value
+    }
+    fn timer_visible(&mut self, v: i32) {
+        crate::tetherball_serve::ServeServices::timer_visible(self, v);
+    }
+}
+impl crate::tetherball_runtime::RuntimeHost for Host {
+    fn pole_indicator(&mut self, offset: f32) {
+        self.trace
+            .events
+            .push(json!(["indicator", offset.to_bits()]));
+    }
+    fn world_update(&mut self, ms: i32) {
+        self.trace.events.push(json!(["world_update", ms]));
+    }
+    fn reset_inputs(
+        &mut self,
+        _: &Lifecycle,
+        _: &ResetState,
+        _: bool,
+    ) -> crate::tetherball_reset::ResetInputs {
+        let c = &self.input["reset_case"];
+        let f = &self.input["reset_fixture"];
+        crate::tetherball_reset::tests::seed(c, f).3
+    }
+    fn reset_effect(&mut self, effect: crate::tetherball_reset::ResetEffect) {
+        let handles = self.input["reset_fixture"]["handles"].clone();
+        let trace = crate::tetherball_reset::tests::effect_trace(
+            vec![effect],
+            &mut self.input["reset_aux"],
+            &handles,
+        );
+        self.trace.events.extend(trace);
+    }
+}
+
 #[test]
 fn original_return_graph() {
     compare("return");
@@ -60,8 +151,33 @@ fn original_indicator_graph() {
     compare("indicator");
 }
 fn compare(command_filter: &str) {
-    let fixture: Value =
-        serde_json::from_str(include_str!("../tests/data/tetherball_rally_golden.json")).unwrap();
+    compare_fixture(
+        command_filter,
+        include_str!("../tests/data/tetherball_rally_golden.json"),
+    );
+}
+#[test]
+fn original_complete_runtime_frames() {
+    compare_fixture(
+        "frame",
+        include_str!("../tests/data/tetherball_runtime_golden.json"),
+    );
+}
+fn compare_fixture(command_filter: &str, text: &str) {
+    let fixture: Value = serde_json::from_str(text).unwrap();
+    let db = if command_filter == "frame" {
+        let path = crate::bridge::data_root().join("files/data/db");
+        Some(
+            crate::vlt::Database::load(
+                &std::fs::read(path.join("db.vlt")).unwrap(),
+                &std::fs::read(path.join("db.bin")).unwrap(),
+                crate::vlt::known_names(),
+            )
+            .unwrap(),
+        )
+    } else {
+        None
+    };
     assert_eq!(fixture["elf_sha256"], crate::recovered::ELF_SHA256);
     for (index, c) in fixture["cases"].as_array().unwrap().iter().enumerate() {
         if c["command"][0] != command_filter {
@@ -134,7 +250,7 @@ fn compare(command_filter: &str) {
             state: pair(o),
             suppress_if_current: pair(o + 8),
         };
-        let animations = HitAnimations {
+        let mut animations = HitAnimations {
             ready_power: ready(0x1a0),
             ready_reverse: ready(0x1d0),
             ready_zone_zero: ready(0x1b8),
@@ -142,7 +258,7 @@ fn compare(command_filter: &str) {
             hit_power: pair(0x198),
             hit_zone_zero: pair(0x1b0),
         };
-        let input = HitInputs {
+        let mut input = HitInputs {
             ball_position: floats(&a["ball_position"]),
             fx_names: std::array::from_fn(|p| {
                 std::array::from_fn(|power| format!("serve_fx_{power}_{p}"))
@@ -161,6 +277,111 @@ fn compare(command_filter: &str) {
         host.input["positions"] = r["positions"].clone();
         let command = c["command"][0].as_str().unwrap();
         match command {
+            "frame" => {
+                use crate::area_transform::AreaTransform;
+                use crate::tetherball_runtime::{FrameInputs, Runtime, RuntimeState};
+                use crate::tetherball_scene::{Attachment, BallScene};
+                let scene = &c["scene"];
+                gestures.pending = c["queue"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|q| crate::tetherball_gestures::GestureRecord {
+                        kind: integer(&q["kind"]),
+                        auxiliary: float(&q["auxiliary"]),
+                        controller_id: integer(&q["controller_id"]),
+                    })
+                    .collect();
+                reset.receiver_220 = integer(&c["intro"]["initial_receiver"]);
+                reset.field_444 = c["intro"]["scoreboard_needs_reset"].as_bool().unwrap();
+                let mut runtime = Runtime {
+                    life,
+                    ball,
+                    state: RuntimeState {
+                        reset,
+                        serve: aux,
+                        gestures,
+                        rally,
+                        hit,
+                        animations,
+                        rules,
+                        scene: BallScene {
+                            anchor: floats(&scene["anchor"]),
+                            position: floats(&scene["position"]),
+                            ball_matrix: floats(&scene["ball_matrix"]),
+                            rope_matrix: floats(&scene["rope_matrix"]),
+                            trails: std::array::from_fn(|i| word(&scene["trails"][i])),
+                            null_trail: u32::MAX,
+                            ball_shadow: scene["shadows"][0].as_bool().unwrap(),
+                            rope_shadow: scene["shadows"][1].as_bool().unwrap(),
+                        },
+                        ai: [None, None],
+                        frontend: serde_json::from_value(c["front"].clone()).unwrap(),
+                        fx_names: input.fx_names.clone(),
+                    },
+                };
+                let frame = FrameInputs {
+                    milliseconds: integer(&c["milliseconds"]),
+                    world_paused: c["world_paused"].as_bool().unwrap(),
+                    area: AreaTransform {
+                        radius: float(&scene["area_radius"]),
+                        disabled: scene["disabled"].as_bool().unwrap(),
+                    },
+                    attachment: Some(Attachment {
+                        world: floats(&scene["world"]),
+                        local: if scene["local"].is_null() {
+                            None
+                        } else {
+                            Some(floats(&scene["local"]))
+                        },
+                    }),
+                    controller_fx_offset: input.controller_fx_offset,
+                };
+                assert_eq!(
+                    runtime
+                        .update(&frame, db.as_ref().unwrap(), &mut host)
+                        .unwrap(),
+                    Some(word(&c["returned"])),
+                    "{label} native frame result"
+                );
+                let Runtime {
+                    life: new_life,
+                    ball: new_ball,
+                    state,
+                } = runtime;
+                life = new_life;
+                ball = new_ball;
+                reset = state.reset;
+                aux = state.serve;
+                gestures = state.gestures;
+                rally = state.rally;
+                hit = state.hit;
+                animations = state.animations;
+                input.ball_position = state.scene.position;
+                assert_eq!(
+                    json!({"position":state.scene.position.map(f32::to_bits),
+                    "ball_matrix":state.scene.ball_matrix.map(f32::to_bits),
+                    "rope_matrix":state.scene.rope_matrix.map(f32::to_bits), "trails":state.scene.trails}),
+                    c["expected_scene"],
+                    "{label} complete scene"
+                );
+                assert_eq!(
+                    serde_json::to_value(&state.frontend).unwrap(),
+                    c["expected_front"],
+                    "{label} frontend"
+                );
+                assert_eq!(
+                    json!({"initial_receiver":reset.receiver_220,"field_25c":reset.field_25c,
+                    "scoreboard_needs_reset":reset.field_444}),
+                    c["expected_intro"],
+                    "{label} intro shared owners"
+                );
+                assert_eq!(
+                    gestures.pending.len(),
+                    word(&c["expected_queue_count"]) as usize,
+                    "{label} queue"
+                );
+            }
             "return" | "accelerate" => {
                 let result = update_rally(
                     if command == "return" {
@@ -216,6 +437,9 @@ fn compare(command_filter: &str) {
             0,
         );
         let mut actual = a.clone();
+        if command == "frame" {
+            actual["ball_position"] = json!(input.ball_position.map(f32::to_bits));
+        }
         for (name, value) in [
             ("base_player_count_070", json!(reset.base_player_count_070)),
             ("word_224", json!(reset.word_224)),
@@ -272,6 +496,22 @@ fn compare(command_filter: &str) {
             actual_r["bytes"][format!("{offset:#x}")] = json!(value);
         }
         actual_r["ai_charge"] = json!(rally.ai_charge);
+        for (offset, values) in [
+            (0x198, animations.hit_power),
+            (0x1a0, animations.ready_power.state),
+            (0x1a8, animations.ready_power.suppress_if_current),
+            (0x1b0, animations.hit_zone_zero),
+            (0x1b8, animations.ready_zone_zero.state),
+            (0x1c0, animations.ready_zone_zero.suppress_if_current),
+            (0x1d0, animations.ready_reverse.state),
+            (0x1d8, animations.ready_reverse.suppress_if_current),
+            (0x1e8, animations.ready_zone_one.state),
+            (0x1f0, animations.ready_zone_one.suppress_if_current),
+        ] {
+            for (player, value) in values.into_iter().enumerate() {
+                actual_r["words"][format!("{:#x}", offset + player * 4)] = json!(value as u32);
+            }
+        }
         assert_eq!(actual_r, c["expected_rally"], "{label} rally fields");
         assert_eq!(
             host.trace.events,

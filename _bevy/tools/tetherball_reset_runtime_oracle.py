@@ -1,4 +1,4 @@
-"""Original ResetRound with unhooked InitializePlayerAnimations dependency."""
+"""Original ResetRound/ResetMiniGame with unhooked InitializePlayerAnimations dependency."""
 import copy, hashlib, json, random, sys
 from pathlib import Path
 from tetherball_reset_oracle import ResetEmu, GAME, SHA, bits
@@ -13,12 +13,12 @@ def generate():
     base=json.loads((ROOT/'_bevy/tests/data/tetherball_reset_golden.json').read_text(encoding='utf-8'))
     em=ResetEmu(rf.load());del em.hooks[0x8039be84]
     rng=random.Random(0x803994f4+0x8039be84);cases=[]
-    for seed in [c for c in base['cases'] if c['operation']=='round']:
+    for seed in [c for c in base['cases'] if c['operation'] in ('round','minigame')]:
       for count in (0,1,2):
        for flags in range(4):
         c=copy.deepcopy(seed)
         for key in ('expected','expected_ball','expected_aux','effects'):c.pop(key)
-        c['label']=f'round-{len(cases)//12}-count-{count}-base-{flags}'
+        c['label']=f"{c['operation']}-{len(cases)//12}-count-{count}-base-{flags}"
         c['initial']['player_count']=count
         for p in range(2):c['initial']['players'][p]['player_flag']=bool(flags&(1<<p))
         c['initial_serve']=dict(pause_block_count_0fc=-1,pause_menu_open=False,power_serve_enabled=True,
@@ -33,7 +33,7 @@ def generate():
             em.wr(0x80607e78+p,bytes([s['forced_ai'][p]]))
         for off in OFFSETS:
             for p in range(2):em.w32(GAME+off+p*4,c['words'][hex(off)][p])
-        em.call(0x803994f4,(GAME,),max_steps=30000)
+        em.call({'round':0x803994f4,'minigame':0x80399460}[c['operation']],(GAME,),max_steps=30000)
         c['expected'],c['expected_ball'],c['expected_aux']=em.read_reset(c['initial'])
         c['expected_serve']=copy.deepcopy(s)
         for name,off in [('power_animations',0x1c8),('high_animations',0x1e0)]:c['expected_serve'][name]=[sx(em.r32(GAME+off+p*4),32) for p in range(2)]
@@ -47,7 +47,7 @@ if __name__=='__main__':
     value=generate()
     if '--check' in sys.argv:
         assert json.loads(OUT.read_text(encoding='utf-8'))==value,'Reset animation composition differs from original PPC'
-        print('Verified',len(value['cases']),'original composed ResetRound calls')
+        print('Verified',len(value['cases']),'original composed reset calls')
     else:
         OUT.write_text(json.dumps(value,indent=1)+'\n',encoding='utf-8',newline='\n')
-        print('Wrote',len(value['cases']),'original composed ResetRound calls')
+        print('Wrote',len(value['cases']),'original composed reset calls')

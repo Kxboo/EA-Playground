@@ -1,0 +1,5704 @@
+{
+  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
+  "function": "InitGameLogicState__12MGTetherballFv",
+  "address": "0x8039ceac",
+  "dependency_boundary": "InitTunablesForSinglePlayer/InitTunablesForMultiPlayer and ResetStats are supplied at their call sites; InitGameLogicState executes natively.",
+  "cases": [
+    {
+      "label": "case_000",
+      "initial": {
+        "variant": -1,
+        "game_mode": -7,
+        "mode": 2147483647,
+        "rounds": 128,
+        "distance": -129,
+        "handicap": 255,
+        "seconds": 127,
+        "rotations_to_win": -32769,
+        "rotation_limit": 2147483647,
+        "wins_required": 1,
+        "rotation_count": 255,
+        "round_winner": -32769,
+        "match_winner": -7,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          32767,
+          7,
+          1,
+          0,
+          255,
+          -1
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -32769,
+          32767,
+          -1
+        ]
+      },
+      "expected": {
+        "variant": -1,
+        "game_mode": -7,
+        "mode": 32767,
+        "rounds": 7,
+        "distance": 1,
+        "handicap": 0,
+        "seconds": 255,
+        "rotations_to_win": -1,
+        "rotation_limit": -1,
+        "wins_required": 4,
+        "rotation_count": 7,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          -32769,
+          32767,
+          -1
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_001",
+      "initial": {
+        "variant": -128,
+        "game_mode": -2147483648,
+        "mode": 255,
+        "rounds": -128,
+        "distance": 127,
+        "handicap": -128,
+        "seconds": -128,
+        "rotations_to_win": 255,
+        "rotation_limit": 1,
+        "wins_required": -128,
+        "rotation_count": -129,
+        "round_winner": -1,
+        "match_winner": -1,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          256,
+          1,
+          -1,
+          -2147483648
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          0,
+          32767,
+          -129
+        ]
+      },
+      "expected": {
+        "variant": 256,
+        "game_mode": 1,
+        "mode": 0,
+        "rounds": -1,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -2147483648,
+        "rotation_limit": -2147483648,
+        "wins_required": 1,
+        "rotation_count": -1,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          0,
+          32767,
+          -129
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_002",
+      "initial": {
+        "variant": -7,
+        "game_mode": -129,
+        "mode": 2147483647,
+        "rounds": 128,
+        "distance": 128,
+        "handicap": 32767,
+        "seconds": -256,
+        "rotations_to_win": 255,
+        "rotation_limit": 127,
+        "wins_required": 256,
+        "rotation_count": 128,
+        "round_winner": -128,
+        "match_winner": -1,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          32767,
+          255,
+          255,
+          2147483647,
+          -1,
+          1
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          127,
+          -7,
+          0
+        ]
+      },
+      "expected": {
+        "variant": -7,
+        "game_mode": -129,
+        "mode": 32767,
+        "rounds": 255,
+        "distance": 255,
+        "handicap": 2147483647,
+        "seconds": -1,
+        "rotations_to_win": 1,
+        "rotation_limit": 1,
+        "wins_required": 128,
+        "rotation_count": 255,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          1,
+          -1
+        ],
+        "indicator_target_bits": 1006699012,
+        "score_weights": [
+          127,
+          -7,
+          0
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_003",
+      "initial": {
+        "variant": 255,
+        "game_mode": -2147483648,
+        "mode": -129,
+        "rounds": -128,
+        "distance": 1,
+        "handicap": 2147483647,
+        "seconds": 0,
+        "rotations_to_win": 7,
+        "rotation_limit": 1,
+        "wins_required": -128,
+        "rotation_count": -32769,
+        "round_winner": -1,
+        "match_winner": 255,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          -2147483648,
+          32767,
+          -1,
+          -2147483648
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          1,
+          -2147483648,
+          255
+        ]
+      },
+      "expected": {
+        "variant": -2147483648,
+        "game_mode": 32767,
+        "mode": 0,
+        "rounds": -1,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -2147483648,
+        "rotation_limit": -2147483648,
+        "wins_required": 1,
+        "rotation_count": -1,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          1,
+          -2147483648,
+          255
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_004",
+      "initial": {
+        "variant": 127,
+        "game_mode": -2147483648,
+        "mode": -256,
+        "rounds": 2147483647,
+        "distance": 0,
+        "handicap": -7,
+        "seconds": -1,
+        "rotations_to_win": 128,
+        "rotation_limit": 0,
+        "wins_required": -128,
+        "rotation_count": -1,
+        "round_winner": 2147483647,
+        "match_winner": -129,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          -1,
+          1,
+          -7,
+          -32769,
+          255,
+          -32769
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -256,
+          32767,
+          1
+        ]
+      },
+      "expected": {
+        "variant": 127,
+        "game_mode": -2147483648,
+        "mode": -1,
+        "rounds": 1,
+        "distance": -7,
+        "handicap": -32769,
+        "seconds": 255,
+        "rotations_to_win": -32769,
+        "rotation_limit": -32769,
+        "wins_required": 1,
+        "rotation_count": 1,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          1,
+          -1
+        ],
+        "indicator_target_bits": 2139095040,
+        "score_weights": [
+          -256,
+          32767,
+          1
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_005",
+      "initial": {
+        "variant": 128,
+        "game_mode": -2147483648,
+        "mode": 127,
+        "rounds": 127,
+        "distance": 256,
+        "handicap": 256,
+        "seconds": -128,
+        "rotations_to_win": 1,
+        "rotation_limit": 2147483647,
+        "wins_required": 0,
+        "rotation_count": 127,
+        "round_winner": 32767,
+        "match_winner": -1,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          -1,
+          255,
+          -1,
+          7
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          0,
+          255,
+          7
+        ]
+      },
+      "expected": {
+        "variant": -1,
+        "game_mode": 255,
+        "mode": 0,
+        "rounds": -1,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": 7,
+        "rotation_limit": 7,
+        "wins_required": 1,
+        "rotation_count": -1,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          0,
+          255,
+          7
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_006",
+      "initial": {
+        "variant": 2147483647,
+        "game_mode": -1,
+        "mode": -129,
+        "rounds": -1,
+        "distance": -129,
+        "handicap": -256,
+        "seconds": -2147483648,
+        "rotations_to_win": 32767,
+        "rotation_limit": 1,
+        "wins_required": 2147483647,
+        "rotation_count": 256,
+        "round_winner": 256,
+        "match_winner": 2147483647,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          -128,
+          -129,
+          1,
+          128,
+          32767,
+          128
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          255,
+          -7,
+          1
+        ]
+      },
+      "expected": {
+        "variant": 2147483647,
+        "game_mode": -1,
+        "mode": -128,
+        "rounds": -129,
+        "distance": 1,
+        "handicap": 128,
+        "seconds": 32767,
+        "rotations_to_win": 128,
+        "rotation_limit": 128,
+        "wins_required": 193,
+        "rotation_count": -129,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          -128,
+          -128
+        ],
+        "indicator_target_bits": 3271557120,
+        "score_weights": [
+          255,
+          -7,
+          1
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_007",
+      "initial": {
+        "variant": -32769,
+        "game_mode": -129,
+        "mode": 32767,
+        "rounds": 1,
+        "distance": 127,
+        "handicap": 32767,
+        "seconds": 256,
+        "rotations_to_win": 7,
+        "rotation_limit": 2147483647,
+        "wins_required": -256,
+        "rotation_count": 7,
+        "round_winner": 256,
+        "match_winner": 0,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          127,
+          -2147483648,
+          1,
+          -128
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -129,
+          -129,
+          -2147483648
+        ]
+      },
+      "expected": {
+        "variant": 127,
+        "game_mode": -2147483648,
+        "mode": 0,
+        "rounds": 1,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -128,
+        "rotation_limit": -128,
+        "wins_required": 1,
+        "rotation_count": 1,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          -129,
+          -129,
+          -2147483648
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_008",
+      "initial": {
+        "variant": -1,
+        "game_mode": 127,
+        "mode": 128,
+        "rounds": 2147483647,
+        "distance": -129,
+        "handicap": 255,
+        "seconds": -1,
+        "rotations_to_win": -1,
+        "rotation_limit": 0,
+        "wins_required": -256,
+        "rotation_count": 256,
+        "round_winner": -2147483648,
+        "match_winner": -32769,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          -128,
+          1,
+          -128,
+          -1,
+          128,
+          7
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          1,
+          -7,
+          127
+        ]
+      },
+      "expected": {
+        "variant": -1,
+        "game_mode": 127,
+        "mode": -128,
+        "rounds": 1,
+        "distance": -128,
+        "handicap": -1,
+        "seconds": 128,
+        "rotations_to_win": 7,
+        "rotation_limit": 7,
+        "wins_required": 1,
+        "rotation_count": 1,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          1,
+          -1
+        ],
+        "indicator_target_bits": 2139095040,
+        "score_weights": [
+          1,
+          -7,
+          127
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_009",
+      "initial": {
+        "variant": 1,
+        "game_mode": 32767,
+        "mode": 255,
+        "rounds": -128,
+        "distance": 32767,
+        "handicap": -1,
+        "seconds": -256,
+        "rotations_to_win": 127,
+        "rotation_limit": 127,
+        "wins_required": -128,
+        "rotation_count": 127,
+        "round_winner": -2147483648,
+        "match_winner": 256,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          -2147483648,
+          -7,
+          -7,
+          -32769
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          127,
+          128,
+          128
+        ]
+      },
+      "expected": {
+        "variant": -2147483648,
+        "game_mode": -7,
+        "mode": 0,
+        "rounds": -7,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -32769,
+        "rotation_limit": -32769,
+        "wins_required": 254,
+        "rotation_count": -7,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          127,
+          128,
+          128
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_010",
+      "initial": {
+        "variant": -2147483648,
+        "game_mode": 255,
+        "mode": 7,
+        "rounds": 2147483647,
+        "distance": 0,
+        "handicap": -128,
+        "seconds": 0,
+        "rotations_to_win": -7,
+        "rotation_limit": -2147483648,
+        "wins_required": 255,
+        "rotation_count": 1,
+        "round_winner": 32767,
+        "match_winner": -7,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          2147483647,
+          -32769,
+          1,
+          -129,
+          32767,
+          32767
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -128,
+          -129,
+          -1
+        ]
+      },
+      "expected": {
+        "variant": -2147483648,
+        "game_mode": 255,
+        "mode": 2147483647,
+        "rounds": -32769,
+        "distance": 1,
+        "handicap": -129,
+        "seconds": 32767,
+        "rotations_to_win": 32767,
+        "rotation_limit": 32767,
+        "wins_required": 1,
+        "rotation_count": -32769,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          -127,
+          127
+        ],
+        "indicator_target_bits": 863895552,
+        "score_weights": [
+          -128,
+          -129,
+          -1
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_011",
+      "initial": {
+        "variant": -128,
+        "game_mode": 1,
+        "mode": 128,
+        "rounds": -2147483648,
+        "distance": 2147483647,
+        "handicap": 0,
+        "seconds": -128,
+        "rotations_to_win": 255,
+        "rotation_limit": -1,
+        "wins_required": -129,
+        "rotation_count": -2147483648,
+        "round_winner": -256,
+        "match_winner": -2147483648,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          -1,
+          -2147483648,
+          -129,
+          -2147483648
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -256,
+          -1,
+          -7
+        ]
+      },
+      "expected": {
+        "variant": -1,
+        "game_mode": -2147483648,
+        "mode": 0,
+        "rounds": -129,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -2147483648,
+        "rotation_limit": -2147483648,
+        "wins_required": 193,
+        "rotation_count": -129,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 2147483648,
+        "score_weights": [
+          -256,
+          -1,
+          -7
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_012",
+      "initial": {
+        "variant": -2147483648,
+        "game_mode": 2147483647,
+        "mode": 32767,
+        "rounds": -256,
+        "distance": -2147483648,
+        "handicap": -2147483648,
+        "seconds": 1,
+        "rotations_to_win": 128,
+        "rotation_limit": 2147483647,
+        "wins_required": -7,
+        "rotation_count": 0,
+        "round_winner": 7,
+        "match_winner": 256,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          1,
+          255,
+          127,
+          2147483647,
+          32767,
+          1
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          127,
+          255,
+          7
+        ]
+      },
+      "expected": {
+        "variant": -2147483648,
+        "game_mode": 2147483647,
+        "mode": 1,
+        "rounds": 255,
+        "distance": 127,
+        "handicap": 2147483647,
+        "seconds": 32767,
+        "rotations_to_win": 1,
+        "rotation_limit": 1,
+        "wins_required": 128,
+        "rotation_count": 255,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          1,
+          -1
+        ],
+        "indicator_target_bits": 805306368,
+        "score_weights": [
+          127,
+          255,
+          7
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_013",
+      "initial": {
+        "variant": -128,
+        "game_mode": 255,
+        "mode": 32767,
+        "rounds": 7,
+        "distance": 7,
+        "handicap": -7,
+        "seconds": 1,
+        "rotations_to_win": -128,
+        "rotation_limit": 127,
+        "wins_required": 7,
+        "rotation_count": 0,
+        "round_winner": -256,
+        "match_winner": 128,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          2147483647,
+          -128,
+          -128,
+          -32769
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -2147483648,
+          7,
+          -129
+        ]
+      },
+      "expected": {
+        "variant": 2147483647,
+        "game_mode": -128,
+        "mode": 0,
+        "rounds": -128,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -32769,
+        "rotation_limit": -32769,
+        "wins_required": 193,
+        "rotation_count": -128,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          -2147483648,
+          7,
+          -129
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_014",
+      "initial": {
+        "variant": 7,
+        "game_mode": -129,
+        "mode": -2147483648,
+        "rounds": -128,
+        "distance": 256,
+        "handicap": 256,
+        "seconds": -256,
+        "rotations_to_win": 0,
+        "rotation_limit": -1,
+        "wins_required": 128,
+        "rotation_count": 256,
+        "round_winner": 32767,
+        "match_winner": -2147483648,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          7,
+          255,
+          -128,
+          7,
+          7,
+          -1
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -32769,
+          -256,
+          7
+        ]
+      },
+      "expected": {
+        "variant": 7,
+        "game_mode": -129,
+        "mode": 7,
+        "rounds": 255,
+        "distance": -128,
+        "handicap": 7,
+        "seconds": 7,
+        "rotations_to_win": -1,
+        "rotation_limit": -1,
+        "wins_required": 128,
+        "rotation_count": 255,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          -7,
+          7
+        ],
+        "indicator_target_bits": 1088421888,
+        "score_weights": [
+          -32769,
+          -256,
+          7
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_015",
+      "initial": {
+        "variant": -256,
+        "game_mode": -32769,
+        "mode": 256,
+        "rounds": 255,
+        "distance": 256,
+        "handicap": 255,
+        "seconds": 1,
+        "rotations_to_win": 0,
+        "rotation_limit": 1,
+        "wins_required": 1,
+        "rotation_count": -129,
+        "round_winner": 7,
+        "match_winner": -1,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          -1,
+          -7,
+          -129,
+          -2147483648
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          256,
+          128,
+          127
+        ]
+      },
+      "expected": {
+        "variant": -1,
+        "game_mode": -7,
+        "mode": 0,
+        "rounds": -129,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -2147483648,
+        "rotation_limit": -2147483648,
+        "wins_required": 193,
+        "rotation_count": -129,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          256,
+          128,
+          127
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_016",
+      "initial": {
+        "variant": -7,
+        "game_mode": 255,
+        "mode": -1,
+        "rounds": 7,
+        "distance": 128,
+        "handicap": 7,
+        "seconds": 255,
+        "rotations_to_win": -1,
+        "rotation_limit": -1,
+        "wins_required": -2147483648,
+        "rotation_count": 1,
+        "round_winner": 7,
+        "match_winner": 1,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          127,
+          -256,
+          32767,
+          32767,
+          -7,
+          -129
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -256,
+          0,
+          -2147483648
+        ]
+      },
+      "expected": {
+        "variant": -7,
+        "game_mode": 255,
+        "mode": 127,
+        "rounds": -256,
+        "distance": 32767,
+        "handicap": 32767,
+        "seconds": -7,
+        "rotations_to_win": -129,
+        "rotation_limit": -129,
+        "wins_required": 129,
+        "rotation_count": -256,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          1,
+          -1
+        ],
+        "indicator_target_bits": 3212836864,
+        "score_weights": [
+          -256,
+          0,
+          -2147483648
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_017",
+      "initial": {
+        "variant": 0,
+        "game_mode": 2147483647,
+        "mode": -32769,
+        "rounds": -256,
+        "distance": 255,
+        "handicap": 7,
+        "seconds": 1,
+        "rotations_to_win": -128,
+        "rotation_limit": 1,
+        "wins_required": 0,
+        "rotation_count": -2147483648,
+        "round_winner": -1,
+        "match_winner": -256,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          256,
+          -2147483648,
+          2147483647,
+          -256
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          2147483647,
+          2147483647,
+          32767
+        ]
+      },
+      "expected": {
+        "variant": 256,
+        "game_mode": -2147483648,
+        "mode": 0,
+        "rounds": 2147483647,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -256,
+        "rotation_limit": -256,
+        "wins_required": 256,
+        "rotation_count": 2147483647,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          2147483647,
+          2147483647,
+          32767
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_018",
+      "initial": {
+        "variant": -7,
+        "game_mode": 256,
+        "mode": -1,
+        "rounds": -128,
+        "distance": 32767,
+        "handicap": 2147483647,
+        "seconds": 128,
+        "rotations_to_win": 255,
+        "rotation_limit": -1,
+        "wins_required": -128,
+        "rotation_count": -129,
+        "round_winner": 255,
+        "match_winner": 256,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          -256,
+          255,
+          127,
+          -32769,
+          7,
+          2147483647
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -1,
+          -32769,
+          7
+        ]
+      },
+      "expected": {
+        "variant": -7,
+        "game_mode": 256,
+        "mode": -256,
+        "rounds": 255,
+        "distance": 127,
+        "handicap": -32769,
+        "seconds": 7,
+        "rotations_to_win": 2147483647,
+        "rotation_limit": 2147483647,
+        "wins_required": 128,
+        "rotation_count": 255,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          1,
+          -1
+        ],
+        "indicator_target_bits": 3212836864,
+        "score_weights": [
+          -1,
+          -32769,
+          7
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_019",
+      "initial": {
+        "variant": 32767,
+        "game_mode": -2147483648,
+        "mode": -2147483648,
+        "rounds": 0,
+        "distance": 32767,
+        "handicap": -2147483648,
+        "seconds": 127,
+        "rotations_to_win": 0,
+        "rotation_limit": -2147483648,
+        "wins_required": 127,
+        "rotation_count": 256,
+        "round_winner": 1,
+        "match_winner": 32767,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          -2147483648,
+          -2147483648,
+          2147483647,
+          -1
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -2147483648,
+          0,
+          -129
+        ]
+      },
+      "expected": {
+        "variant": -2147483648,
+        "game_mode": -2147483648,
+        "mode": 0,
+        "rounds": 2147483647,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -1,
+        "rotation_limit": -1,
+        "wins_required": 256,
+        "rotation_count": 2147483647,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 2147483648,
+        "score_weights": [
+          -2147483648,
+          0,
+          -129
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_020",
+      "initial": {
+        "variant": 255,
+        "game_mode": -32769,
+        "mode": -128,
+        "rounds": 32767,
+        "distance": 127,
+        "handicap": 7,
+        "seconds": 32767,
+        "rotations_to_win": -2147483648,
+        "rotation_limit": -2147483648,
+        "wins_required": -129,
+        "rotation_count": -128,
+        "round_winner": 1,
+        "match_winner": 0,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          127,
+          -2147483648,
+          1,
+          1,
+          7,
+          7
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          1,
+          127,
+          2147483647
+        ]
+      },
+      "expected": {
+        "variant": 255,
+        "game_mode": -32769,
+        "mode": 127,
+        "rounds": -2147483648,
+        "distance": 1,
+        "handicap": 1,
+        "seconds": 7,
+        "rotations_to_win": 7,
+        "rotation_limit": 7,
+        "wins_required": 1,
+        "rotation_count": -2147483648,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          -1,
+          1
+        ],
+        "indicator_target_bits": 805306368,
+        "score_weights": [
+          1,
+          127,
+          2147483647
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_021",
+      "initial": {
+        "variant": 127,
+        "game_mode": 7,
+        "mode": -1,
+        "rounds": 256,
+        "distance": -1,
+        "handicap": 32767,
+        "seconds": -129,
+        "rotations_to_win": 1,
+        "rotation_limit": 2147483647,
+        "wins_required": 7,
+        "rotation_count": -32769,
+        "round_winner": -2147483648,
+        "match_winner": 7,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          1,
+          -128,
+          -1,
+          128
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          256,
+          -7,
+          -256
+        ]
+      },
+      "expected": {
+        "variant": 1,
+        "game_mode": -128,
+        "mode": 0,
+        "rounds": -1,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": 128,
+        "rotation_limit": 128,
+        "wins_required": 1,
+        "rotation_count": -1,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          256,
+          -7,
+          -256
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_022",
+      "initial": {
+        "variant": 255,
+        "game_mode": 256,
+        "mode": 2147483647,
+        "rounds": -32769,
+        "distance": -128,
+        "handicap": 32767,
+        "seconds": -32769,
+        "rotations_to_win": 2147483647,
+        "rotation_limit": -1,
+        "wins_required": -256,
+        "rotation_count": 32767,
+        "round_winner": -1,
+        "match_winner": 256,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          7,
+          32767,
+          0,
+          -7,
+          -2147483648,
+          32767
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -1,
+          -256,
+          -128
+        ]
+      },
+      "expected": {
+        "variant": 255,
+        "game_mode": 256,
+        "mode": 7,
+        "rounds": 32767,
+        "distance": 0,
+        "handicap": -7,
+        "seconds": -2147483648,
+        "rotations_to_win": 32767,
+        "rotation_limit": 32767,
+        "wins_required": 256,
+        "rotation_count": 32767,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          7,
+          -7
+        ],
+        "indicator_target_bits": 3235905536,
+        "score_weights": [
+          -1,
+          -256,
+          -128
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_023",
+      "initial": {
+        "variant": 127,
+        "game_mode": -128,
+        "mode": -128,
+        "rounds": 255,
+        "distance": -256,
+        "handicap": 127,
+        "seconds": 128,
+        "rotations_to_win": 0,
+        "rotation_limit": -1,
+        "wins_required": -128,
+        "rotation_count": 128,
+        "round_winner": -128,
+        "match_winner": -7,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          -7,
+          -32769,
+          -2147483648,
+          2147483647
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          256,
+          32767,
+          32767
+        ]
+      },
+      "expected": {
+        "variant": -7,
+        "game_mode": -32769,
+        "mode": 0,
+        "rounds": -2147483648,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": 2147483647,
+        "rotation_limit": 2147483647,
+        "wins_required": 1,
+        "rotation_count": -2147483648,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 2147483648,
+        "score_weights": [
+          256,
+          32767,
+          32767
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_024",
+      "initial": {
+        "variant": -128,
+        "game_mode": -129,
+        "mode": 0,
+        "rounds": -32769,
+        "distance": 2147483647,
+        "handicap": 1,
+        "seconds": -32769,
+        "rotations_to_win": -2147483648,
+        "rotation_limit": 2147483647,
+        "wins_required": -32769,
+        "rotation_count": -256,
+        "round_winner": -1,
+        "match_winner": 7,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          -7,
+          -32769,
+          -256,
+          2147483647,
+          255,
+          -32769
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -2147483648,
+          -1,
+          -128
+        ]
+      },
+      "expected": {
+        "variant": -128,
+        "game_mode": -129,
+        "mode": -7,
+        "rounds": -32769,
+        "distance": -256,
+        "handicap": 2147483647,
+        "seconds": 255,
+        "rotations_to_win": -32769,
+        "rotation_limit": -32769,
+        "wins_required": 1,
+        "rotation_count": -32769,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          1,
+          -1
+        ],
+        "indicator_target_bits": 805306368,
+        "score_weights": [
+          -2147483648,
+          -1,
+          -128
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_025",
+      "initial": {
+        "variant": -32769,
+        "game_mode": 127,
+        "mode": 128,
+        "rounds": -32769,
+        "distance": 1,
+        "handicap": -32769,
+        "seconds": -1,
+        "rotations_to_win": -2147483648,
+        "rotation_limit": 127,
+        "wins_required": 256,
+        "rotation_count": 1,
+        "round_winner": 255,
+        "match_winner": 256,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          -1,
+          -2147483648,
+          128,
+          128
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          7,
+          127,
+          32767
+        ]
+      },
+      "expected": {
+        "variant": -1,
+        "game_mode": -2147483648,
+        "mode": 0,
+        "rounds": 128,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": 128,
+        "rotation_limit": 128,
+        "wins_required": 65,
+        "rotation_count": 128,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          7,
+          127,
+          32767
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_026",
+      "initial": {
+        "variant": -129,
+        "game_mode": 127,
+        "mode": -129,
+        "rounds": -7,
+        "distance": 7,
+        "handicap": -1,
+        "seconds": -129,
+        "rotations_to_win": 1,
+        "rotation_limit": 0,
+        "wins_required": -128,
+        "rotation_count": -256,
+        "round_winner": -7,
+        "match_winner": 256,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          127,
+          -128,
+          7,
+          32767,
+          127,
+          32767
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -256,
+          1,
+          2147483647
+        ]
+      },
+      "expected": {
+        "variant": -129,
+        "game_mode": 127,
+        "mode": 127,
+        "rounds": -128,
+        "distance": 7,
+        "handicap": 32767,
+        "seconds": 127,
+        "rotations_to_win": 32767,
+        "rotation_limit": 32767,
+        "wins_required": 193,
+        "rotation_count": -128,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          1,
+          -1
+        ],
+        "indicator_target_bits": 2139095040,
+        "score_weights": [
+          -256,
+          1,
+          2147483647
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_027",
+      "initial": {
+        "variant": 127,
+        "game_mode": 256,
+        "mode": 127,
+        "rounds": 0,
+        "distance": -1,
+        "handicap": 255,
+        "seconds": -128,
+        "rotations_to_win": 1,
+        "rotation_limit": 2147483647,
+        "wins_required": -2147483648,
+        "rotation_count": -32769,
+        "round_winner": -32769,
+        "match_winner": -1,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          -32769,
+          -256,
+          1,
+          -2147483648
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          32767,
+          7,
+          -128
+        ]
+      },
+      "expected": {
+        "variant": -32769,
+        "game_mode": -256,
+        "mode": 0,
+        "rounds": 1,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -2147483648,
+        "rotation_limit": -2147483648,
+        "wins_required": 1,
+        "rotation_count": 1,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          32767,
+          7,
+          -128
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_028",
+      "initial": {
+        "variant": 7,
+        "game_mode": 32767,
+        "mode": 255,
+        "rounds": 32767,
+        "distance": -129,
+        "handicap": -2147483648,
+        "seconds": 256,
+        "rotations_to_win": -2147483648,
+        "rotation_limit": 0,
+        "wins_required": -129,
+        "rotation_count": -128,
+        "round_winner": -129,
+        "match_winner": 7,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          256,
+          128,
+          1,
+          -32769,
+          32767,
+          -128
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          128,
+          -129,
+          -256
+        ]
+      },
+      "expected": {
+        "variant": 7,
+        "game_mode": 32767,
+        "mode": 256,
+        "rounds": 128,
+        "distance": 1,
+        "handicap": -32769,
+        "seconds": 32767,
+        "rotations_to_win": -128,
+        "rotation_limit": -128,
+        "wins_required": 65,
+        "rotation_count": 128,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          1,
+          -1
+        ],
+        "indicator_target_bits": 2139095040,
+        "score_weights": [
+          128,
+          -129,
+          -256
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_029",
+      "initial": {
+        "variant": -1,
+        "game_mode": -129,
+        "mode": -32769,
+        "rounds": 255,
+        "distance": 7,
+        "handicap": -7,
+        "seconds": -129,
+        "rotations_to_win": -2147483648,
+        "rotation_limit": -1,
+        "wins_required": -32769,
+        "rotation_count": 32767,
+        "round_winner": 1,
+        "match_winner": 7,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          256,
+          7,
+          0,
+          127
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          128,
+          1,
+          32767
+        ]
+      },
+      "expected": {
+        "variant": 256,
+        "game_mode": 7,
+        "mode": 0,
+        "rounds": 0,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": 127,
+        "rotation_limit": 127,
+        "wins_required": 1,
+        "rotation_count": 0,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 2147483648,
+        "score_weights": [
+          128,
+          1,
+          32767
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_030",
+      "initial": {
+        "variant": -7,
+        "game_mode": 2147483647,
+        "mode": 2147483647,
+        "rounds": -7,
+        "distance": -256,
+        "handicap": -2147483648,
+        "seconds": -128,
+        "rotations_to_win": 2147483647,
+        "rotation_limit": 1,
+        "wins_required": -256,
+        "rotation_count": 127,
+        "round_winner": 256,
+        "match_winner": 32767,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          -256,
+          1,
+          0,
+          127,
+          127,
+          -129
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -32769,
+          -1,
+          255
+        ]
+      },
+      "expected": {
+        "variant": -7,
+        "game_mode": 2147483647,
+        "mode": -256,
+        "rounds": 1,
+        "distance": 0,
+        "handicap": 127,
+        "seconds": 127,
+        "rotations_to_win": -129,
+        "rotation_limit": -129,
+        "wins_required": 1,
+        "rotation_count": 1,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          -127,
+          127
+        ],
+        "indicator_target_bits": 3271426048,
+        "score_weights": [
+          -32769,
+          -1,
+          255
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_031",
+      "initial": {
+        "variant": 128,
+        "game_mode": 32767,
+        "mode": 255,
+        "rounds": 255,
+        "distance": 0,
+        "handicap": 1,
+        "seconds": -2147483648,
+        "rotations_to_win": 7,
+        "rotation_limit": 1,
+        "wins_required": 0,
+        "rotation_count": 2147483647,
+        "round_winner": 127,
+        "match_winner": -256,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          -2147483648,
+          -256,
+          256,
+          256
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          255,
+          -2147483648,
+          127
+        ]
+      },
+      "expected": {
+        "variant": -2147483648,
+        "game_mode": -256,
+        "mode": 0,
+        "rounds": 256,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": 256,
+        "rotation_limit": 256,
+        "wins_required": 129,
+        "rotation_count": 256,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          255,
+          -2147483648,
+          127
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_032",
+      "initial": {
+        "variant": -2147483648,
+        "game_mode": 255,
+        "mode": 2147483647,
+        "rounds": 1,
+        "distance": -7,
+        "handicap": 255,
+        "seconds": 127,
+        "rotations_to_win": 127,
+        "rotation_limit": 1,
+        "wins_required": 0,
+        "rotation_count": 256,
+        "round_winner": -7,
+        "match_winner": -129,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          32767,
+          -286,
+          -2147483648,
+          160,
+          -7,
+          -128
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -2147483648,
+          -32769,
+          -129
+        ]
+      },
+      "expected": {
+        "variant": -2147483648,
+        "game_mode": 255,
+        "mode": 32767,
+        "rounds": -286,
+        "distance": -2147483648,
+        "handicap": 160,
+        "seconds": -7,
+        "rotations_to_win": -128,
+        "rotation_limit": -128,
+        "wins_required": 114,
+        "rotation_count": -286,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          96,
+          -96
+        ],
+        "indicator_target_bits": 1119879168,
+        "score_weights": [
+          -2147483648,
+          -32769,
+          -129
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_033",
+      "initial": {
+        "variant": -256,
+        "game_mode": -7,
+        "mode": 2147483647,
+        "rounds": -32769,
+        "distance": 2147483647,
+        "handicap": -7,
+        "seconds": 256,
+        "rotations_to_win": -7,
+        "rotation_limit": 127,
+        "wins_required": -7,
+        "rotation_count": 0,
+        "round_winner": 127,
+        "match_winner": 0,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          -256,
+          7,
+          219,
+          1
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -2147483648,
+          7,
+          127
+        ]
+      },
+      "expected": {
+        "variant": -256,
+        "game_mode": 7,
+        "mode": 0,
+        "rounds": 219,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": 1,
+        "rotation_limit": 1,
+        "wins_required": 110,
+        "rotation_count": 219,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          -2147483648,
+          7,
+          127
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_034",
+      "initial": {
+        "variant": 255,
+        "game_mode": -32769,
+        "mode": -128,
+        "rounds": 32767,
+        "distance": -128,
+        "handicap": -256,
+        "seconds": -129,
+        "rotations_to_win": -1,
+        "rotation_limit": 1,
+        "wins_required": -1,
+        "rotation_count": 255,
+        "round_winner": 1,
+        "match_winner": 127,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          -1,
+          -260,
+          1,
+          -180,
+          -129,
+          -128
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -1,
+          0,
+          -256
+        ]
+      },
+      "expected": {
+        "variant": 255,
+        "game_mode": -32769,
+        "mode": -1,
+        "rounds": -260,
+        "distance": 1,
+        "handicap": -180,
+        "seconds": -129,
+        "rotations_to_win": -128,
+        "rotation_limit": -128,
+        "wins_required": 127,
+        "rotation_count": -260,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          -76,
+          76
+        ],
+        "indicator_target_bits": 3264741376,
+        "score_weights": [
+          -1,
+          0,
+          -256
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_035",
+      "initial": {
+        "variant": 0,
+        "game_mode": -256,
+        "mode": -2147483648,
+        "rounds": 7,
+        "distance": 7,
+        "handicap": 0,
+        "seconds": 1,
+        "rotations_to_win": 32767,
+        "rotation_limit": 2147483647,
+        "wins_required": 1,
+        "rotation_count": -2147483648,
+        "round_winner": -129,
+        "match_winner": 255,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          0,
+          -2147483648,
+          -107,
+          127
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          2147483647,
+          -128,
+          2147483647
+        ]
+      },
+      "expected": {
+        "variant": 0,
+        "game_mode": -2147483648,
+        "mode": 0,
+        "rounds": -107,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": 127,
+        "rotation_limit": 127,
+        "wins_required": 204,
+        "rotation_count": -107,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          2147483647,
+          -128,
+          2147483647
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_036",
+      "initial": {
+        "variant": 255,
+        "game_mode": 2147483647,
+        "mode": -32769,
+        "rounds": -7,
+        "distance": -256,
+        "handicap": 255,
+        "seconds": 0,
+        "rotations_to_win": 2147483647,
+        "rotation_limit": 127,
+        "wins_required": 128,
+        "rotation_count": -32769,
+        "round_winner": 127,
+        "match_winner": -128,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          255,
+          -404,
+          -256,
+          -129,
+          0,
+          127
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -128,
+          0,
+          -7
+        ]
+      },
+      "expected": {
+        "variant": 255,
+        "game_mode": 2147483647,
+        "mode": 255,
+        "rounds": -404,
+        "distance": -256,
+        "handicap": -129,
+        "seconds": 0,
+        "rotations_to_win": 127,
+        "rotation_limit": 127,
+        "wins_required": 55,
+        "rotation_count": -404,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          -127,
+          127
+        ],
+        "indicator_target_bits": 3212836864,
+        "score_weights": [
+          -128,
+          0,
+          -7
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_037",
+      "initial": {
+        "variant": -7,
+        "game_mode": -129,
+        "mode": 256,
+        "rounds": -7,
+        "distance": 2147483647,
+        "handicap": -2147483648,
+        "seconds": 7,
+        "rotations_to_win": -32769,
+        "rotation_limit": -1,
+        "wins_required": 0,
+        "rotation_count": -129,
+        "round_winner": 256,
+        "match_winner": -2147483648,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          -256,
+          -129,
+          -439,
+          -2147483648
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -129,
+          128,
+          -256
+        ]
+      },
+      "expected": {
+        "variant": -256,
+        "game_mode": -129,
+        "mode": 0,
+        "rounds": -439,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -2147483648,
+        "rotation_limit": -2147483648,
+        "wins_required": 38,
+        "rotation_count": -439,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 2147483648,
+        "score_weights": [
+          -129,
+          128,
+          -256
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_038",
+      "initial": {
+        "variant": 128,
+        "game_mode": 128,
+        "mode": 0,
+        "rounds": -1,
+        "distance": 0,
+        "handicap": -32769,
+        "seconds": -32769,
+        "rotations_to_win": 127,
+        "rotation_limit": 127,
+        "wins_required": 2147483647,
+        "rotation_count": 256,
+        "round_winner": 255,
+        "match_winner": 2147483647,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          -256,
+          -416,
+          255,
+          -287,
+          256,
+          2147483647
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          128,
+          128,
+          32767
+        ]
+      },
+      "expected": {
+        "variant": 128,
+        "game_mode": 128,
+        "mode": -256,
+        "rounds": -416,
+        "distance": 255,
+        "handicap": -287,
+        "seconds": 256,
+        "rotations_to_win": 2147483647,
+        "rotation_limit": 2147483647,
+        "wins_required": 49,
+        "rotation_count": -416,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          31,
+          -31
+        ],
+        "indicator_target_bits": 1048179688,
+        "score_weights": [
+          128,
+          128,
+          32767
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_039",
+      "initial": {
+        "variant": -7,
+        "game_mode": -32769,
+        "mode": 255,
+        "rounds": 255,
+        "distance": 128,
+        "handicap": -128,
+        "seconds": -7,
+        "rotations_to_win": 7,
+        "rotation_limit": 1,
+        "wins_required": 2147483647,
+        "rotation_count": 32767,
+        "round_winner": 256,
+        "match_winner": 0,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          255,
+          -129,
+          281,
+          -129
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          255,
+          -1,
+          255
+        ]
+      },
+      "expected": {
+        "variant": 255,
+        "game_mode": -129,
+        "mode": 0,
+        "rounds": 281,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -129,
+        "rotation_limit": -129,
+        "wins_required": 141,
+        "rotation_count": 281,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          255,
+          -1,
+          255
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_040",
+      "initial": {
+        "variant": -129,
+        "game_mode": 7,
+        "mode": -32769,
+        "rounds": 7,
+        "distance": 1,
+        "handicap": 32767,
+        "seconds": 256,
+        "rotations_to_win": 0,
+        "rotation_limit": 2147483647,
+        "wins_required": -2147483648,
+        "rotation_count": 0,
+        "round_winner": 32767,
+        "match_winner": 128,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          32767,
+          -299,
+          -2147483648,
+          -456,
+          -129,
+          -1
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -1,
+          -2147483648,
+          32767
+        ]
+      },
+      "expected": {
+        "variant": -129,
+        "game_mode": 7,
+        "mode": 32767,
+        "rounds": -299,
+        "distance": -2147483648,
+        "handicap": -456,
+        "seconds": -129,
+        "rotations_to_win": -1,
+        "rotation_limit": -1,
+        "wins_required": 108,
+        "rotation_count": -299,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          -56,
+          56
+        ],
+        "indicator_target_bits": 3001024512,
+        "score_weights": [
+          -1,
+          -2147483648,
+          32767
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_041",
+      "initial": {
+        "variant": 7,
+        "game_mode": 256,
+        "mode": 255,
+        "rounds": 7,
+        "distance": -1,
+        "handicap": 0,
+        "seconds": 2147483647,
+        "rotations_to_win": 0,
+        "rotation_limit": 1,
+        "wins_required": 7,
+        "rotation_count": 1,
+        "round_winner": -1,
+        "match_winner": 128,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          -7,
+          -129,
+          34,
+          -1
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          127,
+          2147483647,
+          32767
+        ]
+      },
+      "expected": {
+        "variant": -7,
+        "game_mode": -129,
+        "mode": 0,
+        "rounds": 34,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -1,
+        "rotation_limit": -1,
+        "wins_required": 18,
+        "rotation_count": 34,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          127,
+          2147483647,
+          32767
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_042",
+      "initial": {
+        "variant": -2147483648,
+        "game_mode": -1,
+        "mode": 1,
+        "rounds": 7,
+        "distance": -128,
+        "handicap": 2147483647,
+        "seconds": 2147483647,
+        "rotations_to_win": -7,
+        "rotation_limit": 0,
+        "wins_required": -129,
+        "rotation_count": -2147483648,
+        "round_winner": 255,
+        "match_winner": 127,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          7,
+          -96,
+          -129,
+          64,
+          -2147483648,
+          0
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -129,
+          -256,
+          256
+        ]
+      },
+      "expected": {
+        "variant": -2147483648,
+        "game_mode": -1,
+        "mode": 7,
+        "rounds": -96,
+        "distance": -129,
+        "handicap": 64,
+        "seconds": -2147483648,
+        "rotations_to_win": 0,
+        "rotation_limit": 0,
+        "wins_required": 209,
+        "rotation_count": -96,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          -64,
+          64
+        ],
+        "indicator_target_bits": 4286578688,
+        "score_weights": [
+          -129,
+          -256,
+          256
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_043",
+      "initial": {
+        "variant": -128,
+        "game_mode": 32767,
+        "mode": 2147483647,
+        "rounds": -2147483648,
+        "distance": 0,
+        "handicap": 1,
+        "seconds": -32769,
+        "rotations_to_win": 1,
+        "rotation_limit": 2147483647,
+        "wins_required": -128,
+        "rotation_count": -1,
+        "round_winner": 32767,
+        "match_winner": -7,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          2147483647,
+          7,
+          402,
+          -7
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          7,
+          2147483647,
+          -256
+        ]
+      },
+      "expected": {
+        "variant": 2147483647,
+        "game_mode": 7,
+        "mode": 0,
+        "rounds": 402,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -7,
+        "rotation_limit": -7,
+        "wins_required": 202,
+        "rotation_count": 402,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          7,
+          2147483647,
+          -256
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_044",
+      "initial": {
+        "variant": -7,
+        "game_mode": 7,
+        "mode": -256,
+        "rounds": -2147483648,
+        "distance": -256,
+        "handicap": -129,
+        "seconds": -32769,
+        "rotations_to_win": 1,
+        "rotation_limit": 127,
+        "wins_required": 7,
+        "rotation_count": -129,
+        "round_winner": 255,
+        "match_winner": 32767,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          7,
+          302,
+          255,
+          -252,
+          256,
+          127
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          256,
+          0,
+          2147483647
+        ]
+      },
+      "expected": {
+        "variant": -7,
+        "game_mode": 7,
+        "mode": 7,
+        "rounds": 302,
+        "distance": 255,
+        "handicap": -252,
+        "seconds": 256,
+        "rotations_to_win": 127,
+        "rotation_limit": 127,
+        "wins_required": 152,
+        "rotation_count": 302,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          -4,
+          4
+        ],
+        "indicator_target_bits": 3170959876,
+        "score_weights": [
+          256,
+          0,
+          2147483647
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_045",
+      "initial": {
+        "variant": 128,
+        "game_mode": 256,
+        "mode": -2147483648,
+        "rounds": 0,
+        "distance": -2147483648,
+        "handicap": 7,
+        "seconds": -2147483648,
+        "rotations_to_win": 0,
+        "rotation_limit": 1,
+        "wins_required": 7,
+        "rotation_count": 128,
+        "round_winner": -256,
+        "match_winner": 1,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          256,
+          0,
+          358,
+          -256
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -128,
+          -7,
+          -7
+        ]
+      },
+      "expected": {
+        "variant": 256,
+        "game_mode": 0,
+        "mode": 0,
+        "rounds": 358,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -256,
+        "rotation_limit": -256,
+        "wins_required": 180,
+        "rotation_count": 358,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          -128,
+          -7,
+          -7
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_046",
+      "initial": {
+        "variant": 128,
+        "game_mode": 255,
+        "mode": 0,
+        "rounds": -7,
+        "distance": -128,
+        "handicap": -256,
+        "seconds": -129,
+        "rotations_to_win": -2147483648,
+        "rotation_limit": 2147483647,
+        "wins_required": 1,
+        "rotation_count": 1,
+        "round_winner": 256,
+        "match_winner": 128,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          0,
+          -24,
+          -128,
+          53,
+          255,
+          0
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -128,
+          -1,
+          -128
+        ]
+      },
+      "expected": {
+        "variant": 128,
+        "game_mode": 255,
+        "mode": 0,
+        "rounds": -24,
+        "distance": -128,
+        "handicap": 53,
+        "seconds": 255,
+        "rotations_to_win": 0,
+        "rotation_limit": 0,
+        "wins_required": 245,
+        "rotation_count": -24,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          -53,
+          53
+        ],
+        "indicator_target_bits": 3000238080,
+        "score_weights": [
+          -128,
+          -1,
+          -128
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_047",
+      "initial": {
+        "variant": -7,
+        "game_mode": -7,
+        "mode": 127,
+        "rounds": 1,
+        "distance": 1,
+        "handicap": 255,
+        "seconds": -129,
+        "rotations_to_win": -256,
+        "rotation_limit": 1,
+        "wins_required": -2147483648,
+        "rotation_count": -2147483648,
+        "round_winner": -7,
+        "match_winner": 128,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          1,
+          -2147483648,
+          -426,
+          7
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          7,
+          -7,
+          128
+        ]
+      },
+      "expected": {
+        "variant": 1,
+        "game_mode": -2147483648,
+        "mode": 0,
+        "rounds": -426,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": 7,
+        "rotation_limit": 7,
+        "wins_required": 44,
+        "rotation_count": -426,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          7,
+          -7,
+          128
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_048",
+      "initial": {
+        "variant": -256,
+        "game_mode": 128,
+        "mode": -2147483648,
+        "rounds": 128,
+        "distance": 32767,
+        "handicap": -256,
+        "seconds": 127,
+        "rotations_to_win": -32769,
+        "rotation_limit": 1,
+        "wins_required": 127,
+        "rotation_count": -129,
+        "round_winner": -128,
+        "match_winner": -32769,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          1,
+          -355,
+          128,
+          -136,
+          128,
+          -32769
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -256,
+          127,
+          256
+        ]
+      },
+      "expected": {
+        "variant": -256,
+        "game_mode": 128,
+        "mode": 1,
+        "rounds": -355,
+        "distance": 128,
+        "handicap": -136,
+        "seconds": 128,
+        "rotations_to_win": -32769,
+        "rotation_limit": -32769,
+        "wins_required": 80,
+        "rotation_count": -355,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          -120,
+          120
+        ],
+        "indicator_target_bits": 3270508544,
+        "score_weights": [
+          -256,
+          127,
+          256
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_049",
+      "initial": {
+        "variant": 2147483647,
+        "game_mode": 255,
+        "mode": 128,
+        "rounds": -256,
+        "distance": -129,
+        "handicap": 255,
+        "seconds": -1,
+        "rotations_to_win": 0,
+        "rotation_limit": 2147483647,
+        "wins_required": 2147483647,
+        "rotation_count": 0,
+        "round_winner": 255,
+        "match_winner": 255,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          256,
+          -32769,
+          454,
+          -7
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -2147483648,
+          -1,
+          1
+        ]
+      },
+      "expected": {
+        "variant": 256,
+        "game_mode": -32769,
+        "mode": 0,
+        "rounds": 454,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -7,
+        "rotation_limit": -7,
+        "wins_required": 228,
+        "rotation_count": 454,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          -2147483648,
+          -1,
+          1
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_050",
+      "initial": {
+        "variant": -128,
+        "game_mode": -2147483648,
+        "mode": -2147483648,
+        "rounds": 127,
+        "distance": 255,
+        "handicap": 7,
+        "seconds": -32769,
+        "rotations_to_win": 32767,
+        "rotation_limit": 2147483647,
+        "wins_required": 7,
+        "rotation_count": -1,
+        "round_winner": -128,
+        "match_winner": 0,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          -32769,
+          212,
+          -128,
+          456,
+          256,
+          -256
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -7,
+          -2147483648,
+          -32769
+        ]
+      },
+      "expected": {
+        "variant": -128,
+        "game_mode": -2147483648,
+        "mode": -32769,
+        "rounds": 212,
+        "distance": -128,
+        "handicap": 456,
+        "seconds": 256,
+        "rotations_to_win": -256,
+        "rotation_limit": -256,
+        "wins_required": 107,
+        "rotation_count": 212,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          56,
+          -56
+        ],
+        "indicator_target_bits": 853540864,
+        "score_weights": [
+          -7,
+          -2147483648,
+          -32769
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_051",
+      "initial": {
+        "variant": 0,
+        "game_mode": -129,
+        "mode": -7,
+        "rounds": -129,
+        "distance": -256,
+        "handicap": 128,
+        "seconds": 256,
+        "rotations_to_win": -128,
+        "rotation_limit": 2147483647,
+        "wins_required": 1,
+        "rotation_count": 7,
+        "round_winner": 1,
+        "match_winner": -256,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          7,
+          -2147483648,
+          169,
+          -256
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -129,
+          -2147483648,
+          7
+        ]
+      },
+      "expected": {
+        "variant": 7,
+        "game_mode": -2147483648,
+        "mode": 0,
+        "rounds": 169,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -256,
+        "rotation_limit": -256,
+        "wins_required": 85,
+        "rotation_count": 169,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          -129,
+          -2147483648,
+          7
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_052",
+      "initial": {
+        "variant": -1,
+        "game_mode": 256,
+        "mode": -2147483648,
+        "rounds": -1,
+        "distance": -7,
+        "handicap": -129,
+        "seconds": 1,
+        "rotations_to_win": -1,
+        "rotation_limit": 0,
+        "wins_required": 7,
+        "rotation_count": 127,
+        "round_winner": 0,
+        "match_winner": 1,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          127,
+          189,
+          256,
+          -310,
+          7,
+          127
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -1,
+          2147483647,
+          -1
+        ]
+      },
+      "expected": {
+        "variant": -1,
+        "game_mode": 256,
+        "mode": 127,
+        "rounds": 189,
+        "distance": 256,
+        "handicap": -310,
+        "seconds": 7,
+        "rotations_to_win": 127,
+        "rotation_limit": 127,
+        "wins_required": 95,
+        "rotation_count": 189,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          54,
+          -54
+        ],
+        "indicator_target_bits": 2139095040,
+        "score_weights": [
+          -1,
+          2147483647,
+          -1
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_053",
+      "initial": {
+        "variant": 0,
+        "game_mode": 255,
+        "mode": -7,
+        "rounds": -256,
+        "distance": 2147483647,
+        "handicap": 128,
+        "seconds": -32769,
+        "rotations_to_win": 127,
+        "rotation_limit": 1,
+        "wins_required": 127,
+        "rotation_count": 2147483647,
+        "round_winner": 2147483647,
+        "match_winner": 128,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          256,
+          128,
+          202,
+          2147483647
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          0,
+          256,
+          1
+        ]
+      },
+      "expected": {
+        "variant": 256,
+        "game_mode": 128,
+        "mode": 0,
+        "rounds": 202,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": 2147483647,
+        "rotation_limit": 2147483647,
+        "wins_required": 102,
+        "rotation_count": 202,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          0,
+          256,
+          1
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_054",
+      "initial": {
+        "variant": 7,
+        "game_mode": -256,
+        "mode": 256,
+        "rounds": 127,
+        "distance": 7,
+        "handicap": -256,
+        "seconds": 256,
+        "rotations_to_win": 32767,
+        "rotation_limit": 0,
+        "wins_required": -1,
+        "rotation_count": 127,
+        "round_winner": 128,
+        "match_winner": -256,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          -1,
+          -344,
+          255,
+          -168,
+          -7,
+          -2147483648
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          7,
+          -1,
+          -128
+        ]
+      },
+      "expected": {
+        "variant": 7,
+        "game_mode": -256,
+        "mode": -1,
+        "rounds": -344,
+        "distance": 255,
+        "handicap": -168,
+        "seconds": -7,
+        "rotations_to_win": -2147483648,
+        "rotation_limit": -2147483648,
+        "wins_required": 85,
+        "rotation_count": -344,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          -88,
+          88
+        ],
+        "indicator_target_bits": 4286578688,
+        "score_weights": [
+          7,
+          -1,
+          -128
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_055",
+      "initial": {
+        "variant": -1,
+        "game_mode": -32769,
+        "mode": 255,
+        "rounds": 1,
+        "distance": -7,
+        "handicap": 255,
+        "seconds": -129,
+        "rotations_to_win": -1,
+        "rotation_limit": -1,
+        "wins_required": 255,
+        "rotation_count": -7,
+        "round_winner": 32767,
+        "match_winner": -32769,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          2147483647,
+          -1,
+          -487,
+          256
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          32767,
+          -7,
+          -129
+        ]
+      },
+      "expected": {
+        "variant": 2147483647,
+        "game_mode": -1,
+        "mode": 0,
+        "rounds": -487,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": 256,
+        "rotation_limit": 256,
+        "wins_required": 14,
+        "rotation_count": -487,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 2147483648,
+        "score_weights": [
+          32767,
+          -7,
+          -129
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_056",
+      "initial": {
+        "variant": -256,
+        "game_mode": 0,
+        "mode": 0,
+        "rounds": 2147483647,
+        "distance": -256,
+        "handicap": -1,
+        "seconds": 2147483647,
+        "rotations_to_win": 128,
+        "rotation_limit": 2147483647,
+        "wins_required": -2147483648,
+        "rotation_count": -1,
+        "round_winner": 255,
+        "match_winner": 2147483647,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          -2147483648,
+          -455,
+          1,
+          -25,
+          -128,
+          127
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -7,
+          -256,
+          -7
+        ]
+      },
+      "expected": {
+        "variant": -256,
+        "game_mode": 0,
+        "mode": -2147483648,
+        "rounds": -455,
+        "distance": 1,
+        "handicap": -25,
+        "seconds": -128,
+        "rotations_to_win": 127,
+        "rotation_limit": 127,
+        "wins_required": 30,
+        "rotation_count": -455,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          25,
+          -25
+        ],
+        "indicator_target_bits": 843579392,
+        "score_weights": [
+          -7,
+          -256,
+          -7
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_057",
+      "initial": {
+        "variant": 256,
+        "game_mode": 0,
+        "mode": 1,
+        "rounds": -129,
+        "distance": 128,
+        "handicap": -256,
+        "seconds": 127,
+        "rotations_to_win": -32769,
+        "rotation_limit": -2147483648,
+        "wins_required": -2147483648,
+        "rotation_count": -2147483648,
+        "round_winner": -32769,
+        "match_winner": -7,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          32767,
+          255,
+          401,
+          7
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          128,
+          128,
+          -7
+        ]
+      },
+      "expected": {
+        "variant": 32767,
+        "game_mode": 255,
+        "mode": 0,
+        "rounds": 401,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": 7,
+        "rotation_limit": 7,
+        "wins_required": 201,
+        "rotation_count": 401,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 2147483648,
+        "score_weights": [
+          128,
+          128,
+          -7
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_058",
+      "initial": {
+        "variant": 2147483647,
+        "game_mode": -7,
+        "mode": 2147483647,
+        "rounds": -128,
+        "distance": -1,
+        "handicap": 1,
+        "seconds": -2147483648,
+        "rotations_to_win": -1,
+        "rotation_limit": 0,
+        "wins_required": 2147483647,
+        "rotation_count": 2147483647,
+        "round_winner": -1,
+        "match_winner": 127,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          -1,
+          488,
+          1,
+          407,
+          0,
+          2147483647
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          1,
+          -256,
+          -1
+        ]
+      },
+      "expected": {
+        "variant": 2147483647,
+        "game_mode": -7,
+        "mode": -1,
+        "rounds": 488,
+        "distance": 1,
+        "handicap": 407,
+        "seconds": 0,
+        "rotations_to_win": 2147483647,
+        "rotation_limit": 2147483647,
+        "wins_required": 245,
+        "rotation_count": 488,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          105,
+          -105
+        ],
+        "indicator_target_bits": 2139095040,
+        "score_weights": [
+          1,
+          -256,
+          -1
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_059",
+      "initial": {
+        "variant": 1,
+        "game_mode": -129,
+        "mode": -32769,
+        "rounds": 1,
+        "distance": 2147483647,
+        "handicap": 2147483647,
+        "seconds": 2147483647,
+        "rotations_to_win": -129,
+        "rotation_limit": 1,
+        "wins_required": 127,
+        "rotation_count": 255,
+        "round_winner": 255,
+        "match_winner": 32767,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          -128,
+          0,
+          -140,
+          -1
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          2147483647,
+          128,
+          -256
+        ]
+      },
+      "expected": {
+        "variant": -128,
+        "game_mode": 0,
+        "mode": 0,
+        "rounds": -140,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -1,
+        "rotation_limit": -1,
+        "wins_required": 187,
+        "rotation_count": -140,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          2147483647,
+          128,
+          -256
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_060",
+      "initial": {
+        "variant": -128,
+        "game_mode": 127,
+        "mode": -7,
+        "rounds": -2147483648,
+        "distance": -32769,
+        "handicap": 128,
+        "seconds": -128,
+        "rotations_to_win": -129,
+        "rotation_limit": 127,
+        "wins_required": 32767,
+        "rotation_count": -1,
+        "round_winner": -32769,
+        "match_winner": -256,
+        "field_444": 0,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          255,
+          -429,
+          -32769,
+          -393,
+          -128,
+          -2147483648
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -1,
+          2147483647,
+          0
+        ]
+      },
+      "expected": {
+        "variant": -128,
+        "game_mode": 127,
+        "mode": 255,
+        "rounds": -429,
+        "distance": -32769,
+        "handicap": -393,
+        "seconds": -128,
+        "rotations_to_win": -2147483648,
+        "rotation_limit": -2147483648,
+        "wins_required": 43,
+        "rotation_count": -429,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          -119,
+          119
+        ],
+        "indicator_target_bits": 3211780031,
+        "score_weights": [
+          -1,
+          2147483647,
+          0
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_061",
+      "initial": {
+        "variant": 255,
+        "game_mode": 128,
+        "mode": 128,
+        "rounds": 7,
+        "distance": 128,
+        "handicap": 32767,
+        "seconds": 2147483647,
+        "rotations_to_win": 0,
+        "rotation_limit": 2147483647,
+        "wins_required": -256,
+        "rotation_count": 255,
+        "round_winner": 128,
+        "match_winner": 128,
+        "field_444": 1,
+        "field_445": 0
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          255,
+          -128,
+          205,
+          -128
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -2147483648,
+          -128,
+          0
+        ]
+      },
+      "expected": {
+        "variant": 255,
+        "game_mode": -128,
+        "mode": 0,
+        "rounds": 205,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -128,
+        "rotation_limit": -128,
+        "wins_required": 103,
+        "rotation_count": 205,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          -2147483648,
+          -128,
+          0
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_062",
+      "initial": {
+        "variant": -7,
+        "game_mode": 128,
+        "mode": 0,
+        "rounds": 256,
+        "distance": -128,
+        "handicap": 256,
+        "seconds": -128,
+        "rotations_to_win": -32769,
+        "rotation_limit": 2147483647,
+        "wins_required": -1,
+        "rotation_count": 2147483647,
+        "round_winner": -256,
+        "match_winner": 255,
+        "field_444": 0,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 0,
+        "single": [
+          128,
+          -73,
+          2147483647,
+          -274,
+          -1,
+          -7
+        ],
+        "multi": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          -32769,
+          127,
+          0
+        ]
+      },
+      "expected": {
+        "variant": -7,
+        "game_mode": 128,
+        "mode": 128,
+        "rounds": -73,
+        "distance": 2147483647,
+        "handicap": -274,
+        "seconds": -1,
+        "rotations_to_win": -7,
+        "rotation_limit": -7,
+        "wins_required": 221,
+        "rotation_count": -73,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          18,
+          -18
+        ],
+        "indicator_target_bits": 839909376,
+        "score_weights": [
+          -32769,
+          127,
+          0
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "single_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    },
+    {
+      "label": "case_063",
+      "initial": {
+        "variant": 256,
+        "game_mode": -1,
+        "mode": -1,
+        "rounds": 32767,
+        "distance": -2147483648,
+        "handicap": 7,
+        "seconds": 7,
+        "rotations_to_win": 7,
+        "rotation_limit": 127,
+        "wins_required": -129,
+        "rotation_count": 0,
+        "round_winner": -32769,
+        "match_winner": 256,
+        "field_444": 1,
+        "field_445": 1
+      },
+      "inputs": {
+        "multi_flag": 1,
+        "multi": [
+          7,
+          32767,
+          -56,
+          -128
+        ],
+        "single": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scores": [
+          32767,
+          -128,
+          -256
+        ]
+      },
+      "expected": {
+        "variant": 7,
+        "game_mode": 32767,
+        "mode": 0,
+        "rounds": -56,
+        "distance": 0,
+        "handicap": 0,
+        "seconds": 0,
+        "rotations_to_win": -128,
+        "rotation_limit": -128,
+        "wins_required": 229,
+        "rotation_count": -56,
+        "round_winner": -1,
+        "match_winner": -1,
+        "rotations": [
+          0,
+          0
+        ],
+        "indicator_target_bits": 0,
+        "score_weights": [
+          32767,
+          -128,
+          -256
+        ],
+        "statistics": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "field_444": false,
+        "field_445": false
+      },
+      "effects": [
+        [
+          "multi_tunables"
+        ],
+        [
+          "reset_stats"
+        ]
+      ]
+    }
+  ]
+}

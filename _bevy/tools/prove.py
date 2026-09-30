@@ -233,6 +233,11 @@ def main():
                              ('tetherball_ai_hit_oracle.py','Original tetherball AI hit compulsion'),
                              ('tetherball_animation_init_oracle.py','Original tetherball player animation initialization'),
                              ('tetherball_reset_runtime_oracle.py','Original tetherball reset with decoded animation initialization'),
+                             ('tetherball_frontend_oracle.py','Original tetherball frontend callbacks, pause reset and exit status'),
+                             ('tetherball_runtime_oracle.py','Original complete tetherball frames with shared gesture, scene and handler state'),
+                             ('tetherball_runtime_reset_oracle.py','Original combined tetherball runtime resets with live queue, trails, AI and HUD'),
+                             ('tetherball_initialize_oracle.py','Original tetherball game-logic initialization and prior-limit arithmetic'),
+                             ('tetherball_player_init_oracle.py','Original tetherball player reuse/spawn and ordered startup services'),
                              ('mp3_lsf_oracle.py','MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC')]:
             args=[] if script=='mp3_lsf_oracle.py' else ['--check']
             r=subprocess.run([sys.executable,str(HERE/script),*args],cwd=BEVY,capture_output=True,text=True)
@@ -278,6 +283,10 @@ def main():
                 ('tetherball_ai_hit::tests','Rust tetherball AI hit compulsion'),
                 ('tetherball_animation_init::tests','Rust tetherball player animation initialization'),
                 ('tetherball_reset_runtime::tests','Rust tetherball reset with decoded animation initialization'),
+                ('tetherball_frontend::tests','Rust tetherball frontend callbacks and integer exit status'),
+                ('tetherball_runtime::reset_tests','Rust combined tetherball runtime resets preserve shared owners and effect order'),
+                ('tetherball_initialize::tests','Rust tetherball game-logic initialization matches original shared stores'),
+                ('tetherball_player_init::tests','Rust tetherball player reuse/spawn initialization matches original calls'),
                 ('mp3::tests','MPEG-2 side information and scale-factor regression checks')]
         for name,label in suites:
             r=subprocess.run(['cargo','test','--release','--offline','--locked',name],cwd=BEVY,capture_output=True,text=True)

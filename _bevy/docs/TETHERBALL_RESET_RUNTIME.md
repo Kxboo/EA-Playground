@@ -1,4 +1,4 @@
-# ResetRound animation composition
+# Round and minigame reset animation composition
 
 `tetherball_reset_runtime::reset_round_with_animations` composes the recovered
 ResetRound projection with the complete native InitializePlayerAnimations body.
@@ -28,12 +28,15 @@ AI allocation/initialization, database, controller, camera and marker boundaries
 remain supplied by the host. In particular, this adapter does not synchronize
 unmodeled memory of newly allocated AI entities into ServeState shadows.
 
+`reset_minigame_with_animations` applies the same composition to ResetMiniGame,
+including its ResetStats and subsequent ResetRound call.
+
 `tools/tetherball_reset_runtime_oracle.py --check` executes original ResetRound
 at `0x803994f4` and removes the old hook for InitializePlayerAnimations so its
 full original body executes. It retains only the existing reset oracle's other
 explicit engine/database/AI boundaries. The ELF is pinned to SHA-256
 `5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c`.
-The 288 cases combine all 24 original round-reset scenarios with counts 0/1/2
+The 576 cases combine 24 round-reset and 24 minigame-reset scenarios with counts 0/1/2
 and all four independent two-player base-flag combinations; native server
 selection determines the side flags. Arbitrary initial table words expose
 unprocessed-player preservation. The native trace contains no

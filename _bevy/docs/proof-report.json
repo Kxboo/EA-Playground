@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-30 05:26",
+ "generated": "2026-09-30 06:14",
  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
  "passed": true,
- "passed_count": 91,
- "total": 91,
+ "passed_count": 100,
+ "total": 100,
  "checks": [
   {
    "name": "Symbol-bearing ELF matches the pinned hash",
@@ -238,7 +238,32 @@
   {
    "name": "Original tetherball reset with decoded animation initialization",
    "ok": true,
-   "detail": "Verified 288 original composed ResetRound calls"
+   "detail": "Verified 576 original composed reset calls"
+  },
+  {
+   "name": "Original tetherball frontend callbacks, pause reset and exit status",
+   "ok": true,
+   "detail": "Verified 112 original frontend calls"
+  },
+  {
+   "name": "Original complete tetherball frames with shared gesture, scene and handler state",
+   "ok": true,
+   "detail": "Verified 180 complete original tetherball frames"
+  },
+  {
+   "name": "Original combined tetherball runtime resets with live queue, trails, AI and HUD",
+   "ok": true,
+   "detail": "Verified 24 original combined runtime reset calls"
+  },
+  {
+   "name": "Original tetherball game-logic initialization and prior-limit arithmetic",
+   "ok": true,
+   "detail": "PASS 64 InitGameLogicState calls with native arithmetic/stores"
+  },
+  {
+   "name": "Original tetherball player reuse/spawn and ordered startup services",
+   "ok": true,
+   "detail": "Verified original InitializePlayer: 8 cases"
   },
   {
    "name": "MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC",
@@ -413,7 +438,7 @@
   {
    "name": "Native complete tetherball return and accelerate graph matches original PowerPC vectors",
    "ok": true,
-   "detail": "test result: ok. 5 passed; 0 failed"
+   "detail": "test result: ok. 6 passed; 0 failed"
   },
   {
    "name": "Rust tetherball reset with decoded AI construction and initialization",
@@ -442,6 +467,26 @@
   },
   {
    "name": "Rust tetherball reset with decoded animation initialization",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Rust tetherball frontend callbacks and integer exit status",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Rust combined tetherball runtime resets preserve shared owners and effect order",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Rust tetherball game-logic initialization matches original shared stores",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Rust tetherball player reuse/spawn initialization matches original calls",
    "ok": true,
    "detail": "test result: ok. 1 passed; 0 failed"
   },

@@ -163,7 +163,7 @@ def generate():
     e.hooks[0x803ab4f0]=lambda em:em.events.append(['base_update',sx(em.r[4],32)])
     for code,addr in [(1,0x80397988),(3,0x803979e4),(8,0x80399b60),(9,0x80399be0),(26,0x80397ae4),(27,0x80397b74),(28,0x80398368),(29,0x80398a84),(30,0x80399108)]:
      def handler(em,code=code):
-      em.events.append(['handler',code,sx(em.r[4],32)]);em.wr(GAME+0x24,bytes([code==9]));em.r[3]=code%2
+      em.events.append(['handler',code,sx(em.r[4],32)]);em.wr(GAME+0x24,bytes([code==9]));em.r[3]=2 if code==9 else code%2
      e.hooks[addr]=handler
    returned=e.call(address,(GAME,arg))
    e.hooks=hooks
