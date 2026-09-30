@@ -212,6 +212,10 @@ def main():
                 ('skeleton::tests','Rust skeleton reader: 181 bones of 4 rigs match the reference; cached world rotations agree'),
                 ('anim::tests::matches_python_reference_for_every_clip','Rust animation codecs: 266 clips match the Python reference per bone and channel'),
                 ('character::tests','Rust player build: skinned model + rig + clips decode from the original files'),
+                ('tpl::tests::corpus_matches_python_decoder','Rust TPL decoder: all 199 distinct texture banks match the Python pixels'),
+                ('locale::tests','Localisation: 10 .loc files + string.idx decode, TRCLocale hash routine reproduced, keys from the executable resolve'),
+                ('conversation::tests','Conversation trees: all 32 .con files parse exactly; 376/429 node texts resolve through the locale'),
+                ('placement::tests','Level placement: 49 marker sets (304 markers) and 10 RC checkpoint files (20 lanes) parse exactly'),
                 ('locomotion::tests','Locomotion constants and behaviour')]
         for name,label in suites:
             r=subprocess.run(['cargo','test','--release','--offline',name],cwd=BEVY,capture_output=True,text=True)
