@@ -62,7 +62,7 @@ fn mat3_cols(m:&[f64;9])->Mat3{Mat3::from_cols(Vec3::new(m[0] as f32,m[3] as f32
 pub fn spawn_rig(commands:&mut Commands,ibp:&mut Assets<SkinnedMeshInverseBindposes>,skeleton:&Skeleton,up:&assets::Uploaded,parent:Entity,player:Entity)->Vec<Entity>{
     let joints:Vec<Entity>=skeleton.bones.iter().map(|b|{
         let t=Transform{translation:Vec3::new(b.trans[0] as f32,b.trans[1] as f32,b.trans[2] as f32),rotation:Quat::from_xyzw(b.quat[0] as f32,b.quat[1] as f32,b.quat[2] as f32,b.quat[3] as f32).normalize(),scale:Vec3::new(b.scale[0] as f32,b.scale[1] as f32,b.scale[2] as f32)};
-        commands.spawn((joint_name(b.index),t,Visibility::default(),target(b.index),AnimatedBy(player))).id()
+        commands.spawn((Name::new(b.name.clone()),t,Visibility::default(),target(b.index),AnimatedBy(player))).id()
     }).collect();
     for b in &skeleton.bones{
         let owner=if b.parent<0{parent}else{joints[b.parent as usize]};

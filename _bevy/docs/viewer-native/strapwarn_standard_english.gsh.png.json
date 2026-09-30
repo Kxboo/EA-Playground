@@ -1,0 +1,14 @@
+{
+  "animation_players": 0,
+  "animation_time": 0.0,
+  "loaded": true,
+  "mesh_entities": 0,
+  "preview": {
+    "decoder_version": "rust-gsh-1",
+    "height": 480,
+    "kind": "image",
+    "name": "strapwarn_standard_english.gsh (strapA_screen)",
+    "width": 640
+  },
+  "status": "strapwarn_standard_english.gsh (strapA_screen) • native Rust decoder"
+}

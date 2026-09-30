@@ -202,9 +202,21 @@ def recorded_checks():
 def main():
     e=exe_checks();dol_checks(e);constants_checks();vlt_checks();havok_checks();data_checks();decode_checks()
     if '--with-tests' in sys.argv:
-        r=subprocess.run(['cargo','test','--release','--offline'],cwd=BEVY,capture_output=True,text=True)
-        m=re.search(r'test result: (\w+)\. (\d+) passed; (\d+) failed',r.stdout)
-        check('Rust unit tests (locomotion constants, hash64 golden vectors, database loader)',bool(m) and m.group(1)=='ok',m.group(0) if m else r.stderr[-200:])
+        # Differential tests: each Rust decoder must reproduce the Python reference / recorded hashes on the whole corpus.
+        suites=[('archive::tests::matches_recorded_corpus_hashes','Rust archive reader: all recorded corpus records match their SHA-256'),
+                ('gsh::tests::corpus_matches_python_decoder','Rust GSH texture decoder: every image of every bank matches the Python pixels'),
+                ('model::tests::corpus_matches_python_reference','Rust model decoder: every primitive of all 836 models matches the reference'),
+                ('assets::tests::world_builds_with_all_textures','Rust asset builder: world mesh, 161 textures, 100,576 triangles, no warnings'),
+                ('vlt::tests','Rust Attrib database: hash64 golden vectors + full database decode'),
+                ('havok::tests','Rust Havok reader: collision bodies/triangles match the Python reference'),
+                ('skeleton::tests','Rust skeleton reader: 181 bones of 4 rigs match the reference; cached world rotations agree'),
+                ('anim::tests::matches_python_reference_for_every_clip','Rust animation codecs: 266 clips match the Python reference per bone and channel'),
+                ('character::tests','Rust player build: skinned model + rig + clips decode from the original files'),
+                ('locomotion::tests','Locomotion constants and behaviour')]
+        for name,label in suites:
+            r=subprocess.run(['cargo','test','--release','--offline',name],cwd=BEVY,capture_output=True,text=True)
+            m=re.search(r'test result: (\w+)\. (\d+) passed; (\d+) failed',r.stdout)
+            check(label,bool(m) and m.group(1)=='ok' and int(m.group(2))>0,m.group(0) if m else (r.stderr or r.stdout)[-200:])
     if '--run-selftest' in sys.argv:
         exe=BEVY/'target'/'release'/'EAGL-Workbench.exe';r=subprocess.run([str(exe),'--selftest',str(BEVY/'docs'/'selftest')],cwd=BEVY,timeout=300)
         check('Game self-test run',r.returncode==0,f'exit code {r.returncode}')
@@ -213,7 +225,7 @@ def main():
     scope=['This proves: the executable in use is the retail binary with symbols; extracted data is consistent across three copies; the decoders reproduce recorded results; the game slice boots from the original files and moves a character using constants read from the executable.',
            'This does NOT prove: a full decompilation. ~19k named functions exist, but only LocalCharacterControl::Update locomotion and a set of rendering/skinning routines are reconstructed.',
            'Provisional (not from the executable): jump/gravity, terrain collision from display meshes, camera framing, spawn point. The world LOD mesh is curved; the original bend/streaming logic is unrecovered.',
-           'Not reconstructed: AI, minigames, conversations, physics (Havok), audio/video playback, APT menu scripting, save data.']
+           'Not reconstructed: AI, minigames, conversations, Havok dynamics (collision shapes and world settings are decoded), audio/video playback, APT menu scripting, save data.']
     rep=dict(generated=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'),elf_sha256=PINNED_ELF,passed=passed==len(checks),passed_count=passed,total=len(checks),checks=checks,scope=scope)
     (BEVY/'docs'/'proof-report.json').write_text(json.dumps(rep,indent=1),encoding='utf-8')
     print(f'\n{passed}/{len(checks)} checks passed');sys.exit(0 if passed==len(checks) else 1)

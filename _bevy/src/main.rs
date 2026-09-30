@@ -14,6 +14,7 @@ mod model;
 mod assets;
 mod skeleton;
 mod anim;
+mod preview;
 mod character;
 
 use bevy::{prelude::*,render::view::window::screenshot::{Screenshot,save_to_disk},winit::WinitSettings};
@@ -56,7 +57,7 @@ fn main(){
     let bridge=bridge::Bridge::start();bridge.catalog();
     App::new()
         .insert_resource(start).insert_resource(SelfTestOut(selftest)).insert_resource(Flow{on:std::env::args().any(|a|a=="--flow-test"),step:0,since:0.,log:vec![]}).insert_resource(Shot{path:arg("--shot"),at:arg("--shot-at").and_then(|s|s.parse().ok()).unwrap_or(3.),taken:false}).init_resource::<menu::Proof>()
-        .insert_resource(state).insert_resource(bridge).insert_resource(viewer::Orbit::default())
+        .insert_resource(state).insert_resource(bridge).insert_resource(viewer::Native::new()).insert_resource(viewer::Orbit::default())
         .insert_resource(RunClock(Instant::now()))
         .insert_resource(ClearColor(Color::srgb(0.055,0.066,0.082)))
         .insert_resource(GlobalAmbientLight{color:Color::WHITE,brightness:800.,..default()})

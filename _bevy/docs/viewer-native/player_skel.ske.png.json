@@ -1,0 +1,15 @@
+{
+  "animation_players": 0,
+  "animation_time": 0.0,
+  "loaded": true,
+  "mesh_entities": 0,
+  "preview": {
+    "animation": "",
+    "bones": 68,
+    "decode_ms": 2.5278,
+    "decoder_version": "rust-anim-1",
+    "kind": "skeleton",
+    "name": "player_skel.ske"
+  },
+  "status": "player_skel.ske • 3 ms • native Rust decoder"
+}

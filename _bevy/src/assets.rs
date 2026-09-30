@@ -106,11 +106,14 @@ fn wrap_modes(symbol:&str,w:usize,h:usize)->[Wrap;2]{
 }
 
 /// Decode a model into CPU-side buffers.  `source` is a (virtual) path, e.g. `...\world.big::world-low-all.o`.
-pub fn build(source:&str,schemas:&model::Schemas)->Result<BuiltModel,String>{
+pub fn build(source:&str,schemas:&model::Schemas)->Result<BuiltModel,String>{build_with(source,schemas,&[])}
+/// `extra_banks`: additional texture banks (virtual paths) searched after the model's own sibling banks.
+pub fn build_with(source:&str,schemas:&model::Schemas,extra_banks:&[String])->Result<BuiltModel,String>{
     let (data,_)=archive::read_virtual(source)?;
     let mf=model::parse(&data,schemas)?;
     let mut warnings=vec![];
-    let banks=load_banks(&texture_sources(source),&mut warnings);
+    let mut sources=texture_sources(source);for e in extra_banks{if !sources.contains(e){sources.push(e.clone())}}
+    let banks=load_banks(&sources,&mut warnings);
     let mut textures:Vec<BuiltTexture>=vec![];let mut tex_index:HashMap<String,Option<usize>>=HashMap::new();
     let mut materials:Vec<BuiltMaterial>=vec![];let mut prims=vec![];
     let (mut lo,mut hi)=([f32::MAX;3],[f32::MIN;3]);
