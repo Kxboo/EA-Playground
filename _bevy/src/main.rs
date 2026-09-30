@@ -39,6 +39,7 @@ mod tetherball_additional_player;
 mod tetherball_ball_init;
 mod tetherball_assets;
 mod animation_graph;
+mod animation_playback;
 mod minigame_entry;
 mod tetherball_server;
 mod tetherball_startup;

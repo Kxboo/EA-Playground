@@ -244,6 +244,7 @@ def main():
                              ('tetherball_ball_init_oracle.py','Original tetherball ball assets, shadows and initial tuning'),
                              ('tetherball_server_oracle.py','Original live server selection, marker timing and ball Grab'),
                              ('animation_graph_oracle.py','Original CSV animation graph mapping, gender overlay and alternate/failure semantics'),
+                             ('animation_playback_oracle.py','Original AnimationState selection, timing, events and ordered pose/marker services'),
                              ('minigame_entry_oracle.py','Original shared area conversion and pregame entry'),
                              ('tetherball_session_oracle.py','Original session setters and team copy'),
                              ('tetherball_constructor_oracle.py','Original game/base/world constructor images and Runtime projections'),

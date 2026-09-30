@@ -1,0 +1,17 @@
+# AnimationState playback evidence
+
+`animation_playback.rs` ports `SetNextAnim` (0x803c8318), complete `Update` (0x803c851c), `ProcessAnimEvents` (0x803c89a4), `SetNextAnimState` (0x803c8b78), `SetStateTime` (0x803c8c84) and `GetStateTime` (0x803c8cd4). It shares the recovered graph IDs and metadata with `animation_graph.rs`; function handles remain explicit engine inputs.
+
+Selection chooses among loaded clip alternatives, allocates a function, obtains its length and applies start/trim and reverse/random-start rules. State changes take the blend duration from the outgoing state, copy the saved pose, release the old function and skip advancement on the next update. A same-state request without force returns before writing speed; an unloaded target writes speed and returns false. Invalid graph IDs and unsafe clip/marker inputs return errors.
+
+Function vtable +0x10 is `UseFPS`, and +0x18 is `GetLength`. `FnCompoundChannel::UseFPS` (0x803fecac) stores the flag and lazily obtains FPS; its `GetLength` (0x803ffaf8) returns sample count when false and count/FPS when true. The state selection path obtains both lengths in that order for seconds-based states and retains the native subtraction/division order. Frame-based states use length minus one and scale update/blend/auto-transition deltas by 30. Actual function construction, FPS attributes and evaluation remain host responsibilities; the oracle explicitly supplies function lengths and an initial false UseFPS flag rather than proving allocator defaults.
+
+Events use the unscaled playback delta, inclusive start/exclusive end intervals and a single native wrap correction. Registered handlers run synchronously, and the loop rereads handler count after every callback. Update retains fused single-precision advancement, reverse sign behavior, end clamping/wrapping, auto-transition fallback to state zero and blend countdown ordering. It requests still poses, function evaluation, blending, optional procedural animation, skinning and both native marker passes in order.
+
+`tools/animation_playback_oracle.py` executes the original six bodies and nested transitions against the pinned executable SHA-256. Its 256 synthetic cases vary graph flags, state changes, clip alternatives, playback speeds, frame/second units, event boundaries, skip/pose/mask flags, procedural presence, signed marker counts and callbacks that remove handlers. The Rust test compares every projected state field by bits and the complete ordered service trace. This is differential evidence for these finite inputs, not a coverage or arbitrary-NaN claim.
+
+Clip lookup/allocation/release, RNG results, function length/mode, pose-mask construction, pose operations, procedural animation, marker matrices and handler implementations are explicit oracle boundaries. Pose/marker services receive an immutable playback view; reentrant marker registration is not modeled. The test does not establish sampled bone transforms or rendered character poses. Concrete Bevy evaluation, skeleton blending/skinning, marker transforms and integration into the live activity remain required.
+
+Validation: regenerate/check with `py -3.14 tools/animation_playback_oracle.py --check`; run `cargo test --release --offline --locked animation_playback` from `_bevy`. The oracle is registered in `tools/prove.py`.
+
+Validation on 2026-09-30: native fixture regeneration and check passed; Python syntax checks, changed-Rust formatting and diff whitespace checks passed. The full offline locked release suite passed 116 tests.
