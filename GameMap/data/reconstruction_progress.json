@@ -1,0 +1,47 @@
+{
+  "updated": "2026-09-30",
+  "summary": "Native Rust / Bevy reconstruction now includes original frame policy and tournament scoring, with playable workbench smoke checks. Full minigame gameplay remains unfinished.",
+  "metrics": [
+    {
+      "label": "Timing oracle",
+      "value": "412",
+      "detail": "Original PowerPC timing cases"
+    },
+    {
+      "label": "Multiplayer scoring",
+      "value": "210",
+      "detail": "Original PowerPC state transitions"
+    },
+    {
+      "label": "Embedded audio",
+      "value": "459 / 471",
+      "detail": "Sounds decoded; 12 MPEG2 sounds unsupported"
+    },
+    {
+      "label": "Game self-test",
+      "value": "21 / 21",
+      "detail": "Workbench game checks passed"
+    },
+    {
+      "label": "Mode hops",
+      "value": "6",
+      "detail": "Workbench mode transitions exercised"
+    }
+  ],
+  "details": [
+    "Original frame policy: 60 ms cap, fixed simulation and pause branches, plus bounded physics slice scheduling.",
+    "MultiplayerMode: round points, wins, previous-rank tie resolution, query results and original placement overwrite behavior.",
+    "These native ports have bounded original-code evidence. They do not promote the whole GameState::Update or PhysicsManager functions to proven status."
+  ],
+  "scope": "Native reconstruction evidence is tracked separately from the whole-function decompilation and lifter percentages below.",
+  "links": [
+    {
+      "label": "Timing oracle",
+      "url": "https://github.com/kxboo/EA-Playground/blob/main/_bevy/tools/timing_oracle.py"
+    },
+    {
+      "label": "Multiplayer evidence",
+      "url": "https://github.com/kxboo/EA-Playground/blob/main/_bevy/docs/MULTIPLAYER.md"
+    }
+  ]
+}

@@ -60,6 +60,20 @@ function route() {
 window.addEventListener("hashchange", route);
 
 // ---------- overview --------------------------------------------------------
+function reconstructionPanel() {
+  const R = GM.reconstruction;
+  if (!R) return "";
+  const proof = R.proof;
+  const report = proof ? `<p class="sub">Latest proof report: <b>${esc(proof.passed_count)} / ${esc(proof.total)}</b> checks passed · ${esc(proof.generated)}${proof.passed ? " · all checks passed" : " · full validation not yet complete"}.</p>` : "";
+  return `<section class="reconstruction" aria-label="Rust and Bevy reconstruction update">
+    <h2>Rust / Bevy reconstruction <span class="badge">${esc(R.updated)}</span></h2>
+    <p>${esc(R.summary)}</p>
+    <div class="grid">${R.metrics.map(m => `<div class="card"><div class="k">${esc(m.label)}</div><div class="v">${esc(m.value)}</div><div class="d">${esc(m.detail)}</div></div>`).join("")}</div>
+    <ul>${R.details.map(d => `<li>${esc(d)}</li>`).join("")}</ul>
+    ${report}<p class="note">${esc(R.scope)}</p>
+    <p>${R.links.map(l => `<a href="${esc(l.url)}">${esc(l.label)}</a>`).join(" · ")}</p>
+  </section>`;
+}
 const views = {};
 views.overview = function () {
   const T = GM.total;
@@ -68,6 +82,7 @@ views.overview = function () {
   main.innerHTML = `
   <h1>EA Playground — decompilation progress</h1>
   <p class="sub">Game + engine code of the Wii executable (${fmt(T.n)} functions, ${kb(T.s)}). Middleware (${fmt(GM.middleware.n)} functions, ${kb(GM.middleware.s)}: Wii SDK, Havok, Lua, APT runtime…) is excluded from the percentages.</p>
+  ${reconstructionPanel()}
   <div class="hero">
     <div><div class="big" style="color:var(--proven)">${pf(doneB, T.s)}</div><div class="lab">of code <b>proven</b> (bytes)</div></div>
     <div><div class="big" style="color:var(--decompiled)">${pf(decB, T.s)}</div><div class="lab">has readable decompiled code</div></div>

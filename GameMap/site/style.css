@@ -75,3 +75,7 @@ pre.code{background:var(--code);color:var(--codeink);padding:12px;border-radius:
 .link{cursor:pointer;color:var(--accent)}
 .diff-ok{color:var(--proven)}
 .hl-call{color:#9a5bd6}
+
+.reconstruction{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:16px 20px;margin-bottom:22px}
+.reconstruction h2{margin:0 0 10px}.reconstruction .card{background:var(--bg)}
+.reconstruction li{margin:5px 0}.reconstruction p:last-child{margin-bottom:0}

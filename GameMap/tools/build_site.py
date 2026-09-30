@@ -167,8 +167,17 @@ def main():
         hist.append({"label": a.snapshot, "date": now, "n": tot["n"], "s": tot["s"], "fc": tot["fc"], "bc": tot["bc"]})
         json.dump(hist, open(hist_path, "w"), indent=1)
 
+    reconstruction_path = os.path.join(DATA, "reconstruction_progress.json")
+    reconstruction = json.load(open(reconstruction_path)) if os.path.exists(reconstruction_path) else None
+    proof_path = os.path.join(ROOT, "..", "_bevy", "docs", "proof-report.json")
+    if reconstruction and os.path.exists(proof_path):
+        proof = json.load(open(proof_path))
+        # The latest actual report is authoritative; never infer a full pass.
+        reconstruction["proof"] = {key: proof.get(key) for key in ("generated", "passed", "passed_count", "total")}
+
     gm = {
         "generated": now,
+        "reconstruction": reconstruction,
         "elf_sha256": meta.get("elf_sha256"),
         "states": STATES,
         "total": tot,
