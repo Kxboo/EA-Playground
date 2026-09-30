@@ -176,6 +176,46 @@
    "symbol": ".sdata2@0x80605840",
    "address": 2153797696,
    "doc": "180.0 used to convert camera yaw"
+  },
+  {
+   "rust": "ANIM_SPEED_EPSILON",
+   "kind": "f32",
+   "value": 0.0010000000474974513,
+   "symbol": ".sdata2@0x806057e4",
+   "address": 2153797604,
+   "doc": "CharacterMovement::Update: walk if speed <= CharacterState+0x1c + this, else run (0x802ed83c-0x802ed848)"
+  },
+  {
+   "rust": "ARRIVAL_SLOWDOWN_START",
+   "kind": "f32",
+   "value": 0.75,
+   "symbol": ".sdata2@0x806057ec",
+   "address": 2153797612,
+   "doc": "CharacterMovement::Update waypoint following: distance at which slow-down starts (0x802ed9d4)"
+  },
+  {
+   "rust": "ARRIVAL_SLOWDOWN_RANGE",
+   "kind": "f32",
+   "value": 3.5,
+   "symbol": ".sdata2@0x806057f0",
+   "address": 2153797616,
+   "doc": "CharacterMovement::Update waypoint following: slow-down ramp length (0x802ed9d8)"
+  },
+  {
+   "rust": "WAYPOINT_TURN_PER_MS_SLOW",
+   "kind": "f32",
+   "value": 0.004999999888241291,
+   "symbol": ".sdata2@0x806057f4",
+   "address": 2153797620,
+   "doc": "CharacterMovement::Update: turn blend per millisecond (0x802eda4c)"
+  },
+  {
+   "rust": "WAYPOINT_TURN_PER_MS_FAST",
+   "kind": "f32",
+   "value": 0.029999999329447746,
+   "symbol": ".sdata2@0x806057f8",
+   "address": 2153797624,
+   "doc": "CharacterMovement::Update: turn blend per millisecond (0x802eda5c)"
   }
  ]
 }

@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-29 18:55",
+ "generated": "2026-09-29 19:22",
  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
  "passed": true,
- "passed_count": 22,
- "total": 22,
+ "passed_count": 25,
+ "total": 25,
  "checks": [
   {
    "name": "Symbol-bearing ELF matches the pinned hash",
@@ -38,7 +38,7 @@
   {
    "name": "Rust constants (src/recovered.rs) regenerate identically from the ELF",
    "ok": true,
-   "detail": "22 constants (turn rates, camera distances, CharacterState defaults)"
+   "detail": "27 constants (turn rates, camera distances, CharacterState defaults)"
   },
   {
    "name": "Recovered player max speed and dead zone",
@@ -64,6 +64,21 @@
    "name": "Rust vault loader output covers the whole database",
    "ok": true,
    "detail": "908 collections, 7683 attributes (cross-checked value-by-value against the Python decoder)"
+  },
+  {
+   "name": "Havok class reflection (src/havok_classes.json) regenerates from the executable",
+   "ok": true,
+   "detail": "244 hkClass definitions recovered by running the static initialisers in the executable"
+  },
+  {
+   "name": "Havok collision packfiles decode (rigid bodies, MOPP/mesh/box/convex shapes)",
+   "ok": true,
+   "detail": "playground: 152 bodies/5931 tris; playground_park: 284 bodies/5015 tris; playground_nature: 278 bodies/5433 tris; playground_stadium: 167 bodies/4828 tris"
+  },
+  {
+   "name": "Physics world settings decode (hkWorldCinfo)",
+   "ok": true,
+   "detail": "gravity -9.81, solver iterations 4, min timestep 0.0333s"
   },
   {
    "name": "Earlier extraction (OLD ATTEMPTS) matches the current DATA files",
@@ -103,7 +118,7 @@
   {
    "name": "Rust unit tests (locomotion constants, hash64 golden vectors, database loader)",
    "ok": true,
-   "detail": "test result: ok. 8 passed; 0 failed"
+   "detail": "test result: ok. 10 passed; 0 failed"
   },
   {
    "name": "Recorded corpus audit: every distinct .o model accounted for (earlier run)",
@@ -113,7 +128,7 @@
   {
    "name": "Game self-test report (boot -> world -> player -> scripted walk)",
    "ok": true,
-   "detail": "12/12 in-game checks passed, load 3.7s, report 0.1 h old"
+   "detail": "15/15 in-game checks passed, load 3.0s, report 0.0 h old"
   }
  ],
  "scope": [

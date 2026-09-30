@@ -6,8 +6,18 @@
       "ok": true
     },
     {
-      "detail": "129128 walkable-source triangles",
-      "name": "world geometry decoded",
+      "detail": "4 files, 881 bodies, 21207 triangles",
+      "name": "Havok collision decoded from physics/*.hkx",
+      "ok": true
+    },
+    {
+      "detail": "gravity 9.810",
+      "name": "gravity read from hkWorldCinfo",
+      "ok": true
+    },
+    {
+      "detail": "radius 250",
+      "name": "world curvature radius from world.csv",
       "ok": true
     },
     {
@@ -16,7 +26,7 @@
       "ok": true
     },
     {
-      "detail": "start_location (12,0,-53) -> ground-snapped spawn 12.0,-6.0,-53.0",
+      "detail": "start_location (12,0,-53) -> ground-snapped spawn 12.0,-0.0,-53.0",
       "name": "player spawn read from db.vlt (character_info/player)",
       "ok": true
     },
@@ -36,8 +46,13 @@
       "ok": true
     },
     {
-      "detail": "moved 24.62 m horizontally (5 m/s max for 4.5 s)",
+      "detail": "moved 16.28 m from the start (5 m/s max)",
       "name": "player walked on recovered locomotion",
+      "ok": true
+    },
+    {
+      "detail": "forward run of 2.5 s (12.5 m if unobstructed) ended after 3.3 m",
+      "name": "Havok collision stops the player at a solid prop",
       "ok": true
     },
     {
@@ -46,7 +61,7 @@
       "ok": true
     },
     {
-      "detail": "y=-1.24",
+      "detail": "y=0.67",
       "name": "player grounded on world surface",
       "ok": true
     },
@@ -66,7 +81,7 @@
     "locomotion": "ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs",
     "terrain": "AssetDerived display mesh"
   },
-  "load_seconds": 3.6566169261932373,
+  "load_seconds": 3.0066189765930176,
   "log": [
     "Boot: reading original data files",
     "db.vlt: 75 types, 32 classes, 908 collections",
@@ -78,22 +93,22 @@
     "loaded clip:S_walk",
     "loaded clip:S_run",
     "loaded layer:playground-high.o",
-    "world layer ready (1)",
     "loaded layer:playground-high-alpha.o",
-    "world layer ready (2)",
+    "world layer ready (1)",
     "loaded layer:playground-high-fade.o",
-    "world layer ready (3)",
+    "world layer ready (2)",
     "loaded layer:playground-high-alphafade.o",
     "playground-high-alphafade.o has an empty draw list; skipped",
+    "world layer ready (3)",
     "loaded layer:playground_nature-high.o",
     "loaded layer:playground_nature-high-alpha.o",
     "world layer ready (4)",
-    "world layer ready (5)",
     "loaded layer:playground_nature-high-fade.o",
+    "world layer ready (5)",
     "loaded layer:playground_nature-high-alphafade.o",
     "world layer ready (6)",
-    "world layer ready (7)",
     "loaded layer:playground_park-high.o",
+    "world layer ready (7)",
     "world layer ready (8)",
     "loaded layer:playground_park-high-alpha.o",
     "loaded layer:playground_park-high-fade.o",
@@ -106,20 +121,21 @@
     "world layer ready (11)",
     "loaded layer:playground_stadium-high-fade.o",
     "world layer ready (12)",
-    "world layer ready (13)",
     "loaded layer:playground_stadium-high-alphafade.o",
+    "world layer ready (13)",
     "world layer ready (14)",
     "loaded layer:world-low-all.o",
     "loaded layer:world-low-all-alpha.o",
     "world layer ready (15)",
+    "world layer ready (16)",
     "loaded layer:world-low-all-fade.o",
     "loaded layer:world-low-all-alphafade.o",
-    "world layer ready (16)",
     "world layer ready (17)",
     "world layer ready (18)",
     "world and player assets ready",
-    "ground coverage around start: 3568/3600 samples",
-    "ground: 129128 triangles; spawn 12.0,-6.0,-53.0"
+    "collision: 4 files, 881 bodies, 21207 triangles; gravity 9.81",
+    "ground coverage around start: 2983/3600 samples",
+    "ground: 21207 triangles; spawn 12.0,-0.0,-53.0"
   ],
   "passed": true,
   "samples": [
@@ -127,12 +143,12 @@
       "grounded": true,
       "pos": [
         12.0,
-        -5.984487533569336,
+        -0.04999999701976776,
         -53.0
       ],
       "speed": 0.0,
       "step": "settle",
-      "t": 1.5016932487487793,
+      "t": 1.5019100904464722,
       "weights": [
         1.0,
         0.0,
@@ -143,64 +159,80 @@
       "grounded": true,
       "pos": [
         12.0,
-        -3.615029811859131,
-        -40.85017776489258
+        -0.04999999701976776,
+        -49.68337631225586
       ],
       "speed": 5.0,
       "step": "forward",
-      "t": 4.000589847564697,
+      "t": 4.001832008361816,
       "weights": [
-        4.779027173995587e-10,
-        8.13120237808107e-10,
-        0.9999998211860657
+        4.728747393656363e-10,
+        3.576404172811465e-10,
+        0.9999998807907104
       ]
     },
     {
       "grounded": true,
       "pos": [
-        2.3524627685546875,
-        -1.2072840929031372,
-        -30.849693298339844
+        15.08327865600586,
+        -0.04999999701976776,
+        -49.08609390258789
+      ],
+      "speed": 5.0,
+      "step": "left",
+      "t": 6.500617980957031,
+      "weights": [
+        2.2584238260957406e-19,
+        1.7080703207730649e-19,
+        0.9999998807907104
+      ]
+    },
+    {
+      "grounded": true,
+      "pos": [
+        23.333587646484375,
+        0.03734006732702255,
+        -41.93865203857422
       ],
       "speed": 7.071067810058594,
       "step": "diagonal",
-      "t": 6.000552177429199,
+      "t": 8.500529289245605,
       "weights": [
-        1.1942514392324168e-17,
-        2.031940554287318e-17,
-        0.9999999403953552
+        7.795582784036326e-27,
+        5.895884775863622e-27,
+        0.9999998807907104
       ]
     },
     {
       "grounded": false,
       "pos": [
-        2.005795955657959,
-        -0.6739509105682373,
-        -30.503026962280273
+        23.680253982543945,
+        1.019840121269226,
+        -41.66643142700195
       ],
       "speed": 0.0,
       "step": "jump",
-      "t": 6.400118350982666,
+      "t": 8.900564193725586,
       "weights": [
-        0.8982521891593933,
-        0.04443356767296791,
-        0.05731426924467087
+        0.8855959177017212,
+        0.03067777119576931,
+        0.08372621983289719
       ]
     },
     {
       "grounded": true,
       "pos": [
-        2.005795955657959,
-        -1.236891746520996,
-        -30.503026962280273
+        23.680253982543945,
+        0.670899510383606,
+        -41.66643142700195
       ],
       "speed": 0.0,
       "step": "final",
-      "t": 7.400127410888672,
+      "t": 9.900310516357422,
       "weights": [
-        0.9999809861183167,
-        8.291586709674448e-6,
-        0.000010695212040445767
+        0.9999788403511047,
+        5.671907729265513e-6,
+        0.00001547985630168114
       ]
     }
   ]

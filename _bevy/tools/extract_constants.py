@@ -31,7 +31,12 @@ CTOR='__ct__14CharacterStateFv'
 CTOR_FIELDS=[(0x10,'STATE_FIELD_10'),(0x14,'STATE_FIELD_14'),(0x18,'STATE_MAX_SPEED'),(0x1c,'STATE_FIELD_1C'),(0x20,'STATE_FIELD_20'),(0x24,'STATE_FIELD_24')]
 # Constants the deadzone/rest of Update read from .sdata2 (address printed by re_functions).
 SDATA2=[('STICK_DEAD_ZONE',0x80605834,'f32','LocalCharacterControl::Update: |axis| must exceed this (0x802ef1fc)'),
-        ('PI',0x8060583c,'f32','pi used by Update'),('DEG_PER_PI',0x80605840,'f32','180.0 used to convert camera yaw'),]
+        ('PI',0x8060583c,'f32','pi used by Update'),('DEG_PER_PI',0x80605840,'f32','180.0 used to convert camera yaw'),
+        ('ANIM_SPEED_EPSILON',0x806057e4,'f32','CharacterMovement::Update: walk if speed <= CharacterState+0x1c + this, else run (0x802ed83c-0x802ed848)'),
+        ('ARRIVAL_SLOWDOWN_START',0x806057ec,'f32','CharacterMovement::Update waypoint following: distance at which slow-down starts (0x802ed9d4)'),
+        ('ARRIVAL_SLOWDOWN_RANGE',0x806057f0,'f32','CharacterMovement::Update waypoint following: slow-down ramp length (0x802ed9d8)'),
+        ('WAYPOINT_TURN_PER_MS_SLOW',0x806057f4,'f32','CharacterMovement::Update: turn blend per millisecond (0x802eda4c)'),
+        ('WAYPOINT_TURN_PER_MS_FAST',0x806057f8,'f32','CharacterMovement::Update: turn blend per millisecond (0x802eda5c)'),]
 
 def ctor_floats(e):
     """Decode `lfs fN,off(r2)` then `stfs fN,field(r3)` pairs in the constructor."""

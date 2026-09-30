@@ -170,6 +170,22 @@ def vlt_checks():
         j=json.loads(dump.read_text(encoding='utf-8'))
         check('Rust vault loader output covers the whole database',len(j['collections'])==908 and len(j['classes'])==32,f"{len(j['collections'])} collections, {sum(len(c['attributes']) for c in j['collections'])} attributes (cross-checked value-by-value against the Python decoder)")
 
+def havok_checks():
+    import extract_havok_classes as xh
+    sys.path.insert(0,str(REPO/'Remaster'/'src'));import havok,hk_world
+    cur=json.loads((BEVY/'src'/'havok_classes.json').read_text(encoding='utf-8'));fresh=xh.build()
+    check('Havok class reflection (src/havok_classes.json) regenerates from the executable',cur==fresh,f'{len(fresh)} hkClass definitions recovered by running the static initialisers in the executable')
+    r=havok.Reflection();golden=json.loads((BEVY/'tests'/'data'/'collision_golden.json').read_text())
+    ok=True;detail=[]
+    for name,g in golden.items():
+        pf=havok.Packfile((DATA/'files'/'data'/'physics'/f'{name}.hkx').read_bytes(),r);c=hk_world.Collision(pf)
+        good=len(c.bodies)==g['bodies'] and len(c.all_triangles())==g['triangles'] and not c.skipped
+        ok&=good;detail.append(f"{name}: {len(c.bodies)} bodies/{len(c.all_triangles())} tris")
+    check('Havok collision packfiles decode (rigid bodies, MOPP/mesh/box/convex shapes)',ok,'; '.join(detail))
+    pf=havok.Packfile((DATA/'files'/'data'/'physics'/'playground.hkx').read_bytes(),r)
+    w=[pf.decode_object(si,off,cn) for (si,off),cn in pf.objects().items() if cn=='hkWorldCinfo'][0]
+    check('Physics world settings decode (hkWorldCinfo)',abs(w['gravity'][1]+9.81)<1e-3 and w['solverIterations']==4,f"gravity {w['gravity'][1]:.2f}, solver iterations {w['solverIterations']}, min timestep {w['expectedMinPsiDeltaTime']:.4f}s")
+
 def recorded_checks():
     mv=REPO/'Remaster'/'research'/'model-verification.json'
     if mv.exists():
@@ -184,7 +200,7 @@ def recorded_checks():
     else:check('Game self-test report',False,'run: EAGL-Workbench.exe --selftest docs/selftest')
 
 def main():
-    e=exe_checks();dol_checks(e);constants_checks();vlt_checks();data_checks();decode_checks()
+    e=exe_checks();dol_checks(e);constants_checks();vlt_checks();havok_checks();data_checks();decode_checks()
     if '--with-tests' in sys.argv:
         r=subprocess.run(['cargo','test','--release','--offline'],cwd=BEVY,capture_output=True,text=True)
         m=re.search(r'test result: (\w+)\. (\d+) passed; (\d+) failed',r.stdout)

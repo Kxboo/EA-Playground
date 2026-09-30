@@ -46,4 +46,14 @@ pub const STICK_DEAD_ZONE: f32 = 0.10000000149011612;
 pub const PI: f32 = 3.1415927410125732;
 /// 180.0 used to convert camera yaw - `.sdata2@0x80605840` @ 0x80605840
 pub const DEG_PER_PI: f32 = 180.0;
+/// CharacterMovement::Update: walk if speed <= CharacterState+0x1c + this, else run (0x802ed83c-0x802ed848) - `.sdata2@0x806057e4` @ 0x806057e4
+pub const ANIM_SPEED_EPSILON: f32 = 0.0010000000474974513;
+/// CharacterMovement::Update waypoint following: distance at which slow-down starts (0x802ed9d4) - `.sdata2@0x806057ec` @ 0x806057ec
+pub const ARRIVAL_SLOWDOWN_START: f32 = 0.75;
+/// CharacterMovement::Update waypoint following: slow-down ramp length (0x802ed9d8) - `.sdata2@0x806057f0` @ 0x806057f0
+pub const ARRIVAL_SLOWDOWN_RANGE: f32 = 3.5;
+/// CharacterMovement::Update: turn blend per millisecond (0x802eda4c) - `.sdata2@0x806057f4` @ 0x806057f4
+pub const WAYPOINT_TURN_PER_MS_SLOW: f32 = 0.004999999888241291;
+/// CharacterMovement::Update: turn blend per millisecond (0x802eda5c) - `.sdata2@0x806057f8` @ 0x806057f8
+pub const WAYPOINT_TURN_PER_MS_FAST: f32 = 0.029999999329447746;
 pub const ELF_SHA256: &str = "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c";

@@ -19,13 +19,18 @@ pub struct OriginalAsset {
 #[derive(Debug,Clone,Serialize,Deserialize,PartialEq)]
 pub enum EvidenceLevel { Unresolved, AssetDerived, ExecutableDerived, GameplayCompared }
 
-/// Not recovered from the executable: values below exist only to make the slice playable.
-const PROVISIONAL_GRAVITY:f32=20.;
-const PROVISIONAL_JUMP_SPEED:f32=5.5;
+/// Not recovered from the executable: exists only to make the slice playable (gravity itself comes from the
+/// Havok world settings in playground.hkx; the character jump impulse was not found).
+const PROVISIONAL_JUMP_SPEED:f32=4.5;
+const CHARACTER_HEIGHT:f32=1.0;
 const STEP_UP:f32=0.6;
 const MIN_BOOT_SECONDS:f32=2.5;
 const CLIPS:[(&str,usize);3]=[("S_idle",250),("S_walk",263),("S_run",253)];
 const WORLD_SUFFIXES:[&str;4]=["","-alpha","-fade","-alphafade"];
+
+/// World display curvature: the decoded world meshes are baked onto a sphere of radius `R` (world.csv RADIUS)
+/// while collision/gameplay coordinates are flat.  Vertical drop at flat position (x,z): R - sqrt(R^2 - r^2).
+pub fn bend(radius:f32,x:f32,z:f32)->f32{if radius<=0.{return 0.}let r2=(x*x+z*z).min(radius*radius*0.99);radius-(radius*radius-r2).sqrt()}
 
 #[derive(Component)] pub struct GameEntity;
 #[derive(Component)] pub struct GameCamera{pub yaw:f32,pub pitch:f32,pub distance:f32}
@@ -38,28 +43,32 @@ const WORLD_SUFFIXES:[&str;4]=["","-alpha","-fade","-alphafade"];
 struct Job{key:String,req:Value}
 #[derive(PartialEq,Clone,Debug)] enum Phase{Loading,Building,Playing,Failed(String)}
 
-pub struct Ground{cell:f32,min:Vec2,cols:usize,rows:usize,cells:Vec<Vec<u32>>,tris:Vec<[Vec3;3]>}
+pub struct Ground{cell:f32,min:Vec2,cols:usize,rows:usize,cells:Vec<Vec<u32>>,walls:Vec<Vec<u32>>,tris:Vec<[Vec3;3]>}
 impl Ground {
     fn build(tris:Vec<[Vec3;3]>)->Self{
         let (mut lo,mut hi)=(Vec2::splat(f32::MAX),Vec2::splat(f32::MIN));
         for t in &tris{for v in t{lo=lo.min(v.xz());hi=hi.max(v.xz());}}
         let cell=2.;let cols=(((hi.x-lo.x)/cell).ceil() as usize+1).max(1);let rows=(((hi.y-lo.y)/cell).ceil() as usize+1).max(1);
-        let mut cells=vec![Vec::new();cols*rows];
+        let mut cells=vec![Vec::new();cols*rows];let mut walls=vec![Vec::new();cols*rows];
         for (i,t) in tris.iter().enumerate(){
-            let a=t[1]-t[0];let b=t[2]-t[0];if a.cross(b).normalize_or_zero().y<0.3{continue} // walkable surfaces only
+            let n=(t[1]-t[0]).cross(t[2]-t[0]).normalize_or_zero();
             let tl=t[0].xz().min(t[1].xz()).min(t[2].xz());let th=t[0].xz().max(t[1].xz()).max(t[2].xz());
             let (c0,r0)=(((tl.x-lo.x)/cell) as usize,((tl.y-lo.y)/cell) as usize);
             let (c1,r1)=(((th.x-lo.x)/cell) as usize,((th.y-lo.y)/cell) as usize);
-            for r in r0..=r1.min(rows-1){for c in c0..=c1.min(cols-1){cells[r*cols+c].push(i as u32);}}
+            // Upward-facing surfaces can be stood on; steep faces block horizontal movement.
+            let bucket=if n.y>=0.3{&mut cells}else if n.y.abs()<0.3{&mut walls}else{continue};
+            for r in r0..=r1.min(rows-1){for c in c0..=c1.min(cols-1){bucket[r*cols+c].push(i as u32);}}
         }
-        Self{cell,min:lo,cols,rows,cells,tris}
+        Self{cell,min:lo,cols,rows,cells,walls,tris}
+    }
+    fn index(&self,x:f32,z:f32)->Option<usize>{
+        let c=((x-self.min.x)/self.cell).floor();let r=((z-self.min.y)/self.cell).floor();
+        if c<0.||r<0.||c as usize>=self.cols||r as usize>=self.rows{None}else{Some(r as usize*self.cols+c as usize)}
     }
     /// Highest walkable surface at (x,z) not above `max_y`.
     pub fn height(&self,x:f32,z:f32,max_y:f32)->Option<f32>{
-        let c=((x-self.min.x)/self.cell).floor();let r=((z-self.min.y)/self.cell).floor();
-        if c<0.||r<0.||c as usize>=self.cols||r as usize>=self.rows{return None}
-        let mut best:Option<f32>=None;let p=Vec2::new(x,z);
-        for &i in &self.cells[r as usize*self.cols+c as usize]{
+        let idx=self.index(x,z)?;let mut best:Option<f32>=None;let p=Vec2::new(x,z);
+        for &i in &self.cells[idx]{
             let t=&self.tris[i as usize];
             let (a,b,cc)=(t[0].xz(),t[1].xz(),t[2].xz());
             let d=(b.y-cc.y)*(a.x-cc.x)+(cc.x-b.x)*(a.y-cc.y);if d.abs()<1e-9{continue}
@@ -70,6 +79,27 @@ impl Ground {
         }
         best
     }
+    /// True if a horizontal move from `a` to `b` (xz) crosses a steep collision face between heights y0..y1.
+    pub fn blocked(&self,a:Vec2,b:Vec2,y0:f32,y1:f32)->bool{
+        let steps=((a.distance(b)/self.cell).ceil() as usize).max(1);let mut seen=std::collections::HashSet::new();
+        for s in 0..=steps{
+            let p=a.lerp(b,s as f32/steps as f32);let Some(idx)=self.index(p.x,p.y) else{continue};
+            for &i in &self.walls[idx]{
+                if !seen.insert(i){continue}
+                let t=&self.tris[i as usize];
+                // Segment (a->b) at heights y0..y1 against the triangle: test the vertical strip by projecting to xz.
+                let (ta,tb,tc)=(t[0],t[1],t[2]);let ymin=ta.y.min(tb.y).min(tc.y);let ymax=ta.y.max(tb.y).max(tc.y);
+                if ymax<y0||ymin>y1{continue}
+                for (u,v) in [(ta,tb),(tb,tc),(tc,ta)]{ if seg_cross(a,b,u.xz(),v.xz()){return true} }
+            }
+        }
+        false
+    }
+}
+fn seg_cross(p:Vec2,q:Vec2,r:Vec2,s:Vec2)->bool{
+    let cr=|a:Vec2,b:Vec2|a.x*b.y-a.y*b.x;let d=q-p;let e=s-r;let den=cr(d,e);
+    if den.abs()<1e-9{return false}
+    let t=cr(r-p,e)/den;let u=cr(r-p,d)/den;(0.0..=1.0).contains(&t)&&(0.0..=1.0).contains(&u)
 }
 
 #[derive(Resource)]
@@ -77,7 +107,7 @@ pub struct Game{
     bridge:Bridge,jobs:VecDeque<Job>,pending:Option<(u64,String)>,results:HashMap<String,Value>,
     phase:Phase,started:Instant,pub log:Vec<String>,boot_image:Option<Handle<Image>>,boot_egui:Option<egui::TextureId>,
     layers:Vec<(String,String)>,layers_expected:usize,layers_ready:usize,layers_empty:usize,clip_handles:Vec<Handle<AnimationClip>>,
-    ground:Option<Ground>,build_wait:u32,player:Option<Entity>,pub spawn:Vec3,
+    ground:Option<Ground>,build_wait:u32,player:Option<Entity>,pub spawn:Vec3,pub gravity:f32,pub world_radius:f32,pub collision_bodies:usize,pub collision_files:usize,
     pub db_summary:String,pub start_dir:Vec3,pub spawn_from_db:bool,pub tri_count:usize,pub controls_rows:usize,pub combat_bindings:usize,pub world_bounds:Option<(f32,f32,f32)>,
     boot_shown:Option<Instant>,boot_shot:bool,pub load_seconds:f32,
     pub selftest:Option<SelfTest>,
@@ -126,7 +156,7 @@ impl Game{
         }
         let mut g=Self{bridge:Bridge::start(),jobs,pending:None,results:HashMap::new(),phase:Phase::Loading,started:Instant::now(),log,
             boot_image:None,boot_egui:None,layers:vec![],layers_expected:0,layers_ready:0,layers_empty:0,clip_handles:vec![],ground:None,build_wait:0,player:None,spawn:Vec3::ZERO,
-            db_summary:String::new(),start_dir:Vec3::Z,spawn_from_db:false,tri_count:0,controls_rows:0,combat_bindings:0,world_bounds:None,boot_shown:None,boot_shot:false,load_seconds:0.,selftest};
+            gravity:9.81,world_radius:0.,collision_bodies:0,collision_files:0,db_summary:String::new(),start_dir:Vec3::Z,spawn_from_db:false,tri_count:0,controls_rows:0,combat_bindings:0,world_bounds:None,boot_shown:None,boot_shot:false,load_seconds:0.,selftest};
         // (fields set below)
         g.apply_db(db_results);g
     }
@@ -170,7 +200,7 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>
                     }}
                 }
             }
-            "bounds"=>{if let Some(row)=value["rows"].as_array().and_then(|r|r.get(1)){let f=|i:usize|row[i].as_str().unwrap_or("0").parse::<f32>().unwrap_or(0.);g.world_bounds=Some((f(0),f(1),f(2)));}}
+            "bounds"=>{if let Some(row)=value["rows"].as_array().and_then(|r|r.get(1)){let f=|i:usize|row[i].as_str().unwrap_or("0").parse::<f32>().unwrap_or(0.);g.world_bounds=Some((f(0),f(1),f(2)));g.world_radius=f(2);}}
             "controls"=>{let rows=value["rows"].as_array().cloned().unwrap_or_default();g.controls_rows=rows.len().saturating_sub(1);g.combat_bindings=rows.iter().filter(|r|r[1]=="STATE_COMBAT").count();}
             k if k.starts_with("layer:")=>{
                 if scene_path(&value).is_none(){
@@ -209,23 +239,35 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>
 
 fn layer_ready(_e:On<WorldInstanceReady>,mut g:Option<ResMut<Game>>){if let Some(g)=g.as_mut(){g.layers_ready+=1;let n=g.layers_ready;g.log.push(format!("world layer ready ({n})"));}}
 
-fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>,meshes:Res<Assets<Mesh>>,layers:Query<(Entity,&WorldLayer)>,children:Query<&Children>,mesh_q:Query<(&Mesh3d,&GlobalTransform)>,mut graphs:ResMut<Assets<AnimationGraph>>,cam:Query<Entity,With<GameCamera>>){
+fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>,mut graphs:ResMut<Assets<AnimationGraph>>,cam:Query<Entity,With<GameCamera>>){
     let Some(g)=g.as_mut() else{return};let g=&mut **g;
     if g.phase!=Phase::Building{return}
     g.build_wait+=1;if g.build_wait<3{return} // let transforms propagate
-    let mut tris=Vec::new();let mut mesh_count=0;
-    for (e,layer) in &layers{
-        if !(layer.0.ends_with("-high.o")||layer.0=="world-low-all.o"){continue} // walkable surface: opaque base layers
-        for d in children.iter_descendants(e){if let Ok((m,t))=mesh_q.get(d){
-            let Some(mesh)=meshes.get(&m.0) else{continue};mesh_count+=1;
-            let Some(pos)=mesh.attribute(Mesh::ATTRIBUTE_POSITION).and_then(|a|a.as_float3()) else{continue};
-            let idx:Vec<u32>=match mesh.indices(){Some(i)=>i.iter().map(|x|x as u32).collect(),None=>(0..pos.len() as u32).collect()};
-            let mat=t.to_matrix();
-            for tri in idx.chunks_exact(3){tris.push([0,1,2].map(|n|mat.transform_point3(Vec3::from(pos[tri[n] as usize]))));}
-        }}
+    // Terrain/prop collision: the Havok files the original game loads for each world area (physics/<area>.hkx).
+    let classes=crate::havok::ClassTable::embedded();
+    let areas:Vec<String>=g.results.get("filelist").and_then(|v|v["rows"].as_array()).map(|rows|rows.iter().skip(1).filter(|r|r[1]=="1").filter_map(|r|r[0].as_str().map(String::from)).collect()).unwrap_or_default();
+    let dir=bridge::data_root().join("files").join("data").join("physics");
+    let mut tris:Vec<[Vec3;3]>=Vec::new();
+    for area in &areas{
+        let Ok(bytes)=std::fs::read(dir.join(format!("{area}.hkx"))) else{g.log.push(format!("{area}.hkx not found"));continue};
+        match crate::havok::Packfile::parse(&bytes,&classes){
+            Ok(pf)=>{
+                let c=crate::havok::Collision::load(&pf);g.collision_files+=1;g.collision_bodies+=c.bodies.len();
+                tris.extend(c.triangles().map(|t|[Vec3::from(t[0]),Vec3::from(t[1]),Vec3::from(t[2])]));
+                if area=="playground"{
+                    // hkWorldCinfo carries the physics world settings (gravity, solver, deactivation).
+                    for (&(si,off),cn) in &pf.virt{if cn=="hkWorldCinfo"{
+                        let w=pf.decode_object(si,off,cn,0);
+                        if let Some(gv)=w["gravity"][1].as_f64(){g.gravity=(-gv) as f32;}
+                    }}
+                }
+            }
+            Err(e)=>g.log.push(format!("{area}.hkx: {e}")),
+        }
     }
     g.tri_count=tris.len();
-    if tris.is_empty(){let m=format!("world mesh data unavailable ({mesh_count} meshes)");g.log.push(m.clone());g.phase=Phase::Failed(m);return}
+    if tris.is_empty(){let m="no Havok collision loaded".to_string();g.log.push(m.clone());g.phase=Phase::Failed(m);return}
+    g.log.push(format!("collision: {} files, {} bodies, {} triangles; gravity {:.2}",g.collision_files,g.collision_bodies,g.tri_count,g.gravity));
     let ground=Ground::build(tris);
     // Spawn: character_info/player start_location from db.vlt (x,z; the stored y is 0, so height comes from the ground).
     // Fallback if the database is unavailable: nearest walkable point to the hub.
@@ -285,14 +327,16 @@ fn movement(g:Option<Res<Game>>,input:Res<GameInput>,cam:Query<&GameCamera>,mut 
             let dir=f*a.cos()+r*a.sin();p.facing=dir;
             let delta=dir*step.speed*dt;
             let ny=t.translation.y;
-            // Horizontal move is accepted if walkable ground exists within step-up height (display mesh; not original collision).
+            // Horizontal move against the Havok collision: needs walkable ground within step-up height and no
+            // steep face crossing the character's body (slides along one axis if the diagonal is blocked).
             for cand in [delta,Vec3::new(delta.x,0.,0.),Vec3::new(0.,0.,delta.z)]{
                 let np=t.translation+cand;
+                if ground.blocked(t.translation.xz(),np.xz(),ny+STEP_UP,ny+CHARACTER_HEIGHT){continue}
                 if let Some(gy)=ground.height(np.x,np.z,ny+STEP_UP){if !p.grounded||gy>=ny-1.5{t.translation.x=np.x;t.translation.z=np.z;break}}
             }
         }
         if input.jump&&p.grounded{p.vy=PROVISIONAL_JUMP_SPEED;p.grounded=false;}
-        p.vy-=PROVISIONAL_GRAVITY*dt*(!p.grounded) as i32 as f32;
+        p.vy-=g.gravity*dt*(!p.grounded) as i32 as f32;
         let mut y=t.translation.y+p.vy*dt;
         match ground.height(t.translation.x,t.translation.z,y+STEP_UP){
             Some(gy) if y<=gy+0.02&&p.vy<=0.||p.grounded&&gy>=t.translation.y-0.5=>{y=gy;p.vy=0.;p.grounded=true}
@@ -303,7 +347,7 @@ fn movement(g:Option<Res<Game>>,input:Res<GameInput>,cam:Query<&GameCamera>,mut 
     }
 }
 
-fn camera(mut c:Query<(&mut GameCamera,&mut Transform),Without<Player>>,p:Query<(&Player,&Transform),Without<GameCamera>>,keys:Res<ButtonInput<KeyCode>>,mouse:Res<ButtonInput<MouseButton>>,motion:Res<AccumulatedMouseMotion>,scroll:Res<AccumulatedMouseScroll>,time:Res<Time>){
+fn camera(g:Option<Res<Game>>,mut c:Query<(&mut GameCamera,&mut Transform),Without<Player>>,p:Query<(&Player,&Transform),Without<GameCamera>>,keys:Res<ButtonInput<KeyCode>>,mouse:Res<ButtonInput<MouseButton>>,motion:Res<AccumulatedMouseMotion>,scroll:Res<AccumulatedMouseScroll>,time:Res<Time>){
     let (Ok((mut cam,mut ct)),Ok((player,pt)))=(c.single_mut(),p.single()) else{return};
     if mouse.pressed(MouseButton::Right)||mouse.pressed(MouseButton::Middle){cam.yaw-=motion.delta.x*0.005;cam.pitch=(cam.pitch+motion.delta.y*0.005).clamp(-0.2,1.3);}
     let key=|k:KeyCode|keys.pressed(k) as i32 as f32;
@@ -311,14 +355,20 @@ fn camera(mut c:Query<(&mut GameCamera,&mut Transform),Without<Player>>,p:Query<
     cam.distance=(cam.distance*(-scroll.delta.y*0.1).exp()).clamp(1.2,12.);
     // EVENT_CAMERA_REORIENT (controls.csv: STATE_COMBAT, BUTTON B): swing behind the player.
     if keys.just_pressed(KeyCode::KeyR){cam.yaw=(-player.facing.x).atan2(-player.facing.z)+std::f32::consts::PI;}
+    let radius=g.map(|g|g.world_radius).unwrap_or(0.);
     let target=pt.translation+Vec3::Y*k::FRAME_CAMERA_HEIGHT;
     let off=Vec3::new(cam.yaw.sin()*cam.pitch.cos(),cam.pitch.sin(),cam.yaw.cos()*cam.pitch.cos())*cam.distance;
-    *ct=Transform::from_translation(target+off).looking_at(target,Vec3::Y);
+    let eye=target+off;
+    // Everything the world draws sits on the curved display surface: drop camera points by the same bend.
+    let (tb,eb)=(target-Vec3::Y*bend(radius,target.x,target.z),eye-Vec3::Y*bend(radius,eye.x,eye.z));
+    *ct=Transform::from_translation(eb).looking_at(tb,Vec3::Y);
 }
 
-fn animate(mut q:Query<(&mut Player,&Children)>,children:Query<&Children>,mut players:Query<&mut AnimationPlayer>,mut models:Query<&mut Transform,(With<PlayerModel>,Without<Player>)>,time:Res<Time>){
-    for (mut p,kids) in &mut q{
-        let target=if p.speed<0.1{[1.,0.,0.]}else if p.speed<0.75*k::STATE_MAX_SPEED{[0.,1.,0.]}else{[0.,0.,1.]};
+fn animate(g:Option<Res<Game>>,mut q:Query<(&mut Player,&Children,&Transform),Without<PlayerModel>>,children:Query<&Children>,mut players:Query<&mut AnimationPlayer>,mut models:Query<&mut Transform,(With<PlayerModel>,Without<Player>)>,time:Res<Time>){
+    let radius=g.map(|g|g.world_radius).unwrap_or(0.);
+    for (mut p,kids,pt) in &mut q{
+        // CharacterMovement::Update: idle at 0, walk while speed <= CharacterState+0x1c (2.5) + 0.001, otherwise run.
+        let target=if p.speed<=0.{[1.,0.,0.]}else if p.speed<=k::STATE_FIELD_1C+k::ANIM_SPEED_EPSILON{[0.,1.,0.]}else{[0.,0.,1.]};
         let blend=(time.delta_secs()*8.).min(1.);
         for i in 0..3{p.weights[i]+=(target[i]-p.weights[i])*blend;}
         let w=p.weights;
@@ -326,6 +376,7 @@ fn animate(mut q:Query<(&mut Player,&Children)>,children:Query<&Children>,mut pl
             if let Ok(mut m)=models.get_mut(kid){
                 // Model +Z is treated as forward until orientation is compared against the game.
                 m.rotation=Quat::from_rotation_y(p.facing.x.atan2(p.facing.z));
+                m.translation.y=-bend(radius,pt.translation.x,pt.translation.z);
             }
             for d in std::iter::once(kid).chain(children.iter_descendants(kid)){if let Ok(mut pl)=players.get_mut(d){
                 for (i,weight) in w.iter().enumerate(){if let Some(a)=pl.animation_mut(AnimationNodeIndex::new(i+1)){a.set_weight(*weight);}}
@@ -364,14 +415,14 @@ fn hud(images:Res<Assets<Image>>,mut contexts:EguiContexts,mut g:Option<ResMut<G
                 egui::Frame::popup(ui.style()).show(ui,|ui|{
                     ui.label(egui::RichText::new("EA PLAYGROUND — reconstruction slice").strong());
                     ui.label(format!("pos {:.1}, {:.1}, {:.1}   speed {:.2}/{:.1}   {:.0} fps",pos.x,pos.y,pos.z,speed,k::STATE_MAX_SPEED,1./time.delta_secs().max(1e-4)));
-                    ui.label(format!("world: {} ground triangles • loaded in {:.1}s",g.tri_count,g.load_seconds));
+                    ui.label(format!("collision: {} Havok files, {} bodies, {} triangles • gravity {:.2} • loaded in {:.1}s",g.collision_files,g.collision_bodies,g.tri_count,g.gravity,g.load_seconds));
                     ui.label(format!("db.vlt: {} • spawn {}",g.db_summary,if g.spawn_from_db{"from character_info/player"}else{"provisional"}));
                     if let Some((x,z,r))=g.world_bounds{ui.label(format!("world.csv bounds: min ({x}, {z}) radius {r}"));}
                     ui.label(format!("controls.csv: {} bindings ({} in STATE_COMBAT)",g.controls_rows,g.combat_bindings));
                     ui.separator();
                     ui.colored_label(egui::Color32::from_rgb(104,200,170),"Locomotion: ELF-derived (LocalCharacterControl::Update)");
-                    ui.colored_label(egui::Color32::YELLOW,"Terrain: display mesh, not original collision");
-                    ui.colored_label(egui::Color32::YELLOW,"Jump/gravity, camera framing: provisional");
+                    ui.colored_label(egui::Color32::from_rgb(104,200,170),"Terrain: original Havok collision (physics/*.hkx); display bent by world.csv radius");
+                    ui.colored_label(egui::Color32::YELLOW,"Jump impulse, camera framing: provisional (gravity is from Havok)");
                     ui.label(egui::RichText::new("WASD/arrows move • Space jump • Q/E or right-drag camera • wheel zoom • R behind • Esc menu").small());
                 });
             });
@@ -406,7 +457,7 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
     let record=|st:&mut SelfTest,name:&str|{st.samples.push(json!({"step":name,"t":st.t,"pos":[t.translation.x,t.translation.y,t.translation.z],"speed":p.speed,"grounded":p.grounded,"weights":p.weights}));};
     input.scripted=true;
     // Scripted input sequence: settle, walk forward, run diagonally, jump, settle.
-    let script=[(0.,0.,0.,false,1.5,"settle"),(0.,1.,0.,false,2.5,"forward"),(1.,1.,0.,false,2.0,"diagonal"),(0.,0.,0.,true,0.4,"jump"),(0.,0.,0.,false,1.0,"land")];
+    let script=[(0.,0.,0.,false,1.5,"settle"),(0.,1.,0.,false,2.5,"forward"),(-1.,0.,0.,false,2.5,"left"),(-1.,1.,0.,false,2.0,"diagonal"),(0.,0.,0.,true,0.4,"jump"),(0.,0.,0.,false,1.0,"land")];
     if st.step==0&&st.t<1e-3+time.delta_secs()*2.{st.start=t.translation;}
     let mut acc=0.;let mut cur=None;
     for (i,s) in script.iter().enumerate(){if st.t>=acc&&st.t<acc+s.4{cur=Some(i);}acc+=s.4;}
@@ -426,13 +477,17 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
                 let mut checks=vec![];
                 let mut check=|name:&str,ok:bool,detail:String|checks.push(json!({"name":name,"ok":ok,"detail":detail}));
                 check("world layers spawned from worldfilelist.csv",g.layers_ready==g.layers_expected&&g.layers_expected+g.layers_empty==WORLD_SUFFIXES.len()*5,format!("{}/{} layers ready, {} empty draw lists skipped",g.layers_ready,g.layers_expected,g.layers_empty));
-                check("world geometry decoded",g.tri_count>20_000,format!("{} walkable-source triangles",g.tri_count));
+                check("Havok collision decoded from physics/*.hkx",g.tri_count>20_000&&g.collision_bodies>=500&&g.collision_files==4,format!("{} files, {} bodies, {} triangles",g.collision_files,g.collision_bodies,g.tri_count));
+                check("gravity read from hkWorldCinfo",(g.gravity-9.81).abs()<0.01,format!("gravity {:.3}",g.gravity));
+                check("world curvature radius from world.csv",g.world_radius>0.,format!("radius {}",g.world_radius));
                 check("player model + 3 clips loaded",g.clip_handles.len()==CLIPS.len()&&p.anim_ready,format!("{} clips, anim player bound: {}",g.clip_handles.len(),p.anim_ready));
-                check("player spawn read from db.vlt (character_info/player)",g.spawn_from_db&&(g.spawn.x-12.).abs()<1.&&(g.spawn.z+53.).abs()<1.,format!("start_location (12,0,-53) -> ground-snapped spawn {:.1},{:.1},{:.1}",g.spawn.x,g.spawn.y,g.spawn.z));
+                check("player spawn read from db.vlt (character_info/player)",g.spawn_from_db&&(g.spawn.x-12.).abs()<1.&&(g.spawn.z+53.).abs()<1.&&g.spawn.y.abs()<1.5,format!("start_location (12,0,-53) -> ground-snapped spawn {:.1},{:.1},{:.1}",g.spawn.x,g.spawn.y,g.spawn.z));
                 check("controls.csv parsed",g.combat_bindings>=8,format!("{} rows, {} STATE_COMBAT",g.controls_rows,g.combat_bindings));
                 check("mesh entities in scene",meshes.iter().count()>100,format!("{} Mesh3d entities",meshes.iter().count()));
                 check("animation players active",players.iter().count()>=1,format!("{} players",players.iter().count()));
-                check("player walked on recovered locomotion",moved>5.,format!("moved {:.2} m horizontally (5 m/s max for 4.5 s)",moved));
+                check("player walked on recovered locomotion",moved>5.,format!("moved {:.2} m from the start (5 m/s max)",moved));
+                let fwd=st.samples.iter().find(|s|s["step"]=="forward").map(|s|{let p=&s["pos"];let dx=p[0].as_f64().unwrap()-st.start.x as f64;let dz=p[2].as_f64().unwrap()-st.start.z as f64;(dx*dx+dz*dz).sqrt()}).unwrap_or(0.);
+                check("Havok collision stops the player at a solid prop",fwd>1.&&fwd<9.,format!("forward run of 2.5 s (12.5 m if unobstructed) ended after {fwd:.1} m"));
                 check("walk/run clip blended in while moving",walk_w>0.5,format!("peak walk+run weight {walk_w:.2} (full stick = run)"));
                 check("player grounded on world surface",p.grounded,format!("y={:.2}",t.translation.y));
                 let jumped=st.samples.iter().any(|s|s["step"]=="jump"||s["step"]=="land");
