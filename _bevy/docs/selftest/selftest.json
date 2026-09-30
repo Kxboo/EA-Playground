@@ -1,12 +1,17 @@
 {
   "checks": [
     {
+      "detail": "684 frames, 11317 simulation ms, maximum 60 simulation ms / 600 uncapped input ms",
+      "name": "recovered integer-ms simulation clock drives the game",
+      "ok": true
+    },
+    {
       "detail": "18/18 layers ready, 2 empty draw lists skipped",
       "name": "world layers spawned from worldfilelist.csv",
       "ok": true
     },
     {
-      "detail": "3/3 layers ready; cloud angle 0.1710 rad after the run",
+      "detail": "3/3 layers ready; cloud angle 0.1358 rad after the run",
       "name": "SkyDome layers (skybox, mountain/city ring, clouds) loaded",
       "ok": true
     },
@@ -41,7 +46,7 @@
       "ok": true
     },
     {
-      "detail": "joint rotation checksum ranged -7.802..-0.068 over 6 samples",
+      "detail": "joint rotation checksum ranged -7.581..0.043 over 6 samples",
       "name": "decoded clips animate the skeleton (joint pose changes idle -> walk/run)",
       "ok": true
     },
@@ -51,7 +56,7 @@
       "ok": true
     },
     {
-      "detail": "world_schoolyard.asf: state Some(1), 518175 samples queued",
+      "detail": "world_schoolyard.asf: state Some(1), 551250 samples queued",
       "name": "area music streams from the Rust EA Layer 3 decoder",
       "ok": true
     },
@@ -71,12 +76,12 @@
       "ok": true
     },
     {
-      "detail": "moved 16.28 m from the start (5 m/s max)",
+      "detail": "moved 15.98 m from the start (5 m/s max)",
       "name": "player walked on recovered locomotion",
       "ok": true
     },
     {
-      "detail": "forward run of 2.5 s (12.5 m if unobstructed) ended after 3.3 m",
+      "detail": "forward run of 2.5 s (12.5 m if unobstructed) ended after 3.4 m",
       "name": "Havok collision stops the player at a solid prop",
       "ok": true
     },
@@ -102,11 +107,13 @@
     }
   ],
   "evidence": {
-    "jump_gravity": "provisional",
+    "gravity": "DataDerived hkWorldCinfo",
+    "jump": "provisional",
     "locomotion": "ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs",
-    "terrain": "AssetDerived display mesh"
+    "terrain": "DataDerived Havok collision meshes; provisional character solver",
+    "timing": "ExecutableDerived: GameState::Update 0x803acdc4, variable integer ms capped at 60; once per host frame"
   },
-  "load_seconds": 3.0064799785614014,
+  "load_seconds": 2.6378893852233887,
   "log": [
     "Boot: reading original data files",
     "db.vlt: 75 types, 32 classes, 908 collections",
@@ -138,10 +145,10 @@
         -0.04999999701976776,
         -53.0
       ],
-      "pose": -3.4069223403930664,
+      "pose": -3.6987857818603516,
       "speed": 0.0,
       "step": "settle",
-      "t": 1.501535415649414,
+      "t": 1.5150001049041748,
       "weights": [
         1.0,
         0.0,
@@ -153,84 +160,84 @@
       "pos": [
         12.0,
         -0.04999999701976776,
-        -49.68337631225586
+        -49.631248474121094
       ],
-      "pose": -7.801743507385254,
+      "pose": -7.5806779861450195,
       "speed": 5.0,
       "step": "forward",
-      "t": 4.001166343688965,
+      "t": 4.005003929138184,
       "weights": [
-        4.771467665420914e-10,
-        3.655494795751224e-10,
+        5.494363852776019e-10,
+        4.0084369157256106e-10,
         0.9999998211860657
       ]
     },
     {
       "grounded": true,
       "pos": [
-        15.08327865600586,
+        14.980050086975098,
         -0.04999999701976776,
-        -49.08609390258789
+        -49.1242790222168
       ],
-      "pose": -0.0682106465101242,
+      "pose": 0.04339976608753204,
       "speed": 5.0,
       "step": "left",
-      "t": 6.500777244567871,
+      "t": 6.506985187530518,
       "weights": [
-        2.2719872616961375e-19,
-        1.7406046267344826e-19,
-        0.9999998807907104
+        2.700903415265669e-19,
+        1.9704567932128016e-19,
+        0.9999998211860657
       ]
     },
     {
       "grounded": true,
       "pos": [
-        23.333587646484375,
-        0.03734006732702255,
-        -41.93865203857422
+        23.11531639099121,
+        0.03614097461104393,
+        -41.877159118652344
       ],
-      "pose": -6.929296493530273,
+      "pose": -6.9107160568237305,
       "speed": 7.071067810058594,
       "step": "diagonal",
-      "t": 8.50008487701416,
+      "t": 8.503968238830566,
       "weights": [
-        7.950923671118734e-27,
-        6.091325835504105e-27,
-        0.9999998807907104
+        1.0064273562114069e-26,
+        7.34243843114123e-27,
+        0.9999998211860657
       ]
     },
     {
       "grounded": false,
       "pos": [
-        23.680253982543945,
-        1.019840121269226,
-        -41.66643142700195
+        23.3729190826416,
+        1.0207576751708984,
+        -41.781158447265625
       ],
-      "pose": -5.351820945739746,
+      "pose": -5.5200395584106445,
       "speed": 0.0,
       "step": "jump",
-      "t": 8.900774002075195,
+      "t": 8.905963897705078,
       "weights": [
-        0.8994948863983154,
-        0.02495274879038334,
-        0.07555233687162399
+        0.9034444093704224,
+        0.03253393992781639,
+        0.06402164697647095
       ]
     },
     {
       "grounded": true,
       "pos": [
-        23.680253982543945,
+        23.3729190826416,
         0.670899510383606,
-        -41.66643142700195
+        -41.781158447265625
       ],
-      "pose": -5.499746322631836,
+      "pose": -5.215542793273926,
       "speed": 0.0,
       "step": "final",
-      "t": 9.916848182678223,
+      "t": 9.907955169677734,
       "weights": [
-        0.9999837279319763,
-        4.038414772367105e-6,
-        0.000012227582374180201
+        0.9999819397926331,
+        6.085989753046306e-6,
+        0.00001197626261273399
       ]
     }
   ]

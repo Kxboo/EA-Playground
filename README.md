@@ -5,7 +5,7 @@ The dashboard is published by GitHub Pages after the GameMap branch is merged in
 
 A native **Bevy asset viewer** and a shared, headless decoding toolkit for the Wii version of EA Playground. Browse archives, inspect formats, preview textured models and images, and play recovered animations on compatible skeletons and models.
 
-The long-term goal is an evidence-based reconstruction in Rust/Bevy. **Gameplay logic has not been ported yet.** Asset previews are usable; Wii rendering and animation semantics are still being researched.
+The long-term goal is an evidence-based reconstruction in Rust/Bevy. A playable world slice uses recovered locomotion and frame timing; it is not a full game port. Asset previews are usable; Wii rendering and animation semantics are still being researched.
 
 ![Textured RC buggy in the Bevy workbench](_bevy/docs/captures/material-buggy.png)
 
@@ -70,7 +70,7 @@ These are the existing captures from the workbench verification runs, not mockup
 
 ## Accuracy and next work
 
-Material ownership, shared texture discovery, vertex colours, prop normal decoding and wrap modes have been corrected against executable evidence. Wii TEV effects, dynamic shadows, sphere-map/specular behavior, exact alpha state, filtering/LOD, APT timelines and some animation timing remain approximate or unresolved. Animation playback currently assumes 30 fps. Audio/video playback is not implemented.
+Material ownership, shared texture discovery, vertex colours, prop normal decoding and wrap modes have been corrected against executable evidence. Wii TEV effects, dynamic shadows, sphere-map/specular behavior, exact alpha state, filtering/LOD, APT timelines and some animation timing remain approximate or unresolved. Animation sampling currently assumes 30 fps. Area music streams through the Rust decoder; video and audio-event scripting remain unimplemented.
 
 For the future game, follow the [reconstruction evidence policy](_bevy/docs/RECONSTRUCTION.md). Do not infer 1:1 game behavior from asset names or successful previews.
 

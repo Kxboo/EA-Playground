@@ -4,6 +4,8 @@ mod viewer;
 mod game;
 mod menu;
 mod locomotion;
+mod sim_time;
+mod multiplayer;
 mod recovered;
 mod vlt;
 mod havok;

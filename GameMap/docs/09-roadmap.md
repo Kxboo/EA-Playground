@@ -8,7 +8,7 @@ recover tick rate and input first, no plausible replacement rules labelled 1:1, 
 | item | source of truth | notes |
 |---|---|---|
 | `GameState` machine and transition graph | [02](02-state-machine-and-timing.md), `data/state_transitions.tsv` | 8 states, 16 call sites; trivial to port; drives everything else |
-| time step: integer ms, cap 60, fixed 16 debug, uncapped time for input | [02](02-state-machine-and-timing.md) | divisor source `[U]` (assume 729 MHz until the store is found) |
+| time step: integer ms, cap 60, fixed 16 debug, uncapped time for input | [02](02-state-machine-and-timing.md), `_bevy/src/sim_time.rs` | ported and checked against original instructions; divisor address `0x800000fc`, runtime value `[U]` |
 | physics step: clamp 200 ms, ≤ 60 ms slices, `n = ceil(dt/60)`, integer slice distribution | [02](02-state-machine-and-timing.md) | independent of Havok |
 | hashes for `.idx` and VLT keys | `tools/hashes.py` (verified) | unlocks text and the whole database |
 | `MultiplayerMode` + post-game awards | `reference/multiplayer_mode.py` (verified) | port 1:1 |
@@ -41,7 +41,7 @@ recover tick rate and input first, no plausible replacement rules labelled 1:1, 
 
 | # | question | where to look |
 |---|---|---|
-| 1 | source of the clock divisor at `gpTrcCorehandlers+0xfc` | `TRCCoreHandlers::Create` (`0x802523e4`), `TRC_InitInfo` |
+| 1 | runtime value of the CPU clock word at absolute `0x800000fc` | capture the console's low-memory word; address confirmed at `0x803ace0c`/`0x803ace24` |
 | 2 | exact `BUTTON_TAP/HOLD/SECOND/HOLDPRESSED` timing and how "no modifier" (0) is distinguished from `UP` | `Controller::UpdateInput` |
 | 3 | which pad-mode handler each minigame/menu selects | `CorePadModeHandler` … vtables, `EnableFrontEndInput`, `gEnableNunchuck` |
 | 4 | per-field value layout of VLT collections; `PtrN` fix-ups; enum member tables in `db.bin` | `Attrib::Vault/Collection` code + the supplied `db.vlt` |

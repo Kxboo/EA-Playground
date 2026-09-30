@@ -1,5 +1,15 @@
 # Developer handoff
 
+## Latest continuation (2026-09-30)
+
+`feat/menu-and-game-proof` is merged into `main` alongside the executable GameMap research. The playable slice now uses `GameState::Update`'s variable integer-millisecond frame policy instead of an assumed fixed 60 Hz loop. `sim_time.rs` also ports Havok step scheduling without claiming Havok dynamics. `tools/timing_oracle.py --check` executes the original PowerPC routines for 160 frame and 252 physics cases; constants regenerate from the pinned ELF. The clock divisor address is absolute `0x800000fc` (corrected in GameMap), with the console's runtime value still uncaptured.
+
+`multiplayer.rs` ports tournament points/wins/ranks as pure rules, verified against 210 original-code transitions and queries. This includes ordered tie handling and the original placement-slot bug; see [multiplayer evidence](../_bevy/docs/MULTIPLAYER.md). Playable minigames remain future work.
+
+`audio.rs` now decodes seven MPEG-1 EA Layer 3 sounds embedded in AEMS banks, bringing supported embedded sounds to 459. Twelve MPEG-2 sounds in `world_sfx.abk` remain explicit errors. See [bank evidence](../_bevy/docs/BANK_AUDIO.md).
+
+From `_bevy`, run `py -3.14 tools/prove.py --with-tests` for corpus checks plus both original-code oracles. After building, run `target/release/EAGL-Workbench.exe --selftest docs/selftest` and `--flow-test --mode menu` for rendered integration. Current boundaries are in [RECONSTRUCTION.md](../_bevy/docs/RECONSTRUCTION.md); the older material-import baseline below remains useful for asset provenance.
+
 Baseline: material decoding pass, decoder **`native-5-materials-4`**, recorded 2026-09-29. Start with the root README, [setup](SETUP.md), and [current findings](../Remaster/research/FINDINGS.md). This is an initial source import into Git; earlier development history survives through notes and provenance, not earlier Git commits.
 
 ## Architecture and ownership

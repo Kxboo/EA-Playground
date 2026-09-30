@@ -12,7 +12,7 @@ Open **EAGL-Workbench.exe** in this folder. This is a native Bevy viewer using t
 | **Play — reconstructed game** | Boots from the original files: decoded Wii strap-warning screen, then every layer in `worldfilelist.csv` (5 areas x 4 variants), Alicia with the decoded idle/walk/run clips, and locomotion from `LocalCharacterControl::Update`. WASD/arrows move, Space jumps, Q/E or right-drag orbit, wheel zoom, R swings the camera behind, Esc returns. |
 | **Proof of decode** | Shows `docs/proof-report.json`; **Run verification** regenerates it with `tools/prove.py` (needs Python 3.14 and the game files). |
 
-What is and is not original in the game slice is printed in its HUD and in `docs/RECONSTRUCTION.md`. Locomotion constants are generated from the ELF (`tools/extract_constants.py` -> `src/recovered.rs`); terrain, jump/gravity, camera framing and the spawn point are provisional.
+What is and is not original in the game slice is printed in its HUD and in `docs/RECONSTRUCTION.md`. Locomotion and timing constants are generated from the ELF (`tools/extract_constants.py` -> `src/recovered.rs`). The game uses the recovered variable frame policy (integer milliseconds, cap 60 ms) for movement, clouds and animation. Terrain collision, gravity and spawn data are decoded; the character solver, jump impulse and camera framing remain provisional.
 
 Command-line switches (all optional):
 
@@ -52,7 +52,7 @@ The viewer, cameras, materials, skinning and animation playback already run in *
 
 The decoding layer currently runs as one persistent, packaged Python worker. This preserves the recovered work while making the native interface responsive. Port a decoder to Rust only after its format and fixtures are stable. UI requests use sequence IDs to discard stale results, the library is virtualized, and generated previews are cached by input content. Static views use reactive updates; active animations render continuously. No Electron or web runtime is included.
 
-**No original gameplay logic has been ported yet.** A 1:1 rewrite requires evidence for state transitions, input, simulation timing, collision, AI and game rules. See `docs/RECONSTRUCTION.md` for the boundary between decoded assets and recovered behavior.
+**Recovered gameplay is partial.** Locomotion, frame/physics timing and multiplayer scoring rules have Rust implementations. A 1:1 rewrite still requires full input/state transitions, Havok dynamics, AI and minigame execution, plus comparisons against the original game. See `docs/RECONSTRUCTION.md` for the boundary between decoded assets and recovered behavior.
 
 ## Headless use
 

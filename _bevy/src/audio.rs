@@ -113,20 +113,32 @@ impl StreamDecoder{
         let Some(&(s,e))=self.blocks.get(self.next) else{return Ok(None)};
         let bi=self.next;self.next+=1;
         let ch=self.channels();let payload=&self.d[s..e];let want=be32(payload,0)? as usize;let buf=payload.get(12..).ok_or("short SCDl block")?;
-        let (mut o,mut emitted)=(0usize,0usize);let mut samples=Vec::with_capacity(want*ch);
+        let samples=layer3_run(buf,want,ch,&mut self.dec,&mut self.skip,&mut self.frames,bi)?;
+        Ok(Some(samples))
+    }
+}
+
+/// Shared CEALayer3Dec chunk walk. Bank payloads begin at the type byte; streamed
+/// SCDl payloads supply the same bytes after their 12-byte block header.
+fn layer3_run(buf:&[u8],want:usize,ch:usize,dec:&mut Layer3,skip:&mut usize,frames:&mut u64,bi:usize)->Result<Vec<i16>,String>{
+    if !(1..=2).contains(&ch){return Err("EA Layer 3 requires one or two channels".into())}
+    let capacity=want.checked_mul(ch).ok_or("EA Layer 3 sample count overflow")?;
+        let (mut o,mut emitted)=(0usize,0usize);let mut samples=Vec::new();
+        samples.try_reserve_exact(capacity).map_err(|_|"EA Layer 3 sample allocation too large")?;
         while emitted<want&&o<buf.len(){
             if buf[o]!=0{return Err(format!("block {bi}: unexpected chunk type {:#04x} at {o}",buf[o]))}
-            let f=self.dec.decode_frame(&buf[o+1..]).map_err(|er|format!("block {bi} frame at {o}: {er}"))?;
+            let f=dec.decode_frame(&buf[o+1..]).map_err(|er|format!("block {bi} frame at {o}: {er}"))?;
             if f.channels!=ch{return Err(format!("block {bi}: frame has {} channels, stream header says {ch}",f.channels))}
-            self.frames+=1;o+=1+f.bytes;let mut pcm=f.pcm;
-            while o+5<=buf.len()&&buf[o]==0xEE{
+            *frames+=1;o+=1+f.bytes;let mut pcm=f.pcm;
+            while buf.get(o)==Some(&0xEE){
+                if buf.len()-o<5{return Err(format!("block {bi}: raw PCM header truncated"))}
                 let off=u16::from_be_bytes([buf[o+1],buf[o+2]]) as usize;let n=u16::from_be_bytes([buf[o+3],buf[o+4]]) as usize;
                 let start=576usize.checked_sub(off).ok_or("raw PCM offset exceeds a granule")?;
                 if start+n>576||o+5+n*ch*2>buf.len(){return Err(format!("block {bi}: raw PCM chunk out of range"))}
                 for k in 0..n{for c in 0..ch{let p=o+5+(k*ch+c)*2;pcm[c][start+k]=i16::from_be_bytes([buf[p],buf[p+1]]) as f64/32768.;}}
                 o+=5+n*ch*2;
             }
-            let from=self.skip.min(576);self.skip-=from;
+            let from=(*skip).min(576);*skip-=from;
             for i in from..576{
                 if emitted>=want{break}
                 for c in 0..ch{samples.push(mp3::to_i16(pcm[c][i]));}
@@ -134,8 +146,7 @@ impl StreamDecoder{
             }
         }
         if emitted!=want{return Err(format!("block {bi}: produced {emitted} of {want} samples"))}
-        Ok(Some(samples))
-    }
+    Ok(samples)
 }
 
 /// Decode a whole stream (or the first `max_blocks` blocks) to interleaved 16-bit PCM.
@@ -154,7 +165,8 @@ pub fn decode(d:&[u8],max_blocks:Option<usize>)->Result<Pcm,String>{
 pub struct BankSound{pub header:Header,pub data_offset:usize}
 pub fn parse_bank(d:&[u8])->Result<Vec<BankSound>,String>{
     if d.get(..4)!=Some(b"BNKb"){return Err("Not a BNKb bank".into())}
-    let count=u16::from_be_bytes([d[6],d[7]]) as usize;let mut out=vec![];let mut pos=0x14+count*4;
+    let count_bytes=d.get(6..8).ok_or("truncated BNKb header")?;
+    let count=u16::from_be_bytes(count_bytes.try_into().unwrap()) as usize;let mut out=vec![];let mut pos=0x14+count*4;
     for _ in 0..count{
         // Sound headers follow the table back to back; each ends with a 0xFF tag and is padded to 4 bytes.
         let body=d.get(pos..).ok_or("sound header outside bank")?;
@@ -196,9 +208,21 @@ pub fn decode_dsp(data:&[u8],coefs:&[u8],samples:usize)->Result<Vec<i16>,String>
     if out.len()<samples{return Err("DSP-ADPCM data too short".into())}
     out.truncate(samples);Ok(out)
 }
-/// Decode sound `i` of a bank (EA-XA and DSP-ADPCM).
+/// Decode sound `i` of a bank (EA-XA, DSP-ADPCM, and MPEG-1 EA Layer 3).
 pub fn decode_bank_sound(d:&[u8],i:usize)->Result<Pcm,String>{
     let sounds=parse_bank(d)?;let s=sounds.get(i).ok_or("no such sound")?;
+    if s.header.codec==0x17{
+        // CEALayer3Dec::Feed (0x802808dc) accepts a byte pointer/size and sample count;
+        // Decode (0x80280988..0x802809ac) starts its first frame at pointer + 1 and
+        // sets a 0x451-sample skip. BNKb data has no SCDl count/offset preamble.
+        // Bound reads to the next sound, including banks whose offsets share data.
+        let end=sounds.iter().map(|x|x.data_offset).filter(|&o|o>s.data_offset).min().unwrap_or(d.len());
+        let data=d.get(s.data_offset..end).ok_or("sound data outside bank")?;
+        let ch=s.header.channels.max(1) as usize;
+        let mut dec=Layer3::new();let mut skip=START_SKIP;let mut frames=0;
+        let samples=layer3_run(data,s.header.samples as usize,ch,&mut dec,&mut skip,&mut frames,i)?;
+        return Ok(Pcm{sample_rate:s.header.sample_rate,channels:ch,samples,frames,stats:dec.stats})
+    }
     if s.header.codec==0x12{
         let coefs=s.header.long.iter().find(|e|e.0==0x8f).map(|e|e.1.as_slice()).ok_or("no coefficient entry")?;
         let data=d.get(s.data_offset..).ok_or("sound data outside bank")?;
@@ -311,6 +335,72 @@ pub fn to_wav(p:&Pcm)->Vec<u8>{
 #[cfg(test)]
 mod tests{
     use super::*;
+    fn silent_layer3_chunk()->Vec<u8>{
+        // MPEG-1/32kHz/mono, granule 0, zero part2_3 and big_values, long block.
+        let mut bits=Vec::new();
+        for (value,n) in [(0xec,8),(0,1),(0,12),(0,9),(210,8),(0,4),(0,1),(0,15),(0,4),(0,3),(0,1),(0,1),(0,1)]{
+            for i in (0..n).rev(){bits.push(((value>>i)&1) as u8)}
+        }
+        let mut chunk=vec![0];
+        chunk.extend(bits.chunks(8).map(|b|b.iter().enumerate().fold(0,|v,(i,&bit)|v|(bit<<(7-i)))));
+        chunk
+    }
+    #[test] fn bank_layer3_delay_and_raw_splice(){
+        let mut data=silent_layer3_chunk();data.extend(silent_layer3_chunk());
+        // Skip 576 + 529 samples; the first returned samples are at 529 and 530.
+        data.extend([0xee,0,47,0,2,0x12,0x34,0xfe,0xdc]);
+        let mut dec=Layer3::new();let mut skip=START_SKIP;let mut frames=0;
+        let pcm=layer3_run(&data,2,1,&mut dec,&mut skip,&mut frames,0).unwrap();
+        assert_eq!(pcm,[0x1234,-292]);assert_eq!((skip,frames),(0,2));
+        assert_eq!(dec.stats.exact_end,2);
+        data.pop();
+        assert!(layer3_run(&data,2,1,&mut Layer3::new(),&mut {START_SKIP},&mut 0,0).unwrap_err().contains("out of range"));
+    }
+    #[test] fn bank_layer3_rejects_incomplete_splice_after_sample_target(){
+        // Two granules leave exactly 47 samples after the decoder delay. A following
+        // splice must still be validated even though those samples satisfy the target.
+        for tail in 1..5{
+            let mut data=silent_layer3_chunk();data.extend(silent_layer3_chunk());
+            data.extend_from_slice(&[0xee,0,47,0][..tail]);
+            let mut skip=START_SKIP;let mut frames=0;
+            let err=layer3_run(&data,47,1,&mut Layer3::new(),&mut skip,&mut frames,0).unwrap_err();
+            assert!(err.contains("raw PCM header truncated"),"{tail} byte suffix: {err}");
+        }
+    }
+    #[test] fn bank_layer3_rejects_truncation_and_versions(){
+        assert!(parse_bank(b"BNKb").is_err());
+        let mut skip=0;let mut frames=0;
+        assert!(layer3_run(&[0,0xec],1,1,&mut Layer3::new(),&mut skip,&mut frames,0).is_err());
+        assert!(layer3_run(&[0,0x8c],1,1,&mut Layer3::new(),&mut skip,&mut frames,0).unwrap_err().contains("unsupported MPEG version bits 2"));
+        assert!(layer3_run(&[1],1,1,&mut Layer3::new(),&mut skip,&mut frames,0).unwrap_err().contains("unexpected chunk type"));
+    }
+    #[test] fn abk_layer3_banks(){
+        let dir=crate::bridge::data_root().join("files/data/audio/aems");
+        let Ok(rd)=std::fs::read_dir(dir) else{eprintln!("DATA absent; skipped");return};
+        let (mut decoded,mut mpeg2)=(0,0);
+        for e in rd.flatten(){
+            let p=e.path();if p.extension().is_none_or(|x|x!="abk"){continue}
+            let d=std::fs::read(&p).unwrap();let Some(bank)=abk_bank(&d).unwrap() else{continue};
+            for (i,s) in parse_bank(bank).unwrap().iter().enumerate(){
+                if s.header.codec!=0x17{continue}
+                if bank[s.data_offset+1]>>6==2{
+                    assert_eq!(p.file_name().unwrap(),"world_sfx.abk");
+                    let e=decode_bank_sound(bank,i).err().expect("MPEG-2 is explicitly unsupported");
+                    assert!(e.contains("unsupported MPEG version bits 2"),"{e}");mpeg2+=1;continue
+                }
+                let pcm=decode_bank_sound(bank,i).unwrap_or_else(|e|panic!("{} #{i}: {e}",p.display()));
+                assert_eq!(pcm.channels,s.header.channels.max(1) as usize);
+                assert_eq!(pcm.samples.len(),s.header.samples as usize*pcm.channels);
+                assert_eq!(pcm.stats.exact_end,pcm.stats.frames);
+                assert_eq!(pcm.stats.overrun+pcm.stats.rewinds,0);
+                let clipped=pcm.samples.iter().filter(|&&x|x==i16::MAX||x==i16::MIN).count();
+                assert!(clipped*100<pcm.samples.len(),"{} #{i}: {clipped} clipped",p.display());
+                decoded+=1;
+            }
+        }
+        eprintln!("ABKC EA Layer 3: {decoded} MPEG-1 sounds decoded exactly; {mpeg2} MPEG-2 sounds explicitly unsupported");
+        assert_eq!((decoded,mpeg2),(7,12));
+    }
     fn music(name:&str)->Option<Vec<u8>>{
         let p=crate::bridge::data_root().join("files").join("data").join("audio").join("music").join(name);
         std::fs::read(p).ok()

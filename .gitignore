@@ -44,3 +44,4 @@
 # Local decompiler output (decompiled game code): never commit; regenerate with GameMap/tools/ghidra
 /GameMap/decomp/
 /GameMap/site/code/
+/GameMap/.deps/

@@ -7,7 +7,7 @@ use bevy_egui::{egui,EguiContexts,EguiTextureHandle};
 use serde::{Deserialize,Serialize};
 use serde_json::{Value,json};
 use std::{collections::{HashMap},path::PathBuf,time::Instant};
-use crate::{archive,assets,bridge,character,gsh,locomotion::{InputKind,Locomotion,TICK_HZ},menu::AppMode,model,recovered as k};
+use crate::{archive,assets,bridge,character,gsh,locomotion::{InputKind,Locomotion},menu::AppMode,model,recovered as k,sim_time::{FramePolicy,FrameStep}};
 use std::sync::{Mutex,mpsc};
 
 #[derive(Component,Debug,Clone,Serialize,Deserialize)]
@@ -47,6 +47,19 @@ const SKY_LAYER:usize=1;
 const SKY_MODELS:[(&str,bool);3]=[("skybox",false),("skybox_mountain_city_ring",false),("skybox_clouds",true)];
 
 #[derive(Resource,Default)] pub struct GameInput{pub x:f32,pub y:f32,pub jump:bool,pub scripted:bool}
+
+#[derive(Resource,Default)]
+struct SimulationClock{frame:FrameStep,frames:u64,total_ms:u64,max_simulation_ms:u32,max_input_ms:i32}
+
+/// Read the uncapped host clock; the original applies its cap after integer truncation.
+/// Loading resets these diagnostics so they describe the current playable session only.
+fn sample_frame(time:Res<Time<Real>>,g:Option<Res<Game>>,mut clock:ResMut<SimulationClock>){
+    if !g.is_some_and(|g|g.is_playing()){*clock=SimulationClock::default();return}
+    clock.frame=FramePolicy::default().step((time.delta_secs_f64()*1000.) as f32);
+    clock.frames+=1;clock.total_ms+=clock.frame.simulation_ms as u64;
+    clock.max_simulation_ms=clock.max_simulation_ms.max(clock.frame.simulation_ms);
+    clock.max_input_ms=clock.max_input_ms.max(clock.frame.input_ms);
+}
 
 /// Decoded player assets waiting for the build step.
 struct PlayerAsset{up:assets::Uploaded,skeleton:crate::skeleton::Skeleton,source:String}
@@ -220,10 +233,9 @@ impl Game{
 
 fn in_game(mode:Res<AppMode>)->bool{*mode==AppMode::Game}
 pub fn plugin(app:&mut App){
-    app.init_resource::<GameInput>().insert_resource(Time::<Fixed>::from_hz(TICK_HZ as f64))
-        .add_systems(Update,(pump,build,read_input,camera,sky_update,animate,selftest).chain().run_if(in_game))
-        .add_systems(bevy_egui::EguiPrimaryContextPass,hud.run_if(in_game))
-        .add_systems(FixedUpdate,movement.run_if(in_game));
+    app.init_resource::<GameInput>().init_resource::<SimulationClock>()
+        .add_systems(Update,(pump,build,sample_frame,read_input,movement,camera,sky_update,animate,selftest).chain().run_if(in_game))
+        .add_systems(bevy_egui::EguiPrimaryContextPass,hud.run_if(in_game));
 }
 
 
@@ -304,9 +316,9 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,mut meshes:ResMut<Asset
 /// `SkyDome::Update` (0x803c6694): the cloud layer's angle advances by 0.012 rad/s (wrapped at 2 pi); `Draw` (0x803c6724)
 /// rotates only the cloud model about Y.  The sky sits at the origin (`Initialise` 0x803c64d0), it does not follow the camera.
 const SKY_CLOUD_RATE:f32=0.012;
-fn sky_update(g:Option<ResMut<Game>>,time:Res<Time>,mut layers:Query<(&SkyLayer,&mut Transform),(Without<SkyCamera>,Without<GameCamera>)>,main:Query<&Transform,With<GameCamera>>,mut sky_cam:Query<&mut Transform,(With<SkyCamera>,Without<GameCamera>,Without<SkyLayer>)>){
+fn sky_update(g:Option<ResMut<Game>>,clock:Res<SimulationClock>,mut layers:Query<(&SkyLayer,&mut Transform),(Without<SkyCamera>,Without<GameCamera>)>,main:Query<&Transform,With<GameCamera>>,mut sky_cam:Query<&mut Transform,(With<SkyCamera>,Without<GameCamera>,Without<SkyLayer>)>){
     let Some(mut g)=g else{return};
-    g.sky_angle=(g.sky_angle+SKY_CLOUD_RATE*time.delta_secs())%std::f32::consts::TAU;
+    g.sky_angle=(g.sky_angle+SKY_CLOUD_RATE*clock.frame.seconds())%std::f32::consts::TAU;
     for (l,mut t) in &mut layers{if l.clouds{t.rotation=Quat::from_rotation_y(g.sky_angle);}}
     if let (Ok(m),Ok(mut c))=(main.single(),sky_cam.single_mut()){*c=*m;}
 }
@@ -404,10 +416,10 @@ fn read_input(keys:Res<ButtonInput<KeyCode>>,mut input:ResMut<GameInput>){
     input.jump=keys.pressed(KeyCode::Space);
 }
 
-fn movement(g:Option<Res<Game>>,input:Res<GameInput>,cam:Query<&GameCamera>,mut q:Query<(&mut Player,&mut Transform)>){
+fn movement(g:Option<Res<Game>>,input:Res<GameInput>,clock:Res<SimulationClock>,cam:Query<&GameCamera>,mut q:Query<(&mut Player,&mut Transform)>){
     let Some(g)=g else{return};if g.phase!=Phase::Playing{return}
     let (Some(ground),Ok(cam))=(&g.ground,cam.single()) else{return};
-    let dt=1./TICK_HZ;let dt_ms=(1000./TICK_HZ) as i32;
+    let dt=clock.frame.seconds();let dt_ms=clock.frame.simulation_ms as i32;
     for (mut p,mut t) in &mut q{
         let step=p.loco.update(dt_ms,InputKind::Digital,input.x,input.y,cam.yaw,k::STATE_MAX_SPEED);
         p.speed=step.speed;
@@ -437,11 +449,11 @@ fn movement(g:Option<Res<Game>>,input:Res<GameInput>,cam:Query<&GameCamera>,mut 
     }
 }
 
-fn camera(g:Option<Res<Game>>,mut c:Query<(&mut GameCamera,&mut Transform),Without<Player>>,p:Query<(&Player,&Transform),Without<GameCamera>>,keys:Res<ButtonInput<KeyCode>>,mouse:Res<ButtonInput<MouseButton>>,motion:Res<AccumulatedMouseMotion>,scroll:Res<AccumulatedMouseScroll>,time:Res<Time>){
+fn camera(g:Option<Res<Game>>,mut c:Query<(&mut GameCamera,&mut Transform),Without<Player>>,p:Query<(&Player,&Transform),Without<GameCamera>>,keys:Res<ButtonInput<KeyCode>>,mouse:Res<ButtonInput<MouseButton>>,motion:Res<AccumulatedMouseMotion>,scroll:Res<AccumulatedMouseScroll>,clock:Res<SimulationClock>){
     let (Ok((mut cam,mut ct)),Ok((player,pt)))=(c.single_mut(),p.single()) else{return};
     if mouse.pressed(MouseButton::Right)||mouse.pressed(MouseButton::Middle){cam.yaw-=motion.delta.x*0.005;cam.pitch=(cam.pitch+motion.delta.y*0.005).clamp(-0.2,1.3);}
     let key=|k:KeyCode|keys.pressed(k) as i32 as f32;
-    cam.yaw+=(key(KeyCode::KeyQ)-key(KeyCode::KeyE))*1.8*time.delta_secs();
+    cam.yaw+=(key(KeyCode::KeyQ)-key(KeyCode::KeyE))*1.8*clock.frame.seconds();
     cam.distance=(cam.distance*(-scroll.delta.y*0.1).exp()).clamp(1.2,12.);
     // EVENT_CAMERA_REORIENT (controls.csv: STATE_COMBAT, BUTTON B): swing behind the player.
     if keys.just_pressed(KeyCode::KeyR){cam.yaw=(-player.facing.x).atan2(-player.facing.z)+std::f32::consts::PI;}
@@ -454,12 +466,15 @@ fn camera(g:Option<Res<Game>>,mut c:Query<(&mut GameCamera,&mut Transform),Witho
     *ct=Transform::from_translation(eb).looking_at(tb,Vec3::Y);
 }
 
-fn animate(g:Option<Res<Game>>,mut q:Query<(&mut Player,&Children,&Transform),Without<PlayerModel>>,children:Query<&Children>,mut players:Query<&mut AnimationPlayer>,mut models:Query<&mut Transform,(With<PlayerModel>,Without<Player>)>,time:Res<Time>){
+fn animate(g:Option<Res<Game>>,mut q:Query<(&mut Player,&Children,&Transform),Without<PlayerModel>>,children:Query<&Children>,mut players:Query<&mut AnimationPlayer>,mut models:Query<&mut Transform,(With<PlayerModel>,Without<Player>)>,time:Res<Time>,clock:Res<SimulationClock>){
     let radius=g.map(|g|g.world_radius).unwrap_or(0.);
     for (mut p,kids,pt) in &mut q{
         // CharacterMovement::Update: idle at 0, walk while speed <= CharacterState+0x1c (2.5) + 0.001, otherwise run.
         let target=if p.speed<=0.{[1.,0.,0.]}else if p.speed<=k::STATE_FIELD_1C+k::ANIM_SPEED_EPSILON{[0.,1.,0.]}else{[0.,0.,1.]};
-        let blend=(time.delta_secs()*8.).min(1.);
+        let dt=clock.frame.seconds();let blend=(dt*8.).min(1.);
+        // Bevy advances clips with virtual Time later in PostUpdate. Scale just these
+        // game clips so a stalled frame advances them by the same capped dt as movement.
+        let playback_speed=if time.delta_secs()>0.{dt/time.delta_secs()}else{0.};
         for i in 0..3{p.weights[i]+=(target[i]-p.weights[i])*blend;}
         let w=p.weights;
         for kid in kids.iter(){
@@ -469,7 +484,7 @@ fn animate(g:Option<Res<Game>>,mut q:Query<(&mut Player,&Children,&Transform),Wi
                 m.translation.y=-bend(radius,pt.translation.x,pt.translation.z);
             }
             for d in std::iter::once(kid).chain(children.iter_descendants(kid)){if let Ok(mut pl)=players.get_mut(d){
-                for (i,weight) in w.iter().enumerate(){if let Some(a)=pl.animation_mut(AnimationNodeIndex::new(i+1)){a.set_weight(*weight);}}
+                for (i,weight) in w.iter().enumerate(){if let Some(a)=pl.animation_mut(AnimationNodeIndex::new(i+1)){a.set_weight(*weight);a.set_speed(playback_speed);}}
             }}
         }
     }
@@ -522,7 +537,7 @@ fn hud(images:Res<Assets<Image>>,mut contexts:EguiContexts,mut g:Option<ResMut<G
     Ok(())
 }
 
-fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<GameInput>,time:Res<Time>,player:Query<(&Player,&Transform)>,cam:Query<&Transform,With<GameCamera>>,meshes:Query<&Mesh3d>,players:Query<&AnimationPlayer>,joints:Query<(&bevy::animation::AnimationTargetId,&Transform)>,skins:Query<&bevy::mesh::skinning::SkinnedMesh>,mut exit:MessageWriter<AppExit>,_window:Query<&Window,With<PrimaryWindow>>){
+fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<GameInput>,time:Res<Time>,clock:Res<SimulationClock>,player:Query<(&Player,&Transform)>,cam:Query<&Transform,With<GameCamera>>,meshes:Query<&Mesh3d>,players:Query<&AnimationPlayer>,joints:Query<(&bevy::animation::AnimationTargetId,&Transform)>,skins:Query<&bevy::mesh::skinning::SkinnedMesh>,mut exit:MessageWriter<AppExit>,_window:Query<&Window,With<PrimaryWindow>>){
     let Some(g)=g.as_mut() else{return};let g=&mut **g;
     if g.selftest.is_none(){return}
     let elapsed=g.started.elapsed().as_secs_f32();
@@ -544,14 +559,14 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
     if g.phase!=Phase::Playing{return}
     let st=g.selftest.as_mut().unwrap();
     let Ok((p,t))=player.single() else{return};
-    st.t+=time.delta_secs();
+    st.t+=clock.frame.seconds();
     // Checksum of every animated joint rotation: changes whenever the decoded clips move the rig.
     let pose:f32=joints.iter().map(|(_,t)|t.rotation.x+2.*t.rotation.y+3.*t.rotation.z).sum();
     let record=|st:&mut SelfTest,name:&str|{st.samples.push(json!({"step":name,"t":st.t,"pos":[t.translation.x,t.translation.y,t.translation.z],"speed":p.speed,"grounded":p.grounded,"weights":p.weights,"pose":pose}));};
     input.scripted=true;
     // Scripted input sequence: settle, walk forward, run diagonally, jump, settle.
     let script=[(0.,0.,0.,false,1.5,"settle"),(0.,1.,0.,false,2.5,"forward"),(-1.,0.,0.,false,2.5,"left"),(-1.,1.,0.,false,2.0,"diagonal"),(0.,0.,0.,true,0.4,"jump"),(0.,0.,0.,false,1.0,"land")];
-    if st.step==0&&st.t<1e-3+time.delta_secs()*2.{st.start=t.translation;}
+    if st.step==0&&st.t<1e-3+clock.frame.seconds()*2.{st.start=t.translation;}
     let mut acc=0.;let mut cur=None;
     for (i,s) in script.iter().enumerate(){if st.t>=acc&&st.t<acc+s.4{cur=Some(i);}acc+=s.4;}
     match cur{
@@ -569,6 +584,7 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
                 let walk_w=st.samples.iter().filter(|s|s["step"]=="forward").filter_map(|s|Some(s["weights"][1].as_f64()?+s["weights"][2].as_f64()?)).fold(0.,f64::max);
                 let mut checks=vec![];
                 let mut check=|name:&str,ok:bool,detail:String|checks.push(json!({"name":name,"ok":ok,"detail":detail}));
+                check("recovered integer-ms simulation clock drives the game",clock.frames>0&&clock.total_ms>=9_900&&clock.max_simulation_ms<=k::FRAME_CAP_MS as u32,format!("{} frames, {} simulation ms, maximum {} simulation ms / {} uncapped input ms",clock.frames,clock.total_ms,clock.max_simulation_ms,clock.max_input_ms));
                 check("world layers spawned from worldfilelist.csv",g.layers_ready==g.layers_expected&&g.layers_expected+g.layers_empty==WORLD_SUFFIXES.len()*5,format!("{}/{} layers ready, {} empty draw lists skipped",g.layers_ready,g.layers_expected,g.layers_empty));
                 check("SkyDome layers (skybox, mountain/city ring, clouds) loaded",g.sky_expected==3&&g.sky_ready==3,format!("{}/{} layers ready; cloud angle {:.4} rad after the run",g.sky_ready,g.sky_expected,g.sky_angle));
                 check("Havok collision decoded from physics/*.hkx",g.tri_count>20_000&&g.collision_bodies>=500&&g.collision_files>=4,format!("{} files, {} bodies, {} triangles",g.collision_files,g.collision_bodies,g.tri_count));
@@ -595,7 +611,7 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
                 check("jump script executed",jumped,"jump/land samples recorded".into());
                 check("camera follows player",cam.single().map(|c|c.translation.distance(t.translation)<15.).unwrap_or(false),"camera within 15 m".into());
                 let passed=checks.iter().all(|c|c["ok"]==true);
-                let report=json!({"passed":passed,"load_seconds":g.load_seconds,"checks":checks,"samples":st.samples,"log":g.log,"evidence":{"locomotion":"ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs","terrain":"AssetDerived display mesh","jump_gravity":"provisional"}});
+                let report=json!({"passed":passed,"load_seconds":g.load_seconds,"checks":checks,"samples":st.samples,"log":g.log,"evidence":{"locomotion":"ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs","timing":"ExecutableDerived: GameState::Update 0x803acdc4, variable integer ms capped at 60; once per host frame","terrain":"DataDerived Havok collision meshes; provisional character solver","gravity":"DataDerived hkWorldCinfo","jump":"provisional"}});
                 let _=std::fs::write(st.out.join("selftest.json"),serde_json::to_string_pretty(&report).unwrap());
                 exit.write(if passed{AppExit::Success}else{AppExit::from_code(1)});
             }

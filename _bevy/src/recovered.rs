@@ -2,6 +2,16 @@
 //! ELF SHA-256: 5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c
 #![allow(dead_code)]
 
+/// GameState::Update: enable integer-millisecond simulation cap - `gFrameCapEnabled` @ 0x805ff804
+pub const FRAME_CAP_ENABLED: u8 = 1;
+/// GameState::Update: maximum simulation milliseconds per frame - `gCappedMillisecondsPerFrame` @ 0x805ff800
+pub const FRAME_CAP_MS: i32 = 60;
+/// GameState::Update: debug fixed-time override (disabled by default) - `gSimFixedTimeAmt` @ 0x805ff808
+pub const FIXED_FRAME_MS: i32 = 16;
+/// PhysicsManager::Update: maximum milliseconds per Havok step - `gSimPhysicsSingleUpdateTimeCap` @ 0x805ff96c
+pub const PHYSICS_SLICE_CAP_MS: i32 = 60;
+/// PhysicsManager::Update: time multiplier applied to each slice - `gSimPhysicsTimeMultiplier` @ 0x805ff968
+pub const PHYSICS_TIME_MULTIPLIER: f32 = 1.0;
 /// LocalCharacterControl::Update turn step (analog, normal) - `gTurnRate` @ 0x805fec58
 pub const TURN_RATE: f32 = 1.0;
 /// LocalCharacterControl::Update turn step (analog, large heading error) - `gTurnRateFast` @ 0x805fec5c

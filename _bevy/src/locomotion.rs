@@ -13,13 +13,10 @@
 //!   `TURN_RATE_DIGITAL` (d-pad).
 //! * d-pad axes ramp toward the pressed direction by `dt / DIGITAL_TRANSITION_TIME_MS` per update.
 //!
-//! NOT recovered (kept out of this module on purpose): the update rate the turn steps assume
-//! (they are not scaled by dt in the binary; `TICK_HZ` is an assumption) and the exact
-//! `ratan` angle convention.  Tests below pin the recovered numbers.
+//! GameState calls the world once per rendered update, with truncated, capped integer
+//! milliseconds (see `sim_time.rs`). Turn steps are per call, not scaled by dt.
+//! The exact `ratan` angle convention remains unresolved. Tests pin the recovered numbers.
 use crate::recovered as k;
-
-/// Assumed simulation rate.  The binary applies turn steps once per call; the call rate is unresolved.
-pub const TICK_HZ: f32 = 60.;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum InputKind { Analog, Digital }

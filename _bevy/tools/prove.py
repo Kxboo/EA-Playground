@@ -2,7 +2,7 @@
 
 Every check reads the original files directly; nothing is taken from earlier reports except where
 labelled.  Flags:
-  --with-tests     also run `cargo test locomotion`
+  --with-tests     run Rust corpus/regression suites and original-code timing/scoring oracles
   --run-selftest   also launch the game self-test (opens a window for ~1 minute)
 Exit status is 0 only if every check passes.
 """
@@ -84,7 +84,7 @@ def members(root):
     return {str(p.relative_to(root)):sha(p) for p in Path(root).rglob('*') if p.is_file()}
 
 def data_checks():
-    import tempfile
+    import uuid
     tree_ok=OLD.exists() and DATA.exists()
     same=diff=missing=0
     if tree_ok:
@@ -96,7 +96,13 @@ def data_checks():
             else:diff+=1
     check('Earlier extraction (OLD ATTEMPTS) matches the current DATA files',tree_ok and diff==0 and same>0,f'{same} identical, {diff} different, {missing} absent')
     # Real game folder: loose files vs DATA; differing/absent files are resolved at archive-member level.
-    D=DATA/'files'/'data';tmp=Path(tempfile.mkdtemp(prefix='eagl-proof-'))
+    # Python 3.14 mkdtemp uses a restrictive Windows ACL that excludes the
+    # packaged decoder's sandbox identity, even under a writable workspace.
+    # Ordinary mkdir inherits the workspace ACL; a UUID keeps outputs isolated.
+    export_root=(BEVY/'exports').resolve();export_root.mkdir(parents=True,exist_ok=True)
+    D=DATA/'files'/'data';tmp=export_root/f'eagl-proof-{uuid.uuid4().hex}'
+    assert tmp.parent.resolve()==export_root
+    tmp.mkdir()
     same=0;member_same=0;unresolved=[];n=0
     cache={}
     def archive_members(d):
@@ -202,6 +208,10 @@ def recorded_checks():
 def main():
     e=exe_checks();dol_checks(e);constants_checks();vlt_checks();havok_checks();data_checks();decode_checks()
     if '--with-tests' in sys.argv:
+        for script,label in [('timing_oracle.py','Timing vectors reproduced by executing the original PowerPC routines'),
+                             ('multiplayer_oracle.py','Multiplayer scoring vectors reproduced by executing the original PowerPC routines')]:
+            r=subprocess.run([sys.executable,str(HERE/script),'--check'],cwd=BEVY,capture_output=True,text=True)
+            check(label,r.returncode==0,(r.stdout or r.stderr)[-500:].strip())
         # Differential tests: each Rust decoder must reproduce the Python reference / recorded hashes on the whole corpus.
         suites=[('archive::tests::matches_recorded_corpus_hashes','Rust archive reader: all recorded corpus records match their SHA-256'),
                 ('gsh::tests::corpus_matches_python_decoder','Rust GSH texture decoder: every image of every bank matches the Python pixels'),
@@ -218,9 +228,11 @@ def main():
                 ('placement::tests','Level placement: 49 marker sets (304 markers) and 10 RC checkpoint files (20 lanes) parse exactly'),
                 ('audio::tests','Audio: EA Layer 3 (14 music tracks, every granule ends on its declared length), EA-XA streams and bank sounds, MicroTalk speech (8 files, exact chunk framing, low-pass output)'),
                 ('conga::tests','Conga gesture machines: conga.gsm parses (34 sequences, transition counts consistent)'),
-                ('locomotion::tests','Locomotion constants and behaviour')]
+                ('locomotion::tests','Locomotion constants and behaviour'),
+                ('sim_time::tests','Frame timing and physics steps: cap/fixed/pause ordering, uncapped input, original PowerPC vectors'),
+                ('multiplayer::tests','Multiplayer scoring/ranking rules match original PowerPC vectors')]
         for name,label in suites:
-            r=subprocess.run(['cargo','test','--release','--offline',name],cwd=BEVY,capture_output=True,text=True)
+            r=subprocess.run(['cargo','test','--release','--offline','--locked',name],cwd=BEVY,capture_output=True,text=True)
             m=re.search(r'test result: (\w+)\. (\d+) passed; (\d+) failed',r.stdout)
             check(label,bool(m) and m.group(1)=='ok' and int(m.group(2))>0,m.group(0) if m else (r.stderr or r.stdout)[-200:])
     if '--run-selftest' in sys.argv:
@@ -229,9 +241,9 @@ def main():
     recorded_checks()
     passed=sum(c['ok'] for c in checks)
     scope=['This proves: the executable in use is the retail binary with symbols; extracted data is consistent across three copies; the decoders reproduce recorded results; the game slice boots from the original files and moves a character using constants read from the executable.',
-           'This does NOT prove: a full decompilation. ~19k named functions exist, but only LocalCharacterControl::Update locomotion and a set of rendering/skinning routines are reconstructed.',
-           'Provisional (not from the executable): jump/gravity, terrain collision from display meshes, camera framing, spawn point. The world LOD mesh is curved; the original bend/streaming logic is unrecovered.',
-           'Not reconstructed: AI, minigames, conversations, Havok dynamics (collision shapes and world settings are decoded), audio/video playback, APT menu scripting, save data.']
+           'This does NOT prove: a full decompilation or matching gameplay on a running console. Locomotion, frame/physics timing and multiplayer scoring are recovered subsets; many executable functions remain unported.',
+           'Provisional: jump impulse, character step/slide solver and camera framing. Spawn and gravity come from the database and Havok world settings; terrain uses decoded Havok collision. World display curvature is a fit against the assets.',
+           'Not reconstructed: AI, full minigame gameplay, conversation execution, Havok dynamics, video, APT menu scripting, save data and audio-event graphs. Rust audio decoders cover music/speech and supported bank codecs; twelve MPEG-2 bank sounds remain unsupported.']
     rep=dict(generated=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'),elf_sha256=PINNED_ELF,passed=passed==len(checks),passed_count=passed,total=len(checks),checks=checks,scope=scope)
     (BEVY/'docs'/'proof-report.json').write_text(json.dumps(rep,indent=1),encoding='utf-8')
     print(f'\n{passed}/{len(checks)} checks passed');sys.exit(0 if passed==len(checks) else 1)

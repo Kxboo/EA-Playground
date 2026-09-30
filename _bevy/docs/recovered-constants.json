@@ -2,6 +2,46 @@
  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
  "constants": [
   {
+   "rust": "FRAME_CAP_ENABLED",
+   "kind": "u8",
+   "value": 1,
+   "symbol": "gFrameCapEnabled",
+   "address": 2153773060,
+   "doc": "GameState::Update: enable integer-millisecond simulation cap"
+  },
+  {
+   "rust": "FRAME_CAP_MS",
+   "kind": "i32",
+   "value": 60,
+   "symbol": "gCappedMillisecondsPerFrame",
+   "address": 2153773056,
+   "doc": "GameState::Update: maximum simulation milliseconds per frame"
+  },
+  {
+   "rust": "FIXED_FRAME_MS",
+   "kind": "i32",
+   "value": 16,
+   "symbol": "gSimFixedTimeAmt",
+   "address": 2153773064,
+   "doc": "GameState::Update: debug fixed-time override (disabled by default)"
+  },
+  {
+   "rust": "PHYSICS_SLICE_CAP_MS",
+   "kind": "i32",
+   "value": 60,
+   "symbol": "gSimPhysicsSingleUpdateTimeCap",
+   "address": 2153773420,
+   "doc": "PhysicsManager::Update: maximum milliseconds per Havok step"
+  },
+  {
+   "rust": "PHYSICS_TIME_MULTIPLIER",
+   "kind": "f32",
+   "value": 1.0,
+   "symbol": "gSimPhysicsTimeMultiplier",
+   "address": 2153773416,
+   "doc": "PhysicsManager::Update: time multiplier applied to each slice"
+  },
+  {
    "rust": "TURN_RATE",
    "kind": "f32",
    "value": 1.0,

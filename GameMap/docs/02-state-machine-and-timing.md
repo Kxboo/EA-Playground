@@ -88,7 +88,7 @@ and the **report card**, and the debug menu; it consults `WorldMan::IsInMicrogam
 
 ```
 cycles  = (TBL * 12) - nLastCycles                     ; Broadway time base ×12 ⇒ CPU cycles  [I: 729 MHz core clock]
-frameMs = cycles / <word at gpTrcCorehandlers+0xfc> * 1000.0   ; float  (sfFrameMilliseconds)
+frameMs = cycles / <word at absolute 0x800000fc> * 1000.0     ; float  (sfFrameMilliseconds)
 dt      = (unsigned) frameMs                              ; truncated integer ms (sElapsedTimeFrame)
 if (gFrameCapEnabled)  dt = min(dt, gCappedMillisecondsPerFrame)   ; 1 / 60 initial
 if (gSimFixedTime)     dt = gSimFixedTimeAmt                        ; 16 initial   (debug option)
@@ -105,9 +105,9 @@ sTotalElapsedTime += dt ; sElapsedSinceLastRender += dt
 
 So the simulation is **variable-timestep, integer milliseconds, capped at 60 ms per frame** by default. The state function receives
 `sElapsedSinceLastRender + dt` (that accumulator is reset to 0 at the end of every `Update`, so in practice `dt`) and passes it on to
-`FEManager::Update`, `WorldMan::Update`, `AIP::Update` etc. `Controller::Update` is different: it receives the **uncapped** `sfFrameMilliseconds` truncated to int (`fctiwz`), so input timing (double-press, hold) is measured in real frame time even when the simulation is capped. The divisor read from `gpTrcCorehandlers+0xfc` is assigned at run time
-(the object is allocated by `TRCCoreHandlers::Create`), so its value is **[U]**; the `TBL*12` scaling and the 1000× factor strongly suggest the
-Broadway core clock (729 MHz), but that number is inferred, not read. The next step is to find the store into that field.
+`FEManager::Update`, `WorldMan::Update`, `AIP::Update` etc. `Controller::Update` is different: it receives the **uncapped** `sfFrameMilliseconds` truncated to int (`fctiwz`), so input timing (double-press, hold) is measured in real frame time even when the simulation is capped. The divisor is read from **absolute `0x800000fc`**: `lis r3,0x8000` at `0x803ace0c`, then `lwz r0,0xfc(r3)` at `0x803ace24`. Earlier notes incorrectly associated this with `gpTrcCorehandlers`. The runtime word is absent from the ELF, so its value remains **[U]**; 729 MHz is an inference, not a captured console value.
+
+The Rust port in `_bevy/src/sim_time.rs` and `tools/timing_oracle.py` verify this conversion (including 32-bit cycle wrap), cap/fixed/pause order and uncapped controller time against execution of the original instructions. The Bevy slice now applies this policy once per host frame; matching the console's frame pacing still needs a recording.
 
 ### Physics step **[C]**
 

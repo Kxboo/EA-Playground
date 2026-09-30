@@ -12,6 +12,11 @@ import re_functions as rf
 
 # (rust name, ELF symbol, kind, what the game uses it for)
 GLOBALS=[
+ ('FRAME_CAP_ENABLED','gFrameCapEnabled','u8','GameState::Update: enable integer-millisecond simulation cap'),
+ ('FRAME_CAP_MS','gCappedMillisecondsPerFrame','i32','GameState::Update: maximum simulation milliseconds per frame'),
+ ('FIXED_FRAME_MS','gSimFixedTimeAmt','i32','GameState::Update: debug fixed-time override (disabled by default)'),
+ ('PHYSICS_SLICE_CAP_MS','gSimPhysicsSingleUpdateTimeCap','i32','PhysicsManager::Update: maximum milliseconds per Havok step'),
+ ('PHYSICS_TIME_MULTIPLIER','gSimPhysicsTimeMultiplier','f32','PhysicsManager::Update: time multiplier applied to each slice'),
  ('TURN_RATE','gTurnRate','f32','LocalCharacterControl::Update turn step (analog, normal)'),
  ('TURN_RATE_FAST','gTurnRateFast','f32','LocalCharacterControl::Update turn step (analog, large heading error)'),
  ('TURN_RATE_DIGITAL','gTurnRateDigital','f32','LocalCharacterControl::Update turn step (digital/dpad input)'),
@@ -58,7 +63,7 @@ def build():
     e=rf.load();items=[];
     for rust,sym,kind,doc in GLOBALS:
         s=e.symbols[sym];b=e.read(s['value'],4)
-        v=struct.unpack('>f' if kind=='f32' else '>i',b)[0]
+        v=b[0] if kind=='u8' else struct.unpack('>f' if kind=='f32' else '>i',b)[0]
         items.append(dict(rust=rust,kind=kind,value=v,symbol=sym,address=s['value'],doc=doc))
     cf=ctor_floats(e);c=e.symbols[CTOR]
     for off,rust in CTOR_FIELDS:
@@ -78,7 +83,7 @@ def rust(items,sha):
             out.append(f"/// {i['doc']} - `{i['symbol']}` @ {i['address']:#010x}")
             out.append(f"pub const {i['rust']}: [u8; {len(i['value'])}] = {i['value']};".replace("'",''))
             continue
-        t='f32' if i['kind']=='f32' else 'i32'
+        t=i['kind']
         v=repr(i['value']) if t=='f32' else str(i['value'])
         if t=='f32' and 'e' not in v and '.' not in v:v+='.0'
         out.append(f"/// {i['doc']} - `{i['symbol']}` @ {i['address']:#010x}")

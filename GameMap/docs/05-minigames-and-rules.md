@@ -58,8 +58,8 @@ A singleton (`0x128` bytes, global pointer at `0x8060204c`) that keeps points, w
 
 - `StartFreePlay()` resets wins; `StartPointSeries(rounds)` also resets points, sets the point-series flag and `rounds_left`.
 - `AddRoundResults(p0,p1,p2,p3)` adds points (players 2 and 3 only when the argument ≠ −1), remembers the round's points, **re-ranks** (rank = number of players *strictly* ahead), breaks ties using the previous rank
-  (the previously better-ranked player keeps the better rank; mutual ties stay tied), counts the round and decrements `rounds_left` in a point series.
-- `AddWinResults(w1,w2)` credits up to two winners the same way (wins + win rank), records `last_winners` and counts the round.
+  in an ordered, in-place pair loop. Equal current ranks compare previous ranks: if player i had a smaller previous rank, player j's current rank increases; otherwise player i's increases. Equal previous ranks therefore do not remain tied. It counts the round and decrements `rounds_left` in a point series.
+- `AddWinResults(w1,w2)` credits up to two winners the same way (wins + win rank), records `last_winners` and counts the result without decrementing `rounds_left`. Duplicate winner arguments each add a win.
 - Queries: `GetPlayerRank` (points rank in a point series, else win rank), `GetPlayerNumByRank`, `GetPointTotal`, `GetWinTotal`, `WonLastGame`, `GetPlayerPointsInThisMatch`, `GetNumRoundsLeft`.
 - Verified quirks: `SetupMultiplayerGame` skips the second word of the `Teams` copy; `SetLastPlacement(a,b,c,d)` writes both `c` and `d` to the same slot (`d` wins if ≠ −1) and never writes the fourth slot.
 
