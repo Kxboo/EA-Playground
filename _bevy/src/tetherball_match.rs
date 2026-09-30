@@ -2,7 +2,7 @@
 //! Winner UI and state-entry work is returned as ordered requests.
 //! See docs/TETHERBALL_MATCH.md for the fields and oracle boundary conditions.
 
-#[derive(Debug,Clone,Copy,PartialEq,Eq)]
+#[derive(Debug,Clone,Copy,PartialEq,Eq,serde::Serialize,serde::Deserialize)]
 pub struct MatchRules {
     /// +0x16c: 0 = best-of rounds, 1 = time survive; other values do nothing.
     pub mode:i32,
@@ -19,7 +19,7 @@ pub enum MatchEffect {
 
 }
 
-#[derive(Debug,Clone,PartialEq)]
+#[derive(Debug,Clone,PartialEq,serde::Serialize,serde::Deserialize)]
 pub struct MatchState {
     pub rotations:[i8;2], // +0x132/133
     pub round_wins:[i8;2], // +0x134/135; stores wrap at 8 bits

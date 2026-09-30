@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-30 02:20",
+ "generated": "2026-09-30 03:23",
  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
  "passed": true,
- "passed_count": 61,
- "total": 61,
+ "passed_count": 69,
+ "total": 69,
  "checks": [
   {
    "name": "Symbol-bearing ELF matches the pinned hash",
@@ -166,6 +166,26 @@
    "detail": "Verified 72 area matrices and 360 complete tetherball Update transitions"
   },
   {
+   "name": "Original tetherball state entry, round-end results and Update orchestration",
+   "ok": true,
+   "detail": "Verified 1280 tetherball lifecycle/orchestration calls"
+  },
+  {
+   "name": "Original tetherball tuning selection, inheritance and indexed values",
+   "ok": true,
+   "detail": "PASS 75 selectors, 9 difficulty indices, 40 lifecycle tuning records"
+  },
+  {
+   "name": "Original tetherball reset and server-selection state and effects",
+   "ok": true,
+   "detail": "Verified 72 original reset/server calls"
+  },
+  {
+   "name": "Original tetherball gesture queue and hit-attempt decisions",
+   "ok": true,
+   "detail": "Tetherball gestures: 112 original callback/consume/input transitions match"
+  },
+  {
    "name": "MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC",
    "ok": true,
    "detail": "Verified 1536 LSF scale-factor vectors (all 512 compression values x long/short/mixed), original PowerPC\nVerified 72 spectral scaling and 48 reorder vectors (576 lines each), MPEG-1/MPEG-2 bands, original PowerPC\nELF sha256 5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c"
@@ -292,6 +312,26 @@
   },
   {
    "name": "Native area matrices and complete ball Update match original PowerPC vectors",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Native tetherball lifecycle, results and frame orchestration match original PowerPC vectors",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Native tetherball tuning matches original PowerPC and corpus values",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Native tetherball reset and server selection match original PowerPC vectors",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Native tetherball gesture queue and hit attempts match original PowerPC vectors",
    "ok": true,
    "detail": "test result: ok. 1 passed; 0 failed"
   },

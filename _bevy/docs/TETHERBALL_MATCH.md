@@ -28,7 +28,11 @@ state dispatch rather than repeatedly evaluate a finished match.
 The API returns ordered winner-visibility and state-entry requests. It applies
 the common state transition (state 30 and zeroed state timers), but leaves the
 state-specific ball transforms, camera, win animations, APT UI, score placement,
-round reset and post-game flow to their future ports. Match-over states supplied
+round reset and post-game flow to the lifecycle caller.
+The new [lifecycle port](TETHERBALL_LIFECYCLE.md) consumes these effects
+synchronously and supplies complete ChangeGameState entry bodies, animation
+selection, camera decisions and round-end results. The 900-case decision fixture
+below deliberately retains its narrower boundary. Match-over states supplied
 to time-survival must have a valid winner index; Rust safely ignores an invalid
 index where the original would access outside its player-counter array.
 

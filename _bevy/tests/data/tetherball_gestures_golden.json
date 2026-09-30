@@ -1,0 +1,4846 @@
+{
+ "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
+ "cases": [
+  {
+   "initial": {
+    "paused": false,
+    "callbacks_enabled": true,
+    "mega_ability": false,
+    "hit_attempt_marker": true,
+    "player_count": 4,
+    "players": [
+     {
+      "controller_id": 7,
+      "action": 0
+     },
+     {
+      "controller_id": 0,
+      "action": 1
+     },
+     {
+      "controller_id": 1,
+      "action": 2
+     },
+     {
+      "controller_id": 2,
+      "action": -1
+     }
+    ],
+    "forward_player": 0,
+    "reverse_player": 1,
+    "pending": []
+   },
+   "steps": [
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "reverse",
+      "controller_id": 0
+     },
+     "expected": {
+      "pending_count": 1,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 0
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "effects": [
+       [
+        1,
+        0
+       ]
+      ]
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "overhand",
+      "controller_id": -1
+     },
+     "expected": {
+      "pending_count": 1,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": -1
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "regular",
+      "controller_id": 4
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 0,
+      "normal": false,
+      "reverse": false,
+      "normal_out": false,
+      "reverse_out": false,
+      "power_type": 0,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": false,
+       "power_type": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "initial": {
+    "paused": true,
+    "callbacks_enabled": true,
+    "mega_ability": true,
+    "hit_attempt_marker": false,
+    "player_count": 4,
+    "players": [
+     {
+      "controller_id": 7,
+      "action": 0
+     },
+     {
+      "controller_id": 0,
+      "action": 1
+     },
+     {
+      "controller_id": 1,
+      "action": 2
+     },
+     {
+      "controller_id": 2,
+      "action": -1
+     }
+    ],
+    "forward_player": 0,
+    "reverse_player": 1,
+    "pending": [
+     {
+      "kind": 0,
+      "aux_bits": 0,
+      "controller_id": 0
+     }
+    ]
+   },
+   "steps": [
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "reverse",
+      "controller_id": 3
+     },
+     "expected": {
+      "pending_count": 1,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 0
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": [
+       [
+        1,
+        0
+       ]
+      ]
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "overhand",
+      "controller_id": 2
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "regular",
+      "controller_id": 4
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "serve_toss",
+      "controller_id": -1
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 1,
+      "argument_player": 2,
+      "player_action": 1,
+      "ball_zone": 1,
+      "normal": true,
+      "reverse": false,
+      "normal_out": false,
+      "reverse_out": true,
+      "power_type": 1,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "attempt": {
+       "normal": false,
+       "reverse": true,
+       "power_type": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "initial": {
+    "paused": false,
+    "callbacks_enabled": false,
+    "mega_ability": false,
+    "hit_attempt_marker": true,
+    "player_count": 4,
+    "players": [
+     {
+      "controller_id": 7,
+      "action": 0
+     },
+     {
+      "controller_id": 0,
+      "action": 1
+     },
+     {
+      "controller_id": 1,
+      "action": 2
+     },
+     {
+      "controller_id": 2,
+      "action": -1
+     }
+    ],
+    "forward_player": 0,
+    "reverse_player": 1,
+    "pending": [
+     {
+      "kind": 0,
+      "aux_bits": 0,
+      "controller_id": 0
+     },
+     {
+      "kind": 1,
+      "aux_bits": 16909060,
+      "controller_id": 1
+     }
+    ]
+   },
+   "steps": [
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "serve_toss",
+      "controller_id": 2
+     },
+     "expected": {
+      "pending_count": 2,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 0
+       },
+       {
+        "kind": 1,
+        "aux_bits": 16909060,
+        "controller_id": 1
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "regular",
+      "controller_id": 4
+     },
+     "expected": {
+      "pending_count": 2,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 0
+       },
+       {
+        "kind": 1,
+        "aux_bits": 16909060,
+        "controller_id": 1
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "reverse",
+      "controller_id": 1
+     },
+     "expected": {
+      "pending_count": 2,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 0
+       },
+       {
+        "kind": 1,
+        "aux_bits": 16909060,
+        "controller_id": 1
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "effects": [
+       [
+        1,
+        0
+       ],
+       [
+        2,
+        1
+       ]
+      ]
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 2,
+      "argument_player": 3,
+      "player_action": 0,
+      "ball_zone": 0,
+      "normal": false,
+      "reverse": true,
+      "normal_out": false,
+      "reverse_out": false,
+      "power_type": 2,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 0
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": false,
+       "power_type": 2
+      }
+     }
+    }
+   ]
+  },
+  {
+   "initial": {
+    "paused": true,
+    "callbacks_enabled": false,
+    "mega_ability": true,
+    "hit_attempt_marker": true,
+    "player_count": 4,
+    "players": [
+     {
+      "controller_id": 7,
+      "action": 0
+     },
+     {
+      "controller_id": 0,
+      "action": 1
+     },
+     {
+      "controller_id": 1,
+      "action": 2
+     },
+     {
+      "controller_id": 2,
+      "action": -1
+     }
+    ],
+    "forward_player": 0,
+    "reverse_player": 1,
+    "pending": [
+     {
+      "kind": 0,
+      "aux_bits": 0,
+      "controller_id": 0
+     },
+     {
+      "kind": 1,
+      "aux_bits": 16909060,
+      "controller_id": 1
+     },
+     {
+      "kind": 2,
+      "aux_bits": 33818120,
+      "controller_id": 2
+     }
+    ]
+   },
+   "steps": [
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "regular",
+      "controller_id": 3
+     },
+     "expected": {
+      "pending_count": 3,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 0
+       },
+       {
+        "kind": 1,
+        "aux_bits": 16909060,
+        "controller_id": 1
+       },
+       {
+        "kind": 2,
+        "aux_bits": 33818120,
+        "controller_id": 2
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "effects": [
+       [
+        1,
+        0
+       ],
+       [
+        2,
+        1
+       ]
+      ]
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "overhand",
+      "controller_id": 1
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "serve_toss",
+      "controller_id": -1
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "reverse",
+      "controller_id": -1
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 3,
+      "argument_player": 0,
+      "player_action": 1,
+      "ball_zone": 1,
+      "normal": true,
+      "reverse": true,
+      "normal_out": false,
+      "reverse_out": true,
+      "power_type": 3,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": false,
+       "reverse": true,
+       "power_type": 3
+      }
+     }
+    }
+   ]
+  },
+  {
+   "initial": {
+    "paused": false,
+    "callbacks_enabled": true,
+    "mega_ability": true,
+    "hit_attempt_marker": true,
+    "player_count": 4,
+    "players": [
+     {
+      "controller_id": 7,
+      "action": 0
+     },
+     {
+      "controller_id": 0,
+      "action": 1
+     },
+     {
+      "controller_id": 1,
+      "action": 2
+     },
+     {
+      "controller_id": 2,
+      "action": -1
+     }
+    ],
+    "forward_player": 0,
+    "reverse_player": 1,
+    "pending": [
+     {
+      "kind": 0,
+      "aux_bits": 0,
+      "controller_id": 0
+     },
+     {
+      "kind": 1,
+      "aux_bits": 16909060,
+      "controller_id": 1
+     },
+     {
+      "kind": 2,
+      "aux_bits": 33818120,
+      "controller_id": 2
+     },
+     {
+      "kind": 0,
+      "aux_bits": 50727180,
+      "controller_id": 3
+     }
+    ]
+   },
+   "steps": [
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "serve_toss",
+      "controller_id": 1
+     },
+     "expected": {
+      "pending_count": 5,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 0
+       },
+       {
+        "kind": 1,
+        "aux_bits": 16909060,
+        "controller_id": 1
+       },
+       {
+        "kind": 2,
+        "aux_bits": 33818120,
+        "controller_id": 2
+       },
+       {
+        "kind": 0,
+        "aux_bits": 50727180,
+        "controller_id": 3
+       },
+       {
+        "kind": 1,
+        "aux_bits": 0,
+        "controller_id": 1
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "overhand",
+      "controller_id": -1
+     },
+     "expected": {
+      "pending_count": 6,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 0
+       },
+       {
+        "kind": 1,
+        "aux_bits": 16909060,
+        "controller_id": 1
+       },
+       {
+        "kind": 2,
+        "aux_bits": 33818120,
+        "controller_id": 2
+       },
+       {
+        "kind": 0,
+        "aux_bits": 50727180,
+        "controller_id": 3
+       },
+       {
+        "kind": 1,
+        "aux_bits": 0,
+        "controller_id": 1
+       },
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": -1
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "effects": [
+       [
+        1,
+        0
+       ],
+       [
+        2,
+        1
+       ],
+       [
+        2,
+        1
+       ]
+      ]
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "reverse",
+      "controller_id": 4
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 0,
+      "normal": false,
+      "reverse": false,
+      "normal_out": true,
+      "reverse_out": false,
+      "power_type": 0,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 0
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": false,
+       "power_type": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "initial": {
+    "paused": true,
+    "callbacks_enabled": true,
+    "mega_ability": true,
+    "hit_attempt_marker": false,
+    "player_count": 4,
+    "players": [
+     {
+      "controller_id": 7,
+      "action": 0
+     },
+     {
+      "controller_id": 0,
+      "action": 1
+     },
+     {
+      "controller_id": 1,
+      "action": 2
+     },
+     {
+      "controller_id": 2,
+      "action": -1
+     }
+    ],
+    "forward_player": 0,
+    "reverse_player": 1,
+    "pending": [
+     {
+      "kind": 0,
+      "aux_bits": 0,
+      "controller_id": 0
+     },
+     {
+      "kind": 1,
+      "aux_bits": 16909060,
+      "controller_id": 1
+     },
+     {
+      "kind": 2,
+      "aux_bits": 33818120,
+      "controller_id": 2
+     },
+     {
+      "kind": 0,
+      "aux_bits": 50727180,
+      "controller_id": 3
+     },
+     {
+      "kind": 1,
+      "aux_bits": 67636240,
+      "controller_id": 0
+     }
+    ]
+   },
+   "steps": [
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "reverse",
+      "controller_id": 1
+     },
+     "expected": {
+      "pending_count": 5,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 0
+       },
+       {
+        "kind": 1,
+        "aux_bits": 16909060,
+        "controller_id": 1
+       },
+       {
+        "kind": 2,
+        "aux_bits": 33818120,
+        "controller_id": 2
+       },
+       {
+        "kind": 0,
+        "aux_bits": 50727180,
+        "controller_id": 3
+       },
+       {
+        "kind": 1,
+        "aux_bits": 67636240,
+        "controller_id": 0
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": [
+       [
+        1,
+        0
+       ],
+       [
+        2,
+        1
+       ],
+       [
+        1,
+        1
+       ]
+      ]
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "serve_toss",
+      "controller_id": 4
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "overhand",
+      "controller_id": 1
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "regular",
+      "controller_id": 3
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 1,
+      "argument_player": 2,
+      "player_action": 1,
+      "ball_zone": 1,
+      "normal": true,
+      "reverse": false,
+      "normal_out": true,
+      "reverse_out": true,
+      "power_type": 1,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "attempt": {
+       "normal": true,
+       "reverse": true,
+       "power_type": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "initial": {
+    "paused": false,
+    "callbacks_enabled": false,
+    "mega_ability": false,
+    "hit_attempt_marker": true,
+    "player_count": 4,
+    "players": [
+     {
+      "controller_id": 7,
+      "action": 0
+     },
+     {
+      "controller_id": 0,
+      "action": 1
+     },
+     {
+      "controller_id": 1,
+      "action": 2
+     },
+     {
+      "controller_id": 2,
+      "action": -1
+     }
+    ],
+    "forward_player": 0,
+    "reverse_player": 1,
+    "pending": [
+     {
+      "kind": 0,
+      "aux_bits": 0,
+      "controller_id": 0
+     },
+     {
+      "kind": 1,
+      "aux_bits": 16909060,
+      "controller_id": 1
+     },
+     {
+      "kind": 2,
+      "aux_bits": 33818120,
+      "controller_id": 2
+     },
+     {
+      "kind": 0,
+      "aux_bits": 50727180,
+      "controller_id": 3
+     },
+     {
+      "kind": 1,
+      "aux_bits": 67636240,
+      "controller_id": 0
+     },
+     {
+      "kind": 2,
+      "aux_bits": 84545300,
+      "controller_id": 1
+     }
+    ]
+   },
+   "steps": [
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "serve_toss",
+      "controller_id": -1
+     },
+     "expected": {
+      "pending_count": 6,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 0
+       },
+       {
+        "kind": 1,
+        "aux_bits": 16909060,
+        "controller_id": 1
+       },
+       {
+        "kind": 2,
+        "aux_bits": 33818120,
+        "controller_id": 2
+       },
+       {
+        "kind": 0,
+        "aux_bits": 50727180,
+        "controller_id": 3
+       },
+       {
+        "kind": 1,
+        "aux_bits": 67636240,
+        "controller_id": 0
+       },
+       {
+        "kind": 2,
+        "aux_bits": 84545300,
+        "controller_id": 1
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "effects": [
+       [
+        1,
+        0
+       ],
+       [
+        2,
+        1
+       ],
+       [
+        1,
+        1
+       ]
+      ]
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "overhand",
+      "controller_id": 3
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "regular",
+      "controller_id": 1
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 2,
+      "argument_player": 3,
+      "player_action": 0,
+      "ball_zone": 0,
+      "normal": false,
+      "reverse": true,
+      "normal_out": true,
+      "reverse_out": false,
+      "power_type": 2,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 0
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": false,
+       "power_type": 2
+      }
+     }
+    }
+   ]
+  },
+  {
+   "initial": {
+    "paused": true,
+    "callbacks_enabled": false,
+    "mega_ability": false,
+    "hit_attempt_marker": true,
+    "player_count": 4,
+    "players": [
+     {
+      "controller_id": 7,
+      "action": 0
+     },
+     {
+      "controller_id": 0,
+      "action": 1
+     },
+     {
+      "controller_id": 1,
+      "action": 2
+     },
+     {
+      "controller_id": 2,
+      "action": -1
+     }
+    ],
+    "forward_player": 0,
+    "reverse_player": 1,
+    "pending": [
+     {
+      "kind": 0,
+      "aux_bits": 0,
+      "controller_id": 0
+     },
+     {
+      "kind": 1,
+      "aux_bits": 16909060,
+      "controller_id": 1
+     },
+     {
+      "kind": 2,
+      "aux_bits": 33818120,
+      "controller_id": 2
+     },
+     {
+      "kind": 0,
+      "aux_bits": 50727180,
+      "controller_id": 3
+     },
+     {
+      "kind": 1,
+      "aux_bits": 67636240,
+      "controller_id": 0
+     },
+     {
+      "kind": 2,
+      "aux_bits": 84545300,
+      "controller_id": 1
+     },
+     {
+      "kind": 0,
+      "aux_bits": 101454360,
+      "controller_id": 2
+     }
+    ]
+   },
+   "steps": [
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "reverse",
+      "controller_id": 1
+     },
+     "expected": {
+      "pending_count": 7,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 0
+       },
+       {
+        "kind": 1,
+        "aux_bits": 16909060,
+        "controller_id": 1
+       },
+       {
+        "kind": 2,
+        "aux_bits": 33818120,
+        "controller_id": 2
+       },
+       {
+        "kind": 0,
+        "aux_bits": 50727180,
+        "controller_id": 3
+       },
+       {
+        "kind": 1,
+        "aux_bits": 67636240,
+        "controller_id": 0
+       },
+       {
+        "kind": 2,
+        "aux_bits": 84545300,
+        "controller_id": 1
+       },
+       {
+        "kind": 0,
+        "aux_bits": 101454360,
+        "controller_id": 2
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "serve_toss",
+      "controller_id": 4
+     },
+     "expected": {
+      "pending_count": 7,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 0
+       },
+       {
+        "kind": 1,
+        "aux_bits": 16909060,
+        "controller_id": 1
+       },
+       {
+        "kind": 2,
+        "aux_bits": 33818120,
+        "controller_id": 2
+       },
+       {
+        "kind": 0,
+        "aux_bits": 50727180,
+        "controller_id": 3
+       },
+       {
+        "kind": 1,
+        "aux_bits": 67636240,
+        "controller_id": 0
+       },
+       {
+        "kind": 2,
+        "aux_bits": 84545300,
+        "controller_id": 1
+       },
+       {
+        "kind": 0,
+        "aux_bits": 101454360,
+        "controller_id": 2
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "overhand",
+      "controller_id": 0
+     },
+     "expected": {
+      "pending_count": 7,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 0
+       },
+       {
+        "kind": 1,
+        "aux_bits": 16909060,
+        "controller_id": 1
+       },
+       {
+        "kind": 2,
+        "aux_bits": 33818120,
+        "controller_id": 2
+       },
+       {
+        "kind": 0,
+        "aux_bits": 50727180,
+        "controller_id": 3
+       },
+       {
+        "kind": 1,
+        "aux_bits": 67636240,
+        "controller_id": 0
+       },
+       {
+        "kind": 2,
+        "aux_bits": 84545300,
+        "controller_id": 1
+       },
+       {
+        "kind": 0,
+        "aux_bits": 101454360,
+        "controller_id": 2
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "regular",
+      "controller_id": 1
+     },
+     "expected": {
+      "pending_count": 7,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 0
+       },
+       {
+        "kind": 1,
+        "aux_bits": 16909060,
+        "controller_id": 1
+       },
+       {
+        "kind": 2,
+        "aux_bits": 33818120,
+        "controller_id": 2
+       },
+       {
+        "kind": 0,
+        "aux_bits": 50727180,
+        "controller_id": 3
+       },
+       {
+        "kind": 1,
+        "aux_bits": 67636240,
+        "controller_id": 0
+       },
+       {
+        "kind": 2,
+        "aux_bits": 84545300,
+        "controller_id": 1
+       },
+       {
+        "kind": 0,
+        "aux_bits": 101454360,
+        "controller_id": 2
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": 0
+       }
+      ],
+      "hit_attempt_marker": true,
+      "effects": [
+       [
+        1,
+        0
+       ],
+       [
+        2,
+        1
+       ],
+       [
+        1,
+        1
+       ],
+       [
+        3,
+        0
+       ]
+      ]
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": 0
+       }
+      ],
+      "hit_attempt_marker": true,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 3,
+      "argument_player": 0,
+      "player_action": 1,
+      "ball_zone": 1,
+      "normal": true,
+      "reverse": true,
+      "normal_out": true,
+      "reverse_out": true,
+      "power_type": 3,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 0,
+        "action": 1
+       },
+       {
+        "controller_id": 1,
+        "action": 1
+       },
+       {
+        "controller_id": 2,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": true,
+       "power_type": 2
+      }
+     }
+    }
+   ]
+  },
+  {
+   "initial": {
+    "paused": false,
+    "callbacks_enabled": true,
+    "mega_ability": false,
+    "hit_attempt_marker": false,
+    "player_count": 4,
+    "players": [
+     {
+      "controller_id": 7,
+      "action": 3
+     },
+     {
+      "controller_id": 8,
+      "action": -1
+     },
+     {
+      "controller_id": 2,
+      "action": 2
+     },
+     {
+      "controller_id": 9,
+      "action": 1
+     }
+    ],
+    "forward_player": 0,
+    "reverse_player": 1,
+    "pending": []
+   },
+   "steps": [
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "regular",
+      "controller_id": 7
+     },
+     "expected": {
+      "pending_count": 1,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 7
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 3
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": [
+       [
+        0,
+        0
+       ]
+      ]
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "reverse",
+      "controller_id": 8
+     },
+     "expected": {
+      "pending_count": 1,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 8
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": 0
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": [
+       [
+        1,
+        0
+       ]
+      ]
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "overhand",
+      "controller_id": 90
+     },
+     "expected": {
+      "pending_count": 1,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 90
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": 0
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": 0
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": []
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "serve_toss",
+      "controller_id": 91
+     },
+     "expected": {
+      "pending_count": 1,
+      "pending": [
+       {
+        "kind": 1,
+        "aux_bits": 0,
+        "controller_id": 91
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": 0
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": 0
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": []
+     }
+    }
+   ]
+  },
+  {
+   "initial": {
+    "paused": false,
+    "callbacks_enabled": true,
+    "mega_ability": false,
+    "hit_attempt_marker": false,
+    "player_count": 4,
+    "players": [
+     {
+      "controller_id": 7,
+      "action": 3
+     },
+     {
+      "controller_id": 8,
+      "action": -1
+     },
+     {
+      "controller_id": 2,
+      "action": 2
+     },
+     {
+      "controller_id": 9,
+      "action": 1
+     }
+    ],
+    "forward_player": 0,
+    "reverse_player": 1,
+    "pending": []
+   },
+   "steps": [
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "regular",
+      "controller_id": 8
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 3
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "reverse",
+      "controller_id": 7
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 3
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 3
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": []
+     }
+    }
+   ]
+  },
+  {
+   "initial": {
+    "paused": false,
+    "callbacks_enabled": true,
+    "mega_ability": false,
+    "hit_attempt_marker": false,
+    "player_count": 4,
+    "players": [
+     {
+      "controller_id": 7,
+      "action": 3
+     },
+     {
+      "controller_id": 8,
+      "action": -1
+     },
+     {
+      "controller_id": 2,
+      "action": 2
+     },
+     {
+      "controller_id": 9,
+      "action": 1
+     }
+    ],
+    "forward_player": 0,
+    "reverse_player": 1,
+    "pending": [
+     {
+      "kind": 2,
+      "aux_bits": 0,
+      "controller_id": 100
+     },
+     {
+      "kind": 2,
+      "aux_bits": 0,
+      "controller_id": 101
+     },
+     {
+      "kind": 2,
+      "aux_bits": 0,
+      "controller_id": 102
+     },
+     {
+      "kind": 2,
+      "aux_bits": 0,
+      "controller_id": 103
+     },
+     {
+      "kind": 2,
+      "aux_bits": 0,
+      "controller_id": 104
+     },
+     {
+      "kind": 2,
+      "aux_bits": 0,
+      "controller_id": 105
+     },
+     {
+      "kind": 2,
+      "aux_bits": 0,
+      "controller_id": 106
+     }
+    ]
+   },
+   "steps": [
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "regular",
+      "controller_id": 7
+     },
+     "expected": {
+      "pending_count": 7,
+      "pending": [
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 100
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 101
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 102
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 103
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 104
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 105
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 106
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 3
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "reverse",
+      "controller_id": 8
+     },
+     "expected": {
+      "pending_count": 7,
+      "pending": [
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 100
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 101
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 102
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 103
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 104
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 105
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 106
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 3
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "overhand",
+      "controller_id": 90
+     },
+     "expected": {
+      "pending_count": 7,
+      "pending": [
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 100
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 101
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 102
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 103
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 104
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 105
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 106
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 3
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "serve_toss",
+      "controller_id": 91
+     },
+     "expected": {
+      "pending_count": 7,
+      "pending": [
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 100
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 101
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 102
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 103
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 104
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 105
+       },
+       {
+        "kind": 2,
+        "aux_bits": 0,
+        "controller_id": 106
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 3
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 3
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       },
+       {
+        "controller_id": 2,
+        "action": 2
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": []
+     }
+    }
+   ]
+  },
+  {
+   "initial": {
+    "paused": false,
+    "callbacks_enabled": true,
+    "mega_ability": false,
+    "hit_attempt_marker": false,
+    "player_count": 4,
+    "players": [
+     {
+      "controller_id": 9,
+      "action": -1
+     },
+     {
+      "controller_id": 9,
+      "action": 2
+     },
+     {
+      "controller_id": 2,
+      "action": 3
+     },
+     {
+      "controller_id": 9,
+      "action": 1
+     }
+    ],
+    "forward_player": 0,
+    "reverse_player": 1,
+    "pending": []
+   },
+   "steps": [
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "regular",
+      "controller_id": 9
+     },
+     "expected": {
+      "pending_count": 1,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 9
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 9,
+        "action": -1
+       },
+       {
+        "controller_id": 9,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": 3
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "serve_toss",
+      "controller_id": 9
+     },
+     "expected": {
+      "pending_count": 2,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 9
+       },
+       {
+        "kind": 1,
+        "aux_bits": 0,
+        "controller_id": 9
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 9,
+        "action": -1
+       },
+       {
+        "controller_id": 9,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": 3
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "callback",
+      "callback": "overhand",
+      "controller_id": 9
+     },
+     "expected": {
+      "pending_count": 3,
+      "pending": [
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 9
+       },
+       {
+        "kind": 1,
+        "aux_bits": 0,
+        "controller_id": 9
+       },
+       {
+        "kind": 0,
+        "aux_bits": 0,
+        "controller_id": 9
+       }
+      ],
+      "players": [
+       {
+        "controller_id": 9,
+        "action": -1
+       },
+       {
+        "controller_id": 9,
+        "action": 2
+       },
+       {
+        "controller_id": 2,
+        "action": 3
+       },
+       {
+        "controller_id": 9,
+        "action": 1
+       }
+      ],
+      "hit_attempt_marker": false
+     }
+    },
+    {
+     "operation": {
+      "op": "process"
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 9,
+        "action": 0
+       },
+       {
+        "controller_id": 9,
+        "action": 0
+       },
+       {
+        "controller_id": 2,
+        "action": 3
+       },
+       {
+        "controller_id": 9,
+        "action": 0
+       }
+      ],
+      "hit_attempt_marker": false,
+      "effects": [
+       [
+        0,
+        0
+       ],
+       [
+        1,
+        0
+       ],
+       [
+        3,
+        0
+       ],
+       [
+        0,
+        1
+       ],
+       [
+        1,
+        1
+       ],
+       [
+        3,
+        1
+       ],
+       [
+        0,
+        0
+       ],
+       [
+        1,
+        0
+       ],
+       [
+        3,
+        0
+       ]
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "initial": {
+    "paused": false,
+    "callbacks_enabled": true,
+    "mega_ability": false,
+    "hit_attempt_marker": false,
+    "player_count": 2,
+    "players": [
+     {
+      "controller_id": 7,
+      "action": 1
+     },
+     {
+      "controller_id": 8,
+      "action": -1
+     }
+    ],
+    "forward_player": 0,
+    "reverse_player": 1,
+    "pending": []
+   },
+   "steps": [
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 0,
+      "normal": false,
+      "reverse": false,
+      "normal_out": false,
+      "reverse_out": false,
+      "power_type": 0,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": false,
+       "power_type": 0
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 0,
+      "normal": false,
+      "reverse": false,
+      "normal_out": true,
+      "reverse_out": false,
+      "power_type": 1,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": false,
+       "power_type": 1
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 0,
+      "normal": false,
+      "reverse": true,
+      "normal_out": false,
+      "reverse_out": true,
+      "power_type": 2,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": true,
+       "power_type": 2
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 0,
+      "normal": false,
+      "reverse": true,
+      "normal_out": true,
+      "reverse_out": true,
+      "power_type": 3,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": true,
+       "power_type": 2
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 0,
+      "normal": true,
+      "reverse": false,
+      "normal_out": false,
+      "reverse_out": false,
+      "power_type": 0,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": false,
+       "power_type": 1
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 0,
+      "normal": true,
+      "reverse": false,
+      "normal_out": true,
+      "reverse_out": false,
+      "power_type": 1,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": false,
+       "power_type": 1
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 0,
+      "normal": true,
+      "reverse": true,
+      "normal_out": false,
+      "reverse_out": true,
+      "power_type": 2,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": true,
+       "power_type": 2
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 0,
+      "normal": true,
+      "reverse": true,
+      "normal_out": true,
+      "reverse_out": true,
+      "power_type": 3,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": true,
+       "power_type": 3
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 0,
+      "normal": false,
+      "reverse": false,
+      "normal_out": false,
+      "reverse_out": false,
+      "power_type": 0,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": false,
+       "reverse": false,
+       "power_type": 0
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 0,
+      "normal": false,
+      "reverse": false,
+      "normal_out": true,
+      "reverse_out": false,
+      "power_type": 1,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": false,
+       "power_type": 1
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 0,
+      "normal": false,
+      "reverse": true,
+      "normal_out": false,
+      "reverse_out": true,
+      "power_type": 2,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": false,
+       "reverse": true,
+       "power_type": 2
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 0,
+      "normal": false,
+      "reverse": true,
+      "normal_out": true,
+      "reverse_out": true,
+      "power_type": 3,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": true,
+       "power_type": 2
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 0,
+      "normal": true,
+      "reverse": false,
+      "normal_out": false,
+      "reverse_out": false,
+      "power_type": 0,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": false,
+       "reverse": false,
+       "power_type": 1
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 0,
+      "normal": true,
+      "reverse": false,
+      "normal_out": true,
+      "reverse_out": false,
+      "power_type": 1,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": false,
+       "power_type": 1
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 0,
+      "normal": true,
+      "reverse": true,
+      "normal_out": false,
+      "reverse_out": true,
+      "power_type": 2,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": false,
+       "reverse": true,
+       "power_type": 2
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 0,
+      "normal": true,
+      "reverse": true,
+      "normal_out": true,
+      "reverse_out": true,
+      "power_type": 3,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": true,
+       "power_type": 3
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 1,
+      "normal": false,
+      "reverse": false,
+      "normal_out": false,
+      "reverse_out": false,
+      "power_type": 0,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": false,
+       "reverse": true,
+       "power_type": 0
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 1,
+      "normal": false,
+      "reverse": false,
+      "normal_out": true,
+      "reverse_out": false,
+      "power_type": 1,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": true,
+       "power_type": 1
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 1,
+      "normal": false,
+      "reverse": true,
+      "normal_out": false,
+      "reverse_out": true,
+      "power_type": 2,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": false,
+       "reverse": true,
+       "power_type": 2
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 1,
+      "normal": false,
+      "reverse": true,
+      "normal_out": true,
+      "reverse_out": true,
+      "power_type": 3,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": true,
+       "power_type": 2
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 1,
+      "normal": true,
+      "reverse": false,
+      "normal_out": false,
+      "reverse_out": false,
+      "power_type": 0,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": false,
+       "reverse": true,
+       "power_type": 1
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 1,
+      "normal": true,
+      "reverse": false,
+      "normal_out": true,
+      "reverse_out": false,
+      "power_type": 1,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": true,
+       "power_type": 1
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 1,
+      "normal": true,
+      "reverse": true,
+      "normal_out": false,
+      "reverse_out": true,
+      "power_type": 2,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": false,
+       "reverse": true,
+       "power_type": 2
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 0,
+      "ball_zone": 1,
+      "normal": true,
+      "reverse": true,
+      "normal_out": true,
+      "reverse_out": true,
+      "power_type": 3,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 0
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": true,
+       "power_type": 3
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 1,
+      "normal": false,
+      "reverse": false,
+      "normal_out": false,
+      "reverse_out": false,
+      "power_type": 0,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": false,
+       "reverse": false,
+       "power_type": 0
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 1,
+      "normal": false,
+      "reverse": false,
+      "normal_out": true,
+      "reverse_out": false,
+      "power_type": 1,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": false,
+       "power_type": 1
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 1,
+      "normal": false,
+      "reverse": true,
+      "normal_out": false,
+      "reverse_out": true,
+      "power_type": 2,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": false,
+       "reverse": true,
+       "power_type": 2
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 1,
+      "normal": false,
+      "reverse": true,
+      "normal_out": true,
+      "reverse_out": true,
+      "power_type": 3,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": true,
+       "power_type": 2
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 1,
+      "normal": true,
+      "reverse": false,
+      "normal_out": false,
+      "reverse_out": false,
+      "power_type": 0,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": false,
+       "reverse": false,
+       "power_type": 1
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 1,
+      "normal": true,
+      "reverse": false,
+      "normal_out": true,
+      "reverse_out": false,
+      "power_type": 1,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": false,
+       "power_type": 1
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 1,
+      "normal": true,
+      "reverse": true,
+      "normal_out": false,
+      "reverse_out": true,
+      "power_type": 2,
+      "mega_ability": false
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": false,
+       "reverse": true,
+       "power_type": 2
+      }
+     }
+    },
+    {
+     "operation": {
+      "op": "hit_attempt",
+      "active_player": 0,
+      "argument_player": 1,
+      "player_action": 1,
+      "ball_zone": 1,
+      "normal": true,
+      "reverse": true,
+      "normal_out": true,
+      "reverse_out": true,
+      "power_type": 3,
+      "mega_ability": true
+     },
+     "expected": {
+      "pending_count": 0,
+      "pending": [],
+      "players": [
+       {
+        "controller_id": 7,
+        "action": 1
+       },
+       {
+        "controller_id": 8,
+        "action": -1
+       }
+      ],
+      "hit_attempt_marker": true,
+      "attempt": {
+       "normal": true,
+       "reverse": true,
+       "power_type": 3
+      }
+     }
+    }
+   ]
+  }
+ ]
+}

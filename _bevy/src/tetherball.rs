@@ -122,6 +122,14 @@ impl BallMotion {
         let velocity = if self.angular_velocity > 0.0 {6.0} else {-6.0};
         self.set_angular_velocity(velocity);
     }
+    /// SpinUpPole uses radius .25 only for an active, tag-checked tetherball
+    /// minigame whose variant field is 2; absent/other context uses .18.
+    pub fn spin_up_pole(&mut self, active_tetherball_variant: Option<i32>) {
+        self.spinning_up = true;
+        self.set_desired_radius(if active_tetherball_variant == Some(2) {0.25} else {0.18});
+        self.target_height = self.pole_height + 1.5;
+        self.set_angular_velocity(if self.angular_velocity > 0.0 {12.0} else {-12.0});
+    }
     pub fn set_angular_velocity(&mut self, velocity: f32) {
         self.angular_velocity = velocity; self.secondary_velocity = velocity;
     }
@@ -191,7 +199,7 @@ impl BallMotion {
 #[derive(Debug, Clone, Copy)]
 pub struct ScoreStats { pub power_hits: i32, pub mega_hits: i32, pub accuracy_percent: i32 }
 /// Difficulty-selected mg_tetherball/scoring fields at +0x138/+0x13c/+0x140.
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct ScoreWeights { pub accuracy_points: i32, pub power_hit_points: i32, pub mega_hit_points: i32 }
 /// CalcScore ignores its difficulty argument; ResetStats already selected weights.
 pub fn calc_score(stats: ScoreStats, weights: ScoreWeights) -> i32 {

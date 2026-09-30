@@ -218,6 +218,10 @@ def main():
                              ('tetherball_oracle.py','Tetherball serve/hit/motion-prefix/scoring vectors reproduced by original PowerPC'),
                              ('tetherball_match_oracle.py','Tetherball winner decisions and common state stores reproduced by original PowerPC'),
                              ('tetherball_scene_oracle.py','Original area matrices and complete tetherball Update state, transforms and effect requests'),
+                             ('tetherball_lifecycle_oracle.py','Original tetherball state entry, round-end results and Update orchestration'),
+                             ('tetherball_tuning_oracle.py','Original tetherball tuning selection, inheritance and indexed values'),
+                             ('tetherball_reset_oracle.py','Original tetherball reset and server-selection state and effects'),
+                             ('tetherball_gestures_oracle.py','Original tetherball gesture queue and hit-attempt decisions'),
                              ('mp3_lsf_oracle.py','MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC')]:
             args=[] if script=='mp3_lsf_oracle.py' else ['--check']
             r=subprocess.run([sys.executable,str(HERE/script),*args],cwd=BEVY,capture_output=True,text=True)
@@ -248,6 +252,10 @@ def main():
                 ('tetherball::tests','Tetherball serve/hit/motion-prefix/scoring arithmetic matches original PowerPC vectors'),
                 ('tetherball_match::tests','Tetherball winner decisions, counters and effects match original PowerPC vectors'),
                 ('tetherball_scene::tests','Native area matrices and complete ball Update match original PowerPC vectors'),
+                ('tetherball_lifecycle::tests','Native tetherball lifecycle, results and frame orchestration match original PowerPC vectors'),
+                ('tetherball_tuning::tests','Native tetherball tuning matches original PowerPC and corpus values'),
+                ('tetherball_reset::tests','Native tetherball reset and server selection match original PowerPC vectors'),
+                ('tetherball_gestures::tests','Native tetherball gesture queue and hit attempts match original PowerPC vectors'),
                 ('mp3::tests','MPEG-2 side information and scale-factor regression checks')]
         for name,label in suites:
             r=subprocess.run(['cargo','test','--release','--offline','--locked',name],cwd=BEVY,capture_output=True,text=True)
