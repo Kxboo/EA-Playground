@@ -5,7 +5,7 @@ The dashboard is published by GitHub Pages after the GameMap branch is merged in
 
 A native **Bevy asset viewer** and a shared, headless decoding toolkit for the Wii version of EA Playground. Browse archives, inspect formats, preview textured models and images, and play recovered animations on compatible skeletons and models.
 
-The long-term goal is an evidence-based reconstruction in Rust/Bevy. A playable world slice uses recovered locomotion, frame timing and controller events; it is not a full game port. Native decoders cover all 471 embedded bank sounds. Tetherball serve/motion arithmetic and tournament scoring have original-code comparisons, while complete minigame play remains unfinished. Asset previews are usable; Wii rendering and animation semantics are still being researched.
+The long-term goal is an evidence-based reconstruction in Rust/Bevy. A playable world slice uses recovered locomotion, frame timing and controller events; it is not a full game port. Native decoders cover all 471 embedded bank sounds. Tetherball hit/motion-prefix/winner decisions, character input and tournament scoring have original-code comparisons, while complete minigame play remains unfinished. Asset previews are usable; Wii rendering and animation semantics are still being researched.
 
 ![Textured RC buggy in the Bevy workbench](_bevy/docs/captures/material-buggy.png)
 

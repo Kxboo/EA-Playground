@@ -1,4 +1,4 @@
-# Tetherball serve and motion core
+# Tetherball serve, hit and motion core
 
 `src/tetherball.rs` implements an original-code slice of the Tetherball ball
 state and score arithmetic. It is not a complete minigame. Callers supply geometry
@@ -6,6 +6,10 @@ and tunable fields; no missing database balance values are invented.
 
 | Original routine | Address | Rust API |
 |---|---|---|
+| rmAngle::Wrap | 0x802cd4e8 | wrap_angle |
+| Tetherball::Hit | 0x8039e3d8 | hit |
+| Tetherball::Update numerical prefix | 0x8039d904–0x8039dc84 | update_motion |
+| Tetherball::SpinDownPole | 0x8039e9bc | spin_down_pole |
 | Tetherball::SetAngularVelocity | 0x8039e348 | set_angular_velocity |
 | Tetherball::Miss | 0x8039e53c | miss |
 | Tetherball::SetRadius | 0x8039e564 | set_radius |
@@ -22,30 +26,48 @@ and tunable fields; no missing database balance values are invented.
 emits `tests/data/tetherball_golden.json`. It pins the original ELF SHA-256
 `5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c`;
 Rust tests assert the same hash against `recovered::ELF_SHA256`. Its local emulator
-subclass adds floating comparisons and CR-or instruction semantics. It has no
+subclass adds floating comparisons, CR-or and indexed stack-store instruction semantics. It has no
 behavior hooks, and executes the original rmfAbs helper too. No original image
 contents are distributed. Run `python _bevy/tools/tetherball_oracle.py --check`
 from the repository root to compare refreshed machine-execution results.
 
-100 prepared ball states cover 1,216 motion/serve transitions; 128 score cases
+100 prepared ball states cover 2,416 motion/serve/hit/update transitions; eight
+angle-wrap cases and 128 score cases
 cover signed multiplication and overflow. Rust compares every represented f32
 field by its bits after every transition. Cases include both directions/zones,
 unequal current/desired radius, positive/negative velocities, signed zero,
-strict serve thresholds, and unsigned millisecond conversion up to UINT_MAX.
+strict serve thresholds, spin-return thresholds at ±6, the delayed
+toss boundary at 399+1 milliseconds, and unsigned conversion up to UINT_MAX.
 This is bounded deterministic equivalence, not all-input formal verification.
 Finite motion inputs and nonzero finite radii are the validated domain; the API
 follows original arithmetic and does not add tuning clamps.
 
 Decoded behavior:
 
+- Hit wraps the supplied angle and records hit type/direction. Reversals take the
+  requested speed divided by current radius; same-direction hits preserve the
+  larger magnitude of existing angular velocity and requested speed/radius.
+  Secondary target velocity is 1.5 times the primary; direction zero negates both.
+- update_motion follows original order: delayed toss/gravity, radius interpolation,
+  wrapped primary/secondary angles, height interpolation, spin-return velocity
+  and possible SpinDownPole. SpinDownPole requests radius 0.7, height pole+0.5,
+  enables the spin-up flag and sets both velocities to ±6 according to current sign.
+- The oracle starts at the original Update prologue, runs the original arithmetic
+  and stops before instruction 0x8039dc84. It does not replace any math helper;
+  original rmAngle addition and Wrap execute too. The full function later derives
+  radius/height again from transformed ball coordinates at 0x8039dfd8–0x8039e024.
+  That transform feedback is outside this port: update_motion is an exact prefix,
+  not a claim of complete ball physics. Original Update/model/rope transforms and
+  particle effects remain required for complete gameplay.
 - Toss sets vertical velocity to 3.6, the timer to 400 and the tossed flag.
 - Serve converts speed to angular velocity using desired radius. Its secondary
   velocity is 1.5 times that value. When absolute vertical velocity is below 0.5,
   only the primary velocity gets another 1.5 multiplier. Direction zero negates
   both velocities. It clears both spin flags/tossed and resets zone directly,
   leaving target height untouched.
-- Serve acceleration uses scale * (drag - 0.1), divided by desired radius for
-  the primary channel and current radius for the secondary channel.
+- Serve acceleration uses base_hit_speed * (modifier - 0.1), divided by desired radius for
+  the primary channel and current radius for the secondary channel. The modifier
+  fields are now named power_modifier and mega_modifier, matching the database.
 - Power-serve predicate predicts vertical velocity with -4.807 acceleration and
   requires absolute value strictly below 0.5. High-serve predicate predicts height
   using a -2.4035 quadratic term and requires height strictly above 0.7.
@@ -91,7 +113,7 @@ multiplayer or dare -1, speed_rounds for dares 0–2, time for 3–5 and enduran
 tuning and does not implement database selection or the MGTetherball state machine.
 
 Direction and Zone enums restrict raw indexing to original valid values zero/one.
-The ball's Update integration, collision geometry, angle normalization, Hit,
-gestures, AI, animation callbacks, database tuning import, game state transitions
-and winner/end-of-game logic remain outside this slice. The existing MultiplayerMode
-module can consume round results when those game result rules are decoded.
+The ball's transform feedback, collision geometry, gestures, AI, animation
+callbacks, database tuning import and full game states remain outside this slice.
+The separate tetherball_match module decodes winner predicates and emits ordered
+UI/state-entry requests; it does not implement the complete match.

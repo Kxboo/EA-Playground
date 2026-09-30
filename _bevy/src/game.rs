@@ -9,6 +9,7 @@ use serde_json::{Value,json};
 use std::{collections::{HashMap},path::PathBuf,time::Instant};
 use crate::{archive,assets,bridge,character,gsh,locomotion::{InputKind,Locomotion},menu::AppMode,model,recovered as k,sim_time::{FramePolicy,FrameStep}};
 use std::sync::{Mutex,mpsc};
+use crate::character_input::{CharacterInputState,SurfaceSupport,CHARACTER_SPEED};
 
 #[derive(Component,Debug,Clone,Serialize,Deserialize)]
 pub struct OriginalAsset {
@@ -32,7 +33,7 @@ pub fn bend(radius:f32,x:f32,z:f32)->f32{if radius<=0.{return 0.}let r2=(x*x+z*z
 
 #[derive(Component)] pub struct GameEntity;
 #[derive(Component)] pub struct GameCamera{pub yaw:f32,pub pitch:f32,pub distance:f32}
-#[derive(Component)] pub struct Player{loco:Locomotion,vy:f32,grounded:bool,speed:f32,facing:Vec3,weights:[f32;3],anim_ready:bool}
+#[derive(Component)] pub struct Player{loco:Locomotion,physics_input:CharacterInputState,physics_frames:u64,vy:f32,grounded:bool,speed:f32,facing:Vec3,weights:[f32;3],anim_ready:bool}
 #[derive(Component)] struct WorldLayer(String);
 #[derive(Component)] struct PlayerModel;
 #[derive(Clone,Debug)] pub struct Placeable{pub id:String,pub asset:String,pub pos:Vec3,pub orientation_deg:f32,pub physics:Option<String>}
@@ -394,7 +395,8 @@ fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,mut ibp:ResMut<Assets<
     let nodes:Vec<AnimationNodeIndex>=g.clip_handles.iter().map(|c|graph.add_clip(c.clone(),1.,graph.root)).collect();
     let handle=graphs.add(graph);
     let asset=g.player_asset.take().expect("player asset");
-    let player=commands.spawn((GameEntity,Player{loco:Locomotion::default(),vy:0.,grounded:true,speed:0.,facing:g.start_dir,weights:[1.,0.,0.],anim_ready:true},Transform::from_translation(g.spawn),Visibility::default(),
+    let physics_input=CharacterInputState{speed:0.,orientation:0.,gravity:[0.,-g.gravity,0.],gravity_override:None,impulse:[0.;3],impulse_decay:[0.;3],impulse_ms:0};
+    let player=commands.spawn((GameEntity,Player{loco:Locomotion::default(),physics_input,physics_frames:0,vy:0.,grounded:true,speed:0.,facing:g.start_dir,weights:[1.,0.,0.],anim_ready:true},Transform::from_translation(g.spawn),Visibility::default(),
         OriginalAsset{evidence:EvidenceLevel::AssetDerived,source:asset.source.clone(),decoder_version:"rust-model-1 / rust-anim-1".into()})).id();
     // The model entity owns the AnimationPlayer; joints point at it through AnimatedBy (see character.rs).
     let model=commands.spawn((GameEntity,PlayerModel,ChildOf(player),Transform::default(),Visibility::default())).id();
@@ -453,8 +455,27 @@ fn movement(g:Option<Res<Game>>,clock:Res<SimulationClock>,cam:Query<&GameCamera
         if let Some(a)=step.move_angle{
             // Camera at `yaw` looks along -(sin,cos); stick angle is measured from camera-forward.
             let f=Vec3::new(-cam.yaw.sin(),0.,-cam.yaw.cos());let r=Vec3::new(cam.yaw.cos(),0.,-cam.yaw.sin());
-            let dir=f*a.cos()+r*a.sin();p.facing=dir;
-            let delta=dir*step.speed*dt;
+            p.facing=f*a.cos()+r*a.sin();
+        }
+        // Explicit desktop direction adapter; original locomotion-to-proxy yaw
+        // wiring is still unresolved. The original flat-ground movement basis is
+        // -forward / -(forward cross up), so desired +Z corresponds to yaw zero.
+        p.physics_input.speed=step.speed;
+        p.physics_input.orientation=p.facing.x.atan2(p.facing.z);
+        // The current step/slide solver supplies an approximate stationary support.
+        // Original Havok support queries and character-state dynamics remain unported.
+        let support=SurfaceSupport{kind:if p.grounded{2}else{0},normal:[0.,1.,0.,0.],velocity:[0.;4]};
+        let position=[t.translation.x,t.translation.y,t.translation.z,0.];
+        let velocity=[0.,p.vy,0.,0.];
+        let prepared=p.physics_input.build(dt_ms,support,position,velocity);
+        p.physics_frames+=1;
+        if prepared.input_ud!=0.||prepared.input_lr!=0.{
+            let forward=Vec3::new(prepared.forward[0],prepared.forward[1],prepared.forward[2]).normalize_or_zero();
+            let side=forward.cross(Vec3::Y).normalize_or_zero();
+            // Both original OnGround and InAir states use speed 20. The signs
+            // follow calculateMovement (0x801dd11c) on flat support. Acceleration,
+            // slope projection and proxy constraints still use this host solver.
+            let delta=-(forward*prepared.input_ud+side*prepared.input_lr)*CHARACTER_SPEED*dt;
             let ny=t.translation.y;
             // Horizontal move against the Havok collision: needs walkable ground within step-up height and no
             // steep face crossing the character's body (slides along one axis if the diagonal is blocked).
@@ -467,7 +488,7 @@ fn movement(g:Option<Res<Game>>,clock:Res<SimulationClock>,cam:Query<&GameCamera
         // Original LocalCharacterControl ignores queued command 4 (Jump), and
         // PhysicsDynamicCharacter::BuildCharacterInput writes wantJump=false.
         // The controller still emits the event, but it adds no vertical impulse.
-        p.vy-=g.gravity*dt*(!p.grounded) as i32 as f32;
+        p.vy+=prepared.gravity[1]*dt*(!prepared.supported) as i32 as f32;
         let mut y=t.translation.y+p.vy*dt;
         match ground.height(t.translation.x,t.translation.z,y+STEP_UP){
             Some(gy) if y<=gy+0.02&&p.vy<=0.||p.grounded&&gy>=t.translation.y-0.5=>{y=gy;p.vy=0.;p.grounded=true}
@@ -629,6 +650,7 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
                 let music_state=g.music.as_ref().map(|m|(m.status.state.load(std::sync::atomic::Ordering::Relaxed),m.status.samples_played.load(std::sync::atomic::Ordering::Relaxed)));
                 check("area music streams from the Rust EA Layer 3 decoder",music_state.is_none_or(|(s,q)|(s==crate::playback::Status::PLAYING&&q>44100)||s==crate::playback::Status::NO_DEVICE),format!("{}: state {:?}, {} samples queued",g.music_name,music_state.map(|m|m.0),music_state.map(|m|m.1).unwrap_or(0)));
                 check("original controls.csv drives movement and jump events",g.combat_bindings>=8&&g.input_frames==clock.frames&&g.input_moves>0&&g.input_jumps>0&&g.input_max_ms==clock.max_input_ms,format!("{} bindings, {} input frames, {} movement / {} jump frames, uncapped maximum {} ms",g.controls_rows,g.input_frames,g.input_moves,g.input_jumps,g.input_max_ms));
+                check("native character input builder drives each world frame",p.physics_frames==clock.frames&&p.physics_frames>0,format!("{} prepared frames; recovered speed clamp/forward/gravity with provisional collision support",p.physics_frames));
                 check("mesh entities in scene",meshes.iter().count()>100,format!("{} Mesh3d entities",meshes.iter().count()));
                 check("animation players active",players.iter().count()>=1,format!("{} players",players.iter().count()));
                 check("player walked on recovered locomotion",moved>5.,format!("moved {:.2} m from the start (5 m/s max)",moved));
@@ -640,7 +662,7 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
                 check("original playground jump command has no upward impulse",jump_ignored,"jump event dispatched while player remains grounded, matching original command 4".into());
                 check("camera follows player",cam.single().map(|c|c.translation.distance(t.translation)<15.).unwrap_or(false),"camera within 15 m".into());
                 let passed=checks.iter().all(|c|c["ok"]==true);
-                let report=json!({"passed":passed,"load_seconds":g.load_seconds,"checks":checks,"samples":st.samples,"log":g.log,"evidence":{"locomotion":"ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs","timing":"ExecutableDerived: GameState::Update 0x803acdc4, variable integer ms capped at 60; once per host frame","terrain":"DataDerived Havok collision meshes; provisional character solver","gravity":"DataDerived hkWorldCinfo","jump":"ExecutableDerived: LocalCharacterControl command 4 ignored; PhysicsDynamicCharacter wantJump=false","input":"ExecutableDerived: original CSV bindings and Controller event predicates; desktop logical-button adapter"}});
+                let report=json!({"passed":passed,"load_seconds":g.load_seconds,"checks":checks,"samples":st.samples,"log":g.log,"evidence":{"locomotion":"ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs","timing":"ExecutableDerived: GameState::Update 0x803acdc4, variable integer ms capped at 60; once per host frame","terrain":"DataDerived Havok collision meshes; provisional character solver","character_input":"ExecutableDerived: BuildCharacterInput; desktop yaw adapter and provisional support boundary, forward/gravity consumed; Havok state dynamics remain unported","gravity":"DataDerived hkWorldCinfo through original character input builder","jump":"ExecutableDerived: LocalCharacterControl command 4 ignored; PhysicsDynamicCharacter wantJump=false","input":"ExecutableDerived: original CSV bindings and Controller event predicates; desktop logical-button adapter"}});
                 let _=std::fs::write(st.out.join("selftest.json"),serde_json::to_string_pretty(&report).unwrap());
                 exit.write(if passed{AppExit::Success}else{AppExit::from_code(1)});
             }

@@ -1,7 +1,7 @@
 {
   "checks": [
     {
-      "detail": "704 frames, 11339 simulation ms, maximum 60 simulation ms / 265 uncapped input ms",
+      "detail": "705 frames, 11367 simulation ms, maximum 60 simulation ms / 325 uncapped input ms",
       "name": "recovered integer-ms simulation clock drives the game",
       "ok": true
     },
@@ -11,7 +11,7 @@
       "ok": true
     },
     {
-      "detail": "3/3 layers ready; cloud angle 0.1361 rad after the run",
+      "detail": "3/3 layers ready; cloud angle 0.1364 rad after the run",
       "name": "SkyDome layers (skybox, mountain/city ring, clouds) loaded",
       "ok": true
     },
@@ -46,7 +46,7 @@
       "ok": true
     },
     {
-      "detail": "joint rotation checksum ranged -7.804..0.183 over 6 samples",
+      "detail": "joint rotation checksum ranged -7.541..0.078 over 6 samples",
       "name": "decoded clips animate the skeleton (joint pose changes idle -> walk/run)",
       "ok": true
     },
@@ -61,8 +61,13 @@
       "ok": true
     },
     {
-      "detail": "58 bindings, 704 input frames, 435 movement / 25 jump frames, uncapped maximum 265 ms",
+      "detail": "58 bindings, 705 input frames, 434 movement / 25 jump frames, uncapped maximum 325 ms",
       "name": "original controls.csv drives movement and jump events",
+      "ok": true
+    },
+    {
+      "detail": "705 prepared frames; recovered speed clamp/forward/gravity with provisional collision support",
+      "name": "native character input builder drives each world frame",
       "ok": true
     },
     {
@@ -76,7 +81,7 @@
       "ok": true
     },
     {
-      "detail": "moved 15.83 m from the start (5 m/s max)",
+      "detail": "moved 15.89 m from the start (5 m/s max)",
       "name": "player walked on recovered locomotion",
       "ok": true
     },
@@ -107,14 +112,15 @@
     }
   ],
   "evidence": {
-    "gravity": "DataDerived hkWorldCinfo",
+    "character_input": "ExecutableDerived: BuildCharacterInput; desktop yaw adapter and provisional support boundary, forward/gravity consumed; Havok state dynamics remain unported",
+    "gravity": "DataDerived hkWorldCinfo through original character input builder",
     "input": "ExecutableDerived: original CSV bindings and Controller event predicates; desktop logical-button adapter",
     "jump": "ExecutableDerived: LocalCharacterControl command 4 ignored; PhysicsDynamicCharacter wantJump=false",
     "locomotion": "ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs",
     "terrain": "DataDerived Havok collision meshes; provisional character solver",
     "timing": "ExecutableDerived: GameState::Update 0x803acdc4, variable integer ms capped at 60; once per host frame"
   },
-  "load_seconds": 2.577078342437744,
+  "load_seconds": 2.595907688140869,
   "log": [
     "Boot: reading original data files",
     "db.vlt: 75 types, 32 classes, 908 collections",
@@ -146,10 +152,10 @@
         -0.04999999701976776,
         -53.0
       ],
-      "pose": -3.3936471939086914,
+      "pose": -3.547739028930664,
       "speed": 0.0,
       "step": "settle",
-      "t": 1.5009998083114624,
+      "t": 1.5069998502731323,
       "weights": [
         1.0,
         0.0,
@@ -161,84 +167,84 @@
       "pos": [
         12.0,
         -0.04999999701976776,
-        -49.63051223754883
+        -49.614749908447266
       ],
-      "pose": -7.80384635925293,
+      "pose": -7.540522575378418,
       "speed": 5.0,
       "step": "forward",
-      "t": 4.000002384185791,
+      "t": 4.008003234863281,
       "weights": [
-        5.73933955916317e-10,
-        4.279914200822077e-10,
+        5.689538840059072e-10,
+        4.2419406875993104e-10,
         0.9999998211860657
       ]
     },
     {
       "grounded": true,
       "pos": [
-        14.976119041442871,
+        15.06771469116211,
         -0.04999999701976776,
-        -49.126502990722656
+        -49.10847854614258
       ],
-      "pose": 0.18333955109119415,
+      "pose": 0.07828278839588165,
       "speed": 5.0,
       "step": "left",
-      "t": 6.516983985900879,
+      "t": 6.508984088897705,
       "weights": [
-        2.482982165900691e-19,
-        1.8515977892783792e-19,
+        2.82037440360641e-19,
+        2.1027829437544408e-19,
         0.9999998211860657
       ]
     },
     {
       "grounded": true,
       "pos": [
-        23.25638771057129,
-        0.03497691825032234,
-        -41.90471267700195
+        23.378015518188477,
+        0.03533466160297394,
+        -41.93702697753906
       ],
-      "pose": -6.898858070373535,
+      "pose": -6.895359992980957,
       "speed": 7.071067810058594,
       "step": "diagonal",
-      "t": 8.508965492248535,
+      "t": 8.51097297668457,
       "weights": [
-        9.696813832444762e-27,
-        7.231062672829295e-27,
+        1.0043828660196432e-26,
+        7.488360750423607e-27,
         0.9999998211860657
       ]
     },
     {
       "grounded": true,
       "pos": [
-        23.284120559692383,
-        0.03388645872473717,
-        -41.90471267700195
+        23.4073486328125,
+        0.03418127819895744,
+        -41.93702697753906
       ],
-      "pose": -5.60482120513916,
+      "pose": -5.599234580993652,
       "speed": 0.0,
       "step": "jump",
-      "t": 8.910961151123047,
+      "t": 8.913971900939941,
       "weights": [
-        0.8882458209991455,
-        0.037655021995306015,
-        0.07409913092851639
+        0.8903054594993591,
+        0.027049802243709564,
+        0.0826447531580925
       ]
     },
     {
       "grounded": true,
       "pos": [
-        23.284120559692383,
-        0.03388645872473717,
-        -41.90471267700195
+        23.4073486328125,
+        0.03418127819895744,
+        -41.93702697753906
       ],
-      "pose": -5.2155256271362305,
+      "pose": -5.418554306030273,
       "speed": 0.0,
       "step": "final",
-      "t": 9.907955169677734,
+      "t": 9.914969444274902,
       "weights": [
-        0.9999781250953674,
-        7.3730684562178794e-6,
-        0.000014509038010146469
+        0.9999793171882629,
+        5.103938292450039e-6,
+        0.000015593968782923184
       ]
     }
   ]

@@ -52,7 +52,7 @@ The viewer, cameras, materials, skinning and animation playback already run in *
 
 The decoding layer currently runs as one persistent, packaged Python worker. This preserves the recovered work while making the native interface responsive. Port a decoder to Rust only after its format and fixtures are stable. UI requests use sequence IDs to discard stale results, the library is virtualized, and generated previews are cached by input content. Static views use reactive updates; active animations render continuously. No Electron or web runtime is included.
 
-**Recovered gameplay is partial.** Locomotion, frame/physics timing, controller events, multiplayer scoring and tetherball serve/motion arithmetic have Rust implementations. The world slice now dispatches movement, jump and camera-reorient through the original `controls.csv` and button timers. A 1:1 rewrite still requires Wii device input, full game states, Havok dynamics, AI and minigame execution, plus comparisons against the original game. See `docs/RECONSTRUCTION.md` for the boundary between decoded assets and recovered behavior.
+**Recovered gameplay is partial.** Locomotion, frame/physics timing, controller events, character input, multiplayer scoring and tetherball hit/motion-prefix/winner decisions have Rust implementations. The world slice now dispatches movement, jump and camera-reorient through the original `controls.csv` and button timers. A 1:1 rewrite still requires Wii device input, full game states, Havok dynamics, AI and minigame execution, plus comparisons against the original game. See `docs/RECONSTRUCTION.md` for the boundary between decoded assets and recovered behavior.
 
 ## Headless use
 
