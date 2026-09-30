@@ -113,6 +113,16 @@ fn float(db: &Database, c: &Collection, name: &str, index: usize) -> Result<f32,
         .ok_or_else(|| format!("{name} is not a float"))
 }
 
+/// Native unsigned-byte array read, with the existing inheritance and absent
+/// attribute/out-of-range semantics shared by all decoded tuning callers.
+pub fn ai_byte_at(
+    db: &Database,
+    collection: &Collection,
+    field: &str,
+    index: u32,
+) -> Result<u8, String> {
+    Ok(int(db, collection, field, index as usize)? as u8)
+}
 /// AI Initialize uses the raw unsigned difficulty index, unlike the minigame
 /// initializer's clamped difficulty selector.
 pub fn ai_difficulty(
@@ -127,7 +137,7 @@ pub fn ai_difficulty(
         .ok_or("missing AI tuning collection")?;
     let mut values = [0; 7];
     for (i, field) in AI_FIELDS.iter().enumerate() {
-        values[i] = int(db, collection, field, index as usize)? as u8;
+        values[i] = ai_byte_at(db, collection, field, index)?;
     }
     Ok(values)
 }

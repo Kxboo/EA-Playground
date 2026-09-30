@@ -604,19 +604,7 @@ pub fn setup_server(
         high: 1,
         value: input.random_server_result,
     }];
-    let server = match state.base_player_count_070 {
-        1 => 0,
-        n if n > 1 => {
-            if state.alternate_server_445 {
-                state.alternate_server_445 = false;
-                1
-            } else {
-                state.alternate_server_445 = true;
-                0
-            }
-        }
-        _ => input.random_server_result,
-    };
+    let server = select_server(state, input.random_server_result);
     let receiver = 1 - server;
     lifecycle.server = server as usize;
     lifecycle.receiver = receiver as usize;
@@ -628,24 +616,14 @@ pub fn setup_server(
 
     let camera = input.camera_lookup_result;
     effects.push(ResetEffect::CameraLookup { index: 0, camera });
-    let local_offset = if server == 1 {
-        [-0.5, 0.0, 0.0]
-    } else {
-        [0.5, 0.0, 0.0]
-    };
-    // SetupServer transforms its local offset only; it does not add +0x110.
-    let cam_position = transform_point([0.0; 3], local_offset, &state.world_matrix_398);
+    let (position, direction) = server_camera(state, server);
     effects.push(ResetEffect::CameraTargetPosition {
         camera,
-        position_bits: bits3(cam_position),
+        position_bits: bits3(position),
     });
-    let mut facing_angle = state.camera_heading_394 + CAMERA_DIRECTION_OFFSET;
-    if server == 1 {
-        facing_angle += f32::from_bits(0x40490fdb);
-    }
     effects.push(ResetEffect::CameraDirection {
         camera,
-        direction_bits: direction_from_angle(wrap_angle(facing_angle)).map(f32::to_bits),
+        direction_bits: direction.map(f32::to_bits),
     });
 
     effects.push(ResetEffect::InitializePlayerAnimations);
@@ -691,6 +669,37 @@ pub fn setup_server(
         );
     }
     effects
+}
+
+/// Shared native server selection, including signed counts and alternation.
+pub(crate) fn select_server(state: &mut ResetState, random: i32) -> i32 {
+    match state.base_player_count_070 {
+        1 => 0,
+        n if n > 1 => {
+            if state.alternate_server_445 {
+                state.alternate_server_445 = false;
+                1
+            } else {
+                state.alternate_server_445 = true;
+                0
+            }
+        }
+        _ => random,
+    }
+}
+
+pub(crate) fn server_camera(state: &ResetState, server: i32) -> ([f32; 3], [f32; 3]) {
+    let offset = if server == 1 {
+        [-0.5, 0., 0.]
+    } else {
+        [0.5, 0., 0.]
+    };
+    let position = transform_point([0.; 3], offset, &state.world_matrix_398);
+    let mut angle = state.camera_heading_394 + CAMERA_DIRECTION_OFFSET;
+    if server == 1 {
+        angle = std::f32::consts::PI + angle;
+    }
+    (position, direction_from_angle(wrap_angle(angle)))
 }
 
 /// ResetMiniGame (including its original ResetStats field stores) followed by

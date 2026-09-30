@@ -36,6 +36,9 @@ impl Host<'_> {
     }
 }
 impl BallInitServices for Host<'_> {
+    fn pole_height(&mut self, _pole: u32) -> f32 {
+        f(&self.input["pole_height"])
+    }
     fn texture(&mut self, name: &str) -> LoadedAsset {
         self.asset(name, true)
     }
@@ -187,6 +190,83 @@ fn original_ball_initialization() {
                 r,
                 rs,
                 rt
+            ]),
+            row["resources"]
+        );
+        assert_eq!(
+            json!(resources.accelerate_modifier_158.to_bits()),
+            row["accelerate_modifier"]
+        );
+        assert_eq!(json!(resources.flag_15c), row["flag_15c"]);
+    }
+}
+
+#[test]
+fn original_ball_constructor() {
+    let fixture: Value = serde_json::from_str(include_str!(
+        "../tests/data/tetherball_ball_constructor_golden.json"
+    ))
+    .unwrap();
+    assert_eq!(fixture["elf_sha256"], crate::recovered::ELF_SHA256);
+    for (i, row) in fixture["cases"].as_array().unwrap().iter().enumerate() {
+        let initial = row["initial_bytes"].as_array().unwrap();
+        let vector = |offset: usize, count: usize| -> Vec<f32> {
+            (0..count)
+                .map(|j| {
+                    let bytes = std::array::from_fn(|k| {
+                        initial[offset + j * 4 + k].as_u64().unwrap() as u8
+                    });
+                    f32::from_bits(u32::from_be_bytes(bytes))
+                })
+                .collect()
+        };
+        let mut motion = crate::tetherball::tests::ball(&row["initial"]);
+        let mut scene = BallScene {
+            position: vector(0x40, 3).try_into().unwrap(),
+            anchor: vector(0x60, 3).try_into().unwrap(),
+            ball_matrix: vector(0xc0, 16).try_into().unwrap(),
+            rope_matrix: vector(0x100, 16).try_into().unwrap(),
+            trails: [123, 234, 345],
+            null_trail: 678,
+            ball_shadow: true,
+            rope_shadow: true,
+        };
+        let null = row["null_trail"].as_u64().unwrap() as u32;
+        let resources = construct_ball(&mut motion, &mut scene, null);
+        crate::tetherball::tests::assert_bits(
+            &motion,
+            &crate::tetherball::tests::ball(&row["motion"]),
+            i,
+            0,
+        );
+        assert_eq!(json!(scene.position.map(f32::to_bits)), row["position"]);
+        assert_eq!(json!(scene.anchor.map(f32::to_bits)), row["anchor"]);
+        assert_eq!(
+            json!(scene.ball_matrix.map(f32::to_bits)),
+            row["ball_matrix"]
+        );
+        assert_eq!(
+            json!(scene.rope_matrix.map(f32::to_bits)),
+            row["rope_matrix"]
+        );
+        assert_eq!(json!(scene.trails), row["trails"]);
+        assert_eq!(scene.null_trail, null);
+        assert!(!scene.ball_shadow && !scene.rope_shadow);
+        let [b, bs, t, r, rs, rt] = resources.asset_ids;
+        assert_eq!(
+            json!([
+                resources.shadows[0],
+                resources.shadows[1],
+                resources.cached[0],
+                resources.cached[1],
+                b,
+                bs,
+                t,
+                resources.cached[2],
+                resources.cached[3],
+                r,
+                rs,
+                rt,
             ]),
             row["resources"]
         );

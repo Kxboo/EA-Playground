@@ -1,5 +1,5 @@
-//! Enclosing MGTetherball::Initialize (0x803966c4). Game helper calls remain
-//! explicit stages so their existing ports can share the same Runtime owners.
+//! Enclosing MGTetherball::Initialize (0x803966c4), composed with recovered
+//! gameplay helpers. Only synchronous engine/data operations remain services.
 use crate::area_transform::{self as matrix, Matrix};
 use crate::tetherball_angles::wrap_angle;
 use crate::tetherball_player_init::PlayerInitInput;
@@ -9,6 +9,14 @@ use crate::tetherball_runtime::Runtime;
 pub struct StartupState {
     /// Base Minigame pointers copied from World +8,+c,+10,+14,+18,+20.
     pub world_services: [u32; 6],
+    /// Tunable words +170/+180, separate from live round/cap words +438/+430.
+    pub tunables_170_180: [i32; 2],
+    pub constructor_metadata: Option<crate::tetherball_constructor::ConstructorMetadata>,
+    /// Base +4c is preserved; +4d is set by Initialize and cleared by UnInitialize.
+    pub base_flags_04c_04d: [u8; 2],
+    pub base_padding_04f: u8,
+    pub player_init: crate::tetherball_player_init::PlayerInitState,
+    pub ball_resources: Option<crate::tetherball_ball_init::BallResources>,
     pub tag_02c: u32,
     pub tag_030: u32,
     pub asset_handle_100: u32,
@@ -35,37 +43,25 @@ pub enum CharacterKind {
 }
 
 #[derive(Clone, Debug)]
-pub enum Stage {
-    BaseInitialize {
-        world: u32,
-    },
-    InitGameLogic,
-    ConstructBall {
-        handle: u32,
-    },
-    SetArea(i32),
-    Character {
-        kind: CharacterKind,
-        input: PlayerInitInput,
-    },
-    Ai {
-        player: usize,
-        enabled: bool,
-        difficulty: u32,
-        heading: f32,
-    },
-    Ball {
-        difficulty: u32,
-        anchor: [f32; 3],
-        heading: f32,
-        pole: u32,
-    },
-    OpenPregame(i32),
-    SetUpServer,
-}
-
-#[derive(Clone, Debug)]
 pub enum Effect {
+    /// Native AreaManager +2c write, followed by PlaceableManager SetCurrentArea.
+    MinigameArea {
+        abstract_area: i32,
+        physical_area: i32,
+    },
+    CameraViewInfo {
+        camera: u32,
+        flag: bool,
+    },
+    CameraReinitialize {
+        manager: u32,
+        camera_type: u32,
+        player: u32,
+    },
+    ControllerReinitialize {
+        controller: u32,
+        control_type: u32,
+    },
     HomeMenu(bool),
     ResetHomeIcon,
     SyncTask(bool),
@@ -113,19 +109,34 @@ pub enum Effect {
     RendererWord1c0(u32),
 }
 
-/// Synchronous original boundaries. Stages must apply their writes to the
-/// provided owners before returning. An error leaves a partially initialized
+/// Synchronous original engine/data boundaries. Helpers apply all gameplay
+/// stores to their existing owners. An error leaves a partially initialized
 /// object; callers must discard it, rather than start a match with that state.
 pub trait StartupServices:
     crate::tetherball_lifecycle::Services + crate::tetherball_shadow_setup::ShadowSetupServices
 {
     fn effect(&mut self, effect: Effect);
-    fn stage(
+    fn player_services(&mut self) -> &mut impl crate::tetherball_player_init::PlayerInitServices;
+    fn ball_services(&mut self) -> &mut impl crate::tetherball_ball_init::BallInitServices;
+    fn pregame_services(&mut self) -> &mut impl crate::minigame_entry::PregameServices;
+    fn server_services(&mut self) -> &mut impl crate::tetherball_server::ServerServices;
+    fn ai_services(&mut self) -> &mut impl crate::tetherball_ai::AiInitServices;
+    /// Read the constructor-preserved AI +68 allocation word; no gameplay writes.
+    fn ai_allocation_direction_scale(&mut self, entity: u32) -> f32;
+    /// WorldMan::GetTetherballMinigame lookup and referenced live game fields.
+    /// This read-only query must not infer presence from the selected area.
+    fn ai_game_context(&mut self, runtime: &Runtime) -> Option<(i32, i32)>;
+    /// Decoded VLT/ResetStats results only; gameplay stores are applied here.
+    fn game_logic_inputs(
         &mut self,
-        stage: Stage,
-        runtime: &mut Runtime,
-        state: &mut StartupState,
-    ) -> Result<(), String>;
+        runtime: &Runtime,
+    ) -> Result<crate::tetherball_initialize::InitGameLogicInputs, String>;
+    /// Particle-system null trail token at 0x80601f78.
+    fn null_ball_trail(&mut self) -> u32;
+    fn world_service_handles(&mut self, world: u32) -> Result<[u32; 6], String>;
+    fn camera_manager(&mut self) -> u32;
+    fn current_camera(&mut self, manager: u32) -> u32;
+    fn controller_handle(&mut self, index: i32) -> u32;
     fn allocate_ball(&mut self, bytes: u32, tag: &str) -> u32;
     fn placeable(&mut self, name: &str) -> (u32, [f32; 3]);
     fn camera(&mut self, player: u32) -> u32;
@@ -137,6 +148,59 @@ pub trait StartupServices:
     fn float_array(&mut self, collection: u32, field: &str, index: u32) -> f32;
     fn int16_array(&mut self, collection: u32, field: &str, index: u32) -> i16;
     fn destroy_collection(&mut self, collection: u32);
+}
+
+/// Minigame::Initialize(World*) (0x803ab430), with the Minigame virtual
+/// Initialize() body (0x803ab470) used by MGTetherball. Camera/controller
+/// reinitialization are synchronous engine effects, in original order.
+pub fn initialize_base(
+    runtime: &mut Runtime,
+    state: &mut StartupState,
+    world: u32,
+    host: &mut impl StartupServices,
+) -> Result<(), String> {
+    state.world_services = host.world_service_handles(world)?;
+    let manager = host.camera_manager();
+    let camera = host.current_camera(manager);
+    host.effect(Effect::CameraViewInfo {
+        camera,
+        flag: false,
+    });
+    // The original reloads the singleton after GetCameraViewInfo.
+    let manager = host.camera_manager();
+    host.effect(Effect::CameraReinitialize {
+        manager,
+        camera_type: state.tag_02c,
+        player: 0,
+    });
+    for index in 0..4 {
+        let controller = host.controller_handle(index);
+        host.effect(Effect::ControllerReinitialize {
+            controller,
+            control_type: state.tag_030,
+        });
+    }
+    state.base_flags_04c_04d[1] = 1;
+    runtime.state.serve.pause_menu_open = false;
+    Ok(())
+}
+
+/// Minigame::UnInitialize (0x803ab524), the matching base cleanup body.
+/// Activity-owned asset/entity destruction remains the derived host's job.
+pub fn uninitialize_base(
+    runtime: &mut Runtime,
+    state: &mut StartupState,
+    host: &mut impl StartupServices,
+) {
+    for index in 0..4 {
+        let controller = host.controller_handle(index);
+        host.effect(Effect::ControllerReinitialize {
+            controller,
+            control_type: 0,
+        });
+    }
+    runtime.state.serve.pause_menu_open = false;
+    state.base_flags_04c_04d[1] = 0;
 }
 
 fn direction(angle: f32) -> [f32; 3] {
@@ -159,6 +223,74 @@ fn inverse_rot_trans(m: &Matrix) -> Matrix {
     result
 }
 
+/// Shared character append path; gameplay stores are owned by the recovered
+/// helpers rather than supplied as host stage writes.
+pub fn initialize_character(
+    runtime: &mut Runtime,
+    state: &mut StartupState,
+    kind: CharacterKind,
+    input: PlayerInitInput,
+    services: &mut impl crate::tetherball_player_init::PlayerInitServices,
+) {
+    match kind {
+        CharacterKind::Player => crate::tetherball_player_init::initialize_player(
+            &mut runtime.life,
+            &mut runtime.state.reset,
+            &mut state.player_init,
+            input,
+            services,
+        ),
+        CharacterKind::Ai => crate::tetherball_ai_init::initialize_ai(
+            &mut runtime.life,
+            &mut runtime.state.reset,
+            &mut state.player_init,
+            input,
+            services,
+        ),
+        CharacterKind::AdditionalPlayer => {
+            crate::tetherball_additional_player::initialize_additional_player(
+                &mut runtime.life,
+                &mut runtime.state.reset,
+                &mut state.player_init,
+                input,
+                services,
+            )
+        }
+    }
+}
+
+/// Project the just-constructed character AI into its live owner, then run
+/// native tuning setup. Engine services may not reenter gameplay during append.
+pub fn initialize_startup_ai(
+    runtime: &mut Runtime,
+    player: usize,
+    enabled: bool,
+    difficulty: u32,
+    heading: f32,
+    host: &mut impl StartupServices,
+) -> Result<(), String> {
+    if player >= 2 || runtime.life.player_count != player + 1 {
+        return Err("startup AI requires its appended character".into());
+    }
+    let handle = runtime.state.reset.current_ai_entities_128[player];
+    if handle == 0 {
+        return Err("native AI allocation failure has no successful startup path".into());
+    }
+    let mut ai = crate::tetherball_ai::AiEntity::new(
+        handle,
+        player,
+        host.ai_allocation_direction_scale(handle),
+    );
+    ai.ball_handle = runtime.state.reset.ball_handle_104;
+    runtime.state.ai[player] = Some(ai);
+    runtime.state.rally.ai_charge[player] = 0;
+    let game = host.ai_game_context(runtime);
+    runtime.state.ai[player]
+        .as_mut()
+        .unwrap()
+        .initialize_with_services(game, enabled, difficulty, heading, host.ai_services())
+}
+
 /// Complete enclosing startup for supported areas 0..2, game modes 0..3,
 /// and native participant configurations 3/6. Invalid domains have no recovered
 /// successful native startup path and return errors instead of guessing defaults.
@@ -176,11 +308,32 @@ pub fn initialize(
     state.tag_02c = 7;
     host.effect(Effect::AncientEvilByte(0));
     runtime.life.current_distance = 2;
-    host.stage(Stage::BaseInitialize { world: input.world }, runtime, state)?;
-    host.stage(Stage::InitGameLogic, runtime, state)?;
+    initialize_base(runtime, state, input.world, host)?;
+    let inputs = host.game_logic_inputs(runtime)?;
+    state.tunables_170_180 = match inputs.tunables {
+        crate::tetherball_initialize::NativeTunables::SinglePlayer { fields } => {
+            [fields[1], fields[5]]
+        }
+        crate::tetherball_initialize::NativeTunables::MultiPlayer {
+            rounds,
+            rotations_to_win,
+            ..
+        } => [rounds, rotations_to_win],
+    };
+    // InitGameLogicState (0x8039ceac) consumes the prior constructor cap.
+    crate::tetherball_initialize::init_game_logic_state(
+        &mut runtime.life,
+        &mut runtime.state.reset,
+        &mut runtime.state.rules,
+        inputs,
+    );
     let ball = host.allocate_ball(0x170, "Minigame::Tetherball");
     if ball != 0 {
-        host.stage(Stage::ConstructBall { handle: ball }, runtime, state)?;
+        state.ball_resources = Some(crate::tetherball_ball_init::construct_ball(
+            &mut runtime.ball,
+            &mut runtime.state.scene,
+            host.null_ball_trail(),
+        ));
     }
     runtime.state.reset.ball_handle_104 = ball;
     runtime.state.reset.ai_initial_values_27c = [1, -1];
@@ -198,7 +351,10 @@ pub fn initialize(
     runtime.state.reset.world_position_110 = origin;
     // Lifecycle's pole position represents the external placeable, not +110.
     runtime.life.pole_position = origin;
-    host.stage(Stage::SetArea(variant), runtime, state)?;
+    host.effect(Effect::MinigameArea {
+        abstract_area: variant,
+        physical_area: crate::minigame_entry::physical_area(variant),
+    });
     host.effect(Effect::PlaceableVisible {
         handle: pole,
         visible: true,
@@ -238,54 +394,48 @@ pub fn initialize(
     }
     let difficulty = mode as u32;
     state.mode_2ec = 1;
-    host.stage(
-        Stage::Character {
-            kind: CharacterKind::Player,
-            input: PlayerInitInput {
-                position: positions[0],
-                heading: first_heading,
-                identity_words: state.identities_078_0b8[0],
-            },
-        },
+    initialize_character(
         runtime,
         state,
-    )?;
-    host.stage(
-        Stage::Ai {
-            player: 0,
-            enabled: runtime.state.serve.forced_ai[0],
-            difficulty: 1,
-            heading: wrap_angle(heading),
+        CharacterKind::Player,
+        PlayerInitInput {
+            position: positions[0],
+            heading: first_heading,
+            identity_words: state.identities_078_0b8[0],
         },
+        host.player_services(),
+    );
+    initialize_startup_ai(
         runtime,
-        state,
+        0,
+        runtime.state.serve.forced_ai[0],
+        1,
+        wrap_angle(heading),
+        host,
     )?;
     let second_kind = match runtime.state.reset.ai_special_case_0c0 {
         6 => CharacterKind::Ai,
         3 => CharacterKind::AdditionalPlayer,
         v => return Err(format!("unsupported native participant configuration {v}")),
     };
-    host.stage(
-        Stage::Character {
-            kind: second_kind,
-            input: PlayerInitInput {
-                position: positions[1],
-                heading: std::f32::consts::PI + first_heading,
-                identity_words: state.identities_078_0b8[1],
-            },
-        },
+    initialize_character(
         runtime,
         state,
-    )?;
-    host.stage(
-        Stage::Ai {
-            player: 1,
-            enabled: second_kind == CharacterKind::Ai || runtime.state.serve.forced_ai[1],
-            difficulty,
-            heading: wrap_angle(heading),
+        second_kind,
+        PlayerInitInput {
+            position: positions[1],
+            heading: std::f32::consts::PI + first_heading,
+            identity_words: state.identities_078_0b8[1],
         },
+        host.player_services(),
+    );
+    initialize_startup_ai(
         runtime,
-        state,
+        1,
+        second_kind == CharacterKind::Ai || runtime.state.serve.forced_ai[1],
+        difficulty,
+        wrap_angle(heading),
+        host,
     )?;
     let camera_start = crate::tetherball_ai::transform_point([0.5, 0., 0.], &transform);
     runtime.life.set_player_distance(2, &mut runtime.ball, host);
@@ -339,16 +489,17 @@ pub fn initialize(
     );
     let mut anchor = crate::tetherball_ai::transform_point([0.; 3], &transform);
     anchor[1] = 2.2 + host.ground_height(anchor, 50.);
-    host.stage(
-        Stage::Ball {
+    state.ball_resources = Some(crate::tetherball_ball_init::initialize_from_placeable(
+        &mut runtime.ball,
+        &mut runtime.state.scene,
+        crate::tetherball_ball_init::BallPlacementInput {
             difficulty,
             anchor,
             heading,
             pole,
         },
-        runtime,
-        state,
-    )?;
+        host.ball_services(),
+    ));
     runtime
         .ball
         .set_radius([0.7, 0.9, 1.1][runtime.life.current_distance as usize]);
@@ -412,11 +563,17 @@ pub fn initialize(
     host.effect(Effect::RendererWord1c0(1));
     crate::tetherball_shadow_setup::setup_shadow_options(&runtime.state.reset, host);
     runtime.life.round_number = 1;
-    host.stage(Stage::OpenPregame(2), runtime, state)?;
+    crate::minigame_entry::open_pregame(
+        &mut runtime.state.serve.frontend_flags,
+        runtime.state.reset.base_player_count_070,
+        runtime.life.game_type,
+        2,
+        host.pregame_services(),
+    );
     runtime
         .life
         .change_state(1, runtime.state.rules, &mut runtime.ball, host);
-    host.stage(Stage::SetUpServer, runtime, state)?;
+    crate::tetherball_server::setup_server(runtime, host.server_services())?;
     host.effect(Effect::VSync(true));
     host.effect(Effect::SyncTask(false));
     host.effect(Effect::ResetHomeIcon);

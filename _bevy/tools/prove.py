@@ -240,8 +240,14 @@ def main():
                              ('tetherball_player_init_oracle.py','Original tetherball player reuse/spawn and ordered startup services'),
                              ('tetherball_ai_init_oracle.py','Original tetherball AI character spawning and shared startup stores'),
                              ('tetherball_additional_player_oracle.py','Original tetherball additional player spawning and controller setup'),
+                             ('tetherball_ball_constructor_oracle.py','Original tetherball constructor stores and preserved fields'),
                              ('tetherball_ball_init_oracle.py','Original tetherball ball assets, shadows and initial tuning'),
-                             ('tetherball_startup_oracle.py','Original enclosing tetherball startup with composed animation, distance, state and shadow helpers'),
+                             ('tetherball_server_oracle.py','Original live server selection, marker timing and ball Grab'),
+                             ('minigame_entry_oracle.py','Original shared area conversion and pregame entry'),
+                             ('tetherball_session_oracle.py','Original session setters and team copy'),
+                             ('tetherball_constructor_oracle.py','Original game/base/world constructor images and Runtime projections'),
+                             ('tetherball_cleanup_oracle.py','Original complete tetherball cleanup composed with base/ball teardown'),
+                             ('tetherball_startup_oracle.py','Original enclosing tetherball startup with composed character helpers, base lifecycle, ball constructor/initialization, AI construction/tuning, area/pregame/server entry, logic, animation, distance, state and shadow helpers'),
                              ('tetherball_shadow_setup_oracle.py','Original tetherball shadow options and native static initialization'),
                              ('mp3_lsf_oracle.py','MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC')]:
             args=[] if script=='mp3_lsf_oracle.py' else ['--check']
@@ -295,7 +301,10 @@ def main():
                 ('tetherball_ai_init::tests','Rust tetherball AI character startup matches original calls'),
                 ('tetherball_additional_player::tests','Rust tetherball additional player startup matches original calls'),
                 ('tetherball_ball_init::tests','Rust tetherball ball initialization matches original resources and state'),
-                ('tetherball_startup::tests','Rust enclosing tetherball startup matches original stores and ordered calls'),
+                ('minigame_entry::tests','Rust shared minigame entry matches original helpers'),
+                ('tetherball_session::tests','Rust session stores match original native setters'),
+                ('tetherball_constructor::tests','Rust game/base/world constructor memory matches original stores'),
+                ('tetherball_startup::tests','Rust enclosing tetherball startup and live server/Grab matches original stores and ordered calls'),
                 ('tetherball_shadow_setup::tests','Rust tetherball shadow setup matches original viewport options'),
                 ('mp3::tests','MPEG-2 side information and scale-factor regression checks')]
         for name,label in suites:

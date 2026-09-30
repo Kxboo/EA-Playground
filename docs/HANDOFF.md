@@ -1,6 +1,22 @@
+All generic tetherball startup stages are now removed. Live SetUpServer queries animation markers after state requests and composes native Grab; selection/camera rules share the existing reset port. Native checks include 64 additional live server transitions and the 24 complete enclosing cases. Production Bevy host/readiness, live restart/exit and playable outcomes remain required. See `_bevy/docs/TETHERBALL_STARTUP.md`.
+
+Area selection and pregame entry now compose directly in tetherball startup. SetArea/OpenPregame stages are removed; the shared helper preserves signed count semantics and the native ready byte, and area conversion preserves raw abstract/physical distinctions. Standalone and enclosing native checks cover these paths. SetUpServer is the last generic startup stage, followed by the concrete Bevy host/readiness/interactive loop. See `_bevy/docs/TETHERBALL_STARTUP.md`.
+
+AI startup now composes derived AI construction and tuning through the existing live owners; the Ai stage is removed. Native enclosing cases execute constructor/Initialize/collection selection and cover active-game absence plus enabled/disabled configuration. Existing corpus callers share the service-based initializer. Remaining stages are SetArea, OpenPregame and SetUpServer, followed by the concrete Bevy host. See `_bevy/docs/TETHERBALL_STARTUP.md`.
+
+Tetherball startup now directly composes ball resource initialization. The Ball stage is removed; StartupState retains all cached/shadow handles and asset IDs for cleanup. Native enclosing cases cover all shadow null combinations and the late live pole-height read. Remaining startup stages are area, AI tuning, pregame and server setup; the Bevy host remains required. See `_bevy/docs/TETHERBALL_STARTUP.md`.
+
+Enclosing tetherball startup now composes all three recovered character append helpers directly; the Character stage is removed. The 24 native enclosing cases cover absent, reused and mismatching first characters and compare ownership/count/controller effects and AI ball bindings. Cleanup and constructor fixtures have been regenerated; `_bevy/docs/TETHERBALL_STARTUP.md` records the remaining engine/stage dependencies.
+
+Session setup now has a shared constructor/configure/startup entry in `_bevy/src/tetherball_session.rs`. Five original setters and the team copy are compared across 48 dirty native memory images; typed fields reuse existing owners. See `_bevy/docs/TETHERBALL_SESSION.md`. Child startup service composition and the interactive Bevy host remain the next dependencies.
+
 # Developer handoff
 
 ## Latest continuation (2026-09-30)
+
+Current working changes now include exact MGTetherball/Minigame/World constructor stores and an in-place Runtime projection, verified against 32 full 0x450-byte native images and 24 typed projections. The original allocation size is pinned to its caller instruction. Tunables +170/+180 are now independent of live count/cap +438/+430. See `_bevy/docs/TETHERBALL_CONSTRUCTOR.md`; the next factory dependency is native session setter/team-copy ordering, already traced but not yet composed.
+
+Current working changes compose startup game logic, ball construction and base initialization, and add the enclosing derived teardown in `_bevy/src/tetherball_cleanup.rs`. The cleanup oracle runs original base/ball teardown and the ball destructor across 64 scenarios, including signed negative +210 counts. See `_bevy/docs/TETHERBALL_CLEANUP.md` for precise service boundaries. Interactive tetherball remains unconnected; constructor/session recovery, child startup composition and a Bevy host remain necessary. Keep the full reconstruction objective active; no gameplay-completion claim is implied by these fixture checks.
 
 `feat/menu-and-game-proof` is merged into `main` alongside the executable GameMap research. The playable slice now uses `GameState::Update`'s variable integer-millisecond frame policy instead of an assumed fixed 60 Hz loop. `sim_time.rs` also ports Havok step scheduling without claiming Havok dynamics. `tools/timing_oracle.py --check` executes the original PowerPC routines for 160 frame and 252 physics cases; constants regenerate from the pinned ELF. The clock divisor address is absolute `0x800000fc` (corrected in GameMap), with the console's runtime value still uncaptured.
 

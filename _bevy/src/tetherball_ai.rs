@@ -14,6 +14,41 @@ pub struct AiEntity {
     pub heading: f32,
 }
 
+/// Synchronous VLT boundaries of TetherballAIEntity::Initialize (0x80395354).
+/// Gameplay stores stay in AiEntity; errors preserve preceding stores.
+pub trait AiInitServices {
+    fn database_key(&mut self, name: &str) -> u64;
+    fn collection(&mut self, class: u64, name: u64) -> Result<u32, String>;
+    fn byte_array(&mut self, collection: u32, field: &str, index: u32) -> Result<u8, String>;
+    fn destroy_collection(&mut self, collection: u32);
+}
+struct DatabaseAiServices<'a> {
+    db: &'a crate::vlt::Database,
+}
+impl AiInitServices for DatabaseAiServices<'_> {
+    fn database_key(&mut self, name: &str) -> u64 {
+        crate::vlt::string_hash64(name)
+    }
+    fn collection(&mut self, class: u64, name: u64) -> Result<u32, String> {
+        let index = self
+            .db
+            .collections
+            .iter()
+            .position(|c| c.class_key == class && c.key == name)
+            .ok_or("missing AI tuning collection")?;
+        u32::try_from(index + 1).map_err(|_| "AI collection index overflow".into())
+    }
+    fn byte_array(&mut self, collection: u32, field: &str, index: u32) -> Result<u8, String> {
+        crate::tetherball_tuning::ai_byte_at(
+            self.db,
+            &self.db.collections[collection as usize - 1],
+            field,
+            index,
+        )
+    }
+    fn destroy_collection(&mut self, _collection: u32) {}
+}
+
 #[derive(Clone, Debug)]
 pub struct AiGeometry {
     pub world: Matrix,
@@ -83,18 +118,37 @@ impl AiEntity {
         heading: f32,
         db: &crate::vlt::Database,
     ) -> Result<(), String> {
+        self.initialize_with_services(
+            game,
+            enabled,
+            difficulty,
+            heading,
+            &mut DatabaseAiServices { db },
+        )
+    }
+
+    pub fn initialize_with_services(
+        &mut self,
+        game: Option<(i32, i32)>,
+        enabled: bool,
+        difficulty: u32,
+        heading: f32,
+        services: &mut impl AiInitServices,
+    ) -> Result<(), String> {
         if let Some((session, dare)) = game {
-            // The native routine acquires a collection even when disabled.
+            // GetKey(class) precedes the collection-name selector in native code.
+            let class = services.database_key("mg_tetherball");
             let name = crate::tetherball_tuning::collection_name(session, dare)
                 .ok_or("native null tuning collection")?;
-            if db.find_collection("mg_tetherball", name).is_none() {
-                return Err("missing AI tuning collection".into());
-            }
+            let name = services.database_key(name);
+            let collection = services.collection(class, name)?;
             self.enabled = enabled;
             if enabled {
-                self.difficulty =
-                    crate::tetherball_tuning::ai_difficulty(db, session, dare, difficulty)?;
+                for (slot, field) in crate::tetherball_tuning::AI_FIELDS.iter().enumerate() {
+                    self.difficulty[slot] = services.byte_array(collection, field, difficulty)?;
+                }
             }
+            services.destroy_collection(collection);
         }
         self.heading = wrap_angle(heading);
         Ok(())

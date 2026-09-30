@@ -21,6 +21,53 @@ pub struct BallResources {
     pub flag_15c: u8,
 }
 
+/// Tetherball::Tetherball (0x8039d264). Only native constructor stores are
+/// applied. Hit type/directions/zone and both model matrices are untouched;
+/// allocation/caller state for those fields is required, not guessed here.
+pub fn construct_ball(
+    motion: &mut BallMotion,
+    scene: &mut BallScene,
+    null_trail: u32,
+) -> BallResources {
+    motion.angle = 0.;
+    motion.hit_angle = 0.;
+    motion.secondary_angle = 0.;
+    motion.target_velocity = 0.;
+    motion.secondary_target_velocity = 0.;
+    motion.spin_acceleration = 0.;
+    motion.grabbed = false;
+    motion.vertical_velocity = 0.;
+    motion.toss_time = 0;
+    motion.angular_velocity = 0.;
+    motion.acceleration = 0.;
+    motion.secondary_acceleration = 0.;
+    motion.secondary_velocity = 0.;
+    motion.radius = 0.;
+    motion.desired_radius = 0.;
+    motion.height = 0.;
+    motion.target_height = 0.;
+    motion.base_hit_speed = 0.;
+    motion.power_modifier = 0.;
+    motion.mega_modifier = 0.;
+    motion.pole_height = 0.;
+    motion.tossed = false;
+    motion.spinning_up = false;
+    motion.spinning_down = false;
+    scene.position = [0.; 3];
+    scene.anchor = [0.; 3];
+    scene.trails = [null_trail; 3];
+    scene.null_trail = null_trail;
+    scene.ball_shadow = false;
+    scene.rope_shadow = false;
+    BallResources {
+        shadows: [0; 2],
+        cached: [0; 4],
+        asset_ids: [u32::MAX; 6],
+        accelerate_modifier_158: 0.,
+        flag_15c: 0,
+    }
+}
+
 /// Engine-owned resources and database collection lifetimes. Implementations
 /// must be synchronous and must not reenter ball logic during these calls.
 pub trait BallInitServices {
@@ -38,6 +85,8 @@ pub trait BallInitServices {
     fn collection(&mut self, class: u64, name: u64) -> u32;
     fn float_from_array(&mut self, collection: u32, field: &str, index: u32) -> f32;
     fn destroy_collection(&mut self, collection: u32);
+    /// Placeable +f4, queried after the tuning collection is released.
+    fn pole_height(&mut self, pole: u32) -> f32;
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -75,6 +124,44 @@ pub fn initialize_ball(
     scene: &mut BallScene,
     input: BallInitInput,
     host: &mut impl BallInitServices,
+) -> BallResources {
+    initialize_with_height(motion, scene, input, host, |_| input.pole_height)
+}
+
+#[derive(Clone, Copy, Debug)]
+pub struct BallPlacementInput {
+    pub difficulty: u32,
+    pub anchor: [f32; 3],
+    pub heading: f32,
+    pub pole: u32,
+}
+/// Enclosing startup passes a live placeable; preserve the late +f4 read after
+/// all asset allocation and tuning service calls rather than snapshotting early.
+pub fn initialize_from_placeable(
+    motion: &mut BallMotion,
+    scene: &mut BallScene,
+    input: BallPlacementInput,
+    host: &mut impl BallInitServices,
+) -> BallResources {
+    initialize_with_height(
+        motion,
+        scene,
+        BallInitInput {
+            difficulty: input.difficulty,
+            anchor: input.anchor,
+            heading: input.heading,
+            pole_height: 0., // Unused; the live read below supplies this value.
+        },
+        host,
+        |host| host.pole_height(input.pole),
+    )
+}
+fn initialize_with_height<H: BallInitServices>(
+    motion: &mut BallMotion,
+    scene: &mut BallScene,
+    input: BallInitInput,
+    host: &mut H,
+    height: impl FnOnce(&mut H) -> f32,
 ) -> BallResources {
     // These misspellings are the retail asset names.
     let texture = host.texture("teatherball.gsh");
@@ -118,8 +205,8 @@ pub fn initialize_ball(
     motion.mega_modifier = host.float_from_array(collection, "ball_megamodifier", input.difficulty);
     host.destroy_collection(collection);
 
-    motion.pole_height = input.pole_height;
-    motion.height = input.pole_height + 0.5;
+    motion.pole_height = height(host);
+    motion.height = motion.pole_height + 0.5;
     motion.target_height = motion.height;
     motion.spinning_down = false;
     motion.spinning_up = false;
@@ -147,3 +234,45 @@ pub fn initialize_ball(
 #[cfg(test)]
 #[path = "tetherball_ball_init_tests.rs"]
 mod tests;
+
+/// Synchronous object services used by Tetherball::Uninitialize (0x8039d768).
+pub trait BallCleanupServices {
+    fn cleanup_null_trail(&mut self) -> u32;
+    fn cleanup_destroy_fx(&mut self, handle: u32, fade: i32);
+    fn cleanup_cached_model(&mut self, handle: u32);
+    fn cleanup_remove_shadow(&mut self, layer: i32, handle: u32);
+    fn cleanup_shadow_entity(&mut self, handle: u32);
+}
+
+/// Recovered teardown order. The native routine removes layer-0's ball shadow
+/// even when null; the rope shadow was never registered with that scene.
+/// Asset ids, motion, transforms and acceleration modifier are preserved.
+pub fn uninitialize_ball(
+    resources: &mut BallResources,
+    scene: &mut BallScene,
+    host: &mut impl BallCleanupServices,
+) {
+    for trail in &mut scene.trails {
+        let null = host.cleanup_null_trail();
+        if *trail != null {
+            host.cleanup_destroy_fx(*trail, 0);
+            *trail = host.cleanup_null_trail();
+        }
+    }
+    for cached in &mut resources.cached {
+        if *cached != 0 {
+            host.cleanup_cached_model(*cached);
+            *cached = 0;
+        }
+    }
+    host.cleanup_remove_shadow(0, resources.shadows[0]);
+    for shadow in &mut resources.shadows {
+        if *shadow != 0 {
+            host.cleanup_shadow_entity(*shadow);
+            *shadow = 0;
+        }
+    }
+    scene.ball_shadow = false;
+    scene.rope_shadow = false;
+    resources.flag_15c = 0;
+}
