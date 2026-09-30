@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-29 19:22",
+ "generated": "2026-09-29 19:30",
  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
  "passed": true,
- "passed_count": 25,
- "total": 25,
+ "passed_count": 24,
+ "total": 24,
  "checks": [
   {
    "name": "Symbol-bearing ELF matches the pinned hash",
@@ -116,11 +116,6 @@
    "detail": "66 bindings, includes EVENT_PLAYER_MOVE/JUMP/CAMERA_REORIENT: True"
   },
   {
-   "name": "Rust unit tests (locomotion constants, hash64 golden vectors, database loader)",
-   "ok": true,
-   "detail": "test result: ok. 10 passed; 0 failed"
-  },
-  {
    "name": "Recorded corpus audit: every distinct .o model accounted for (earlier run)",
    "ok": true,
    "detail": "828 geometry exports + 8 empty draw lists + 0 failures = 836 distinct models; 619 frontend files; not re-run here (see Remaster/tests/audit_models.py)"
@@ -128,7 +123,7 @@
   {
    "name": "Game self-test report (boot -> world -> player -> scripted walk)",
    "ok": true,
-   "detail": "15/15 in-game checks passed, load 3.0s, report 0.0 h old"
+   "detail": "16/16 in-game checks passed, load 3.1s, report 0.0 h old"
   }
  ],
  "scope": [

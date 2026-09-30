@@ -6,6 +6,11 @@
       "ok": true
     },
     {
+      "detail": "3/3 layers ready; cloud angle 0.1728 rad after the run",
+      "name": "SkyDome layers (skybox, mountain/city ring, clouds) loaded",
+      "ok": true
+    },
+    {
       "detail": "4 files, 881 bodies, 21207 triangles",
       "name": "Havok collision decoded from physics/*.hkx",
       "ok": true
@@ -36,7 +41,7 @@
       "ok": true
     },
     {
-      "detail": "1947 Mesh3d entities",
+      "detail": "1954 Mesh3d entities",
       "name": "mesh entities in scene",
       "ok": true
     },
@@ -81,7 +86,7 @@
     "locomotion": "ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs",
     "terrain": "AssetDerived display mesh"
   },
-  "load_seconds": 3.0066189765930176,
+  "load_seconds": 3.0932862758636475,
   "log": [
     "Boot: reading original data files",
     "db.vlt: 75 types, 32 classes, 908 collections",
@@ -89,34 +94,40 @@
     "loaded filelist",
     "loaded bounds",
     "loaded controls",
+    "loaded sky:skybox",
+    "sky layer ready (1)",
+    "loaded sky:skybox_mountain_city_ring",
+    "loaded sky:skybox_clouds",
+    "sky layer ready (2)",
+    "sky layer ready (3)",
     "loaded clip:S_idle",
     "loaded clip:S_walk",
     "loaded clip:S_run",
     "loaded layer:playground-high.o",
     "loaded layer:playground-high-alpha.o",
     "world layer ready (1)",
-    "loaded layer:playground-high-fade.o",
     "world layer ready (2)",
+    "loaded layer:playground-high-fade.o",
+    "world layer ready (3)",
     "loaded layer:playground-high-alphafade.o",
     "playground-high-alphafade.o has an empty draw list; skipped",
-    "world layer ready (3)",
     "loaded layer:playground_nature-high.o",
     "loaded layer:playground_nature-high-alpha.o",
     "world layer ready (4)",
     "loaded layer:playground_nature-high-fade.o",
     "world layer ready (5)",
     "loaded layer:playground_nature-high-alphafade.o",
-    "world layer ready (6)",
     "loaded layer:playground_park-high.o",
+    "world layer ready (6)",
     "world layer ready (7)",
     "world layer ready (8)",
     "loaded layer:playground_park-high-alpha.o",
     "loaded layer:playground_park-high-fade.o",
     "playground_park-high-fade.o has an empty draw list; skipped",
-    "world layer ready (9)",
     "loaded layer:playground_park-high-alphafade.o",
-    "world layer ready (10)",
+    "world layer ready (9)",
     "loaded layer:playground_stadium-high.o",
+    "world layer ready (10)",
     "loaded layer:playground_stadium-high-alpha.o",
     "world layer ready (11)",
     "loaded layer:playground_stadium-high-fade.o",
@@ -127,9 +138,9 @@
     "loaded layer:world-low-all.o",
     "loaded layer:world-low-all-alpha.o",
     "world layer ready (15)",
-    "world layer ready (16)",
     "loaded layer:world-low-all-fade.o",
     "loaded layer:world-low-all-alphafade.o",
+    "world layer ready (16)",
     "world layer ready (17)",
     "world layer ready (18)",
     "world and player assets ready",
@@ -148,7 +159,7 @@
       ],
       "speed": 0.0,
       "step": "settle",
-      "t": 1.5019100904464722,
+      "t": 1.5016534328460693,
       "weights": [
         1.0,
         0.0,
@@ -164,11 +175,11 @@
       ],
       "speed": 5.0,
       "step": "forward",
-      "t": 4.001832008361816,
+      "t": 4.0013556480407715,
       "weights": [
-        4.728747393656363e-10,
-        3.576404172811465e-10,
-        0.9999998807907104
+        4.752346294267795e-10,
+        3.6866767971766023e-10,
+        0.9999998211860657
       ]
     },
     {
@@ -180,11 +191,11 @@
       ],
       "speed": 5.0,
       "step": "left",
-      "t": 6.500617980957031,
+      "t": 6.501228332519531,
       "weights": [
-        2.2584238260957406e-19,
-        1.7080703207730649e-19,
-        0.9999998807907104
+        2.1909339014235977e-19,
+        1.699637989909911e-19,
+        0.9999999403953552
       ]
     },
     {
@@ -196,11 +207,11 @@
       ],
       "speed": 7.071067810058594,
       "step": "diagonal",
-      "t": 8.500529289245605,
+      "t": 8.501734733581543,
       "weights": [
-        7.795582784036326e-27,
-        5.895884775863622e-27,
-        0.9999998807907104
+        7.550515902332828e-27,
+        5.8573865918332876e-27,
+        0.9999999403953552
       ]
     },
     {
@@ -212,11 +223,11 @@
       ],
       "speed": 0.0,
       "step": "jump",
-      "t": 8.900564193725586,
+      "t": 8.900711059570312,
       "weights": [
-        0.8855959177017212,
-        0.03067777119576931,
-        0.08372621983289719
+        0.8984487056732178,
+        0.02560126967728138,
+        0.0759500041604042
       ]
     },
     {
@@ -228,11 +239,11 @@
       ],
       "speed": 0.0,
       "step": "final",
-      "t": 9.900310516357422,
+      "t": 9.901041984558105,
       "weights": [
-        0.9999788403511047,
-        5.671907729265513e-6,
-        0.00001547985630168114
+        0.999981164932251,
+        4.750120297103422e-6,
+        0.000014091942830418702
       ]
     }
   ]

@@ -2,7 +2,7 @@
 //! recovered locomotion (see `locomotion.rs`) drive a character.  Evidence per subsystem is shown
 //! in the HUD and written by `--selftest`; nothing here is labelled original unless it traces to
 //! the executable or a data file.
-use bevy::{prelude::*,render::view::window::screenshot::{Screenshot,save_to_disk},input::mouse::{AccumulatedMouseMotion,AccumulatedMouseScroll},window::{PrimaryWindow,RequestRedraw},winit::{WinitSettings,UpdateMode},world_serialization::WorldInstanceReady};
+use bevy::{camera::visibility::RenderLayers,prelude::*,render::view::window::screenshot::{Screenshot,save_to_disk},input::mouse::{AccumulatedMouseMotion,AccumulatedMouseScroll},window::{PrimaryWindow,RequestRedraw},winit::{WinitSettings,UpdateMode},world_serialization::WorldInstanceReady};
 use bevy_egui::{egui,EguiContexts,EguiTextureHandle};
 use serde::{Deserialize,Serialize};
 use serde_json::{Value,json};
@@ -37,6 +37,11 @@ pub fn bend(radius:f32,x:f32,z:f32)->f32{if radius<=0.{return 0.}let r2=(x*x+z*z
 #[derive(Component)] pub struct Player{loco:Locomotion,vy:f32,grounded:bool,speed:f32,facing:Vec3,weights:[f32;3],anim_ready:bool}
 #[derive(Component)] struct WorldLayer(String);
 #[derive(Component)] struct PlayerModel;
+/// SkyDome layers (`SkyDome::LoadGeometry` 0x803c6578): skybox, mountain/city ring, clouds; only the clouds turn.
+#[derive(Component)] struct SkyLayer{clouds:bool}
+#[derive(Component)] struct SkyCamera;
+const SKY_LAYER:usize=1;
+const SKY_MODELS:[(&str,bool);3]=[("skybox",false),("skybox_mountain_city_ring",false),("skybox_clouds",true)];
 
 #[derive(Resource,Default)] pub struct GameInput{pub x:f32,pub y:f32,pub jump:bool,pub scripted:bool}
 
@@ -107,7 +112,7 @@ pub struct Game{
     bridge:Bridge,jobs:VecDeque<Job>,pending:Option<(u64,String)>,results:HashMap<String,Value>,
     phase:Phase,started:Instant,pub log:Vec<String>,boot_image:Option<Handle<Image>>,boot_egui:Option<egui::TextureId>,
     layers:Vec<(String,String)>,layers_expected:usize,layers_ready:usize,layers_empty:usize,clip_handles:Vec<Handle<AnimationClip>>,
-    ground:Option<Ground>,build_wait:u32,player:Option<Entity>,pub spawn:Vec3,pub gravity:f32,pub world_radius:f32,pub collision_bodies:usize,pub collision_files:usize,
+    ground:Option<Ground>,build_wait:u32,player:Option<Entity>,pub spawn:Vec3,pub gravity:f32,pub world_radius:f32,sky_expected:usize,sky_ready:usize,sky_angle:f32,pub collision_bodies:usize,pub collision_files:usize,
     pub db_summary:String,pub start_dir:Vec3,pub spawn_from_db:bool,pub tri_count:usize,pub controls_rows:usize,pub combat_bindings:usize,pub world_bounds:Option<(f32,f32,f32)>,
     boot_shown:Option<Instant>,boot_shot:bool,pub load_seconds:f32,
     pub selftest:Option<SelfTest>,
@@ -135,6 +140,7 @@ impl Game{
         jobs.push_back(Job{key:"controls".into(),req:json!({"command":"inspect","source":format!("{}::controls.csv",src("csvs.viv"))})});
         let model=format!("{}::alicia.viv::alicia.o",src("characters/models/characters.viv"));
         let skel=format!("{}::player_skel.ske",src("characters/player_anims.viv"));let bank=format!("{}::player_anims.anm",src("characters/player_anims.viv"));
+        for (name,_) in SKY_MODELS{jobs.push_back(Job{key:format!("sky:{name}"),req:json!({"command":"preview","source":format!("{}::{name}.o",src(&format!("placeables/{name}.viv")))})});}
         for (name,index) in CLIPS{jobs.push_back(Job{key:format!("clip:{name}"),req:json!({"command":"preview","source":model,"skeleton":skel,"bank":bank,"index":index})});}
         // Player start from the game's own Attrib database (character_info/player), read by the Rust vault loader.
         let mut db_results=HashMap::new();
@@ -156,7 +162,7 @@ impl Game{
         }
         let mut g=Self{bridge:Bridge::start(),jobs,pending:None,results:HashMap::new(),phase:Phase::Loading,started:Instant::now(),log,
             boot_image:None,boot_egui:None,layers:vec![],layers_expected:0,layers_ready:0,layers_empty:0,clip_handles:vec![],ground:None,build_wait:0,player:None,spawn:Vec3::ZERO,
-            gravity:9.81,world_radius:0.,collision_bodies:0,collision_files:0,db_summary:String::new(),start_dir:Vec3::Z,spawn_from_db:false,tri_count:0,controls_rows:0,combat_bindings:0,world_bounds:None,boot_shown:None,boot_shot:false,load_seconds:0.,selftest};
+            gravity:9.81,world_radius:0.,sky_expected:0,sky_ready:0,sky_angle:0.,collision_bodies:0,collision_files:0,db_summary:String::new(),start_dir:Vec3::Z,spawn_from_db:false,tri_count:0,controls_rows:0,combat_bindings:0,world_bounds:None,boot_shown:None,boot_shot:false,load_seconds:0.,selftest};
         // (fields set below)
         g.apply_db(db_results);g
     }
@@ -165,7 +171,7 @@ impl Game{
 fn in_game(mode:Res<AppMode>)->bool{*mode==AppMode::Game}
 pub fn plugin(app:&mut App){
     app.init_resource::<GameInput>().insert_resource(Time::<Fixed>::from_hz(TICK_HZ as f64))
-        .add_systems(Update,(pump,build,read_input,camera,animate,selftest).chain().run_if(in_game))
+        .add_systems(Update,(pump,build,read_input,camera,sky_update,animate,selftest).chain().run_if(in_game))
         .add_systems(bevy_egui::EguiPrimaryContextPass,hud.run_if(in_game))
         .add_systems(FixedUpdate,movement.run_if(in_game));
 }
@@ -214,6 +220,14 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>
                     let _=e;g.layers.push((name,p));
                 }
             }
+            k if k.starts_with("sky:")=>{
+                if let Some(p)=scene_path(&value){
+                    let name=k.trim_start_matches("sky:");let clouds=SKY_MODELS.iter().any(|(n,c)|*n==name&&*c);
+                    commands.spawn((GameEntity,SkyLayer{clouds},RenderLayers::layer(SKY_LAYER),WorldAssetRoot(assets.load(GltfAssetLabel::Scene(0).from_asset(p))),Transform::IDENTITY,
+                        OriginalAsset{evidence:EvidenceLevel::AssetDerived,source:value["source"].as_str().unwrap_or("").into(),decoder_version:value["decoder_version"].as_str().unwrap_or("").into()})).observe(sky_ready);
+                    g.sky_expected+=1;
+                }
+            }
             k if k.starts_with("clip:")=>{
                 let p=scene_path(&value).unwrap_or_default();
                 g.clip_handles.push(assets.load(GltfAssetLabel::Animation(0).from_asset(p.clone())));
@@ -229,12 +243,31 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>
     }
     if g.pending.is_none(){
         if let Some(job)=g.jobs.pop_front(){let id=g.bridge.request(job.req);g.pending=Some((id,job.key));}
-        else if g.layers_ready>=g.layers_expected && g.clip_handles.len()==CLIPS.len(){
+        else if g.layers_ready>=g.layers_expected && g.sky_ready>=g.sky_expected && g.clip_handles.len()==CLIPS.len(){
             let _=&mut graphs;
             let boot_done=g.boot_shown.map(|t|t.elapsed().as_secs_f32()>=MIN_BOOT_SECONDS).unwrap_or(g.boot_image.is_none());
             if boot_done{g.phase=Phase::Building;g.log.push("world and player assets ready".into());}
         }
     }
+}
+
+/// Sky layers are unlit, double-sided, and confined to the sky render layer (drawn by the sky camera behind the world).
+fn sky_ready(ev:On<WorldInstanceReady>,mut commands:Commands,mut g:Option<ResMut<Game>>,children:Query<&Children>,mats:Query<&MeshMaterial3d<StandardMaterial>>,mut materials:ResMut<Assets<StandardMaterial>>){
+    for d in children.iter_descendants(ev.entity){
+        commands.entity(d).insert(RenderLayers::layer(SKY_LAYER));
+        if let Ok(m)=mats.get(d){if let Some(mut mat)=materials.get_mut(&m.0){mat.unlit=true;mat.cull_mode=None;mat.double_sided=true;}}
+    }
+    if let Some(g)=g.as_mut(){g.sky_ready+=1;let n=g.sky_ready;g.log.push(format!("sky layer ready ({n})"));}
+}
+
+/// `SkyDome::Update` (0x803c6694): the cloud layer's angle advances by 0.012 rad/s (wrapped at 2 pi); `Draw` (0x803c6724)
+/// rotates only the cloud model about Y.  The sky sits at the origin (`Initialise` 0x803c64d0), it does not follow the camera.
+const SKY_CLOUD_RATE:f32=0.012;
+fn sky_update(g:Option<ResMut<Game>>,time:Res<Time>,mut layers:Query<(&SkyLayer,&mut Transform),(Without<SkyCamera>,Without<GameCamera>)>,main:Query<&Transform,With<GameCamera>>,mut sky_cam:Query<&mut Transform,(With<SkyCamera>,Without<GameCamera>,Without<SkyLayer>)>){
+    let Some(mut g)=g else{return};
+    g.sky_angle=(g.sky_angle+SKY_CLOUD_RATE*time.delta_secs())%std::f32::consts::TAU;
+    for (l,mut t) in &mut layers{if l.clouds{t.rotation=Quat::from_rotation_y(g.sky_angle);}}
+    if let (Ok(m),Ok(mut c))=(main.single(),sky_cam.single_mut()){*c=*m;}
 }
 
 fn layer_ready(_e:On<WorldInstanceReady>,mut g:Option<ResMut<Game>>){if let Some(g)=g.as_mut(){g.layers_ready+=1;let n=g.layers_ready;g.log.push(format!("world layer ready ({n})"));}}
@@ -300,7 +333,11 @@ fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer
             }}
         });
     g.player=Some(player);
-    if cam.is_empty(){commands.spawn((GameEntity,GameCamera{yaw:(-g.start_dir.x).atan2(-g.start_dir.z),pitch:0.28,distance:k::HINGE_CAMERA_DISTANCE},Camera3d::default(),Transform::from_translation(g.spawn+Vec3::new(0.,2.,4.))));}
+    if cam.is_empty(){
+        // Sky camera (order -1) draws the sky layer first; the world camera keeps that colour buffer and adds the world on top.
+        commands.spawn((GameEntity,SkyCamera,Camera3d::default(),Camera{order:-1,..default()},RenderLayers::layer(SKY_LAYER),Transform::from_translation(g.spawn+Vec3::new(0.,2.,4.))));
+        commands.spawn((GameEntity,GameCamera{yaw:(-g.start_dir.x).atan2(-g.start_dir.z),pitch:0.28,distance:k::HINGE_CAMERA_DISTANCE},Camera3d::default(),Camera{order:0,clear_color:ClearColorConfig::None,..default()},Transform::from_translation(g.spawn+Vec3::new(0.,2.,4.))));
+    }
     commands.spawn((GameEntity,DirectionalLight{illuminance:9000.,shadow_maps_enabled:false,..default()},Transform::from_rotation(Quat::from_euler(EulerRot::XYZ,-0.9,-0.5,0.))));
     g.log.push(format!("ground: {} triangles; spawn {:.1},{:.1},{:.1}",g.tri_count,g.spawn.x,g.spawn.y,g.spawn.z));
     g.phase=Phase::Playing;
@@ -477,6 +514,7 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
                 let mut checks=vec![];
                 let mut check=|name:&str,ok:bool,detail:String|checks.push(json!({"name":name,"ok":ok,"detail":detail}));
                 check("world layers spawned from worldfilelist.csv",g.layers_ready==g.layers_expected&&g.layers_expected+g.layers_empty==WORLD_SUFFIXES.len()*5,format!("{}/{} layers ready, {} empty draw lists skipped",g.layers_ready,g.layers_expected,g.layers_empty));
+                check("SkyDome layers (skybox, mountain/city ring, clouds) loaded",g.sky_expected==3&&g.sky_ready==3,format!("{}/{} layers ready; cloud angle {:.4} rad after the run",g.sky_ready,g.sky_expected,g.sky_angle));
                 check("Havok collision decoded from physics/*.hkx",g.tri_count>20_000&&g.collision_bodies>=500&&g.collision_files==4,format!("{} files, {} bodies, {} triangles",g.collision_files,g.collision_bodies,g.tri_count));
                 check("gravity read from hkWorldCinfo",(g.gravity-9.81).abs()<0.01,format!("gravity {:.3}",g.gravity));
                 check("world curvature radius from world.csv",g.world_radius>0.,format!("radius {}",g.world_radius));
