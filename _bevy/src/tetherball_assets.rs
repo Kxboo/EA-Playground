@@ -1,6 +1,6 @@
 //! Activity-owned asset preparation for the synchronous tetherball engine host.
 //! Names come from Initialize 0x803966c4 and Tetherball::Initialize 0x8039d3d8.
-use crate::{archive, assets, gsh, model};
+use crate::{animation_graph, archive, assets, gsh, model};
 use bevy::prelude::*;
 use serde_json::{Value, json};
 use std::{collections::BTreeMap, path::Path};
@@ -15,6 +15,8 @@ const BANKS: [&str; 2] = ["teatherball.gsh", "teatherball_rope.gsh"];
 pub struct Decoded {
     visible: BTreeMap<String, assets::BuiltModel>,
     shadows: BTreeMap<String, model::ModelFile>,
+    player: animation_graph::PlayerGraph,
+    clips: BTreeMap<usize, AnimationClip>,
     report: Value,
 }
 impl Decoded {
@@ -74,12 +76,31 @@ impl Decoded {
             );
             shadows.insert(name.to_string(), parsed);
         }
+        // Tetherball uses the same states in both gender graphs; the female
+        // overlay only replaces non-tetherball states. Keep the base graph here
+        // until character selection supplies its actual gender to the host.
+        let player = animation_graph::PlayerGraph::load(data_root, false)?;
+        let decoded_clips = player.tetherball_clips()?;
+        let mut clips = BTreeMap::new();
+        let mut clip_report = BTreeMap::new();
+        for (index, clip) in decoded_clips {
+            clips.insert(index, crate::character::animation_clip(&clip)?);
+            clip_report.insert(
+                index,
+                json!({"name":clip.name,"samples":clip.sample_count,"caveats":clip.caveats}),
+            );
+        }
         Ok(Self {
             visible,
             shadows,
+            player,
+            clips,
             report: json!({
                 "archive":source,"visible":geometry,"texture_banks":banks,
                 "shadows":shadow_geometry,"shadow_composition":"unimplemented",
+                "tetherball_animation_states":41,"clips":clip_report,
+                "animation_sample_rate":crate::anim::CLIP_FPS,
+                "animation_playback":"unimplemented",
             }),
         })
     }
@@ -91,15 +112,19 @@ impl Decoded {
 pub struct Prepared {
     pub visible: BTreeMap<String, assets::Uploaded>,
     pub shadows: BTreeMap<String, model::ModelFile>,
+    pub animation_graph: animation_graph::Graph,
+    pub skeleton: crate::skeleton::Skeleton,
+    pub clips: BTreeMap<usize, Handle<AnimationClip>>,
     images: Vec<Handle<Image>>,
     pub report: Value,
 }
 impl Prepared {
     pub fn ready(&self, world: &World) -> bool {
-        let (Some(meshes), Some(materials), Some(images)) = (
+        let (Some(meshes), Some(materials), Some(images), Some(clips)) = (
             world.get_resource::<Assets<Mesh>>(),
             world.get_resource::<Assets<StandardMaterial>>(),
             world.get_resource::<Assets<Image>>(),
+            world.get_resource::<Assets<AnimationClip>>(),
         ) else {
             return false;
         };
@@ -112,6 +137,8 @@ impl Prepared {
                     })
             })
             && self.images.iter().all(|image| images.contains(image.id()))
+            && !self.clips.is_empty()
+            && self.clips.values().all(|clip| clips.contains(clip.id()))
     }
 }
 
@@ -121,8 +148,9 @@ pub fn install(world: &mut World, decoded: Decoded) -> Result<(), String> {
     if !world.contains_resource::<Assets<Mesh>>()
         || !world.contains_resource::<Assets<StandardMaterial>>()
         || !world.contains_resource::<Assets<Image>>()
+        || !world.contains_resource::<Assets<AnimationClip>>()
     {
-        return Err("tetherball preparation requires mesh/material/image stores".into());
+        return Err("tetherball preparation requires mesh/material/image/animation stores".into());
     }
     release(world);
     let mut visible = BTreeMap::new();
@@ -152,10 +180,23 @@ pub fn install(world: &mut World, decoded: Decoded) -> Result<(), String> {
             }
         });
     });
+    let clips = decoded
+        .clips
+        .into_iter()
+        .map(|(index, clip)| {
+            (
+                index,
+                world.resource_mut::<Assets<AnimationClip>>().add(clip),
+            )
+        })
+        .collect();
     world.insert_resource(Prepared {
         visible,
         shadows: decoded.shadows,
         images,
+        animation_graph: decoded.player.graph,
+        skeleton: decoded.player.skeleton,
+        clips,
         report: decoded.report,
     });
     Ok(())
@@ -180,6 +221,11 @@ pub fn release(world: &mut World) {
             store.remove(image.id());
         }
     }
+    if let Some(mut store) = world.get_resource_mut::<Assets<AnimationClip>>() {
+        for clip in prepared.clips.into_values() {
+            store.remove(clip.id());
+        }
+    }
 }
 
 #[cfg(test)]
@@ -192,6 +238,7 @@ mod tests {
         world.init_resource::<Assets<Mesh>>();
         world.init_resource::<Assets<StandardMaterial>>();
         world.init_resource::<Assets<Image>>();
+        world.init_resource::<Assets<AnimationClip>>();
         // Unrelated assets must survive activity cleanup.
         let unrelated = world
             .resource_mut::<Assets<StandardMaterial>>()
@@ -201,6 +248,7 @@ mod tests {
                 w.resource::<Assets<Mesh>>().len(),
                 w.resource::<Assets<StandardMaterial>>().len(),
                 w.resource::<Assets<Image>>().len(),
+                w.resource::<Assets<AnimationClip>>().len(),
             )
         };
         let baseline = counts(&world);
@@ -210,6 +258,10 @@ mod tests {
         )
         .unwrap();
         assert!(world.resource::<Prepared>().ready(&world));
+        assert_eq!(world.resource::<Prepared>().skeleton.bones.len(), 68);
+        assert!(
+            (56..=96).all(|id| world.resource::<Prepared>().animation_graph.states[id].is_some())
+        );
         eprintln!("{}", world.resource::<Prepared>().report);
         let first = counts(&world);
         assert!(first.0 > 0 && first.2 > 0);

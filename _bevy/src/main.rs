@@ -38,6 +38,7 @@ mod tetherball_ai_init;
 mod tetherball_additional_player;
 mod tetherball_ball_init;
 mod tetherball_assets;
+mod animation_graph;
 mod minigame_entry;
 mod tetherball_server;
 mod tetherball_startup;
@@ -102,6 +103,7 @@ fn main(){
             world.init_resource::<Assets<Mesh>>();
             world.init_resource::<Assets<StandardMaterial>>();
             world.init_resource::<Assets<Image>>();
+            world.init_resource::<Assets<AnimationClip>>();
             tetherball_assets::install(&mut world,decoded)?;
             let prepared=world.resource::<tetherball_assets::Prepared>();
             let report=json!({"main_world_assets_ready":prepared.ready(&world),"assets":prepared.report});
