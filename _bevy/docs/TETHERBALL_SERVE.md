@@ -133,5 +133,6 @@ responsibilities. These tests establish differential agreement for the
 recorded deterministic corpus, not formal proof for every pointer graph or
 hardware state.
 
-This does not yet make the minigame playable: Return, Accelerate, their AI/hit
-dependencies, and the Bevy host integration remain unfinished.
+Return, Accelerate and their hit/charge dependencies are now covered by the
+[rally graph](TETHERBALL_RALLY.md). The Bevy host integration, complete AI
+policy and remaining minigame setup still prevent a playable reconstruction.

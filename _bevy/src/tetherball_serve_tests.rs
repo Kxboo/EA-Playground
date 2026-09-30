@@ -4,9 +4,9 @@ use crate::tetherball_lifecycle::{Services, tests::Recorder};
 use crate::tetherball_match::WinnerUi;
 use serde_json::{Value, json};
 
-struct Host {
-    trace: Recorder,
-    input: Value,
+pub(crate) struct Host {
+    pub(crate) trace: Recorder,
+    pub(crate) input: Value,
 }
 
 impl Services for Host {
@@ -69,18 +69,18 @@ impl Services for Host {
     }
 }
 
-fn integer(v: &Value) -> i32 {
+pub(crate) fn integer(v: &Value) -> i32 {
     v.as_i64().unwrap() as i32
 }
-fn word(v: &Value) -> u32 {
+pub(crate) fn word(v: &Value) -> u32 {
     v.as_u64()
         .map(|n| n as u32)
         .unwrap_or_else(|| integer(v) as u32)
 }
-fn float(v: &Value) -> f32 {
+pub(crate) fn float(v: &Value) -> f32 {
     f32::from_bits(word(v))
 }
-fn floats<const N: usize>(v: &Value) -> [f32; N] {
+pub(crate) fn floats<const N: usize>(v: &Value) -> [f32; N] {
     std::array::from_fn(|i| float(&v[i]))
 }
 
@@ -91,9 +91,22 @@ impl ServeServices for Host {
         value
     }
     fn event(&mut self, controller: i32, action: i32) -> bool {
-        let value = self.input["events"][controller.to_string()][action.to_string()]
-            .as_bool()
-            .unwrap_or(false);
+        let response = self.input["events"][controller.to_string()][action.to_string()].clone();
+        let value = if let Some(sequence) = response.as_array() {
+            let key = format!("{controller}:{action}");
+            let cursor = self.input["event_cursors"][&key].as_u64().unwrap_or(0) as usize;
+            if self.input["event_cursors"].is_null() {
+                self.input["event_cursors"] = json!({});
+            }
+            self.input["event_cursors"][key] = json!(cursor + 1);
+            sequence
+                .get(cursor)
+                .or_else(|| sequence.last())
+                .and_then(Value::as_bool)
+                .unwrap_or(false)
+        } else {
+            response.as_bool().unwrap_or(false)
+        };
         self.trace
             .events
             .push(json!(["event", controller, action, value]));

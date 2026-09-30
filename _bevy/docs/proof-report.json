@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-30 03:56",
+ "generated": "2026-09-30 04:38",
  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
  "passed": true,
- "passed_count": 73,
- "total": 73,
+ "passed_count": 79,
+ "total": 79,
  "checks": [
   {
    "name": "Symbol-bearing ELF matches the pinned hash",
@@ -196,6 +196,21 @@
    "detail": "Verified 672 complete tetherball serve calls"
   },
   {
+   "name": "Original tetherball AI hit attempts, charge and ball-drop rules",
+   "ok": true,
+   "detail": "Verified 511 original rally rule calls"
+  },
+  {
+   "name": "Original tetherball hit animations and hit windows",
+   "ok": true,
+   "detail": "Verified 1663 original hit-animation/range vectors"
+  },
+  {
+   "name": "Original complete tetherball return, accelerate, hit and indicator graph",
+   "ok": true,
+   "detail": "Verified 2086 original tetherball rally/hit/indicator calls"
+  },
+  {
    "name": "MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC",
    "ok": true,
    "detail": "Verified 1536 LSF scale-factor vectors (all 512 compression values x long/short/mixed), original PowerPC\nVerified 72 spectral scaling and 48 reorder vectors (576 lines each), MPEG-1/MPEG-2 bands, original PowerPC\nELF sha256 5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c"
@@ -356,6 +371,21 @@
    "detail": "test result: ok. 1 passed; 0 failed"
   },
   {
+   "name": "Native tetherball rally rules match original PowerPC vectors",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Native tetherball hit animations and ranges match original PowerPC vectors",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Native complete tetherball return and accelerate graph matches original PowerPC vectors",
+   "ok": true,
+   "detail": "test result: ok. 5 passed; 0 failed"
+  },
+  {
    "name": "MPEG-2 side information and scale-factor regression checks",
    "ok": true,
    "detail": "test result: ok. 3 passed; 0 failed"
@@ -368,7 +398,7 @@
   {
    "name": "Game self-test report (boot -> world -> player -> scripted walk)",
    "ok": true,
-   "detail": "22/22 in-game checks passed, load 2.7s, report 0.1 h old"
+   "detail": "22/22 in-game checks passed, load 3.0s, report 0.1 h old"
   }
  ],
  "scope": [

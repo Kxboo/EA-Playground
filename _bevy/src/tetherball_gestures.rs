@@ -206,6 +206,23 @@ pub fn get_player_hit_attempt(
     }
 }
 
+/// Original synchronous event reads: 0x5c, 0x5d, 0x5c again, then 0x5d
+/// only if the third read succeeds. Preserve the action/marker stores before
+/// querying the controller, and allow each engine read to return its own value.
+pub fn sample_player_hit_attempt(
+    state: &mut GestureState,
+    player_action: i32,
+    ball_zone: i32,
+    mega_ability: bool,
+    attempt: &mut HitAttempt,
+    mut event: impl FnMut(i32) -> bool,
+) {
+    get_player_hit_attempt(state, player_action, ball_zone, ControllerHitEvents::default(), false, attempt);
+    if event(0x5c) { attempt.power_type = 1; }
+    if event(0x5d) { attempt.power_type = 2; }
+    if event(0x5c) && event(0x5d) && mega_ability { attempt.power_type = 3; }
+}
+
 /// Lifecycle adapter for hit-attempt action state. `active_player` is the
 /// current MGTetherball +0x214 selection: the original routine ignores its
 /// nominal player argument and reads this field. The caller supplies events

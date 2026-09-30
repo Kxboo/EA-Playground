@@ -224,6 +224,9 @@ def main():
                              ('tetherball_gestures_oracle.py','Original tetherball gesture queue and hit-attempt decisions'),
                              ('tetherball_angles_oracle.py','Original tetherball angle range predicates'),
                              ('tetherball_serve_oracle.py','Original complete tetherball serve, state-entry and pause graph'),
+                             ('tetherball_rally_rules_oracle.py','Original tetherball AI hit attempts, charge and ball-drop rules'),
+                             ('tetherball_hit_animation_oracle.py','Original tetherball hit animations and hit windows'),
+                             ('tetherball_rally_oracle.py','Original complete tetherball return, accelerate, hit and indicator graph'),
                              ('mp3_lsf_oracle.py','MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC')]:
             args=[] if script=='mp3_lsf_oracle.py' else ['--check']
             r=subprocess.run([sys.executable,str(HERE/script),*args],cwd=BEVY,capture_output=True,text=True)
@@ -260,6 +263,9 @@ def main():
                 ('tetherball_gestures::tests','Native tetherball gesture queue and hit attempts match original PowerPC vectors'),
                 ('tetherball_angles::tests','Native angle range predicates match original PowerPC vectors'),
                 ('tetherball_serve::tests','Native complete tetherball serve graph matches original PowerPC vectors'),
+                ('tetherball_rally_rules::tests','Native tetherball rally rules match original PowerPC vectors'),
+                ('tetherball_hit_animation::tests','Native tetherball hit animations and ranges match original PowerPC vectors'),
+                ('tetherball_rally::tests','Native complete tetherball return and accelerate graph matches original PowerPC vectors'),
                 ('mp3::tests','MPEG-2 side information and scale-factor regression checks')]
         for name,label in suites:
             r=subprocess.run(['cargo','test','--release','--offline','--locked',name],cwd=BEVY,capture_output=True,text=True)

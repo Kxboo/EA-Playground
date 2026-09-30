@@ -306,7 +306,7 @@ fn update_ai_serve(
     }
 }
 
-fn update_pause_events(
+pub(crate) fn update_pause_events(
     lifecycle: &mut Lifecycle,
     reset: &ResetState,
     aux: &mut ServeState,
@@ -378,4 +378,4 @@ fn player_index(player: i32) -> usize {
 
 #[cfg(test)]
 #[path = "tetherball_serve_tests.rs"]
-mod tests;
+pub(crate) mod tests;
