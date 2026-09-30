@@ -20,8 +20,10 @@ import argparse
 import collections
 import datetime
 import glob
+import hashlib
 import json
 import os
+import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, "..")
@@ -196,6 +198,18 @@ def main():
         fh.write("window.GM = ")
         json.dump(gm, fh, separators=(",", ":"))
         fh.write(";\n")
+    # Version public assets so returning visitors see a newly published snapshot.
+    digest = hashlib.sha256()
+    for name in ("data.js", "app.js", "style.css"):
+        with open(os.path.join(SITE, name), "rb") as fh:
+            digest.update(fh.read())
+    index_path = os.path.join(SITE, "index.html")
+    with open(index_path, encoding="utf-8") as fh:
+        index = fh.read()
+    index = re.sub(r'((?:src|href)="(?:data\.js|app\.js|style\.css))(?:\?v=[^"]+)?',
+                   lambda m: m[1] + "?v=" + digest.hexdigest()[:12], index)
+    with open(index_path, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(index)
     print("functions", len(funcs), "units", len(units), "states", tot["fc"])
     print("data.js %.0f KB" % (os.path.getsize(os.path.join(SITE, "data.js")) / 1024))
 
