@@ -222,6 +222,8 @@ def main():
                              ('tetherball_tuning_oracle.py','Original tetherball tuning selection, inheritance and indexed values'),
                              ('tetherball_reset_oracle.py','Original tetherball reset and server-selection state and effects'),
                              ('tetherball_gestures_oracle.py','Original tetherball gesture queue and hit-attempt decisions'),
+                             ('tetherball_angles_oracle.py','Original tetherball angle range predicates'),
+                             ('tetherball_serve_oracle.py','Original complete tetherball serve, state-entry and pause graph'),
                              ('mp3_lsf_oracle.py','MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC')]:
             args=[] if script=='mp3_lsf_oracle.py' else ['--check']
             r=subprocess.run([sys.executable,str(HERE/script),*args],cwd=BEVY,capture_output=True,text=True)
@@ -256,6 +258,8 @@ def main():
                 ('tetherball_tuning::tests','Native tetherball tuning matches original PowerPC and corpus values'),
                 ('tetherball_reset::tests','Native tetherball reset and server selection match original PowerPC vectors'),
                 ('tetherball_gestures::tests','Native tetherball gesture queue and hit attempts match original PowerPC vectors'),
+                ('tetherball_angles::tests','Native angle range predicates match original PowerPC vectors'),
+                ('tetherball_serve::tests','Native complete tetherball serve graph matches original PowerPC vectors'),
                 ('mp3::tests','MPEG-2 side information and scale-factor regression checks')]
         for name,label in suites:
             r=subprocess.run(['cargo','test','--release','--offline','--locked',name],cwd=BEVY,capture_output=True,text=True)

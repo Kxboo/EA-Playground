@@ -15,13 +15,13 @@ mod float_bits {
 }
 
 #[cfg(test)]
-mod tests {
+pub(crate) mod tests {
     use super::*;
     use serde_json::{Value, json};
-    struct Recorder {
-        events: Vec<Value>,
-        randoms: Vec<i32>,
-        next: usize,
+    pub(crate) struct Recorder {
+        pub(crate) events: Vec<Value>,
+        pub(crate) randoms: Vec<i32>,
+        pub(crate) next: usize,
     }
     impl IntroServices for Recorder {
         fn reset_scoreboard(&mut self) {

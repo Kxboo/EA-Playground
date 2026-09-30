@@ -18,6 +18,8 @@ mod tetherball_lifecycle;
 mod tetherball_tuning;
 mod tetherball_reset;
 mod tetherball_gestures;
+mod tetherball_angles;
+mod tetherball_serve;
 mod recovered;
 mod vlt;
 mod havok;

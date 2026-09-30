@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-30 03:23",
+ "generated": "2026-09-30 03:56",
  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
  "passed": true,
- "passed_count": 69,
- "total": 69,
+ "passed_count": 73,
+ "total": 73,
  "checks": [
   {
    "name": "Symbol-bearing ELF matches the pinned hash",
@@ -186,6 +186,16 @@
    "detail": "Tetherball gestures: 112 original callback/consume/input transitions match"
   },
   {
+   "name": "Original tetherball angle range predicates",
+   "ok": true,
+   "detail": "Tetherball angles: 43 wrap and 1994 IsBetween PPC vectors match"
+  },
+  {
+   "name": "Original complete tetherball serve, state-entry and pause graph",
+   "ok": true,
+   "detail": "Verified 672 complete tetherball serve calls"
+  },
+  {
    "name": "MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC",
    "ok": true,
    "detail": "Verified 1536 LSF scale-factor vectors (all 512 compression values x long/short/mixed), original PowerPC\nVerified 72 spectral scaling and 48 reorder vectors (576 lines each), MPEG-1/MPEG-2 bands, original PowerPC\nELF sha256 5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c"
@@ -336,6 +346,16 @@
    "detail": "test result: ok. 1 passed; 0 failed"
   },
   {
+   "name": "Native angle range predicates match original PowerPC vectors",
+   "ok": true,
+   "detail": "test result: ok. 2 passed; 0 failed"
+  },
+  {
+   "name": "Native complete tetherball serve graph matches original PowerPC vectors",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
    "name": "MPEG-2 side information and scale-factor regression checks",
    "ok": true,
    "detail": "test result: ok. 3 passed; 0 failed"
@@ -348,7 +368,7 @@
   {
    "name": "Game self-test report (boot -> world -> player -> scripted walk)",
    "ok": true,
-   "detail": "22/22 in-game checks passed, load 2.6s, report 0.0 h old"
+   "detail": "22/22 in-game checks passed, load 2.7s, report 0.1 h old"
   }
  ],
  "scope": [

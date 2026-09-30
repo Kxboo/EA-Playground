@@ -36,14 +36,7 @@ pub struct BallMotion {
     pub spinning_up: bool,
     pub spinning_down: bool,
 }
-/// Original rmAngle::Wrap uses repeated rounded additions/subtractions, not remainder.
-/// Finite bounded angles are required; original also fails to terminate on infinity.
-pub fn wrap_angle(mut angle: f32) -> f32 {
-    let tau = f32::from_bits(0x40c90fdb);
-    while angle >= tau { angle -= tau; }
-    while angle < 0.0 { angle += tau; }
-    angle
-}
+pub use crate::tetherball_angles::wrap_angle;
 impl BallMotion {
     pub fn hit(&mut self, direction: Direction, speed: f32, angle: f32, hit_type: i32) {
         self.hit_angle = wrap_angle(angle); self.hit_direction = direction;
