@@ -1,7 +1,7 @@
 {
   "checks": [
     {
-      "detail": "684 frames, 11317 simulation ms, maximum 60 simulation ms / 600 uncapped input ms",
+      "detail": "704 frames, 11339 simulation ms, maximum 60 simulation ms / 265 uncapped input ms",
       "name": "recovered integer-ms simulation clock drives the game",
       "ok": true
     },
@@ -11,7 +11,7 @@
       "ok": true
     },
     {
-      "detail": "3/3 layers ready; cloud angle 0.1358 rad after the run",
+      "detail": "3/3 layers ready; cloud angle 0.1361 rad after the run",
       "name": "SkyDome layers (skybox, mountain/city ring, clouds) loaded",
       "ok": true
     },
@@ -46,7 +46,7 @@
       "ok": true
     },
     {
-      "detail": "joint rotation checksum ranged -7.581..0.043 over 6 samples",
+      "detail": "joint rotation checksum ranged -7.804..0.183 over 6 samples",
       "name": "decoded clips animate the skeleton (joint pose changes idle -> walk/run)",
       "ok": true
     },
@@ -61,8 +61,8 @@
       "ok": true
     },
     {
-      "detail": "58 rows, 15 STATE_COMBAT",
-      "name": "controls.csv parsed",
+      "detail": "58 bindings, 704 input frames, 435 movement / 25 jump frames, uncapped maximum 265 ms",
+      "name": "original controls.csv drives movement and jump events",
       "ok": true
     },
     {
@@ -76,7 +76,7 @@
       "ok": true
     },
     {
-      "detail": "moved 15.98 m from the start (5 m/s max)",
+      "detail": "moved 15.83 m from the start (5 m/s max)",
       "name": "player walked on recovered locomotion",
       "ok": true
     },
@@ -91,13 +91,13 @@
       "ok": true
     },
     {
-      "detail": "y=0.67",
+      "detail": "y=0.03",
       "name": "player grounded on world surface",
       "ok": true
     },
     {
-      "detail": "jump/land samples recorded",
-      "name": "jump script executed",
+      "detail": "jump event dispatched while player remains grounded, matching original command 4",
+      "name": "original playground jump command has no upward impulse",
       "ok": true
     },
     {
@@ -108,20 +108,21 @@
   ],
   "evidence": {
     "gravity": "DataDerived hkWorldCinfo",
-    "jump": "provisional",
+    "input": "ExecutableDerived: original CSV bindings and Controller event predicates; desktop logical-button adapter",
+    "jump": "ExecutableDerived: LocalCharacterControl command 4 ignored; PhysicsDynamicCharacter wantJump=false",
     "locomotion": "ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs",
     "terrain": "DataDerived Havok collision meshes; provisional character solver",
     "timing": "ExecutableDerived: GameState::Update 0x803acdc4, variable integer ms capped at 60; once per host frame"
   },
-  "load_seconds": 2.6378893852233887,
+  "load_seconds": 2.577078342437744,
   "log": [
     "Boot: reading original data files",
     "db.vlt: 75 types, 32 classes, 908 collections",
     "decoded boot screen",
     "player: 68 bones, 62 skinned parts, clips S_idle (23 samples), S_walk (15 samples), S_run (11 samples)",
+    "native controls.csv: 58 bindings",
     "loaded filelist.csv (6 rows)",
     "loaded bounds.csv (2 rows)",
-    "loaded controls.csv (59 rows)",
     "playground-high-alphafade.o has an empty draw list; skipped",
     "playground_park-high-fade.o has an empty draw list; skipped",
     "world and player assets ready",
@@ -145,10 +146,10 @@
         -0.04999999701976776,
         -53.0
       ],
-      "pose": -3.6987857818603516,
+      "pose": -3.3936471939086914,
       "speed": 0.0,
       "step": "settle",
-      "t": 1.5150001049041748,
+      "t": 1.5009998083114624,
       "weights": [
         1.0,
         0.0,
@@ -160,84 +161,84 @@
       "pos": [
         12.0,
         -0.04999999701976776,
-        -49.631248474121094
+        -49.63051223754883
       ],
-      "pose": -7.5806779861450195,
+      "pose": -7.80384635925293,
       "speed": 5.0,
       "step": "forward",
-      "t": 4.005003929138184,
+      "t": 4.000002384185791,
       "weights": [
-        5.494363852776019e-10,
-        4.0084369157256106e-10,
+        5.73933955916317e-10,
+        4.279914200822077e-10,
         0.9999998211860657
       ]
     },
     {
       "grounded": true,
       "pos": [
-        14.980050086975098,
+        14.976119041442871,
         -0.04999999701976776,
-        -49.1242790222168
+        -49.126502990722656
       ],
-      "pose": 0.04339976608753204,
+      "pose": 0.18333955109119415,
       "speed": 5.0,
       "step": "left",
-      "t": 6.506985187530518,
+      "t": 6.516983985900879,
       "weights": [
-        2.700903415265669e-19,
-        1.9704567932128016e-19,
+        2.482982165900691e-19,
+        1.8515977892783792e-19,
         0.9999998211860657
       ]
     },
     {
       "grounded": true,
       "pos": [
-        23.11531639099121,
-        0.03614097461104393,
-        -41.877159118652344
+        23.25638771057129,
+        0.03497691825032234,
+        -41.90471267700195
       ],
-      "pose": -6.9107160568237305,
+      "pose": -6.898858070373535,
       "speed": 7.071067810058594,
       "step": "diagonal",
-      "t": 8.503968238830566,
+      "t": 8.508965492248535,
       "weights": [
-        1.0064273562114069e-26,
-        7.34243843114123e-27,
+        9.696813832444762e-27,
+        7.231062672829295e-27,
         0.9999998211860657
-      ]
-    },
-    {
-      "grounded": false,
-      "pos": [
-        23.3729190826416,
-        1.0207576751708984,
-        -41.781158447265625
-      ],
-      "pose": -5.5200395584106445,
-      "speed": 0.0,
-      "step": "jump",
-      "t": 8.905963897705078,
-      "weights": [
-        0.9034444093704224,
-        0.03253393992781639,
-        0.06402164697647095
       ]
     },
     {
       "grounded": true,
       "pos": [
-        23.3729190826416,
-        0.670899510383606,
-        -41.781158447265625
+        23.284120559692383,
+        0.03388645872473717,
+        -41.90471267700195
       ],
-      "pose": -5.215542793273926,
+      "pose": -5.60482120513916,
+      "speed": 0.0,
+      "step": "jump",
+      "t": 8.910961151123047,
+      "weights": [
+        0.8882458209991455,
+        0.037655021995306015,
+        0.07409913092851639
+      ]
+    },
+    {
+      "grounded": true,
+      "pos": [
+        23.284120559692383,
+        0.03388645872473717,
+        -41.90471267700195
+      ],
+      "pose": -5.2155256271362305,
       "speed": 0.0,
       "step": "final",
       "t": 9.907955169677734,
       "weights": [
-        0.9999819397926331,
-        6.085989753046306e-6,
-        0.00001197626261273399
+        0.9999781250953674,
+        7.3730684562178794e-6,
+        0.000014509038010146469
       ]
     }
   ]

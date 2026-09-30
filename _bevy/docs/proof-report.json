@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-30 00:43",
+ "generated": "2026-09-30 01:18",
  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
  "passed": true,
- "passed_count": 44,
- "total": 44,
+ "passed_count": 53,
+ "total": 53,
  "checks": [
   {
    "name": "Symbol-bearing ELF matches the pinned hash",
@@ -126,6 +126,31 @@
    "detail": "MultiplayerMode: 210 state transitions match original PowerPC fixtures"
   },
   {
+   "name": "Controller event vectors reproduced by executing original PowerPC",
+   "ok": true,
+   "detail": "Verified 303 original controller frames"
+  },
+  {
+   "name": "Original playground jump command leaves movement unchanged",
+   "ok": true,
+   "detail": "Verified 5 original playground jump/no-command differentials: queue consumed, state unchanged"
+  },
+  {
+   "name": "All 14 control tables loaded by the original PowerPC parser",
+   "ok": true,
+   "detail": "csv: 37 original bindings\ncontrolsmgdribbling.csv: 24 original bindings\ncontrolsmgfootie.csv: 34 original bindings\ncontrolsmgpaperairplanes.csv: 33 original bindings\ncontrolsmgquickdraw.csv: 25 original bindings\ncontrolsmgrccars.csv: 82 original bindings\ncontrolsmgtemplate.csv: 23 original bindings\ncontrolsmgtetherball.csv: 29 original bindings\ncontrolsmgwallball.csv: 31 original bindings\ncontrolsmgfreethrow.csv: 33 original bindings\nAll 14 control tables match original PowerPC binding fixtures"
+  },
+  {
+   "name": "Tetherball serve/motion/scoring vectors reproduced by original PowerPC",
+   "ok": true,
+   "detail": "Tetherball: 1216 motion/serve transitions and 128 scores match original PowerPC"
+  },
+  {
+   "name": "MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC",
+   "ok": true,
+   "detail": "Verified 1536 LSF scale-factor vectors (all 512 compression values x long/short/mixed), original PowerPC\nVerified 72 spectral scaling and 48 reorder vectors (576 lines each), MPEG-1/MPEG-2 bands, original PowerPC\nELF sha256 5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c"
+  },
+  {
    "name": "Rust archive reader: all recorded corpus records match their SHA-256",
    "ok": true,
    "detail": "test result: ok. 1 passed; 0 failed"
@@ -216,6 +241,26 @@
    "detail": "test result: ok. 2 passed; 0 failed"
   },
   {
+   "name": "Controller edge/timer/modifier/context rules match original PowerPC vectors",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "Native control tables match all 14 original parser outputs",
+   "ok": true,
+   "detail": "test result: ok. 2 passed; 0 failed"
+  },
+  {
+   "name": "Tetherball serve/motion/scoring arithmetic matches original PowerPC vectors",
+   "ok": true,
+   "detail": "test result: ok. 1 passed; 0 failed"
+  },
+  {
+   "name": "MPEG-2 side information and scale-factor regression checks",
+   "ok": true,
+   "detail": "test result: ok. 3 passed; 0 failed"
+  },
+  {
    "name": "Recorded corpus audit: every distinct .o model accounted for (earlier run)",
    "ok": true,
    "detail": "828 geometry exports + 8 empty draw lists + 0 failures = 836 distinct models; 619 frontend files; not re-run here (see Remaster/tests/audit_models.py)"
@@ -223,13 +268,13 @@
   {
    "name": "Game self-test report (boot -> world -> player -> scripted walk)",
    "ok": true,
-   "detail": "21/21 in-game checks passed, load 2.6s, report 0.1 h old"
+   "detail": "21/21 in-game checks passed, load 2.6s, report 0.0 h old"
   }
  ],
  "scope": [
   "This proves: the executable in use is the retail binary with symbols; extracted data is consistent across three copies; the decoders reproduce recorded results; the game slice boots from the original files and moves a character using constants read from the executable.",
-  "This does NOT prove: a full decompilation or matching gameplay on a running console. Locomotion, frame/physics timing and multiplayer scoring are recovered subsets; many executable functions remain unported.",
-  "Provisional: jump impulse, character step/slide solver and camera framing. Spawn and gravity come from the database and Havok world settings; terrain uses decoded Havok collision. World display curvature is a fit against the assets.",
-  "Not reconstructed: AI, full minigame gameplay, conversation execution, Havok dynamics, video, APT menu scripting, save data and audio-event graphs. Rust audio decoders cover music/speech and supported bank codecs; twelve MPEG-2 bank sounds remain unsupported."
+  "This does NOT prove: a full decompilation or matching gameplay on a running console. Locomotion, frame/physics timing, controller events, multiplayer scoring and tetherball serve/motion arithmetic are recovered subsets; many executable functions remain unported.",
+  "Provisional: character step/slide solver and camera framing. The original playground jump command is inert and the port adds no jump impulse. Spawn and gravity come from the database and Havok world settings; terrain uses decoded Havok collision. World display curvature is a fit against the assets.",
+  "Not reconstructed: AI, full minigame gameplay, conversation execution, Havok dynamics, video, APT menu scripting, save data and audio-event graphs. Rust audio decoders cover music/speech and all 471 embedded bank sounds; console PCM equality remains unverified."
  ]
 }

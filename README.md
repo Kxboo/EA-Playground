@@ -5,7 +5,7 @@ The dashboard is published by GitHub Pages after the GameMap branch is merged in
 
 A native **Bevy asset viewer** and a shared, headless decoding toolkit for the Wii version of EA Playground. Browse archives, inspect formats, preview textured models and images, and play recovered animations on compatible skeletons and models.
 
-The long-term goal is an evidence-based reconstruction in Rust/Bevy. A playable world slice uses recovered locomotion and frame timing; it is not a full game port. Asset previews are usable; Wii rendering and animation semantics are still being researched.
+The long-term goal is an evidence-based reconstruction in Rust/Bevy. A playable world slice uses recovered locomotion, frame timing and controller events; it is not a full game port. Native decoders cover all 471 embedded bank sounds. Tetherball serve/motion arithmetic and tournament scoring have original-code comparisons, while complete minigame play remains unfinished. Asset previews are usable; Wii rendering and animation semantics are still being researched.
 
 ![Textured RC buggy in the Bevy workbench](_bevy/docs/captures/material-buggy.png)
 
@@ -21,7 +21,7 @@ The latest local corpus audit accounts for **836 distinct models: 828 geometry e
 
 ## Menu, playable slice and proof
 
-The Bevy app opens a menu with the asset viewer, a **playable reconstruction slice** and a **proof-of-decode** screen. The slice boots from the original files (decoded Wii strap-warning screen, world layers listed in `worldfilelist.csv`, Alicia with decoded animations) and moves the character with locomotion recovered from `LocalCharacterControl::Update` in the executable. It is a vertical slice, not a full port: terrain collision, jump/gravity and camera framing are provisional, and AI, minigames and menus are not reconstructed. `tools/prove.py` checks that the retail DOL equals the symbol-bearing ELF byte for byte, that three copies of the game data agree, and that the decoders reproduce recorded results. Details: [_bevy/README.md](_bevy/README.md#menu-game-and-proof) and the [evidence table](_bevy/docs/RECONSTRUCTION.md#evidence-table-for-the-game-slice).
+The Bevy app opens a menu with the asset viewer, a **playable reconstruction slice** and a **proof-of-decode** screen. The slice boots from the original files (decoded Wii strap-warning screen, world layers listed in `worldfilelist.csv`, Alicia with decoded animations) and moves the character with locomotion recovered from `LocalCharacterControl::Update` in the executable. It is a vertical slice, not a full port: the character collision solver and camera framing are provisional, and AI, full minigames and original menu scripts are not reconstructed. Gravity comes from Havok data; the original playground jump command is inert. `tools/prove.py` checks that the retail DOL equals the symbol-bearing ELF byte for byte, that three copies of the game data agree, and that the decoders reproduce recorded results. Details: [_bevy/README.md](_bevy/README.md#menu-game-and-proof) and the [evidence table](_bevy/docs/RECONSTRUCTION.md#evidence-table-for-the-game-slice).
 
 ![Menu](_bevy/docs/captures/ui-menu.png)
 ![Game slice](_bevy/docs/selftest/02-game.png)

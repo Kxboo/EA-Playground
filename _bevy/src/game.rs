@@ -20,9 +20,6 @@ pub struct OriginalAsset {
 #[derive(Debug,Clone,Serialize,Deserialize,PartialEq)]
 pub enum EvidenceLevel { Unresolved, AssetDerived, ExecutableDerived, GameplayCompared }
 
-/// Not recovered from the executable: exists only to make the slice playable (gravity itself comes from the
-/// Havok world settings in playground.hkx; the character jump impulse was not found).
-const PROVISIONAL_JUMP_SPEED:f32=4.5;
 const CHARACTER_HEIGHT:f32=1.0;
 const STEP_UP:f32=0.6;
 const MIN_BOOT_SECONDS:f32=2.5;
@@ -46,7 +43,10 @@ pub fn bend(radius:f32,x:f32,z:f32)->f32{if radius<=0.{return 0.}let r2=(x*x+z*z
 const SKY_LAYER:usize=1;
 const SKY_MODELS:[(&str,bool);3]=[("skybox",false),("skybox_mountain_city_ring",false),("skybox_clouds",true)];
 
-#[derive(Resource,Default)] pub struct GameInput{pub x:f32,pub y:f32,pub jump:bool,pub scripted:bool}
+/// Keyboard/script -> Wii button adapter. The adapter and bindings are separate:
+/// actions consumed by gameplay come only from the recovered Controller dispatcher.
+#[derive(Resource,Default)] pub struct GameInput{pub x:f32,pub y:f32,pub jump:bool,pub reorient:bool,pub scripted:bool}
+#[derive(Default)] struct DispatchedInput{x:f32,y:f32,jump:bool,reorient:bool}
 
 #[derive(Resource,Default)]
 struct SimulationClock{frame:FrameStep,frames:u64,total_ms:u64,max_simulation_ms:u32,max_input_ms:i32}
@@ -64,7 +64,7 @@ fn sample_frame(time:Res<Time<Real>>,g:Option<Res<Game>>,mut clock:ResMut<Simula
 /// Decoded player assets waiting for the build step.
 struct PlayerAsset{up:assets::Uploaded,skeleton:crate::skeleton::Skeleton,source:String}
 /// What the loader thread hands to the main thread (CPU-side only; Bevy assets are created on the main thread).
-enum LoadMsg{Boot(Vec<u8>,usize,usize),Csv(&'static str,Vec<Vec<String>>),Expect{models:usize},Model{kind:ModelKind,result:Result<assets::BuiltModel,String>},Player(Result<character::CharacterData,String>),Log(String)}
+enum LoadMsg{Boot(Vec<u8>,usize,usize),Csv(&'static str,Vec<Vec<String>>),Controls(Result<Vec<crate::controller::Binding>,String>),Expect{models:usize},Model{kind:ModelKind,result:Result<assets::BuiltModel,String>},Player(Result<character::CharacterData,String>),Log(String)}
 #[derive(Clone)] enum ModelKind{Layer(String),Sky{clouds:bool},Prop(String)}
 
 fn parse_csv(d:&[u8])->Vec<Vec<String>>{
@@ -81,9 +81,11 @@ fn loader(tx:mpsc::Sender<LoadMsg>,placeables:Vec<Placeable>){
         Err(e)=>{let _=tx.send(LoadMsg::Log(format!("boot screen: {e}")));}
     }
     let _=tx.send(LoadMsg::Player(character::load(&p("characters"),&schemas)));
+    let controls=archive::read_virtual(&format!("{}::controls.csv",p("csvs.viv"))).and_then(|(d,_)|crate::control_bindings::parse(&d));
+    let _=tx.send(LoadMsg::Controls(controls));
     let big=p("world/world.big");
     let mut layers:Vec<String>=vec![];
-    for (key,source) in [("filelist",format!("{big}::worldfilelist.csv")),("bounds",format!("{big}::world.csv")),("controls",format!("{}::controls.csv",p("csvs.viv")))]{
+    for (key,source) in [("filelist",format!("{big}::worldfilelist.csv")),("bounds",format!("{big}::world.csv"))]{
         match archive::read_virtual(&source){
             Ok((d,_))=>{
                 let rows=parse_csv(&d);
@@ -174,6 +176,7 @@ pub struct Game{
     pub db_summary:String,pub start_dir:Vec3,pub spawn_from_db:bool,pub tri_count:usize,pub controls_rows:usize,pub combat_bindings:usize,pub world_bounds:Option<(f32,f32,f32)>,
     boot_shown:Option<Instant>,boot_shot:bool,pub load_seconds:f32,
     pub selftest:Option<SelfTest>,
+    controller:Option<crate::controller::Controller>,actions:DispatchedInput,input_frames:u64,input_moves:u64,input_jumps:u64,input_max_ms:i32,
 }
 
 #[derive(Clone)] pub struct SelfTest{pub out:PathBuf,step:usize,t:f32,samples:Vec<Value>,start:Vec3,checks:Vec<Value>,shot:bool,shot_wait:f32}
@@ -221,7 +224,7 @@ impl Game{
             _=>log.push("db.vlt/db.bin not found".into()),
         }
         let (tx,rx)=mpsc::channel();
-        let mut g=Self{player_asset:None,music:None,music_name:String::new(),results:HashMap::new(),rx:Mutex::new(rx),filelist:vec![],models_expected:None,models_received:0,phase:Phase::Loading,started:Instant::now(),log,
+        let mut g=Self{controller:None,actions:DispatchedInput::default(),input_frames:0,input_moves:0,input_jumps:0,input_max_ms:0,player_asset:None,music:None,music_name:String::new(),results:HashMap::new(),rx:Mutex::new(rx),filelist:vec![],models_expected:None,models_received:0,phase:Phase::Loading,started:Instant::now(),log,
             boot_image:None,boot_egui:None,layers:vec![],layers_expected:0,layers_ready:0,layers_empty:0,clip_handles:vec![],ground:None,build_wait:0,player:None,spawn:Vec3::ZERO,
             gravity:9.81,world_radius:0.,sky_expected:0,sky_ready:0,sky_angle:0.,placeables:vec![],props_spawned:0,props_failed:0,collision_bodies:0,collision_files:0,db_summary:String::new(),start_dir:Vec3::Z,spawn_from_db:false,tri_count:0,controls_rows:0,combat_bindings:0,world_bounds:None,boot_shown:None,boot_shot:false,load_seconds:0.,selftest};
         // (fields set below)
@@ -234,7 +237,9 @@ impl Game{
 fn in_game(mode:Res<AppMode>)->bool{*mode==AppMode::Game}
 pub fn plugin(app:&mut App){
     app.init_resource::<GameInput>().init_resource::<SimulationClock>()
-        .add_systems(Update,(pump,build,sample_frame,read_input,movement,camera,sky_update,animate,selftest).chain().run_if(in_game))
+        // GameState::Update runs the world before Controller::Update: gameplay
+        // consumes the events produced at the end of the previous host frame.
+        .add_systems(Update,(pump,build,sample_frame,movement,camera,sky_update,animate,read_input,dispatch_input,selftest).chain().run_if(in_game))
         .add_systems(bevy_egui::EguiPrimaryContextPass,hud.run_if(in_game));
 }
 
@@ -248,6 +253,15 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,mut meshes:ResMut<Asset
     for m in msgs{
         match m{
             LoadMsg::Log(l)=>g.log.push(l),
+            LoadMsg::Controls(Ok(rows))=>{
+                g.controls_rows=rows.len();g.combat_bindings=rows.iter().filter(|r|r.state==3).count();
+                let mut controller=crate::controller::Controller::new(rows,3);
+                // These are original dispatcher gates. Their corresponding world
+                // modes are not implemented yet, so the desktop slice disables them.
+                controller.freecam_enabled=false;controller.debug_enabled=false;
+                g.controller=Some(controller);g.log.push(format!("native controls.csv: {} bindings",g.controls_rows));
+            }
+            LoadMsg::Controls(Err(e))=>{g.phase=Phase::Failed(format!("controls.csv: {e}"));return}
             LoadMsg::Boot(rgba,w,h)=>{
                 g.boot_image=Some(images.add(Image::new(bevy::render::render_resource::Extent3d{width:w as u32,height:h as u32,depth_or_array_layers:1},bevy::render::render_resource::TextureDimension::D2,rgba,bevy::render::render_resource::TextureFormat::Rgba8UnormSrgb,bevy::asset::RenderAssetUsages::default())));
                 g.log.push("decoded boot screen".into());
@@ -257,7 +271,6 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,mut meshes:ResMut<Asset
                 match key{
                     "filelist"=>{g.filelist=rows.iter().skip(1).filter_map(|r|Some((r.first()?.clone(),r.get(1).map(String::as_str)==Some("1")))).collect();g.layers_expected=g.filelist.len()*WORLD_SUFFIXES.len();}
                     "bounds"=>{if let Some(row)=rows.get(1){let f=|i:usize|row.get(i).and_then(|c|c.parse::<f32>().ok()).unwrap_or(0.);g.world_bounds=Some((f(0),f(1),f(2)));g.world_radius=f(2);}}
-                    "controls"=>{g.controls_rows=rows.len().saturating_sub(1);g.combat_bindings=rows.iter().filter(|r|r.get(1).map(String::as_str)==Some("STATE_COMBAT")).count();}
                     _=>{}
                 }
             }
@@ -414,10 +427,24 @@ fn read_input(keys:Res<ButtonInput<KeyCode>>,mut input:ResMut<GameInput>){
     input.x=a(&[KeyCode::KeyD,KeyCode::ArrowRight])-a(&[KeyCode::KeyA,KeyCode::ArrowLeft]);
     input.y=a(&[KeyCode::KeyW,KeyCode::ArrowUp])-a(&[KeyCode::KeyS,KeyCode::ArrowDown]);
     input.jump=keys.pressed(KeyCode::Space);
+    input.reorient=keys.pressed(KeyCode::KeyR);
 }
 
-fn movement(g:Option<Res<Game>>,input:Res<GameInput>,clock:Res<SimulationClock>,cam:Query<&GameCamera>,mut q:Query<(&mut Player,&mut Transform)>){
+fn dispatch_input(mut g:Option<ResMut<Game>>,input:Res<GameInput>,clock:Res<SimulationClock>){
+    let Some(g)=g.as_mut() else{return};if !g.is_playing(){return}
+    let Some(controller)=g.controller.as_mut() else{return};
+    // Desktop mapping: WASD/arrows -> Wii D-pad, Space -> C, R -> B.
+    let held=(u32::from(input.y>0.)<<0)|(u32::from(input.y<0.)<<1)|(u32::from(input.x<0.)<<2)|(u32::from(input.x>0.)<<3)|(u32::from(input.reorient)<<5)|(u32::from(input.jump)<<6);
+    controller.update(held,clock.frame.input_ms);
+    let event=|id|controller.event(id).active;
+    let actions=DispatchedInput{x:event(179) as i32 as f32-event(178) as i32 as f32,y:event(180) as i32 as f32-event(181) as i32 as f32,jump:event(2),reorient:event(7)};
+    g.input_moves+=u64::from(actions.x!=0.||actions.y!=0.);g.input_jumps+=u64::from(actions.jump);
+    g.actions=actions;g.input_frames+=1;g.input_max_ms=g.input_max_ms.max(clock.frame.input_ms);
+}
+
+fn movement(g:Option<Res<Game>>,clock:Res<SimulationClock>,cam:Query<&GameCamera>,mut q:Query<(&mut Player,&mut Transform)>){
     let Some(g)=g else{return};if g.phase!=Phase::Playing{return}
+    let input=&g.actions;
     let (Some(ground),Ok(cam))=(&g.ground,cam.single()) else{return};
     let dt=clock.frame.seconds();let dt_ms=clock.frame.simulation_ms as i32;
     for (mut p,mut t) in &mut q{
@@ -437,7 +464,9 @@ fn movement(g:Option<Res<Game>>,input:Res<GameInput>,clock:Res<SimulationClock>,
                 if let Some(gy)=ground.height(np.x,np.z,ny+STEP_UP){if !p.grounded||gy>=ny-1.5{t.translation.x=np.x;t.translation.z=np.z;break}}
             }
         }
-        if input.jump&&p.grounded{p.vy=PROVISIONAL_JUMP_SPEED;p.grounded=false;}
+        // Original LocalCharacterControl ignores queued command 4 (Jump), and
+        // PhysicsDynamicCharacter::BuildCharacterInput writes wantJump=false.
+        // The controller still emits the event, but it adds no vertical impulse.
         p.vy-=g.gravity*dt*(!p.grounded) as i32 as f32;
         let mut y=t.translation.y+p.vy*dt;
         match ground.height(t.translation.x,t.translation.z,y+STEP_UP){
@@ -456,7 +485,7 @@ fn camera(g:Option<Res<Game>>,mut c:Query<(&mut GameCamera,&mut Transform),Witho
     cam.yaw+=(key(KeyCode::KeyQ)-key(KeyCode::KeyE))*1.8*clock.frame.seconds();
     cam.distance=(cam.distance*(-scroll.delta.y*0.1).exp()).clamp(1.2,12.);
     // EVENT_CAMERA_REORIENT (controls.csv: STATE_COMBAT, BUTTON B): swing behind the player.
-    if keys.just_pressed(KeyCode::KeyR){cam.yaw=(-player.facing.x).atan2(-player.facing.z)+std::f32::consts::PI;}
+    if g.as_ref().is_some_and(|g|g.actions.reorient){cam.yaw=(-player.facing.x).atan2(-player.facing.z);}
     let radius=g.map(|g|g.world_radius).unwrap_or(0.);
     let target=pt.translation+Vec3::Y*k::FRAME_CAMERA_HEIGHT;
     let off=Vec3::new(cam.yaw.sin()*cam.pitch.cos(),cam.pitch.sin(),cam.yaw.cos()*cam.pitch.cos())*cam.distance;
@@ -528,8 +557,8 @@ fn hud(images:Res<Assets<Image>>,mut contexts:EguiContexts,mut g:Option<ResMut<G
                     ui.separator();
                     ui.colored_label(egui::Color32::from_rgb(104,200,170),"Locomotion: ELF-derived (LocalCharacterControl::Update)");
                     ui.colored_label(egui::Color32::from_rgb(104,200,170),"Terrain: original Havok collision (physics/*.hkx); display bent by world.csv radius");
-                    ui.colored_label(egui::Color32::YELLOW,"Jump impulse, camera framing: provisional (gravity is from Havok)");
-                    ui.label(egui::RichText::new("WASD/arrows move • Space jump • Q/E or right-drag camera • wheel zoom • R behind • Esc menu").small());
+                    ui.colored_label(egui::Color32::YELLOW,"Character collision response and camera framing remain provisional");
+                    ui.label(egui::RichText::new("WASD/arrows move • Q/E or right-drag camera • wheel zoom • R behind • Esc menu").small());
                 });
             });
         }
@@ -599,7 +628,7 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
                 check("player spawn read from db.vlt (character_info/player)",g.spawn_from_db&&(g.spawn.x-12.).abs()<1.&&(g.spawn.z+53.).abs()<1.&&g.spawn.y.abs()<1.5,format!("start_location (12,0,-53) -> ground-snapped spawn {:.1},{:.1},{:.1}",g.spawn.x,g.spawn.y,g.spawn.z));
                 let music_state=g.music.as_ref().map(|m|(m.status.state.load(std::sync::atomic::Ordering::Relaxed),m.status.samples_played.load(std::sync::atomic::Ordering::Relaxed)));
                 check("area music streams from the Rust EA Layer 3 decoder",music_state.is_none_or(|(s,q)|(s==crate::playback::Status::PLAYING&&q>44100)||s==crate::playback::Status::NO_DEVICE),format!("{}: state {:?}, {} samples queued",g.music_name,music_state.map(|m|m.0),music_state.map(|m|m.1).unwrap_or(0)));
-                check("controls.csv parsed",g.combat_bindings>=8,format!("{} rows, {} STATE_COMBAT",g.controls_rows,g.combat_bindings));
+                check("original controls.csv drives movement and jump events",g.combat_bindings>=8&&g.input_frames==clock.frames&&g.input_moves>0&&g.input_jumps>0&&g.input_max_ms==clock.max_input_ms,format!("{} bindings, {} input frames, {} movement / {} jump frames, uncapped maximum {} ms",g.controls_rows,g.input_frames,g.input_moves,g.input_jumps,g.input_max_ms));
                 check("mesh entities in scene",meshes.iter().count()>100,format!("{} Mesh3d entities",meshes.iter().count()));
                 check("animation players active",players.iter().count()>=1,format!("{} players",players.iter().count()));
                 check("player walked on recovered locomotion",moved>5.,format!("moved {:.2} m from the start (5 m/s max)",moved));
@@ -607,11 +636,11 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
                 check("Havok collision stops the player at a solid prop",fwd>1.&&fwd<9.,format!("forward run of 2.5 s (12.5 m if unobstructed) ended after {fwd:.1} m"));
                 check("walk/run clip blended in while moving",walk_w>0.5,format!("peak walk+run weight {walk_w:.2} (full stick = run)"));
                 check("player grounded on world surface",p.grounded,format!("y={:.2}",t.translation.y));
-                let jumped=st.samples.iter().any(|s|s["step"]=="jump"||s["step"]=="land");
-                check("jump script executed",jumped,"jump/land samples recorded".into());
+                let jump_ignored=g.input_jumps>0&&st.samples.iter().any(|s|s["step"]=="jump"&&s["grounded"]==true);
+                check("original playground jump command has no upward impulse",jump_ignored,"jump event dispatched while player remains grounded, matching original command 4".into());
                 check("camera follows player",cam.single().map(|c|c.translation.distance(t.translation)<15.).unwrap_or(false),"camera within 15 m".into());
                 let passed=checks.iter().all(|c|c["ok"]==true);
-                let report=json!({"passed":passed,"load_seconds":g.load_seconds,"checks":checks,"samples":st.samples,"log":g.log,"evidence":{"locomotion":"ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs","timing":"ExecutableDerived: GameState::Update 0x803acdc4, variable integer ms capped at 60; once per host frame","terrain":"DataDerived Havok collision meshes; provisional character solver","gravity":"DataDerived hkWorldCinfo","jump":"provisional"}});
+                let report=json!({"passed":passed,"load_seconds":g.load_seconds,"checks":checks,"samples":st.samples,"log":g.log,"evidence":{"locomotion":"ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs","timing":"ExecutableDerived: GameState::Update 0x803acdc4, variable integer ms capped at 60; once per host frame","terrain":"DataDerived Havok collision meshes; provisional character solver","gravity":"DataDerived hkWorldCinfo","jump":"ExecutableDerived: LocalCharacterControl command 4 ignored; PhysicsDynamicCharacter wantJump=false","input":"ExecutableDerived: original CSV bindings and Controller event predicates; desktop logical-button adapter"}});
                 let _=std::fs::write(st.out.join("selftest.json"),serde_json::to_string_pretty(&report).unwrap());
                 exit.write(if passed{AppExit::Success}else{AppExit::from_code(1)});
             }

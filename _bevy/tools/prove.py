@@ -2,7 +2,7 @@
 
 Every check reads the original files directly; nothing is taken from earlier reports except where
 labelled.  Flags:
-  --with-tests     run Rust corpus/regression suites and original-code timing/scoring oracles
+  --with-tests     run Rust corpus/regression suites and original-code behavioral oracles
   --run-selftest   also launch the game self-test (opens a window for ~1 minute)
 Exit status is 0 only if every check passes.
 """
@@ -209,8 +209,14 @@ def main():
     e=exe_checks();dol_checks(e);constants_checks();vlt_checks();havok_checks();data_checks();decode_checks()
     if '--with-tests' in sys.argv:
         for script,label in [('timing_oracle.py','Timing vectors reproduced by executing the original PowerPC routines'),
-                             ('multiplayer_oracle.py','Multiplayer scoring vectors reproduced by executing the original PowerPC routines')]:
-            r=subprocess.run([sys.executable,str(HERE/script),'--check'],cwd=BEVY,capture_output=True,text=True)
+                             ('multiplayer_oracle.py','Multiplayer scoring vectors reproduced by executing the original PowerPC routines'),
+                             ('controller_oracle.py','Controller event vectors reproduced by executing original PowerPC'),
+                             ('jump_command_oracle.py','Original playground jump command leaves movement unchanged'),
+                             ('control_bindings_oracle.py','All 14 control tables loaded by the original PowerPC parser'),
+                             ('tetherball_oracle.py','Tetherball serve/motion/scoring vectors reproduced by original PowerPC'),
+                             ('mp3_lsf_oracle.py','MPEG Layer 3 scale factors, spectral scaling and reorder match original PowerPC')]:
+            args=[] if script=='mp3_lsf_oracle.py' else ['--check']
+            r=subprocess.run([sys.executable,str(HERE/script),*args],cwd=BEVY,capture_output=True,text=True)
             check(label,r.returncode==0,(r.stdout or r.stderr)[-500:].strip())
         # Differential tests: each Rust decoder must reproduce the Python reference / recorded hashes on the whole corpus.
         suites=[('archive::tests::matches_recorded_corpus_hashes','Rust archive reader: all recorded corpus records match their SHA-256'),
@@ -230,7 +236,11 @@ def main():
                 ('conga::tests','Conga gesture machines: conga.gsm parses (34 sequences, transition counts consistent)'),
                 ('locomotion::tests','Locomotion constants and behaviour'),
                 ('sim_time::tests','Frame timing and physics steps: cap/fixed/pause ordering, uncapped input, original PowerPC vectors'),
-                ('multiplayer::tests','Multiplayer scoring/ranking rules match original PowerPC vectors')]
+                ('multiplayer::tests','Multiplayer scoring/ranking rules match original PowerPC vectors'),
+                ('controller::tests','Controller edge/timer/modifier/context rules match original PowerPC vectors'),
+                ('control_bindings::tests','Native control tables match all 14 original parser outputs'),
+                ('tetherball::tests','Tetherball serve/motion/scoring arithmetic matches original PowerPC vectors'),
+                ('mp3::tests','MPEG-2 side information and scale-factor regression checks')]
         for name,label in suites:
             r=subprocess.run(['cargo','test','--release','--offline','--locked',name],cwd=BEVY,capture_output=True,text=True)
             m=re.search(r'test result: (\w+)\. (\d+) passed; (\d+) failed',r.stdout)
@@ -241,9 +251,9 @@ def main():
     recorded_checks()
     passed=sum(c['ok'] for c in checks)
     scope=['This proves: the executable in use is the retail binary with symbols; extracted data is consistent across three copies; the decoders reproduce recorded results; the game slice boots from the original files and moves a character using constants read from the executable.',
-           'This does NOT prove: a full decompilation or matching gameplay on a running console. Locomotion, frame/physics timing and multiplayer scoring are recovered subsets; many executable functions remain unported.',
-           'Provisional: jump impulse, character step/slide solver and camera framing. Spawn and gravity come from the database and Havok world settings; terrain uses decoded Havok collision. World display curvature is a fit against the assets.',
-           'Not reconstructed: AI, full minigame gameplay, conversation execution, Havok dynamics, video, APT menu scripting, save data and audio-event graphs. Rust audio decoders cover music/speech and supported bank codecs; twelve MPEG-2 bank sounds remain unsupported.']
+           'This does NOT prove: a full decompilation or matching gameplay on a running console. Locomotion, frame/physics timing, controller events, multiplayer scoring and tetherball serve/motion arithmetic are recovered subsets; many executable functions remain unported.',
+           'Provisional: character step/slide solver and camera framing. The original playground jump command is inert and the port adds no jump impulse. Spawn and gravity come from the database and Havok world settings; terrain uses decoded Havok collision. World display curvature is a fit against the assets.',
+           'Not reconstructed: AI, full minigame gameplay, conversation execution, Havok dynamics, video, APT menu scripting, save data and audio-event graphs. Rust audio decoders cover music/speech and all 471 embedded bank sounds; console PCM equality remains unverified.']
     rep=dict(generated=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'),elf_sha256=PINNED_ELF,passed=passed==len(checks),passed_count=passed,total=len(checks),checks=checks,scope=scope)
     (BEVY/'docs'/'proof-report.json').write_text(json.dumps(rep,indent=1),encoding='utf-8')
     print(f'\n{passed}/{len(checks)} checks passed');sys.exit(0 if passed==len(checks) else 1)

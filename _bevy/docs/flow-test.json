@@ -1,11 +1,11 @@
 {
   "log": [
-    "2.1s: menu shown -> Game",
-    "5.1s: game playing -> Menu",
-    "6.1s: game torn down (no entities, no loader) -> Viewer",
-    "8.1s: viewer loaded 'basketball.o • 0 ms • native Rust decoder' -> Menu",
-    "9.1s: viewer closed -> Game",
-    "12.2s: game playing again after re-entry"
+    "1.6s: menu shown -> Game",
+    "4.6s: game playing -> Menu",
+    "5.7s: game torn down (no entities, no loader) -> Viewer",
+    "7.7s: viewer loaded 'basketball.o • 0 ms • native Rust decoder' -> Menu",
+    "8.7s: viewer closed -> Game",
+    "11.7s: game playing again after re-entry"
   ],
   "passed": true
 }

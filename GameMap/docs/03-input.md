@@ -4,6 +4,16 @@ Evidence tags: **[C]** confirmed, **[D]** data read from the ELF, **[I]** inferr
 Machine-readable: [`data/enums/`](../data/enums/) (`input_*.tsv`), [`data/functions/game-input.tsv`](../data/functions/game-input.tsv),
 [`data/functions/engine-pad-drivers.tsv`](../data/functions/engine-pad-drivers.tsv). Generated page: [game-input](subsystems/game-input.md).
 
+## Native reconstruction update (2026-09-30)
+
+The digital Controller core and all 14 native control-table loaders now exist in Rust.
+[Controller evidence](../../_bevy/docs/CONTROLLER.md) records the original instruction
+ranges, 303 runtime comparison frames and all 506 binding rows produced by the
+original Initialize/cCSVParser. This resolves the timer/modifier/transition unknowns
+below for the digital core; Wii device input, rumble and Apt dispatch remain separate.
+The whole-function decompilation percentages do not count this bounded port as proof
+of the entire UpdateInput routine.
+
 ## Architecture
 
 The game does **not** read buttons directly in gameplay code. It has an abstract layer:
@@ -23,7 +33,7 @@ gameplay code (minigames, camera, player) polls GetEventState / analog helpers w
   pad. Analog helpers: `GetControllerAnalogScale` (dead-zone), `…NoDeadZone`, `GetControllerDPadDirectionScale`; Wii extras: `GetCoreAccelerometers`,
   `GetLastCoreAccelerometers`, `GetFilteredValue(EWiiMoteAxis, int)`, pointer (DPD) helpers (`GetDPDMousePointRotationallyCorrected`,
   `…InScreenCoordsRotationallyCorrected`, `GetWorldVectorFromDPDRotationallyCorrected(ViewPort*, Camera*, int, rmVector3*)`), `GetMouseRotation`, `StartRumble(int, float)`,
-  `EnableFrontEndInput(bool)`, `SetCurrentControllerState/PopState`. **[D]** (signatures); behaviour of `UpdateInput` is **[U]** beyond what is below.
+  `EnableFrontEndInput(bool)`, `SetCurrentControllerState/PopState`. **[D]** (signatures); digital timer/event behavior is now **[C]**, with scope in the native reconstruction update above.
 - Reflection names registered in the constructor (Exposure/Lua): `Controller:mButtonHeldState`, `mTimeSinceLastButtonDown`, `mTimeBetweenLastTwoButtonDowns`, `mEventState`. **[D]**
   These are the per-button timers that implement tap / hold / double-press.
 - `Controller::Update` receives the **uncapped** frame time in ms (see [02](02-state-machine-and-timing.md)), so timing thresholds are in real milliseconds. **[C]**
@@ -48,8 +58,7 @@ gameplay code (minigames, camera, player) polls GetEventState / analog helpers w
 | `BUTTON` | `+0x60` | `ConvertStringToButton` | the primary button |
 
 Row stride is `0x64` (100) bytes and the rows start at `Controller + 0x26c`; the row count is kept in a separate field. Empty `MOD` columns leave the four modifier fields at their
-initial value `0`, which is numerically `UP`; how `UpdateInput` distinguishes "no modifier" from `UP` is **[U]** (read the compare in `UpdateInput`). Bytes `+0x04..+0x43` of a row are not
-written by the parser (runtime state, **[U]**). The `~` variants of every button token map to the *same* enum value as the plain token.
+initial value `0`, which is numerically `UP`; `UpdateInput` ignores modifier value zero, so UP cannot be required or forbidden as a modifier. Bytes `+0x04..+0x43` are unused by the event dispatcher; runtime timers/events live in separate arrays. **[C]** The `~` variants of every button token map to the *same* enum value as the plain token.
 
 ### Validated against real files **[C]**
 
@@ -97,7 +106,7 @@ per-minigame contexts (`21_*`, `QD_*`, `TB_*`, `DODGEBALL`, `FOOTIE`, `PA`, `WAL
 
 `BUTTON_UP`=0, `BUTTON_DOWN`=1, `BUTTON_DOUBLEDOWN`=2, `BUTTON_PRESSED`=3, `BUTTON_SECOND`=4, `BUTTON_TAP`=5, `BUTTON_HOLD`=6, `BUTTON_HOLDPRESSED`=7
 
-Their exact timing semantics belong to `UpdateInput` and are **[U]**; thresholds that exist as named tunables: `gControllerDoubleDownThreshhold = 500` ms,
+Their exact timing semantics are now recorded in [the Rust controller evidence](../../_bevy/docs/CONTROLLER.md). Thresholds that exist as named tunables: `gControllerDoubleDownThreshhold = 500` ms,
 `gTapPressThreshhold = 180` ms, `gTapHoldPressThreshhold = 120` ms, `gControllerRumbleMSPerInterval = 100` ms (initial values, **[D]**). The names suggest
 `BUTTON_DOUBLEDOWN` = second press within 500 ms, `BUTTON_TAP` = release within the tap window, `BUTTON_HOLD` = held past a threshold — **[I]**, verify in `UpdateInput`
 before porting.

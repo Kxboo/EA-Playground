@@ -64,5 +64,27 @@
    "flagged": 310324,
    "mapped": 22376
   }
+ },
+ {
+  "label": "Controller, tetherball, and full bank audio",
+  "date": "2026-09-30T06:19:23Z",
+  "n": 6786,
+  "s": 1261272,
+  "fc": {
+   "reviewed": 23,
+   "proven": 2893,
+   "partial": 482,
+   "decompiled": 2885,
+   "flagged": 457,
+   "mapped": 46
+  },
+  "bc": {
+   "reviewed": 4724,
+   "proven": 184332,
+   "partial": 80484,
+   "decompiled": 659032,
+   "flagged": 310324,
+   "mapped": 22376
+  }
  }
 ]

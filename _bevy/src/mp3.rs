@@ -1,7 +1,7 @@
-//! EA Layer 3 decoder: the game's `Snd::CEALayer3` (0x802817f0..0x80286758) re-implemented for MPEG-1 streams.
+//! EA Layer 3 decoder: the game's `Snd::CEALayer3` (0x802817f0..0x80286758) re-implemented for MPEG-1 and MPEG-2 streams.
 //!
 //! EA re-frames MPEG layer III as one granule per frame with no sync word and no bit reservoir:
-//!   `[header byte][gr bit][scfsi 4 bits/ch if gr == 1][side info per channel][scale factors + Huffman data per channel]`
+//!   `[header byte][gr bit][MPEG-1 scfsi 4 bits/ch if gr == 1][side info per channel][scale factors + Huffman data per channel]`
 //!   padded to a byte boundary.  Header byte: version(2) sample-rate index(2) channel mode(2, 3 = mono) mode extension(2)
 //!   (`CEALayer3::ProcessHeader` 0x80282b68).  Side info fields follow `GetSideInfo` 0x802817f0, big-value/count1 decoding
 //!   follows `DecodeHuffman` 0x80282628 with the executable's own trees (mp3_tables.rs).  The remaining stages (dequantise,
@@ -33,7 +33,22 @@ pub struct Layer3{
     pub stats:Stats,
 }
 #[derive(Default,Debug,Clone)]
-pub struct Stats{pub frames:u64,pub exact_end:u64,pub short_end:u64,pub overrun:u64,pub rewinds:u64}
+pub struct Stats{pub frames:u64,pub exact_end:u64,pub short_end:u64,pub overrun:u64,pub rewinds:u64,pub lsf_frames:u64,pub short_frames:u64,pub mixed_frames:u64}
+
+/// Normal-channel LSF compression and partition layout from GetLsfScaleData.
+/// Intensity stereo remains rejected before this routine is reached.
+fn lsf_layout(compress:usize,block_type:u8,mixed:bool)->Result<([u32;4],[u8;4],bool),String>{
+    let (widths,class,preflag)=match compress{
+        0..=399=>([(compress>>4)/5,(compress>>4)%5,(compress>>2)&3,compress&3],0,false),
+        400..=499=>{let c=compress-400;([(c>>2)/5,(c>>2)%5,c&3,0],1,false)},
+        500..=511=>{let c=compress-500;([c/3,c%3,0,0],2,true)},
+        _=>return Err("LSF scalefactor compression exceeds nine bits".into()),
+    };
+    let block=if block_type==2{if mixed{2}else{1}}else{0};
+    let base=class*12+block*4;
+    let partition=t::NUM_SFB_BLOCK[base..base+4].try_into().unwrap();
+    Ok((widths.map(|x|x as u32),partition,preflag))
+}
 
 impl Default for Layer3{fn default()->Self{Self::new()}}
 
@@ -59,16 +74,18 @@ impl Layer3{
         let mut b=Bits::new(buf);
         let hdr=b.get(8);
         let (version,sr,mode,ext)=((hdr>>6)&3,((hdr>>4)&3) as usize,(hdr>>2)&3,hdr&3);
-        if version!=3{return Err(format!("unsupported MPEG version bits {version} (header {hdr:#04x})"))}
+        if version!=3&&version!=2{return Err(format!("unsupported MPEG version bits {version} (header {hdr:#04x})"))}
+        let lsf=version==2;
         if sr==3{return Err("reserved sample-rate index".into())}
         if ext&1!=0{return Err("intensity stereo frames are not implemented".into())}
         let channels=if mode==3{1}else{2};let ms=ext&2!=0&&channels==2;
+        let band_sr=sr+if lsf{3}else{0};
         let gr=b.get(1) as usize;
         let mut scfsi=[[false;4];2];
-        if gr==1{for ch in 0..channels{for band in 0..4{scfsi[ch][band]=b.get(1)==1;}}}
+        if !lsf&&gr==1{for ch in 0..channels{for band in 0..4{scfsi[ch][band]=b.get(1)==1;}}}
         let mut g=[Granule::default();2];
         for ch in 0..channels{
-            let mut x=Granule{part23:b.get(12) as usize,big_values:b.get(9) as usize,global_gain:b.get(8) as i32,scalefac_compress:b.get(4) as usize,window_switching:b.get(1)==1,..Default::default()};
+            let mut x=Granule{part23:b.get(12) as usize,big_values:b.get(9) as usize,global_gain:b.get(8) as i32,scalefac_compress:b.get(if lsf{9}else{4}) as usize,window_switching:b.get(1)==1,..Default::default()};
             if x.window_switching{
                 x.block_type=b.get(2) as u8;x.mixed=b.get(1)==1;
                 x.table_select[0]=b.get(5) as u8;x.table_select[1]=b.get(5) as u8;
@@ -79,26 +96,29 @@ impl Layer3{
                 for i in 0..3{x.table_select[i]=b.get(5) as u8;}
                 x.region0=b.get(4) as usize;x.region1=b.get(3) as usize;
             }
-            x.preflag=b.get(1)==1;x.scalefac_scale=b.get(1)==1;x.count1table=b.get(1) as usize;
+            x.preflag=!lsf&&b.get(1)==1;x.scalefac_scale=b.get(1)==1;x.count1table=b.get(1) as usize;
             if x.big_values>288{return Err("big_values exceeds 288".into())}
             g[ch]=x;
         }
         let mut xr=[[0f64;576];2];
         for ch in 0..channels{
             let start=b.pos;let end=start+g[ch].part23;
-            self.read_scale_factors(&mut b,ch,&g[ch],gr,&scfsi[ch])?;
-            let counts=self.huffman(&mut b,&g[ch],end,sr,&mut xr[ch])?;
+            if lsf{self.read_lsf_scale_factors(&mut b,ch,&mut g[ch])?}else{self.read_scale_factors(&mut b,ch,&g[ch],gr,&scfsi[ch])?};
+            let counts=self.huffman(&mut b,&g[ch],end,band_sr,&mut xr[ch])?;
             self.stats.frames+=1;
+            self.stats.lsf_frames+=lsf as u64;
+            self.stats.short_frames+=(g[ch].window_switching&&g[ch].block_type==2) as u64;
+            self.stats.mixed_frames+=g[ch].mixed as u64;
             if b.pos==end{self.stats.exact_end+=1}else if b.pos<end{self.stats.short_end+=1;let skip=(end-b.pos) as u32;for _ in 0..skip{b.bit();}}
             let _=counts;
-            self.dequantise(ch,&g[ch],sr,&mut xr[ch]);
+            self.dequantise(ch,&g[ch],band_sr,&mut xr[ch]);
         }
         if b.overrun(){self.stats.overrun+=1;return Err("frame runs past the end of the data".into())}
         if ms{let k=std::f64::consts::FRAC_1_SQRT_2;for i in 0..576{let (m,s)=(xr[0][i],xr[1][i]);xr[0][i]=(m+s)*k;xr[1][i]=(m-s)*k;}}
         let mut pcm=[[0f64;576];2];
         for ch in 0..channels{
             let mut spec=xr[ch];
-            if g[ch].window_switching&&g[ch].block_type==2{self.reorder(&g[ch],sr,&mut spec)}
+            if g[ch].window_switching&&g[ch].block_type==2{self.reorder(&g[ch],band_sr,&mut spec)}
             if !(g[ch].window_switching&&g[ch].block_type==2&&!g[ch].mixed){self.antialias(&g[ch],&mut spec)}
             let sb=self.hybrid(ch,&g[ch],&spec);
             self.synthesise(ch,&sb,&mut pcm[ch]);
@@ -129,6 +149,24 @@ impl Layer3{
             }
             self.scale_l[ch][21]=0;
         }
+        Ok(())
+    }
+
+    /// GetLsfScaleData (0x802821c4): nine-bit compression selects four widths,
+    /// one of three normal-channel partition rows, and the derived preflag.
+    fn read_lsf_scale_factors(&mut self,b:&mut Bits,ch:usize,g:&mut Granule)->Result<(),String>{
+        let (widths,partition,preflag)=lsf_layout(g.scalefac_compress,g.block_type,g.mixed)?;
+        g.preflag=preflag;
+        let mut values=[0u8;45];let mut k=0;
+        for i in 0..4{for _ in 0..partition[i]{values[k]=b.get(widths[i]) as u8;k+=1;}}
+        self.scale_l[ch]=[0;22];self.scale_s[ch]=[[0;3];13];
+        // GetLsfScaleFactors (0x802824e8) copies eight long values for mixed blocks,
+        // then starts short sfb 3; this is the retail executable's mapping.
+        if g.window_switching&&g.block_type==2{
+            let first=if g.mixed{self.scale_l[ch][..8].copy_from_slice(&values[..8]);8}else{0};
+            let mut k=first;
+            for s in if g.mixed{3}else{0}..12{for w in 0..3{self.scale_s[ch][s][w]=values[k];k+=1;}}
+        }else{self.scale_l[ch][..21].copy_from_slice(&values[..21]);}
         Ok(())
     }
 
@@ -183,8 +221,9 @@ impl Layer3{
             let sfb=&t::SFB_SHORT[sr];
             let start_sfb=if g.mixed{3}else{0};
             if g.mixed{
-                // first two subbands are long blocks (long bands 0..7 of the sample-rate table)
-                for s in 0..8{
+                // First two subbands are long: 8 MPEG-1 bands, 6 LSF bands
+                // (Dequantize 0x80284558..0x8028456c).
+                for s in 0..if sr<3{8}else{6}{
                     let e=2f64.powf((g.global_gain-210) as f64/4.-mult*self.scale_l[ch][s] as f64);
                     for i in t::SFB_LONG[sr][s] as usize..t::SFB_LONG[sr][s+1] as usize{xr[i]=mag(xr[i])*e;}
                 }
@@ -284,3 +323,58 @@ impl Layer3{
 
 /// Clamp to signed 16-bit PCM.
 pub fn to_i16(x:f64)->i16{(x*32768.).round().clamp(-32768.,32767.) as i16}
+
+#[cfg(test)]
+mod tests{
+    use super::*;
+    #[test] fn lsf_compression_partitions_and_preflag(){
+        assert_eq!(lsf_layout(399,0,false).unwrap(),([4,4,3,3],[6,5,5,5],false));
+        assert_eq!(lsf_layout(400,0,false).unwrap(),([0,0,0,0],[6,5,7,3],false));
+        assert_eq!(lsf_layout(499,2,false).unwrap(),([4,4,3,0],[9,9,12,6],false));
+        assert_eq!(lsf_layout(500,2,true).unwrap(),([0,0,0,0],[15,18,0,0],true));
+        assert_eq!(lsf_layout(511,0,false).unwrap(),([3,2,0,0],[11,10,0,0],true));
+        assert!(lsf_layout(512,0,false).is_err());
+    }
+    #[test] fn mpeg2_granule_bit_has_no_scfsi_or_preflag_bit(){
+        for gr in 0..2{for comp in [0,399,400,499,500,511]{for block in 0..3{
+            let short=block>0;let mixed=block==2;
+            let (widths,counts,_)=lsf_layout(comp,if short{2}else{0},mixed).unwrap();
+            let part23:u32=(0..4).map(|i|widths[i]*counts[i] as u32).sum();
+            let mut bits=Vec::new();
+            let mut put=|v:u32,n:u32|{for i in (0..n).rev(){bits.push(((v>>i)&1) as u8)}};
+            for (v,n) in [(0x8c,8),(gr,1),(part23,12),(0,9),(210,8),(comp as u32,9),(short as u32,1)]{put(v,n)}
+            if short{for (v,n) in [(2,2),(mixed as u32,1),(0,10),(0,9)]{put(v,n)}}else{put(0,15);put(0,7)}
+            put(0,1);put(0,1);bits.extend(std::iter::repeat_n(0,part23 as usize));
+            let bytes:Vec<u8>=bits.chunks(8).map(|b|b.iter().enumerate().fold(0,|v,(i,&bit)|v|(bit<<(7-i)))).collect();
+            let mut dec=Layer3::new();let f=dec.decode_frame(&bytes).unwrap();
+            assert_eq!(f.bytes,bytes.len());assert_eq!(f.granule,gr as u8);
+            assert_eq!(dec.stats.exact_end,1);assert!(f.pcm[0].iter().all(|&v|v==0.));
+        }}}
+    }
+    /// Machine-readable test output for tools/mp3_lsf_oracle.py, silent in ordinary runs.
+    #[test] fn lsf_original_vectors(){
+        if std::env::var_os("EAGL_LSF_ORACLE").is_none(){return}
+        let input:Vec<u8>=(0..256).map(|i|[0xa5,0x3c,0xe7,0x19][i%4]).collect();
+        let mut dec=Layer3::new();
+        for comp in 0..512{for block in 0..3{
+            let mut g=Granule{scalefac_compress:comp,window_switching:block>0,block_type:if block>0{2}else{0},mixed:block==2,..Default::default()};
+            let mut b=Bits::new(&input);dec.read_lsf_scale_factors(&mut b,0,&mut g).unwrap();
+            let values=dec.scale_l[0].iter().copied().chain(dec.scale_s[0].iter().flatten().copied()).map(|v|v.to_string()).collect::<Vec<_>>().join(",");
+            println!("LSFV {comp} {block} {} {} {values}",b.pos,g.preflag as u8);
+        }}
+        for sr in 0..6{for block in 0..3{for scale in 0..2{for pre in 0..2{
+            let g=Granule{global_gain:210,window_switching:block>0,block_type:if block>0{2}else{0},mixed:block==2,scalefac_scale:scale!=0,preflag:pre!=0,subblock_gain:[0,1,2],..Default::default()};
+            dec.scale_l[0]=std::array::from_fn(|i|(i%5) as u8);
+            dec.scale_s[0]=std::array::from_fn(|s|std::array::from_fn(|w|if s==12{0}else{((s+w)%5) as u8}));
+            let mut xr=std::array::from_fn(|i|if i%2==0{1.}else{-1.});
+            dec.dequantise(0,&g,sr,&mut xr);
+            let values=xr.iter().map(|&v|(v as f32).to_bits().to_string()).collect::<Vec<_>>().join(",");
+            println!("DQFV {sr} {block} {scale} {pre} {values}");
+            if block>0{
+                let mut xr=std::array::from_fn(|i|i as f64);dec.reorder(&g,sr,&mut xr);
+                let values=xr.iter().map(|&v|(v as u32).to_string()).collect::<Vec<_>>().join(",");
+                println!("ROFV {sr} {block} {scale} {pre} {values}");
+            }
+        }}}}
+    }
+}

@@ -208,7 +208,7 @@ pub fn decode_dsp(data:&[u8],coefs:&[u8],samples:usize)->Result<Vec<i16>,String>
     if out.len()<samples{return Err("DSP-ADPCM data too short".into())}
     out.truncate(samples);Ok(out)
 }
-/// Decode sound `i` of a bank (EA-XA, DSP-ADPCM, and MPEG-1 EA Layer 3).
+/// Decode sound `i` of a bank (EA-XA, DSP-ADPCM, and EA Layer 3).
 pub fn decode_bank_sound(d:&[u8],i:usize)->Result<Pcm,String>{
     let sounds=parse_bank(d)?;let s=sounds.get(i).ok_or("no such sound")?;
     if s.header.codec==0x17{
@@ -371,7 +371,7 @@ mod tests{
         assert!(parse_bank(b"BNKb").is_err());
         let mut skip=0;let mut frames=0;
         assert!(layer3_run(&[0,0xec],1,1,&mut Layer3::new(),&mut skip,&mut frames,0).is_err());
-        assert!(layer3_run(&[0,0x8c],1,1,&mut Layer3::new(),&mut skip,&mut frames,0).unwrap_err().contains("unsupported MPEG version bits 2"));
+        assert!(layer3_run(&[0,0x0c],1,1,&mut Layer3::new(),&mut skip,&mut frames,0).unwrap_err().contains("unsupported MPEG version bits 0"));
         assert!(layer3_run(&[1],1,1,&mut Layer3::new(),&mut skip,&mut frames,0).unwrap_err().contains("unexpected chunk type"));
     }
     #[test] fn abk_layer3_banks(){
@@ -383,12 +383,9 @@ mod tests{
             let d=std::fs::read(&p).unwrap();let Some(bank)=abk_bank(&d).unwrap() else{continue};
             for (i,s) in parse_bank(bank).unwrap().iter().enumerate(){
                 if s.header.codec!=0x17{continue}
-                if bank[s.data_offset+1]>>6==2{
-                    assert_eq!(p.file_name().unwrap(),"world_sfx.abk");
-                    let e=decode_bank_sound(bank,i).err().expect("MPEG-2 is explicitly unsupported");
-                    assert!(e.contains("unsupported MPEG version bits 2"),"{e}");mpeg2+=1;continue
-                }
+                if bank[s.data_offset+1]>>6==2{mpeg2+=1;}
                 let pcm=decode_bank_sound(bank,i).unwrap_or_else(|e|panic!("{} #{i}: {e}",p.display()));
+                eprintln!("{} #{i}: {} samples/ch @{}Hz, stats {:?}",p.file_name().unwrap().to_string_lossy(),s.header.samples,pcm.sample_rate,pcm.stats);
                 assert_eq!(pcm.channels,s.header.channels.max(1) as usize);
                 assert_eq!(pcm.samples.len(),s.header.samples as usize*pcm.channels);
                 assert_eq!(pcm.stats.exact_end,pcm.stats.frames);
@@ -398,8 +395,8 @@ mod tests{
                 decoded+=1;
             }
         }
-        eprintln!("ABKC EA Layer 3: {decoded} MPEG-1 sounds decoded exactly; {mpeg2} MPEG-2 sounds explicitly unsupported");
-        assert_eq!((decoded,mpeg2),(7,12));
+        eprintln!("ABKC EA Layer 3: {decoded} sounds decoded exactly, including {mpeg2} MPEG-2 sounds");
+        assert_eq!((decoded,mpeg2),(19,12));
     }
     fn music(name:&str)->Option<Vec<u8>>{
         let p=crate::bridge::data_root().join("files").join("data").join("audio").join("music").join(name);
@@ -546,7 +543,7 @@ mod tests{
             let sounds=parse_bank(bank).unwrap();
             for (i,s) in sounds.iter().enumerate(){
                 *codecs.entry(s.header.codec).or_default()+=1;
-                if s.header.codec==0x0a||s.header.codec==0x12{let pcm=decode_bank_sound(bank,i).unwrap_or_else(|er|panic!("{} #{i}: {er}",p.display()));assert_eq!(pcm.samples.len() as u32,s.header.samples);
+                if matches!(s.header.codec,0x0a|0x12|0x17){let pcm=decode_bank_sound(bank,i).unwrap_or_else(|er|panic!("{} #{i}: {er}",p.display()));assert_eq!(pcm.samples.len(),s.header.samples as usize*pcm.channels);
                     let n=pcm.samples.len() as f64;let rms=(pcm.samples.iter().map(|&x|(x as f64).powi(2)).sum::<f64>()/n).sqrt();
                     let clipped=pcm.samples.iter().filter(|&&x|x==i16::MAX||x==i16::MIN).count();
                     assert!(rms<20000.&&clipped*20<pcm.samples.len(),"{} #{i}: rms {rms:.0} clipped {clipped}",p.display());

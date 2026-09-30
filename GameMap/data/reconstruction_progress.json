@@ -1,21 +1,26 @@
 {
   "updated": "2026-09-30",
-  "summary": "Native Rust / Bevy reconstruction now includes original frame policy and tournament scoring, with playable workbench smoke checks. Full minigame gameplay remains unfinished.",
+  "summary": "Native Rust / Bevy reconstruction now routes world controls through the original event rules, decodes all embedded bank sounds, and includes tetherball serve/motion arithmetic. Complete minigame gameplay remains unfinished.",
   "metrics": [
     {
-      "label": "Timing oracle",
-      "value": "412",
-      "detail": "Original PowerPC timing cases"
+      "label": "Controller events",
+      "value": "303",
+      "detail": "Original PowerPC frame comparisons"
     },
     {
-      "label": "Multiplayer scoring",
-      "value": "210",
-      "detail": "Original PowerPC state transitions"
+      "label": "Control tables",
+      "value": "506",
+      "detail": "Bindings across all 14 original CSV files"
+    },
+    {
+      "label": "Tetherball core",
+      "value": "1,344",
+      "detail": "Motion/serve transitions and score comparisons"
     },
     {
       "label": "Embedded audio",
-      "value": "459 / 471",
-      "detail": "Sounds decoded; 12 MPEG2 sounds unsupported"
+      "value": "471 / 471",
+      "detail": "Bank sounds decoded, including all 12 MPEG-2 sounds"
     },
     {
       "label": "Game self-test",
@@ -29,19 +34,24 @@
     }
   ],
   "details": [
-    "Original frame policy: 60 ms cap, fixed simulation and pause branches, plus bounded physics slice scheduling.",
-    "MultiplayerMode: round points, wins, previous-rank tie resolution, query results and original placement overwrite behavior.",
-    "These native ports have bounded original-code evidence. They do not promote the whole GameState::Update or PhysicsManager functions to proven status."
+    "Controller button edges, tap/hold/double/repeat timers, modifiers and context transitions drive the Bevy keyboard adapter from controls.csv.",
+    "MPEG Layer 3: 1,536 LSF mappings, 72 spectral scaling vectors and 48 reorder vectors compared with original PowerPC. Full console PCM equality remains unverified.",
+    "Tetherball arithmetic covers serve/toss timing, radius/velocity changes, zones and score calculation. Ball Update/Hit, AI and complete game states remain to be ported.",
+    "Existing frame/physics timing (412 cases) and tournament scoring (210 transitions) remain covered. Native ports do not promote entire surrounding functions to proven status."
   ],
   "scope": "Native reconstruction evidence is tracked separately from the whole-function decompilation and lifter percentages below.",
   "links": [
     {
-      "label": "Timing oracle",
-      "url": "https://github.com/kxboo/EA-Playground/blob/main/_bevy/tools/timing_oracle.py"
+      "label": "Controller evidence",
+      "url": "https://github.com/kxboo/EA-Playground/blob/main/_bevy/docs/CONTROLLER.md"
     },
     {
-      "label": "Multiplayer evidence",
-      "url": "https://github.com/kxboo/EA-Playground/blob/main/_bevy/docs/MULTIPLAYER.md"
+      "label": "Tetherball evidence",
+      "url": "https://github.com/kxboo/EA-Playground/blob/main/_bevy/docs/TETHERBALL.md"
+    },
+    {
+      "label": "Bank audio evidence",
+      "url": "https://github.com/kxboo/EA-Playground/blob/main/_bevy/docs/BANK_AUDIO.md"
     }
   ]
 }

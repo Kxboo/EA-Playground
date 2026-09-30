@@ -1,0 +1,7796 @@
+{
+  "elf_sha256": "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c",
+  "source": "Controller::Initialize and cCSVParser, original PowerPC",
+  "files": [
+    {
+      "name": "controls.csv",
+      "sha256": "98604233050fa67efd916b4fc9afc949fff5dbfdbd3fd3d55eaad58f63b3ba94",
+      "rows": [
+        {
+          "action": 0,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 3,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 4,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 190,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            5
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 2,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 5,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 6,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 175,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            12
+          ],
+          "button": 11
+        },
+        {
+          "action": 182,
+          "state": 0,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 183,
+          "state": 0,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 14,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 15,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 16,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 17,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 18,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 19,
+          "state": 28,
+          "transition": 6,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 20,
+          "state": 6,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 21,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 22,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 23,
+          "state": 6,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 24,
+          "state": 6,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 25,
+          "state": 6,
+          "transition": 31,
+          "kind": 4,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 7,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 149,
+          "state": 28,
+          "transition": 8,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 150,
+          "state": 8,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 151,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 152,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 153,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 154,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 155,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 156,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 157,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 158,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 174,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 178,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 179,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 180,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 181,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 186,
+          "state": 29,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 187,
+          "state": 29,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 184,
+          "state": 29,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 185,
+          "state": 29,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 188,
+          "state": 29,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 159,
+          "state": 10,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 160,
+          "state": 10,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 161,
+          "state": 10,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 162,
+          "state": 10,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 163,
+          "state": 10,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 164,
+          "state": 10,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 165,
+          "state": 10,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 165,
+          "state": 6,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 166,
+          "state": 10,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 167,
+          "state": 10,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 168,
+          "state": 10,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 169,
+          "state": 10,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 170,
+          "state": 10,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 171,
+          "state": 10,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 177,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            11
+          ],
+          "button": 12
+        }
+      ]
+    },
+    {
+      "name": "controlsmg21.csv",
+      "sha256": "2dc3de7c69b36e13138a5ebddbd199e69d9a85302a5c8940f03c4eb1f3c9ff34",
+      "rows": [
+        {
+          "action": 4,
+          "state": 12,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 4,
+          "state": 14,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 4,
+          "state": 11,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 4,
+          "state": 13,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 0,
+          "state": 12,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 2,
+          "state": 12,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 26,
+          "state": 14,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 27,
+          "state": 14,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 28,
+          "state": 14,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 29,
+          "state": 14,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 0,
+          "state": 13,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 0,
+          "state": 11,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 2,
+          "state": 11,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 14,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 15,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 16,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 17,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 18,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 19,
+          "state": 28,
+          "transition": 6,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 20,
+          "state": 6,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 21,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 22,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 25,
+          "state": 28,
+          "transition": 31,
+          "kind": 4,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 7,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 149,
+          "state": 28,
+          "transition": 8,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 150,
+          "state": 8,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 151,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 152,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 153,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 154,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 155,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 156,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 157,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 158,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        }
+      ]
+    },
+    {
+      "name": "controlsmgbughunt.csv",
+      "sha256": "e0c32f7dc8e516002a4a0aab6bb968fcc72654707fa859c9562a38991297d020",
+      "rows": [
+        {
+          "action": 96,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 97,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 0,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 4,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 14,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 15,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 16,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 17,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 18,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 19,
+          "state": 28,
+          "transition": 6,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 20,
+          "state": 6,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 21,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 22,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 25,
+          "state": 28,
+          "transition": 31,
+          "kind": 4,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 7,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 149,
+          "state": 3,
+          "transition": 8,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 150,
+          "state": 8,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 151,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 152,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 153,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 154,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 155,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 156,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 157,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 158,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        }
+      ]
+    },
+    {
+      "name": "controlsmgdartshootout.csv",
+      "sha256": "c0b0a07a282550dc0416d5cfcf64e6395a100fc8886c2e988e273f1f2202b982",
+      "rows": [
+        {
+          "action": 175,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 126,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 127,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 128,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            5
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 128,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            5
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 129,
+          "state": 3,
+          "transition": 31,
+          "kind": 0,
+          "required": [
+            0,
+            5
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 129,
+          "state": 6,
+          "transition": 31,
+          "kind": 0,
+          "required": [
+            0,
+            5
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 132,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            4
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 133,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 134,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 4,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 135,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 136,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 137,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 138,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 14,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 15,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 16,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 17,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 18,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 19,
+          "state": 28,
+          "transition": 6,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 20,
+          "state": 6,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 21,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 22,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 23,
+          "state": 6,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 24,
+          "state": 6,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 25,
+          "state": 28,
+          "transition": 31,
+          "kind": 4,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 7,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 149,
+          "state": 28,
+          "transition": 8,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 150,
+          "state": 8,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 151,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 152,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 153,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 154,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 155,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 156,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 157,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 158,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        }
+      ]
+    },
+    {
+      "name": "controlsmgdodgeball.csv",
+      "sha256": "5da5e90b7d649eb4ca9ea20cd2a81b78e0dae5fda1e549ff96e5b919d912b427",
+      "rows": [
+        {
+          "action": 4,
+          "state": 20,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            8,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 175,
+          "state": 20,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 176,
+          "state": 20,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 98,
+          "state": 20,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 99,
+          "state": 20,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 99,
+          "state": 20,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 99,
+          "state": 20,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 99,
+          "state": 20,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 100,
+          "state": 20,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 101,
+          "state": 20,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 102,
+          "state": 20,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 103,
+          "state": 20,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 104,
+          "state": 20,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 105,
+          "state": 20,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 106,
+          "state": 20,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 107,
+          "state": 20,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 108,
+          "state": 20,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 149,
+          "state": 28,
+          "transition": 8,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 150,
+          "state": 8,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 151,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 152,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 153,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 154,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 155,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 156,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 157,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 158,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 14,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 15,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 16,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 17,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 18,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 19,
+          "state": 28,
+          "transition": 6,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 20,
+          "state": 6,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 21,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 22,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 25,
+          "state": 28,
+          "transition": 31,
+          "kind": 4,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        }
+      ]
+    },
+    {
+      "name": "controlsmgdribbling.csv",
+      "sha256": "7931c3a5885949a2bb26c986b077b861f71f839f39c75a22065a72d14da6e28d",
+      "rows": [
+        {
+          "action": 4,
+          "state": 26,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            8,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 175,
+          "state": 26,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 14,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 15,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 16,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 17,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 18,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 19,
+          "state": 28,
+          "transition": 6,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 20,
+          "state": 6,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 21,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 22,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 25,
+          "state": 28,
+          "transition": 31,
+          "kind": 4,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 23,
+          "state": 6,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 24,
+          "state": 6,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 149,
+          "state": 28,
+          "transition": 8,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 150,
+          "state": 8,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 151,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 152,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 153,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 154,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 155,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 156,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 157,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 158,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        }
+      ]
+    },
+    {
+      "name": "controlsmgfootie.csv",
+      "sha256": "8e5073466ecfbb8fb563ed32286a539d44649e3a2ea57fedeeaa9f89e0b6f218",
+      "rows": [
+        {
+          "action": 4,
+          "state": 21,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            8,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 175,
+          "state": 21,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 109,
+          "state": 21,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 109,
+          "state": 21,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 109,
+          "state": 21,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 109,
+          "state": 21,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 110,
+          "state": 21,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 111,
+          "state": 21,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 112,
+          "state": 21,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 113,
+          "state": 21,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 114,
+          "state": 21,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 115,
+          "state": 21,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            5,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 149,
+          "state": 28,
+          "transition": 8,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 150,
+          "state": 8,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 151,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 152,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 153,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 154,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 155,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 156,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 157,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 158,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 14,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 15,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 16,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 17,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 18,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 19,
+          "state": 28,
+          "transition": 6,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 20,
+          "state": 6,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 21,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 22,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 25,
+          "state": 28,
+          "transition": 31,
+          "kind": 4,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 23,
+          "state": 6,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 24,
+          "state": 6,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        }
+      ]
+    },
+    {
+      "name": "controlsmgpaperairplanes.csv",
+      "sha256": "171c12779e6d284db3c097b9c094b0a8b51ca2ff94632265aecd1e555844692c",
+      "rows": [
+        {
+          "action": 4,
+          "state": 28,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            8,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 175,
+          "state": 22,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 116,
+          "state": 22,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 117,
+          "state": 22,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 118,
+          "state": 22,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 119,
+          "state": 22,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 120,
+          "state": 22,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 121,
+          "state": 22,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 122,
+          "state": 22,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 124,
+          "state": 22,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 125,
+          "state": 22,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 123,
+          "state": 22,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 14,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 15,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 16,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 17,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 18,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 19,
+          "state": 28,
+          "transition": 6,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 20,
+          "state": 6,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 21,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 22,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 25,
+          "state": 28,
+          "transition": 31,
+          "kind": 4,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 7,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 149,
+          "state": 28,
+          "transition": 8,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 150,
+          "state": 8,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 151,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 152,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 153,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 154,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 155,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 156,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 157,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 158,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        }
+      ]
+    },
+    {
+      "name": "controlsmgquickdraw.csv",
+      "sha256": "5fc1fe087b532c39b8907adee4f2ff4dbf99a3472e0e43611733cfd5ad425a3e",
+      "rows": [
+        {
+          "action": 31,
+          "state": 16,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 4,
+          "state": 16,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 32,
+          "state": 15,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 4,
+          "state": 15,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 14,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 15,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 16,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 17,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 18,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 19,
+          "state": 28,
+          "transition": 6,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 20,
+          "state": 6,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 21,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 22,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 25,
+          "state": 28,
+          "transition": 31,
+          "kind": 4,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 7,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 149,
+          "state": 28,
+          "transition": 8,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 150,
+          "state": 8,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 151,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 152,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 153,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 154,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 155,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 156,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 157,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 158,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        }
+      ]
+    },
+    {
+      "name": "controlsmgrccars.csv",
+      "sha256": "5b98c5c5963cfa86e8e3b1b7cd2cc73b580312e6e6ad9ba050a8f64a6ba99cd2",
+      "rows": [
+        {
+          "action": 33,
+          "state": 4,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 34,
+          "state": 4,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 37,
+          "state": 4,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 38,
+          "state": 4,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            6
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 35,
+          "state": 4,
+          "transition": 31,
+          "kind": 5,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 36,
+          "state": 4,
+          "transition": 31,
+          "kind": 6,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 4,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            8
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 175,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 39,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 40,
+          "state": 3,
+          "transition": 31,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 41,
+          "state": 3,
+          "transition": 31,
+          "kind": 5,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 42,
+          "state": 3,
+          "transition": 31,
+          "kind": 6,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 43,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 44,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 45,
+          "state": 3,
+          "transition": 31,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 46,
+          "state": 3,
+          "transition": 31,
+          "kind": 5,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 47,
+          "state": 3,
+          "transition": 31,
+          "kind": 6,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 48,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 49,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 50,
+          "state": 3,
+          "transition": 31,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 51,
+          "state": 3,
+          "transition": 31,
+          "kind": 5,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 52,
+          "state": 3,
+          "transition": 31,
+          "kind": 6,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 53,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 54,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 55,
+          "state": 3,
+          "transition": 31,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 56,
+          "state": 3,
+          "transition": 31,
+          "kind": 5,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 57,
+          "state": 3,
+          "transition": 31,
+          "kind": 6,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 58,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 59,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 60,
+          "state": 3,
+          "transition": 31,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 61,
+          "state": 3,
+          "transition": 31,
+          "kind": 5,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 62,
+          "state": 3,
+          "transition": 31,
+          "kind": 6,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 63,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 64,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 65,
+          "state": 3,
+          "transition": 31,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 66,
+          "state": 3,
+          "transition": 31,
+          "kind": 5,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 67,
+          "state": 3,
+          "transition": 31,
+          "kind": 6,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 68,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 69,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 70,
+          "state": 3,
+          "transition": 31,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 71,
+          "state": 3,
+          "transition": 31,
+          "kind": 5,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 72,
+          "state": 3,
+          "transition": 31,
+          "kind": 6,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 73,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 74,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 75,
+          "state": 3,
+          "transition": 31,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 76,
+          "state": 3,
+          "transition": 31,
+          "kind": 5,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 77,
+          "state": 3,
+          "transition": 31,
+          "kind": 6,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 78,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 79,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 80,
+          "state": 3,
+          "transition": 31,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 81,
+          "state": 3,
+          "transition": 31,
+          "kind": 5,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 82,
+          "state": 3,
+          "transition": 31,
+          "kind": 6,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 83,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 84,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 85,
+          "state": 3,
+          "transition": 31,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 86,
+          "state": 3,
+          "transition": 31,
+          "kind": 5,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 87,
+          "state": 3,
+          "transition": 31,
+          "kind": 6,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 88,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 190,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 14,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 15,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 16,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 17,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 18,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 19,
+          "state": 28,
+          "transition": 6,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 20,
+          "state": 6,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 21,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 22,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 23,
+          "state": 6,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 24,
+          "state": 6,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 25,
+          "state": 28,
+          "transition": 31,
+          "kind": 4,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 7,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 149,
+          "state": 28,
+          "transition": 8,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 150,
+          "state": 8,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 151,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 152,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 153,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 154,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 155,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 156,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 157,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 158,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        }
+      ]
+    },
+    {
+      "name": "controlsmgtemplate.csv",
+      "sha256": "b6928c19f7791a7d7dbc2a4196931d6df3e13eee28c548d5bc2078afccd75f02",
+      "rows": [
+        {
+          "action": 0,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            5
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 4,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 14,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 15,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 16,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 17,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 18,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 19,
+          "state": 28,
+          "transition": 6,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 20,
+          "state": 6,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 21,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 22,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 25,
+          "state": 28,
+          "transition": 31,
+          "kind": 4,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 7,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 149,
+          "state": 3,
+          "transition": 8,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 150,
+          "state": 8,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 151,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 152,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 153,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 154,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 155,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 156,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 157,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 158,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        }
+      ]
+    },
+    {
+      "name": "controlsmgtetherball.csv",
+      "sha256": "ba0552f4bfdfbff445041d80f03bdd16f006817487821852e81269e8f7fc3aef",
+      "rows": [
+        {
+          "action": 4,
+          "state": 28,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            8,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 175,
+          "state": 17,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 175,
+          "state": 18,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 90,
+          "state": 17,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 91,
+          "state": 18,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 92,
+          "state": 28,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 93,
+          "state": 18,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 95,
+          "state": 18,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 14,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 15,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 16,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 17,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 18,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 19,
+          "state": 28,
+          "transition": 6,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 20,
+          "state": 6,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 21,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 22,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 25,
+          "state": 28,
+          "transition": 31,
+          "kind": 4,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 7,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 149,
+          "state": 28,
+          "transition": 8,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 150,
+          "state": 8,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 151,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 152,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 153,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 154,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 155,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 156,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 157,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 158,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        }
+      ]
+    },
+    {
+      "name": "controlsmgwallball.csv",
+      "sha256": "cea442640067a43d3a27204548538fda28825024f93e29ada25729b6b1ed2779",
+      "rows": [
+        {
+          "action": 4,
+          "state": 23,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            8,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 175,
+          "state": 23,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 139,
+          "state": 23,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 139,
+          "state": 23,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 139,
+          "state": 23,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 139,
+          "state": 23,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 143,
+          "state": 23,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 144,
+          "state": 23,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 140,
+          "state": 23,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 141,
+          "state": 23,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 142,
+          "state": 23,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 149,
+          "state": 28,
+          "transition": 8,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 150,
+          "state": 8,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 151,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 152,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 153,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 154,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 155,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 156,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 157,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 158,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 14,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 15,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 16,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 17,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 18,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 19,
+          "state": 28,
+          "transition": 6,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 20,
+          "state": 6,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 21,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 22,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 25,
+          "state": 28,
+          "transition": 31,
+          "kind": 4,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        }
+      ]
+    },
+    {
+      "name": "controlsmgfreethrow.csv",
+      "sha256": "9e878bb3e944507feb74a1ecda2e90f49f825158fc49cbddc439657dd70541bc",
+      "rows": [
+        {
+          "action": 4,
+          "state": 24,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            8,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 175,
+          "state": 24,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 11
+        },
+        {
+          "action": 2,
+          "state": 24,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 148,
+          "state": 24,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 147,
+          "state": 24,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 146,
+          "state": 24,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 145,
+          "state": 24,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 178,
+          "state": 24,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 179,
+          "state": 24,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 180,
+          "state": 24,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 181,
+          "state": 24,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 14,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 15,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 16,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 17,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 18,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 19,
+          "state": 28,
+          "transition": 6,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 20,
+          "state": 6,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 21,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 22,
+          "state": 6,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 7
+        },
+        {
+          "action": 25,
+          "state": 28,
+          "transition": 31,
+          "kind": 4,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 12
+        },
+        {
+          "action": 23,
+          "state": 6,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 24,
+          "state": 6,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 9
+        },
+        {
+          "action": 149,
+          "state": 28,
+          "transition": 8,
+          "kind": 2,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 150,
+          "state": 8,
+          "transition": 27,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 8
+        },
+        {
+          "action": 151,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        },
+        {
+          "action": 152,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 1
+        },
+        {
+          "action": 153,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 154,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        },
+        {
+          "action": 155,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 5
+        },
+        {
+          "action": 156,
+          "state": 8,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 4
+        },
+        {
+          "action": 157,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 2
+        },
+        {
+          "action": 158,
+          "state": 8,
+          "transition": 31,
+          "kind": 7,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 3
+        }
+      ]
+    }
+  ],
+  "synthetic": [
+    {
+      "name": "left whitespace and modifiers",
+      "input": "ACTION_EVENT,CONTROLLER_STATE,CONTROLLER_STATE_TRANSITION,CONTROLLER_EVENT,MOD1,MOD2,BUTTON\r\n\r\n// ignored comment\r\n EVENT_PLAYER_JUMP,\tSTATE_COMBAT,, BUTTON_DOWN,B,~PLUS,C\r\n",
+      "rows": [
+        {
+          "action": 2,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            5,
+            0
+          ],
+          "forbidden": [
+            0,
+            11
+          ],
+          "button": 6
+        }
+      ]
+    },
+    {
+      "name": "literal quotes and mid-field trailing whitespace",
+      "input": "ACTION_EVENT,CONTROLLER_STATE,CONTROLLER_STATE_TRANSITION,CONTROLLER_EVENT,MOD1,MOD2,BUTTON\r\n\"EVENT_PLAYER_MOVE\",STATE_COMBAT,,BUTTON_PRESSED,,,ANALOG\r\nEVENT_PLAYER_MOVE ,STATE_COMBAT,,BUTTON_PRESSED,,,ANALOG\r\n",
+      "rows": [
+        {
+          "action": 190,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        },
+        {
+          "action": 190,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 13
+        }
+      ]
+    },
+    {
+      "name": "line trailing whitespace and fallback tokens",
+      "input": "ACTION_EVENT,CONTROLLER_STATE,CONTROLLER_STATE_TRANSITION,CONTROLLER_EVENT,MOD1,MOD2,BUTTON\r\nEVENT_PLAYER_JUMP,STATE_COMBAT,,BUTTON_PRESSED,,,C \t\r\nDISABLED,UNKNOWN,,INVALID,UNKNOWN,~UNKNOWN,UNKNOWN\r\n",
+      "rows": [
+        {
+          "action": 2,
+          "state": 3,
+          "transition": 31,
+          "kind": 3,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 6
+        },
+        {
+          "action": 190,
+          "state": 31,
+          "transition": 31,
+          "kind": 9,
+          "required": [
+            0,
+            0
+          ],
+          "forbidden": [
+            0,
+            0
+          ],
+          "button": 0
+        }
+      ]
+    },
+    {
+      "name": "reordered columns",
+      "input": "BUTTON,MOD2,CONTROLLER_EVENT,ACTION_EVENT,MOD1,CONTROLLER_STATE_TRANSITION,CONTROLLER_STATE\r\nA,~MINUS,BUTTON_DOWN,EVENT_ENTER_MINIGAME,B,,STATE_COMBAT\r\n",
+      "rows": [
+        {
+          "action": 3,
+          "state": 3,
+          "transition": 31,
+          "kind": 1,
+          "required": [
+            5,
+            0
+          ],
+          "forbidden": [
+            0,
+            12
+          ],
+          "button": 4
+        }
+      ]
+    }
+  ]
+}
