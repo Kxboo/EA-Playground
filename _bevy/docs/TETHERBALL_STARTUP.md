@@ -76,7 +76,7 @@ AiInitServices restricts the host to database keys, collection lifetime and byte
 
 The 24 enclosing scenarios execute the derived AI constructor, Initialize and the collection selector natively. The base AIEntity constructor remains an engine boundary. Cases include absent/present active game, enabled/disabled AI, dare groups, both second-participant configurations, constructor-preserved scale inputs and varied seven-byte tuning results. Comparisons cover ordered queries, enable/difficulty/heading/charge stores, ball bindings and the existing complete startup projections. Synthetic dependency results remain test inputs, not production tuning. The independent corpus-backed AI and reset/runtime tests exercise the shared Database adapter.
 
-Remaining generic startup stages are SetArea, OpenPregame and SetUpServer. A concrete Bevy engine host and live scene readiness are still required before an interactive tetherball completion claim.
+The formerly generic SetArea, OpenPregame and SetUpServer stages are now composed below. A concrete Bevy engine host and live scene readiness are still required before an interactive tetherball completion claim. [Activity asset preparation](TETHERBALL_ASSETS.md) supplies the first main-world asset ownership boundary.
 
 
 ## Area selection and pregame entry composition (2026-09-30)

@@ -37,6 +37,7 @@ mod tetherball_player_init;
 mod tetherball_ai_init;
 mod tetherball_additional_player;
 mod tetherball_ball_init;
+mod tetherball_assets;
 mod minigame_entry;
 mod tetherball_server;
 mod tetherball_startup;
@@ -93,6 +94,23 @@ use std::time::Instant;
 fn main(){
     let args:Vec<String>=std::env::args().collect();
     let arg=|key:&str|args.iter().position(|a|a==key).and_then(|i|args.get(i+1)).cloned();
+    if args.iter().any(|a|a=="--prepare-tetherball") {
+        let data=arg("--data").map(std::path::PathBuf::from).unwrap_or_else(bridge::data_root);
+        let result=(|| -> Result<serde_json::Value,String> {
+            let decoded=tetherball_assets::Decoded::load(&data)?;
+            let mut world=World::new();
+            world.init_resource::<Assets<Mesh>>();
+            world.init_resource::<Assets<StandardMaterial>>();
+            world.init_resource::<Assets<Image>>();
+            tetherball_assets::install(&mut world,decoded)?;
+            let prepared=world.resource::<tetherball_assets::Prepared>();
+            let report=json!({"main_world_assets_ready":prepared.ready(&world),"assets":prepared.report});
+            tetherball_assets::release(&mut world);
+            Ok(report)
+        })();
+        match result { Ok(report)=>println!("{}",serde_json::to_string_pretty(&report).unwrap()),Err(error)=>{eprintln!("{error}");std::process::exit(1);} }
+        return;
+    }
     if let Some(command)=arg("--headless"){
         let mut req=json!({"command":command});
         for key in ["source","model","skeleton","bank","out","offset","length","minimum"]{if let Some(v)=arg(&format!("--{key}")){req[key]=json!(v);}}
