@@ -56,4 +56,6 @@ pub const ARRIVAL_SLOWDOWN_RANGE: f32 = 3.5;
 pub const WAYPOINT_TURN_PER_MS_SLOW: f32 = 0.004999999888241291;
 /// CharacterMovement::Update: turn blend per millisecond (0x802eda5c) - `.sdata2@0x806057f8` @ 0x806057f8
 pub const WAYPOINT_TURN_PER_MS_FAST: f32 = 0.029999999329447746;
+/// EvalSQTMask (0x803fdfc8): per-bone translation gate, 0 = engine skips the translation write - `sBoneMask (EvalSQTMask)` @ 0x804e9ea6
+pub const BONE_MASK: [u8; 68] = [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0];
 pub const ELF_SHA256: &str = "5cef3efc7005fb71fed0a75e60ee240ee6ac4243b00dd3296e6e53ca269a3e2c";
