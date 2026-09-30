@@ -36,8 +36,9 @@ impl Locale{
         Ok(Self{strings,index})
     }
     /// `TRCLocale::FindStringIndex` + `LOCALE_getstr`.
-    pub fn get(&self,key:&str)->Option<&str>{
-        let h=compute_hash(key);
+    pub fn get(&self,key:&str)->Option<&str>{self.get_hash(compute_hash(key))}
+    /// `Locale::GetString(int)` (0x803ae8c4): lookup by the precomputed key hash (the id stored in conversation files).
+    pub fn get_hash(&self,h:u32)->Option<&str>{
         self.index.binary_search_by_key(&h,|e|e.0).ok().map(|i|self.strings[self.index[i].1 as usize].as_str())
     }
     pub fn len(&self)->usize{self.index.len()}

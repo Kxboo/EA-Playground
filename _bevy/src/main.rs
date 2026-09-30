@@ -12,6 +12,7 @@ mod archive;
 mod gsh;
 mod tpl;
 mod locale;
+mod conversation;
 mod model;
 mod assets;
 mod skeleton;
