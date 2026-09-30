@@ -31,9 +31,9 @@ ProcessAnimEvents__14AnimationStateFf @ 0x803c89a4 size=460
 803c8a18: 41820010  beq 0x803c8a28
 803c8a1c: c003004c  lfs f0, 0x4c(r3)
 803c8a20: efde002a  fadds f30, f30, f0
-803c8a24: 4800003c  b 0x803c8a60 ; 
+803c8a24: 4800003c  b 0x803c8a60 ;
 803c8a28: ffc00090  fmr f30, f0
-803c8a2c: 48000034  b 0x803c8a60 ; 
+803c8a2c: 48000034  b 0x803c8a60 ;
 803c8a30: c3c30048  lfs f30, 0x48(r3)
 803c8a34: c003004c  lfs f0, 0x4c(r3)
 803c8a38: efbe082a  fadds f29, f30, f1
@@ -44,7 +44,7 @@ ProcessAnimEvents__14AnimationStateFf @ 0x803c89a4 size=460
 803c8a4c: 2c000000  cmpwi r0, 0
 803c8a50: 4182000c  beq 0x803c8a5c
 803c8a54: efbd0028  fsubs f29, f29, f0
-803c8a58: 48000008  b 0x803c8a60 ; 
+803c8a58: 48000008  b 0x803c8a60 ;
 803c8a5c: ffa00090  fmr f29, f0
 803c8a60: c3e2d320  lfs f31, -0x2ce0(r2) ; f32 0.0 @0x80607860
 803c8a64: 3b400000  li r26, 0
@@ -64,7 +64,7 @@ ProcessAnimEvents__14AnimationStateFf @ 0x803c89a4 size=460
 803c8a9c: fc01e840  .long 0xfc01e840
 803c8aa0: 40800040  bge 0x803c8ae0
 803c8aa4: 38000001  li r0, 1
-803c8aa8: 48000038  b 0x803c8ae0 ; 
+803c8aa8: 48000038  b 0x803c8ae0 ;
 803c8aac: fc01f040  .long 0xfc01f040
 803c8ab0: 38000000  li r0, 0
 803c8ab4: 4c411382  cror cr0eq, cr0gt, cr0eq
@@ -84,7 +84,7 @@ ProcessAnimEvents__14AnimationStateFf @ 0x803c89a4 size=460
 803c8aec: 3b200000  li r25, 0
 803c8af0: 3b630018  addi r27, r3, 0x18
 803c8af4: 3ba00000  li r29, 0
-803c8af8: 4800002c  b 0x803c8b24 ; 
+803c8af8: 4800002c  b 0x803c8b24 ;
 803c8afc: 7cbfea14  add r5, r31, r29
 803c8b00: 7f64db78  mr r4, r27
 803c8b04: 80650008  lwz r3, 8(r5)
@@ -92,7 +92,7 @@ ProcessAnimEvents__14AnimationStateFf @ 0x803c89a4 size=460
 803c8b0c: 81830000  lwz r12, 0(r3)
 803c8b10: 818c0008  lwz r12, 8(r12)
 803c8b14: 7d8903a6  mtctr r12
-803c8b18: 4e800421  bctrl 
+803c8b18: 4e800421  bctrl
 803c8b1c: 3b390001  addi r25, r25, 1
 803c8b20: 3bbd0008  addi r29, r29, 8
 803c8b24: 801f0028  lwz r0, 0x28(r31)
@@ -113,4 +113,4 @@ ProcessAnimEvents__14AnimationStateFf @ 0x803c89a4 size=460
 803c8b60: 80010064  lwz r0, 0x64(r1)
 803c8b64: 7c0803a6  mtlr r0
 803c8b68: 38210060  addi r1, r1, 0x60
-803c8b6c: 4e800020  blr 
+803c8b6c: 4e800020  blr

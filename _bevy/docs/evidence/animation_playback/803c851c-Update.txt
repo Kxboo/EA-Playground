@@ -44,7 +44,7 @@ Update__14AnimationStateFfbb @ 0x803c851c size=1152
 803c85c4: 41820010  beq 0x803c85d4
 803c85c8: 38000000  li r0, 0
 803c85cc: 981d0069  stb r0, 0x69(r29)
-803c85d0: 48000210  b 0x803c87e0 ; 
+803c85d0: 48000210  b 0x803c87e0 ;
 803c85d4: 801d0054  lwz r0, 0x54(r29)
 803c85d8: 807d0004  lwz r3, 4(r29)
 803c85dc: 1c00004c  mulli r0, r0, 0x4c
@@ -55,7 +55,7 @@ Update__14AnimationStateFfbb @ 0x803c851c size=1152
 803c85f0: 41820010  beq 0x803c8600
 803c85f4: c002d32c  lfs f0, -0x2cd4(r2) ; f32 30.0 @0x8060786c
 803c85f8: efc007f2  fmuls f30, f0, f31
-803c85fc: 48000008  b 0x803c8604 ; 
+803c85fc: 48000008  b 0x803c8604 ;
 803c8600: ffc0f890  fmr f30, f31
 803c8604: fc20f090  fmr f1, f30
 803c8608: 7fa3eb78  mr r3, r29
@@ -67,7 +67,7 @@ Update__14AnimationStateFfbb @ 0x803c851c size=1152
 803c8620: c01d0048  lfs f0, 0x48(r29)
 803c8624: ec1e007c  fnmsubs f0, f30, f1, f0
 803c8628: d01d0048  stfs f0, 0x48(r29)
-803c862c: 48000014  b 0x803c8640 ; 
+803c862c: 48000014  b 0x803c8640 ;
 803c8630: c03d0050  lfs f1, 0x50(r29)
 803c8634: c01d0048  lfs f0, 0x48(r29)
 803c8638: ec1e007a  fmadds f0, f30, f1, f0
@@ -104,17 +104,17 @@ Update__14AnimationStateFfbb @ 0x803c851c size=1152
 803c86b4: c01d004c  lfs f0, 0x4c(r29)
 803c86b8: ec01002a  fadds f0, f1, f0
 803c86bc: d01d0048  stfs f0, 0x48(r29)
-803c86c0: 48000058  b 0x803c8718 ; 
+803c86c0: 48000058  b 0x803c8718 ;
 803c86c4: c03d0048  lfs f1, 0x48(r29)
 803c86c8: c01d004c  lfs f0, 0x4c(r29)
 803c86cc: ec010028  fsubs f0, f1, f0
 803c86d0: d01d0048  stfs f0, 0x48(r29)
-803c86d4: 48000044  b 0x803c8718 ; 
+803c86d4: 48000044  b 0x803c8718 ;
 803c86d8: 2c030000  cmpwi r3, 0
 803c86dc: 41820010  beq 0x803c86ec
 803c86e0: c01d0058  lfs f0, 0x58(r29)
 803c86e4: d01d0048  stfs f0, 0x48(r29)
-803c86e8: 48000014  b 0x803c86fc ; 
+803c86e8: 48000014  b 0x803c86fc ;
 803c86ec: c03d004c  lfs f1, 0x4c(r29)
 803c86f0: c01d0058  lfs f0, 0x58(r29)
 803c86f4: ec01002a  fadds f0, f1, f0
@@ -140,7 +140,7 @@ Update__14AnimationStateFfbb @ 0x803c851c size=1152
 803c8744: 41820010  beq 0x803c8754
 803c8748: c002d32c  lfs f0, -0x2cd4(r2) ; f32 30.0 @0x8060786c
 803c874c: ec4007f2  fmuls f2, f0, f31
-803c8750: 48000008  b 0x803c8758 ; 
+803c8750: 48000008  b 0x803c8758 ;
 803c8754: fc40f890  fmr f2, f31
 803c8758: c03d006c  lfs f1, 0x6c(r29)
 803c875c: c002d320  lfs f0, -0x2ce0(r2) ; f32 0.0 @0x80607860
@@ -157,7 +157,7 @@ Update__14AnimationStateFfbb @ 0x803c851c size=1152
 803c8788: 38a00000  li r5, 0
 803c878c: 38c0ffff  li r6, -1
 803c8790: 480003e9  bl 0x803c8b78 ; SetNextAnimState__14AnimationStateFQ219AnimationStateGraph10AnimStatesfbi
-803c8794: 4800001c  b 0x803c87b0 ; 
+803c8794: 4800001c  b 0x803c87b0 ;
 803c8798: c022d324  lfs f1, -0x2cdc(r2) ; f32 1.0 @0x80607864
 803c879c: 7fa3eb78  mr r3, r29
 803c87a0: 38800000  li r4, 0
@@ -166,7 +166,7 @@ Update__14AnimationStateFfbb @ 0x803c851c size=1152
 803c87ac: 480003cd  bl 0x803c8b78 ; SetNextAnimState__14AnimationStateFQ219AnimationStateGraph10AnimStatesfbi
 803c87b0: 3b600000  li r27, 0
 803c87b4: 3b800000  li r28, 0
-803c87b8: 4800001c  b 0x803c87d4 ; 
+803c87b8: 4800001c  b 0x803c87d4 ;
 803c87bc: 7c7de214  add r3, r29, r28
 803c87c0: 7fa4eb78  mr r4, r29
 803c87c4: 38630070  addi r3, r3, 0x70
@@ -219,7 +219,7 @@ Update__14AnimationStateFfbb @ 0x803c851c size=1152
 803c8880: 809d0034  lwz r4, 0x34(r29)
 803c8884: 818c0020  lwz r12, 0x20(r12)
 803c8888: 7d8903a6  mtctr r12
-803c888c: 4e800421  bctrl 
+803c888c: 4e800421  bctrl
 803c8890: 807d0000  lwz r3, 0(r29)
 803c8894: 38a00000  li r5, 0
 803c8898: 809d0030  lwz r4, 0x30(r29)
@@ -232,7 +232,7 @@ Update__14AnimationStateFfbb @ 0x803c851c size=1152
 803c88b4: 80bd0034  lwz r5, 0x34(r29)
 803c88b8: 80dd0030  lwz r6, 0x30(r29)
 803c88bc: 4802e6ad  bl 0x803f6f68 ; Blend__Q28EAGLAnim13FnPoseBlenderFifPCfPCfPfPCQ28EAGLAnim8BoneMask
-803c88c0: 48000034  b 0x803c88f4 ; 
+803c88c0: 48000034  b 0x803c88f4 ;
 803c88c4: 807d0000  lwz r3, 0(r29)
 803c88c8: 7fc5f378  mr r5, r30
 803c88cc: 809d0030  lwz r4, 0x30(r29)
@@ -244,7 +244,7 @@ Update__14AnimationStateFfbb @ 0x803c851c size=1152
 803c88e4: 809d0030  lwz r4, 0x30(r29)
 803c88e8: 818c0020  lwz r12, 0x20(r12)
 803c88ec: 7d8903a6  mtctr r12
-803c88f0: 4e800421  bctrl 
+803c88f0: 4e800421  bctrl
 803c88f4: 807d002c  lwz r3, 0x2c(r29)
 803c88f8: 2c030000  cmpwi r3, 0
 803c88fc: 41820020  beq 0x803c891c
@@ -254,7 +254,7 @@ Update__14AnimationStateFfbb @ 0x803c851c size=1152
 803c890c: 80bd0030  lwz r5, 0x30(r29)
 803c8910: 80dd0034  lwz r6, 0x34(r29)
 803c8914: 7d8903a6  mtctr r12
-803c8918: 4e800421  bctrl 
+803c8918: 4e800421  bctrl
 803c891c: 807d0000  lwz r3, 0(r29)
 803c8920: 7fc6f378  mr r6, r30
 803c8924: 809d0030  lwz r4, 0x30(r29)
@@ -267,7 +267,7 @@ Update__14AnimationStateFfbb @ 0x803c851c size=1152
 803c8940: 41820034  beq 0x803c8974
 803c8944: 3b600000  li r27, 0
 803c8948: 3bc00000  li r30, 0
-803c894c: 4800001c  b 0x803c8968 ; 
+803c894c: 4800001c  b 0x803c8968 ;
 803c8950: 7c7df214  add r3, r29, r30
 803c8954: 7fa4eb78  mr r4, r29
 803c8958: 38630070  addi r3, r3, 0x70
@@ -286,4 +286,4 @@ Update__14AnimationStateFfbb @ 0x803c851c size=1152
 803c898c: 80010064  lwz r0, 0x64(r1)
 803c8990: 7c0803a6  mtlr r0
 803c8994: 38210060  addi r1, r1, 0x60
-803c8998: 4e800020  blr 
+803c8998: 4e800020  blr

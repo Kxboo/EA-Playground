@@ -11,7 +11,7 @@ GetStateTime__14AnimationStateFv @ 0x803c8cd4 size=64
 803c8cf8: 7c630214  add r3, r3, r0
 803c8cfc: 88030031  lbz r0, 0x31(r3)
 803c8d00: 2c000000  cmpwi r0, 0
-803c8d04: 4d820020  beqlr 
+803c8d04: 4d820020  beqlr
 803c8d08: c002d324  lfs f0, -0x2cdc(r2) ; f32 1.0 @0x80607864
 803c8d0c: ec200828  fsubs f1, f0, f1
-803c8d10: 4e800020  blr 
+803c8d10: 4e800020  blr

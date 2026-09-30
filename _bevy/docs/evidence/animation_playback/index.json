@@ -433,7 +433,7 @@
     "_bevy/tools/animation_graph_oracle.py": "062d15d608223c9f8ffe8a57a06825dd9c2a1daefdb632c19f3934e5f690091a",
     "_bevy/tests/data/animation_playback_golden.json": "ff385416fd9865d217a332c44c1be133510740b9eb7736e76e57430df1255d28",
     "_bevy/tests/data/animation_graph_golden.json": "16608baf92599b3aea24a18b6ebe035c9e908c2164229232fd3d8f515e2024a3",
-    "_bevy/tools/animation_playback_evidence.py": "9b097b575ebdb9d55fa64deee5b1aaf963873118b4b4e93c31a8d5f06d5c8f45",
+    "_bevy/tools/animation_playback_evidence.py": "7608558d5879f206fccbd40eda09e01995f1a33a446839453f9bb8a8e0cad7e4",
     "_bevy/tools/character_input_oracle.py": "46b6a44466522fd47a10f988f4969c974b1dd0e4ee9e2be1c5e3d2b9e884b606",
     "_bevy/tools/re_functions.py": "96cd412c32d2f8d9cb2576c75f48283af41e5f3db0e701b46739ef9ec23891e5",
     "_bevy/tools/tetherball_lifecycle_oracle.py": "339c0399faf78003480ed8c6662eb8db95189b12be6fc71b13f4006e8e9f9d25",

@@ -52,7 +52,7 @@ def generate():
         assert match is not None, method
         line = rust[:match.start()].count('\n') + 1
         filename = f'{address:08x}-{label}.txt'
-        outputs[filename] = rf.annotate(exe, symbol) + '\n'
+        outputs[filename] = '\n'.join(line.rstrip() for line in rf.annotate(exe, symbol).splitlines()) + '\n'
         rows.append(dict(name=label, symbol=symbol, address=f'0x{address:08x}',
                          size_bytes=info['size'],
                          instruction_bytes_sha256=digest(exe.read(address, info['size'])),

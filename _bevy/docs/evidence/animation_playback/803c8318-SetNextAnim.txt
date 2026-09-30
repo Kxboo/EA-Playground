@@ -24,13 +24,13 @@ SetNextAnim__14AnimationStateFQ219AnimationStateGraph10AnimStates @ 0x803c8318 s
 803c8370: 81830000  lwz r12, 0(r3)
 803c8374: 818c0010  lwz r12, 0x10(r12)
 803c8378: 7d8903a6  mtctr r12
-803c837c: 4e800421  bctrl 
+803c837c: 4e800421  bctrl
 803c8380: 7c641b78  mr r4, r3
 803c8384: 806de54c  lwz r3, -0x1ab4(r13) ; @0x8060242c
 803c8388: 81830000  lwz r12, 0(r3)
 803c838c: 818c0030  lwz r12, 0x30(r12)
 803c8390: 7d8903a6  mtctr r12
-803c8394: 4e800421  bctrl 
+803c8394: 4e800421  bctrl
 803c8398: 907e003c  stw r3, 0x3c(r30)
 803c839c: c01f0010  lfs f0, 0x10(r31)
 803c83a0: d01e0058  stfs f0, 0x58(r30)
@@ -43,7 +43,7 @@ SetNextAnim__14AnimationStateFQ219AnimationStateGraph10AnimStates @ 0x803c8318 s
 803c83bc: 389e004c  addi r4, r30, 0x4c
 803c83c0: 818c0018  lwz r12, 0x18(r12)
 803c83c4: 7d8903a6  mtctr r12
-803c83c8: 4e800421  bctrl 
+803c83c8: 4e800421  bctrl
 803c83cc: c05e004c  lfs f2, 0x4c(r30)
 803c83d0: c002d324  lfs f0, -0x2cdc(r2) ; f32 1.0 @0x80607864
 803c83d4: c03e006c  lfs f1, 0x6c(r30)
@@ -65,30 +65,30 @@ SetNextAnim__14AnimationStateFQ219AnimationStateGraph10AnimStates @ 0x803c8318 s
 803c8414: ec0000b2  fmuls f0, f0, f2
 803c8418: d03e0060  stfs f1, 0x60(r30)
 803c841c: d01e0064  stfs f0, 0x64(r30)
-803c8420: 48000074  b 0x803c8494 ; 
+803c8420: 48000074  b 0x803c8494 ;
 803c8424: 81830000  lwz r12, 0(r3)
 803c8428: 38800000  li r4, 0
 803c842c: 818c0010  lwz r12, 0x10(r12)
 803c8430: 7d8903a6  mtctr r12
-803c8434: 4e800421  bctrl 
+803c8434: 4e800421  bctrl
 803c8438: 807e003c  lwz r3, 0x3c(r30)
 803c843c: 38810008  addi r4, r1, 8
 803c8440: 81830000  lwz r12, 0(r3)
 803c8444: 818c0018  lwz r12, 0x18(r12)
 803c8448: 7d8903a6  mtctr r12
-803c844c: 4e800421  bctrl 
+803c844c: 4e800421  bctrl
 803c8450: 807e003c  lwz r3, 0x3c(r30)
 803c8454: 38800001  li r4, 1
 803c8458: 81830000  lwz r12, 0(r3)
 803c845c: 818c0010  lwz r12, 0x10(r12)
 803c8460: 7d8903a6  mtctr r12
-803c8464: 4e800421  bctrl 
+803c8464: 4e800421  bctrl
 803c8468: 807e003c  lwz r3, 0x3c(r30)
 803c846c: 389e004c  addi r4, r30, 0x4c
 803c8470: 81830000  lwz r12, 0(r3)
 803c8474: 818c0018  lwz r12, 0x18(r12)
 803c8478: 7d8903a6  mtctr r12
-803c847c: 4e800421  bctrl 
+803c847c: 4e800421  bctrl
 803c8480: c03e004c  lfs f1, 0x4c(r30)
 803c8484: c0010008  lfs f0, 8(r1)
 803c8488: ec010024  fdivs f0, f1, f0
@@ -108,7 +108,7 @@ SetNextAnim__14AnimationStateFQ219AnimationStateGraph10AnimStates @ 0x803c8318 s
 803c84c0: c01e0058  lfs f0, 0x58(r30)
 803c84c4: ec01002a  fadds f0, f1, f0
 803c84c8: d01e0048  stfs f0, 0x48(r30)
-803c84cc: 48000018  b 0x803c84e4 ; 
+803c84cc: 48000018  b 0x803c84e4 ;
 803c84d0: 881f0031  lbz r0, 0x31(r31)
 803c84d4: 28000001  cmplwi r0, 1
 803c84d8: 40820008  bne 0x803c84e0
@@ -119,4 +119,4 @@ SetNextAnim__14AnimationStateFQ219AnimationStateGraph10AnimStates @ 0x803c8318 s
 803c84ec: 83c10018  lwz r30, 0x18(r1)
 803c84f0: 7c0803a6  mtlr r0
 803c84f4: 38210020  addi r1, r1, 0x20
-803c84f8: 4e800020  blr 
+803c84f8: 4e800020  blr
