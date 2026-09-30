@@ -11,6 +11,7 @@ mod sha256;
 mod archive;
 mod gsh;
 mod model;
+mod assets;
 
 use bevy::{prelude::*,render::view::window::screenshot::{Screenshot,save_to_disk},winit::WinitSettings};
 use bevy_egui::{EguiPlugin,EguiPrimaryContextPass};

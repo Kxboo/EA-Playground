@@ -7,7 +7,8 @@ use bevy_egui::{egui,EguiContexts,EguiTextureHandle};
 use serde::{Deserialize,Serialize};
 use serde_json::{Value,json};
 use std::{collections::{HashMap,VecDeque},path::PathBuf,time::Instant};
-use crate::{bridge::{self,Bridge},locomotion::{InputKind,Locomotion,TICK_HZ},menu::AppMode,recovered as k};
+use crate::{archive,assets,bridge::{self,Bridge},gsh,locomotion::{InputKind,Locomotion,TICK_HZ},menu::AppMode,model,recovered as k};
+use std::sync::{Mutex,mpsc};
 
 #[derive(Component,Debug,Clone,Serialize,Deserialize)]
 pub struct OriginalAsset {
@@ -48,6 +49,46 @@ const SKY_MODELS:[(&str,bool);3]=[("skybox",false),("skybox_mountain_city_ring",
 #[derive(Resource,Default)] pub struct GameInput{pub x:f32,pub y:f32,pub jump:bool,pub scripted:bool}
 
 struct Job{key:String,req:Value}
+/// What the loader thread hands to the main thread (CPU-side only; Bevy assets are created on the main thread).
+enum LoadMsg{Boot(Vec<u8>,usize,usize),Csv(&'static str,Vec<Vec<String>>),Expect{models:usize},Model{kind:ModelKind,result:Result<assets::BuiltModel,String>},Log(String)}
+#[derive(Clone)] enum ModelKind{Layer(String),Sky{clouds:bool},Prop(String)}
+
+fn parse_csv(d:&[u8])->Vec<Vec<String>>{
+    String::from_utf8_lossy(d).trim_start_matches(char::from_u32(0xfeff).unwrap()).lines().filter(|l|!l.trim().is_empty()).map(|l|l.split(',').map(|c|c.trim().trim_matches('"').to_string()).collect()).collect()
+}
+
+/// Decodes everything the world needs with the Rust decoders: boot screen, CSV tables, sky, world layers, props.
+fn loader(tx:mpsc::Sender<LoadMsg>,placeables:Vec<Placeable>){
+    let p=|rel:&str|src(rel);
+    let schemas=model::Schemas::embedded();
+    let strap=p("boot/strapwarn_standard_english.gsh");
+    match archive::read_virtual(&strap).and_then(|(d,_)|{let g=gsh::parse(&d)?;let e=g.entries.first().ok_or("empty GSH")?.clone();gsh::decode(&e,&d)}){
+        Ok((rgba,w,h))=>{let _=tx.send(LoadMsg::Boot(rgba,w,h));}
+        Err(e)=>{let _=tx.send(LoadMsg::Log(format!("boot screen: {e}")));}
+    }
+    let big=p("world/world.big");
+    let mut layers:Vec<String>=vec![];
+    for (key,source) in [("filelist",format!("{big}::worldfilelist.csv")),("bounds",format!("{big}::world.csv")),("controls",format!("{}::controls.csv",p("csvs.viv")))]{
+        match archive::read_virtual(&source){
+            Ok((d,_))=>{
+                let rows=parse_csv(&d);
+                if key=="filelist"{
+                    // worldfilelist.csv (FILE_NAME,IS_HIGH): IS_HIGH=1 rows are detailed area chunks (<name>-high*.o), IS_HIGH=0 the whole-world mesh.
+                    for row in rows.iter().skip(1){for sfx in WORLD_SUFFIXES{layers.push(if row.get(1).map(String::as_str)==Some("1"){format!("{}-high{sfx}.o",row[0])}else{format!("{}{sfx}.o",row[0])});}}
+                }
+                let _=tx.send(LoadMsg::Csv(key,rows));
+            }
+            Err(e)=>{let _=tx.send(LoadMsg::Log(format!("{key}: {e}")));}
+        }
+    }
+    let mut list:Vec<(ModelKind,String)>=vec![];
+    for (name,clouds) in SKY_MODELS{list.push((ModelKind::Sky{clouds},format!("{}::{name}.o",p(&format!("placeables/{name}.viv")))));}
+    for l in layers{list.push((ModelKind::Layer(l.clone()),format!("{big}::{l}")));}
+    let mut prop_assets:Vec<String>=placeables.iter().map(|q|q.asset.clone()).collect();prop_assets.sort();prop_assets.dedup();
+    for a in prop_assets{list.push((ModelKind::Prop(a.clone()),format!("{}::{a}.o",p(&format!("placeables/{}.viv",a.to_lowercase())))));}
+    let _=tx.send(LoadMsg::Expect{models:list.len()});
+    for (kind,source) in list{let _=tx.send(LoadMsg::Model{kind,result:assets::build(&source,&schemas)});}
+}
 #[derive(PartialEq,Clone,Debug)] enum Phase{Loading,Building,Playing,Failed(String)}
 
 pub struct Ground{cell:f32,min:Vec2,cols:usize,rows:usize,cells:Vec<Vec<u32>>,walls:Vec<Vec<u32>>,tris:Vec<[Vec3;3]>}
@@ -111,7 +152,7 @@ fn seg_cross(p:Vec2,q:Vec2,r:Vec2,s:Vec2)->bool{
 
 #[derive(Resource)]
 pub struct Game{
-    bridge:Bridge,jobs:VecDeque<Job>,pending:Option<(u64,String)>,results:HashMap<String,Value>,
+    bridge:Bridge,jobs:VecDeque<Job>,pending:Option<(u64,String)>,results:HashMap<String,Value>,rx:Mutex<mpsc::Receiver<LoadMsg>>,filelist:Vec<(String,bool)>,models_expected:Option<usize>,models_received:usize,
     phase:Phase,started:Instant,pub log:Vec<String>,boot_image:Option<Handle<Image>>,boot_egui:Option<egui::TextureId>,
     layers:Vec<(String,String)>,layers_expected:usize,layers_ready:usize,layers_empty:usize,clip_handles:Vec<Handle<AnimationClip>>,
     ground:Option<Ground>,build_wait:u32,player:Option<Entity>,pub spawn:Vec3,pub gravity:f32,pub world_radius:f32,sky_expected:usize,sky_ready:usize,sky_angle:f32,pub placeables:Vec<Placeable>,pub props_spawned:usize,pub props_failed:usize,pub collision_bodies:usize,pub collision_files:usize,
@@ -135,25 +176,13 @@ impl Game{
                 let a=p["pos"].as_array().unwrap();
                 self.placeables.push(Placeable{id:p["id"].as_str().unwrap_or("").into(),asset:p["asset"].as_str().unwrap_or("").into(),pos:Vec3::new(a[0].as_f64().unwrap() as f32,a[1].as_f64().unwrap() as f32,a[2].as_f64().unwrap() as f32),orientation_deg:p["orient"].as_f64().unwrap_or(0.) as f32,physics:p["physics"].as_str().map(String::from)});
             }
-            let mut assets:Vec<String>=self.placeables.iter().map(|p|p.asset.clone()).collect();assets.sort();assets.dedup();
-            for a in assets{
-                let viv=src(&format!("placeables/{}.viv",a.to_lowercase()));
-                self.jobs.push_back(Job{key:format!("prop:{a}"),req:json!({"command":"preview","source":format!("{viv}::{a}.o")})});
-            }
         }
         if let Some(l)=r.get("start_location").and_then(v3){self.results.insert("db_start".into(),json!([l.x,l.y,l.z]));self.spawn_from_db=true;}
     }
     pub fn new(selftest:Option<SelfTest>)->Self{
         let mut jobs=VecDeque::new();
-        let strap=src("boot/strapwarn_standard_english.gsh");
-        jobs.push_back(Job{key:"boot".into(),req:json!({"command":"preview","source":strap})});
-        let big=src("world/world.big");
-        jobs.push_back(Job{key:"filelist".into(),req:json!({"command":"inspect","source":format!("{big}::worldfilelist.csv")})});
-        jobs.push_back(Job{key:"bounds".into(),req:json!({"command":"inspect","source":format!("{big}::world.csv")})});
-        jobs.push_back(Job{key:"controls".into(),req:json!({"command":"inspect","source":format!("{}::controls.csv",src("csvs.viv"))})});
         let model=format!("{}::alicia.viv::alicia.o",src("characters/models/characters.viv"));
         let skel=format!("{}::player_skel.ske",src("characters/player_anims.viv"));let bank=format!("{}::player_anims.anm",src("characters/player_anims.viv"));
-        for (name,_) in SKY_MODELS{jobs.push_back(Job{key:format!("sky:{name}"),req:json!({"command":"preview","source":format!("{}::{name}.o",src(&format!("placeables/{name}.viv")))})});}
         for (name,index) in CLIPS{jobs.push_back(Job{key:format!("clip:{name}"),req:json!({"command":"preview","source":model,"skeleton":skel,"bank":bank,"index":index})});}
         // Player start from the game's own Attrib database (character_info/player), read by the Rust vault loader.
         let mut db_results=HashMap::new();
@@ -180,11 +209,14 @@ impl Game{
             },
             _=>log.push("db.vlt/db.bin not found".into()),
         }
-        let mut g=Self{bridge:Bridge::start(),jobs,pending:None,results:HashMap::new(),phase:Phase::Loading,started:Instant::now(),log,
+        let (tx,rx)=mpsc::channel();
+        let mut g=Self{bridge:Bridge::start(),jobs,pending:None,results:HashMap::new(),rx:Mutex::new(rx),filelist:vec![],models_expected:None,models_received:0,phase:Phase::Loading,started:Instant::now(),log,
             boot_image:None,boot_egui:None,layers:vec![],layers_expected:0,layers_ready:0,layers_empty:0,clip_handles:vec![],ground:None,build_wait:0,player:None,spawn:Vec3::ZERO,
             gravity:9.81,world_radius:0.,sky_expected:0,sky_ready:0,sky_angle:0.,placeables:vec![],props_spawned:0,props_failed:0,collision_bodies:0,collision_files:0,db_summary:String::new(),start_dir:Vec3::Z,spawn_from_db:false,tri_count:0,controls_rows:0,combat_bindings:0,world_bounds:None,boot_shown:None,boot_shot:false,load_seconds:0.,selftest};
         // (fields set below)
-        g.apply_db(db_results);g
+        g.apply_db(db_results);
+        let list=g.placeables.clone();std::thread::spawn(move||loader(tx,list));
+        g
     }
 }
 
@@ -198,104 +230,88 @@ pub fn plugin(app:&mut App){
 
 fn scene_path(v:&Value)->Option<String>{v["asset"].as_str().map(|s|s.to_owned())}
 
-fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>,mut graphs:ResMut<Assets<AnimationGraph>>,mut settings:ResMut<WinitSettings>,mut redraw:MessageWriter<RequestRedraw>){
+fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,assets_srv:Res<AssetServer>,mut meshes:ResMut<Assets<Mesh>>,mut materials:ResMut<Assets<StandardMaterial>>,mut images:ResMut<Assets<Image>>,mut settings:ResMut<WinitSettings>,mut redraw:MessageWriter<RequestRedraw>){
     let Some(g)=g.as_mut() else{return};let g=&mut **g;
     settings.focused_mode=UpdateMode::Continuous;settings.unfocused_mode=UpdateMode::Continuous;redraw.write(RequestRedraw);
     if g.phase!=Phase::Loading{return}
+    // Rust loader thread: boot screen, tables, sky, world layers and props.
+    let msgs:Vec<LoadMsg>=g.rx.lock().unwrap().try_iter().collect();
+    for m in msgs{
+        match m{
+            LoadMsg::Log(l)=>g.log.push(l),
+            LoadMsg::Boot(rgba,w,h)=>{
+                g.boot_image=Some(images.add(Image::new(bevy::render::render_resource::Extent3d{width:w as u32,height:h as u32,depth_or_array_layers:1},bevy::render::render_resource::TextureDimension::D2,rgba,bevy::render::render_resource::TextureFormat::Rgba8UnormSrgb,bevy::asset::RenderAssetUsages::default())));
+                g.log.push("decoded boot screen".into());
+            }
+            LoadMsg::Csv(key,rows)=>{
+                g.log.push(format!("loaded {key}.csv ({} rows)",rows.len()));
+                match key{
+                    "filelist"=>{g.filelist=rows.iter().skip(1).filter_map(|r|Some((r.first()?.clone(),r.get(1).map(String::as_str)==Some("1")))).collect();g.layers_expected=g.filelist.len()*WORLD_SUFFIXES.len();}
+                    "bounds"=>{if let Some(row)=rows.get(1){let f=|i:usize|row.get(i).and_then(|c|c.parse::<f32>().ok()).unwrap_or(0.);g.world_bounds=Some((f(0),f(1),f(2)));g.world_radius=f(2);}}
+                    "controls"=>{g.controls_rows=rows.len().saturating_sub(1);g.combat_bindings=rows.iter().filter(|r|r.get(1).map(String::as_str)==Some("STATE_COMBAT")).count();}
+                    _=>{}
+                }
+            }
+            LoadMsg::Expect{models}=>{g.models_expected=Some(models);g.sky_expected=SKY_MODELS.len();}
+            LoadMsg::Model{kind,result}=>{
+                g.models_received+=1;
+                match (kind,result){
+                    (ModelKind::Layer(name),Ok(b))=>{
+                        if b.prims.is_empty(){g.layers_expected-=1;g.layers_empty+=1;g.log.push(format!("{name} has an empty draw list; skipped"));}
+                        else{
+                            let up=assets::upload(&b,&mut meshes,&mut materials,&mut images,false);
+                            assets::spawn(&mut commands,&up,(GameEntity,WorldLayer(name.clone()),Transform::IDENTITY,OriginalAsset{evidence:EvidenceLevel::AssetDerived,source:name.clone(),decoder_version:"rust-model-1".into()}),None);
+                            g.layers_ready+=1;
+                        }
+                        for w in b.warnings.iter().take(2){g.log.push(w.clone());}
+                    }
+                    (ModelKind::Sky{clouds},Ok(b))=>{
+                        let up=assets::upload(&b,&mut meshes,&mut materials,&mut images,true);
+                        assets::spawn(&mut commands,&up,(GameEntity,SkyLayer{clouds},Transform::IDENTITY,OriginalAsset{evidence:EvidenceLevel::AssetDerived,source:"SkyDome".into(),decoder_version:"rust-model-1".into()}),Some(RenderLayers::layer(SKY_LAYER)));
+                        g.sky_ready+=1;
+                    }
+                    (ModelKind::Prop(asset),Ok(b))=>{
+                        let up=assets::upload(&b,&mut meshes,&mut materials,&mut images,false);
+                        let radius=g.world_radius;
+                        for q in g.placeables.clone().into_iter().filter(|q|q.asset==asset){
+                            // Positions are flat gameplay coordinates; the display is bent like the world.
+                            let t=Transform::from_xyz(q.pos.x,q.pos.y-bend(radius,q.pos.x,q.pos.z),q.pos.z).with_rotation(Quat::from_rotation_y(q.orientation_deg.to_radians()));
+                            assets::spawn(&mut commands,&up,(GameEntity,PlaceableProp,Name::new(q.id.clone()),t,OriginalAsset{evidence:EvidenceLevel::AssetDerived,source:asset.clone(),decoder_version:"rust-model-1".into()}),None);
+                            g.props_spawned+=1;
+                        }
+                    }
+                    (kind,Err(e))=>{
+                        let what=match &kind{ModelKind::Layer(n)=>n.clone(),ModelKind::Sky{..}=>"sky".into(),ModelKind::Prop(a)=>format!("prop {a}")};
+                        g.log.push(format!("FAILED {what}: {e}"));
+                        match kind{ModelKind::Prop(a)=>{g.props_failed+=g.placeables.iter().filter(|q|q.asset==a).count()},ModelKind::Layer(_)=>{g.layers_expected=g.layers_expected.saturating_sub(1)},ModelKind::Sky{..}=>{g.sky_expected=g.sky_expected.saturating_sub(1)}}
+                    }
+                }
+            }
+        }
+    }
+    // Python worker: only the character clips remain (skeleton/animation decoders are not ported yet).
     let responses:Vec<Value>=g.bridge.rx.lock().unwrap().try_iter().collect();
     for r in responses{
         let Some((id,key))=g.pending.clone() else{continue};
         if r["id"].as_u64()!=Some(id){continue}
         g.pending=None;
-        if r["ok"]!=true{
-            let e=format!("{key}: {}",r["error"].as_str().unwrap_or("decoder error"));g.log.push(format!("FAILED {e}"));
-            if key.starts_with("prop:"){g.props_failed+=g.placeables.iter().filter(|p|key=="prop:".to_string()+&p.asset).count();continue} // a missing prop must not stop the game
-            g.phase=Phase::Failed(e);return
-        }
+        if r["ok"]!=true{let e=format!("{key}: {}",r["error"].as_str().unwrap_or("decoder error"));g.log.push(format!("FAILED {e}"));g.phase=Phase::Failed(e);return}
         let value=r["value"].clone();
         g.log.push(format!("loaded {key}"));
-        match key.as_str(){
-            "boot"=>{if let Some(p)=scene_path(&value){g.boot_image=Some(assets.load(p));}}
-            "filelist"=>{
-                // worldfilelist.csv (FILE_NAME,IS_HIGH): every row is a world layer; IS_HIGH=1 rows are the detailed area chunks,
-                // the IS_HIGH=0 row is the whole-world mesh.
-                let rows=value["rows"].as_array().cloned().unwrap_or_default();
-                let big=src("world/world.big");
-                for row in rows.iter().skip(1){
-                    let (name,high)=(row[0].as_str().unwrap_or(""),row[1].as_str().unwrap_or("1"));
-                    {for s in WORLD_SUFFIXES{
-                        let file=if high=="1"{format!("{name}-high{s}.o")}else{format!("{name}{s}.o")}; // IS_HIGH=1 entries map to <name>-high[-variant].o inside world.big
-                        g.jobs.push_back(Job{key:format!("layer:{file}"),req:json!({"command":"preview","source":format!("{big}::{file}")})});
-                        g.layers_expected+=1;
-                    }}
-                }
-            }
-            "bounds"=>{if let Some(row)=value["rows"].as_array().and_then(|r|r.get(1)){let f=|i:usize|row[i].as_str().unwrap_or("0").parse::<f32>().unwrap_or(0.);g.world_bounds=Some((f(0),f(1),f(2)));g.world_radius=f(2);}}
-            "controls"=>{let rows=value["rows"].as_array().cloned().unwrap_or_default();g.controls_rows=rows.len().saturating_sub(1);g.combat_bindings=rows.iter().filter(|r|r[1]=="STATE_COMBAT").count();}
-            k if k.starts_with("layer:")=>{
-                if scene_path(&value).is_none(){
-                    // Decoder reports an empty draw list (see FINDINGS.md: eight empty models); nothing to spawn.
-                    g.layers_expected-=1;g.layers_empty+=1;g.log.push(format!("{} has an empty draw list; skipped",k.trim_start_matches("layer:")));
-                }
-                if let Some(p)=scene_path(&value){
-                    let name=k.trim_start_matches("layer:").to_string();
-                    let e=commands.spawn((GameEntity,WorldLayer(name.clone()),WorldAssetRoot(assets.load(GltfAssetLabel::Scene(0).from_asset(p.clone()))),Transform::IDENTITY,
-                        OriginalAsset{evidence:EvidenceLevel::AssetDerived,source:value["source"].as_str().unwrap_or("").into(),decoder_version:value["decoder_version"].as_str().unwrap_or("").into()})).observe(layer_ready).id();
-                    let _=e;g.layers.push((name,p));
-                }
-            }
-            k if k.starts_with("prop:")=>{
-                let asset=k.trim_start_matches("prop:").to_string();
-                if let Some(p)=scene_path(&value){
-                    let radius=g.world_radius;
-                    let list:Vec<Placeable>=g.placeables.iter().filter(|q|q.asset==asset).cloned().collect();
-                    for q in list{
-                        // Positions are flat gameplay coordinates; the display is bent like the world.
-                        let t=Transform::from_xyz(q.pos.x,q.pos.y-bend(radius,q.pos.x,q.pos.z),q.pos.z).with_rotation(Quat::from_rotation_y(q.orientation_deg.to_radians()));
-                        commands.spawn((GameEntity,PlaceableProp,Name::new(q.id.clone()),WorldAssetRoot(assets.load(GltfAssetLabel::Scene(0).from_asset(p.clone()))),t,
-                            OriginalAsset{evidence:EvidenceLevel::AssetDerived,source:value["source"].as_str().unwrap_or("").into(),decoder_version:value["decoder_version"].as_str().unwrap_or("").into()}));
-                        g.props_spawned+=1;
-                    }
-                }
-            }
-            k if k.starts_with("sky:")=>{
-                if let Some(p)=scene_path(&value){
-                    let name=k.trim_start_matches("sky:");let clouds=SKY_MODELS.iter().any(|(n,c)|*n==name&&*c);
-                    commands.spawn((GameEntity,SkyLayer{clouds},RenderLayers::layer(SKY_LAYER),WorldAssetRoot(assets.load(GltfAssetLabel::Scene(0).from_asset(p))),Transform::IDENTITY,
-                        OriginalAsset{evidence:EvidenceLevel::AssetDerived,source:value["source"].as_str().unwrap_or("").into(),decoder_version:value["decoder_version"].as_str().unwrap_or("").into()})).observe(sky_ready);
-                    g.sky_expected+=1;
-                }
-            }
-            k if k.starts_with("clip:")=>{
-                let p=scene_path(&value).unwrap_or_default();
-                g.clip_handles.push(assets.load(GltfAssetLabel::Animation(0).from_asset(p.clone())));
-                g.results.insert(format!("scene:{}",k),json!(p));
-            }
-            _=>{}
+        if key.starts_with("clip:"){
+            let p=scene_path(&value).unwrap_or_default();
+            g.clip_handles.push(assets_srv.load(GltfAssetLabel::Animation(0).from_asset(p.clone())));
+            g.results.insert(format!("scene:{}",key),json!(p));
         }
         g.results.insert(key,value);
     }
-    if g.pending.is_none()&&g.jobs.is_empty()&&g.started.elapsed().as_secs_f32()>30.&&g.layers_ready<g.layers_expected&&g.layers_ready>0{
-        // Never hang on the boot screen: continue with the layers that did arrive and say so.
-        let (r,e)=(g.layers_ready,g.layers_expected);g.log.push(format!("WARNING: only {r}/{e} world layers became ready; continuing"));g.layers_expected=r;
-    }
     if g.pending.is_none(){
         if let Some(job)=g.jobs.pop_front(){let id=g.bridge.request(job.req);g.pending=Some((id,job.key));}
-        else if g.layers_ready>=g.layers_expected && g.sky_ready>=g.sky_expected && g.clip_handles.len()==CLIPS.len(){
-            let _=&mut graphs;
+        else if g.models_expected.is_some_and(|n|g.models_received>=n) && g.clip_handles.len()==CLIPS.len(){
             let boot_done=g.boot_shown.map(|t|t.elapsed().as_secs_f32()>=MIN_BOOT_SECONDS).unwrap_or(g.boot_image.is_none());
             if boot_done{g.phase=Phase::Building;g.log.push("world and player assets ready".into());}
         }
     }
-}
-
-/// Sky layers are unlit, double-sided, and confined to the sky render layer (drawn by the sky camera behind the world).
-fn sky_ready(ev:On<WorldInstanceReady>,mut commands:Commands,mut g:Option<ResMut<Game>>,children:Query<&Children>,mats:Query<&MeshMaterial3d<StandardMaterial>>,mut materials:ResMut<Assets<StandardMaterial>>){
-    for d in children.iter_descendants(ev.entity){
-        commands.entity(d).insert(RenderLayers::layer(SKY_LAYER));
-        if let Ok(m)=mats.get(d){if let Some(mut mat)=materials.get_mut(&m.0){mat.unlit=true;mat.cull_mode=None;mat.double_sided=true;}}
-    }
-    if let Some(g)=g.as_mut(){g.sky_ready+=1;let n=g.sky_ready;g.log.push(format!("sky layer ready ({n})"));}
 }
 
 /// `SkyDome::Update` (0x803c6694): the cloud layer's angle advances by 0.012 rad/s (wrapped at 2 pi); `Draw` (0x803c6724)
@@ -308,7 +324,6 @@ fn sky_update(g:Option<ResMut<Game>>,time:Res<Time>,mut layers:Query<(&SkyLayer,
     if let (Ok(m),Ok(mut c))=(main.single(),sky_cam.single_mut()){*c=*m;}
 }
 
-fn layer_ready(_e:On<WorldInstanceReady>,mut g:Option<ResMut<Game>>){if let Some(g)=g.as_mut(){g.layers_ready+=1;let n=g.layers_ready;g.log.push(format!("world layer ready ({n})"));}}
 
 fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer>,mut graphs:ResMut<Assets<AnimationGraph>>,cam:Query<Entity,With<GameCamera>>){
     let Some(g)=g.as_mut() else{return};let g=&mut **g;
@@ -316,7 +331,7 @@ fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,assets:Res<AssetServer
     g.build_wait+=1;if g.build_wait<3{return} // let transforms propagate
     // Terrain/prop collision: the Havok files the original game loads for each world area (physics/<area>.hkx).
     let classes=crate::havok::ClassTable::embedded();
-    let areas:Vec<String>=g.results.get("filelist").and_then(|v|v["rows"].as_array()).map(|rows|rows.iter().skip(1).filter(|r|r[1]=="1").filter_map(|r|r[0].as_str().map(String::from)).collect()).unwrap_or_default();
+    let areas:Vec<String>=g.filelist.iter().filter(|(_,high)|*high).map(|(n,_)|n.clone()).collect();
     let dir=bridge::data_root().join("files").join("data").join("physics");
     let mut tris:Vec<[Vec3;3]>=Vec::new();
     for area in &areas{

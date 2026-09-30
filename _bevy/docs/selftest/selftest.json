@@ -6,7 +6,7 @@
       "ok": true
     },
     {
-      "detail": "3/3 layers ready; cloud angle 0.1824 rad after the run",
+      "detail": "3/3 layers ready; cloud angle 0.1665 rad after the run",
       "name": "SkyDome layers (skybox, mountain/city ring, clouds) loaded",
       "ok": true
     },
@@ -41,12 +41,12 @@
       "ok": true
     },
     {
-      "detail": "66 rows, 15 STATE_COMBAT",
+      "detail": "58 rows, 15 STATE_COMBAT",
       "name": "controls.csv parsed",
       "ok": true
     },
     {
-      "detail": "2080 Mesh3d entities",
+      "detail": "2056 Mesh3d entities",
       "name": "mesh entities in scene",
       "ok": true
     },
@@ -91,74 +91,19 @@
     "locomotion": "ExecutableDerived: LocalCharacterControl::Update 0x802eeb28, constants from recovered.rs",
     "terrain": "AssetDerived display mesh"
   },
-  "load_seconds": 3.921238899230957,
+  "load_seconds": 2.604875326156616,
   "log": [
     "Boot: reading original data files",
     "db.vlt: 75 types, 32 classes, 908 collections",
-    "loaded boot",
-    "loaded filelist",
-    "loaded bounds",
-    "loaded controls",
-    "loaded sky:skybox",
-    "sky layer ready (1)",
-    "loaded sky:skybox_mountain_city_ring",
-    "loaded sky:skybox_clouds",
-    "sky layer ready (2)",
-    "sky layer ready (3)",
+    "decoded boot screen",
+    "loaded filelist.csv (6 rows)",
+    "loaded bounds.csv (2 rows)",
+    "loaded controls.csv (59 rows)",
+    "playground-high-alphafade.o has an empty draw list; skipped",
+    "playground_park-high-fade.o has an empty draw list; skipped",
     "loaded clip:S_idle",
     "loaded clip:S_walk",
     "loaded clip:S_run",
-    "loaded prop:nature_gate_left",
-    "loaded prop:nature_gate_right",
-    "loaded prop:rc_track_car",
-    "loaded prop:schoolGate_left",
-    "loaded prop:schoolGate_right",
-    "loaded prop:stadium_gate_left",
-    "loaded prop:stadium_gate_right",
-    "loaded prop:swingset",
-    "loaded prop:teeter_totter",
-    "loaded prop:tetherball_pole_nature_w_ballrope",
-    "loaded prop:tetherball_pole_w_ball",
-    "loaded layer:playground-high.o",
-    "world layer ready (1)",
-    "loaded layer:playground-high-alpha.o",
-    "loaded layer:playground-high-fade.o",
-    "world layer ready (2)",
-    "loaded layer:playground-high-alphafade.o",
-    "playground-high-alphafade.o has an empty draw list; skipped",
-    "world layer ready (3)",
-    "loaded layer:playground_nature-high.o",
-    "loaded layer:playground_nature-high-alpha.o",
-    "loaded layer:playground_nature-high-fade.o",
-    "world layer ready (4)",
-    "loaded layer:playground_nature-high-alphafade.o",
-    "world layer ready (5)",
-    "world layer ready (6)",
-    "world layer ready (7)",
-    "loaded layer:playground_park-high.o",
-    "loaded layer:playground_park-high-alpha.o",
-    "world layer ready (8)",
-    "loaded layer:playground_park-high-fade.o",
-    "playground_park-high-fade.o has an empty draw list; skipped",
-    "world layer ready (9)",
-    "loaded layer:playground_park-high-alphafade.o",
-    "loaded layer:playground_stadium-high.o",
-    "world layer ready (10)",
-    "loaded layer:playground_stadium-high-alpha.o",
-    "world layer ready (11)",
-    "loaded layer:playground_stadium-high-fade.o",
-    "world layer ready (12)",
-    "loaded layer:playground_stadium-high-alphafade.o",
-    "world layer ready (13)",
-    "world layer ready (14)",
-    "loaded layer:world-low-all.o",
-    "loaded layer:world-low-all-alpha.o",
-    "loaded layer:world-low-all-fade.o",
-    "world layer ready (15)",
-    "loaded layer:world-low-all-alphafade.o",
-    "world layer ready (16)",
-    "world layer ready (17)",
-    "world layer ready (18)",
     "world and player assets ready",
     "gate1_right collision: +0 triangles",
     "nature_gate_right collision: +12 triangles",
@@ -181,7 +126,7 @@
       ],
       "speed": 0.0,
       "step": "settle",
-      "t": 1.5054293870925903,
+      "t": 1.5016964673995972,
       "weights": [
         1.0,
         0.0,
@@ -197,10 +142,10 @@
       ],
       "speed": 5.0,
       "step": "forward",
-      "t": 4.0045599937438965,
+      "t": 4.001405239105225,
       "weights": [
-        4.739156844735248e-10,
-        3.6311670337241253e-10,
+        4.5429865425106186e-10,
+        3.57294638320127e-10,
         0.9999998211860657
       ]
     },
@@ -213,10 +158,10 @@
       ],
       "speed": 5.0,
       "step": "left",
-      "t": 6.504467010498047,
+      "t": 6.500635147094727,
       "weights": [
-        2.2330831480301786e-19,
-        1.7109994448702976e-19,
+        2.1647774164789053e-19,
+        1.702544108046357e-19,
         0.9999998807907104
       ]
     },
@@ -229,10 +174,10 @@
       ],
       "speed": 7.071067810058594,
       "step": "diagonal",
-      "t": 8.50401496887207,
+      "t": 8.50081729888916,
       "weights": [
-        7.784708213198338e-27,
-        5.964678993477134e-27,
+        7.503032484739949e-27,
+        5.900948430873405e-27,
         0.9999998807907104
       ]
     },
@@ -245,11 +190,11 @@
       ],
       "speed": 0.0,
       "step": "jump",
-      "t": 8.903695106506348,
+      "t": 8.90086841583252,
       "weights": [
-        0.8985668420791626,
-        0.025197476148605347,
-        0.07623568177223206
+        0.8989344835281372,
+        0.0251441802829504,
+        0.07592133432626724
       ]
     },
     {
@@ -261,11 +206,11 @@
       ],
       "speed": 0.0,
       "step": "final",
-      "t": 9.904829025268555,
+      "t": 9.900431632995605,
       "weights": [
-        0.9999812841415405,
-        4.652571078622714e-6,
-        0.000014076485967962071
+        0.9999811053276062,
+        4.71039356852998e-6,
+        0.000014222746358427685
       ]
     }
   ]

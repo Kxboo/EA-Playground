@@ -103,7 +103,7 @@ fn pcode(raw:&[u8],start:usize,local:&HashMap<usize,usize>)->Result<PCode,String
 #[derive(Debug,Clone,Default)]
 pub struct Vertex{pub pos:[f64;3],pub nrm:Option<[f32;3]>,pub clr:Option<[u8;4]>,pub uv:Option<[f64;2]>,pub weight:Option<([f32;3],[u8;3])>,pub pos_index:u32}
 #[derive(Debug,Clone)]
-pub struct Prim{pub anchor:usize,pub family:String,pub verts:Vec<Vertex>,pub tris:Vec<[u32;3]>,pub textures:BTreeMap<String,String>,pub color:Option<[u8;4]>}
+pub struct Prim{pub anchor:usize,pub family:String,pub verts:Vec<Vertex>,pub tris:Vec<[u32;3]>,pub textures:BTreeMap<String,String>,pub texture_symbols:BTreeMap<String,String>,pub color:Option<[u8;4]>}
 #[derive(Debug,Clone)]
 pub struct ModelInfo{pub name:String,pub offset:usize,pub bounds:[[f32;3];2],pub scale:[f32;3],pub center:[f32;3],pub prims:Vec<usize>}
 pub struct ModelFile{pub models:Vec<ModelInfo>,pub prims:Vec<Prim>}
@@ -228,11 +228,11 @@ fn decode_primitive(raw:&[u8],local:&HashMap<usize,usize>,external:&HashMap<usiz
             if pa!=pb&&pb!=pc&&pa!=pc{tris.push([a,c,b])} // GX winding reversed to CCW
         }
     }
-    let mut textures=BTreeMap::new();
+    let mut textures=BTreeMap::new();let mut texture_symbols=BTreeMap::new();
     for name in ["Texture","Texture1","Texture2","Texture3"]{
-        if let Some(&(_,po,_))=fields.get(name){if let Some(sym)=external.get(&(anchor+po)){textures.insert(name.to_string(),read_texture_name(sym));}}
+        if let Some(&(_,po,_))=fields.get(name){if let Some(sym)=external.get(&(anchor+po)){textures.insert(name.to_string(),read_texture_name(sym));texture_symbols.insert(name.to_string(),sym.clone());}}
     }
-    Ok(Prim{anchor,family,verts,tris,textures,color})
+    Ok(Prim{anchor,family,verts,tris,textures,texture_symbols,color})
 }
 
 /// Content hash used by the golden data: first 16 hex chars of SHA-256 over vertex attributes then triangles.
