@@ -12,6 +12,7 @@ mod archive;
 mod gsh;
 mod tpl;
 mod locale;
+mod conga;
 mod mp3_tables;
 mod mp3;
 mod audio;
