@@ -87,6 +87,7 @@ pub struct Session {
     restart: bool,
     fx_serial: u32,
     sound_rng: u64,
+    pole_materials: Vec<Handle<StandardMaterial>>,
 }
 
 fn data_dir(rel: &str) -> String {
@@ -145,6 +146,7 @@ impl Session {
             restart: false,
             fx_serial: 0,
             sound_rng: 0x9e37_79b9,
+            pole_materials: vec![],
         }
     }
 }
@@ -279,6 +281,7 @@ fn build(
     let origin = Vec3::from(host.origin);
     let disp = |p: Vec3| crate::game::display_matrix(game.world_radius, p);
     let pole_up = assets::upload(&pole, &mut meshes, &mut materials, &mut images, false);
+    s.pole_materials = pole_up.parts.iter().map(|(_, m)| m.clone()).collect();
     assets::spawn(&mut commands, &pole_up, (TbEntity, TbPole, Transform::from_matrix(disp(origin))), None);
     let ball_up = assets::upload(&ball, &mut meshes, &mut materials, &mut images, false);
     assets::spawn(&mut commands, &ball_up, (TbEntity, TbBall, Transform::default()), None);
@@ -582,6 +585,7 @@ fn step(
 
 fn present(
     s: Option<NonSendMut<Session>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
     game: Option<Res<crate::game::Game>>,
     mut roots: Query<(&TbRoot, &mut Transform), (Without<TbJoint>, Without<TbBall>, Without<TbRope>)>,
     mut joints: Query<(&TbJoint, &mut Transform), (Without<TbRoot>, Without<TbBall>, Without<TbRope>)>,
@@ -592,6 +596,14 @@ fn present(
     let s = &*s;
     let (Some(host), Some(game)) = (s.host.as_ref(), game) else { return };
     let radius = game.world_radius;
+    for h in &s.pole_materials {
+        if let Some(mut m) = materials.get_mut(h) {
+            let t = bevy::math::Affine2::from_translation(Vec2::new(0., host.pole_offset));
+            if m.uv_transform != t {
+                m.uv_transform = t;
+            }
+        }
+    }
     let mat = |m: &[f32; 16]| Transform::from_matrix(Mat4::from_cols_array(m));
     for mut t in &mut ball {
         *t = mat(&host.ball_matrix);

@@ -275,6 +275,8 @@ pub fn view_step(mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option
             cfg.female=[female(0),female(1)];
             cfg.special=[crate::tb_host::celebration_state(kid(0).as_deref()),crate::tb_host::celebration_state(kid(1).as_deref())];
             if let Some(a)=std::env::var("EAGL_TB_AREA").ok().and_then(|a|a.parse().ok()){cfg.area=a;}
+            if let Some(r)=std::env::var("EAGL_TB_ROT").ok().and_then(|a|a.parse().ok()){cfg.rotations=r;}
+            if let Some(r)=std::env::var("EAGL_TB_ROUNDS").ok().and_then(|a|a.parse().ok()){cfg.rounds=r;}
             let kids=[kid(0),kid(1)];
             commands.insert_resource(crate::tb_session::TbLaunch{cfg,kids});}
     }
