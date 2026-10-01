@@ -24,6 +24,8 @@ pub type HookFn<H> = fn(&mut H, &mut Vm<H>) -> Result<(), String>;
 struct HookEntry<H> {
     name: String,
     f: Option<HookFn<H>>,
+    /// Observer hooks run `f` and then execute the original function instead of returning.
+    observe: bool,
 }
 
 pub struct Vm<H> {
@@ -90,18 +92,26 @@ impl<H> Vm<H> {
         self.hook_addr(addr, name, Some(f));
         true
     }
+    /// Run `f` whenever the function `name` is entered, then continue with the original (native) code.
+    pub fn observe(&mut self, name: &str, f: HookFn<H>) -> bool {
+        let Some(addr) = self.img.addr(name) else { return false };
+        self.hook_addr(addr, name, Some(f));
+        let i = self.hook_at[&addr];
+        self.hooks[i].observe = true;
+        true
+    }
     pub fn log_missing_symbol(&mut self, name: &str) {
         self.missing_symbols.push(name.to_string());
     }
     pub fn hook_addr(&mut self, addr: u32, name: &str, f: Option<HookFn<H>>) {
         if let Some(&i) = self.hook_at.get(&addr) {
             if f.is_some() || self.hooks[i].f.is_none() {
-                self.hooks[i] = HookEntry { name: name.to_string(), f };
+                self.hooks[i] = HookEntry { name: name.to_string(), f, observe: false };
             }
             return;
         }
         self.hook_at.insert(addr, self.hooks.len());
-        self.hooks.push(HookEntry { name: name.to_string(), f });
+        self.hooks.push(HookEntry { name: name.to_string(), f, observe: false });
         self.set_bit(addr);
     }
 
@@ -247,6 +257,17 @@ impl<H> Vm<H> {
                 if i >> 6 < self.hook_bits.len() && (self.hook_bits[i >> 6] >> (i & 63)) & 1 != 0 {
                     let idx = self.hook_at[&pc];
                     let f = self.hooks[idx].f;
+                    if self.hooks[idx].observe {
+                        if let Some(f) = f {
+                            f(host, self).map_err(|e| format!("{}: {e}", self.hooks[idx].name))?;
+                        }
+                        // fall through: execute the first instruction of the original function
+                        let w = self.st.mem.r32(pc);
+                        if let Err(e) = self.st.cpu.step(&mut self.st.mem, w) {
+                            return Err(format!("{e} ({})", self.backtrace()));
+                        }
+                        continue;
+                    }
                     match f {
                         Some(f) => {
                             if self.trace {

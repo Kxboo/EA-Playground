@@ -2,6 +2,9 @@
 //! hooks operate on and the boot sequence (policy, static constructors, singletons).
 pub mod hooks;
 pub mod vfs;
+pub mod physics;
+pub mod snapshot;
+pub mod physhooks;
 pub mod world;
 use crate::gekko::Vm;
 
@@ -14,6 +17,16 @@ pub struct MgHost {
     pub vfs: vfs::Vfs,
     pub fe_manager: u32,
     pub scene_options: u32,
+    pub events: Vec<FeEvent>,
+    /// Model draws of the current frame: (model name, world matrix).
+    pub draws: Vec<(String, [f32; 16])>,
+    /// Names of the placeholder models handed out by the asset manager.
+    pub model_names: std::collections::HashMap<u32, String>,
+    /// The camera whose position was set last.
+    pub camera: u32,
+    pub pads: [hooks::Pad; 4],
+    pub phys: physics::Physics,
+    pub pending_contacts: Vec<physics::Contact>,
     /// Names of null-serviced functions already reported.
     pub stubbed: std::collections::BTreeSet<String>,
 }
@@ -105,7 +118,7 @@ pub fn is_soft_stub(name: &str) -> bool {
     match class_of(name) {
         Some(c) => {
             let q = qualified(c);
-            (q.ends_with("Handlers") && !q.ends_with("LVHandlers") && !q.ends_with("FSHandlers")) || q.starts_with("Physics") || q.ends_with("RenderEntity") || q.starts_with("Ren::") || q.starts_with("nw4") || q.starts_with("EAGL::Model") || q.starts_with("EAGL::Device") || q.starts_with("EAGL::RenderContext") || q.starts_with("EAGL::Geo") || q.starts_with("EAGLInternal::RenderContext") || q.starts_with("Csis::") || ["AreaManager", "PhysicsManager", "PhysicsRigidBody", "PhysicsDynamicCharacter", "PhysicsStaticCharacter", "Audio", "AuAEMSManager", "AuCharacterSoundObject", "AuEnvironmentManager", "AuHelpers", "PartFxManager", "PartFx", "FEManager", "WorldHudHandlers", "MinigameHandlers", "TRC"].contains(&q.as_str())
+            (q.ends_with("Handlers") && !q.ends_with("LVHandlers") && !q.ends_with("FSHandlers")) || q.starts_with("Physics") || q.ends_with("RenderEntity") || q.starts_with("Ren::") || q.starts_with("nw4") || q.starts_with("EAGL::Model") || q.starts_with("EAGL::Draw") || q.starts_with("EAGL::Device") || q.starts_with("EAGL::RenderContext") || q.starts_with("EAGL::Geo") || q.starts_with("EAGLInternal::RenderContext") || q.starts_with("Csis::") || ["AreaManager", "PhysicsManager", "PhysicsRigidBody", "PhysicsDynamicCharacter", "PhysicsStaticCharacter", "Audio", "AuAEMSManager", "AuCharacterSoundObject", "AuEnvironmentManager", "AuHelpers", "PartFxManager", "PartFx", "FEManager", "WorldHudHandlers", "MinigameHandlers", "TRC"].contains(&q.as_str())
         }
         None => false,
     }
@@ -160,12 +173,21 @@ pub fn runs_natively(name: &str) -> bool {
     }
 }
 
+/// A call into a front-end handler class (`MinigameHandlers`, `PreGameHandlers`, ...): HUD updates and screens.
+#[derive(Clone, Debug)]
+pub struct FeEvent {
+    pub name: String,
+    pub ints: [u32; 4],
+    pub floats: [f32; 2],
+}
+
 pub type MgVm = Vm<MgHost>;
 
 pub fn boot() -> Result<(MgVm, MgHost), String> {
     let mut vm = MgVm::load()?;
     vm.trap_unless(runs_natively);
     hooks::install(&mut vm);
+    physhooks::install(&mut vm);
     hooks::install_stubs(&mut vm);
     let mut host = MgHost::default();
     if let Err(e) = world::boot(&mut vm, &mut host) {
@@ -197,8 +219,10 @@ pub fn probe(ty: i32) {
     let mg_id = vm.alloc_zeroed(8, 8);
     vm.w32(mg_id, mgid);
     let teams = vm.alloc_zeroed(0x100, 8);
+    let kids_dbg;
     let kids = world::kid_keys(&mut vm, &mut host).unwrap_or_else(|e| { println!("kid_keys: {e}"); vec![] });
     println!("kids {kids:x?}");
+    kids_dbg = kids.clone();
     if kids.len() >= 2 {
         vm.w32(teams, 1);
         let mut rec = |off: u32, key: u64, control: u32| {
@@ -239,12 +263,19 @@ pub fn probe(ty: i32) {
                 let r = vm.call_by_name(&mut host, "OnPlay__8MinigameFv", &[mg], &[]);
                 println!("OnPlay {r:?}");
             }
+            for e in host.events.drain(..) {
+                println!("  [{f}] {} {:x?} {:?}", e.name, e.ints, e.floats);
+            }
             if f % 100 == 0 {
                 let c = vm.r32(mg + 0x11c);
                 let ch = vm.r32(c + 0x4);
                 let pos = [vm.st.mem.rf32(ch + 0x180), vm.st.mem.rf32(ch + 0x184), vm.st.mem.rf32(ch + 0x188)];
                 println!("frame {f}: state {} player0 {:?}", vm.r32(mg + 0x34), pos);
             }
+            host.pads[0].active = true;
+            // tap A every 40 frames once the match is running
+            host.pads[0].buttons = if f > 650 && (f / 8) % 5 == 0 { 0x0008 } else { 0 };
+            hooks::write_pads(&mut vm, &host.pads);
             let r = vm.call_by_name(&mut host, "Update__8WorldManFi", &[0x805e8320, 33], &[]);
             if let Err(e) = r {
                 println!("frame {f}: {e}");
@@ -252,6 +283,71 @@ pub fn probe(ty: i32) {
             }
         }
     }
+    if let Err(e) = world::draw_minigame(&mut vm, &mut host, ty) {
+        println!("draw: {e}");
+    }
+    let snap = snapshot::snapshot(&mut vm, &mut host);
+    println!("snapshot: {} chars, draws {:?}, camera {:?}", snap.chars.len(), snap.draws.iter().map(|d| d.0.clone()).collect::<Vec<_>>(), snap.camera);
+    for c in &snap.chars {
+        println!("  char key {:x} pos {:?} angle {} anim {} bones {}", c.key, c.pos, c.angle, c.anim_state, c.pose.len());
+    }
+    for l in &host.phys.log {
+        println!("  phys: {l}");
+    }
+    {
+        let mut y = 60.0f32;
+        for _ in 0..12 {
+            match host.phys.cast_ray([88.527, y, 3.034], [0., -1., 0.], 200.) {
+                Some(t) => {
+                    println!("  ground hit at y={}", y - t);
+                    y = y - t - 0.01;
+                }
+                None => break,
+            }
+        }
+    }
+    for (h, c) in host.phys.world.colliders.iter() {
+        let a = c.compute_aabb();
+        if a.mins.x <= 88.527 && a.maxs.x >= 88.527 && a.mins.z <= 3.034 && a.maxs.z >= 3.034 {
+            println!("  collider {:?} shape {:?} aabb {:?}..{:?}", h, c.shape().shape_type(), a.mins, a.maxs);
+        }
+    }
+    {
+        let mgp = vm.r32(0x805e8320 + 0x90);
+        let dc = vm.r32(mgp + 0x11c);
+        let c = vm.r32(dc + 4);
+        let a = vm.r32(c + 0x18);
+        let pose = vm.r32(a + 0x30);
+        println!("char {c:#x} animstate {a:#x} state {} bones {} pose {pose:#x}", vm.r32(a + 0x54), vm.r32(a + 0x40) / 12);
+        for b in 0..3 {
+            let f: Vec<f32> = (0..12).map(|i| vm.st.mem.rf32(pose + 48 * b + 4 * i)).collect();
+            println!("  pose bone {b}: {f:?}");
+        }
+        let skin = vm.r32(a + 0x1674);
+        for b in 0..3 {
+            let f: Vec<f32> = (0..16).map(|i| vm.st.mem.rf32(skin + 64 * b + 4 * i)).collect();
+            println!("  skin bone {b}: {f:?}");
+        }
+    }
+    {
+        let mgp = vm.r32(0x805e8320 + 0x90);
+        for slot in 0..8u32 {
+            let dc = vm.r32(mgp + 0x11c + 4 * slot);
+            let c = vm.r32(dc + 4);
+            if c == 0 {
+                continue;
+            }
+            for off in (0..0x400u32).step_by(4) {
+                let hi = vm.r32(c + off);
+                let lo = vm.r32(c + off + 4);
+                let v = ((hi as u64) << 32) | lo as u64;
+                if let Some(i) = kids_dbg.iter().position(|k| *k == v) {
+                    println!("slot {slot} char {c:#x}: kid {i} key found at +{off:#x}");
+                }
+            }
+        }
+    }
+    println!("physics chars {} bodies {} colliders {}", host.phys.chars.len(), host.phys.bodies.len(), host.phys.world.colliders.len());
     for l in host.log.iter().rev().take(40).rev() {
         println!("  log: {l}");
     }

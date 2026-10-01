@@ -214,6 +214,87 @@ impl Collision{
     pub fn triangles(&self)->impl Iterator<Item=&[[f32;3];3]>{self.bodies.iter().flat_map(|b|b.tris.iter())}
 }
 
+
+/// A collision primitive in the rigid body's local space.
+#[derive(Debug,Clone)] pub enum Prim{
+    Sphere{c:[f32;3],r:f32},
+    Capsule{a:[f32;3],b:[f32;3],r:f32},
+    /// Convex point cloud (boxes, convex vertex shapes).
+    Hull(Vec<[f32;3]>),
+    /// Triangle soup (mesh shapes).
+    Mesh(Vec<[[f32;3];3]>),
+}
+/// Dynamics + shape data of one `hkRigidBody`, as needed to rebuild it in another physics engine.
+#[derive(Debug,Clone)] pub struct BodyInfo{
+    pub name:String,pub mass_inv:f32,pub friction:f32,pub restitution:f32,pub linear_damping:f32,pub angular_damping:f32,
+    /// Initial world transform: row-major 3x3 rotation (column vectors) and translation.
+    pub rotation:[[f32;3];3],pub translation:[f32;3],pub prims:Vec<Prim>,pub filter:u32,
+}
+impl Collision{
+    fn prims(&mut self,pf:&Packfile,r:Ref,local:&M4,out:&mut Vec<Prim>){
+        let Some(cn)=pf.class_of(r).cloned() else{return};
+        let o=pf.decode_object(r.0,r.1,&cn,0);
+        let f=|p:[f64;3]|{let q=apply(local,p);[q[0] as f32,q[1] as f32,q[2] as f32]};
+        match cn.as_str(){
+            "hkMoppBvTreeShape"=>{if let Some(c)=self.child(pf,&o,"child"){self.prims(pf,c,local,out)}}
+            "hkSphereShape"=>out.push(Prim::Sphere{c:f([0.,0.,0.]),r:o["radius"].as_f64().unwrap_or(0.5) as f32}),
+            "hkCapsuleShape"=>out.push(Prim::Capsule{a:f(v3(&o["vertexA"])),b:f(v3(&o["vertexB"])),r:o["radius"].as_f64().unwrap_or(0.5) as f32}),
+            "hkBoxShape"=>{
+                let h=v3(&o["halfExtents"]);let mut pts=vec![];
+                for sx in [-1.,1.]{for sy in [-1.,1.]{for sz in [-1.,1.]{pts.push(f([sx*h[0],sy*h[1],sz*h[2]]))}}}
+                out.push(Prim::Hull(pts));
+            }
+            "hkConvexTransformShape"|"hkTransformShape"=>{if let Some(c)=self.child(pf,&o,"childShape"){let t=mul(local,&mat_from(&o["transform"]));self.prims(pf,c,&t,out)}}
+            "hkConvexTranslateShape"=>{if let Some(c)=self.child(pf,&o,"childShape"){let mut t=ident();let v=v3(&o["translation"]);for i in 0..3{t[i][3]=v[i]}let t=mul(local,&t);self.prims(pf,c,&t,out)}}
+            "hkListShape"=>{
+                for ci in pf.array_elements(&o["childInfo"]){
+                    if let Some(rr)=ci["shape"]["$ref"].as_array(){self.prims(pf,(rr[0].as_u64().unwrap() as usize,rr[1].as_i64().unwrap() as i32),local,out)}
+                }
+            }
+            "hkConvexVerticesShape"=>{
+                let tris:Vec<[[f64;3];3]>=convex_tris(pf,&o);
+                let mut pts:Vec<[f32;3]>=vec![];
+                for t in tris{for p in t{pts.push(f(p))}}
+                if !pts.is_empty(){out.push(Prim::Hull(pts))}
+            }
+            "hkSimpleMeshShape"=>{
+                let v:Vec<[f64;3]>=pf.array_elements(&o["vertices"]).iter().map(v3).collect();
+                let tris:Vec<[[f32;3];3]>=pf.array_elements(&o["triangles"]).iter().filter_map(|t|{
+                    let (a,b,c)=(t["a"].as_i64()? as usize,t["b"].as_i64()? as usize,t["c"].as_i64()? as usize);
+                    Some([f(*v.get(a)?),f(*v.get(b)?),f(*v.get(c)?)])}).collect();
+                if !tris.is_empty(){out.push(Prim::Mesh(tris))}
+            }
+            other=>{*self.skipped.entry(other.into()).or_insert(0)+=1;}
+        }
+    }
+}
+/// Every `hkRigidBody` of a packfile with its shape decomposed into [`Prim`]s.
+pub fn rigid_bodies(pf:&Packfile)->Vec<BodyInfo>{
+    let mut c=Collision{bodies:vec![],skipped:BTreeMap::new()};
+    let mut out=vec![];
+    for (&(si,off),cn) in &pf.virt{
+        if cn!="hkRigidBody"{continue}
+        let o=pf.decode_object(si,off,cn,0);
+        let Some(r)=o["collidable"]["shape"]["$ref"].as_array() else{continue};
+        let sref:Ref=(r[0].as_u64().unwrap() as usize,r[1].as_i64().unwrap() as i32);
+        let m=mat_from(&o["motion"]["motionState"]["transform"]);
+        let mut prims=vec![];
+        c.prims(pf,sref,&ident(),&mut prims);
+        if prims.is_empty(){continue}
+        let ms=&o["motion"]["motionState"];
+        let mut rotation=[[0f32;3];3];for i in 0..3{for j in 0..3{rotation[i][j]=m[i][j] as f32}}
+        out.push(BodyInfo{
+            name:o["name"].as_str().unwrap_or("").into(),
+            mass_inv:o["motion"]["inertiaAndMassInv"][3].as_f64().unwrap_or(0.) as f32,
+            friction:o["material"]["friction"].as_f64().unwrap_or(0.5) as f32,restitution:o["material"]["restitution"].as_f64().unwrap_or(0.) as f32,
+            linear_damping:ms["linearDamping"].as_f64().unwrap_or(0.) as f32,angular_damping:ms["angularDamping"].as_f64().unwrap_or(0.) as f32,
+            rotation,translation:[m[0][3] as f32,m[1][3] as f32,m[2][3] as f32],prims,
+            filter:o["collidable"]["broadPhaseHandle"]["collisionFilterInfo"].as_u64().unwrap_or(0) as u32,
+        });
+    }
+    out
+}
+
 fn box_tris(h:[f64;3])->Vec<[[f64;3];3]>{
     let mut v=vec![];for sx in [-1.,1.]{for sy in [-1.,1.]{for sz in [-1.,1.]{v.push([sx*h[0],sy*h[1],sz*h[2]])}}}
     let mut t=vec![];for (a,b,c,d) in [(0,1,3,2),(4,6,7,5),(0,4,5,1),(2,3,7,6),(0,2,6,4),(1,5,7,3)]{t.push([v[a],v[b],v[c]]);t.push([v[a],v[c],v[d]]);}t

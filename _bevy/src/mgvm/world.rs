@@ -98,3 +98,17 @@ pub fn kid_keys(vm: &mut MgVm, host: &mut MgHost) -> Result<Vec<u64>, String> {
     }
     Ok(out)
 }
+
+pub const MINIGAME_CLASSES: [(i32, &str); 8] = [(0, "MGDartShootout"), (1, "MGRcCars"), (2, "MGTetherball"), (3, "MGDodgeball"), (4, "MGFootie"), (5, "MGPaperAirplanes"), (6, "MGWallball"), (8, "MGFreeThrow")];
+
+/// `Minigame::Draw(SceneContext&)` of the running game: fills `host.draws`.
+pub fn draw_minigame(vm: &mut MgVm, host: &mut MgHost, ty: i32) -> Result<(), String> {
+    let Some((_, class)) = MINIGAME_CLASSES.iter().find(|(t, _)| *t == ty) else { return Ok(()) };
+    let mg = vm.r32(WORLD_MAN + 0x90);
+    if mg == 0 {
+        return Ok(());
+    }
+    let name = format!("Draw__{}{}FRQ23Ren12SceneContext", class.len(), class);
+    let ctx = vm.alloc_zeroed(0x100, 16);
+    vm.call_by_name(host, &name, &[mg, ctx], &[]).map(|_| ())
+}

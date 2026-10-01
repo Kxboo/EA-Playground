@@ -13,6 +13,8 @@ pub fn install(vm: &mut V) {
     assets(vm);
     front_end(vm);
     scene(vm);
+    input(vm);
+    drawing(vm);
 }
 
 fn bind(vm: &mut V, names: &[&str], f: fn(&mut MgHost, &mut V) -> R) {
@@ -68,6 +70,14 @@ fn stub(h: &mut MgHost, vm: &mut V) -> R {
     if h.stubbed.insert(name.clone()) {
         h.log.push(format!("stub {name}"));
     }
+    // front-end handler calls are the HUD / screen interface: record them with their arguments
+    if let Some(class) = super::class_of(&name) {
+        if class.ends_with("Handlers") {
+            let ints = [vm.a(1), vm.a(2), vm.a(3), vm.a(4)];
+            let floats = [vm.fa(0), vm.fa(1)];
+            h.events.push(super::FeEvent { name: name.clone(), ints, floats });
+        }
+    }
     // constructors return `this` and install the class's vtable so virtual calls reach the (stubbed or native) methods
     if let Some(rest) = name.strip_prefix("__ct__") {
         if let Some(class) = super::mangled_class(rest) {
@@ -97,6 +107,9 @@ pub fn install_stubs(vm: &mut V) {
 fn resolve_model(_h: &mut MgHost, vm: &mut V) -> R {
     let (loader, models, count) = (vm.a(3), vm.a(4), vm.a(5));
     let dummy = vm.alloc_zeroed(0x200, 32);
+    // the asset slot's name sits at +0xc of the 0xb8-byte entry that `models` (+0x90) points into
+    let name = vm.st.mem.cstr(models - 0x90 + 0xc, 64);
+    _h.model_names.insert(dummy, name);
     vm.w32(loader, 0);
     vm.w32(models, dummy);
     vm.w32(count, 1);
@@ -159,4 +172,78 @@ fn scene_options(h: &mut MgHost, vm: &mut V) -> R {
 
 pub fn scene(vm: &mut V) {
     bind(vm, &["GetSceneOptions__Q23Ren5SceneCFi"], scene_options);
+}
+
+// --- input ------------------------------------------------------------------------------------------------------------
+
+/// One Wii Remote as the executable's `_WiiPadStatus` sees it (`WPADStatus` bits, accelerometer centred at 512).
+#[derive(Clone, Copy, Debug)]
+pub struct Pad {
+    pub active: bool,
+    /// WPAD button bits: TWO 0x1, ONE 0x2, B 0x4, A 0x8, MINUS 0x10, HOME 0x8000, LEFT 0x100, RIGHT 0x200, DOWN 0x400, UP 0x800, PLUS 0x1000.
+    pub buttons: u16,
+    pub acc: [i16; 3],
+}
+
+impl Default for Pad {
+    fn default() -> Self {
+        Pad { active: false, buttons: 0, acc: [512, 512, 616] }
+    }
+}
+
+pub const PAD_STATUS: u32 = 0x805f_017c;
+
+/// Write the host pad states into the guest's `PAD` array (what `PAD_update` would have done).
+pub fn write_pads(vm: &mut V, pads: &[Pad; 4]) {
+    for (i, p) in pads.iter().enumerate() {
+        let a = PAD_STATUS + 0x60 * i as u32;
+        vm.w32(a, if p.active { 2 } else { 0 });
+        vm.st.mem.w16(a + 4, p.buttons);
+        for k in 0..3 {
+            vm.st.mem.w16(a + 6 + 2 * k as u32, p.acc[k] as u16);
+        }
+        for k in 0..16 {
+            vm.st.mem.w16(a + 0xc + 2 * k, 1023);
+        }
+        vm.st.mem.w8(a + 0x2c, 0);
+        vm.st.mem.w8(a + 0x2d, 0);
+    }
+}
+
+fn pad_active(h: &mut MgHost, vm: &mut V) -> R {
+    let port = vm.a(0) as usize;
+    vm.ret(h.pads.get(port).map(|p| p.active).unwrap_or(false) as u32);
+    Ok(())
+}
+
+pub fn input(vm: &mut V) {
+    bind(vm, &["PAD_active"], pad_active);
+    bind(vm, &["PAD_update"], nothing);
+}
+
+
+// --- drawing / cameras --------------------------------------------------------------------------------------------------
+
+/// `Ren::CachedModel::Draw(this, const rmMatrix4&, bool)`: remember what the game asked to draw.
+fn cached_model_draw(h: &mut MgHost, vm: &mut V) -> R {
+    let (this, m) = (vm.a(0), vm.a(1));
+    let model = vm.r32(this + 0x44);
+    let name = h.model_names.get(&model).cloned().unwrap_or_else(|| format!("model@{model:#x}"));
+    let mut mat = [0f32; 16];
+    for (i, v) in mat.iter_mut().enumerate() {
+        *v = vm.st.mem.rf32(m + 4 * i as u32);
+    }
+    h.draws.push((name, mat));
+    Ok(())
+}
+fn camera_set_pos(h: &mut MgHost, vm: &mut V) -> R {
+    h.camera = vm.a(0);
+    Ok(())
+}
+
+pub fn drawing(vm: &mut V) {
+    bind(vm, &["Draw__Q23Ren11CachedModelFRC9rmMatrix4b"], cached_model_draw);
+    if !vm.observe("SetPos__6CameraFRC9rmVector3", camera_set_pos) {
+        vm.log_missing_symbol("SetPos__6CameraFRC9rmVector3");
+    }
 }
