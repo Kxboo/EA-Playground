@@ -41,6 +41,10 @@ pub struct Vm<H> {
     pub soft_traps: bool,
     pub missing: std::collections::BTreeMap<String, u32>,
     pub missing_symbols: Vec<String>,
+    /// r4 at the end of the last `call` (second word of 64-bit results).
+    pub ret_hi_lo: u32,
+    /// Log entries into functions whose name contains this text (development aid, env `EAGL_PPC_CALLS`).
+    pub call_filter: Option<String>,
 }
 
 pub const STACK_TOP: u32 = 0x817f_0000;
@@ -68,6 +72,8 @@ impl<H> Vm<H> {
             soft_traps: false,
             missing: Default::default(),
             missing_symbols: vec![],
+            ret_hi_lo: 0,
+            call_filter: std::env::var("EAGL_PPC_CALLS").ok(),
         })
     }
 
@@ -210,6 +216,7 @@ impl<H> Vm<H> {
         let r = self.run(host);
         self.depth -= 1;
         let (ret, fret) = (self.st.cpu.r[3], self.st.cpu.f[1]);
+        self.ret_hi_lo = self.st.cpu.r[4];
         let steps = self.st.cpu.steps;
         self.st.cpu = saved;
         self.st.cpu.steps = steps;
@@ -263,6 +270,13 @@ impl<H> Vm<H> {
                             }
                             return Err(format!("unhandled engine function {name} ({})", self.backtrace()));
                         }
+                    }
+                }
+            }
+            if let Some(f) = &self.call_filter {
+                if let Some(sym) = self.img.func_at(pc) {
+                    if sym.addr == pc && sym.name.contains(f.as_str()) {
+                        eprintln!("[call] {}", sym.name);
                     }
                 }
             }

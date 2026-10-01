@@ -13,6 +13,7 @@ pub struct MgHost {
     pub minigame_type: i32,
     pub vfs: vfs::Vfs,
     pub fe_manager: u32,
+    pub scene_options: u32,
     /// Names of null-serviced functions already reported.
     pub stubbed: std::collections::BTreeSet<String>,
 }
@@ -104,7 +105,7 @@ pub fn is_soft_stub(name: &str) -> bool {
     match class_of(name) {
         Some(c) => {
             let q = qualified(c);
-            q.starts_with("Physics") || q.ends_with("RenderEntity") || q.starts_with("Ren::") || q.starts_with("nw4") || q.starts_with("EAGL::Model") || q.starts_with("EAGL::Device") || q.starts_with("EAGL::RenderContext") || q.starts_with("EAGL::Geo") || q.starts_with("EAGLInternal::RenderContext") || q.starts_with("Csis::") || ["AreaManager", "PhysicsManager", "PhysicsRigidBody", "PhysicsDynamicCharacter", "PhysicsStaticCharacter", "Audio", "AuAEMSManager", "AuCharacterSoundObject", "AuEnvironmentManager", "AuHelpers", "PartFxManager", "PartFx", "FEManager", "WorldHudHandlers", "MinigameHandlers"].contains(&q.as_str())
+            (q.ends_with("Handlers") && !q.ends_with("LVHandlers") && !q.ends_with("FSHandlers")) || q.starts_with("Physics") || q.ends_with("RenderEntity") || q.starts_with("Ren::") || q.starts_with("nw4") || q.starts_with("EAGL::Model") || q.starts_with("EAGL::Device") || q.starts_with("EAGL::RenderContext") || q.starts_with("EAGL::Geo") || q.starts_with("EAGLInternal::RenderContext") || q.starts_with("Csis::") || ["AreaManager", "PhysicsManager", "PhysicsRigidBody", "PhysicsDynamicCharacter", "PhysicsStaticCharacter", "Audio", "AuAEMSManager", "AuCharacterSoundObject", "AuEnvironmentManager", "AuHelpers", "PartFxManager", "PartFx", "FEManager", "WorldHudHandlers", "MinigameHandlers", "TRC"].contains(&q.as_str())
         }
         None => false,
     }
@@ -188,11 +189,62 @@ pub fn probe(ty: i32) {
         println!("missing symbol {m}");
     }
     host.minigame_type = ty;
-    let r = vm.call_by_name(&mut host, "StartMinigameFadeComplete__8WorldManFv", &[0x805e8320], &[]);
+    let wm = 0x805e8320u32;
+    let ids = vm.img.addr("MinigameIDs").unwrap();
+    let mgid = vm.r32(ids + 4 * ty as u32);
+    println!("MinigameIDs[{ty}] = {mgid:#x}");
+    // WorldMan::StartMinigame(MGID, players, difficulty, Teams, rules) then the fade-complete step that creates it
+    let mg_id = vm.alloc_zeroed(8, 8);
+    vm.w32(mg_id, mgid);
+    let teams = vm.alloc_zeroed(0x100, 8);
+    let kids = world::kid_keys(&mut vm, &mut host).unwrap_or_else(|e| { println!("kid_keys: {e}"); vec![] });
+    println!("kids {kids:x?}");
+    if kids.len() >= 2 {
+        vm.w32(teams, 1);
+        let mut rec = |off: u32, key: u64, control: u32| {
+            vm.w32(teams + off, (key >> 32) as u32);
+            vm.w32(teams + off + 4, key as u32);
+            vm.w32(teams + off + 8, control);
+        };
+        rec(8, kids[0], 1);
+        rec(0x18, kids[2], 6);
+        rec(0x28, kids[3], 6);
+        rec(0x48, kids[1], 6);
+        rec(0x58, kids[4], 6);
+        rec(0x68, kids[5], 6);
+    }
+    let req = vm.call_by_name(&mut host, "StartMinigame__8WorldManF4MGIDiQ25Enums23MiniGameDifficultyLevelRC5TeamsPCi", &[wm, mg_id, 1, 1, teams, 0], &[]);
+    println!("StartMinigame {req:?}");
+    let r = vm.call_by_name(&mut host, "StartMinigameFadeComplete__8WorldManFv", &[wm], &[]);
     println!("RESULT {r:?}");
     if r.is_ok() {
+        let wm = 0x805e8320u32;
+        let (cur, mg) = (vm.r32(wm + 0x8c), vm.r32(wm + 0x90));
+        let vt = |vm: &mut MgVm, p: u32| {
+            let v = vm.r32(p);
+            vm.name_of(v)
+        };
+        let (a, b) = (vt(&mut vm, cur), vt(&mut vm, mg));
+        println!("world {cur:#x} (vtable {a})  minigame {mg:#x} (vtable {b})");
+        let nteams = vm.r32(mg + 0x15c);
+        println!("teams {nteams} counts {} {}", vm.r32(mg + 0x148), vm.r32(mg + 0x14c));
+        for i in 0..8 {
+            let c = vm.r32(mg + 0x11c + 4 * i);
+            let m = if c != 0 { vm.r32(c + 0x88) } else { 0 };
+            println!("  slot {i}: char {c:#x} meter {m:#x}");
+        }
         let frames = std::env::var("EAGL_MG_FRAMES").ok().and_then(|v| v.parse().ok()).unwrap_or(5);
         for f in 0..frames {
+            if f == 10 {
+                let r = vm.call_by_name(&mut host, "OnPlay__8MinigameFv", &[mg], &[]);
+                println!("OnPlay {r:?}");
+            }
+            if f % 100 == 0 {
+                let c = vm.r32(mg + 0x11c);
+                let ch = vm.r32(c + 0x4);
+                let pos = [vm.st.mem.rf32(ch + 0x180), vm.st.mem.rf32(ch + 0x184), vm.st.mem.rf32(ch + 0x188)];
+                println!("frame {f}: state {} player0 {:?}", vm.r32(mg + 0x34), pos);
+            }
             let r = vm.call_by_name(&mut host, "Update__8WorldManFi", &[0x805e8320, 33], &[]);
             if let Err(e) = r {
                 println!("frame {f}: {e}");

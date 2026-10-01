@@ -54,6 +54,8 @@ pub fn boot(vm: &mut MgVm, host: &mut MgHost) -> Result<(), String> {
     vm.call_by_name(host, "Create__12AssetManagerFv", &[], &[])?;
     vm.call_by_name(host, "Create__11pgIDatabaseFv", &[], &[])?;
     vm.call_by_name(host, "InitialiseDatabase__11pgIDatabaseFv", &[], &[])?;
+    // the nine MGIDs are database keys: rebuild them now that the database exists
+    vm.call_by_name(host, r"__sinit_\conversationmanager_cpp", &[], &[])?;
     // GameState::Init
     let csvs = vm.alloc_cstr("data/csvs.viv");
     let pgio = vm.r32(0x8060_22ac);
@@ -75,4 +77,24 @@ pub fn boot(vm: &mut MgVm, host: &mut MgHost) -> Result<(), String> {
     vm.call_by_name(host, "ReInitialize__13CameraManagerF10CameraTypeUi", &[camera_manager, 2, 0], &[])?;
     vm.call_by_name(host, "Initialize__8WorldManFQ28WorldMan13WorldInitType", &[WORLD_MAN, 1], &[])?;
     Ok(())
+}
+
+/// Database keys of the eight selectable kids (`character_select/character.characterlist`).
+pub fn kid_keys(vm: &mut MgVm, host: &mut MgHost) -> Result<Vec<u64>, String> {
+    let db = vm.r32(0x8060_18d4);
+    let mut key = |vm: &mut MgVm, host: &mut MgHost, name: &str| -> Result<u64, String> {
+        let s = vm.alloc_cstr(name);
+        let hi = vm.call_by_name(host, "GetKey__11pgIDatabaseFPCc", &[db, s], &[])?;
+        Ok(((hi as u64) << 32) | vm.ret_hi_lo as u64)
+    };
+    let (k1, k2) = (key(vm, host, "character_select")?, key(vm, host, "character")?);
+    let coll = vm.call_by_name(host, "GetCollection__11pgIDatabaseFUxUx", &[db, 0, (k1 >> 32) as u32, k1 as u32, (k2 >> 32) as u32, k2 as u32], &[])?;
+    let list = vm.alloc_cstr("characterlist");
+    let mut out = vec![];
+    for i in 0..8 {
+        let s = vm.call_by_name(host, "GetArrayString__14pgDBCollectionFPCci", &[coll, list, i], &[])?;
+        let name = vm.st.mem.cstr(s, 64);
+        out.push(key(vm, host, &name)?);
+    }
+    Ok(out)
 }

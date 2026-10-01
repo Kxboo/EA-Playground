@@ -12,6 +12,7 @@ pub fn install(vm: &mut V) {
     super::vfs::install(vm);
     assets(vm);
     front_end(vm);
+    scene(vm);
 }
 
 fn bind(vm: &mut V, names: &[&str], f: fn(&mut MgHost, &mut V) -> R) {
@@ -139,4 +140,23 @@ fn fe_utf8_to_ucs2(_h: &mut MgHost, vm: &mut V) -> R {
 pub fn front_end(vm: &mut V) {
     bind(vm, &["GetInstance__9FEManagerFv"], fe_instance);
     bind(vm, &["ConvertUTF8TOUCS2__9FEManagerFPwPCci"], fe_utf8_to_ucs2);
+}
+
+// --- scene -------------------------------------------------------------------------------------------------------------
+
+/// `Ren::Scene::GetSceneOptions(int)`: a static options block (viewport 0,0,640,480; the renderer is not emulated).
+fn scene_options(h: &mut MgHost, vm: &mut V) -> R {
+    if h.scene_options == 0 {
+        let p = vm.alloc_zeroed(0x40, 16);
+        for (i, v) in [0.0f32, 0.0, 0.0, 640.0, 480.0, 0.0, 1.0, 1.0, 0.0].iter().enumerate() {
+            vm.st.mem.wf32(p + 4 + 4 * i as u32, *v);
+        }
+        h.scene_options = p;
+    }
+    vm.ret(h.scene_options);
+    Ok(())
+}
+
+pub fn scene(vm: &mut V) {
+    bind(vm, &["GetSceneOptions__Q23Ren5SceneCFi"], scene_options);
 }
