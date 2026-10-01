@@ -181,6 +181,7 @@ impl TbHost {
                     None => {}
                 }
                 self.chars[p].target = None;
+                self.chars[p].face = None;
             }
             // 2-3. EvaluateCompulsions(priority) -> SetCompulsion(new) -> Activate
             let priority = match &self.active[p] {
@@ -210,6 +211,8 @@ impl TbHost {
                     if m.think(ms, &inputs) {
                         self.chars[p].target = m.target_position_020;
                     }
+                    // The edict's facing (`ProcessMovement` -> `SetFacingAngle`, flag at +0x28 set by `Think`).
+                    self.chars[p].face = (m.target_angle_valid_034 && m.field_048 == Some(true)).then_some(m.target_angle_030);
                     self.active[p] = Some(Active::Move(m));
                 }
                 Some(Active::Hit(mut h)) => {
@@ -222,18 +225,21 @@ impl TbHost {
         Ok(())
     }
 
-    /// Provisional locomotion: walk toward the move target at `movement_speed`, switching between the walk state (1) and
-    /// the tetherball idle the lifecycle selected; then step every animator.
+    /// `CharacterMovement::Update` (0x802ed784) for an AI edict: the character walks toward the edict's waypoint at the
+    /// bestiary `speed_walk` (movement type 0 -> `CharacterState` +0x1c), stops when the waypoint is reached (distance
+    /// below 0.001), keeps the edict's facing, and maps speed to animation (walk state 1 while moving; state 0 when it
+    /// stops from one of the mapped movement states 1..5).  The Havok character proxy that does the actual stepping is
+    /// replaced by exact stepping.
     fn move_and_animate(&mut self, rt: &mut Runtime, ms: i32) {
         let dt = ms.max(0) as f32 / 1000.;
+        let speed = self.walk_speed();
         for p in 0..self.chars.len().min(2) {
-            let speed = rt.life.players[p].movement_speed * 1.5;
             let c = &mut self.chars[p];
             let mut moving = false;
             if let Some(t) = c.target {
                 let d = [t[0] - c.pos[0], 0., t[2] - c.pos[2]];
                 let len = (d[0] * d[0] + d[2] * d[2]).sqrt();
-                if len > 1e-4 {
+                if len >= 0.001 {
                     let step = speed * dt;
                     if len <= step {
                         c.pos[0] = t[0];
@@ -241,17 +247,23 @@ impl TbHost {
                     } else {
                         c.pos[0] += d[0] / len * step;
                         c.pos[2] += d[2] / len * step;
-                        moving = true;
                     }
+                    moving = true;
                 }
             }
-            if moving != c.moving {
-                c.moving = moving;
-                if moving {
+            if let Some(a) = c.face {
+                c.dir = [a.sin(), 0., a.cos()];
+            }
+            let current = rt.life.players[p].current_animation;
+            if moving {
+                c.moving = true;
+                if current != 1 {
                     self.set_animation(p, 1, false, -1);
-                } else if rt.life.players[p].current_animation == 1 {
-                    let idle = rt.life.lose_animations[p];
-                    self.set_animation(p, idle, false, -1);
+                }
+            } else {
+                c.moving = false;
+                if (1..=5).contains(&current) {
+                    self.set_animation(p, 0, false, -1);
                 }
             }
         }
@@ -269,5 +281,17 @@ impl TbHost {
             }
         }
         self.rng = rng;
+    }
+}
+
+impl TbHost {
+    /// `speed_walk` of the character's bestiary entry (`CharacterState::Initialize` stores it at +0x1c).
+    fn walk_speed(&self) -> f32 {
+        self.db
+            .find_collection("bestiary", "base")
+            .and_then(|c| self.db.attribute(c, "speed_walk"))
+            .and_then(|v| v.as_f64())
+            .map(|v| v as f32)
+            .unwrap_or(2.5)
     }
 }

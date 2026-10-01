@@ -367,6 +367,7 @@ impl PlayerInitServices for TbHost {
             animator,
             female,
             moving: false,
+            face: None,
         });
         self.out.push(Out::CharacterSpawned { index, handle });
         handle

@@ -191,6 +191,8 @@ pub struct Char {
     pub animator: Animator,
     pub female: bool,
     pub moving: bool,
+    /// Facing requested by the active move edict (`SetFacingAngle`, applied after the movement update).
+    pub face: Option<f32>,
 }
 
 impl Char {
