@@ -119,6 +119,7 @@ pub enum Hud {
     Clear,
     CloseScreen,
     OpenScreen(String),
+    OpenOverlay(String),
     CloseOverlay,
     PostGame(i32, Vec<u32>),
     SetupHandlers(i32),
@@ -145,6 +146,7 @@ pub enum Out {
     ShadowViewport { mode: i32, options: ShadowViewOptions },
     Fade { kind: &'static str, ms: i32 },
     Pregame { kind: i32, argument: i32 },
+    PauseInfo { kind: i32, argument: i32, words: [u32; 4] },
     AudioPause(i32),
     AudioUnpause,
     LoadAudio(i32),
@@ -591,7 +593,7 @@ impl TbHost {
                 Ok(())
             }
             Stage::Ball { difficulty, anchor, heading, .. } => {
-                let input = crate::tetherball_ball_init::BallInitInput { difficulty, anchor, heading, pole_height: self.pole_height };
+                let input = crate::tetherball_ball_init::BallInitInput { difficulty, anchor, heading, pole_height: self.origin[1] };
                 let resources = crate::tetherball_ball_init::initialize_ball(&mut rt.ball, &mut rt.state.scene, input, self);
                 self.ball_resources = Some(resources);
                 Ok(())
@@ -639,6 +641,23 @@ impl TbHost {
     }
     pub fn start_anim_complete(&self, rt: &mut Runtime) {
         crate::tetherball_frontend::on_game_start_anim_complete(&mut rt.life);
+    }
+}
+
+
+impl TbHost {
+    /// `MGTetherball::OnPauseReset`: full reset, intro again, then the base `ClosePauseMenu`.
+    pub fn restart(&mut self, rt: &mut Runtime) -> Result<(), String> {
+        let db = self.db.clone();
+        rt.reset(true, &db, self)?;
+        let rules = rt.state.rules;
+        rt.life.change_state(3, rules, &mut rt.ball, self);
+        rt.life.paused = false;
+        self.out.push(Out::Hud(Hud::CloseOverlay));
+        self.out.push(Out::AudioUnpause);
+        rt.state.serve.pause_menu_open = false;
+        rt.state.serve.pause_block_count_0fc = 1200;
+        Ok(())
     }
 }
 

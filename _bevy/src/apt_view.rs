@@ -64,7 +64,7 @@ impl AptView{
 /// Background music of the frontend: `fe.asf` (`Audio::PlayMusic` in FEManager states 2 and 13), the minigame's stream while a match runs.
 #[derive(Resource,Default)]
 struct FeMusic{track:String,music:Option<crate::playback::Music>}
-fn fe_music(world:Option<Res<crate::game::WorldPlay>>,v:Option<NonSend<AptViewNs>>,tb:Option<Res<crate::tetherball_play::Tb>>,mut m:ResMut<FeMusic>){
+fn fe_music(world:Option<Res<crate::game::WorldPlay>>,v:Option<NonSend<AptViewNs>>,tb:Option<Res<crate::tb_session::TbActive>>,mut m:ResMut<FeMusic>){
     let want=if v.is_none()||std::env::args().any(|a|a=="--mute")||world.is_some(){""}else if tb.is_some(){"tetherball.asf"}else{"fe.asf"};
     if m.track==want{return}
     m.music=None;m.track=want.to_string();
@@ -109,7 +109,7 @@ pub fn leave(world:&mut World){
     world.remove_non_send_resource::<AptViewNs>();
 }
 
-pub fn view_step(mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option<ResMut<crate::game::Game>>,mut mode:ResMut<AppMode>,mut backdrop:Option<ResMut<crate::game::Backdrop>>,mut commands:Commands,tbres:Option<Res<crate::tetherball_play::Tb>>,v:Option<NonSendMut<AptViewNs>>,time:Res<Time<Real>>,keys:Res<ButtonInput<KeyCode>>,mouse:Res<ButtonInput<MouseButton>>,windows:Query<&Window>,mut settings:ResMut<WinitSettings>,mut redraw:MessageWriter<RequestRedraw>){
+pub fn view_step(mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option<ResMut<crate::game::Game>>,mut mode:ResMut<AppMode>,mut backdrop:Option<ResMut<crate::game::Backdrop>>,mut commands:Commands,tbres:Option<Res<crate::tb_session::TbActive>>,v:Option<NonSendMut<AptViewNs>>,time:Res<Time<Real>>,keys:Res<ButtonInput<KeyCode>>,mouse:Res<ButtonInput<MouseButton>>,windows:Query<&Window>,mut settings:ResMut<WinitSettings>,mut redraw:MessageWriter<RequestRedraw>){
     let Some(mut v)=v else{return};let v=&mut v.0;
     settings.focused_mode=UpdateMode::Continuous;settings.unfocused_mode=UpdateMode::Continuous;redraw.write(RequestRedraw);
     if v.error.is_some(){return}
@@ -155,6 +155,9 @@ pub fn view_step(mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option
             }else if let Some(name)=c.strip_prefix('o'){
                 // `oNAME` opens a frontend screen (testing aid).
                 v.vm.fe.todo.push(("OpenScreen".into(),vec![crate::apt_vm::V::Str(name.into())]));
+            }else if let Some(n)=c.strip_prefix("tb").and_then(|n|n.parse::<i32>().ok()){
+                // `tbN` starts a tetherball match for N human players straight away (testing aid).
+                v.vm.fe.mp.players=n;v.vm.fe.mp.quick=n==1;v.vm.fe.launch=Some("tetherball".into());
             }else if c=="wr"||c=="ws"{v.vm.fe.script_world=Some(if c=="wr"{"ReportCard"}else{"StickerBookCover"});
             }else if c=="pause"{v.vm.fe.script_pause=true;
             }else if let Some(path)=c.strip_prefix('x'){
@@ -262,17 +265,24 @@ pub fn view_step(mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option
         }
         if g=="tetherball"&&tbres.is_none(){let fe=&v.vm.fe;
             let kid=|i:usize|fe.mp.avatars.get(i).and_then(|&k|fe.roster.get(k as usize)).map(|k|k.asset.clone());
-            commands.insert_resource(crate::tetherball_play::Tb::new_fe(fe.mp.players.max(2) as usize,[kid(0),kid(1)]));}
+            let female=|i:usize|fe.mp.avatars.get(i).and_then(|&k|fe.roster.get(k as usize)).map(|k|!k.boy).unwrap_or(false);
+            let humans=(fe.mp.players.max(1) as usize).min(2);
+            let mut cfg=crate::tb_host::Config::quick(humans);
+            cfg.single_player=fe.mp.quick&&humans==1;
+            cfg.rounds=if fe.mp.rounds>0{fe.mp.rounds}else{3};
+            cfg.female=[female(0),female(1)];
+            let kids=[kid(0),kid(1)];
+            commands.insert_resource(crate::tb_session::TbLaunch{cfg,kids});}
     }
     let hc:Vec<_>=v.vm.host_calls.drain(..).collect();
     for (n,a) in hc{let mut parts=vec![];for x in &a{parts.push(v.vm.to_str(x).to_string());}let line=format!("HOST {n}({})",parts.join(", "));v.vm.log.push(line);}
 }
 
 /// Letterbox the camera to the movie's aspect so nothing outside the authored frame shows.
-fn view_camera(v:Option<NonSend<AptViewNs>>,windows:Query<&Window>,mut cams:Query<(&mut Camera,Option<&AptCamera>,Option<&crate::game::GameEntity>),Or<(With<AptCamera>,With<LetterboxCamera>)>>,world3d:Query<(),(With<LetterboxCamera>,Without<AptCamera>)>,tb:Option<Res<crate::tetherball_play::Tb>>,mut world_vis:Query<&mut Visibility,(With<crate::game::GameEntity>,Without<AptEntity>,Without<crate::game::Player>)>){
+fn view_camera(v:Option<NonSend<AptViewNs>>,windows:Query<&Window>,mut cams:Query<(&mut Camera,Option<&AptCamera>,Option<&crate::game::GameEntity>),Or<(With<AptCamera>,With<LetterboxCamera>)>>,world3d:Query<(),(With<LetterboxCamera>,Without<AptCamera>)>,tb:Option<Res<crate::tb_session::TbActive>>,mut world_vis:Query<&mut Visibility,(With<crate::game::GameEntity>,Without<AptEntity>,Without<crate::game::Player>,Without<crate::tb_session::TbHidden>)>){
     let Some(v)=v else{return};let Some(m)=v.0.root_movie() else{return};
     // The menu world is hidden while a minigame scene is up.
-    let want=if tb.is_some(){Visibility::Hidden}else{Visibility::Inherited};
+    let want=Visibility::Inherited;let _=&tb;
     for mut vis in &mut world_vis{ if *vis!=want{*vis=want;} }
     let Ok(w)=windows.single() else{return};
     let (mw,mh)=(m.apt.width.max(1.),m.apt.height.max(1.));
@@ -281,7 +291,7 @@ fn view_camera(v:Option<NonSend<AptViewNs>>,windows:Query<&Window>,mut cams:Quer
     let (ox,oy)=(((pw-cw)/2.).floor(),((ph-ch)/2.).floor());
     for (mut c,apt,world) in &mut cams{
         // The menu world is only shown while no minigame scene is running.
-        if world.is_some()&&c.is_active==tb.is_some(){c.is_active=tb.is_none();}
+        if world.is_some()&&!c.is_active{c.is_active=true;}
         c.viewport=Some(bevy::camera::Viewport{physical_position:UVec2::new(ox as u32,oy as u32),physical_size:UVec2::new(cw as u32,ch as u32),..default()});
         if apt.is_some(){
             c.order=10;

@@ -264,11 +264,11 @@ impl ServeServices for TbHost {
         self.out.push(Out::Particle { id, name: name.to_string(), position });
         self.out.push(Out::ParticleDestroy { id, fade_ms });
     }
-    fn pregame(&mut self, kind: i32, argument: i32, _words: [u32; 4]) {
-        self.out.push(Out::Pregame { kind, argument });
+    fn pregame(&mut self, kind: i32, argument: i32, words: [u32; 4]) {
+        self.out.push(Out::PauseInfo { kind, argument, words });
     }
     fn overlay(&mut self, name: &str) {
-        self.out.push(Out::Hud(Hud::OpenScreen(name.to_string())));
+        self.out.push(Out::Hud(Hud::OpenOverlay(name.to_string())));
     }
     fn audio_pause(&mut self, mode: i32) {
         self.paused_audio = true;

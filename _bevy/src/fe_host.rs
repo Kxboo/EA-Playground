@@ -23,6 +23,10 @@ pub struct Fe{
     pub hud_loaded:bool,
     pub start_anim_done:bool,
     pub serve_bubble:bool,
+    /// Choice made on a post-game screen for the minigame to act on (0 replay, 1 leave); see `UpdatePostGame`.
+    pub postgame_choice:Option<i32>,
+    /// Front-end calls to run once the minigame has finished leaving (screens to return to).
+    pub after_exit:Vec<(u32,String,Vec<V>)>,
     /// Pause overlay state: set while the `PauseMenu` overlay is open; the pause buttons leave a request here.
     pub paused:bool,
     pub pause_req:Option<PauseReq>,
@@ -212,10 +216,11 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
             vec![("aiPlayerStats".into(),[r.hits[p].to_string(),r.power_hits[p].to_string()].join(DELIM))]
         }
         "MultiPlayer_PostGameOnSelect"=>{
+            // 2 = play again (the minigame resets itself), 1 = new game, anything else = main menu: the latter two leave the minigame first.
             match arg("iSelected").as_deref(){
-                Some("2")=>{ vm.fe.todo.push(("CloseScreen".into(),vec![])); vm.fe.later.push((30,"OpenScreen".into(),vec![V::Str("PreGameMP".into())])); }
-                Some("1")=>{ vm.fe.mp.active=true; vm.fe.todo.push(("ClearScreenStack".into(),vec![])); vm.fe.later.push((10,"OpenScreen".into(),vec![V::Str("SelectNumPlayers".into())])); }
-                _=>{ vm.fe.mp.active=false; vm.fe.todo.push(("ClearScreenStack".into(),vec![])); vm.fe.later.push((10,"OpenScreen".into(),vec![V::Str("MainMenu".into())])); }
+                Some("2")=>{ vm.fe.postgame_choice=Some(0); }
+                Some("1")=>{ vm.fe.mp.active=true; vm.fe.postgame_choice=Some(1); vm.fe.after_exit=vec![(0,"ClearScreenStack".into(),vec![]),(10,"OpenScreen".into(),vec![V::Str("SelectNumPlayers".into())])]; }
+                _=>{ vm.fe.mp.active=false; vm.fe.postgame_choice=Some(1); vm.fe.after_exit=vec![(0,"ClearScreenStack".into(),vec![]),(10,"OpenScreen".into(),vec![V::Str("MainMenu".into())])]; }
             }
             vec![]
         }
@@ -239,8 +244,8 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
             vec![("aiStats".into(),[r.hits[p].to_string(),r.power_hits[p].to_string()].join(DELIM))]
         }
         "PostGame_GetMPInfo"=>vec![("iNumPlayers".into(),"1".into()),("iIsTeamGame".into(),"0".into()),("aiRank".into(),"0".into()),("iMultiplayerGameType".into(),"0".into())],
-        "PostGame_OnReplay"=>{vm.fe.todo.push(("CloseScreen".into(),vec![]));vm.fe.later.push((20,"OpenScreen".into(),vec![V::Str("PreGameInstructions".into())]));vec![]}
-        "PostGame_OnDone"|"PostGame_OnButtonClick"=>{vm.fe.mp.active=false;vm.fe.mp.quick=false;vm.fe.todo.push(("ClearScreenStack".into(),vec![]));vm.fe.later.push((10,"OpenScreen".into(),vec![V::Str("MainMenu".into())]));vec![]}
+        "PostGame_OnReplay"=>{vm.fe.postgame_choice=Some(0);vec![]}
+        "PostGame_OnDone"|"PostGame_OnButtonClick"=>{vm.fe.mp.active=false;vm.fe.mp.quick=false;vm.fe.postgame_choice=Some(1);vm.fe.after_exit=vec![(0,"ClearScreenStack".into(),vec![]),(10,"OpenScreen".into(),vec![V::Str("MainMenu".into())])];vec![]}
         "EndGame_OnLoad"=>vec![("aiBeatenMinigames".into(),["0";7].join(DELIM)),("iLastBeatenMinigame".into(),"0".into()),("iAllGamesFinished".into(),"0".into())],
         "StickerBookCover_LoadLayout"=>{
             let pr=&vm.fe.profiles;

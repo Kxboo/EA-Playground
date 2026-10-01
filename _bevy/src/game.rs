@@ -258,6 +258,8 @@ fn backdrop_only(mode:Res<AppMode>,backdrop:Option<Res<Backdrop>>)->bool{*mode!=
 pub struct Backdrop{pub eye:Vec3,pub target:Vec3,from:(Vec3,Vec3),to:(Vec3,Vec3),t:f32,dur:f32}
 impl Backdrop{
     pub fn new(eye:Vec3,target:Vec3)->Self{Self{eye,target,from:(eye,target),to:(eye,target),t:1.,dur:1.}}
+    /// Jump to a pose immediately (a minigame drives the camera itself).
+    pub fn set_now(&mut self,eye:Vec3,target:Vec3){self.eye=eye;self.target=target;self.t=1.;}
     /// Start a smooth camera move (duration in seconds).
     pub fn move_to(&mut self,eye:Vec3,target:Vec3,dur:f32){self.from=(self.eye,self.target);self.to=(eye,target);self.t=0.;self.dur=dur.max(0.01);}
 }
