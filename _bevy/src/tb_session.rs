@@ -86,6 +86,7 @@ pub struct Session {
     hidden_props: Vec<Entity>,
     restart: bool,
     fx_serial: u32,
+    sound_rng: u64,
 }
 
 fn data_dir(rel: &str) -> String {
@@ -143,6 +144,7 @@ impl Session {
             hidden_props: vec![],
             restart: false,
             fx_serial: 0,
+            sound_rng: 0x9e37_79b9,
         }
     }
 }
@@ -316,6 +318,26 @@ const SEATS: [Keys; 2] = [
     Keys { swing: KeyCode::Space, reverse: KeyCode::KeyX, overhand: KeyCode::KeyZ, a: KeyCode::ShiftLeft, b: KeyCode::ControlLeft },
     Keys { swing: KeyCode::Enter, reverse: KeyCode::Period, overhand: KeyCode::Slash, a: KeyCode::ShiftRight, b: KeyCode::ControlRight },
 ];
+
+/// `Services::sound`: front-end ids go to `AUDIOAEMSFEHUDSFX` (UI sounds below 22), the rest to `AUDIOAEMSBESFX`.
+fn play_sound(frontend: bool, id: i32, volume: i32, rng: &mut u64) {
+    let v = volume as f32 / 100.;
+    if frontend {
+        if (0..22).contains(&id) {
+            crate::fe_sfx::play(crate::fe_sfx::NAMES[id as usize]);
+        } else if let Some((file, class, index)) = crate::sfx::hud(id) {
+            crate::sfx::play(file, class, index, v);
+        }
+    } else if let Some((file, class, index)) = crate::sfx::backend(id) {
+        let index = index.unwrap_or_else(|| {
+            *rng ^= *rng << 13;
+            *rng ^= *rng >> 7;
+            *rng ^= *rng << 17;
+            (*rng % (crate::sfx::random_variants(id) as u64 + 1)) as usize
+        });
+        crate::sfx::play(file, class, index, v);
+    }
+}
 
 fn fe_call(vm: &mut crate::apt_vm::Vm, name: &str, args: &[f64]) {
     vm.call_exposed(name, args.iter().map(|&n| V::Num(n)).collect());
@@ -535,7 +557,8 @@ fn step(
                     Hud::SetupHandlers(_) | Hud::ClearPregameHandlers | Hud::ClearPostgameHandlers | Hud::Clear => {}
                 },
                 Out::PauseInfo { words, .. } => vm.fe.pause_words = Some(words),
-                Out::Sound { .. } | Out::WiimoteSound { .. } => {}
+                Out::Sound { frontend, id, volume, .. } => play_sound(frontend, id, volume, &mut s.sound_rng),
+                Out::WiimoteSound { .. } => {}
                 Out::PlayMusic(_) | Out::LoadAudio(_) => {}
                 _ => {}
             }

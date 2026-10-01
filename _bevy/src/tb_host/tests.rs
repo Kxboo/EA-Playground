@@ -119,3 +119,53 @@ fn a_full_match_runs_through_the_recovered_state_machine() {
     assert!(log.iter().any(|l| l.contains("state 27")), "serve state reached");
     assert!(log.iter().any(|l| l.contains("state 28") || l.contains("state 29")), "rally reached");
 }
+
+/// Manual evidence dump: the AEMS module listing of the tetherball bank (`scratch/tb_abk.txt`, `scratch/tb_abk.json`).
+#[test]
+#[ignore]
+fn dump_tetherball_bank() {
+    let dir = crate::bridge::data_root().join("files/data/audio/aems");
+    let Ok(d) = std::fs::read(dir.join("mg_tetherball.abk")) else { return };
+    let csi = std::fs::read(dir.join("playground_aems.csi")).unwrap();
+    let names: std::collections::BTreeMap<u16, String> = crate::formats2::csi(&csi)
+        .map(|v| {
+            ["table1", "table2", "table3"]
+                .iter()
+                .flat_map(|t| v[*t].as_array().cloned().unwrap_or_default())
+                .filter_map(|e| Some((u16::from_str_radix(e["id"].as_str()?, 16).ok()?, e["name"].as_str()?.to_string())))
+                .collect()
+        })
+        .unwrap_or_default();
+    let b = crate::aems::decode(&d, &names).unwrap();
+    std::fs::write(crate::bridge::root().join("scratch/tb_abk.txt"), &b.listing).unwrap();
+    std::fs::write(crate::bridge::root().join("scratch/tb_abk.json"), serde_json::to_string_pretty(&b.json).unwrap()).unwrap();
+}
+
+/// Manual evidence dump: class names per AEMS bank (`scratch/aems_classes.txt`).
+#[test]
+#[ignore]
+fn dump_aems_classes() {
+    let dir = crate::bridge::data_root().join("files/data/audio/aems");
+    let csi = std::fs::read(dir.join("playground_aems.csi")).unwrap();
+    let names: std::collections::BTreeMap<u16, String> = crate::formats2::csi(&csi)
+        .map(|v| {
+            ["table1", "table2", "table3"]
+                .iter()
+                .flat_map(|t| v[*t].as_array().cloned().unwrap_or_default())
+                .filter_map(|e| Some((u16::from_str_radix(e["id"].as_str()?, 16).ok()?, e["name"].as_str()?.to_string())))
+                .collect()
+        })
+        .unwrap_or_default();
+    let mut out = String::new();
+    for e in std::fs::read_dir(&dir).unwrap().flatten() {
+        let p = e.path();
+        if p.extension().is_some_and(|x| x == "abk") {
+            let d = std::fs::read(&p).unwrap();
+            if let Ok(b) = crate::aems::decode(&d, &names) {
+                let cls: Vec<String> = b.json["csis_bindings"].as_array().unwrap().iter().filter(|x| x["kind"] == "class").map(|x| x["name"].as_str().unwrap_or("?").to_string()).collect();
+                out += &format!("{}: {:?}\n", p.file_name().unwrap().to_string_lossy(), cls);
+            }
+        }
+    }
+    std::fs::write(crate::bridge::root().join("scratch/aems_classes.txt"), out).unwrap();
+}
