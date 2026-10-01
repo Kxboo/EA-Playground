@@ -158,6 +158,10 @@ pub fn view_step(mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option
             }else if let Some(n)=c.strip_prefix("tb").and_then(|n|n.parse::<i32>().ok()){
                 // `tbN` starts a tetherball match for N human players straight away (testing aid).
                 v.vm.fe.mp.players=n;v.vm.fe.mp.minigame=2;v.vm.fe.mp.quick=n==1;v.vm.fe.launch=Some("tetherball".into());
+            }else if matches!(c,"pr"|"ps"|"pq"){
+                // pause-menu button presses without the pointer (testing aid): resume / start over / quit
+                use crate::fe_host::PauseReq;
+                v.vm.fe.pause_req=Some(match c{"pr"=>PauseReq::Resume,"ps"=>PauseReq::Restart,_=>PauseReq::Quit});
             }else if c=="g2"{v.vm.fe.mp.minigame=2;v.vm.fe.mp.players=2;
             }else if c=="wr"||c=="ws"{v.vm.fe.script_world=Some(if c=="wr"{"ReportCard"}else{"StickerBookCover"});
             }else if c=="pause"{v.vm.fe.script_pause=true;

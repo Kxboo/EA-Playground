@@ -169,3 +169,29 @@ fn dump_aems_classes() {
     }
     std::fs::write(crate::bridge::root().join("scratch/aems_classes.txt"), out).unwrap();
 }
+
+#[test]
+#[ignore]
+fn dump_skeleton_names() {
+    let Ok(a) = AnimAssets::load() else { return };
+    let names: Vec<String> = a.skeleton.bones.iter().map(|b| format!("{}:{}({})", b.index, b.name, b.parent)).collect();
+    std::fs::write(crate::bridge::root().join("scratch/skel_names.txt"), names.join("\n")).unwrap();
+}
+
+#[test]
+#[ignore]
+fn dump_serve_pose() {
+    let Ok(a) = AnimAssets::load() else { return };
+    let mut out = String::new();
+    for asset in ["TB_ServeIdle", "TB_ServeStart", "TB_ServeEnd", "TB_Idle"] {
+        let Some(c) = a.lib.clip(asset) else { continue };
+        out += &format!("{asset}: {} samples, rot bones {:?}, trans bones {:?}\n", c.sample_count, c.rot.keys().take(6).collect::<Vec<_>>(), c.trans.keys().collect::<Vec<_>>());
+        for f in [0., 8., 16., 24.] {
+            let p = crate::tb_anim::pose_of(c, &a.bind, f);
+            for b in [0usize, 56, 67] {
+                out += &format!("  f{f} bone {b}: rot {:?} trans {:?}\n", p[b].rot, p[b].trans);
+            }
+        }
+    }
+    std::fs::write(crate::bridge::root().join("scratch/serve_pose.txt"), out).unwrap();
+}

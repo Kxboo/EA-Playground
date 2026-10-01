@@ -11,12 +11,8 @@ fn to_mat(m: &Matrix) -> Mat4 {
 impl TbHost {
     /// Index of the bone the served ball is attached to (marker 0x3f is not decoded; the right hand is used).
     pub fn hand_bone(&self) -> usize {
-        let names: Vec<String> = self.assets.skeleton.bones.iter().map(|b| b.name.to_lowercase()).collect();
-        names
-            .iter()
-            .position(|n| n.contains("hand") && (n.contains("r_") || n.contains("right") || n.ends_with("_r") || n.contains("rt")))
-            .or_else(|| names.iter().position(|n| n.contains("hand")))
-            .unwrap_or(0)
+        let find = |n: &str| self.assets.skeleton.bones.iter().position(|b| b.name.eq_ignore_ascii_case(n));
+        find("r_prop").or_else(|| find("r_hand")).unwrap_or(0)
     }
 
     /// World matrices of every bone of `chars[index]` in the engine's matrix layout.
