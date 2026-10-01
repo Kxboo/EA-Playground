@@ -85,6 +85,7 @@ pub struct Session {
     over: bool,
     hidden_props: Vec<Entity>,
     restart: bool,
+    fx_serial: u32,
 }
 
 fn data_dir(rel: &str) -> String {
@@ -141,6 +142,7 @@ impl Session {
             over: false,
             hidden_props: vec![],
             restart: false,
+            fx_serial: 0,
         }
     }
 }
@@ -185,6 +187,9 @@ pub fn teardown(world: &mut World) {
         }
     }
     world.remove_resource::<TbActive>();
+    if let Some(mut fx) = world.get_resource_mut::<crate::fx::FxWorld>() {
+        fx.instances.clear();
+    }
 }
 
 fn pump(s: Option<NonSendMut<Session>>, mut settings: ResMut<WinitSettings>, mut redraw: MessageWriter<RequestRedraw>) {
@@ -325,6 +330,7 @@ fn step(
     mut fe: Option<NonSendMut<crate::apt_view::AptViewNs>>,
     mut backdrop: Option<ResMut<crate::game::Backdrop>>,
     mut exit: MessageWriter<AppExit>,
+    mut fx: ResMut<crate::fx::FxWorld>,
 ) {
     let Some(mut s) = s else { return };
     if s.load != Load::Running || s.over {
@@ -460,6 +466,21 @@ fn step(
     }
     // Host -> front end.
     let outs = host.take_out();
+    fx.update(step.seconds());
+    for out in &outs {
+        match out {
+            Out::Particle { id, name, position } => fx.spawn(*id, name, *position),
+            Out::ParticleMove { id, position } => fx.move_to(*id, *position),
+            Out::ParticleDestroy { id, fade_ms } => fx.stop(*id, *fade_ms as f32 / 1000.),
+            Out::WrapParticle { player, position, fade_ms } => {
+                s.fx_serial += 1;
+                let id = 0xF000_0000 + s.fx_serial;
+                fx.spawn(id, if *player == 0 { "pg_tetherball_point_blue" } else { "pg_tetherball_point_red" }, *position);
+                fx.stop(id, *fade_ms as f32 / 1000.);
+            }
+            _ => {}
+        }
+    }
     if let Some(v) = fe.as_mut() {
         let vm = &mut v.0.vm;
         for out in outs {
