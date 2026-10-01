@@ -27,3 +27,10 @@ strip = true
 [[bin]]
 name = "EAGL-Workbench"
 path = "src/main.rs"
+
+[profile.lab]
+inherits = "release"
+lto = false
+opt-level = 2
+incremental = true
+strip = false

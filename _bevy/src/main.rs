@@ -47,6 +47,8 @@ mod tb_host;
 mod tb_session;
 mod fx;
 mod fe_postgame;
+mod gekko;
+mod mgvm;
 mod sfx;
 mod apt;
 mod apt_player;
