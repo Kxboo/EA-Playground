@@ -38,6 +38,13 @@ struct TbBall;
 struct TbRope;
 #[derive(Component)]
 struct TbPole;
+/// Flattened copies of the casters (`ShadowManager`'s top-down projection onto the ground).
+#[derive(Component)]
+struct TbShadowRoot(usize);
+#[derive(Component)]
+struct TbShadowBall;
+#[derive(Component)]
+struct TbShadowRope;
 /// World props the minigame hides (kept hidden by the front end's visibility sync).
 #[derive(Component)]
 pub struct TbHidden;
@@ -161,7 +168,7 @@ pub struct TbLaunch {
 struct TbTeardown;
 
 pub fn plugin(app: &mut App) {
-    app.add_systems(Update, (launch_or_teardown, pump, build, step, present).chain());
+    app.add_systems(Update, (launch_or_teardown, pump, build, step, present, present_shadows).chain());
 }
 
 fn launch_or_teardown(world: &mut World) {
@@ -293,6 +300,27 @@ fn build(
         let up = own.as_ref().unwrap_or(&default_up);
         let root = commands.spawn((TbEntity, TbRoot(index), Transform::default(), Visibility::default())).id();
         let joints = character::spawn_rig(&mut commands, &mut ibp, &player.skeleton, up, root, root);
+        for (bone, j) in joints.iter().enumerate() {
+            commands.entity(*j).insert(TbJoint { char: index, bone });
+        }
+    }
+    // Shadows: the original renders the casters top-down into a 2.5 x 2.5 viewport (`SetupShadowOptions`) and projects the
+    // result on the ground; here the same silhouettes are the casters flattened onto the ground plane.
+    let shadow_mat = materials.add(StandardMaterial {
+        base_color: Color::srgba(0., 0., 0., SHADOW_ALPHA),
+        unlit: true,
+        alpha_mode: AlphaMode::Blend,
+        cull_mode: None,
+        ..default()
+    });
+    let shadowed = |u: &assets::Uploaded| assets::Uploaded { parts: u.parts.iter().map(|(m, _)| (m.clone(), shadow_mat.clone())).collect() };
+    assets::spawn(&mut commands, &shadowed(&ball_up), (TbEntity, TbShadowBall, Transform::default()), None);
+    assets::spawn(&mut commands, &shadowed(&rope_up), (TbEntity, TbShadowRope, Transform::default()), None);
+    for index in 0..2 {
+        let own = kids[index].as_ref().map(|m| assets::upload_skinned(m, &mut meshes, &mut materials, &mut images));
+        let up = shadowed(own.as_ref().unwrap_or(&default_up));
+        let root = commands.spawn((TbEntity, TbShadowRoot(index), Transform::default(), Visibility::default())).id();
+        let joints = character::spawn_rig(&mut commands, &mut ibp, &player.skeleton, &up, root, root);
         for (bone, j) in joints.iter().enumerate() {
             commands.entity(*j).insert(TbJoint { char: index, bone });
         }
@@ -577,6 +605,42 @@ fn step(
         commands.insert_resource(TbTeardown);
     }
     let _ = &mut exit;
+}
+
+/// Shadow opacity (provisional: `SetupShadowOptions`' scalar 0x3f1eb852).
+const SHADOW_ALPHA: f32 = 0.62;
+const SHADOW_FLAT: f32 = 0.01;
+
+fn present_shadows(
+    s: Option<NonSendMut<Session>>,
+    game: Option<Res<crate::game::Game>>,
+    mut roots: Query<(&TbShadowRoot, &mut Transform), (Without<TbJoint>, Without<TbShadowBall>, Without<TbShadowRope>)>,
+    mut ball: Query<&mut Transform, (With<TbShadowBall>, Without<TbShadowRoot>, Without<TbJoint>, Without<TbShadowRope>)>,
+    mut rope: Query<&mut Transform, (With<TbShadowRope>, Without<TbShadowRoot>, Without<TbJoint>, Without<TbShadowBall>)>,
+) {
+    let Some(s) = s else { return };
+    let (Some(host), Some(game)) = (s.host.as_ref(), game) else { return };
+    let radius = game.world_radius;
+    let flat = Mat4::from_scale(Vec3::new(1., SHADOW_FLAT, 1.));
+    let lift = |x: f32, z: f32, fallback: f32| Vec3::new(x, game.ground_height(x, z).unwrap_or(fallback) + 0.08, z);
+    let on_ground = |m: &[f32; 16]| {
+        let m = Mat4::from_cols_array(m);
+        let p = m.w_axis;
+        let ground = lift(p.x, p.z, p.y);
+        Mat4::from_translation(Vec3::new(0., ground.y, 0.)) * flat * m
+    };
+    for mut t in &mut ball {
+        *t = Transform::from_matrix(on_ground(&host.ball_matrix));
+    }
+    for mut t in &mut rope {
+        *t = Transform::from_matrix(on_ground(&host.rope_matrix));
+    }
+    for (r, mut t) in &mut roots {
+        let Some(c) = host.chars.get(r.0) else { continue };
+        let p = lift(c.pos[0], c.pos[2], c.pos[1]);
+        let heading = c.dir[0].atan2(c.dir[2]);
+        *t = Transform::from_matrix(crate::game::display_matrix(radius, p) * flat * Mat4::from_rotation_y(heading));
+    }
 }
 
 fn present(

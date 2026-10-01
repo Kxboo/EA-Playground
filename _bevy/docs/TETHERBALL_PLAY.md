@@ -25,8 +25,9 @@ area, `tbN` in `--apt-script` starts a match for N players, `EAGL_TB_DEBUG=1` wr
 ## Known gaps
 
 * Gameplay sounds (`Services::sound` ids of `mg_tetherball.abk`), voice lines and rumble are reported by the host but not played.
-* Particles (`pg_tetherball_*` trails, impacts, pole glow, hit indicator), shadows and the pole indicator texture offset are reported
-  (`Out::Particle`, `ShadowMatrix`, `PoleIndicator`) but not drawn.
+* Shadows are the casters flattened onto the ground (`present_shadows`); the original renders them top-down into a 2.5 x 2.5 texture
+  with a colour vector we do not apply (flat black at alpha 0.62), and overlapping parts darken each other.
+* Footsteps use the first surface sound: the ground type comes from a Havok ray cast (`Character::UpdateWalkSurfaceType`).
 * The ball is attached to the right-hand bone; the original uses marker 0x3f (not decoded).  Character locomotion speed/facing is a guess.
 * `current_animation` reaches the recovered logic one frame late (the modules read it as plain data).
 * Single-player entry from the world (point of interest) and progression (visited areas, unlocked abilities) are not implemented.
