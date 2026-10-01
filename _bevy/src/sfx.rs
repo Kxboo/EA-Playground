@@ -119,6 +119,33 @@ pub fn hud(id: i32) -> Option<(&'static str, &'static str, usize)> {
     }
 }
 
+/// `AuCharacterSoundObject::Play(int, int)` (0x802e498c), reached through `Audio::PlayAnimSFX` when a character starts an
+/// animation: a switch over the animation state number that instantiates a character-sound Csis class.  Only the
+/// minigame (`MGSFX_*`) classes are mapped; the `WSFX_*` ones belong to the open world.  Returns (bank, class, table index);
+/// `female` is the character-object flag at +0x1e8 that picks the second constructor input where the original branches.
+pub fn anim(state: i32, female: bool) -> Option<(&'static str, &'static str, usize)> {
+    const COMMON: &str = "common sfx.abk";
+    let pick = |m: usize, f: usize| if female { f } else { m };
+    Some(match state {
+        79 | 82 => ("mg_tetherball.abk", "MGSFX_TB_Windups", pick(1, 0)),
+        85 => (COMMON, "MGSFX_GENERIC_Celebrations", pick(1, 5)),
+        165 => (COMMON, "MGSFX_GENERIC_Celebrations", pick(0, 4)),
+        225 => (COMMON, "MGSFX_GENERIC_Celebrations", pick(0, 4)),
+        226 => (COMMON, "MGSFX_GENERIC_Celebrations", pick(1, 5)),
+        227 => (COMMON, "MGSFX_GENERIC_Celebrations", pick(3, 7)),
+        228 => (COMMON, "MGSFX_GENERIC_Celebrations", pick(2, 6)),
+        95 => (COMMON, "MGSFX_HERO_Celebrations", pick(0, 1)),
+        138 => (COMMON, "MGSFX_HERO_Celebrations", pick(3, 2)),
+        166 => (COMMON, "MGSFX_HERO_Celebrations", pick(7, 6)),
+        167 => (COMMON, "MGSFX_HERO_Celebrations", pick(5, 4)),
+        209 => (COMMON, "MGSFX_HERO_Celebrations", pick(12, 11)),
+        210 => (COMMON, "MGSFX_HERO_Celebrations", pick(9, 8)),
+        237 => (COMMON, "MGSFX_HERO_Celebrations", 10),
+        229..=236 => (COMMON, "MGSFX_SIGNATURE_Celebrations", [4, 7, 1, 6, 3, 5, 0, 2][(state - 229) as usize]),
+        _ => return None,
+    })
+}
+
 fn pcm(file: &str, sound: u32) -> Option<audio::Pcm> {
     let cache = PCM.get_or_init(|| Mutex::new(HashMap::new()));
     let key = (file.to_string(), sound);
@@ -163,6 +190,24 @@ mod tests {
         for (file, class) in [("mg_tetherball.abk", "MGSFX_Tetherball_Hits"), ("mg_tetherball.abk", "MGSFX_HUD_TB"), ("common sfx.abk", "MGSFX_CommonHUD")] {
             for (_, s) in bank(file).unwrap().class(class).unwrap() {
                 assert!(pcm(file, *s).is_some(), "{file} {class} sound {s}");
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod anim_tests {
+    use super::*;
+    #[test]
+    fn character_sounds_index_existing_table_entries() {
+        let Some(common) = bank("common sfx.abk") else { return };
+        let tb = bank("mg_tetherball.abk").unwrap();
+        for state in 0..260 {
+            for female in [false, true] {
+                if let Some((file, class, i)) = anim(state, female) {
+                    let b = if file == "common sfx.abk" { &common } else { &tb };
+                    assert!(i < b.class(class).unwrap().len(), "state {state} {class} {i}");
+                }
             }
         }
     }

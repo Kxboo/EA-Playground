@@ -173,6 +173,8 @@ pub enum Out {
     LoadAudio(i32),
     PlayMusic(i32),
     CharacterSpawned { index: usize, handle: u32 },
+    /// A character started animation `state` (`Audio::PlayAnimSFX`).
+    AnimSfx { female: bool, state: i32 },
 }
 
 

@@ -94,11 +94,15 @@ impl TbHost {
         let mut rng = self.rng;
         let Some(c) = self.chars.get_mut(player) else { return };
         let graph = assets.graph(c.female);
+        let before = c.animator.anim.state;
         c.animator.set(graph, &assets.lib, state as usize, 1., force, timer_ms, |lo, hi| {
             let span = (hi - lo + 1).max(1) as u64;
             lo + (xorshift(&mut rng) % span) as i32
         });
         self.rng = rng;
+        if c.animator.anim.state != before {
+            self.out.push(Out::AnimSfx { female: c.female, state: c.animator.anim.state as i32 });
+        }
     }
 
     /// Look-at point and eye of the follow camera as of the last frame.
