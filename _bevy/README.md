@@ -86,6 +86,8 @@ The refreshed inventory covers 5,267 records, 3,685 distinct contents and 47 ext
 
 GSH base images, TPL base images, recovered model layouts, skeletons and several animation codecs are supported. CSV/localization/effect trees and many binary structures are inspectable. Materials are approximate; shadow compositing, APT timelines/masks, sparse animation timing, static extra channels, collision and several other formats remain unresolved. Animation timing still assumes 30 fps. Sound/video playback is not implemented. `../Remaster/research/FINDINGS.md` records the ELF evidence and gaps; `../Remaster/research/model-verification.json` records the full model audit.
 
+**Native decode:** `EAGL-Workbench.exe --decode-all <new dir>` now decodes the whole corpus in Rust, without the worker. It covers models, rigs, textures, fonts, APT, Havok, audio, VP6 video, NW4R and system files; only 12 unlinked third-party keyboard dictionaries stay partial. See [docs/NATIVE_DECODE.md](docs/NATIVE_DECODE.md).
+
 ## Build and verify
 
 Source needs Rust/MSVC and Python 3.14 with PyInstaller/NumPy. Dependencies are pinned in `Cargo.lock`; a first build needs `cargo fetch --locked`. Then:

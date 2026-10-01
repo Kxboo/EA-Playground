@@ -9,6 +9,13 @@
 //!
 //! All arithmetic is done in f64 in the same operation order as the reference decoders so the differential test can
 //! compare against the Python output.
+//!
+//! Corrections from the executable's evaluators (the Python reference shares the old behaviour):
+//! * `FnStatelessF3` samples are signed 16-bit times the channel scale (`EvalSQTfast` 0x803fdc1c), not offset binary.
+//! * `FnStatelessQ`/`F3` extra static channels and sparse keyframe time tables (`EvalSQT` 0x803fd220) are decoded;
+//!   sparse clips are resampled per frame with the evaluator's component-wise interpolation.
+//! * `FnCompoundChannel` (container 0x0f, 0x803ff53c) applies every child track, lower index last; the reference only
+//!   read the first two and missed 125 player F1 tracks and both prop animations.
 use crate::recovered::BONE_MASK;
 use crate::skeleton::{be16,be32,bef32,le32,Container,Skeleton};
 use std::collections::{BTreeMap,HashMap};
@@ -32,12 +39,14 @@ impl Clip{pub fn duration(&self)->f64{(self.sample_count.saturating_sub(1)) as f
 fn rd_be16(d:&[u8],o:usize)->Result<usize,String>{Ok(be16(d,o)? as usize)}
 fn byte(d:&[u8],o:usize)->Result<u8,String>{d.get(o).copied().ok_or_else(||format!("read past end at {o:#x}"))}
 
-fn parse_marker(d:&[u8],reloc:&HashMap<usize,usize>,data_start:usize,rel:usize)->Option<Marker>{
+fn parse_marker(d:&[u8],reloc:&HashMap<usize,usize>,data_start:usize,rel:usize)->Option<Marker>{parse_marker_in(d,reloc,data_start,rel,None)}
+/// `container_family`: a compound child carries its container's family (the bank's target checksum).
+fn parse_marker_in(d:&[u8],reloc:&HashMap<usize,usize>,data_start:usize,rel:usize,container_family:Option<u16>)->Option<Marker>{
     let abs=data_start+rel;
     if abs+0x12>d.len()||d[abs]!=0{return None}
     let (tag,family)=(d[abs+1],u16::from_be_bytes([d[abs+2],d[abs+3]]));
-    // Real markers only use these family suffixes (0x1414 is the RC-car container/markers).
-    if !matches!(family,0xc6e4|0x0606|0xe580|0xe664|0x1414){return None}
+    // Real markers only use these family suffixes (0x1414 is the RC-car container/markers) or their container's.
+    if !matches!(family,0xc6e4|0x0606|0xe580|0xe664|0x1414)&&Some(family)!=container_family{return None}
     if !(0x11..=0x17).contains(&tag){return None}
     Some(Marker{abs,tag,family,dense_ptr:reloc.get(&(rel+12)).copied()})
 }
@@ -234,14 +243,17 @@ fn unpack_u16(v:u16)->f64{
 }
 fn mask(mb:u32,me:u32)->u32{(mb..=me).fold(0,|m,b|m|1<<(31-b))}
 
-struct Stateless<T>{keyframes:usize,bone_table:Option<Vec<Option<usize>>>,frames:Vec<Vec<T>>}
+struct Stateless<T>{keyframes:usize,bone_table:Option<Vec<Option<usize>>>,frames:Vec<Vec<T>>,
+    /// Extra static channels (constant values) with their bone slots, and the sparse keyframe time table (u16 frame of keyframe k+1).
+    statics:Vec<(Option<usize>,T)>,times:Option<Vec<u16>>}
 
 /// `FnStatelessQ` (0x16): the clip block itself is the map; 4 x u16 quaternion fields per keyframe/channel.
 fn stateless_q(d:&[u8],reloc:&HashMap<usize,usize>,ds:usize,cb:&ClipBlock)->Result<Stateless<[f64;4]>,String>{
     let a=cb.abs;let keyframes=rd_be16(d,a+0x14)?;let channels=byte(d,a+0x16)? as usize;let extra=byte(d,a+0x17)? as usize;
     let base=a+0x18;
     if base+keyframes*channels*8>d.len(){return Err("record table runs past EOF".into())}
-    let table=reloc.get(&(a-ds+0x0c)).map(|&r|ds+r).filter(|&t|t+channels+extra<=d.len()).map(|t|d[t..t+channels].iter().map(|&b|Some(b as usize)).collect());
+    let tbl=reloc.get(&(a-ds+0x0c)).map(|&r|ds+r).filter(|&t|t+channels+extra<=d.len());
+    let table=tbl.map(|t|d[t..t+channels].iter().map(|&b|Some(b as usize)).collect());
     let mut frames=vec![];
     for ch in 0..channels{
         let mut v=vec![];
@@ -251,7 +263,12 @@ fn stateless_q(d:&[u8],reloc:&HashMap<usize,usize>,ds:usize,cb:&ClipBlock)->Resu
         }
         frames.push(v);
     }
-    Ok(Stateless{keyframes,bone_table:table,frames})
+    // `FnStatelessQ::EvalSQT` (0x803fd220): `extra` constant quaternions follow the keyframe records; their bones continue
+    // the channel table.  +0x08 points at the sparse time table when keyframes are not one per frame.
+    let sbase=base+keyframes*channels*8;let mut statics=vec![];
+    for i in 0..extra{let f=|k:usize|be16(d,sbase+8*i+2*k).map(unpack_u16);statics.push((tbl.map(|t|d[t+channels+i] as usize),[f(0)?,f(1)?,f(2)?,f(3)?]))}
+    let times=reloc.get(&(a-ds+0x08)).map(|&r|ds+r).map(|t|(0..keyframes.saturating_sub(1)).map(|k|be16(d,t+2*k)).collect::<Result<Vec<_>,_>>()).transpose()?;
+    Ok(Stateless{keyframes,bone_table:table,frames,statics,times})
 }
 
 /// `FnStatelessF3` (0x17): per-channel scale basis, 3 x offset-binary u16 per keyframe/channel.
@@ -259,9 +276,9 @@ fn stateless_f3(d:&[u8],reloc:&HashMap<usize,usize>,ds:usize,m:&Marker)->Result<
     let a=m.abs;let keyframes=rd_be16(d,a+0x10)?;let channels=byte(d,a+0x12)? as usize;let extra=byte(d,a+0x13)? as usize;
     let basis=a+0x18;let kf_table=basis+channels*0x20;let stride=channels*6;
     if kf_table+keyframes*stride>d.len(){return Err("keyframe table runs past EOF".into())}
-    let table=reloc.get(&(a-ds+0x0c)).map(|&r|ds+r).filter(|&t|t+(channels+extra)*2<=d.len()).map(|t|{
-        (0..channels).map(|i|{let e=be16(d,t+i*2).unwrap() as i64-8;if e>=0&&e%12==0{Some((e/12) as usize)}else{None}}).collect::<Vec<_>>()
-    });
+    let tbl=reloc.get(&(a-ds+0x0c)).map(|&r|ds+r).filter(|&t|t+(channels+extra)*2<=d.len());
+    let slot=|t:usize,i:usize|{let e=be16(d,t+i*2).unwrap() as i64-8;if e>=0&&e%12==0{Some((e/12) as usize)}else{None}};
+    let table=tbl.map(|t|(0..channels).map(|i|slot(t,i)).collect::<Vec<_>>());
     let mut scales=vec![];
     for ch in 0..channels{let o=basis+ch*0x20+0x10;scales.push([bef32(d,o)?,bef32(d,o+4)?,bef32(d,o+8)?]);}
     let mut frames=vec![];
@@ -269,12 +286,32 @@ fn stateless_f3(d:&[u8],reloc:&HashMap<usize,usize>,ds:usize,m:&Marker)->Result<
         let mut v=vec![];
         for k in 0..keyframes{
             let o=kf_table+k*stride+ch*6;let s=&scales[ch];
-            let f=|i:usize|be16(d,o+i*2).map(|r|(r^0x8000) as f64*s[i]);
+            // `FnStatelessF3::EvalSQTfast` (0x803fdc1c) / `EvalSQT` (0x803fe43c): `lha` (signed 16-bit) times the
+            // channel scale at basis+0x10; no offset is applied.
+            let f=|i:usize|be16(d,o+i*2).map(|r|(r as i16) as f64*s[i]);
             v.push([f(0)?,f(1)?,f(2)?]);
         }
         frames.push(v);
     }
-    Ok(Stateless{keyframes,bone_table:table,frames})
+    // Extra constant translations: three f32 each, 4-byte aligned after the keyframe table (`EvalSQTfast`).
+    let sbase=(kf_table+keyframes*stride+3)&!3;let mut statics=vec![];
+    for i in 0..extra{statics.push((tbl.and_then(|t|slot(t,channels+i)),[bef32(d,sbase+12*i)?,bef32(d,sbase+12*i+4)?,bef32(d,sbase+12*i+8)?]))}
+    let times=reloc.get(&(a-ds+0x08)).map(|&r|ds+r).map(|t|(0..keyframes.saturating_sub(1)).map(|k|be16(d,t+2*k)).collect::<Result<Vec<_>,_>>()).transpose()?;
+    Ok(Stateless{keyframes,bone_table:table,frames,statics,times})
+}
+
+/// Sparse keyframes -> one sample per frame, as `FnStatelessQ::EvalSQT` evaluates them: keyframe 0 at frame 0, keyframe
+/// k+1 at `times[k]`; between keys each component is interpolated linearly (no renormalisation).
+fn resample<const N:usize>(keys:&[[f64;N]],times:&Option<Vec<u16>>)->Vec<[f64;N]>{
+    let Some(t)=times else{return keys.to_vec()};
+    if keys.is_empty(){return vec![]}
+    let kt:Vec<f64>=std::iter::once(0.).chain(t.iter().map(|&x|x as f64)).collect();
+    let last=*kt.last().unwrap() as usize;
+    (0..=last).map(|f|{
+        let f=f as f64;let k=kt.iter().rposition(|&x|x<=f).unwrap_or(0).min(keys.len()-1);
+        if k+1>=keys.len()||kt[k+1]==kt[k]{return keys[k]}
+        let a=(f-kt[k])/(kt[k+1]-kt[k]);std::array::from_fn(|i|keys[k][i]+a*(keys[k+1][i]-keys[k][i]))
+    }).collect()
 }
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -319,6 +356,60 @@ impl Bank{
         (0..channels).map(|i|{let (bone,field,axis)=pose_field(be16(&self.data,abs+i*2).ok()? as usize);(field==Field::Trans&&bone<MAX_BONES).then_some((bone,axis))}).collect()
     }
 
+    /// `FnCompoundChannel` (container tag 0x0f, `EvalSQT` 0x803ff53c): u16 child count at +8, child pointers from +0xc.
+    /// Children are evaluated from the last to the first into one pose, so a lower index overwrites what a higher one
+    /// wrote for the same pose words.  Each child is decoded with its own codec.
+    fn compound(&self,skel:&Skeleton,cb:&ClipBlock,name:String)->Result<Clip,String>{
+        let d=&self.data[..];let n_bones=skel.bones.len();
+        let n=be16(d,cb.abs+8)? as usize;if n>16{return Err(format!("compound channel count {n}"))}
+        let kids:Vec<Marker>=(0..n).map(|i|self.reloc.get(&(cb.rel+0x0c+4*i)).and_then(|&p|parse_marker_in(d,&self.reloc,self.data_start,p,Some(cb.family))).ok_or_else(||format!("compound child {i} unresolved"))).collect::<Result<_,_>>()?;
+        let (mut rot,mut trans,mut scale)=(Rot::new(),Vec3s::new(),Vec3s::new());let mut caveats=vec![];let mut samples=0usize;
+        let mut codecs=vec![];
+        for m in kids.iter().rev(){
+            match m.tag{
+                0x12|0x13=>{
+                    let c=if m.tag==0x12{delta_qfast(d,m)?}else{delta_singleq(d,m)?};
+                    let bones=self.qfast_bones(m,c.channel_count).ok_or("could not resolve compound rotation bone table")?;
+                    for (ch,&b) in bones.iter().enumerate(){if b<n_bones{rot.insert(b,c.frames[ch].clone());}}
+                    samples=samples.max(c.sample_count);codecs.push(if m.tag==0x12{"FnDeltaQFast"}else{"FnDeltaSingleQ"});
+                }
+                0x14=>{
+                    let t=delta_float::<3>(d,m)?;samples=samples.max(t.sample_count);codecs.push("FnDeltaF3");
+                    if t.channel_count==0{caveats.push("empty FnDeltaF3 child (0 channels) writes nothing".into());continue}
+                    let (tb,notes,scale_ch)=self.vector_bones(m,t.channel_count).ok_or_else(||format!("could not resolve compound F3 bone table ({} channels)",t.channel_count))?;
+                    caveats.extend(notes);
+                    for (ch,b) in tb.iter().enumerate(){if let Some(b)=b{if *b<n_bones{trans.insert(*b,t.frames[ch].clone());}}}
+                    for (ch,&b) in &scale_ch{if b<n_bones{scale.insert(b,t.frames[*ch].clone());}}
+                }
+                0x15=>{
+                    // FnDeltaF1 writes each scalar channel to one pose word (bone*12 + word): scale 0-2, rotation 4-7,
+                    // translation 8-10.  Unwritten words keep the value already in the pose.
+                    let t=delta_float::<1>(d,m)?;samples=samples.max(t.sample_count);codecs.push("FnDeltaF1");
+                    let p=*self.reloc.get(&(m.abs-self.data_start+4)).ok_or("compound F1 channel table unresolved")?;let abs=self.data_start+p;
+                    for ch in 0..t.channel_count{
+                        let (bone,field,axis)=pose_field(be16(d,abs+ch*2)? as usize);
+                        if bone>=n_bones{continue}
+                        let b=&skel.bones[bone];
+                        match field{
+                            Field::Trans=>{let cur=trans.entry(bone).or_insert_with(||vec![Some(b.trans);t.sample_count]);for (s,v) in t.frames[ch].iter().enumerate(){if let (Some(v),Some(Some(c)))=(v,cur.get_mut(s)){c[axis]=v[0]}}}
+                            Field::Scale=>{let cur=scale.entry(bone).or_insert_with(||vec![Some(b.scale);t.sample_count]);for (s,v) in t.frames[ch].iter().enumerate(){if let (Some(v),Some(Some(c)))=(v,cur.get_mut(s)){c[axis]=v[0]}}}
+                            Field::Quat=>{let cur=rot.entry(bone).or_insert_with(||vec![Some(b.quat);t.sample_count]);for (s,v) in t.frames[ch].iter().enumerate(){if let (Some(v),Some(Some(c)))=(v,cur.get_mut(s)){c[axis]=v[0]}}}
+                            Field::Pad=>caveats.push(format!("F1 channel {ch} writes padding word of bone {bone}")),
+                        }
+                    }
+                }
+                t=>return Err(format!("compound child tag {t:#x} not supported")),
+            }
+        }
+        let fix=|v:&mut Samples<[f64;3]>,fill:[f64;3]|{v.resize(samples,Some(fill))};
+        for (b,v) in trans.iter_mut(){let last=v.last().copied().flatten().unwrap_or(skel.bones[*b].trans);fix(v,last)}
+        for (b,v) in scale.iter_mut(){let last=v.last().copied().flatten().unwrap_or(skel.bones[*b].scale);fix(v,last)}
+        for v in rot.values_mut(){let last=v.last().copied().flatten().unwrap_or([0.,0.,0.,1.]);v.resize(samples,Some(last))}
+        codecs.reverse();
+        let codec:&'static str=Box::leak(format!("FnCompoundChannel({})",codecs.join("+")).into_boxed_str());
+        Ok(Clip{index:cb.index,name,sample_count:samples,codec,rot,trans,scale,caveats})
+    }
+
     fn decode_raw(&self,skel:&Skeleton,cb:&ClipBlock)->Result<Clip,String>{
         let d=&self.data[..];let ds=self.data_start;let n_bones=skel.bones.len();
         let name=self.names.get(cb.index).cloned().unwrap_or_else(||format!("clip_{}",cb.index));
@@ -330,21 +421,27 @@ impl Bank{
             let rot_r=stateless_q(d,&self.reloc,ds,cb).map_err(|e|format!("FnStatelessQ decode failed: {e}"))?;
             let table=rot_r.bone_table.as_ref().ok_or("could not resolve FnStatelessQ bone table")?;
             let mut rot=Rot::new();
-            for (ch,bone) in table.iter().enumerate(){let bone=bone.unwrap();if bone>=n_bones{continue}rot.insert(bone,some(&rot_r.frames[ch]));}
+            let rs:Vec<Vec<[f64;4]>>=rot_r.frames.iter().map(|f|resample(f,&rot_r.times)).collect();
+            let samples=match &rot_r.times{Some(t)=>t.last().map(|&x|x as usize+1).unwrap_or(1),None=>rot_r.keyframes};
+            for (ch,bone) in table.iter().enumerate(){let bone=bone.unwrap();if bone>=n_bones{continue}rot.insert(bone,some(&rs[ch]));}
+            for (bone,q) in &rot_r.statics{let Some(b)=*bone else{caveats.push("static rotation channel without a bone slot".into());continue};if b>=n_bones{continue}rot.insert(b,vec![Some(*q);samples]);}
             let mut trans=Vec3s::new();let mut trans_kf=None;
             match cb.secondary.filter(|m|m.tag==0x17){
                 Some(m)=>match stateless_f3(d,&self.reloc,ds,&m){
                     Err(e)=>caveats.push(format!("FnStatelessF3 decode failed: {e} -- bind-pose translation used throughout")),
                     Ok(t)=>match &t.bone_table{
                         None=>caveats.push("could not resolve FnStatelessF3 bone table -- bind-pose translation used throughout".into()),
-                        Some(bt)=>{trans_kf=Some(t.keyframes);for (ch,bone) in bt.iter().enumerate(){let Some(b)=bone else{continue};if *b>=n_bones{continue}trans.insert(*b,some3(&t.frames[ch]));}}
+                        // The nested F3 track is evaluated with the rotation track's key index and fraction.
+                        Some(bt)=>{trans_kf=Some(t.keyframes);for (ch,bone) in bt.iter().enumerate(){let Some(b)=bone else{continue};if *b>=n_bones{continue}trans.insert(*b,some3(&resample(&t.frames[ch],&rot_r.times)));}
+                            for (bone,v) in &t.statics{let Some(b)=*bone else{caveats.push("static translation channel without a translation slot".into());continue};if b>=n_bones{continue}trans.insert(b,vec![Some(*v);samples]);}}
                     }
                 },
                 None=>caveats.push("no nested FnStatelessF3 secondary track -- bind-pose translation used throughout".into()),
             }
             if !trans.is_empty(){if let Some(k)=trans_kf{if k!=rot_r.keyframes{caveats.push(format!("translation keyframe_count ({k}) != rotation keyframe_count ({}) -- NOT resampled",rot_r.keyframes))}}}
-            return Ok(clip("whole_clip (FnStatelessQ+F3)",rot_r.keyframes,rot,trans,scale,caveats));
+            return Ok(clip(if rot_r.times.is_some(){"whole_clip sparse (FnStatelessQ+F3)"}else{"whole_clip (FnStatelessQ+F3)"},samples,rot,trans,scale,caveats));
         }
+        if cb.container_tag==0x0f{return self.compound(skel,cb,name.clone())}
         if cb.primary.is_some_and(|m|m.tag==0x13){
             let prim=cb.primary.unwrap();
             let sq=delta_singleq(d,&prim)?;
@@ -426,16 +523,6 @@ impl Bank{
             Ok(())
         }
         check("rot_by_bone",&c.rot,n,skel.bones.len())?;check("trans_by_bone",&c.trans,n,skel.bones.len())?;check("scale_by_bone",&c.scale,n,skel.bones.len())?;
-        if cb.whole_clip{
-            let extra=self.data[cb.abs+0x17];
-            if self.reloc.contains_key(&(cb.rel+8)){return Err("Sparse stateless rotation times are not decoded; refusing fixed-rate export".into())}
-            if extra>0{c.caveats.push(format!("{extra} extra static rotation channels remain undecoded"))}
-            if let Some(m)=cb.secondary.filter(|m|m.tag==0x17){
-                let extra=self.data[m.abs+0x13];
-                if self.reloc.contains_key(&(m.abs-self.data_start+8)){return Err("Sparse stateless translation times are not decoded; refusing fixed-rate export".into())}
-                if extra>0{c.caveats.push(format!("{extra} extra static translation channels remain undecoded"))}
-            }
-        }
         Ok(c)
     }
 }
@@ -468,12 +555,19 @@ mod tests{
         assert!((unpack_u16(0x7eff)-0.998).abs()<1e-3,"{}",unpack_u16(0x7eff));
     }
     /// Every clip of every corpus bank must decode (or fail) exactly like the Python reference.
+    /// Every clip the Python reference decodes must still decode, and every track the reference produced must be
+    /// reproduced sample-for-sample, except where the executable's evaluators prove the reference wrong:
+    /// * whole-clip translations are signed 16-bit x scale (`FnStatelessF3::EvalSQTfast` 0x803fdc1c), not offset binary;
+    /// * extra static channels and every child of a `FnCompoundChannel` (0x803ff53c) are applied, lower index last, so
+    ///   compound clips gain the tracks the reference ignored (their added bones are not in the reference);
+    /// * with both SingleQ and QFast children, SingleQ (index 0) is evaluated last and wins on shared bones.
+    /// The two prop banks the reference could not decode (compound + sparse) now decode as well.
     #[test]
     fn matches_python_reference_for_every_clip(){
         let p=std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/data/anim_golden.json");
         let Ok(txt)=std::fs::read_to_string(p) else{eprintln!("anim_golden.json absent; skipped");return};
         let g:serde_json::Value=serde_json::from_str(&txt).unwrap();
-        let (mut ok,mut failed_same)=(0,0);let mut bad=vec![];
+        let (mut ok,mut newly,mut exempt)=(0,0,0);let mut bad=vec![];
         for (bank,entry) in g.as_object().unwrap(){
             let viv=viv_path(bank);
             let Ok((data,_))=crate::archive::read_virtual(&format!("{viv}::{}",bank.split_once("::").unwrap().1)) else{eprintln!("DATA absent; skipped");return};
@@ -482,30 +576,42 @@ mod tests{
             let ske=Skeleton::parse(&crate::archive::read_virtual(&format!("{viv}::{ske_name}")).unwrap().0).unwrap();
             let bank_data=Bank::parse(data).unwrap();
             for w in entry["clips"].as_array().unwrap(){
-                let i=w["index"].as_u64().unwrap() as usize;let got=bank_data.decode(i,&ske);
-                match (got,w["ok"].as_bool().unwrap()){
-                    (Ok(c),true)=>{
-                        let mut errs=vec![];
-                        if c.sample_count as u64!=w["samples"].as_u64().unwrap(){errs.push("samples".to_string())}
-                        if c.codec!=w["codec"].as_str().unwrap(){errs.push(format!("codec {}",c.codec))}
-                        if c.caveats.len() as u64!=w["caveats"].as_u64().unwrap(){errs.push(format!("caveats {:?}",c.caveats))}
-                        for (field,got) in [("rot",summary(&c.rot)),("trans",summary(&c.trans)),("scale",summary(&c.scale))]{
-                            let want=w[field].as_array().unwrap();
-                            if got.len()!=want.len(){errs.push(format!("{field}: {} bones vs {}",got.len(),want.len()));continue}
-                            for ((b,n,sum),x) in got.iter().zip(want){
-                                if *b as u64!=x[0].as_u64().unwrap()||*n as u64!=x[1].as_u64().unwrap()||!approx(*sum,x[2].as_f64().unwrap()){errs.push(format!("{field} bone {b}: {n} samples sum {sum} vs {x}"));break}
-                            }
-                        }
-                        if errs.is_empty(){ok+=1}else{bad.push(format!("{bank} clip {i}: {errs:?}"))}
+                let i=w["index"].as_u64().unwrap() as usize;
+                let c=match bank_data.decode(i,&ske){Ok(c)=>c,Err(e)=>{bad.push(format!("{bank} clip {i}: {e}"));continue}};
+                if !w["ok"].as_bool().unwrap(){newly+=1;continue}
+                let whole=w["codec"].as_str().unwrap().starts_with("whole_clip");
+                let order=c.codec.contains("SingleQ")&&c.codec.contains("QFast");
+                let f1_added=c.codec.contains("FnDeltaF1")&&!w["codec"].as_str().unwrap().contains("F1");
+                let mut errs=vec![];
+                for (field,got) in [("rot",summary(&c.rot)),("trans",summary(&c.trans)),("scale",summary(&c.scale))]{
+                    let got:std::collections::HashMap<usize,(usize,f64)>=got.into_iter().map(|(b,n,s)|(b,(n,s))).collect();
+                    for x in w[field].as_array().unwrap(){
+                        let b=x[0].as_u64().unwrap() as usize;
+                        let Some(&(n,sum))=got.get(&b) else{errs.push(format!("{field} bone {b} missing"));continue};
+                        let same=n as u64==x[1].as_u64().unwrap()&&approx(sum,x[2].as_f64().unwrap());
+                        let allowed=(field=="trans"&&(whole||f1_added))||(field=="rot"&&order);
+                        if !same{if allowed{exempt+=1}else{errs.push(format!("{field} bone {b}: {n} samples sum {sum} vs {x}"))}}
                     }
-                    (Err(_),false)=>failed_same+=1,
-                    (Ok(_),false)=>bad.push(format!("{bank} clip {i}: decoded but reference fails")),
-                    (Err(e),true)=>bad.push(format!("{bank} clip {i}: {e} but reference decodes")),
                 }
+                if errs.is_empty(){ok+=1}else{bad.push(format!("{bank} clip {i} ({}): {errs:?}",c.codec))}
             }
         }
         assert!(bad.is_empty(),"{} ok, {} bad; first: {:?}",ok,bad.len(),&bad[..bad.len().min(5)]);
-        eprintln!("animation corpus: {ok} clips match the Python reference ({failed_same} unsupported in both)");
-        assert!(ok>=266);
+        eprintln!("animation corpus: {ok} clips reproduce the Python reference ({exempt} evidence-backed track differences), {newly} clips newly decoded");
+        assert!(ok>=266&&newly==2);
+    }
+
+    /// Whole clips: the signed decode puts the root on its bind translation (StoryTeller, frame 0), the old offset-binary
+    /// reading put it 32768 x scale away.
+    #[test]
+    fn whole_clip_root_translation_matches_bind_pose(){
+        let viv=crate::bridge::data_root().join("files/data/characters/player_anims.viv").to_string_lossy().into_owned();
+        let Ok((data,_))=crate::archive::read_virtual(&format!("{viv}::player_anims.anm")) else{eprintln!("DATA absent; skipped");return};
+        let ske=Skeleton::parse(&crate::archive::read_virtual(&format!("{viv}::player_skel.ske")).unwrap().0).unwrap();
+        let b=Bank::parse(data).unwrap();
+        let i=b.names.iter().position(|n|n=="S_AI_StoryTeller").unwrap();
+        let c=b.decode(i,&ske).unwrap();
+        let root=c.trans[&0][0].unwrap();let bind=ske.bones[0].trans;
+        for k in 0..3{assert!((root[k]-bind[k]).abs()<0.01,"root {root:?} bind {bind:?}")}
     }
 }

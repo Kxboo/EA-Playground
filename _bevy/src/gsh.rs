@@ -36,7 +36,8 @@ pub(crate) fn rgb5a3(v:u16)->[u8;4]{
 fn read_palette(d:&[u8],off:usize)->Option<Vec<[u8;4]>>{
     if off+16>d.len(){return None}
     let hdr=&d[off..off+16];let id=hdr[0];
-    if !matches!(id,0x31|0x32|0x33){return None}
+    // 0x30 IA8, 0x31 RGB565, 0x32 RGB5A3 (`TARExtension::SetClut` 0x803e8568 GX TLUT formats 0/1/2); 0x33 AR/GB planes.
+    if !matches!(id,0x30|0x31|0x32|0x33){return None}
     let size=((hdr[1] as usize)<<16)|((hdr[2] as usize)<<8)|hdr[3] as usize;
     let (w,h)=(be16(hdr,4),be16(hdr,6));let count=w*h;
     if count==0||count>256{return None}
@@ -46,6 +47,7 @@ fn read_palette(d:&[u8],off:usize)->Option<Vec<[u8;4]>>{
     let p=&d[pal_off..pal_off+pal_size];
     Some((0..count).map(|i|match id{
         0x33=>[p[2*i+1],p[stride+2*i],p[stride+2*i+1],p[2*i]],
+        0x30=>[p[2*i+1],p[2*i+1],p[2*i+1],p[2*i]],
         0x31=>rgb565(u16::from_be_bytes([p[2*i],p[2*i+1]])),
         _=>rgb5a3(u16::from_be_bytes([p[2*i],p[2*i+1]])),
     }).collect())
@@ -87,6 +89,18 @@ pub fn parse(d:&[u8])->Result<Gsh,String>{
     }
     entries.sort_by_key(|e|e.img_offset);
     Ok(Gsh{entries})
+}
+
+/// One SHAPE record at `off` outside an SHPG directory (e.g. the glyph sheet of an EA `FntG` font: `FONT+[0x1c]`),
+/// with its trailing palette record when indexed.
+pub fn shape_at(d:&[u8],off:usize)->Result<Entry,String>{
+    let eh=d.get(off..off+16).ok_or("shape header past end")?;
+    let size=((eh[1] as usize)<<16)|((eh[2] as usize)<<8)|eh[3] as usize;
+    let end=if size==0{d.len()}else{off+size};
+    if end>d.len()||end<off+16{return Err("shape block outside file".into())}
+    let mut e=Entry{index:0,name:String::new(),full_name:None,record_id:eh[0],width:be16(eh,4),height:be16(eh,6),img_offset:off+16,img_end:end,palette:None};
+    if matches!(e.record_id,24|25){e.palette=read_palette(d,end)}
+    Ok(e)
 }
 
 /// Byte length of the top mip level: whole GX tiles at this bit depth (must fit inside the record).

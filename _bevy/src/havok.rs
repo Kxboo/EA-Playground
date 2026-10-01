@@ -19,16 +19,38 @@ impl ClassTable{
         let v:Value=serde_json::from_str(s).expect("class table");let mut m=HashMap::new();
         for (name,c) in v.as_object().unwrap(){
             m.insert(name.clone(),Class{parent:c["parent"].as_str().map(String::from),size:c["size"].as_u64().unwrap() as u32,
-                members:c["members"].as_array().unwrap().iter().map(|x|Member{name:x["n"].as_str().unwrap().into(),cls:x["c"].as_str().map(String::from),ty:x["t"].as_u64().unwrap() as u8,sub:x["s"].as_u64().unwrap() as u8,csize:x["a"].as_u64().unwrap() as u16,off:x["o"].as_u64().unwrap() as u16}).collect()});
+                members:c["members"].as_array().unwrap().iter().map(|x|{let (ty,sub)=(x["t"].as_u64().unwrap() as u8,x["s"].as_u64().unwrap() as u8);
+                    Member{name:x["n"].as_str().unwrap().into(),cls:x["c"].as_str().map(String::from),ty,sub:enum_storage(ty,sub,x["f"].as_u64().unwrap_or(0)),csize:x["a"].as_u64().unwrap() as u16,off:x["o"].as_u64().unwrap() as u16}}).collect()});
         }
         Self(m)
     }
+    pub fn has(&self,name:&str)->bool{self.0.contains_key(name)}
     fn all_members(&self,name:&str)->Vec<&Member>{
         let Some(c)=self.0.get(name) else{return vec![]};
         let mut v=c.parent.as_deref().map(|p|self.all_members(p)).unwrap_or_default();v.extend(c.members.iter());v
     }
     pub fn len(&self)->usize{self.0.len()}
+    /// Extend with the reflection a packfile carries in its own `__types__` section (`hkClass` objects with their
+    /// `hkClassMember` arrays), for classes the executable does not reflect (e.g. `hkxScene` in the airplane files).
+    /// Returns the names that were added.
+    pub fn with_file_types(&self,pf:&Packfile)->(ClassTable,Vec<String>){
+        let mut m=self.0.clone();let mut added=vec![];
+        let name_of=|r:&Value|->Option<String>{let a=r["$ref"].as_array()?;let o=pf.decode_object(a[0].as_u64()? as usize,a[1].as_i64()? as i32,"hkClass",1);o["name"].as_str().map(String::from)};
+        for (&(si,off),cn) in &pf.virt{
+            if cn!="hkClass"{continue}
+            let c=pf.decode_object(si,off,"hkClass",0);let Some(name)=c["name"].as_str() else{continue};
+            if m.contains_key(name){continue}
+            let members=pf.array_elements(&c["declaredMembers"]).iter().map(|x|Member{name:x["name"].as_str().unwrap_or("").into(),cls:name_of(&x["class"]),
+                ty:x["type"].as_u64().unwrap_or(0) as u8,sub:enum_storage(x["type"].as_u64().unwrap_or(0) as u8,x["subtype"].as_u64().unwrap_or(0) as u8,x["flags"].as_u64().unwrap_or(0)),csize:x["cArraySize"].as_i64().unwrap_or(0) as u16,off:x["offset"].as_u64().unwrap_or(0) as u16}).collect();
+            m.insert(name.to_string(),Class{parent:name_of(&c["parent"]),size:c["objectSize"].as_u64().unwrap_or(0) as u32,members});added.push(name.to_string());
+        }
+        (ClassTable(m),added)
+    }
 }
+
+/// Havok 4.x enum members record their storage size in `hkClassMember::flags` (ENUM_8 = 8, ENUM_16 = 16,
+/// ENUM_32 = 32) rather than in the subtype; map it to the matching unsigned scalar type.
+fn enum_storage(ty:u8,sub:u8,flags:u64)->u8{if ty!=T_ENUM||sub!=0{return sub}match flags&0x38{8=>T_UINT8,16=>T_UINT16,32=>T_UINT32,_=>T_UINT32}}
 
 // hkClassMember::Type values (Havok 4.6)
 const T_BOOL:u8=1;const T_CHAR:u8=2;const T_INT8:u8=3;const T_UINT8:u8=4;const T_INT16:u8=5;const T_UINT16:u8=6;const T_INT32:u8=7;const T_UINT32:u8=8;const T_INT64:u8=9;const T_UINT64:u8=10;const T_REAL:u8=11;
@@ -108,6 +130,24 @@ impl<'a> Packfile<'a>{
         (0..n).map(|i|self.decode_type(si,off+i*w,et,&m,1)).collect()
     }
     pub fn class_of(&self,r:Ref)->Option<&String>{self.virt.get(&r)}
+    /// Every virtual-class object in the packfile, decoded by its reflected class, with arrays expanded (`$elements`).
+    pub fn dump(&self)->Value{
+        fn expand(pf:&Packfile,v:&mut Value,depth:u32){
+            match v{
+                Value::Object(m)=>{
+                    if m.get("$array")==Some(&json!(true))&&depth<4{let els=pf.array_elements(&Value::Object(m.clone()));m.insert("$elements".into(),Value::Array(els));}
+                    for (_,x) in m.iter_mut(){expand(pf,x,depth+1)}
+                }
+                Value::Array(a)=>for x in a{expand(pf,x,depth+1)},
+                _=>{}
+            }
+        }
+        let objs:Vec<Value>=self.virt.iter().map(|(&(si,off),cn)|{
+            let mut o=if self.classes.0.contains_key(cn){self.decode_object(si,off,cn,0)}else{json!({"$unreflected":true})};
+            expand(self,&mut o,0);json!({"ref":[si,off],"class":cn,"object":o})
+        }).collect();
+        json!({"sections":self.starts.len(),"objects":objs})
+    }
 }
 
 /// One static/dynamic rigid body's collision geometry in world space.

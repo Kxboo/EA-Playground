@@ -42,6 +42,8 @@ impl Locale{
         self.index.binary_search_by_key(&h,|e|e.0).ok().map(|i|self.strings[self.index[i].1 as usize].as_str())
     }
     pub fn len(&self)->usize{self.index.len()}
+    /// (key hash, string index) pairs of `string.idx`, sorted by hash.
+    pub fn index(&self)->&[(u32,u32)]{&self.index}
 }
 
 #[cfg(test)]
