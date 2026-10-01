@@ -158,6 +158,7 @@ pub fn view_step(mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option
             }else if let Some(n)=c.strip_prefix("tb").and_then(|n|n.parse::<i32>().ok()){
                 // `tbN` starts a tetherball match for N human players straight away (testing aid).
                 v.vm.fe.mp.players=n;v.vm.fe.mp.minigame=2;v.vm.fe.mp.quick=n==1;v.vm.fe.launch=Some("tetherball".into());
+            }else if c=="g2"{v.vm.fe.mp.minigame=2;v.vm.fe.mp.players=2;
             }else if c=="wr"||c=="ws"{v.vm.fe.script_world=Some(if c=="wr"{"ReportCard"}else{"StickerBookCover"});
             }else if c=="pause"{v.vm.fe.script_pause=true;
             }else if let Some(path)=c.strip_prefix('x'){
@@ -270,8 +271,10 @@ pub fn view_step(mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option
             let mut cfg=crate::tb_host::Config::quick(humans);
             cfg.single_player=fe.mp.quick&&humans==1;
             cfg.rounds=if fe.mp.rounds>0{fe.mp.rounds}else{3};
+            if let [loc,diff,rot,mega,rounds]=fe.mp.rules[..]{cfg.area=loc;cfg.difficulty=diff;cfg.rotations=rot;cfg.mega=mega!=0;cfg.rounds=rounds;}
             cfg.female=[female(0),female(1)];
             cfg.special=[crate::tb_host::celebration_state(kid(0).as_deref()),crate::tb_host::celebration_state(kid(1).as_deref())];
+            if let Some(a)=std::env::var("EAGL_TB_AREA").ok().and_then(|a|a.parse().ok()){cfg.area=a;}
             let kids=[kid(0),kid(1)];
             commands.insert_resource(crate::tb_session::TbLaunch{cfg,kids});}
     }

@@ -123,6 +123,47 @@ fn start_game(vm:&mut Vm){
     vm.fe.todo.push(("TRCDisplayPopup".into(),vec![V::Str("notimpl".into()),V::Str("This minigame is not available in this port.".into()),V::Num(1.),V::Str(ok.as_str().into()),V::Str("0".into()),V::Num(0.),V::Num(0.)]));
 }
 
+
+/// `default_rules` of the minigame (`RetrieveDefaultRules`, 0x8031aef8), in the order tetherball's rule rows use:
+/// location, difficulty, rotations to win, mega hit on, rounds.
+pub fn tetherball_default_rules()->Vec<i32>{
+    static RULES:std::sync::OnceLock<Vec<i32>>=std::sync::OnceLock::new();
+    RULES.get_or_init(||{
+        let dir=crate::bridge::data_root().join("files").join("data").join("db");
+        let fallback=vec![0,0,5,1,3];
+        let (Ok(v),Ok(b))=(std::fs::read(dir.join("db.vlt")),std::fs::read(dir.join("db.bin"))) else{return fallback};
+        let Ok(db)=crate::vlt::Database::load(&v,&b,crate::vlt::known_names()) else{return fallback};
+        let Some(c)=db.find_collection("mg_tetherball","default_rules") else{return fallback};
+        let int=|n:&str|db.attribute(c,n).and_then(|v|v.as_i64().or_else(||v.as_bool().map(|b|b as i64))).unwrap_or(0) as i32;
+        vec![int("location"),int("difficulty"),int("rotations_to_win"),int("megahit_on"),int("num_rounds")]
+    }).clone()
+}
+
+/// `MultiPlayerLVHandlers::SetTetherballRule` (0x8031cc14): one row of the custom-rules screen.  Rows: 0 location (three
+/// areas; the original locks an area until the profile has visited it), 1 difficulty, 2 rotations to win (5..10),
+/// 3 mega hit on/off, 4 rounds (odd values 3 and 5).
+fn tetherball_rule(vm:&Vm,rule:usize,current:&[i32])->Vec<(String,String)>{
+    let t=|k:&str|vm.locale_string(k);
+    let cur=current.get(rule).copied().unwrap_or(0);
+    let nums=["B_NumericZero","B_NumericOne","B_NumericTwo","B_NumericThree","B_NumericFour","B_NumericFive","B_NumericSix","B_NumericSeven","B_NumericEight","B_NumericNine","B_NumericTen"];
+    let (title,text,values,default):(&str,Vec<String>,Vec<i32>,i32)=match rule{
+        0=>("T_Location",["B_SchoolYard","B_Stadium","B_Woods"].iter().map(|k|t(k)).collect(),vec![0,1,2],cur),
+        1=>("T_Difficulty",["B_Easy","B_Medium","B_Hard"].iter().map(|k|t(k)).collect(),vec![0,1,2],cur),
+        2=>("T_RotationsToWin",(5..=10).map(|n|t(nums[n])).collect(),(5..=10).collect(),cur-5),
+        3=>("T_MegaHit",vec![t("B_Off"),t("B_On")],vec![0,1],cur),
+        _=>{
+            // SetRoundsRule: only odd round counts are offered; the default is the option holding the current value.
+            let odd:Vec<i32>=(3..=5).filter(|n|n%2!=0).collect();
+            let idx=odd.iter().position(|&n|n==cur).map(|i|i as i32).unwrap_or(1);
+            ("T_Rounds",odd.iter().map(|&n|t(nums[n as usize])).collect(),odd,idx)
+        }
+    };
+    let n=values.len();
+    vec![("iRuleText".into(),t(title)),("iNumberOptions".into(),n.to_string()),("aiOptionsText".into(),text.join(DELIM)),
+         ("aiOptionsValue".into(),values.iter().map(|v|v.to_string()).collect::<Vec<_>>().join(DELIM)),("aiLocked".into(),vec!["0";n].join(DELIM)),
+         ("iDefaultOption".into(),default.to_string())]
+}
+
 /// Split `k=v&k2=v2` into pairs (values percent-decoded).
 pub fn parse_params(p:&str)->Vec<(String,String)>{
     p.split('&').filter(|s|!s.is_empty()).map(|kv|{
@@ -267,7 +308,22 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
         "StickerBookCover_OnSave"|"StickerBookCover_OnMusic"|"StickerBookCover_OnSelect"|"StickerBook_LayoutSave"=>vec![],
         "StickerStoreCover_OnLoad"=>vec![("aiAvailableGames".into(),["1","1","1","1","1","1","1"].join(DELIM)),("iMarble".into(),"0".into()),("iStickerTotal".into(),"0".into())],
         "SelectPlane_OnLoad"=>vec![("aiAvailablePlanes".into(),["1";5].join(DELIM))],
-        "MultiPlayer_GameRulesOnLoad"=>vec![("iNumberRules".into(),"0".into())],
+        "MultiPlayer_GameRulesOnLoad"=>{
+            // `GameRulesOnLoad`: the per-minigame rule count (tetherball 5); only tetherball's rows are ported.
+            if vm.fe.mp.rules.is_empty(){vm.fe.mp.rules=tetherball_default_rules();}
+            vec![("iNumberRules".into(),(if vm.fe.mp.minigame==2{5}else{0}).to_string())]
+        }
+        "MultiPlayer_GetGameRule"=>{
+            let rule=arg("iRule").and_then(|v|v.parse::<usize>().ok()).unwrap_or(0).min(4);
+            let cur=vm.fe.mp.rules.clone();
+            tetherball_rule(vm,rule,&cur)
+        }
+        "MultiPlayer_SetGameRules"=>{
+            // `SetGameRules`: aiRules -> MultiplayerMode::SetRules (five ints), then the game launches (here: after the pre-game screen).
+            if let Some(a)=arg("aiRules"){let v:Vec<i32>=a.split(DELIM).filter_map(|x|x.parse().ok()).collect();if v.len()>=5{vm.fe.mp.rules=v;}}
+            let next=if vm.fe.mp.quick{"PreGameInstructions"}else{"PreGameMP"};vm.fe.later.push((20,"OpenScreen".into(),vec![V::Str(next.into())]));
+            vec![]
+        }
         "PostGame_IsLastTourneyGame"|"PostGame_IsNextGameLastTourneyGame"=>vec![("iIsLastTourneyGame".into(),"0".into())],
         "PostGame_OnLoad"=>vec![("iMinigameType".into(),vm.fe.mp.minigame.to_string()),("iGameMode".into(),"0".into())],
         "PostGame_GetSPInfo"=>{
@@ -307,6 +363,7 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
         "MultiPlayer_SetRulesType"=>{
             // "Play" (0): the rules screen stack is cleared and the game opens its pre-game instructions.
             let t=arg("iMultiPlayerRulesType").and_then(|v|v.parse::<i32>().ok()).unwrap_or(0);
+            if t==0{vm.fe.mp.rules=tetherball_default_rules();}
             if t==0{let next=if vm.fe.mp.quick{"PreGameInstructions"}else{"PreGameMP"};vm.fe.later.push((20,"OpenScreen".into(),vec![V::Str(next.into())]));}
             vec![]
         }
