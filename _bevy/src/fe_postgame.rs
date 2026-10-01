@@ -133,6 +133,12 @@ pub fn open(vm: &mut Vm, kind: i32, words: &[u32]) {
 
 /// `PostGameLVHandlers::DoJobLV` for a handler name; `None` if the name is not a post-game query.
 pub fn query(vm: &mut Vm, name: &str, player: i32) -> Option<Vec<(String, String)>> {
+    if name == "EndTourney_OnLoad" {
+        // `EndTourneyLVHandlers::EndTourneyOnLoad` (0x80316220): GetPlayerNumByRank(0) and that player's avatar id.
+        let winner = vm.fe.pg.tournament.player_by_rank(0).unwrap_or(0);
+        let avatar = vm.fe.mp.avatars.get(winner).copied().unwrap_or(0);
+        return Some(vec![("iWinningPlayerId".into(), winner.to_string()), ("iWinningPlayerAvatarId".into(), avatar.to_string())]);
+    }
     let job = match name {
         "PostGame_OnLoad" => 0,
         "PostGame_GetSPInfo" => 1,
@@ -161,6 +167,16 @@ pub fn query(vm: &mut Vm, name: &str, player: i32) -> Option<Vec<(String, String
 /// `PostGameFSHandlers::DoJobFS` (11 replay, 12 done, 13 multiplayer select, 14 button click).  Leaves the minigame's
 /// post-game choice for `UpdatePostGame` to consume and queues the screens to show once the minigame has exited.
 pub fn command(vm: &mut Vm, name: &str, selection: i32) -> bool {
+    if name == "EndTourney_OnButtonClick" {
+        // 0x80316180 -> Minigame::OnDone (0x803abc14): the choice becomes "done"; the series is over.
+        vm.fe.pg.session.on_done();
+        vm.fe.pg.end_series();
+        vm.fe.mp.active = false;
+        vm.fe.mp.quick = false;
+        vm.fe.postgame_choice = Some(1);
+        vm.fe.after_exit = vec![(0, "ClearScreenStack".into(), vec![]), (10, "OpenScreen".into(), vec![V::Str("MainMenu".into())])];
+        return true;
+    }
     let job = match name {
         "PostGame_OnReplay" => 11,
         "PostGame_OnDone" => 12,

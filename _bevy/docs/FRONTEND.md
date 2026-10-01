@@ -21,7 +21,9 @@ Run it with no arguments (`--mode menu` keeps the older developer menu, `--no-wo
 | `fe_host.rs` | The game API: profile, kid select, multiplayer flow, pregame/postgame, pause, minigame HUD calls. |
 | `kid_pick.rs` | The 3-D selectable-kid scene behind `SelectKid` and `PlayerSetup`. |
 | `game.rs` (`Backdrop`) | The playground world shown behind the menus; camera poses from `main_menu_nis` / `character_select`. |
-| `tetherball_play.rs` | The tetherball match started from the front end, with the original `TetherballHud` movie as its HUD. |
+| `tb_session.rs`, `tb_host.rs`, `tb_anim.rs` | The tetherball match started from the front end: the recovered `MGTetherball` runtime hosted in the loaded world, with the original `TetherballHud`, `PreGameInstructions` (pause) and `PostGame` screens (see `TETHERBALL_PLAY.md`). |
+| `fe_postgame.rs` | Post-game screen state on top of `minigame_session` (`OpenPostGameScreen`, `PostGame_*` queries, button commands, tournament series, `EndTourney_*`). |
+| `fx.rs`, `sfx.rs` | LION particle effects (approximate) and AEMS bank sounds used by minigames. |
 
 ## What is the original and what is not
 
@@ -51,8 +53,8 @@ with `T_NameKid`, the kid's name as default), and the button-icon substitution (
 ## Screens and flows
 
 Verified end to end by scripted runs: Title, Profile (create / select / erase), SelectKid with the 3-D kids, ConfirmKid, MainMenu with
-its camera moves, Multi-Player (player count, player setup, game select, rules, pre-game, tetherball with the original HUD,
-post-game, pause), Quick Play (game select, rules, instruction book, match, `PostGame`), Extras / Credits (text from the
+its camera moves, Multi-Player (player count, player setup, game select, the tetherball SET RULES rows, pre-game, tetherball with the original HUD,
+the shared post-game screen with series standings, pause), Quick Play (game select, rules, instruction book, match, `PostGame`), Extras / Credits (text from the
 locale keys `T_Credits_*`), and Single Player (the world behind the menus becomes playable; the original `WorldHud` movie draws the report-card (-) and sticker-book (+) icons, `-` / `+` open those screens, Esc / P opens the original pause overlay and Quit returns to the main menu). Rendered with
 data but without gameplay behind them: ReportCard, sticker book cover, sticker store cover, end game, select plane.
 
@@ -60,7 +62,7 @@ data but without gameplay behind them: ReportCard, sticker book cover, sticker s
 
 * No blend-mode data was found in the APT place records (only colour multiply/add), so everything draws as alpha; masks are limited to 48 triangles per mask layer and nested masks use
   the innermost one.
-* Only Tetherball is playable from the menus. The other six minigames stay locked; the sticker book, sticker store, boss
+* Only Tetherball is playable from the menus. The other six minigames show a notice; the sticker book, sticker store, boss
   select, conversation and world HUD screens have no game logic behind them.
 * The world played from Single Player is the earlier playable slice (provisional camera and collision, no NPC conversations, no POIs), so `PressA_SetVisible`, dialogue and the sticker/report data have nothing driving them.
 * UI sounds are triggered by name; their volume, and the loops (`UI_Loop_Sfx`), are not modelled.

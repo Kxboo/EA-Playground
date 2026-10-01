@@ -188,7 +188,7 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
     let arg=|k:&str|args.iter().find(|(a,_)|a==k).map(|(_,v)|v.clone());
     vm.fe.calls.push(format!("{name}?{params}"));
     // Post-game screen: the verified shared port answers the queries and the button commands.
-    if name.starts_with("PostGame_")||name=="MultiPlayer_PostGameOnSelect"{
+    if name.starts_with("PostGame_")||name.starts_with("EndTourney_")||name=="MultiPlayer_PostGameOnSelect"{
         let player=arg("iPlayerId").and_then(|v|v.parse().ok()).unwrap_or(0);
         if let Some(r)=crate::fe_postgame::query(vm,name,player){return r}
         let sel=arg("iSelected").or_else(||arg("iButton")).and_then(|v|v.parse().ok()).unwrap_or(0);

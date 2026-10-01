@@ -234,6 +234,8 @@ pub struct TbHost {
     pub shake_ms: i32,
     pub grab: Option<usize>,
     pub generation: u32,
+    /// `Lifecycle::players[i].direction` as last applied to the character (the lifecycle turns winners at round end).
+    pub applied_dir: [[f32; 3]; 2],
     player_init: PlayerInitState,
     next_handle: u32,
     rng: u64,
@@ -292,6 +294,7 @@ impl TbHost {
             shake_ms: 0,
             grab: None,
             generation: 0,
+            applied_dir: [[0., 0., 1.]; 2],
             player_init: PlayerInitState::new([0; 2]),
             next_handle: HANDLE_BASE,
             rng: seed | 1,

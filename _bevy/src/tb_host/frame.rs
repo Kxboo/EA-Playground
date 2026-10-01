@@ -91,6 +91,13 @@ impl TbHost {
             controller_fx_offset: [0.2, 0.9, -0.15],
         };
         let result = rt.update(&input, &db, self)?;
+        for p in 0..self.chars.len().min(2) {
+            let d = rt.life.players[p].direction;
+            if d != self.applied_dir[p] {
+                self.applied_dir[p] = d;
+                self.chars[p].dir = d;
+            }
+        }
         self.ball_matrix = rt.state.scene.ball_matrix;
         self.rope_matrix = rt.state.scene.rope_matrix;
         if !rt.life.paused {
