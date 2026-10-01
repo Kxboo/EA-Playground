@@ -25,6 +25,8 @@ pub struct Fe{
     pub serve_bubble:bool,
     /// Choice made on a post-game screen for the minigame to act on (0 replay, 1 leave); see `UpdatePostGame`.
     pub postgame_choice:Option<i32>,
+    /// Post-game state shared with `minigame_session` (tournament, payload, singleton flags).
+    pub pg:crate::fe_postgame::Pg,
     /// `MGTetherball::OpenPauseMenu` hands the pre-game screen its parameters: [1, controlling player, multiplayer, game type].
     pub pause_words:Option<[u32;4]>,
     /// Front-end calls to run once the minigame has finished leaving (screens to return to).
@@ -185,6 +187,13 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
     let args=parse_params(params);
     let arg=|k:&str|args.iter().find(|(a,_)|a==k).map(|(_,v)|v.clone());
     vm.fe.calls.push(format!("{name}?{params}"));
+    // Post-game screen: the verified shared port answers the queries and the button commands.
+    if name.starts_with("PostGame_")||name=="MultiPlayer_PostGameOnSelect"{
+        let player=arg("iPlayerId").and_then(|v|v.parse().ok()).unwrap_or(0);
+        if let Some(r)=crate::fe_postgame::query(vm,name,player){return r}
+        let sel=arg("iSelected").or_else(||arg("iButton")).and_then(|v|v.parse().ok()).unwrap_or(0);
+        if crate::fe_postgame::command(vm,name,sel){return vec![]}
+    }
     match name{
         "GetStartScreenFromMain"=>vec![("strFirstScreen".into(),vm.fe.first_screen.clone())],
         "GetLocale"|"GetLocaleFE"=>vec![("iLocale".into(),vm.fe.locale.to_string())],
@@ -242,31 +251,6 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
         "MultiPlayer_SetMinigame"=>{vm.fe.mp.minigame=arg("iMiniGameType").and_then(|v|v.parse().ok()).unwrap_or(2);vec![]}
         "MultiPlayer_SetNumRounds"=>{vm.fe.mp.rounds=arg("iNumberRounds").and_then(|v|v.parse().ok()).unwrap_or(3);vec![]}
         "MultiPlayer_SetGameStyle"=>{vm.fe.mp.style=arg("iMultiPlayerGameType").and_then(|v|v.parse().ok()).unwrap_or(0);vec![]}
-        "MultiPlayer_PostGameOnLoad"=>{
-            let mp=&vm.fe.mp;let r=mp.results.unwrap_or(MpResult{winner:0,scores:[0,0],hits:[0,0],power_hits:[0,0]});
-            let n=mp.players.max(2) as usize;
-            let scores:Vec<String>=(0..n).map(|i|r.scores.get(i).copied().unwrap_or(0).to_string()).collect();
-            let rank:Vec<String>=(0..n).map(|i|if i as i32==r.winner{"0".to_string()}else{(1+(i as i32-(i as i32>r.winner) as i32).max(0)).to_string()}).collect();
-            let stats=[vm.locale_string("T_Hits"),vm.locale.as_ref().and_then(|l|l.get_hash(0x286b0bf2).map(|s|s.to_string())).unwrap_or_else(||"POWER HITS".into())];
-            let played=format!("1 {} 1",vm.locale_string("T_OutOf"));
-            vec![("iWinningPlayer".into(),r.winner.to_string()),("iIsTeamGame".into(),"0".into()),("aiPlayerScore".into(),scores.join(DELIM)),("aiPlayerRank".into(),rank.join(DELIM)),
-                 ("iMiniGameId".into(),mp.minigame.to_string()),("iAllowPlayAgain".into(),"1".into()),("iGamesPlayed".into(),"1".into()),("iTotalGames".into(),"1".into()),
-                 ("iNumStats".into(),"2".into()),("aiStatsText".into(),stats.join(DELIM)),("strGamesPlayed".into(),played)]
-        }
-        "MultiPlayer_PostGameGetStats"=>{
-            let p=arg("iPlayer").and_then(|v|v.parse::<usize>().ok()).unwrap_or(0).min(1);
-            let r=vm.fe.mp.results.unwrap_or(MpResult{winner:0,scores:[0,0],hits:[0,0],power_hits:[0,0]});
-            vec![("aiPlayerStats".into(),[r.hits[p].to_string(),r.power_hits[p].to_string()].join(DELIM))]
-        }
-        "MultiPlayer_PostGameOnSelect"=>{
-            // 2 = play again (the minigame resets itself), 1 = new game, anything else = main menu: the latter two leave the minigame first.
-            match arg("iSelected").as_deref(){
-                Some("2")=>{ vm.fe.postgame_choice=Some(0); }
-                Some("1")=>{ vm.fe.mp.active=true; vm.fe.postgame_choice=Some(1); vm.fe.after_exit=vec![(0,"ClearScreenStack".into(),vec![]),(10,"OpenScreen".into(),vec![V::Str("SelectNumPlayers".into())])]; }
-                _=>{ vm.fe.mp.active=false; vm.fe.postgame_choice=Some(1); vm.fe.after_exit=vec![(0,"ClearScreenStack".into(),vec![]),(10,"OpenScreen".into(),vec![V::Str("MainMenu".into())])]; }
-            }
-            vec![]
-        }
         "ScrCreditsInit"=>{
             // `CreditScreenLVHandlers::GetScreenCredits`: header key `T_Credits_Header%.2i`, names `T_Credits_%.2i_%.2i`, `iAnyMore` while the next header exists.
             let i=arg("iCreditIndex").and_then(|v|v.parse::<usize>().ok()).unwrap_or(0);
@@ -285,14 +269,6 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
         "PreGame_GetMultiPlayerInfo"=>vec![("iMultiPlayerMode".into(),"0".into()),("iNumPlayers".into(),vm.fe.mp.players.to_string()),("aiGamesWon".into(),"0".into()),("aiScore".into(),"0".into()),("aiRank".into(),"0".into()),("iControllingPlayer".into(),vm.fe.pause_words.map(|w|w[1]).unwrap_or(0).to_string())],
         "PreGame_GetDareText"=>vec![("iText".into(),String::new()),("strTitle".into(),String::new())],
         "PreGame_OnPlay"=>{start_game(vm);vec![]}
-        "PostGame_GetStats"=>{
-            let r=vm.fe.mp.results.unwrap_or(MpResult{winner:0,scores:[0,0],hits:[0,0],power_hits:[0,0]});
-            let p=arg("iPlayerId").and_then(|v|v.parse::<usize>().ok()).unwrap_or(0).min(1);
-            vec![("aiStats".into(),[r.hits[p].to_string(),r.power_hits[p].to_string()].join(DELIM))]
-        }
-        "PostGame_GetMPInfo"=>vec![("iNumPlayers".into(),"1".into()),("iIsTeamGame".into(),"0".into()),("aiRank".into(),"0".into()),("iMultiplayerGameType".into(),"0".into())],
-        "PostGame_OnReplay"=>{vm.fe.postgame_choice=Some(0);vec![]}
-        "PostGame_OnDone"|"PostGame_OnButtonClick"=>{vm.fe.mp.active=false;vm.fe.mp.quick=false;vm.fe.postgame_choice=Some(1);vm.fe.after_exit=vec![(0,"ClearScreenStack".into(),vec![]),(10,"OpenScreen".into(),vec![V::Str("MainMenu".into())])];vec![]}
         "EndGame_OnLoad"=>vec![("aiBeatenMinigames".into(),["0";7].join(DELIM)),("iLastBeatenMinigame".into(),"0".into()),("iAllGamesFinished".into(),"0".into())],
         "StickerBookCover_LoadLayout"=>{
             let pr=&vm.fe.profiles;
@@ -323,14 +299,6 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
             if let Some(a)=arg("aiRules"){let v:Vec<i32>=a.split(DELIM).filter_map(|x|x.parse().ok()).collect();if v.len()>=5{vm.fe.mp.rules=v;}}
             let next=if vm.fe.mp.quick{"PreGameInstructions"}else{"PreGameMP"};vm.fe.later.push((20,"OpenScreen".into(),vec![V::Str(next.into())]));
             vec![]
-        }
-        "PostGame_IsLastTourneyGame"|"PostGame_IsNextGameLastTourneyGame"=>vec![("iIsLastTourneyGame".into(),"0".into())],
-        "PostGame_OnLoad"=>vec![("iMinigameType".into(),vm.fe.mp.minigame.to_string()),("iGameMode".into(),"0".into())],
-        "PostGame_GetSPInfo"=>{
-            let r=vm.fe.mp.results.unwrap_or(MpResult{winner:0,scores:[0,0],hits:[0,0],power_hits:[0,0]});
-            let rank=if r.winner==0{["0","1"]}else{["1","0"]};
-            vec![("iScore".into(),r.scores[0].to_string()),("iHighScore".into(),r.scores[0].to_string()),("iNumCharactersInGame".into(),"2".into()),
-                 ("aiRank".into(),rank.join(DELIM)),("iUserWon".into(),((r.winner==0) as i32).to_string())]
         }
         "Conversation_Init"=>vec![],
         "Conversation_GetName"=>vec![("iCharacterName".into(),String::new())],

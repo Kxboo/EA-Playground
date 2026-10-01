@@ -46,6 +46,7 @@ mod tb_anim;
 mod tb_host;
 mod tb_session;
 mod fx;
+mod fe_postgame;
 mod sfx;
 mod apt;
 mod apt_player;

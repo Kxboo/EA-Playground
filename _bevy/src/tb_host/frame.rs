@@ -74,6 +74,13 @@ impl TbHost {
             c.update(held[i], ms);
         }
         self.sync_animations(rt);
+        // The accuracy percentage divides hits by attempts; the original's zero-attempt case is an undefined `divw`, so a player
+        // who never faced the ball is given one attempt (0 %) once the last round ends.
+        if rt.life.match_state.state_code == 30 {
+            for p in 0..rt.life.player_count.min(2) {
+                rt.life.statistics[p][0] = rt.life.statistics[p][0].max(1);
+            }
+        }
         let attachment = self.attachment(rt);
         let db = self.db.clone();
         let input = FrameInputs {

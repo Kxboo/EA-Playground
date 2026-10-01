@@ -542,21 +542,7 @@ fn step(
                         };
                         fe_call(vm, name, &[p as f64, f64::from(vis)]);
                     }
-                    Hud::PostGame(_, words) => {
-                        let w = |i: usize| words.get(i).copied().unwrap_or(0);
-                        let n = (w(1) as usize).clamp(1, 2);
-                        let winner = if w(0) > 1 { w(0x3c / 4) as i32 } else if w(0x3c / 4) == 0 { 0 } else { 1 };
-                        let mut r = crate::fe_host::MpResult { winner, scores: [0; 2], hits: [0; 2], power_hits: [0; 2] };
-                        for i in 0..n {
-                            let o = (0x58 + i * 0x28) / 4;
-                            r.scores[i] = w(0xf8 / 4 + i) as i32;
-                            r.hits[i] = w(o) as i32;
-                            r.power_hits[i] = w(o + 1) as i32;
-                        }
-                        vm.fe.mp.results = Some(r);
-                        let next = if w(0) > 1 { "PostGameMP" } else { "PostGame" };
-                        vm.call_exposed("OpenScreen", vec![V::Str(next.into())]);
-                    }
+                    Hud::PostGame(kind, words) => crate::fe_postgame::open(vm, kind, &words),
                     Hud::SetupHandlers(_) | Hud::ClearPregameHandlers | Hud::ClearPostgameHandlers | Hud::Clear => {}
                 },
                 Out::PauseInfo { words, .. } => vm.fe.pause_words = Some(words),

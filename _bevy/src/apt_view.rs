@@ -281,7 +281,10 @@ pub fn view_step(mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option
             if let Some(a)=std::env::var("EAGL_TB_AREA").ok().and_then(|a|a.parse().ok()){cfg.area=a;}
             if let Some(r)=std::env::var("EAGL_TB_ROT").ok().and_then(|a|a.parse().ok()){cfg.rotations=r;}
             if let Some(r)=std::env::var("EAGL_TB_ROUNDS").ok().and_then(|a|a.parse().ok()){cfg.rounds=r;}
+            let multiplayer=fe.mp.active&&!fe.mp.quick&&humans>=2;
+            let series=std::env::var("EAGL_TB_SERIES").ok().and_then(|a|a.parse().ok()).or((fe.mp.style==1).then_some(fe.mp.rounds));
             let kids=[kid(0),kid(1)];
+            v.vm.fe.pg.begin_game(humans,multiplayer,series);
             commands.insert_resource(crate::tb_session::TbLaunch{cfg,kids});}
     }
     let hc:Vec<_>=v.vm.host_calls.drain(..).collect();
