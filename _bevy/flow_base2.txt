@@ -1,0 +1,1 @@
+800:302,810:1302,1000:m420_136,1100:d,1110:u,1500:c_root.window425.mcBtnMultiplayer,1600:d,1610:u,2000:c_root.window425.cpBtn2,2100:d,2110:u,2600:c_root.window425.mcNextButtonAnim.cpNextBtn,2700:d,2710:u,3100:c_root.window425.cpBtnYes,3200:d,3210:u,4000:c_root.window425.mcBtn2,4100:d,4110:u

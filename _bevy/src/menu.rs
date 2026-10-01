@@ -6,7 +6,8 @@ use std::sync::{Arc,Mutex};
 use crate::{bridge,game,viewer};
 
 #[derive(Resource,Clone,Copy,PartialEq,Eq,Debug)]
-pub enum AppMode{Menu,Viewer,Game,Proof}
+pub enum AppMode{Menu,Viewer,Game,Tetherball,Apt,Proof}
+#[derive(Resource)] pub struct AptStart(pub String);
 
 #[derive(Resource,Default)]
 pub struct Proof{report:Option<Value>,running:Arc<Mutex<Option<String>>>,loaded:bool}
@@ -86,6 +87,8 @@ pub fn ui(mut contexts:EguiContexts,mut mode:ResMut<AppMode>,mut proof:ResMut<Pr
             ui.add_space(8.);
             if ui.add(big("Play — reconstructed game")).on_hover_text("Boot from the original files: world, player, recovered locomotion").clicked(){*mode=AppMode::Game;}
             ui.add_space(8.);
+            if ui.add(big("Play — Tetherball")).on_hover_text("Tetherball against the AI: decoded models, animation, ball motion and tuning").clicked(){*mode=AppMode::Tetherball;}
+            ui.add_space(8.);
             if ui.add(big("Proof of decode")).on_hover_text("Executable/data verification report").clicked(){*mode=AppMode::Proof;}
             ui.add_space(8.);
             if ui.add(big("Quit")).clicked(){exit.write(AppExit::Success);}
@@ -99,17 +102,21 @@ pub fn ui(mut contexts:EguiContexts,mut mode:ResMut<AppMode>,mut proof:ResMut<Pr
 }
 
 /// Reconcile cameras/entities with the active mode. Runs every frame; acts only on change.
-pub fn on_mode_change(mode:Res<AppMode>,mut commands:Commands,mut v:ResMut<viewer::Viewer>,roots:Query<Entity,With<viewer::PreviewRoot>>,game_entities:Query<Entity,With<game::GameEntity>>,mut preview:Single<&mut Camera,With<viewer::PreviewCamera>>,mut last:Local<Option<AppMode>>,mut light:Query<&mut Visibility,With<viewer::PreviewLight>>,selftest:Res<crate::SelfTestOut>){
+pub fn on_mode_change(mode:Res<AppMode>,mut commands:Commands,mut v:ResMut<viewer::Viewer>,roots:Query<Entity,With<viewer::PreviewRoot>>,game_entities:Query<Entity,With<game::GameEntity>>,tb_entities:Query<Entity,With<crate::tetherball_play::TbEntity>>,mut preview:Single<&mut Camera,With<viewer::PreviewCamera>>,mut last:Local<Option<AppMode>>,mut light:Query<&mut Visibility,With<viewer::PreviewLight>>,selftest:Res<crate::SelfTestOut>,apt_start:Res<AptStart>){
     if *last==Some(*mode){return}
     let previous=*last;*last=Some(*mode);
     if previous==Some(AppMode::Game){game::teardown(&mut commands,&game_entities);}
+    if previous==Some(AppMode::Apt){commands.queue(|w:&mut World|crate::apt_view::leave(w));}
+    if *mode==AppMode::Apt{let k=apt_start.0.clone();commands.queue(move|w:&mut World|crate::apt_view::enter(w,&k));}
+    if previous==Some(AppMode::Tetherball){crate::tetherball_play::teardown(&mut commands,&tb_entities);}
     if *mode!=AppMode::Viewer{
         for e in &roots{commands.entity(e).despawn();}
         v.loaded=false;v.busy=false;v.image=None;v.image_id=None;
         preview.viewport=None;
     }
-    preview.is_active=*mode!=AppMode::Game;
-    for mut vis in &mut light{*vis=if *mode==AppMode::Game{Visibility::Hidden}else{Visibility::Inherited};}
+    preview.is_active=!matches!(*mode,AppMode::Game|AppMode::Tetherball|AppMode::Apt);
+    for mut vis in &mut light{*vis=if matches!(*mode,AppMode::Game|AppMode::Tetherball|AppMode::Apt){Visibility::Hidden}else{Visibility::Inherited};}
     if *mode==AppMode::Game{commands.insert_resource(game::Game::new(selftest.0.clone().map(game::SelfTest::new)));}
+    if *mode==AppMode::Tetherball{commands.insert_resource(crate::tetherball_play::Tb::new(std::env::args().any(|a|a=="--tb-autotest")));}
     let _=RenderLayers::none();
 }

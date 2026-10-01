@@ -30,7 +30,9 @@ const WORLD_SUFFIXES:[&str;4]=["","-alpha","-fade","-alphafade"];
 
 /// Convert the original row-vector matrix to Bevy's column-vector convention.
 /// A missing radius uses the original disabled-curvature path while loading.
-fn display_matrix(radius:f32,position:Vec3)->Mat4{
+/// Set when the world was entered from the frontend's Single Player entry: Esc then returns to the frontend.
+pub static FROM_FE:std::sync::atomic::AtomicBool=std::sync::atomic::AtomicBool::new(false);
+pub fn display_matrix(radius:f32,position:Vec3)->Mat4{
     Mat4::from_cols_array(&crate::area_transform::AreaTransform{radius,disabled:radius<=0.}.model_matrix(position.to_array()))
 }
 
@@ -241,17 +243,65 @@ impl Game{
     }
 }
 
-fn in_game(mode:Res<AppMode>)->bool{*mode==AppMode::Game}
+fn in_game(mode:Res<AppMode>,play:Option<Res<WorldPlay>>)->bool{*mode==AppMode::Game||(*mode==AppMode::Apt&&play.is_some_and(|p|!p.paused))}
+fn game_mode(mode:Res<AppMode>)->bool{*mode==AppMode::Game}
+/// The world is being played underneath the frontend (Single Player): the front end draws the HUD and menus on top.
+#[derive(Resource,Default)]
+pub struct WorldPlay{pub paused:bool,/// Paused by a full-screen front-end screen (report card, sticker book) rather than the pause overlay.
+    pub screen_pause:bool,pub seen_other:bool}
+/// The world is also loaded behind the front end (menu cameras from the `main_menu_nis` collections).
+fn world_active(mode:Res<AppMode>,backdrop:Option<Res<Backdrop>>,play:Option<Res<WorldPlay>>)->bool{*mode==AppMode::Game||backdrop.is_some()||play.is_some()}
+fn backdrop_only(mode:Res<AppMode>,backdrop:Option<Res<Backdrop>>)->bool{*mode!=AppMode::Game&&backdrop.is_some()}
+
+/// Camera rig for the world shown behind menus: eased moves between the `main_menu_nis` positions.
+#[derive(Resource)]
+pub struct Backdrop{pub eye:Vec3,pub target:Vec3,from:(Vec3,Vec3),to:(Vec3,Vec3),t:f32,dur:f32}
+impl Backdrop{
+    pub fn new(eye:Vec3,target:Vec3)->Self{Self{eye,target,from:(eye,target),to:(eye,target),t:1.,dur:1.}}
+    /// Start a smooth camera move (duration in seconds).
+    pub fn move_to(&mut self,eye:Vec3,target:Vec3,dur:f32){self.from=(self.eye,self.target);self.to=(eye,target);self.t=0.;self.dur=dur.max(0.01);}
+}
+/// Camera poses of the `main_menu_nis` collections in `db.vlt` (first vector is the look-at point, second the eye).
+pub fn nis_pose(name:&str)->Option<(Vec3,Vec3,f32)>{
+    let dir=bridge::data_root().join("files").join("data").join("db");
+    let (v,b)=(std::fs::read(dir.join("db.vlt")).ok()?,std::fs::read(dir.join("db.bin")).ok()?);
+    let db=crate::vlt::Database::load(&v,&b,crate::vlt::known_names()).ok()?;
+    // The kid-select scene has its own cameras in `character_select` (same two keys, no duration).
+    let (class,coll)=match name{"select_kid"=>("character_select","single_player"),"select_kid_mp"=>("character_select","multi_player"),_=>("main_menu_nis",name)};
+    let c=db.find_collection(class,coll)?;
+    let to3=|v:Value|v.as_array().map(|a|Vec3::new(a[0].as_f64().unwrap_or(0.) as f32,a[1].as_f64().unwrap_or(0.) as f32,a[2].as_f64().unwrap_or(0.) as f32));
+    let (target,eye)=if name=="general"{
+        (db.attribute(c,"camera_main_menu_target").and_then(to3)?,db.attribute(c,"camera_main_menu_position").and_then(to3)?)
+    }else{
+        (db.attribute_by_key(c,0x2634b113a1d79c5f).and_then(to3)?,db.attribute_by_key(c,0x7eb3a9524cd43207).and_then(to3)?)
+    };
+    let ms=db.attribute_by_key(c,0xdbb7651f3b631882).and_then(|v|v.as_f64()).unwrap_or(3000.) as f32;
+    Some((eye,target,ms/1000.))
+}
+fn backdrop_camera(g:Option<Res<Game>>,mut bd:Option<ResMut<Backdrop>>,time:Res<Time<Real>>,mut c:Query<&mut Transform,With<GameCamera>>){
+    let (Some(g),Some(bd))=(g,bd.as_mut()) else{return};
+    if bd.t<1.{
+        bd.t=(bd.t+time.delta_secs()/bd.dur).min(1.);
+        let k=bd.t*bd.t*(3.-2.*bd.t);
+        bd.eye=bd.from.0.lerp(bd.to.0,k);bd.target=bd.from.1.lerp(bd.to.1,k);
+    }
+    let Ok(mut ct)=c.single_mut() else{return};
+    let radius=g.world_radius;
+    let (eb,tb)=(display_matrix(radius,bd.eye).w_axis.truncate(),display_matrix(radius,bd.target).w_axis.truncate());
+    *ct=Transform::from_translation(eb).looking_at(tb,Vec3::Y);
+}
 pub fn plugin(app:&mut App){
     app.init_resource::<GameInput>().init_resource::<SimulationClock>()
+        .add_systems(Update,(pump,build,sample_frame).chain().run_if(world_active))
         // GameState::Update runs the world before Controller::Update: gameplay
         // consumes the events produced at the end of the previous host frame.
-        .add_systems(Update,(pump,build,sample_frame,movement,camera,sky_update,animate,read_input,dispatch_input,selftest).chain().run_if(in_game))
-        .add_systems(bevy_egui::EguiPrimaryContextPass,hud.run_if(in_game));
+        .add_systems(Update,(movement,camera,sky_update,animate,read_input,dispatch_input,selftest).chain().after(sample_frame).run_if(in_game))
+        .add_systems(Update,(backdrop_camera,sky_update).chain().after(sample_frame).run_if(backdrop_only))
+        .add_systems(bevy_egui::EguiPrimaryContextPass,hud.run_if(game_mode));
 }
 
 
-fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,mut meshes:ResMut<Assets<Mesh>>,mut materials:ResMut<Assets<StandardMaterial>>,mut images:ResMut<Assets<Image>>,mut clips:ResMut<Assets<AnimationClip>>,mut settings:ResMut<WinitSettings>,mut redraw:MessageWriter<RequestRedraw>){
+fn pump(backdrop:Option<Res<Backdrop>>,mut commands:Commands,mut g:Option<ResMut<Game>>,mut meshes:ResMut<Assets<Mesh>>,mut materials:ResMut<Assets<StandardMaterial>>,mut images:ResMut<Assets<Image>>,mut clips:ResMut<Assets<AnimationClip>>,mut settings:ResMut<WinitSettings>,mut redraw:MessageWriter<RequestRedraw>){
     let Some(g)=g.as_mut() else{return};let g=&mut **g;
     settings.focused_mode=UpdateMode::Continuous;settings.unfocused_mode=UpdateMode::Continuous;redraw.write(RequestRedraw);
     if g.phase!=Phase::Loading{return}
@@ -327,7 +377,7 @@ fn pump(mut commands:Commands,mut g:Option<ResMut<Game>>,mut meshes:ResMut<Asset
         }
     }
     if g.models_expected.is_some_and(|n|g.models_received>=n) && g.player_asset.is_some(){
-        let boot_done=g.boot_shown.map(|t|t.elapsed().as_secs_f32()>=MIN_BOOT_SECONDS).unwrap_or(g.boot_image.is_none());
+        let boot_done=backdrop.is_some()||g.boot_shown.map(|t|t.elapsed().as_secs_f32()>=MIN_BOOT_SECONDS).unwrap_or(g.boot_image.is_none());
         if boot_done{g.phase=Phase::Building;g.log.push("world and player assets ready".into());}
     }
 }
@@ -343,7 +393,7 @@ fn sky_update(g:Option<ResMut<Game>>,clock:Res<SimulationClock>,mut layers:Query
 }
 
 
-fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,mut ibp:ResMut<Assets<bevy::mesh::skinning::SkinnedMeshInverseBindposes>>,mut graphs:ResMut<Assets<AnimationGraph>>,cam:Query<Entity,With<GameCamera>>){
+fn build(backdrop:Option<Res<Backdrop>>,mut commands:Commands,mut g:Option<ResMut<Game>>,mut ibp:ResMut<Assets<bevy::mesh::skinning::SkinnedMeshInverseBindposes>>,mut graphs:ResMut<Assets<AnimationGraph>>,cam:Query<Entity,With<GameCamera>>){
     let Some(g)=g.as_mut() else{return};let g=&mut **g;
     if g.phase!=Phase::Building{return}
     g.build_wait+=1;if g.build_wait<3{return} // let transforms propagate
@@ -412,17 +462,18 @@ fn build(mut commands:Commands,mut g:Option<ResMut<Game>>,mut ibp:ResMut<Assets<
     let joints=character::spawn_rig(&mut commands,&mut ibp,&asset.skeleton,&asset.up,model,model);
     g.log.push(format!("player rig: {} joints, {} skinned parts",joints.len(),asset.up.parts.len()));
     g.player=Some(player);
+    if backdrop.is_some(){commands.entity(player).insert(Visibility::Hidden);}
     // Area music: the executable names world_nature/park/schoolyard/stadium.asf; the start area is the schoolyard hub
     // (provisional mapping - the original's area -> track selection was not traced).
-    if !std::env::args().any(|a|a=="--mute"){
+    if backdrop.is_none()&&!std::env::args().any(|a|a=="--mute"){
         let track="world_schoolyard.asf";
         g.music=Some(crate::playback::Music::start(bridge::data_root().join("files").join("data").join("audio").join("music").join(track),0.4));
         g.music_name=track.into();
     }
     if cam.is_empty(){
         // Sky camera (order -1) draws the sky layer first; the world camera keeps that colour buffer and adds the world on top.
-        commands.spawn((GameEntity,SkyCamera,Camera3d::default(),Camera{order:-1,..default()},RenderLayers::layer(SKY_LAYER),Transform::from_translation(g.spawn+Vec3::new(0.,2.,4.))));
-        commands.spawn((GameEntity,GameCamera{yaw:(-g.start_dir.x).atan2(-g.start_dir.z),pitch:0.28,distance:k::HINGE_CAMERA_DISTANCE},Camera3d::default(),Camera{order:0,clear_color:ClearColorConfig::None,..default()},Transform::from_translation(g.spawn+Vec3::new(0.,2.,4.))));
+        commands.spawn((GameEntity,SkyCamera,crate::apt_view::LetterboxCamera,Camera3d::default(),Camera{order:-1,..default()},RenderLayers::layer(SKY_LAYER),Transform::from_translation(g.spawn+Vec3::new(0.,2.,4.))));
+        commands.spawn((GameEntity,crate::apt_view::LetterboxCamera,GameCamera{yaw:(-g.start_dir.x).atan2(-g.start_dir.z),pitch:0.28,distance:k::HINGE_CAMERA_DISTANCE},Camera3d::default(),Camera{order:0,clear_color:ClearColorConfig::None,..default()},Transform::from_translation(g.spawn+Vec3::new(0.,2.,4.))));
     }
     commands.spawn((GameEntity,DirectionalLight{illuminance:9000.,shadow_maps_enabled:false,..default()},Transform::from_rotation(Quat::from_euler(EulerRot::XYZ,-0.9,-0.5,0.))));
     g.log.push(format!("ground: {} triangles; spawn {:.1},{:.1},{:.1}",g.tri_count,g.spawn.x,g.spawn.y,g.spawn.z));
@@ -549,7 +600,7 @@ fn hud(images:Res<Assets<Image>>,mut contexts:EguiContexts,mut g:Option<ResMut<G
     let Some(g)=g.as_mut() else{return Ok(())};
     if g.boot_image.is_some()&&g.boot_egui.is_none(){if let Some(h)=g.boot_image.clone(){g.boot_egui=Some(contexts.add_image(EguiTextureHandle::Strong(h)));}}
     let ctx=contexts.ctx_mut()?;
-    if keys.just_pressed(KeyCode::Escape){*mode=AppMode::Menu;return Ok(())}
+    if keys.just_pressed(KeyCode::Escape){*mode=if FROM_FE.swap(false,std::sync::atomic::Ordering::Relaxed){AppMode::Apt}else{AppMode::Menu};return Ok(())}
     let screen=ctx.viewport_rect();
     match g.phase.clone(){
         Phase::Loading|Phase::Building=>{
@@ -571,7 +622,7 @@ fn hud(images:Res<Assets<Image>>,mut contexts:EguiContexts,mut g:Option<ResMut<G
         Phase::Failed(e)=>{egui::Area::new(egui::Id::new("fail")).fixed_pos(screen.center()-egui::vec2(200.,20.)).show(ctx,|ui|{ui.heading(egui::RichText::new("Game failed to load").color(egui::Color32::LIGHT_RED));ui.label(e);ui.label("Esc: back to menu");});}
         Phase::Playing=>{
             let (speed,pos)=player.single().map(|(p,t)|(p.speed,t.translation)).unwrap_or((0.,Vec3::ZERO));
-            egui::Area::new(egui::Id::new("hud")).fixed_pos(egui::pos2(12.,12.)).show(ctx,|ui|{
+            if !FROM_FE.load(std::sync::atomic::Ordering::Relaxed){egui::Area::new(egui::Id::new("hud")).fixed_pos(egui::pos2(12.,12.)).show(ctx,|ui|{
                 egui::Frame::popup(ui.style()).show(ui,|ui|{
                     ui.label(egui::RichText::new("EA PLAYGROUND — reconstruction slice").strong());
                     ui.label(format!("pos {:.1}, {:.1}, {:.1}   speed {:.2}/{:.1}   {:.0} fps",pos.x,pos.y,pos.z,speed,k::STATE_MAX_SPEED,1./time.delta_secs().max(1e-4)));
@@ -586,7 +637,7 @@ fn hud(images:Res<Assets<Image>>,mut contexts:EguiContexts,mut g:Option<ResMut<G
                     ui.colored_label(egui::Color32::YELLOW,"Character collision response and camera framing remain provisional");
                     ui.label(egui::RichText::new("WASD/arrows move • Q/E or right-drag camera • wheel zoom • R behind • Esc menu").small());
                 });
-            });
+            });}
         }
     }
     Ok(())
@@ -675,7 +726,23 @@ fn selftest(mut commands:Commands,mut g:Option<ResMut<Game>>,mut input:ResMut<Ga
     }
 }
 
-impl Game{pub fn is_playing(&self)->bool{self.phase==Phase::Playing}}
+impl Game{
+    /// Start the schoolyard area music (the frontend does this when the world takes over from the menus).
+    pub fn start_music(&mut self){
+        if self.music.is_none()&&!std::env::args().any(|a|a=="--mute"){
+            let track="world_schoolyard.asf";
+            self.music=Some(crate::playback::Music::start(bridge::data_root().join("files").join("data").join("audio").join("music").join(track),0.4));
+            self.music_name=track.into();
+        }
+    }
+    pub fn stop_music(&mut self){self.music=None;}
+    pub fn player_entity(&self)->Option<Entity>{self.player}
+    pub fn is_playing(&self)->bool{self.phase==Phase::Playing}
+    /// Walkable height at a logical world position (collision data), if the ground is loaded.
+    pub fn ground_height(&self,x:f32,z:f32)->Option<f32>{self.ground.as_ref().and_then(|g|g.height(x,z,3.0))}
+    /// Display transform (world curvature) of a logical position.
+    pub fn display(&self,p:Vec3)->Mat4{display_matrix(self.world_radius,p)}
+}
 
 /// Leave game mode: drop the loader and all game entities.
 pub fn teardown(commands:&mut Commands,entities:&Query<Entity,With<GameEntity>>){

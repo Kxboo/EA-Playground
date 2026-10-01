@@ -85,5 +85,30 @@ fn run(path:std::path::PathBuf,volume:f32,stop:Arc<AtomicBool>,status:Arc<Status
     status.state.store(Status::STOPPED,Ordering::Relaxed);
 }
 
+/// Play decoded PCM once on the default device and return when it has finished (call from a worker thread).
+#[cfg(windows)]
+pub fn play_once(pcm:&crate::audio::Pcm,volume:f32){
+    use std::{ffi::c_void,time::Duration};
+    let ch=pcm.channels.max(1);
+    let fmt=sys::WaveFormatEx{tag:1,channels:ch as u16,rate:pcm.sample_rate,bytes_per_sec:pcm.sample_rate*ch as u32*2,block_align:(ch*2) as u16,bits:16,size:0};
+    let mut h:*mut c_void=std::ptr::null_mut();
+    if unsafe{sys::waveOutOpen(&mut h,sys::WAVE_MAPPER,&fmt,0,0,0)}!=0{return}
+    let mut buf:Vec<i16>=pcm.samples.iter().map(|s|(*s as f32*volume) as i16).collect();
+    let hs=std::mem::size_of::<sys::WaveHdr>() as u32;
+    let mut hdr=sys::WaveHdr{data:buf.as_mut_ptr() as *mut u8,len:(buf.len()*2) as u32,recorded:0,user:0,flags:0,loops:0,next:std::ptr::null_mut(),reserved:0};
+    unsafe{
+        if sys::waveOutPrepareHeader(h,&mut hdr,hs)==0{
+            if sys::waveOutWrite(h,&mut hdr,hs)==0{
+                let mut waited=0;
+                while hdr.flags&sys::WHDR_DONE==0&&waited<20_000{std::thread::sleep(Duration::from_millis(20));waited+=20;}
+            }
+            sys::waveOutReset(h);sys::waveOutUnprepareHeader(h,&mut hdr,hs);
+        }
+        sys::waveOutClose(h);
+    }
+}
+#[cfg(not(windows))]
+pub fn play_once(_pcm:&crate::audio::Pcm,_volume:f32){}
+
 #[cfg(not(windows))]
 fn run(_path:std::path::PathBuf,_volume:f32,_stop:Arc<AtomicBool>,status:Arc<Status>){status.state.store(Status::NO_DEVICE,Ordering::Relaxed);}

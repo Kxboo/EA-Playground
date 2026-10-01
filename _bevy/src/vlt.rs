@@ -184,6 +184,10 @@ impl Database{
         let k=string_hash64(name);
         c.attributes.iter().find(|a|a.name_key==k).and_then(|a|self.value(a).ok())
     }
+    /// Attribute lookup by raw name key (for attributes whose names were never recovered).
+    pub fn attribute_by_key(&self,c:&Collection,key:u64)->Option<Value>{
+        c.attributes.iter().find(|a|a.name_key==key).and_then(|a|self.value(a).ok())
+    }
     /// Whole database as JSON (for `--vlt-dump` and cross-checks against the Python decoder).
     pub fn to_json(&self)->Value{
         json!({

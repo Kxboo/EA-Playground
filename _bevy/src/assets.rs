@@ -62,8 +62,8 @@ pub fn texture_sources(source:&str)->Vec<String>{
     out
 }
 
-struct Bank{data:Vec<u8>,gsh:gsh::Gsh}
-fn load_banks(sources:&[String],warn:&mut Vec<String>)->Vec<Bank>{
+pub(crate) struct Bank{data:Vec<u8>,gsh:gsh::Gsh}
+pub(crate) fn load_banks(sources:&[String],warn:&mut Vec<String>)->Vec<Bank>{
     let mut out=vec![];
     for s in sources{
         match archive::read_virtual(s).and_then(|(d,_)|gsh::parse(&d).map(|g|Bank{data:d,gsh:g})){Ok(b)=>out.push(b),Err(e)=>warn.push(format!("Texture {s}: {e}"))}
@@ -72,7 +72,7 @@ fn load_banks(sources:&[String],warn:&mut Vec<String>)->Vec<Bank>{
 }
 
 /// Resolve a material texture name against the banks (exact, case-insensitive, unnamed alias); identical duplicates merge.
-fn resolve(name:&str,banks:&[Bank],warn:&mut Vec<String>)->Option<(Vec<u8>,usize,usize)>{
+pub(crate) fn resolve(name:&str,banks:&[Bank],warn:&mut Vec<String>)->Option<(Vec<u8>,usize,usize)>{
     let n=name.trim();
     let mut hits:Vec<(&Bank,&gsh::Entry)>=vec![];
     for b in banks{for e in &b.gsh.entries{if e.full_name.as_deref().map(str::trim)==Some(n){hits.push((b,e))}}}
@@ -93,7 +93,7 @@ fn resolve(name:&str,banks:&[Bank],warn:&mut Vec<String>)->Option<(Vec<u8>,usize
     decoded.pop()
 }
 
-fn wrap_modes(symbol:&str,w:usize,h:usize)->[Wrap;2]{
+pub(crate) fn wrap_modes(symbol:&str,w:usize,h:usize)->[Wrap;2]{
     let mut out=[Wrap::Repeat,Wrap::Repeat];
     for part in symbol.split(';'){
         let Some((k,v))=part.split_once('=') else{continue};

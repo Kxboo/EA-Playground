@@ -89,7 +89,7 @@ pub fn streams(d:&[u8])->Vec<(usize,usize)>{
     out
 }
 
-pub struct Pcm{pub sample_rate:u32,pub channels:usize,pub samples:Vec<i16>,pub frames:u64,pub stats:mp3::Stats}
+#[derive(Clone)] pub struct Pcm{pub sample_rate:u32,pub channels:usize,pub samples:Vec<i16>,pub frames:u64,pub stats:mp3::Stats}
 
 /// The engine discards the first 1105 samples of a stream (`li r28,0x451; stw r28,0x1d0` in `CEALayer3Dec::Decode`,
 /// 0x802808f8): one granule plus the 529-sample decoder delay.

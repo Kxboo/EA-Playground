@@ -11,3 +11,6 @@
 /exports/
 /research/coverage.json
 __pycache__/
+/scratch/
+/saves/
+/docs/apt-log.txt

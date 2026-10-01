@@ -1,5 +1,7 @@
 #![cfg_attr(target_os="windows",windows_subsystem="windows")]
 mod bridge;
+mod kid_pick;
+mod fe_sfx;
 mod viewer;
 mod game;
 mod menu;
@@ -39,6 +41,18 @@ mod tetherball_additional_player;
 mod tetherball_ball_init;
 mod tetherball_startup;
 mod tetherball_shadow_setup;
+mod tetherball_play;
+mod apt;
+mod apt_player;
+mod apt_view;
+mod apt_vm;
+mod apt_lib;
+mod apt_anim;
+mod fe_host;
+mod apt_geom;
+mod fntg;
+mod apt_mat;
+mod apt_text;
 mod recovered;
 mod vlt;
 mod havok;
@@ -94,6 +108,10 @@ fn main(){
         if input.to_lowercase().ends_with(".bnk")||input.to_lowercase().ends_with(".abk"){
             let which=arg("--stream").and_then(|s|s.parse::<usize>().ok()).unwrap_or(0);
             let bank=if input.to_lowercase().ends_with(".abk"){match audio::abk_bank(&d){Ok(Some(b))=>b,Ok(None)=>{eprintln!("module bank without samples");std::process::exit(1)}Err(e)=>{eprintln!("{e}");std::process::exit(1)}}}else{&d[..]};
+            if std::env::args().any(|a|a=="--list"){
+                if let Ok(list)=audio::parse_bank(bank){for (i,s) in list.iter().enumerate(){eprintln!("{i}: codec {:#x} {} ch {} Hz {} samples {:.2}s",s.header.codec,s.header.channels,s.header.sample_rate,s.header.samples,s.header.samples as f32/s.header.sample_rate.max(1) as f32);}}
+                return
+            }
             match audio::decode_bank_sound(bank,which){Ok(p)=>{std::fs::write(&out,audio::to_wav(&p)).expect("write");eprintln!("{} samples at {} Hz",p.samples.len(),p.sample_rate);}Err(e)=>{eprintln!("{e}");std::process::exit(1)}}
             return
         }
@@ -119,7 +137,7 @@ fn main(){
     state.startup_bank=arg("--bank");state.startup_clip=arg("--clip").and_then(|s|s.parse().ok()).unwrap_or(0);
     state.capture=arg("--capture");state.capture_at=arg("--capture-after").and_then(|s|s.parse().ok()).unwrap_or(15.);
     let selftest=arg("--selftest").map(std::path::PathBuf::from);
-    let start=match arg("--mode").as_deref(){Some("viewer")=>menu::AppMode::Viewer,Some("game")=>menu::AppMode::Game,Some("proof")=>menu::AppMode::Proof,Some(_)|None=>if selftest.is_some(){menu::AppMode::Game}else if state.capture.is_some()||arg("--asset").is_some(){menu::AppMode::Viewer}else{menu::AppMode::Menu}};
+    let start=match arg("--mode").as_deref(){Some("viewer")=>menu::AppMode::Viewer,Some("game")=>menu::AppMode::Game,Some("tetherball")=>menu::AppMode::Tetherball,Some("apt")=>menu::AppMode::Apt,Some("proof")=>menu::AppMode::Proof,Some("menu")=>menu::AppMode::Menu,Some(_)|None=>if selftest.is_some(){menu::AppMode::Game}else if state.capture.is_some()||arg("--asset").is_some(){menu::AppMode::Viewer}else{menu::AppMode::Apt}};
     let bridge=bridge::Bridge::start();bridge.catalog();
     App::new()
         .insert_resource(start).insert_resource(SelfTestOut(selftest)).insert_resource(Flow{on:std::env::args().any(|a|a=="--flow-test"),step:0,since:0.,log:vec![]}).insert_resource(Shot{path:arg("--shot"),at:arg("--shot-at").and_then(|s|s.parse().ok()).unwrap_or(3.),taken:false}).init_resource::<menu::Proof>()
@@ -128,11 +146,11 @@ fn main(){
         .insert_resource(ClearColor(Color::srgb(0.055,0.066,0.082)))
         .insert_resource(GlobalAmbientLight{color:Color::WHITE,brightness:800.,..default()})
         .insert_resource(WinitSettings::desktop_app())
-        .add_plugins(DefaultPlugins.set(WindowPlugin{primary_window:Some(Window{title:"EA Playground — Bevy Asset Workbench".into(),resolution:(1440,900).into(),..default()}),..default()})
+        .add_plugins(DefaultPlugins.set(WindowPlugin{primary_window:Some(Window{title:"EA Playground".into(),resolution:(1280,720).into(),..default()}),..default()})
             .set(AssetPlugin{file_path:bridge::root().join("assets").to_string_lossy().into_owned(),..default()}))
         .add_plugins(EguiPlugin::default())
         .add_systems(Startup,viewer::setup)
-        .add_plugins(game::plugin).add_systems(Update,(shot,flow))
+        .add_plugins(game::plugin).add_plugins(tetherball_play::plugin).add_plugins(apt_view::plugin).add_plugins(kid_pick::plugin).insert_resource(menu::AptStart(arg("--apt").unwrap_or_else(||"main".into()))).add_systems(Update,(shot,flow))
         .add_systems(Update,(menu::on_mode_change,(viewer::receive,viewer::animate).chain().run_if(in_mode(menu::AppMode::Viewer))).chain())
         .add_systems(EguiPrimaryContextPass,(viewer::ui.run_if(in_mode(menu::AppMode::Viewer)),menu::ui.run_if(in_mode(menu::AppMode::Menu).or(in_mode(menu::AppMode::Proof)))))
         .add_systems(PostUpdate,(viewer::bones.run_if(in_mode(menu::AppMode::Viewer)),capture).after(TransformSystems::Propagate))

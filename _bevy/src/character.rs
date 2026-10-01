@@ -28,6 +28,18 @@ pub fn load(viv_dir:&str,schemas:&crate::model::Schemas)->Result<CharacterData,S
     Ok(CharacterData{model,skeleton,clips,source:model_src})
 }
 
+/// The model of another roster kid (`characters.viv::<asset>.viv::<asset>.o`); they all share the player's skeleton and clips.
+pub fn load_kid_model(viv_dir:&str,asset:&str,schemas:&crate::model::Schemas)->Result<assets::BuiltModel,String>{
+    assets::build(&format!("{viv_dir}/models/characters.viv::{asset}.viv::{asset}.o"),schemas)
+}
+
+/// Further clips of `player_anims.anm` by bank index (select-kid scene: run, pick-me, celebrations).
+pub fn load_clips(viv_dir:&str,skeleton:&Skeleton,indices:&[usize])->Result<Vec<Clip>,String>{
+    let anim_viv=format!("{viv_dir}/player_anims.viv");
+    let bank=Bank::parse(archive::read_virtual(&format!("{anim_viv}::player_anims.anm"))?.0)?;
+    indices.iter().map(|&i|bank.decode(i,skeleton)).collect()
+}
+
 /// One decoded clip -> Bevy animation: rotation/translation/scale curves per animated bone (`i / 30` s), unit
 /// quaternions with continuous sign.
 pub fn animation_clip(clip:&Clip)->Result<AnimationClip,String>{

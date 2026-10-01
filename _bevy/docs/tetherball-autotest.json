@@ -1,0 +1,37 @@
+{
+  "ball": {
+    "angle": 5.905081748962402,
+    "angular_velocity": -5.4150004386901855,
+    "radius": 0.699999988079071
+  },
+  "completed": true,
+  "difficulty": "Normal",
+  "distance": 1.2999999523162842,
+  "log": [
+    "Tetherball: reading original data files",
+    "pole bounds [[-0.19972198, -0.016976843, -0.19972168], [0.19972229, 2.3175128, 0.19972168]]; ball bounds [[-0.12191284, -0.11786652, -0.11786132], [0.12191284, 0.1178664, 0.11786621]]",
+    "Easy: speeds [3.2, 1.2, 1.4, 1.1] rotations 6 distance 0 ai [25, 30, 20, 10, 0, 35, 85] angles [0.9773844, 0.7853982, 0.6981317]",
+    "Normal: speeds [3.5, 1.2, 1.4, 1.1] rotations 6 distance 0 ai [18, 25, 15, 15, 30, 25, 75] angles [0.9773844, 0.7853982, 0.6981317]",
+    "Hard: speeds [3.8, 1.3, 1.4, 1.1] rotations 6 distance 0 ai [16, 20, 10, 18, 35, 15, 65] angles [0.9773844, 0.7853982, 0.6981317]",
+    "Expert: speeds [3.8, 1.3, 1.4, 1.1] rotations 6 distance 0 ai [15, 15, 10, 25, 40, 15, 50] angles [0.9773844, 0.7853982, 0.6981317]",
+    "ready: distance 1.30, window 0.79 rad, rotations to win 6, pole top 2.32"
+  ],
+  "match_seconds": 11.64006519317627,
+  "rotations_to_win": 6,
+  "seats": [
+    {
+      "charge": 1,
+      "hits": 5,
+      "misses": 0,
+      "power_hits": 2
+    },
+    {
+      "charge": 3,
+      "hits": 5,
+      "misses": 6,
+      "power_hits": 1
+    }
+  ],
+  "window": 0.7853981852531433,
+  "winner": 0
+}
