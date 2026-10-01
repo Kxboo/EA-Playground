@@ -25,6 +25,8 @@ pub struct Fe{
     pub serve_bubble:bool,
     /// Choice made on a post-game screen for the minigame to act on (0 replay, 1 leave); see `UpdatePostGame`.
     pub postgame_choice:Option<i32>,
+    /// `MGTetherball::OpenPauseMenu` hands the pre-game screen its parameters: [1, controlling player, multiplayer, game type].
+    pub pause_words:Option<[u32;4]>,
     /// Front-end calls to run once the minigame has finished leaving (screens to return to).
     pub after_exit:Vec<(u32,String,Vec<V>)>,
     /// Pause overlay state: set while the `PauseMenu` overlay is open; the pause buttons leave a request here.
@@ -233,9 +235,13 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
             let more=has(&format!("T_Credits_Header{:02}",i+1));
             vec![("strTask".into(),task),("astrNames".into(),names.join(DELIM)),("iAnyMore".into(),(more as i32).to_string())]
         }
-        "PreGame_OnLoad"=>vec![("iMiniGameType".into(),vm.fe.mp.minigame.to_string()),("aiGestureIsLocked".into(),["0";6].join(DELIM)),("iGameMode".into(),"0".into()),("iScreenType".into(),"0".into())],
+        "PreGame_OnLoad"=>{
+            // iScreenType: 0 = pre-game, 1 = pause menu (BECONSTANT_PAUSE_MENU); iGameMode: 0 single player, 1 multiplayer.
+            let (screen,mode)=match vm.fe.pause_words{Some(w)=>(1,w[2] as i32),None=>(0,0)};
+            vec![("iMiniGameType".into(),vm.fe.mp.minigame.to_string()),("aiGestureIsLocked".into(),["0";6].join(DELIM)),("iGameMode".into(),mode.to_string()),("iScreenType".into(),screen.to_string())]
+        }
         "PreGame_GetSinglePlayerInfo"=>vec![("iIsDare".into(),"0".into())],
-        "PreGame_GetMultiPlayerInfo"=>vec![("iMultiPlayerMode".into(),"0".into()),("iNumPlayers".into(),vm.fe.mp.players.to_string()),("aiGamesWon".into(),"0".into()),("aiScore".into(),"0".into()),("aiRank".into(),"0".into()),("iControllingPlayer".into(),"0".into())],
+        "PreGame_GetMultiPlayerInfo"=>vec![("iMultiPlayerMode".into(),"0".into()),("iNumPlayers".into(),vm.fe.mp.players.to_string()),("aiGamesWon".into(),"0".into()),("aiScore".into(),"0".into()),("aiRank".into(),"0".into()),("iControllingPlayer".into(),vm.fe.pause_words.map(|w|w[1]).unwrap_or(0).to_string())],
         "PreGame_GetDareText"=>vec![("iText".into(),String::new()),("strTitle".into(),String::new())],
         "PreGame_OnPlay"=>{start_game(vm);vec![]}
         "PostGame_GetStats"=>{

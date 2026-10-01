@@ -48,6 +48,15 @@ impl TbHost {
         Some(Attachment { world: m.to_cols_array(), local: Some(matrix::IDENTITY) })
     }
 
+    /// Whether the ball is inside `player`'s narrow hit window (the predicate UpdateReturn / UpdateAccelerate use).
+    pub fn in_swing_window(&self, rt: &Runtime, player: usize) -> bool {
+        let accelerate = rt.life.match_state.state_code == 29;
+        let row = if accelerate { 2 } else { 0 };
+        let dist = rt.life.current_distance.clamp(0, 2) as usize;
+        let t = &rt.state.hit.indicator_angles_360_36c_378_384;
+        crate::tetherball_hit_animation::is_ball_in_hit_range(&rt.life, &rt.state.reset, &rt.ball, player, t[row][dist], t[row + 1][dist])
+    }
+
     /// Conga callback entry (`RegularStrike`, `RegularStrikeReverse`, `OverhandStrike`, `ServeToss`).
     pub fn gesture(&mut self, rt: &mut Runtime, callback: GestureCallback, controller: i32) -> bool {
         rt.capture_gesture(callback, controller)
@@ -91,23 +100,7 @@ impl TbHost {
     }
 
     fn camera_step(&mut self, ms: i32) {
-        for target in [false, true] {
-            let c = &mut self.camera;
-            let (cur, slot) = if target { (&mut c.target_offset, &mut c.target_desired) } else { (&mut c.position_offset, &mut c.position_desired) };
-            if let Some((goal, left)) = *slot {
-                let step = ms.max(0) as u32;
-                if left <= step || left == 0 {
-                    *cur = goal;
-                    *slot = None;
-                } else {
-                    let k = step as f32 / left as f32;
-                    for i in 0..3 {
-                        cur[i] += (goal[i] - cur[i]) * k;
-                    }
-                    *slot = Some((goal, left - step));
-                }
-            }
-        }
+        self.eye_target = self.camera.update(ms);
     }
 
     fn geometry(&self, rt: &Runtime, p: usize) -> AiGeometry {

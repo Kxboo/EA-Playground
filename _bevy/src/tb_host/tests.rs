@@ -9,7 +9,7 @@ fn load_db() -> Option<Rc<Database>> {
 }
 
 /// Run the recovered startup and a complete match against the host with a bot standing in for the human.
-fn play(humans: usize, area: i32, rotations: i32, seconds: i32, verbose: bool) -> Option<(Runtime, TbHost, Vec<String>)> {
+fn play(humans: usize, area: i32, rotations: i32, seconds: i32, verbose: bool, window: f32) -> Option<(Runtime, TbHost, Vec<String>)> {
     let db = load_db()?;
     let assets = Rc::new(AnimAssets::load().ok()?);
     let mut cfg = Config::quick(humans);
@@ -59,8 +59,18 @@ fn play(humans: usize, area: i32, rotations: i32, seconds: i32, verbose: bool) -
         // Bot: serve toss, then strike; return the ball when it enters the swing window.
         if rt.life.players[0].controller.is_some() {
             match state {
-                27 if rt.life.server == 0 => gesture = Some(if rt.ball.tossed { GestureCallback::RegularStrike } else { GestureCallback::ServeToss }),
-                28 | 29 if rt.life.receiver == 0 => gesture = Some(GestureCallback::RegularStrike),
+                27 if rt.life.server == 0 => gesture = Some(GestureCallback::ServeToss),
+                28 | 29 => {
+                    let row = if state == 29 { 2 } else { 0 };
+                    let dist = rt.life.current_distance as usize;
+                    let t = &rt.state.hit.indicator_angles_360_36c_378_384;
+                    let narrow = crate::tetherball_hit_animation::is_ball_in_hit_range(&rt.life, &rt.state.reset, &rt.ball, 0, t[row][dist], t[row + 1][dist]);
+                    if verbose && tick % 3 == 0 { log.push(format!("{now:6} NARROW {narrow} ang {:.2} start {:?} tbl {:?} {:?} dist {dist} focus {} recv220 {} ctl {:?}", rt.ball.angle, rt.state.reset.start_angles_248, t[row][dist], t[row+1][dist], rt.life.focus_player, rt.state.reset.receiver_220, [rt.life.players[0].controller, rt.life.players[1].controller])); }
+                    if narrow {
+                        host.gesture(&mut rt, GestureCallback::RegularStrike, 0);
+                        gesture = Some(GestureCallback::RegularStrikeReverse)
+                    }
+                }
                 _ => {}
             }
         }
@@ -100,7 +110,7 @@ fn startup_builds_the_recovered_world() {
 
 #[test]
 fn a_full_match_runs_through_the_recovered_state_machine() {
-    let Some((rt, host, log)) = play(1, 0, 3, 600, std::env::var("TB_VERBOSE").is_ok()) else { return };
+    let Some((rt, host, log)) = play(1, 0, 3, 600, std::env::var("TB_VERBOSE").is_ok(), std::env::var("TB_WINDOW").ok().and_then(|v| v.parse().ok()).unwrap_or(0.5)) else { return };
     for l in &log {
         eprintln!("{l}");
     }

@@ -53,24 +53,19 @@ impl TbHost {
                 self.out.push(Out::PoleIndicator(m));
             }
             ResetEffect::GrabBall { character, .. } => self.grab = self.char_index(character),
-            ResetEffect::CameraPositionOffset { offset_bits, .. } => self.camera.position_offset = offset_bits.map(f32::from_bits),
-            ResetEffect::CameraDesiredPositionOffset { offset_bits, ms, .. } => {
-                self.camera.position_desired = Some((offset_bits.map(f32::from_bits), ms))
-            }
-            ResetEffect::CameraTargetOffset { offset_bits, .. } => self.camera.target_offset = offset_bits.map(f32::from_bits),
-            ResetEffect::CameraDesiredTargetOffset { offset_bits, ms, .. } => {
-                self.camera.target_desired = Some((offset_bits.map(f32::from_bits), ms))
-            }
-            ResetEffect::CameraBackwardsOffset { offset_bits, .. } => self.camera.backwards = f32::from_bits(offset_bits),
+            ResetEffect::CameraPositionOffset { offset_bits, .. } => self.camera.set_position_offset(offset_bits.map(f32::from_bits)),
+            ResetEffect::CameraDesiredPositionOffset { offset_bits, ms, .. } => self.camera.set_desired_position_offset(offset_bits.map(f32::from_bits), ms),
+            ResetEffect::CameraTargetOffset { offset_bits, .. } => self.camera.set_target_offset(offset_bits.map(f32::from_bits)),
+            ResetEffect::CameraDesiredTargetOffset { offset_bits, ms, .. } => self.camera.set_desired_target_offset(offset_bits.map(f32::from_bits), ms),
+            ResetEffect::CameraBackwardsOffset { offset_bits, .. } => self.camera.set_backwards(f32::from_bits(offset_bits)),
             ResetEffect::CameraDistance { distance_bits, target_height_bits, .. } => {
-                self.camera.distance = f32::from_bits(distance_bits);
-                self.camera.target_height = f32::from_bits(target_height_bits);
+                self.camera.set_scalars(f32::from_bits(distance_bits), f32::from_bits(target_height_bits))
             }
-            ResetEffect::CameraDesiredRotation { angle_bits, .. } => self.camera.rotation = f32::from_bits(angle_bits),
+            ResetEffect::CameraDesiredRotation { angle_bits, ms, .. } => self.camera.set_desired_rotation(f32::from_bits(angle_bits), ms),
             ResetEffect::CameraStartPosition { position_bits, .. } | ResetEffect::CameraTargetPosition { position_bits, .. } => {
-                self.camera.start = position_bits.map(f32::from_bits)
+                self.camera.set_start(position_bits.map(f32::from_bits))
             }
-            ResetEffect::CameraDirection { direction_bits, .. } => self.camera.direction = direction_bits.map(f32::from_bits),
+            ResetEffect::CameraDirection { direction_bits, .. } => self.camera.set_dir(direction_bits.map(f32::from_bits)),
             ResetEffect::CreateAiEntity { player, entity, .. } => {
                 if let Some(c) = self.chars.get_mut(player) {
                     c.ai_entity = entity;
@@ -106,19 +101,12 @@ impl TbHost {
         self.rng = rng;
     }
 
-    /// Camera eye / focus from the follow-camera scalars (provisional placement, original inputs).
+    /// Look-at point and eye of the follow camera as of the last frame.
     pub fn camera_focus(&self) -> [f32; 3] {
-        let c = &self.camera;
-        [c.start[0] + c.target_offset[0], c.start[1] + c.target_offset[1] + c.target_height, c.start[2] + c.target_offset[2]]
+        self.eye_target.1
     }
     pub fn eye(&self) -> [f32; 3] {
-        let c = &self.camera;
-        let d = c.direction;
-        [
-            c.start[0] - d[0] * c.backwards + c.position_offset[0],
-            c.start[1] + c.height + c.position_offset[1],
-            c.start[2] - d[2] * c.backwards + c.position_offset[2],
-        ]
+        self.eye_target.0
     }
 }
 
@@ -159,8 +147,11 @@ impl Services for TbHost {
     }
     fn switch_to_ai(&mut self, _player: usize) {}
     fn camera_offset(&mut self, target: bool, offset: [f32; 3], ms: u32) {
-        let slot = if target { &mut self.camera.target_desired } else { &mut self.camera.position_desired };
-        *slot = Some((offset, ms));
+        if target {
+            self.camera.set_desired_target_offset(offset, ms)
+        } else {
+            self.camera.set_desired_position_offset(offset, ms)
+        }
     }
     fn wrap_particle(&mut self, player: usize, position: [f32; 3], fade_ms: i32) {
         self.out.push(Out::WrapParticle { player, position, fade_ms });
@@ -464,24 +455,17 @@ impl StartupServices for TbHost {
     fn effect(&mut self, effect: Effect) {
         match effect {
             Effect::PlaceableVisible { handle, visible } => self.out.push(Out::PoleVisible { handle, visible }),
-            Effect::CameraOffset { target, desired_ms, value, .. } => match desired_ms {
-                None => {
-                    if target {
-                        self.camera.target_offset = value
-                    } else {
-                        self.camera.position_offset = value
-                    }
-                }
-                Some(ms) => {
-                    let slot = if target { &mut self.camera.target_desired } else { &mut self.camera.position_desired };
-                    *slot = Some((value, ms));
-                }
+            Effect::CameraOffset { target, desired_ms, value, .. } => match (target, desired_ms) {
+                (false, None) => self.camera.set_position_offset(value),
+                (true, None) => self.camera.set_target_offset(value),
+                (false, Some(ms)) => self.camera.set_desired_position_offset(value, ms),
+                (true, Some(ms)) => self.camera.set_desired_target_offset(value, ms),
             },
-            Effect::CameraBackwards { value, .. } => self.camera.backwards = value,
-            Effect::CameraScalars { height_39c, .. } => self.camera.height = height_39c,
-            Effect::CameraRotation { value, .. } => self.camera.rotation = value,
-            Effect::CameraStart { value, .. } => self.camera.start = value,
-            Effect::CameraDirection { value, .. } => self.camera.direction = value,
+            Effect::CameraBackwards { value, .. } => self.camera.set_backwards(value),
+            Effect::CameraScalars { height_39c, value_3a0, .. } => self.camera.set_scalars(height_39c, value_3a0),
+            Effect::CameraRotation { value, milliseconds, .. } => self.camera.set_desired_rotation(value, milliseconds),
+            Effect::CameraStart { value, .. } => self.camera.set_start(value),
+            Effect::CameraDirection { value, .. } => self.camera.set_dir(value),
             Effect::LoadAudio(id) => self.out.push(Out::LoadAudio(id)),
             Effect::PlayMusic(id) => self.out.push(Out::PlayMusic(id)),
             _ => {}

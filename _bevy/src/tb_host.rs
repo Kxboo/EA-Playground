@@ -36,8 +36,10 @@ use crate::{
 };
 use std::{collections::HashMap, rc::Rc};
 
+mod camera;
 mod frame;
 mod services;
+pub use camera::Camera;
 
 /// MGTetherball's object ids are engine pointers; the port hands out opaque handles in this range.
 const HANDLE_BASE: u32 = 0x7100_0000;
@@ -62,12 +64,25 @@ pub struct Config {
     pub female: [bool; 2],
     /// Mega ability per slot (`SetupMultiPlayerAbility` / `SetupSinglePlayerAbility`).
     pub mega: bool,
+    /// Signature celebration state (`ANIM_CELEB_<KID>`) per seat, -1 for none.
+    pub special: [i32; 2],
 }
 
 impl Config {
     pub fn quick(humans: usize) -> Self {
-        Config { area: 0, difficulty: 1, rotations: 6, rounds: 3, humans, single_player: humans == 1, female: [false; 2], mega: true }
+        Config { area: 0, difficulty: 1, rotations: 6, rounds: 3, humans, single_player: humans == 1, female: [false; 2], mega: true, special: [229, 229] }
     }
+}
+
+/// `ANIM_CELEB_<KID>` state for a roster asset (Alicia when unnamed), -1 for kids without one.
+pub fn celebration_state(asset: Option<&str>) -> i32 {
+    let name = asset.unwrap_or("alicia").to_lowercase();
+    for (i, k) in ["alicia", "jazz", "josun", "kalia", "ken", "nerdy", "skater", "timothy", "stickerkid"].iter().enumerate() {
+        if name.contains(k) {
+            return 229 + i as i32;
+        }
+    }
+    -1
 }
 
 /// Decoded animation data shared by both characters.
@@ -87,14 +102,20 @@ impl AnimAssets {
         let skeleton = crate::skeleton::Skeleton::parse(&crate::archive::read_virtual(&format!("{dir}/player_anims.viv::player_skel.ske"))?.0)?;
         let bank = crate::anim::Bank::parse(crate::archive::read_virtual(&format!("{dir}/player_anims.viv::player_anims.anm"))?.0)?;
         let mut lib = Library::default();
-        let wanted: Vec<usize> = [0usize, 1].into_iter().chain(56..=96).chain(225..=228).collect();
+        let wanted: Vec<usize> = [0usize, 1].into_iter().chain(56..=96).chain(225..=237).collect();
         for graph in [&male, &female] {
             for asset in graph.assets_of(wanted.iter().copied()) {
                 if lib.clips.contains_key(&asset) {
                     continue;
                 }
                 let name = format!("S_{asset}");
-                let index = bank.names.iter().position(|n| *n == name).ok_or_else(|| format!("clip {name} missing"))?;
+                let Some(index) = bank.names.iter().position(|n| *n == name) else {
+                    // Only the signature celebrations (229..) may be absent for a graph row; the tetherball states must exist.
+                    if graph.states.iter().flatten().any(|i| i.assets.contains(&asset)) && wanted.iter().any(|&w| w < 229 && graph.info(w).is_some_and(|i| i.assets.contains(&asset))) {
+                        return Err(format!("clip {name} missing"));
+                    }
+                    continue;
+                };
                 lib.clips.insert(asset, bank.decode(index, &skeleton)?);
             }
         }
@@ -154,20 +175,6 @@ pub enum Out {
     CharacterSpawned { index: usize, handle: u32 },
 }
 
-#[derive(Clone, Debug, Default)]
-pub struct Camera {
-    pub position_offset: [f32; 3],
-    pub target_offset: [f32; 3],
-    pub position_desired: Option<([f32; 3], u32)>,
-    pub target_desired: Option<([f32; 3], u32)>,
-    pub backwards: f32,
-    pub height: f32,
-    pub target_height: f32,
-    pub rotation: f32,
-    pub start: [f32; 3],
-    pub direction: [f32; 3],
-    pub distance: f32,
-}
 
 pub struct Char {
     pub handle: u32,
@@ -208,6 +215,7 @@ pub struct TbHost {
     pub chars: Vec<Char>,
     pub controllers: Vec<Controller>,
     pub camera: Camera,
+    pub eye_target: ([f32; 3], [f32; 3]),
     pub ball_resources: Option<crate::tetherball_ball_init::BallResources>,
     pub pole_height: f32,
     pub origin: [f32; 3],
@@ -265,6 +273,7 @@ impl TbHost {
             chars: vec![],
             controllers,
             camera: Camera::default(),
+            eye_target: ([0.; 3], [0.; 3]),
             ball_resources: None,
             pole_height: 2.0,
             origin: [0.; 3],
@@ -320,7 +329,7 @@ impl TbHost {
     pub fn new_runtime(&self) -> Runtime {
         let player = Player {
             controller: None,
-            special_win_animation: 0,
+            special_win_animation: -1,
             current_animation: 0,
             player_flag: false,
             facing: 0.,
@@ -351,7 +360,7 @@ impl TbHost {
             server: 0,
             receiver: 0,
             focus_player: 0,
-            players: [player.clone(), player],
+            players: [Player { special_win_animation: self.cfg.special[0], ..player.clone() }, Player { special_win_animation: self.cfg.special[1], ..player }],
             round_number: 0,
             total_rounds: 0,
             scoreboard_visible: false,

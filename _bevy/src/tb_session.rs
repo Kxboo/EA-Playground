@@ -355,6 +355,7 @@ fn step(
         if let Some(req) = vm.fe.pause_req.take() {
             use crate::fe_host::PauseReq;
             vm.fe.paused = false;
+            vm.fe.pause_words = None;
             vm.fe.todo.push(("CloseOverlay".into(), vec![]));
             match req {
                 PauseReq::Resume => {
@@ -372,6 +373,9 @@ fn step(
                     s.over = true;
                 }
             }
+        }
+        if std::mem::take(&mut vm.fe.script_pause) {
+            s.held_pause = 3;
         }
         if let Some(choice) = vm.fe.postgame_choice.take() {
             rt.state.frontend.postgame_choice_05c = choice;
@@ -392,8 +396,13 @@ fn step(
             held[i] |= 1 << 5;
         }
         if keys.just_pressed(k.swing) {
-            let cb = if state == 27 { GestureCallback::ServeToss } else { GestureCallback::RegularStrike };
-            host.gesture(rt, cb, i as i32);
+            if state == 27 {
+                host.gesture(rt, GestureCallback::ServeToss, i as i32);
+            } else {
+                // A Wiimote swing produces both strike gestures; each is accepted only for the player its controller belongs to.
+                host.gesture(rt, GestureCallback::RegularStrike, i as i32);
+                host.gesture(rt, GestureCallback::RegularStrikeReverse, i as i32);
+            }
         }
         if keys.just_pressed(k.reverse) {
             host.gesture(rt, GestureCallback::RegularStrikeReverse, i as i32);
@@ -416,8 +425,9 @@ fn step(
             27 if rt.life.server == 0 && tick % 2 == 0 => {
                 host.gesture(rt, if rt.ball.tossed { GestureCallback::RegularStrike } else { GestureCallback::ServeToss }, 0);
             }
-            28 | 29 if rt.life.receiver == 0 && tick % 2 == 0 => {
+            28 | 29 if host.in_swing_window(rt, 0) && tick % 2 == 0 => {
                 host.gesture(rt, GestureCallback::RegularStrike, 0);
+                host.gesture(rt, GestureCallback::RegularStrikeReverse, 0);
             }
             _ => {}
         }
@@ -503,6 +513,7 @@ fn step(
                     }
                     Hud::SetupHandlers(_) | Hud::ClearPregameHandlers | Hud::ClearPostgameHandlers | Hud::Clear => {}
                 },
+                Out::PauseInfo { words, .. } => vm.fe.pause_words = Some(words),
                 Out::Sound { .. } | Out::WiimoteSound { .. } => {}
                 Out::PlayMusic(_) | Out::LoadAudio(_) => {}
                 _ => {}
