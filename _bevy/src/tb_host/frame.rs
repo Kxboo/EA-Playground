@@ -259,10 +259,14 @@ impl TbHost {
         let mut rng = self.rng;
         for c in &mut self.chars {
             let graph = if c.female { &assets.female } else { &assets.male };
-            c.animator.step(graph, &assets.lib, &assets.bind, dt, |lo, hi| {
+            let events = c.animator.step(graph, &assets.lib, &assets.bind, dt, |lo, hi| {
                 let span = (hi - lo + 1).max(1) as u64;
                 lo + (xorshift(&mut rng) % span) as i32
             });
+            for e in events {
+                // `PlayerCharacterAnimationEventHandler::HandleEvent` (0x802eb730): CHAR_FOOTSTEP and SFX_ANIM.
+                self.out.push(Out::AnimEvent { female: c.female, state: e.state as i32, name: e.name });
+            }
         }
         self.rng = rng;
     }

@@ -119,6 +119,11 @@ pub fn hud(id: i32) -> Option<(&'static str, &'static str, usize)> {
     }
 }
 
+/// `CHAR_FOOTSTEP` plays `AUDIOAEMSBESFX` (surface - 1) = `WSFX_Footsteps(surface - 1)` where the surface comes from
+/// `Character::UpdateWalkSurfaceType` (ground type 11..15 -> 1..5 from a Havok ray cast; other types are silent).  The
+/// collision materials are not loaded here, so the first surface is used (provisional).
+pub const FOOTSTEP_SURFACE: usize = 0;
+
 /// `AuCharacterSoundObject::Play(int, int)` (0x802e498c), reached through `Audio::PlayAnimSFX` when a character starts an
 /// animation: a switch over the animation state number that instantiates a character-sound Csis class.  Only the
 /// minigame (`MGSFX_*`) classes are mapped; the `WSFX_*` ones belong to the open world.  Returns (bank, class, table index);
@@ -209,6 +214,17 @@ mod anim_tests {
                     assert!(i < b.class(class).unwrap().len(), "state {state} {class} {i}");
                 }
             }
+        }
+    }
+
+    #[test]
+    #[ignore]
+    fn dump_footsteps() {
+        let b = bank("footsteps.abk").unwrap();
+        let mut n: Vec<_> = b.classes.iter().collect();
+        n.sort_by_key(|x| x.0.clone());
+        for (k, v) in n {
+            println!("FS {k}: {v:?}");
         }
     }
 }

@@ -195,3 +195,20 @@ fn dump_serve_pose() {
     }
     std::fs::write(crate::bridge::root().join("scratch/serve_pose.txt"), out).unwrap();
 }
+
+#[test]
+#[ignore]
+fn dump_anim_events() {
+    let Ok(a) = AnimAssets::load() else { return };
+    let mut out = String::new();
+    for (name, g) in [("male", &a.male), ("female", &a.female)] {
+        for s in 0..260 {
+            if let Some(i) = g.info(s) {
+                if !i.events.is_empty() {
+                    out += &format!("{name} {s}: {:?}\n", i.events);
+                }
+            }
+        }
+    }
+    std::fs::write(crate::bridge::root().join("scratch/anim_events.txt"), out).unwrap();
+}

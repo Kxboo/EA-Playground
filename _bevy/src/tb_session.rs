@@ -549,11 +549,15 @@ fn step(
                 Out::PauseInfo { words, .. } => vm.fe.pause_words = Some(words),
                 Out::Sound { frontend, id, volume, .. } => play_sound(frontend, id, volume, &mut s.sound_rng),
                 Out::WiimoteSound { .. } => {}
-                Out::AnimSfx { female, state } => {
-                    if let Some((file, class, i)) = crate::sfx::anim(state, female) {
-                        crate::sfx::play(file, class, i, 1.);
+                Out::AnimEvent { female, state, name } => match name.as_str() {
+                    "SFX_ANIM" => {
+                        if let Some((file, class, i)) = crate::sfx::anim(state, female) {
+                            crate::sfx::play(file, class, i, 1.);
+                        }
                     }
-                }
+                    "CHAR_FOOTSTEP" => crate::sfx::play("footsteps.abk", "WSFX_Footsteps", crate::sfx::FOOTSTEP_SURFACE, 1.),
+                    _ => {}
+                },
                 Out::PlayMusic(_) | Out::LoadAudio(_) => {}
                 _ => {}
             }
