@@ -42,6 +42,8 @@ mod tetherball_ball_init;
 mod tetherball_startup;
 mod tetherball_shadow_setup;
 mod tetherball_play;
+mod tb_anim;
+mod tb_host;
 mod apt;
 mod apt_player;
 mod apt_view;
