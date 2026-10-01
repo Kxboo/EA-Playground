@@ -245,6 +245,7 @@ impl ServeServices for TbHost {
     }
     fn camera_shake(&mut self, milliseconds: i32, strength: f32) {
         self.shake_ms = milliseconds;
+        self.shake = (milliseconds.max(1), strength);
         self.out.push(Out::CameraShake { ms: milliseconds, strength });
     }
     fn rumble(&mut self, controller: i32, milliseconds: u32, strength: f32) {

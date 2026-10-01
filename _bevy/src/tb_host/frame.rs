@@ -44,6 +44,24 @@ impl TbHost {
         Some(Attachment { world: m.to_cols_array(), local: Some(matrix::IDENTITY) })
     }
 
+    /// Eye jitter of a running camera shake (provisional amplitude: strength metres, decaying linearly).
+    pub fn shake_offset(&mut self) -> [f32; 3] {
+        if self.shake_ms <= 0 {
+            return [0.; 3];
+        }
+        let k = self.shake_ms as f32 / self.shake.0 as f32 * self.shake.1;
+        let mut r = |s: &mut u64| {
+            *s ^= *s << 13;
+            *s ^= *s >> 7;
+            *s ^= *s << 17;
+            ((*s >> 40) as f32 / (1u64 << 24) as f32) * 2. - 1.
+        };
+        let mut rng = self.rng;
+        let o = [r(&mut rng) * k, r(&mut rng) * k, r(&mut rng) * k];
+        self.rng = rng;
+        o
+    }
+
     /// Whether the ball is inside `player`'s narrow hit window (the predicate UpdateReturn / UpdateAccelerate use).
     pub fn in_swing_window(&self, rt: &Runtime, player: usize) -> bool {
         let accelerate = rt.life.match_state.state_code == 29;
@@ -111,6 +129,9 @@ impl TbHost {
 
     fn camera_step(&mut self, ms: i32) {
         self.eye_target = self.camera.update(ms);
+        if self.shake_ms > 0 {
+            self.shake_ms -= ms;
+        }
     }
 
     fn geometry(&self, rt: &Runtime, p: usize) -> AiGeometry {
@@ -133,7 +154,8 @@ impl TbHost {
         }
     }
 
-    /// Provisional AIEntity update: pick a compulsion by priority, let it think, retire it when it expires.
+    /// `AIEntity::Think(ms, depth 2)` (0x802cc6b0): drop an expired compulsion, evaluate a replacement against the current
+    /// priority (`CalculateCurrentPriority` 0x802cc93c; these compulsions are interruptible), activate it, then think.
     fn ai_step(&mut self, rt: &mut Runtime, ms: i32) -> Result<(), String> {
         let tuning = match self.hit_tuning {
             Some(t) => t,
@@ -145,15 +167,32 @@ impl TbHost {
         };
         for p in 0..self.chars.len().min(2) {
             let Some(ai) = rt.state.ai[p].clone() else { continue };
+            let inputs = self.move_inputs(rt, p);
+            // 1. HasExpired -> SetCompulsion(null)
+            let expired = match &self.active[p] {
+                Some(Active::Move(m)) => ai.move_has_expired(m, &rt.life, &inputs, true),
+                Some(Active::Hit(h)) => h.has_expired(&rt.ball),
+                None => false,
+            };
+            if expired {
+                match self.active[p].take() {
+                    Some(Active::Move(mut m)) => m.deactivate(),
+                    Some(Active::Hit(mut h)) => h.deactivate(),
+                    None => {}
+                }
+                self.chars[p].target = None;
+            }
+            // 2-3. EvaluateCompulsions(priority) -> SetCompulsion(new) -> Activate
             let priority = match &self.active[p] {
                 Some(Active::Move(m)) => m.priority_009,
                 Some(Active::Hit(h)) => h.priority,
                 None => 0,
             };
             let geometry = self.geometry(rt, p);
-            if let Some(new) =
-                ai.evaluate(Some(&rt.life), priority, &geometry, &rt.ball, &rt.state.serve, &rt.state.rally)
-            {
+            if let Some(new) = ai.evaluate(Some(&rt.life), priority, &geometry, &rt.ball, &rt.state.serve, &rt.state.rally) {
+                if let Some(Active::Move(mut m)) = self.active[p].take() {
+                    m.deactivate();
+                }
                 match new {
                     Compulsion::Move(mut m) => {
                         m.activate();
@@ -165,28 +204,17 @@ impl TbHost {
                     }
                 }
             }
-            let inputs = self.move_inputs(rt, p);
+            // 4. Compulsion::Think(ms): a true result publishes the movement request (+0x1c) for the character.
             match self.active[p].take() {
                 Some(Active::Move(mut m)) => {
-                    if ai.move_has_expired(&m, &rt.life, &inputs, true) {
-                        m.deactivate();
-                        self.chars[p].target = None;
-                    } else {
-                        if m.think(ms, &inputs) {
-                            self.chars[p].target = m.target_position_020;
-                        } else if let Some(t) = m.target_position_020 {
-                            self.chars[p].target = Some(t);
-                        }
-                        self.active[p] = Some(Active::Move(m));
+                    if m.think(ms, &inputs) {
+                        self.chars[p].target = m.target_position_020;
                     }
+                    self.active[p] = Some(Active::Move(m));
                 }
                 Some(Active::Hit(mut h)) => {
-                    if h.has_expired(&rt.ball) {
-                        h.deactivate();
-                    } else {
-                        h.think(&rt.ball, ms, &mut rt.state.rally, self);
-                        self.active[p] = Some(Active::Hit(h));
-                    }
+                    h.think(&rt.ball, ms, &mut rt.state.rally, self);
+                    self.active[p] = Some(Active::Hit(h));
                 }
                 None => {}
             }

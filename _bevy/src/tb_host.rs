@@ -232,6 +232,8 @@ pub struct TbHost {
     pub fade_pending: bool,
     pub paused_audio: bool,
     pub shake_ms: i32,
+    /// (total ms, strength) of the running camera shake; `shake_ms` counts down.
+    pub shake: (i32, f32),
     pub grab: Option<usize>,
     pub generation: u32,
     /// `Lifecycle::players[i].direction` as last applied to the character (the lifecycle turns winners at round end).
@@ -292,6 +294,7 @@ impl TbHost {
             fade_pending: false,
             paused_audio: false,
             shake_ms: 0,
+            shake: (1, 0.),
             grab: None,
             generation: 0,
             applied_dir: [[0., 0., 1.]; 2],

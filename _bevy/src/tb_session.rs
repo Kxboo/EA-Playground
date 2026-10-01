@@ -481,7 +481,8 @@ fn step(
         }
     }
     if let Some(bd) = backdrop.as_mut() {
-        bd.set_now(Vec3::from(host.eye()), Vec3::from(host.camera_focus()));
+        let shake = Vec3::from(host.shake_offset());
+        bd.set_now(Vec3::from(host.eye()) + shake, Vec3::from(host.camera_focus()));
     }
 
     if std::env::var("EAGL_TB_DEBUG").is_ok() && (s.t * 4.) as i32 != ((s.t - step.seconds()) * 4.) as i32 {
