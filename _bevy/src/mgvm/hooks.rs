@@ -109,15 +109,28 @@ pub fn install_stubs(vm: &mut V) {
 
 /// `AssetManager::ResolveModel(data, size, DynamicLoader** loader, Model** models, int* count)`: the renderer is not
 /// emulated, so a model is an opaque placeholder object.
-fn resolve_model(_h: &mut MgHost, vm: &mut V) -> R {
+fn resolve_model(h: &mut MgHost, vm: &mut V) -> R {
     let (loader, models, count) = (vm.a(3), vm.a(4), vm.a(5));
-    let dummy = vm.alloc_zeroed(0x200, 32);
     // the asset slot's name sits at +0xc of the 0xb8-byte entry that `models` (+0x90) points into
     let name = vm.st.mem.cstr(models - 0x90 + 0xc, 64);
-    _h.model_names.insert(dummy, name);
+    // RcCars' car files hold one model per paint job
+    let n: u32 = if name.starts_with("rc_") { 6 } else { 1 };
+    for k in 0..n {
+        let dummy = vm.alloc_zeroed(0x200, 32);
+        // +0x44 -> geometry record whose bounding box (+0x6c min, +0x7c max) some games read when drawing
+        let geo = vm.alloc_zeroed(0x100, 32);
+        vm.w32(dummy + 0x44, geo);
+        vm.w32(dummy + 8, n); // number of sub-models the game loops over
+        for (i, v) in [-0.5f32, 0., -1., 0.5, 0.5, 1.].iter().enumerate() {
+            let o = if i < 3 { 0x6c + 4 * i as u32 } else { 0x7c + 4 * (i as u32 - 3) };
+            vm.st.mem.wf32(geo + o, *v);
+            vm.st.mem.wf32(dummy + o, *v);
+        }
+        h.model_names.insert(dummy, name.clone());
+        vm.w32(models + 4 * k, dummy);
+    }
     vm.w32(loader, 0);
-    vm.w32(models, dummy);
-    vm.w32(count, 1);
+    vm.w32(count, n);
     Ok(())
 }
 
@@ -264,7 +277,54 @@ fn dbg_move(h: &mut MgHost, vm: &mut V) -> R {
     Ok(())
 }
 
+fn dbg_getcoll(_h: &mut MgHost, vm: &mut V) -> R {
+    let n = vm.st.mem.cstr(vm.a(1), 100);
+    eprintln!("GetCollection {n} key {:x}{:08x}", vm.a(2), vm.a(3));
+    Ok(())
+}
+fn dbg_getstring(_h: &mut MgHost, vm: &mut V) -> R {
+    let n = vm.st.mem.cstr(vm.a(1), 100);
+    eprintln!("GetString this={:x} {n}", vm.a(0));
+    Ok(())
+}
+
+fn dbg_rccar(_h: &mut MgHost, vm: &mut V) -> R {
+    let this = vm.a(0);
+    let (t, v) = (vm.r32(this + 0x434), vm.r32(this + 0x438));
+    let e = 0x805e3380 + t * 0x34;
+    let ent: Vec<u32> = (0..13).map(|i| vm.r32(e + 4 * i)).collect();
+    eprintln!("RcCar::Render type {t} variant {v} entry {ent:x?}");
+    Ok(())
+}
+
+/// RcCars drives its chase camera through `SetBase`/`SetViewMatrix` instead of `SetPos`.
+fn camera_set_base(h: &mut MgHost, vm: &mut V) -> R {
+    if h.minigame_type == 1 {
+        let v = |vm: &mut V, i: usize| {
+            let p = vm.a(i);
+            [vm.st.mem.rf32(p), vm.st.mem.rf32(p + 4), vm.st.mem.rf32(p + 8)]
+        };
+        let a = [v(vm, 1), v(vm, 2), v(vm, 3)];
+        if std::env::var("EAGL_DBG_CAM").is_ok() {
+            eprintln!("SetBase {:x} {:?}", vm.a(0), a);
+        }
+        if a[0] != [0.; 3] {
+            h.camera = vm.a(0);
+            h.view = Some(a);
+        }
+    }
+    Ok(())
+}
+
 pub fn drawing(vm: &mut V) {
+    vm.observe("SetBase__6CameraFRC9rmVector3RC9rmVector3RC9rmVector3R9rmVector3R9rmVector3R9rmVector3", camera_set_base);
+    if std::env::var("EAGL_DBG_RC").is_ok() {
+        vm.observe("Render__5RcCarFRQ23Ren12SceneContext", dbg_rccar);
+    }
+    if std::env::var("EAGL_DBG_STR").is_ok() {
+        vm.observe("GetString__14pgDBCollectionFPCc", dbg_getstring);
+        vm.observe("GetCollection__11pgIDatabaseFPCcUx", dbg_getcoll);
+    }
     if std::env::var("EAGL_DBG_MOVE").is_ok() {
         vm.observe("AddMoveInputEvent__18DodgeballCharacterFPC9rmVector3f", dbg_move);
     }

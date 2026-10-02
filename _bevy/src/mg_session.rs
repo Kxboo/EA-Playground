@@ -288,6 +288,12 @@ fn gesture_for(keys: &ButtonInput<KeyCode>) -> Option<Vec<[i16; 3]>> {
         Some(cat(pulse(1, 450, 3), pulse(0, -450, 3))) // wind up, swing left (regular strike)
     } else if j(KeyCode::KeyL) {
         Some(cat(pulse(1, 450, 3), pulse(0, 450, 3))) // wind up, swing right (reverse strike)
+    } else if j(KeyCode::KeyB) {
+        Some(cat(pulse(1, -450, 3), pulse(1, 450, 3))) // paper plane boost
+    } else if j(KeyCode::KeyI) {
+        Some(pulse(0, 450, 3)) // football shot
+    } else if j(KeyCode::KeyO) {
+        Some(pulse(2, 450, 3)) // juggle
     } else if j(KeyCode::KeyQ) {
         Some(cat(pulse(0, 450, 3), pulse(0, -450, 3))) // dodge left
     } else if j(KeyCode::KeyE) {
@@ -337,7 +343,13 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
         s.gesture = g.into();
     }
     let rest = [512i16, 512, 616];
-    let d = s.gesture.pop_front().unwrap_or([0; 3]);
+    let mut d = s.gesture.pop_front().unwrap_or([0; 3]);
+    if s.ty == 1 {
+        // RcCars steers by tilting the remote
+        let left = keys.pressed(KeyCode::ArrowLeft) || keys.pressed(KeyCode::KeyA);
+        let right = keys.pressed(KeyCode::ArrowRight) || keys.pressed(KeyCode::KeyD);
+        d[0] += if left { -150 } else if right { 150 } else { 0 };
+    }
     host.pads[0].acc = [rest[0] + d[0], rest[1] + d[1], rest[2] + d[2]];
     if let Err(e) = mgvm::frame(vm, host, ms) {
         eprintln!("[mg] frame failed: {e}");

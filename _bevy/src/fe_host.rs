@@ -430,5 +430,5 @@ pub fn _unused(_:&V){}
 
 /// Minigames the original code runs for (`mg_session`); tetherball stays on the hand port with `EAGL_TB_HAND=1`.
 pub fn vm_game(n: i32) -> bool {
-    matches!(n, 0 | 3 | 4 | 5 | 6) || (n == 2 && std::env::var("EAGL_TB_HAND").is_err())
+    matches!(n, 0 | 1 | 3 | 4 | 5 | 6 | 8) || (n == 2 && std::env::var("EAGL_TB_HAND").is_err())
 }

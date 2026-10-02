@@ -121,6 +121,17 @@ pub fn draw_minigame(vm: &mut MgVm, host: &mut MgHost, ty: i32) -> Result<(), St
         return Ok(());
     }
     let name = format!("Draw__{}{}FRQ23Ren12SceneContext", class.len(), class);
-    let ctx = vm.alloc_zeroed(0x100, 16);
+    if host.scene_ctx == 0 {
+        // views list (+0, with a frustum at +0x18 and a count at +0x2e8) the games cull against; the view index at +0x10 is -1 (all)
+        let ctx = vm.alloc_zeroed(0x100, 16);
+        let views = vm.alloc_zeroed(0x300, 16);
+        let frustum = vm.alloc_zeroed(0x80, 16);
+        vm.w32(views + 0x18, frustum);
+        vm.w32(views + 0x2e8, 1);
+        vm.w32(ctx, views);
+        vm.w32(ctx + 0x10, u32::MAX);
+        host.scene_ctx = ctx;
+    }
+    let ctx = host.scene_ctx;
     vm.call_by_name(host, &name, &[mg, ctx], &[]).map(|_| ())
 }

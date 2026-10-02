@@ -66,5 +66,17 @@ pub fn snapshot(vm: &mut MgVm, host: &mut MgHost) -> Snapshot {
         let v = |vm: &mut MgVm, o: u32| [vm.st.mem.rf32(c + o), vm.st.mem.rf32(c + o + 4), vm.st.mem.rf32(c + o + 8)];
         out.camera = Some((v(vm, 0x10), v(vm, 0x20), v(vm, 0x30)));
     }
+    if host.minigame_type == 1 {
+        // RcCars: follow the first car's body (the player's) from behind; its local +X is forward
+        if let Some((_, m)) = out.draws.iter().find(|(n, _)| n.contains("body") || n.starts_with("model@")) {
+            let f = [m[0], 0., m[2]];
+            let l = (f[0] * f[0] + f[2] * f[2]).sqrt().max(1e-4);
+            let f = [f[0] / l, 0., f[2] / l];
+            let p = [m[12], m[13], m[14]];
+            let eye = [p[0] - f[0] * 3.2, p[1] + 1.5, p[2] - f[2] * 3.2];
+            let tgt = [p[0] + f[0] * 4., p[1] + 0.3, p[2] + f[2] * 4.];
+            out.camera = Some((eye, tgt, [0., 1., 0.]));
+        }
+    }
     out
 }

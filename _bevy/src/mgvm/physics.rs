@@ -83,6 +83,43 @@ pub struct CharBody {
     pub user_data: u32,
 }
 
+/// A `PhysicsVehicle`: RcCars computes the driving model itself (SetVel/SetDir every frame), so this only integrates,
+/// keeps the car on the ground and answers pose queries.
+#[derive(Clone, Debug)]
+pub struct Vehicle {
+    pub pos: [f32; 3],
+    pub vel: [f32; 3],
+    /// Forward axis (the car's local +X).
+    pub dir: [f32; 3],
+    pub angvel: [f32; 3],
+    pub fixed: bool,
+    pub grounded: bool,
+}
+
+pub const WHEEL_OFFSETS: [[f32; 3]; 4] = [[0.22, -0.06, 0.13], [0.22, -0.06, -0.13], [-0.22, -0.06, 0.13], [-0.22, -0.06, -0.13]];
+pub const VEHICLE_REST: f32 = 0.12;
+
+impl Vehicle {
+    /// Body matrix: rows are forward, up, side axes (engine row-vector convention).
+    pub fn mat(&self) -> Mat {
+        let d = self.dir;
+        let l = (d[0] * d[0] + d[1] * d[1] + d[2] * d[2]).sqrt().max(1e-6);
+        let x = [d[0] / l, d[1] / l, d[2] / l];
+        let mut y = [0., 1., 0.];
+        // keep the up vector perpendicular to forward
+        let dot = x[1];
+        y = [y[0] - x[0] * dot, y[1] - x[1] * dot, y[2] - x[2] * dot];
+        let yl = (y[0] * y[0] + y[1] * y[1] + y[2] * y[2]).sqrt().max(1e-6);
+        y = [y[0] / yl, y[1] / yl, y[2] / yl];
+        let z = [x[1] * y[2] - x[2] * y[1], x[2] * y[0] - x[0] * y[2], x[0] * y[1] - x[1] * y[0]];
+        [x[0], x[1], x[2], 0., y[0], y[1], y[2], 0., z[0], z[1], z[2], 0., self.pos[0], self.pos[1], self.pos[2], 1.]
+    }
+    pub fn wheel_pos(&self, i: usize) -> [f32; 3] {
+        let m = self.mat();
+        apply(&m, WHEEL_OFFSETS[i % 4])
+    }
+}
+
 /// A contact that began (or ended) this step, for the guest listeners.
 #[derive(Clone, Debug)]
 pub struct Contact {
@@ -101,6 +138,7 @@ pub struct Physics {
     system_bodies: Vec<Vec<RigidBodyHandle>>,
     pub bodies: HashMap<u32, DynBody>,
     pub chars: HashMap<u32, CharBody>,
+    pub vehicles: HashMap<u32, Vehicle>,
     by_handle: HashMap<RigidBodyHandle, u32>,
     prev_pairs: std::collections::HashSet<(u32, u32)>,
     pub log: Vec<String>,
@@ -143,6 +181,7 @@ impl Physics {
             system_bodies: vec![],
             bodies: HashMap::new(),
             chars: HashMap::new(),
+            vehicles: HashMap::new(),
             by_handle: HashMap::new(),
             prev_pairs: Default::default(),
             log: vec![],
@@ -331,7 +370,7 @@ impl Physics {
     }
 
     /// Move a character's capsule-ish probe horizontally by `delta`, sliding along static obstacles.
-    fn slide(&self, pos: [f32; 3], delta: [f32; 2]) -> [f32; 3] {
+    pub fn slide(&self, pos: [f32; 3], delta: [f32; 2]) -> [f32; 3] {
         use rapier3d::parry::shape::Ball;
         let ball = Ball::new(0.28);
         let mut p = Vector::new(pos[0], pos[1] + 0.62, pos[2]);
@@ -365,6 +404,44 @@ impl Physics {
             }
         }
         [p.x, pos[1], p.z]
+    }
+
+    // --- vehicles -----------------------------------------------------------------------------------------------------
+
+    pub fn add_vehicle(&mut self, guest: u32, pos: [f32; 3]) {
+        self.vehicles.insert(guest, Vehicle { pos, vel: [0.; 3], dir: [1., 0., 0.], angvel: [0.; 3], fixed: false, grounded: false });
+    }
+
+    pub fn step_vehicles(&mut self, guest: u32, ms: i32) {
+        let dt = (ms.max(0) as f32 / 1000.).min(0.1);
+        let Some(mut v) = self.vehicles.get(&guest).cloned() else { return };
+        if !v.fixed && dt > 0. {
+            // yaw by the angular velocity
+            let a = v.angvel[1] * dt;
+            if a != 0. {
+                let (s, c) = a.sin_cos();
+                v.dir = [v.dir[0] * c + v.dir[2] * s, v.dir[1], -v.dir[0] * s + v.dir[2] * c];
+            }
+            let delta = [v.vel[0] * dt, v.vel[2] * dt];
+            let p = self.slide([v.pos[0], v.pos[1] - VEHICLE_REST, v.pos[2]], delta);
+            v.pos = [p[0], v.pos[1], p[2]];
+            v.pos[1] += v.vel[1] * dt;
+            let ground = self.ground_height(v.pos, 0.5, 400.0).map(|g| g + VEHICLE_REST);
+            match ground {
+                Some(g) if v.pos[1] <= g + 0.02 => {
+                    v.pos[1] = g;
+                    v.grounded = true;
+                    if v.vel[1] < 0. {
+                        v.vel[1] = 0.;
+                    }
+                }
+                _ => {
+                    v.grounded = false;
+                    v.vel[1] += self.gravity[1] * dt;
+                }
+            }
+        }
+        self.vehicles.insert(guest, v);
     }
 
     // --- stepping -----------------------------------------------------------------------------------------------------

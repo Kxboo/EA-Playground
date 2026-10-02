@@ -196,6 +196,157 @@ fn rb_listener_ct(h: &mut MgHost, vm: &mut V) -> R {
     Ok(())
 }
 
+// --- vehicles ---------------------------------------------------------------------------------------------------------
+
+/// `PhysicsManager::GenerateVehicle(this, int, rmVector3 pos, PhysicsVehicleInfo*, void* user)`
+fn generate_vehicle(h: &mut MgHost, vm: &mut V) -> R {
+    let pos = read_v3(vm, vm.a(2));
+    let obj = vm.alloc_zeroed(0x100, 16);
+    h.phys.add_vehicle(obj, pos);
+    // RcCar pokes the chassis through the Havok vehicle instance (+4): give it a motion whose virtual methods do nothing
+    let inst = vm.alloc_zeroed(0x400, 16);
+    let vt = vm.alloc_zeroed(0x200, 16);
+    let blr = vm.img.addr("CleanupGouraud__FPQ24EAGL7GeoPrim").unwrap_or(0);
+    for i in 0..0x80 {
+        vm.w32(vt + 4 * i, blr);
+    }
+    vm.w32(inst + 0xa0, vt);
+    vm.st.mem.wf32(inst + 0xdc, 1.0);
+    vm.w32(obj + 4, inst);
+    vm.ret(obj);
+    Ok(())
+}
+fn veh<T>(h: &MgHost, g: u32, f: impl Fn(&super::physics::Vehicle) -> T, d: T) -> T {
+    h.phys.vehicles.get(&g).map(f).unwrap_or(d)
+}
+fn veh_get_pos(h: &mut MgHost, vm: &mut V) -> R {
+    let v = veh(h, vm.a(1), |v| v.pos, [0.; 3]);
+    write_v3(vm, vm.a(0), v);
+    Ok(())
+}
+fn veh_get_vel(h: &mut MgHost, vm: &mut V) -> R {
+    let v = veh(h, vm.a(1), |v| v.vel, [0.; 3]);
+    write_v3(vm, vm.a(0), v);
+    Ok(())
+}
+fn veh_get_dir(h: &mut MgHost, vm: &mut V) -> R {
+    let v = veh(h, vm.a(1), |v| {
+        let d = v.dir;
+        let l = (d[0] * d[0] + d[1] * d[1] + d[2] * d[2]).sqrt().max(1e-6);
+        [d[0] / l, d[1] / l, d[2] / l]
+    }, [1., 0., 0.]);
+    write_v3(vm, vm.a(0), v);
+    Ok(())
+}
+/// `GetRot(this)`: the heading as an `rmAngle` (returned in r3).
+fn veh_get_rot(h: &mut MgHost, vm: &mut V) -> R {
+    let a = veh(h, vm.a(0), |v| v.dir[0].atan2(v.dir[2]), 0.);
+    vm.ret(a.to_bits());
+    Ok(())
+}
+fn veh_get_speed(h: &mut MgHost, vm: &mut V) -> R {
+    let s = veh(h, vm.a(0), |v| (v.vel[0] * v.vel[0] + v.vel[1] * v.vel[1] + v.vel[2] * v.vel[2]).sqrt(), 0.);
+    vm.fret(s);
+    Ok(())
+}
+fn veh_get_body_mat(h: &mut MgHost, vm: &mut V) -> R {
+    let m = veh(h, vm.a(1), |v| v.mat(), super::physics::mat_identity());
+    write_mat(vm, vm.a(0), &m);
+    Ok(())
+}
+fn veh_get_wheel_pos(h: &mut MgHost, vm: &mut V) -> R {
+    let i = vm.a(2) as usize;
+    let p = veh(h, vm.a(1), |v| v.wheel_pos(i), [0.; 3]);
+    write_v3(vm, vm.a(0), p);
+    Ok(())
+}
+fn veh_get_wheel_mat(h: &mut MgHost, vm: &mut V) -> R {
+    let i = vm.a(2) as usize;
+    let mut m = veh(h, vm.a(1), |v| v.mat(), super::physics::mat_identity());
+    let p = veh(h, vm.a(1), |v| v.wheel_pos(i), [0.; 3]);
+    m[12] = p[0];
+    m[13] = p[1];
+    m[14] = p[2];
+    write_mat(vm, vm.a(0), &m);
+    Ok(())
+}
+fn veh_set_pos(h: &mut MgHost, vm: &mut V) -> R {
+    let p = read_v3(vm, vm.a(1));
+    if let Some(v) = h.phys.vehicles.get_mut(&vm.a(0)) {
+        v.pos = p;
+    }
+    Ok(())
+}
+fn veh_set_vel(h: &mut MgHost, vm: &mut V) -> R {
+    let p = read_v3(vm, vm.a(1));
+    if let Some(v) = h.phys.vehicles.get_mut(&vm.a(0)) {
+        v.vel = p;
+    }
+    Ok(())
+}
+fn veh_set_dir(h: &mut MgHost, vm: &mut V) -> R {
+    let p = read_v3(vm, vm.a(1));
+    if let Some(v) = h.phys.vehicles.get_mut(&vm.a(0)) {
+        v.dir = p;
+    }
+    Ok(())
+}
+fn veh_set_angvel(h: &mut MgHost, vm: &mut V) -> R {
+    let p = read_v3(vm, vm.a(1));
+    if let Some(v) = h.phys.vehicles.get_mut(&vm.a(0)) {
+        v.angvel = p;
+    }
+    Ok(())
+}
+fn veh_set_body_mat(h: &mut MgHost, vm: &mut V) -> R {
+    let m = read_mat(vm, vm.a(1));
+    if let Some(v) = h.phys.vehicles.get_mut(&vm.a(0)) {
+        v.dir = [m[0], m[1], m[2]];
+        v.pos = [m[12], m[13], m[14]];
+    }
+    Ok(())
+}
+fn veh_reset(h: &mut MgHost, vm: &mut V) -> R {
+    if let Some(v) = h.phys.vehicles.get_mut(&vm.a(0)) {
+        v.vel = [0.; 3];
+        v.angvel = [0.; 3];
+    }
+    Ok(())
+}
+fn veh_fixed(h: &mut MgHost, vm: &mut V) -> R {
+    let f = vm.a(1) & 0xff != 0;
+    if let Some(v) = h.phys.vehicles.get_mut(&vm.a(0)) {
+        v.fixed = f;
+    }
+    Ok(())
+}
+fn veh_update(h: &mut MgHost, vm: &mut V) -> R {
+    h.phys.step_vehicles(vm.a(0), vm.a(1) as i32);
+    Ok(())
+}
+fn veh_uninit(h: &mut MgHost, vm: &mut V) -> R {
+    h.phys.vehicles.remove(&vm.a(0));
+    Ok(())
+}
+/// `EAGL::Model::GetGeometry(this, name)`: the game only flips flags in the returned record.
+fn model_geometry(_h: &mut MgHost, vm: &mut V) -> R {
+    let g = vm.alloc_zeroed(0x80, 16);
+    vm.ret(g);
+    Ok(())
+}
+
+fn in_view(_h: &mut MgHost, vm: &mut V) -> R {
+    vm.ret(1);
+    Ok(())
+}
+fn get_partfx(h: &mut MgHost, vm: &mut V) -> R {
+    if h.dummy_partfx == 0 {
+        h.dummy_partfx = vm.alloc_zeroed(0x400, 16);
+    }
+    vm.ret(h.dummy_partfx);
+    Ok(())
+}
+
 // --- characters -------------------------------------------------------------------------------------------------------
 
 /// `PhysicsDynamicCharacter(this, Character*, const rmVector3* pos, PhysicsManager*)`
@@ -361,6 +512,29 @@ pub fn install(vm: &mut V) {
     bind(vm, &["GetMass__16PhysicsRigidBodyFv"], get_mass);
     bind(vm, &["SetUserData__16PhysicsRigidBodyFPC15PhysicsUserData"], set_user_data);
     bind(vm, &["__ct__24PhysicsRigidBodyListenerFP16PhysicsRigidBody"], rb_listener_ct);
+    bind(vm, &["GenerateVehicle__14PhysicsManagerFi9rmVector3P18PhysicsVehicleInfoPv"], generate_vehicle);
+    bind(vm, &["GetPos__14PhysicsVehicleFv"], veh_get_pos);
+    bind(vm, &["GetVel__14PhysicsVehicleFv"], veh_get_vel);
+    bind(vm, &["GetDir__14PhysicsVehicleFv"], veh_get_dir);
+    bind(vm, &["GetRot__14PhysicsVehicleFv"], veh_get_rot);
+    bind(vm, &["GetSpeed__14PhysicsVehicleFv"], veh_get_speed);
+    bind(vm, &["GetBodyMat__14PhysicsVehicleFv", "GetBodyRenderMat__14PhysicsVehicleFv"], veh_get_body_mat);
+    bind(vm, &["GetWheelPos__14PhysicsVehicleFi"], veh_get_wheel_pos);
+    bind(vm, &["GetWheelMat__14PhysicsVehicleFi", "GetWheelRenderMat__14PhysicsVehicleFi"], veh_get_wheel_mat);
+    bind(vm, &["SetPos__14PhysicsVehicleF9rmVector3"], veh_set_pos);
+    bind(vm, &["SetVel__14PhysicsVehicleF9rmVector3"], veh_set_vel);
+    bind(vm, &["SetDir__14PhysicsVehicleF9rmVector3"], veh_set_dir);
+    bind(vm, &["SetAngularVelocity__14PhysicsVehicleF9rmVector3"], veh_set_angvel);
+    bind(vm, &["SetBodyMat__14PhysicsVehicleF9rmMatrix4"], veh_set_body_mat);
+    bind(vm, &["Reset__14PhysicsVehicleFv"], veh_reset);
+    bind(vm, &["SetMotionFixed__14PhysicsVehicleFb"], veh_fixed);
+    bind(vm, &["Update__14PhysicsVehicleFi"], veh_update);
+    bind(vm, &["UnInitialize__14PhysicsVehicleFv", "__dt__14PhysicsVehicleFv"], veh_uninit);
+    bind(vm, &["GetGeometry__Q24EAGL5ModelFPCc"], model_geometry);
+    bind(vm, &["GetPartFx__13PartFxManagerF4GUID"], get_partfx);
+    // Havok entity bookkeeping the vehicle stand-in has no use for
+    bind(vm, &["addCollisionListener__8hkEntityFP19hkCollisionListener", "removeCollisionListener__8hkEntityFP19hkCollisionListener", "activate__8hkEntityFv"], nothing);
+    bind(vm, &["IsBoundingBoxInView__Q23Ren11FrustumTestFRCQ23Ren11BoundingBoxRC9rmMatrix4"], in_view);
     bind(vm, &["__ct__24PhysicsCharacterListenerFP16PhysicsCharacter"], char_listener_ct);
     bind(vm, &["__ct__23PhysicsDynamicCharacterFP9CharacterPC9rmVector3P14PhysicsManager", "__ct__22PhysicsStaticCharacterFP9CharacterPC9rmVector3P14PhysicsManager"], char_ct);
     bind(vm, &["__dt__23PhysicsDynamicCharacterFv", "__dt__22PhysicsStaticCharacterFv"], char_dt);

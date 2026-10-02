@@ -34,6 +34,12 @@ pub struct MgHost {
     pub pending_contacts: Vec<physics::Contact>,
     /// Names of null-serviced functions already reported.
     pub stubbed: std::collections::BTreeSet<String>,
+    /// Scratch record handed out for every `PartFx` (particles are not simulated; the game only pokes flags in it).
+    pub dummy_partfx: u32,
+    /// RcCars: (position, target, up) the chase camera last set.
+    pub view: Option<[[f32; 3]; 3]>,
+    /// Reused `Ren::SceneContext` handed to `Draw`.
+    pub scene_ctx: u32,
 }
 
 /// The mangled-name class of a symbol: `Update__11MGDodgeballFi` -> `MGDodgeball`.
@@ -235,6 +241,13 @@ fn team_layout(ty: i32, humans: usize) -> Vec<(u32, usize, u32)> {
             out.push((0x48, 1, if humans > 1 { 2 } else { 6 }));
             out.push((0x58, 3, 6));
         }
+        // four racers
+        1 => {
+            out.push((8, 0, 1));
+            out.push((0x48, 1, if humans > 1 { 2 } else { 6 }));
+            out.push((0x18, 2, 6));
+            out.push((0x28, 3, 6));
+        }
         // 1 v 1 default
         _ => {
             out.push((8, 0, 1));
@@ -324,6 +337,13 @@ pub fn probe(ty: i32) {
         return;
     }
     println!("launched {ty}");
+    if std::env::var("EAGL_DBG_RCTAB").is_ok() {
+        for t in 0..6u32 {
+            let e = 0x805e3380 + t * 0x34;
+            let ent: Vec<u32> = (0..13).map(|i| vm.r32(e + 4 * i)).collect();
+            println!("rccar table {t}: {ent:x?}");
+        }
+    }
     if std::env::var("EAGL_MG_SELFTEST").is_ok() {
         for x in [4.0f64, 2.0, 0.25, 1.5, 100.0, 0.0001] {
             let r = vm.call_by_name(&mut host, "sqrt", &[], &[x]);
@@ -371,6 +391,11 @@ pub fn probe(ty: i32) {
             let ev = |vm: &mut MgVm, id: u32| (vm.r32(tbl + 8 * id), vm.r32(tbl + 8 * id + 4));
             let st = vm.call_by_name(&mut host, "GetCurrentControllerState__10ControllerCFv", &[c], &[]).unwrap_or(0);
             println!("  f{f}: ctrl {c:#x} state {st} ev62 {:?} ev63 {:?} ev66 {:?}", ev(&mut vm, 0x62), ev(&mut vm, 0x63), ev(&mut vm, 0x66));
+        }
+        if f % 300 == 299 && std::env::var("EAGL_DBG_CAMOBJ").is_ok() && host.camera != 0 {
+            let c = host.camera;
+            let fl: Vec<String> = (0..24).map(|i| format!("{:.2}", vm.st.mem.rf32(c + 0x8 + 4 * i))).collect();
+            println!("  cam {:x}: {}", c, fl.join(" "));
         }
         if f % 100 == 99 {
             let sn = snapshot::snapshot(&mut vm, &mut host);
