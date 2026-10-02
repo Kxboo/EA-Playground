@@ -157,6 +157,9 @@ fn get_angvel(h: &mut MgHost, vm: &mut V) -> R {
 }
 fn set_linvel(h: &mut MgHost, vm: &mut V) -> R {
     let v = read_v3(vm, vm.a(1));
+    if std::env::var("EAGL_PHYS_BODY").is_ok() {
+        eprintln!("[body] SetLinearVelocity {:x} {v:?}", vm.a(0));
+    }
     h.phys.set_linvel(vm.a(0), v);
     Ok(())
 }
@@ -168,6 +171,9 @@ fn set_angvel(h: &mut MgHost, vm: &mut V) -> R {
 /// `ApplyForce(this, float scale, const rmVector3& dir)`
 fn apply_force(h: &mut MgHost, vm: &mut V) -> R {
     let (s, d) = (vm.fa(0), read_v3(vm, vm.a(1)));
+    if std::env::var("EAGL_PHYS_BODY").is_ok() {
+        eprintln!("[body] ApplyForce {:x} {s} {d:?} mass {}", vm.a(0), h.phys.mass(vm.a(0)));
+    }
     h.phys.apply_force(vm.a(0), s, d);
     Ok(())
 }

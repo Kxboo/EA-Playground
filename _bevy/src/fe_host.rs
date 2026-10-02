@@ -283,7 +283,13 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
             vec![("iPlayerName".into(),title),("iLayout".into(),["1";8].join(DELIM)),("iMarble".into(),"0".into()),("iSticker".into(),"0".into()),("iStickerTotal".into(),"0".into()),("iIsMusicEnabled".into(),"1".into())]
         }
         "StickerBookCover_IsGameDirty"=>vec![("iDirty".into(),"0".into())],
-        "StickerBookCover_OnWorld"|"StickerBookCover_OnQuit"|"StickerStoreCover_OnExit"|"StickerBook_Exit"|"ReportCard_OnClose"|"SelectPlane_Exit"=>{
+        "StickerBookCover_OnWorld"|"StickerBookCover_OnQuit"|"StickerStoreCover_OnExit"|"StickerBook_Exit"|"ReportCard_OnClose"=>{
+            vm.fe.todo.push(("CloseScreen".into(),vec![]));vec![]
+        }
+        "SelectPlane_Exit"=>{
+            let plane=args.first().and_then(|(_,v)|v.trim().parse::<i32>().ok()).unwrap_or(0);
+            if std::env::var("EAGL_MG_DEBUG").is_ok(){eprintln!("[fe] SelectPlane_Exit params {args:?}");}
+            if vm.fe.vm_session{vm.fe.mg_cmds.push(format!("OnPlaneSelected:{plane}"));}
             vm.fe.todo.push(("CloseScreen".into(),vec![]));vec![]
         }
         "StickerBookCover_OnSave"|"StickerBookCover_OnMusic"|"StickerBookCover_OnSelect"|"StickerBook_LayoutSave"=>vec![],

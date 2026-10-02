@@ -344,6 +344,12 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
     }
     let rest = [512i16, 512, 616];
     let mut d = s.gesture.pop_front().unwrap_or([0; 3]);
+    if s.ty == 5 {
+        // paper airplane: pitch and bank by tilting the remote
+        let k = |a: KeyCode, b: KeyCode| keys.pressed(a) || keys.pressed(b);
+        d[1] += if k(KeyCode::ArrowUp, KeyCode::KeyW) { -100 } else if k(KeyCode::ArrowDown, KeyCode::KeyS) { 100 } else { 0 };
+        d[0] += if k(KeyCode::ArrowLeft, KeyCode::KeyA) { -150 } else if k(KeyCode::ArrowRight, KeyCode::KeyD) { 150 } else { 0 };
+    }
     if s.ty == 1 {
         // RcCars steers by tilting the remote
         let left = keys.pressed(KeyCode::ArrowLeft) || keys.pressed(KeyCode::KeyA);
@@ -374,6 +380,11 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
             "OnPlay" => {
                 let mg = vm.r32(mgvm::snapshot::WORLD_MAN + 0x90);
                 vm.call_by_name(host, "OnPlay__8MinigameFv", &[mg], &[]).map(|_| true)
+            }
+            other if other.starts_with("OnPlaneSelected:") => {
+                let mg = vm.r32(mgvm::snapshot::WORLD_MAN + 0x90);
+                let plane = other.rsplit(':').next().and_then(|v| v.parse::<u32>().ok()).unwrap_or(0);
+                vm.call_by_name(host, "OnPlaneSelected__16MGPaperAirplanesFi", &[mg, plane], &[]).map(|_| true)
             }
             other => mgvm::game_callback(vm, host, other),
         };

@@ -416,10 +416,14 @@ pub fn probe(ty: i32) {
             println!("  [{f}] {} {:?}", e.name, e.args);
             // stand in for the front end: the HUD "loads" at once and the start animation plays instantly
             let cb = match (e.name.as_str(), e.args.first()) {
-                ("FEManager::OpenAptScreen", Some(FeArg::Str(n))) if n.ends_with("Hud") && n != "WorldHud" => Some("OnHudLoadComplete"),
+                ("FEManager::OpenAptScreen" | "FEManager::ReplaceAptScreen", Some(FeArg::Str(n))) if n.ends_with("Hud") && n != "WorldHud" => Some("OnHudLoadComplete"),
                 ("Apt::GameStartAnim_Play", _) => Some("OnGameStartAnimComplete"),
                 _ => None,
             };
+            if e.name == "FEManager::ReplaceAptScreen" && matches!(e.args.first(), Some(FeArg::Str(n)) if n == "SelectPlane") {
+                let mg = vm.r32(world::WORLD_MAN + 0x90);
+                println!("  [{f}] -> OnPlaneSelected: {:?}", vm.call_by_name(&mut host, "OnPlaneSelected__16MGPaperAirplanesFi", &[mg, 0], &[]));
+            }
             if let Some(cb) = cb {
                 println!("  [{f}] -> {cb}: {:?}", game_callback(&mut vm, &mut host, cb));
             }

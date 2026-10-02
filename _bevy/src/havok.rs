@@ -280,7 +280,7 @@ pub fn rigid_bodies(pf:&Packfile)->Vec<BodyInfo>{
         let m=mat_from(&o["motion"]["motionState"]["transform"]);
         let mut prims=vec![];
         c.prims(pf,sref,&ident(),&mut prims);
-        if prims.is_empty(){continue}
+        if prims.is_empty(){if std::env::var("EAGL_HK_DEBUG").is_ok(){eprintln!("hk: body {} has no prims; skipped {:?}",o["name"],c.skipped)}continue}
         let ms=&o["motion"]["motionState"];
         let mut rotation=[[0f32;3];3];for i in 0..3{for j in 0..3{rotation[i][j]=m[i][j] as f32}}
         out.push(BodyInfo{
@@ -308,9 +308,11 @@ fn convex_tris(pf:&Packfile,o:&Value)->Vec<[[f64;3];3]>{
     let n=o["numVertices"].as_i64().unwrap_or(0).max(0) as usize;let mut pts=vec![];
     for f in pf.array_elements(&o["rotatedVertices"]){for i in 0..4{pts.push([f["x"][i].as_f64().unwrap(),f["y"][i].as_f64().unwrap(),f["z"][i].as_f64().unwrap()])}}
     pts.truncate(n);let mut tris=vec![];
+    // the stored planes include the shape's convex radius, which the vertices are shrunk by
+    let tol=o["radius"].as_f64().unwrap_or(0.).max(0.)*1.25+1e-3;
     for pl in pf.array_elements(&o["planeEquations"]){
         let p=pl.as_array().unwrap();let (nrm,d)=([p[0].as_f64().unwrap(),p[1].as_f64().unwrap(),p[2].as_f64().unwrap()],p[3].as_f64().unwrap());
-        let mut on:Vec<[f64;3]>=pts.iter().copied().filter(|q|(dot(nrm,*q)+d).abs()<1e-3).collect();
+        let mut on:Vec<[f64;3]>=pts.iter().copied().filter(|q|(dot(nrm,*q)+d).abs()<tol).collect();
         if on.len()<3{continue}
         let c=[0,1,2].map(|i|on.iter().map(|q|q[i]).sum::<f64>()/on.len() as f64);
         let u=norm(if nrm[0].abs()<0.9{cross(nrm,[1.,0.,0.])}else{cross(nrm,[0.,1.,0.])});let w=cross(nrm,u);
