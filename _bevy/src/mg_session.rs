@@ -511,6 +511,15 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
     }
     let events: Vec<mgvm::FeEvent> = host.events.drain(..).collect();
     if let Some(v) = fe.as_mut() {
+        // answers for the HUD's own queries (`MinigameLVHandlers`)
+        let mg = vm.r32(mgvm::snapshot::WORLD_MAN + 0x90);
+        v.0.vm.fe.mg_num_huds = match (s.ty, mg) {
+            (_, 0) => 0,
+            (0, _) => vm.call_by_name(host, "GetNumHuds__14MGDartShootoutFv", &[mg], &[]).unwrap_or(0) as i32,
+            (5, _) => vm.call_by_name(host, "GetNumHuds__16MGPaperAirplanesFv", &[mg], &[]).unwrap_or(0) as i32,
+            (1, _) => vm.r32(mg + 0x16c) as i32,
+            _ => 0,
+        };
         forward_events(&mut v.0.vm, &events, s);
     }
     // front-end button presses become guest callbacks
@@ -607,7 +616,10 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
     }
     let snapshot = mgvm::snapshot::snapshot(vm, host);
     if let (Some(bd), Some((eye, target, _))) = (backdrop.as_mut(), snapshot.camera) {
-        bd.set_now(Vec3::from(eye), Vec3::from(target));
+        // development aid: watch from this many units behind the game's camera
+        let back = std::env::var("EAGL_MG_CAMBACK").ok().and_then(|v| v.parse::<f32>().ok()).unwrap_or(0.);
+        let (eye, target) = (Vec3::from(eye), Vec3::from(target));
+        bd.set_now(eye - (target - eye).normalize_or_zero() * back, target);
     }
     for mut p in &mut projection {
         if let Projection::Perspective(pp) = &mut *p {
@@ -732,6 +744,7 @@ fn present(
     mut joints: Query<(&MgJoint, &mut Transform), (Without<MgChar>, Without<MgProp>)>,
     mut props: Query<(&MgProp, &mut Transform, &mut Visibility), (Without<MgChar>, Without<MgJoint>)>,
     mut placeables: Query<(Entity, &Name, &mut Visibility, Option<&MgPlaceable>), (With<game::PlaceableProp>, Without<MgProp>)>,
+    cams: Query<&GlobalTransform, With<game::GameCamera>>,
 ) {
     let (Some(mut s), Some(snap), Some(game)) = (s, snap, game) else { return };
     if s.state != SessionState::Running {
@@ -803,10 +816,10 @@ fn present(
     // model draws (balls, props): one pooled entity per draw call
     for (i, (name, m)) in snapshot.draws.iter().enumerate() {
         if i >= s.props.len() || s.props[i].1 != *name {
-            if i < s.props.len() {
-                let old = s.props[i].0;
+            // the pool from here on no longer matches: drop all of it (a stale entity would keep its old model and take
+            // the pose of whatever draw now has its index)
+            for (old, _) in s.props.drain(i.min(s.props.len())..) {
                 commands.entity(old).despawn();
-                s.props.truncate(i);
             }
             if !s.prop_models.contains_key(name) {
                 if let Some(src) = find_model_source(name) {
@@ -827,14 +840,50 @@ fn present(
         }
     }
     if std::env::var("EAGL_MG_DEBUG").is_ok() && s.frames % 120 == 0 {
+        eprintln!("[mg] frame {} camera {:?} fov {}", s.frames, snapshot.camera, snapshot.fov);
         eprintln!("[mg] frame {} draws {:?}", s.frames, snapshot.draws.iter().map(|(n, m)| (n.as_str(), [m[12], m[13], m[14]])).collect::<Vec<_>>());
     }
     for (p, mut t, mut v) in &mut props {
-        if let Some((_, m)) = snapshot.draws.get(p.0) {
+        if let Some((name, m)) = snapshot.draws.get(p.0) {
             *t = mat_to_transform(radius, m);
-            *v = Visibility::Inherited;
+            // development aid: leave out models whose name contains this text
+            let hidden = std::env::var("EAGL_MG_HIDE").is_ok_and(|k| name.contains(&k));
+            if std::env::var("EAGL_MG_DEBUG").is_ok() && s.frames % 120 == 0 && name.contains("dartgun_high") {
+                if let Ok(c) = cams.single() {
+                    let inv = c.to_matrix().inverse();
+                    let tm = t.to_matrix();
+                    let pts = [Vec3::ZERO, Vec3::new(0., 0., -0.287), Vec3::new(0., 0.18, 0.08)].map(|p| inv.transform_point3(tm.transform_point3(p)));
+                    eprintln!("[mg] gun in camera space origin/tip/back {pts:?} scale {:?}", t.scale);
+                }
+            }
+            *v = if hidden { Visibility::Hidden } else { Visibility::Inherited };
         } else {
             *v = Visibility::Hidden;
+        }
+    }
+}
+
+#[cfg(test)]
+mod model_bounds_tests {
+    /// Bounds of the prop models named in `EAGL_MG_MODELS` (comma separated), as the session loads them.
+    #[test]
+    #[ignore]
+    fn prop_model_bounds() {
+        let Ok(names) = std::env::var("EAGL_MG_MODELS") else { return };
+        for n in names.split(',') {
+            let src = super::find_model_source(n);
+            let m = src.as_ref().and_then(|s| crate::assets::build(s, &crate::model::Schemas::embedded()).ok());
+            if let Some(m) = &m {
+                let (mut lo, mut hi) = ([f32::MAX; 3], [f32::MIN; 3]);
+                for p in m.prims.iter().flat_map(|p| p.positions.iter()) {
+                    for i in 0..3 {
+                        lo[i] = lo[i].min(p[i]);
+                        hi[i] = hi[i].max(p[i]);
+                    }
+                }
+                println!("{n}: vertices {lo:?}..{hi:?} prims {} skinned {:?} materials {:?}", m.prims.len(), m.prims.iter().map(|p| p.joints.is_some()).collect::<Vec<_>>(), m.materials.iter().map(|x| (x.alpha, x.unlit, x.double_sided)).collect::<Vec<_>>());
+            }
+            println!("{n}: {src:?} bounds {:?}", m.map(|m| m.bounds));
         }
     }
 }

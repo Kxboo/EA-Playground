@@ -40,9 +40,13 @@ Found with a Ghidra decompilation of the executable (`D:/tools/decomp.c`, see th
   `EAGL::DrawTextured` batches (indicators, cursors) are drawn by `mg_draw.rs` with textures from the `TarManager` banks;
   `PartFxManager` effects feed `fx.rs`; `Audio::PlaySFX` runs the original id switch and `Csis` instances play through
   `sfx::play_class`; `Audio::PlayMusic` picks `kMusicFilenames`.
+* **Contacts** – a body listener gets `ContactAddedCallback` (its return value accepts the contact), then
+  `ContactConfirmedCallback` and `ContactProcessCallback` (where e.g. Dart Shootout scores).
 * **Lab** – `tools/mgbattery.sh` runs every game to PostGame and exit under AI (`EAGL_MG_ALLAI`); `EAGL_MG_FE="kids;teams"`
   uses the front-end launch; `EAGL_MG_POSTGAME`, `EAGL_MG_PAUSEBTN` press screen buttons; `EAGL_DBG_CT/CTWORDS`,
-  `EAGL_DBG_WORDS`, `EAGL_DBG_EV`, `EAGL_MG_SOUNDS`, `EAGL_MG_FX`, `EAGL_DBG_IMM` inspect.
+  `EAGL_DBG_WORDS`, `EAGL_DBG_EV`, `EAGL_MG_SOUNDS`, `EAGL_MG_FX`, `EAGL_DBG_IMM`, `EAGL_DBG_DART`, `EAGL_DBG_DRAW=<model>`
+  inspect; `EAGL_MG_LEVEL` picks the level. In the app `EAGL_MG_HIDE=<model>`, `EAGL_FX_SKIP=<effect>` and
+  `EAGL_MG_CAMBACK=<units>` (watch from behind the game camera) help find what is drawn where.
 
 ## Per-game status
 
@@ -52,4 +56,5 @@ Found with a Ghidra decompilation of the executable (`D:/tools/decomp.c`, see th
 | Tetherball | Complete: FE launch, AI serve/rally, J toss / K strike / L reverse strike (overhand strike needs the mega-hit ability flag `MGTetherball+0x424`), plain pole swapped in for the world's pole-with-ball (guest `Placeable+0xa8` mirrored onto the Bevy world), HUD, effects, sound, music, PostGame -> menus. |
 | Wallball | Complete: FE launch, AI rallies, J toss / K backhand / L forehand (overhand serve is ability-gated, `MGWallball+0x1d3/+0x1d5`), power-ups and ball trail drawn, HUD hit counter / serve bubble, sound, music, PostGame -> menus. |
 | Footie | Complete: FE launch, 2v2 AI (serves, juggles, shots, dive saves, goals via net phantoms), J serve / O juggle / I shot / Q,E dive, power-ring indicators (textures by bank index), HUD, sound, music, PostGame -> menus. |
+| Dart Shootout | Complete: FE launch (course from the level argument), rail camera, mouse = remote pointer (reticle effect, blaster aims via `Controller::GetWorldVectorFromDPDRotationallyCorrected`), left button B fires, right button A reloads / raises the shield, pin-up and character targets score through `DSDartCollisionListener::ContactProcessCallback`, hostile darts stick to the screen plane and drain health, single-player HUD (`GetNumberOfHuds`), PostGame -> menus. |
 | others | Run start -> PostGame -> exit in the lab under AI; per-game polish pending (one game at a time). |

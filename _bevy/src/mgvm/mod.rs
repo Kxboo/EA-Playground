@@ -376,7 +376,8 @@ pub fn launch(vm: &mut MgVm, host: &mut MgHost, ty: i32, humans: usize) -> Resul
         }
     }
     // StartMinigame(MGID, level, difficulty, teams, dare)
-    vm.call_by_name(host, "StartMinigame__8WorldManF4MGIDiQ25Enums23MiniGameDifficultyLevelRC5TeamsPCi", &[wm, mg_id, 1, 1, teams, 0], &[])?;
+    let level = std::env::var("EAGL_MG_LEVEL").ok().and_then(|v| v.parse().ok()).unwrap_or(1);
+    vm.call_by_name(host, "StartMinigame__8WorldManF4MGIDiQ25Enums23MiniGameDifficultyLevelRC5TeamsPCi", &[wm, mg_id, level, 1, teams, 0], &[])?;
     vm.call_by_name(host, "StartMinigameFadeComplete__8WorldManFv", &[wm], &[])?;
     Ok(())
 }
@@ -766,6 +767,11 @@ pub fn probe(ty: i32) {
         println!("  draw_textured {:?}", host.draw_textured.iter().map(|(k, v)| (*k, v.tex)).collect::<Vec<_>>());
         for d in &host.imm {
             println!("  imm {:?} prim {:#x} verts {} first {:?} model t {:?}", d.tex, d.prim, d.verts.len(), d.verts.first(), &d.model[12..15]);
+        }
+    }
+    if let Ok(k) = std::env::var("EAGL_DBG_DRAW") {
+        for (n, m) in snap.draws.iter().filter(|d| d.0.contains(&k)) {
+            println!("draw {n} {m:?}");
         }
     }
     println!("draws {:?}", snap.draws.iter().map(|d| (d.0.clone(), [d.1[12], d.1[13], d.1[14]])).collect::<Vec<_>>());

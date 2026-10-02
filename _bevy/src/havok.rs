@@ -229,6 +229,8 @@ impl Collision{
     pub name:String,pub mass_inv:f32,pub friction:f32,pub restitution:f32,pub linear_damping:f32,pub angular_damping:f32,
     /// Initial world transform: row-major 3x3 rotation (column vectors) and translation.
     pub rotation:[[f32;3];3],pub translation:[f32;3],pub prims:Vec<Prim>,pub filter:u32,
+    /// `hkMotion::type` (1-5, 8 dynamic, 6 keyframed, 7 fixed).
+    pub motion:u32,
 }
 impl Collision{
     fn prims(&mut self,pf:&Packfile,r:Ref,local:&M4,out:&mut Vec<Prim>){
@@ -298,6 +300,7 @@ pub fn rigid_bodies(pf:&Packfile)->Vec<BodyInfo>{
             linear_damping:ms["linearDamping"].as_f64().unwrap_or(0.) as f32,angular_damping:ms["angularDamping"].as_f64().unwrap_or(0.) as f32,
             rotation,translation:[m[0][3] as f32,m[1][3] as f32,m[2][3] as f32],prims,
             filter:o["collidable"]["broadPhaseHandle"]["collisionFilterInfo"].as_u64().unwrap_or(0) as u32,
+            motion:o["motion"]["type"].as_u64().unwrap_or(0) as u32,
         });
     }
     out

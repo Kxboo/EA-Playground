@@ -331,6 +331,10 @@ impl Physics {
         let pick = dynamic.get(index).copied().or_else(|| dynamic.first().copied()).unwrap_or(index.min(count - 1));
         let filter = if filter != 0 { filter } else { self.system_filters.get(system).copied().unwrap_or(0) };
         let h = self.insert_body(system, pick, None, None, filter);
+        if std::env::var("EAGL_PHYS_FILTER").is_ok() {
+            let i = &self.systems[system].as_ref().unwrap()[pick];
+            self.log.push(format!("generate {guest:#x} {} mass_inv {} motion {}", i.name, i.mass_inv, i.motion));
+        }
         self.by_handle.insert(h, guest);
         self.bodies.insert(guest, DynBody { handle: h, system, user_data: 0, listener: 0, in_world: true });
         true

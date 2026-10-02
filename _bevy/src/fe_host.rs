@@ -23,6 +23,8 @@ pub struct Fe{
     pub hud_loaded:bool,
     /// A minigame runs in the PowerPC VM (`mg_session`): FE buttons are forwarded as guest callbacks through `mg_cmds`.
     pub vm_session:bool,
+    /// `MinigameLVHandlers::GetNumberOfHuds` answer of the VM-hosted game (published by `mg_session` every frame).
+    pub mg_num_huds:i32,
     pub mg_cmds:Vec<String>,
     pub start_anim_done:bool,
     pub serve_bubble:bool,
@@ -202,6 +204,8 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
         if crate::fe_postgame::command(vm,name,sel){return vec![]}
     }
     match name{
+        // `MinigameLVHandlers::GetNumberOfHuds` (0x80319520): Dart / Paper `GetNumHuds`, RcCars +0x16c, else 0
+        "GetNumberOfHuds"=>vec![("iNumHuds".into(),vm.fe.mg_num_huds.to_string())],
         "GetStartScreenFromMain"=>vec![("strFirstScreen".into(),vm.fe.first_screen.clone())],
         "GetLocale"|"GetLocaleFE"=>vec![("iLocale".into(),vm.fe.locale.to_string())],
         "GetAspectRatio"=>vec![("iAspectRatio".into(),"1".into())],

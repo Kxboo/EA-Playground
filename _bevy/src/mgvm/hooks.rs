@@ -312,7 +312,15 @@ fn dpd_world_vector(h: &mut MgHost, vm: &mut V) -> R {
         return Ok(());
     };
     let v = |vm: &mut V, o: u32| [vm.st.mem.rf32(cam + o), vm.st.mem.rf32(cam + o + 4), vm.st.mem.rf32(cam + o + 8)];
-    let (pos, tgt) = (v(vm, 0x10), v(vm, 0x20));
+    // the final (transitioned, shaken) view the game aims from, `Camera::GetPos/GetTarget(true)`; the base pair before
+    // the camera has updated
+    let (mut pos, mut tgt) = (v(vm, 0x70), v(vm, 0x80));
+    if pos == tgt {
+        (pos, tgt) = (v(vm, 0x10), v(vm, 0x20));
+    }
+    if std::env::var("EAGL_DBG_DPD").is_ok() {
+        eprintln!("dpd pos {pos:?} tgt {tgt:?} base {:?} {:?} p {p:?}", v(vm, 0x10), v(vm, 0x20));
+    }
     let norm = |a: [f32; 3]| {
         let l = (a[0] * a[0] + a[1] * a[1] + a[2] * a[2]).sqrt().max(1e-6);
         [a[0] / l, a[1] / l, a[2] / l]
@@ -885,6 +893,44 @@ fn dt_end(h: &mut MgHost, vm: &mut V) -> R {
 
 pub fn pregame(vm: &mut V) {
     vm.observe("Initialize__10TarManagerFR7CString", tar_manager_init);
+    if std::env::var("EAGL_DBG_DART").is_ok() {
+        vm.observe("StickDart__6DSDartF9rmVector39rmVector3", |h, vm| {
+            let v = |vm: &mut V, p: u32| [vm.st.mem.rf32(p), vm.st.mem.rf32(p + 4), vm.st.mem.rf32(p + 8)];
+            let (pos, off) = (v(vm, vm.a(1)), v(vm, vm.a(2)));
+            let cam = if h.camera != 0 { v(vm, h.camera + 0x70) } else { [0.; 3] };
+            eprintln!("[dart] StickDart {:#x} pos {pos:?} off {off:?} cam {cam:?}", vm.a(0));
+            Ok(())
+        });
+        vm.observe("RenderOpaque__9DSDartGunFb", |_h, vm| {
+            if vm.st.mem.r8(vm.a(0) + 0x11e) == 0 || vm.a(1) == 0 {
+                return Ok(());
+            }
+            let this = vm.a(0);
+            let v = |vm: &mut V, p: u32| [vm.st.mem.rf32(p), vm.st.mem.rf32(p + 4), vm.st.mem.rf32(p + 8)];
+            let cm = vm.img.addr("sCameraManagerInstance__13CameraManager").map(|a| vm.r32(a)).unwrap_or(0);
+            let cm = if cm != 0 { vm.r32(cm) } else { 0 };
+            let consts: Vec<(String, f32)> = ["@37760", "@38155", "@38154", "@38011", "@38153", "@37725", "@37759"].iter().map(|n| (n.to_string(), vm.img.addr(n).map(|a| vm.st.mem.rf32(a)).unwrap_or(f32::NAN))).collect();
+            let m50: Vec<f32> = (0..16).map(|i| vm.st.mem.rf32(this + 0x50 + 4 * i)).collect();
+            eprintln!("[gun] m50 {m50:?}");
+            let am = vm.r32(vm.img.addr("gWorld").unwrap_or(0) + 0x8c);
+            let am = if am != 0 { vm.r32(am + 8) } else { 0 };
+            let out = vm.alloc_zeroed(0x40, 16);
+            let r = vm.call_by_name(_h, "CalcRenderingModelMatrix__11AreaManagerFRC9rmVector3R9rmMatrix4", &[am, this + 0x20, out], &[]);
+            let calc: Vec<f32> = (0..16).map(|i| vm.st.mem.rf32(out + 4 * i)).collect();
+            eprintln!("[gun] areamgr {am:#x} {r:?} calc {calc:?}");
+            eprintln!("[gun] {this:#x} +0 {:?} +10 {:?} +20 {:?} +30 {:?} y+ {} cm d0 {:?} e0 {:?} f0 {:?} {consts:?}", v(vm, this), v(vm, this + 0x10), v(vm, this + 0x20), v(vm, this + 0x30), vm.st.mem.rf32(this + 0x90), v(vm, cm + 0xd0), v(vm, cm + 0xe0), v(vm, cm + 0xf0));
+            Ok(())
+        });
+        vm.observe("Render__6DSDartFv", |h, vm| {
+            let this = vm.a(0);
+            if vm.r32(this + 0x230) as i32 > 0 {
+                let body = vm.r32(this + 0x38);
+                let cam = if h.camera != 0 { [vm.st.mem.rf32(h.camera + 0x70), vm.st.mem.rf32(h.camera + 0x74), vm.st.mem.rf32(h.camera + 0x78)] } else { [0.; 3] };
+                eprintln!("[dart] stuck {this:#x} body {:?} cam {cam:?} t {}", h.phys.body_pos(body), vm.r32(this + 0x230) as i32);
+            }
+            Ok(())
+        });
+    }
     if std::env::var("EAGL_DBG_IMM").is_ok() {
         vm.observe("GetTar__10TarManagerFPCc", |_h, vm| {
             let this = vm.a(0);

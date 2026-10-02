@@ -160,6 +160,10 @@ impl FxWorld {
     pub fn spawn(&mut self, id: u32, name: &str, pos: [f32; 3]) {
         let effect = self.cache.entry(name.to_lowercase()).or_insert_with(|| Effect::load(name).map(Arc::new)).clone();
         let Some(effect) = effect else { return };
+        // development aid: leave out effects whose name contains this text
+        if std::env::var("EAGL_FX_SKIP").is_ok_and(|k| name.to_lowercase().contains(&k)) {
+            return;
+        }
         let emitters = effect.emitters.iter().map(|e| EmitterState { def: e.clone(), particles: vec![], age: 0., carry: 0., emitted: 0 }).collect();
         self.instances.push(Instance { id, name: name.to_string(), origin: pos, emitters, stopped: false, kill_in: None });
     }
@@ -323,6 +327,7 @@ pub fn render(
     mut images: ResMut<Assets<Image>>,
     mut textures: Local<Option<FxTextures>>,
     mut live: Local<HashMap<(String, bool), (Entity, Handle<Mesh>)>>,
+    mut vis: Query<&mut Visibility, With<FxSprites>>,
 ) {
     let textures = textures.get_or_insert_with(FxTextures::default);
     let radius = game.as_ref().map(|g| g.world_radius).unwrap_or(0.);
@@ -355,8 +360,11 @@ pub fn render(
         mesh.insert_attribute(Mesh::ATTRIBUTE_COLOR, colours);
         mesh.insert_indices(Indices::U32(indices));
         match live.get(key) {
-            Some((_, handle)) => {
+            Some((e, handle)) => {
                 meshes.insert(handle.id(), mesh);
+                if let Ok(mut v) = vis.get_mut(*e) {
+                    *v = Visibility::Inherited;
+                }
             }
             None => {
                 let image = textures.image(&key.0, &mut images);
@@ -375,16 +383,12 @@ pub fn render(
             }
         }
     }
-    // Hide groups with no sprites this frame.
-    for (key, (_, handle)) in live.iter() {
+    // Hide groups with no sprites this frame (an empty mesh would leave the render allocator without a slot to update).
+    for (key, (e, _)) in live.iter() {
         if !groups.contains_key(key) {
-            let mut mesh = Mesh::new(PrimitiveTopology::TriangleList, RenderAssetUsages::default());
-            mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, Vec::<[f32; 3]>::new());
-            mesh.insert_attribute(Mesh::ATTRIBUTE_NORMAL, Vec::<[f32; 3]>::new());
-            mesh.insert_attribute(Mesh::ATTRIBUTE_UV_0, Vec::<[f32; 2]>::new());
-            mesh.insert_attribute(Mesh::ATTRIBUTE_COLOR, Vec::<[f32; 4]>::new());
-            mesh.insert_indices(Indices::U32(vec![]));
-            meshes.insert(handle.id(), mesh);
+            if let Ok(mut v) = vis.get_mut(*e) {
+                *v = Visibility::Hidden;
+            }
         }
     }
 }

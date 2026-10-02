@@ -487,7 +487,7 @@ fn listener_method(vm: &mut V, vt: u32, base: &str) -> Option<u32> {
 }
 
 /// Deliver the contacts that began during the last physics step to the guest listeners
-/// (`ContactAddedCallback`/`ContactConfirmedCallback` on the body, `ObjectInteractionCallback` on the character).
+/// (`ContactAdded/Confirmed/ProcessCallback` on the body, `ObjectInteractionCallback` on the character).
 pub fn dispatch_contacts(h: &mut MgHost, vm: &mut V) -> Result<(), String> {
     let contacts = std::mem::take(&mut h.pending_contacts);
     // phantoms: `PhysicsPhantomListener::OverlapAdded/RemovedCallback(this, PhysicsUserData* of the body)`
@@ -530,12 +530,7 @@ pub fn dispatch_contacts(h: &mut MgHost, vm: &mut V) -> Result<(), String> {
                 for (i, v) in c.point.iter().chain(c.normal.iter()).enumerate() {
                     vm.st.mem.wf32(cp + 4 * i as u32, *v);
                 }
-                let vt = vm.r32(listener);
-                for slot_name in ["ContactAddedCallback", "ContactConfirmedCallback"] {
-                    if let Some(f) = listener_method(vm, vt, slot_name) {
-                        vm.call(h, f, &[listener, other_ud, ty, cp], &[0.])?;
-                    }
-                }
+                body_contact(h, vm, listener, other_ud, ty, cp)?;
             }
             continue;
         }
@@ -558,18 +553,32 @@ pub fn dispatch_contacts(h: &mut MgHost, vm: &mut V) -> Result<(), String> {
             vm.st.mem.wf32(cp + 4 * i as u32, *v);
         }
         if b_listener != 0 {
-            let vt = vm.r32(b_listener);
-            for slot_name in ["ContactAddedCallback", "ContactConfirmedCallback"] {
-                if let Some(f) = listener_method(vm, vt, slot_name) {
-                    vm.call(h, f, &[b_listener, c_ud, 3, cp], &[0.])?;
-                }
-            }
+            body_contact(h, vm, b_listener, c_ud, 3, cp)?;
         }
         if c_listener != 0 {
             let vt = vm.r32(c_listener);
             if let Some(f) = listener_method(vm, vt, "ObjectInteractionCallback") {
                 vm.call(h, f, &[c_listener, b_ud, cp], &[])?;
             }
+        }
+    }
+    Ok(())
+}
+/// A rigid body's listener hears a new contact: `ContactAddedCallback` decides whether the contact counts (0 rejects
+/// it), then `ContactConfirmedCallback` and `ContactProcessCallback(this, other PhysicsUserData*, type, point)` - where
+/// e.g. Dart Shootout scores its hits.
+fn body_contact(h: &mut MgHost, vm: &mut V, listener: u32, other_ud: u32, ty: u32, cp: u32) -> R {
+    let vt = vm.r32(listener);
+    let accepted = match listener_method(vm, vt, "ContactAddedCallback") {
+        Some(f) => vm.call(h, f, &[listener, other_ud, ty, cp], &[0.])? != 0,
+        None => true,
+    };
+    if let Some(f) = listener_method(vm, vt, "ContactConfirmedCallback") {
+        vm.call(h, f, &[listener, other_ud, ty, cp], &[0.])?;
+    }
+    if accepted {
+        if let Some(f) = listener_method(vm, vt, "ContactProcessCallback") {
+            vm.call(h, f, &[listener, other_ud, ty, cp], &[])?;
         }
     }
     Ok(())
