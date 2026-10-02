@@ -62,6 +62,8 @@ pub struct Session {
     pub frames: i32,
     skip_close: i32,
     pub last_events: Vec<mgvm::FeEvent>,
+    /// Accelerometer offsets still to play out (one entry per frame): the keyboard's stand-in for swinging the Wii Remote.
+    gesture: std::collections::VecDeque<[i16; 3]>,
 }
 
 #[derive(PartialEq, Eq, Clone, Debug)]
@@ -157,6 +159,7 @@ impl Session {
             frames: 0,
             skip_close: 0,
             last_events: vec![],
+            gesture: Default::default(),
         }
     }
 }
@@ -273,6 +276,27 @@ fn pad_buttons(keys: &ButtonInput<KeyCode>) -> u16 {
     b
 }
 
+/// Wii Remote swings as accelerometer pulses (offsets from rest; 1 g is about 100 counts). Waveforms found by sweeping the
+/// original Conga state machines (`tools/gsweep.py`).
+fn gesture_for(keys: &ButtonInput<KeyCode>) -> Option<Vec<[i16; 3]>> {
+    let pulse = |axis: usize, v: i16, n: usize| vec![{ let mut a = [0i16; 3]; a[axis] = v; a }; n];
+    let cat = |a: Vec<[i16; 3]>, b: Vec<[i16; 3]>| a.into_iter().chain(b).collect::<Vec<_>>();
+    let j = |k| keys.just_pressed(k);
+    if j(KeyCode::KeyJ) {
+        Some(pulse(1, 450, 3)) // toss / throw / shoot
+    } else if j(KeyCode::KeyK) {
+        Some(cat(pulse(1, 450, 3), pulse(0, -450, 3))) // wind up, swing left (regular strike)
+    } else if j(KeyCode::KeyL) {
+        Some(cat(pulse(1, 450, 3), pulse(0, 450, 3))) // wind up, swing right (reverse strike)
+    } else if j(KeyCode::KeyQ) {
+        Some(cat(pulse(0, 450, 3), pulse(0, -450, 3))) // dodge left
+    } else if j(KeyCode::KeyE) {
+        Some(cat(pulse(0, -450, 3), pulse(0, 450, 3))) // dodge right
+    } else {
+        None
+    }
+}
+
 /// `EAGL_MG_PADS="from-to:hexbits,..."` scripts the pad by frame number (testing aid).
 fn scripted_pad(frame: i32) -> u16 {
     let mut bits = 0u16;
@@ -309,6 +333,12 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
         s.log.push(format!("autoplay OnPlay {r:?}"));
     }
     host.pads[0].buttons = pad_buttons(&keys) | scripted_pad(s.frames);
+    if let Some(g) = gesture_for(&keys) {
+        s.gesture = g.into();
+    }
+    let rest = [512i16, 512, 616];
+    let d = s.gesture.pop_front().unwrap_or([0; 3]);
+    host.pads[0].acc = [rest[0] + d[0], rest[1] + d[1], rest[2] + d[2]];
     if let Err(e) = mgvm::frame(vm, host, ms) {
         eprintln!("[mg] frame failed: {e}");
         s.log.push(format!("frame failed: {e}"));

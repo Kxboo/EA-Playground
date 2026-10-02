@@ -351,6 +351,20 @@ pub fn probe(ty: i32) {
             }
         }
         host.pads[0].buttons = bits;
+        host.pads[0].acc = [512, 512, 616];
+        for part in std::env::var("EAGL_MG_ACC").unwrap_or_default().split(';') {
+            // "from-to:x,y,z" (raw WPAD accelerometer values)
+            if let Some((range, v)) = part.split_once(':') {
+                if let Some((a, z)) = range.split_once('-') {
+                    if let (Ok(a), Ok(z)) = (a.parse::<i32>(), z.parse::<i32>()) {
+                        let v: Vec<i16> = v.split(',').filter_map(|t| t.parse().ok()).collect();
+                        if f >= a && f < z && v.len() == 3 {
+                            host.pads[0].acc = [v[0], v[1], v[2]];
+                        }
+                    }
+                }
+            }
+        }
         if f >= 1100 && f < 1105 {
             let c = vm.call_by_name(&mut host, "Get__10ControllerFi", &[0], &[]).unwrap_or(0);
             let tbl = vm.r32(c + 0x268);
@@ -366,8 +380,18 @@ pub fn probe(ty: i32) {
             println!("frame {f}: {e}");
             break;
         }
-        for e in host.events.drain(..) {
+        let evs: Vec<FeEvent> = host.events.drain(..).collect();
+        for e in &evs {
             println!("  [{f}] {} {:?}", e.name, e.args);
+            // stand in for the front end: the HUD "loads" at once and the start animation plays instantly
+            let cb = match (e.name.as_str(), e.args.first()) {
+                ("FEManager::OpenAptScreen", Some(FeArg::Str(n))) if n.ends_with("Hud") && n != "WorldHud" => Some("OnHudLoadComplete"),
+                ("Apt::GameStartAnim_Play", _) => Some("OnGameStartAnimComplete"),
+                _ => None,
+            };
+            if let Some(cb) = cb {
+                println!("  [{f}] -> {cb}: {:?}", game_callback(&mut vm, &mut host, cb));
+            }
         }
     }
     let snap = snapshot::snapshot(&mut vm, &mut host);

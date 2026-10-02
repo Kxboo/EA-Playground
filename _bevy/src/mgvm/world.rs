@@ -82,6 +82,12 @@ pub fn boot(vm: &mut MgVm, host: &mut MgHost) -> Result<(), String> {
     vm.call_by_name(host, "Initialize__13CameraManagerF10CameraTypeUi", &[camera_manager, 4, 4], &[])?;
     vm.call_by_name(host, "ReInitialize__13CameraManagerF10CameraTypeUi", &[camera_manager, 2, 0], &[])?;
     vm.call_by_name(host, "Initialize__8WorldManFQ28WorldMan13WorldInitType", &[WORLD_MAN, 1], &[])?;
+    // AreaManager is a null service, so build the placeable list (positions of the games' props) ourselves
+    let world = vm.r32(WORLD_MAN + 0x88);
+    let areas = vm.r32(world + 8);
+    if areas != 0 {
+        vm.call_by_name(host, "Initialize__16PlaceableManagerFv", &[areas + 0x1b0], &[])?;
+    }
     Ok(())
 }
 
