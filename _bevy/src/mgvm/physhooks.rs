@@ -226,6 +226,9 @@ fn char_get_position(h: &mut MgHost, vm: &mut V) -> R {
 }
 fn char_set_destination(h: &mut MgHost, vm: &mut V) -> R {
     let p = read_v3(vm, vm.a(1));
+    if std::env::var("EAGL_PHYS_TRACE").is_ok() {
+        eprintln!("[phys] SetDestination {:#x} -> {p:?}", vm.a(0));
+    }
     if let Some(c) = h.phys.chars.get_mut(&vm.a(0)) {
         c.destination = Some(p);
     }
@@ -233,6 +236,9 @@ fn char_set_destination(h: &mut MgHost, vm: &mut V) -> R {
 }
 fn char_set_speed(h: &mut MgHost, vm: &mut V) -> R {
     let s = vm.fa(0);
+    if std::env::var("EAGL_PHYS_TRACE").is_ok() && s != 0. {
+        eprintln!("[phys] SetSpeed {:#x} = {s}", vm.a(0));
+    }
     if let Some(c) = h.phys.chars.get_mut(&vm.a(0)) {
         c.speed = s;
         if s <= 0. {

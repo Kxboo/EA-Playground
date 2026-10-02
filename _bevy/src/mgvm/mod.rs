@@ -25,6 +25,10 @@ pub struct MgHost {
     /// The camera whose position was set last.
     pub camera: u32,
     pub kid_keys: Vec<u64>,
+    pub viewport: u32,
+    pub vp_matrix: u32,
+    pub fov: f32,
+    pub aspect: f32,
     pub pads: [hooks::Pad; 4],
     pub phys: physics::Physics,
     pub pending_contacts: Vec<physics::Contact>,
@@ -152,7 +156,7 @@ fn qualified(c: &str) -> String {
 
 /// Whether a function may run natively in the VM (game logic, math, containers) as opposed to being an engine service.
 /// Service-class functions that are really game logic and run natively.
-const NATIVE_EXCEPTIONS: &[&str] = &["SetNewOverride__Q24EAGL6DeviceFPFUlPCc_PvPFUlPCc_Pv", "SetDeleteOverride__Q24EAGL6DeviceFPFPvUl_v"];
+const NATIVE_EXCEPTIONS: &[&str] = &["CalcRenderingModelMatrix__11AreaManagerFRC9rmVector3R9rmMatrix4", "CalcRenderingPosUp__11AreaManagerFRC9rmVector3R9rmVector3R9rmVector3", "PAD_getdataptr", "SetNewOverride__Q24EAGL6DeviceFPFUlPCc_PvPFUlPCc_Pv", "SetDeleteOverride__Q24EAGL6DeviceFPFPvUl_v"];
 
 pub fn runs_natively(name: &str) -> bool {
     if NATIVE_EXCEPTIONS.contains(&name) {
@@ -190,7 +194,7 @@ pub fn boot() -> Result<(MgVm, MgHost), String> {
     hooks::install(&mut vm);
     physhooks::install(&mut vm);
     hooks::install_stubs(&mut vm);
-    let mut host = MgHost::default();
+    let mut host = MgHost { fov: 0.8, aspect: 16. / 9., ..MgHost::default() };
     if let Err(e) = world::boot(&mut vm, &mut host) {
         if std::env::var("EAGL_MG_LOG").is_ok() {
             for l in &host.log {
@@ -254,8 +258,25 @@ pub fn launch(vm: &mut MgVm, host: &mut MgHost, ty: i32, humans: usize) -> Resul
 
 /// One game frame: pads -> guest, `WorldMan::Update(ms)`, then the minigame's draw pass.
 pub fn frame(vm: &mut MgVm, host: &mut MgHost, ms: i32) -> Result<(), String> {
+    // GameState::Update -> STATEFN_UPDATE_Playground order: pads, controllers, conga, AI, world, cameras
     hooks::write_pads(vm, &host.pads);
+    for i in 0..4u32 {
+        if host.pads[i as usize].active {
+            let c = vm.call_by_name(host, "Get__10ControllerFi", &[i], &[])?;
+            if c != 0 {
+                vm.call_by_name(host, "Update__10ControllerFi", &[c, ms as u32], &[])?;
+            }
+        }
+    }
+    let ae = vm.r32(0x8060_12ac);
+    if ae != 0 {
+        vm.call_by_name(host, "Update__11AncientEvilFi", &[ae, ms as u32], &[])?;
+    }
     vm.call_by_name(host, "Update__8WorldManFi", &[world::WORLD_MAN, ms as u32], &[])?;
+    let cm = vm.r32(0x8060_214c);
+    if cm != 0 {
+        vm.call_by_name(host, "Update__13CameraManagerFi", &[cm, ms as u32], &[])?;
+    }
     host.draws.clear();
     world::draw_minigame(vm, host, host.minigame_type)
 }
@@ -281,7 +302,31 @@ pub fn probe(ty: i32) {
             let r = vm.call_by_name(&mut host, "OnPlay__8MinigameFv", &[mg], &[]);
             println!("OnPlay {r:?}");
         }
-        host.pads[0].buttons = if f > 650 && (f / 8) % 5 == 0 { 0x0008 } else { 0 };
+        let mut bits = 0u16;
+        for part in std::env::var("EAGL_MG_PADS").unwrap_or_default().split(',') {
+            // "from-to:hexbits"
+            if let Some((range, b)) = part.split_once(':') {
+                if let Some((a, z)) = range.split_once('-') {
+                    if let (Ok(a), Ok(z), Ok(b)) = (a.parse::<i32>(), z.parse::<i32>(), u16::from_str_radix(b.trim_start_matches("0x"), 16)) {
+                        if f >= a && f < z {
+                            bits |= b;
+                        }
+                    }
+                }
+            }
+        }
+        host.pads[0].buttons = bits;
+        if f >= 1100 && f < 1105 {
+            let c = vm.call_by_name(&mut host, "Get__10ControllerFi", &[0], &[]).unwrap_or(0);
+            let tbl = vm.r32(c + 0x268);
+            let ev = |vm: &mut MgVm, id: u32| (vm.r32(tbl + 8 * id), vm.r32(tbl + 8 * id + 4));
+            let st = vm.call_by_name(&mut host, "GetCurrentControllerState__10ControllerCFv", &[c], &[]).unwrap_or(0);
+            println!("  f{f}: ctrl {c:#x} state {st} ev62 {:?} ev63 {:?} ev66 {:?}", ev(&mut vm, 0x62), ev(&mut vm, 0x63), ev(&mut vm, 0x66));
+        }
+        if f % 100 == 99 {
+            let sn = snapshot::snapshot(&mut vm, &mut host);
+            println!("  t{f}: p0 {:?} anim {}", sn.chars.first().map(|c| c.pos), sn.chars.first().map(|c| c.anim_state).unwrap_or(0));
+        }
         if let Err(e) = frame(&mut vm, &mut host, 33) {
             println!("frame {f}: {e}");
             break;
@@ -295,7 +340,7 @@ pub fn probe(ty: i32) {
     for c in snap.chars.iter().take(8) {
         println!("  char key {:x} pos {:?} angle {} anim {} bones {}", c.key, c.pos, c.angle, c.anim_state, c.pose.len());
     }
-    println!("draws {:?}", snap.draws.iter().map(|d| d.0.clone()).collect::<Vec<_>>());
+    println!("draws {:?}", snap.draws.iter().map(|d| (d.0.clone(), [d.1[12], d.1[13], d.1[14]])).collect::<Vec<_>>());
     println!("physics chars {} bodies {} colliders {}", host.phys.chars.len(), host.phys.bodies.len(), host.phys.world.colliders.len());
     for l in &host.phys.log {
         println!("  phys: {l}");

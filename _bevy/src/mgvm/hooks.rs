@@ -15,6 +15,7 @@ pub fn install(vm: &mut V) {
     scene(vm);
     input(vm);
     drawing(vm);
+    view(vm);
 }
 
 fn bind(vm: &mut V, names: &[&str], f: fn(&mut MgHost, &mut V) -> R) {
@@ -180,7 +181,7 @@ pub fn scene(vm: &mut V) {
 #[derive(Clone, Copy, Debug)]
 pub struct Pad {
     pub active: bool,
-    /// WPAD button bits: TWO 0x1, ONE 0x2, B 0x4, A 0x8, MINUS 0x10, HOME 0x8000, LEFT 0x100, RIGHT 0x200, DOWN 0x400, UP 0x800, PLUS 0x1000.
+    /// WPAD button bits: LEFT 0x1, RIGHT 0x2, DOWN 0x4, UP 0x8, PLUS 0x10, TWO 0x100, ONE 0x200, B 0x400, A 0x800, MINUS 0x1000, Z 0x2000, C 0x4000, HOME 0x8000.
     pub buttons: u16,
     pub acc: [i16; 3],
 }
@@ -246,4 +247,81 @@ pub fn drawing(vm: &mut V) {
     if !vm.observe("SetPos__6CameraFRC9rmVector3", camera_set_pos) {
         vm.log_missing_symbol("SetPos__6CameraFRC9rmVector3");
     }
+}
+
+// --- view / projection -------------------------------------------------------------------------------------------------
+
+fn scene_viewport(h: &mut MgHost, vm: &mut V) -> R {
+    if h.viewport == 0 {
+        h.viewport = vm.alloc_zeroed(0x200, 32);
+        h.vp_matrix = vm.alloc_zeroed(0x80, 32);
+    }
+    vm.ret(h.viewport);
+    Ok(())
+}
+
+/// `EAGL::ViewPort::GetViewProjectionMatrix()`: view * projection of the active camera, in the engine's row-vector
+/// layout (`[x y z 1] * M`).  Field of view and aspect are the Wii's widescreen defaults.
+fn viewport_view_projection(h: &mut MgHost, vm: &mut V) -> R {
+    if h.vp_matrix == 0 {
+        h.viewport = vm.alloc_zeroed(0x200, 32);
+        h.vp_matrix = vm.alloc_zeroed(0x80, 32);
+    }
+    let c = h.camera;
+    let m = if c != 0 {
+        let eye = read_vec(vm, c + 0x10);
+        let target = read_vec(vm, c + 0x20);
+        let up = read_vec(vm, c + 0x30);
+        let view = glam_look_at(eye, target, up);
+        let proj = glam_perspective(h.fov, h.aspect, 0.1, 1000.);
+        mat_mul(&proj, &view)
+    } else {
+        [1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 1.]
+    };
+    for (i, v) in m.iter().enumerate() {
+        vm.st.mem.wf32(h.vp_matrix + 4 * i as u32, *v);
+    }
+    vm.ret(h.vp_matrix);
+    Ok(())
+}
+
+fn read_vec(vm: &mut V, p: u32) -> [f32; 3] {
+    [vm.st.mem.rf32(p), vm.st.mem.rf32(p + 4), vm.st.mem.rf32(p + 8)]
+}
+
+// Column-major 4x4 helpers (memory order == the row-vector matrix the engine expects).
+fn mat_mul(a: &[f32; 16], b: &[f32; 16]) -> [f32; 16] {
+    // column-vector product a * b, both column-major
+    let mut r = [0f32; 16];
+    for c in 0..4 {
+        for row in 0..4 {
+            for k in 0..4 {
+                r[c * 4 + row] += a[k * 4 + row] * b[c * 4 + k];
+            }
+        }
+    }
+    r
+}
+fn glam_look_at(eye: [f32; 3], target: [f32; 3], up: [f32; 3]) -> [f32; 16] {
+    let sub = |a: [f32; 3], b: [f32; 3]| [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+    let norm = |a: [f32; 3]| {
+        let l = (a[0] * a[0] + a[1] * a[1] + a[2] * a[2]).sqrt().max(1e-9);
+        [a[0] / l, a[1] / l, a[2] / l]
+    };
+    let cross = |a: [f32; 3], b: [f32; 3]| [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+    let dot = |a: [f32; 3], b: [f32; 3]| a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    let f = norm(sub(target, eye));
+    let s = norm(cross(f, up));
+    let u = cross(s, f);
+    // right-handed view matrix, column-major
+    [s[0], u[0], -f[0], 0., s[1], u[1], -f[1], 0., s[2], u[2], -f[2], 0., -dot(s, eye), -dot(u, eye), dot(f, eye), 1.]
+}
+fn glam_perspective(fov_y: f32, aspect: f32, near: f32, far: f32) -> [f32; 16] {
+    let f = 1. / (fov_y / 2.).tan();
+    [f / aspect, 0., 0., 0., 0., f, 0., 0., 0., 0., (far + near) / (near - far), -1., 0., 0., 2. * far * near / (near - far), 0.]
+}
+
+pub fn view(vm: &mut V) {
+    bind(vm, &["GetViewPort__Q23Ren5SceneFi"], scene_viewport);
+    bind(vm, &["GetViewProjectionMatrix__Q24EAGL8ViewPortFv"], viewport_view_projection);
 }

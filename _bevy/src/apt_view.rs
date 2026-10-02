@@ -160,7 +160,7 @@ pub fn view_step(mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option
                 v.vm.fe.mp.players=n;v.vm.fe.mp.minigame=2;v.vm.fe.mp.quick=n==1;v.vm.fe.launch=Some("tetherball".into());
             }else if let Some(n)=c.strip_prefix("gm").and_then(|n|n.parse::<i32>().ok()){
                 // `gmN` starts minigame type N (0 Dart 1 RcCars 3 Dodgeball 4 Footie 5 Paper 6 Wall 8 FreeThrow) in the VM (testing aid).
-                v.vm.fe.launch=Some(format!("mg:{n}"));
+                v.vm.fe.launch=Some(format!("mg:{n}"));v.vm.fe.todo.push(("ClearScreenStack".into(),vec![]));
             }else if matches!(c,"pr"|"ps"|"pq"){
                 // pause-menu button presses without the pointer (testing aid): resume / start over / quit
                 use crate::fe_host::PauseReq;

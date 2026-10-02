@@ -328,6 +328,39 @@ impl Physics {
         }
     }
 
+    /// Move a character's capsule-ish probe horizontally by `delta`, sliding along static obstacles.
+    fn slide(&self, pos: [f32; 3], delta: [f32; 2]) -> [f32; 3] {
+        use rapier3d::parry::shape::Ball;
+        let ball = Ball::new(0.28);
+        let mut p = Vector::new(pos[0], pos[1] + 0.62, pos[2]);
+        let mut rest = Vector::new(delta[0], 0., delta[1]);
+        for _ in 0..3 {
+            if rest.length() < 1e-5 {
+                break;
+            }
+            let pose = Pose::from_parts(p, Rotation::IDENTITY);
+            let mut opts = rapier3d::parry::query::ShapeCastOptions::with_max_time_of_impact(1.0);
+            opts.stop_at_penetration = false;
+            let filter = QueryFilter::only_fixed();
+            match self.world.cast_shape(&pose, rest, &ball, opts, filter) {
+                Some((_, hit)) => {
+                    let t = (hit.time_of_impact - 0.02).max(0.);
+                    p += rest * t;
+                    let n = hit.normal2;
+                    let remaining = rest * (1. - t);
+                    let into = remaining.dot(n);
+                    rest = remaining - n * into;
+                    rest.y = 0.;
+                }
+                None => {
+                    p += rest;
+                    break;
+                }
+            }
+        }
+        [p.x, pos[1], p.z]
+    }
+
     // --- stepping -----------------------------------------------------------------------------------------------------
 
     /// Advance the simulation by `ms`; returns the contacts that began since the previous step.
@@ -339,19 +372,25 @@ impl Physics {
         // characters walk toward their destination and stay on the ground
         let ids: Vec<u32> = self.chars.keys().copied().collect();
         for id in ids {
-            let (pos, dest, speed) = {
+            let (pos, dest, speed, orient) = {
                 let c = &self.chars[&id];
-                (c.position, c.destination, c.speed)
+                (c.position, c.destination, c.speed, c.orientation)
             };
             let mut p = pos;
+            let mut delta = [0f32; 2];
             if let Some(d) = dest {
                 let (dx, dz) = (d[0] - p[0], d[2] - p[2]);
                 let len = (dx * dx + dz * dz).sqrt();
                 if len > 1e-4 && speed > 0. {
                     let step = (speed * dt).min(len);
-                    p[0] += dx / len * step;
-                    p[2] += dz / len * step;
+                    delta = [dx / len * step, dz / len * step];
                 }
+            } else if speed > 0. {
+                // no waypoint: walk along the heading (`rmAngle::AsDir` = (sin, cos))
+                delta = [orient.sin() * speed * dt, orient.cos() * speed * dt];
+            }
+            if delta != [0.; 2] {
+                p = self.slide(p, delta);
             }
             if let Some(g) = self.ground_height(p, 1.0, 3.0) {
                 p[1] = g;

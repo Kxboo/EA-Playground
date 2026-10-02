@@ -59,6 +59,7 @@ pub struct Session {
     kid_uploads: Vec<Option<assets::Uploaded>>,
     default_upload: Option<assets::Uploaded>,
     pub t: f64,
+    pub frames: i32,
     pub last_events: Vec<mgvm::FeEvent>,
 }
 
@@ -152,6 +153,7 @@ impl Session {
             kid_uploads: vec![],
             default_upload: None,
             t: 0.,
+            frames: 0,
             last_events: vec![],
         }
     }
@@ -236,33 +238,50 @@ fn pad_buttons(keys: &ButtonInput<KeyCode>) -> u16 {
     let mut b = 0u16;
     let any = |ks: &[KeyCode]| ks.iter().any(|k| keys.pressed(*k));
     if any(&[KeyCode::ArrowUp, KeyCode::KeyW]) {
-        b |= 0x0800;
-    }
-    if any(&[KeyCode::ArrowDown, KeyCode::KeyS]) {
-        b |= 0x0400;
-    }
-    if any(&[KeyCode::ArrowLeft, KeyCode::KeyA]) {
-        b |= 0x0100;
-    }
-    if any(&[KeyCode::ArrowRight, KeyCode::KeyD]) {
-        b |= 0x0200;
-    }
-    if any(&[KeyCode::Space, KeyCode::KeyZ]) {
         b |= 0x0008;
     }
-    if any(&[KeyCode::KeyX, KeyCode::ControlLeft]) {
+    if any(&[KeyCode::ArrowDown, KeyCode::KeyS]) {
         b |= 0x0004;
     }
-    if any(&[KeyCode::Digit1]) {
-        b |= 0x0002;
-    }
-    if any(&[KeyCode::Digit2]) {
+    if any(&[KeyCode::ArrowLeft, KeyCode::KeyA]) {
         b |= 0x0001;
     }
+    if any(&[KeyCode::ArrowRight, KeyCode::KeyD]) {
+        b |= 0x0002;
+    }
+    if any(&[KeyCode::Space, KeyCode::KeyZ]) {
+        b |= 0x0800;
+    }
+    if any(&[KeyCode::KeyX, KeyCode::ControlLeft]) {
+        b |= 0x0400;
+    }
+    if any(&[KeyCode::Digit1]) {
+        b |= 0x0200;
+    }
+    if any(&[KeyCode::Digit2]) {
+        b |= 0x0100;
+    }
     if any(&[KeyCode::KeyP, KeyCode::Escape]) {
-        b |= 0x1000;
+        b |= 0x0010;
     }
     b
+}
+
+/// `EAGL_MG_PADS="from-to:hexbits,..."` scripts the pad by frame number (testing aid).
+fn scripted_pad(frame: i32) -> u16 {
+    let mut bits = 0u16;
+    for part in std::env::var("EAGL_MG_PADS").unwrap_or_default().split(',') {
+        if let Some((range, b)) = part.split_once(':') {
+            if let Some((a, z)) = range.split_once('-') {
+                if let (Ok(a), Ok(z), Ok(b)) = (a.parse::<i32>(), z.parse::<i32>(), u16::from_str_radix(b.trim_start_matches("0x"), 16)) {
+                    if frame >= a && frame < z {
+                        bits |= b;
+                    }
+                }
+            }
+        }
+    }
+    bits
 }
 
 #[derive(Resource, Default)]
@@ -277,7 +296,13 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
     let ms = ((time.delta_secs_f64() * 1000.) as i32).clamp(1, 50);
     s.t += time.delta_secs_f64();
     let Some((vm, host)) = s.vm.as_mut() else { return };
-    host.pads[0].buttons = pad_buttons(&keys);
+    s.frames += 1;
+    if s.frames == 30 && std::env::var("EAGL_MG_AUTOPLAY").is_ok() {
+        let mg = vm.r32(mgvm::snapshot::WORLD_MAN + 0x90);
+        let r = vm.call_by_name(host, "OnPlay__8MinigameFv", &[mg], &[]);
+        s.log.push(format!("autoplay OnPlay {r:?}"));
+    }
+    host.pads[0].buttons = pad_buttons(&keys) | scripted_pad(s.frames);
     if let Err(e) = mgvm::frame(vm, host, ms) {
         s.log.push(format!("frame failed: {e}"));
         s.state = SessionState::Failed(e);
@@ -368,12 +393,18 @@ fn present(
                     }
                 }
             }
+            if std::env::var("EAGL_MG_DEBUG").is_ok() {
+                eprintln!("[mg] prop {i} {name} found={} pos {:?}", s.prop_models.contains_key(name), &m[12..15]);
+            }
             let e = match s.prop_models.get(name) {
                 Some(up) => assets::spawn(&mut commands, up, (MgEntity, MgProp(i), mat_to_transform(radius, m)), None),
                 None => commands.spawn((MgEntity, MgProp(i), Transform::default(), Visibility::Hidden)).id(),
             };
             s.props.push((e, name.clone()));
         }
+    }
+    if std::env::var("EAGL_MG_DEBUG").is_ok() && s.frames % 120 == 0 {
+        eprintln!("[mg] frame {} draws {:?}", s.frames, snapshot.draws.iter().map(|(n, m)| (n.as_str(), [m[12], m[13], m[14]])).collect::<Vec<_>>());
     }
     for (p, mut t, mut v) in &mut props {
         if let Some((_, m)) = snapshot.draws.get(p.0) {

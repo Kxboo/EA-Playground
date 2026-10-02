@@ -38,6 +38,8 @@ fn stub_ren_singletons(vm: &mut MgVm) {
 
 pub fn boot(vm: &mut MgVm, host: &mut MgHost) -> Result<(), String> {
     run_static_constructors(vm, host);
+    // render space == world space: the host applies the world's curvature when presenting
+    vm.st.mem.w8(0x8060_22ec, 1);
     stub_ren_singletons(vm);
     // opaque engine objects the game only passes around
     let scene = vm.alloc_zeroed(0x2000, 32);
