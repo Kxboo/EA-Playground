@@ -813,7 +813,7 @@ fn tar_manager_init(h: &mut MgHost, vm: &mut V) -> R {
     Ok(())
 }
 
-fn tar_name(h: &mut MgHost, vm: &mut V, tar: u32) -> Result<Option<(String, String)>, String> {
+fn tar_name(h: &mut MgHost, vm: &mut V, tar: u32) -> Result<Option<(String, String, usize)>, String> {
     if let Some(t) = h.tars.get(&tar) {
         return Ok(Some(t.clone()));
     }
@@ -834,7 +834,7 @@ fn tar_name(h: &mut MgHost, vm: &mut V, tar: u32) -> Result<Option<(String, Stri
             let e = mgr + 0x84 * i;
             let t = vm.r32(e);
             let name = vm.st.mem.cstr(e + 4, 128);
-            h.tars.insert(t, (path.clone(), name));
+            h.tars.insert(t, (path.clone(), name, i as usize));
         }
     }
     Ok(h.tars.get(&tar).cloned())

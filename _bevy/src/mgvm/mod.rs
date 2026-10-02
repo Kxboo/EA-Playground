@@ -52,8 +52,8 @@ pub struct MgHost {
     pub int_array: Vec<i32>,
     /// `TarManager`s initialised so far: (object, texture bank path).
     pub tar_managers: Vec<(u32, String)>,
-    /// `EAGL::TAR` -> (bank path, shape name), filled from the managers' tables.
-    pub tars: std::collections::HashMap<u32, (String, String)>,
+    /// `EAGL::TAR` -> (bank path, shape name, index), filled from the managers' tables (bank order).
+    pub tars: std::collections::HashMap<u32, (String, String, usize)>,
     /// Texture banks behind those managers, copied out of guest memory (they may live inside in-place-loaded archives).
     pub tar_banks: std::collections::HashMap<String, std::sync::Arc<Vec<u8>>>,
     /// Open `EAGL::DrawTextured` objects.
@@ -95,8 +95,8 @@ pub enum FxEvent {
 /// One `EAGL::DrawTextured` batch (Begin .. End) the game drew this frame: indicators, cursors, rings.
 #[derive(Clone, Debug, Default)]
 pub struct ImmDraw {
-    /// (texture bank path, shape name) of the `EAGL::TAR` set with `SetTexture`.
-    pub tex: Option<(String, String)>,
+    /// (texture bank path, shape name, shape index in the bank) of the `EAGL::TAR` set with `SetTexture`.
+    pub tex: Option<(String, String, usize)>,
     /// `SetModelMatrix` (engine row-vector convention, translation at 12..14).
     pub model: [f32; 16],
     /// GX primitive: 0x80 quads, 0x90 triangles, 0x98 strip, 0xa0 fan.
@@ -756,6 +756,9 @@ pub fn probe(ty: i32) {
         }
         for (k, v) in &host.tar_banks {
             println!("    bank {k}: {} bytes {:?}", v.len(), &v[..8]);
+            if let Ok(dir) = std::env::var("EAGL_DUMP_BANKS") {
+                let _ = std::fs::write(std::path::Path::new(&dir).join(k.replace('/', "_")), v.as_slice());
+            }
         }
         for (_, path) in &host.tar_managers {
             println!("    vfs {path}: {:?}", host.vfs.read(path).map(|d| (d.len(), d[..16.min(d.len())].to_vec())));

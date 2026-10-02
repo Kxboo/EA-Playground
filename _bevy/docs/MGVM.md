@@ -50,4 +50,6 @@ Found with a Ghidra decompilation of the executable (`D:/tools/decomp.c`, see th
 | --- | --- |
 | Dodgeball | Complete: FE quick play / multiplayer teams, 3v3 with AI (hits, catches, dodges), keyboard controls (move, A ready/catch, J throw, Q/E dodge), HUD + round banners, indicators, effects, sound + music, pause (resume/restart/quit), PostGame -> replay/done -> menus. |
 | Tetherball | Complete: FE launch, AI serve/rally, J toss / K strike / L reverse strike (overhand strike needs the mega-hit ability flag `MGTetherball+0x424`), plain pole swapped in for the world's pole-with-ball (guest `Placeable+0xa8` mirrored onto the Bevy world), HUD, effects, sound, music, PostGame -> menus. |
+| Wallball | Complete: FE launch, AI rallies, J toss / K backhand / L forehand (overhand serve is ability-gated, `MGWallball+0x1d3/+0x1d5`), power-ups and ball trail drawn, HUD hit counter / serve bubble, sound, music, PostGame -> menus. |
+| Footie | Complete: FE launch, 2v2 AI (serves, juggles, shots, dive saves, goals via net phantoms), J serve / O juggle / I shot / Q,E dive, power-ring indicators (textures by bank index), HUD, sound, music, PostGame -> menus. |
 | others | Run start -> PostGame -> exit in the lab under AI; per-game polish pending (one game at a time). |

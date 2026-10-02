@@ -11,7 +11,7 @@ pub struct ImmBatch(usize);
 #[derive(Default)]
 pub struct ImmCache {
     banks: HashMap<String, Option<crate::gsh::Gsh>>,
-    materials: HashMap<Option<(String, String)>, Handle<StandardMaterial>>,
+    materials: HashMap<Option<(String, String, usize)>, Handle<StandardMaterial>>,
     pool: Vec<(Entity, Handle<Mesh>)>,
 }
 
@@ -45,14 +45,16 @@ pub fn triangles(prim: u32, n: usize) -> Vec<u32> {
     out
 }
 
-fn material(cache: &mut ImmCache, tex: &Option<(String, String)>, banks: &HashMap<String, std::sync::Arc<Vec<u8>>>, images: &mut Assets<Image>, materials: &mut Assets<StandardMaterial>) -> Handle<StandardMaterial> {
+fn material(cache: &mut ImmCache, tex: &Option<(String, String, usize)>, banks: &HashMap<String, std::sync::Arc<Vec<u8>>>, images: &mut Assets<Image>, materials: &mut Assets<StandardMaterial>) -> Handle<StandardMaterial> {
     if let Some(m) = cache.materials.get(tex) {
         return m.clone();
     }
-    let image = tex.as_ref().and_then(|(bank, shape)| {
+    let image = tex.as_ref().and_then(|(bank, shape, index)| {
         let data = banks.get(bank)?;
         let gsh = cache.banks.entry(bank.clone()).or_insert_with(|| crate::gsh::parse(data).ok()).as_ref()?;
-        let e = gsh.entries.iter().find(|e| e.full_name.as_deref().is_some_and(|n| n.trim().eq_ignore_ascii_case(shape)) || e.name.eq_ignore_ascii_case(shape))?;
+        // by long name, else by position (the TarManager table follows the bank order; some banks' long names are not
+        // attachments the parser knows)
+        let e = gsh.entries.iter().find(|e| e.full_name.as_deref().is_some_and(|n| n.trim().eq_ignore_ascii_case(shape)) || e.name.eq_ignore_ascii_case(shape)).or_else(|| gsh.entries.get(*index))?;
         let (rgba, w, h) = crate::gsh::decode(e, data).ok()?;
         Some(images.add(Image::new(Extent3d { width: w as u32, height: h as u32, depth_or_array_layers: 1 }, TextureDimension::D2, rgba, TextureFormat::Rgba8UnormSrgb, RenderAssetUsages::default())))
     });
@@ -118,6 +120,18 @@ pub fn render(
 
 #[cfg(test)]
 mod tests {
+    /// Decode every shape of a bank dumped by `EAGL_DUMP_BANKS` (set `EAGL_BANK` to its path).
+    #[test]
+    #[ignore]
+    fn decode_dumped_bank() {
+        let Ok(path) = std::env::var("EAGL_BANK") else { return };
+        let d = std::fs::read(path).unwrap();
+        let g = crate::gsh::parse(&d).unwrap();
+        for e in &g.entries {
+            println!("{} {:?} id {} {}x{} -> {:?}", e.name, e.full_name, e.record_id, e.width, e.height, crate::gsh::decode(e, &d).map(|r| r.0.len()));
+        }
+    }
+
     #[test]
     fn primitives_become_triangles() {
         assert_eq!(super::triangles(0x90, 6), vec![0, 1, 2, 3, 4, 5]);
