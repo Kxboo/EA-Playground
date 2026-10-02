@@ -58,6 +58,10 @@ pub fn boot(vm: &mut MgVm, host: &mut MgHost) -> Result<(), String> {
     vm.call_by_name(host, "InitialiseDatabase__11pgIDatabaseFv", &[], &[])?;
     // the nine MGIDs are database keys: rebuild them now that the database exists
     vm.call_by_name(host, r"__sinit_\conversationmanager_cpp", &[], &[])?;
+    // front-end handler singletons the games talk to (FEManager::InitializeAip creates them)
+    for name in ["Create__15PreGameHandlersFv", "Create__16MinigameHandlersFv", "Create__16WorldHudHandlersFv", "Create__16PostGameHandlersFv", "Create__17PauseMenuHandlersFv", "Create__21PaperAirplaneHandlersFv", "Create__18EndTourneyHandlersFv", "Create__19MultiPlayerHandlersFv"] {
+        vm.call_by_name(host, name, &[], &[])?;
+    }
     // GameState::Init
     let csvs = vm.alloc_cstr("data/csvs.viv");
     let pgio = vm.r32(0x8060_22ac);

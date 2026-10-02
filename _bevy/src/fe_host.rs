@@ -21,6 +21,9 @@ pub struct Fe{
     pub launch:Option<String>,
     pub launch_done:bool,
     pub hud_loaded:bool,
+    /// A minigame runs in the PowerPC VM (`mg_session`): FE buttons are forwarded as guest callbacks through `mg_cmds`.
+    pub vm_session:bool,
+    pub mg_cmds:Vec<String>,
     pub start_anim_done:bool,
     pub serve_bubble:bool,
     /// Choice made on a post-game screen for the minigame to act on (0 replay, 1 leave); see `UpdatePostGame`.
@@ -120,6 +123,8 @@ pub fn kid_name(vm:&Vm,idx:usize)->String{
 /// Start the chosen minigame: only Tetherball (`MinigameEnum` 2) exists in this port; for any other the original screens have run
 /// (rules, instructions) and a system message box says so, leaving the player on the pre-game screen.
 fn start_game(vm:&mut Vm){
+    if vm.fe.vm_session{vm.fe.mg_cmds.push("OnPlay".into());return}
+    if matches!(vm.fe.mp.minigame,0|3|4|5|6){let n=vm.fe.mp.minigame;vm.fe.todo.push(("ClearScreenStack".into(),vec![]));vm.fe.launch=Some(format!("mg:{n}"));return}
     if vm.fe.mp.minigame==2{vm.fe.todo.push(("CloseScreen".into(),vec![]));vm.fe.launch=Some("tetherball".into());return}
     let ok=vm.locale_string("$OK");
     vm.fe.todo.push(("TRCDisplayPopup".into(),vec![V::Str("notimpl".into()),V::Str("This minigame is not available in this port.".into()),V::Num(1.),V::Str(ok.as_str().into()),V::Str("0".into()),V::Num(0.),V::Num(0.)]));
@@ -297,7 +302,7 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
         "MultiPlayer_SetGameRules"=>{
             // `SetGameRules`: aiRules -> MultiplayerMode::SetRules (five ints), then the game launches (here: after the pre-game screen).
             if let Some(a)=arg("aiRules"){let v:Vec<i32>=a.split(DELIM).filter_map(|x|x.parse().ok()).collect();if v.len()>=5{vm.fe.mp.rules=v;}}
-            let next=if vm.fe.mp.quick{"PreGameInstructions"}else{"PreGameMP"};vm.fe.later.push((20,"OpenScreen".into(),vec![V::Str(next.into())]));
+            if matches!(vm.fe.mp.minigame,0|3|4|5|6){start_game(vm);}else{let next=if vm.fe.mp.quick{"PreGameInstructions"}else{"PreGameMP"};vm.fe.later.push((20,"OpenScreen".into(),vec![V::Str(next.into())]));}
             vec![]
         }
         "Conversation_Init"=>vec![],
@@ -319,8 +324,8 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
         "Pause_OnKeepPlaying"=>{vm.fe.pause_req=Some(PauseReq::Resume);vec![]}
         "Pause_OnRestart"=>{vm.fe.pause_req=Some(PauseReq::Restart);vec![]}
         "Pause_OnQuit"=>{vm.fe.pause_req=Some(PauseReq::Quit);vec![]}
-        "Hud_LoadComplete"=>{vm.fe.hud_loaded=true;vec![]}
-        "GameStartAnim_Complete"=>{vm.fe.start_anim_done=true;vm.fe.serve_bubble=true;vec![]}
+        "Hud_LoadComplete"=>{vm.fe.hud_loaded=true;if vm.fe.vm_session{vm.fe.mg_cmds.push("OnHudLoadComplete".into());}vec![]}
+        "GameStartAnim_Complete"=>{vm.fe.start_anim_done=true;vm.fe.serve_bubble=true;if vm.fe.vm_session{vm.fe.mg_cmds.push("OnGameStartAnimComplete".into());}vec![]}
         "QuickPlay_SaveScores"|"RoundSelect_OnBack"=>vec![],
         "MultiPlayer_TeamSelectOnLoad"=>{
             let mp=&vm.fe.mp;
@@ -332,7 +337,7 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
             // "Play" (0): the rules screen stack is cleared and the game opens its pre-game instructions.
             let t=arg("iMultiPlayerRulesType").and_then(|v|v.parse::<i32>().ok()).unwrap_or(0);
             if t==0{vm.fe.mp.rules=tetherball_default_rules();}
-            if t==0{let next=if vm.fe.mp.quick{"PreGameInstructions"}else{"PreGameMP"};vm.fe.later.push((20,"OpenScreen".into(),vec![V::Str(next.into())]));}
+            if t==0{if matches!(vm.fe.mp.minigame,0|3|4|5|6){start_game(vm);}else{let next=if vm.fe.mp.quick{"PreGameInstructions"}else{"PreGameMP"};vm.fe.later.push((20,"OpenScreen".into(),vec![V::Str(next.into())]));}}
             vec![]
         }
         "MultiPlayer_PreRulesOnLoad"=>{

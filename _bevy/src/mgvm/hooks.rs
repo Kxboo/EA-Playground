@@ -16,6 +16,9 @@ pub fn install(vm: &mut V) {
     input(vm);
     drawing(vm);
     view(vm);
+    fe_screens(vm);
+    apt_calls(vm);
+    pregame(vm);
 }
 
 fn bind(vm: &mut V, names: &[&str], f: fn(&mut MgHost, &mut V) -> R) {
@@ -76,7 +79,8 @@ fn stub(h: &mut MgHost, vm: &mut V) -> R {
         if class.ends_with("Handlers") {
             let ints = [vm.a(1), vm.a(2), vm.a(3), vm.a(4)];
             let floats = [vm.fa(0), vm.fa(1)];
-            h.events.push(super::FeEvent { name: name.clone(), ints, floats });
+            let args = decode_args(vm, &name);
+            h.events.push(super::FeEvent { name: name.clone(), ints, floats, args });
         }
     }
     // constructors return `this` and install the class's vtable so virtual calls reach the (stubbed or native) methods
@@ -324,4 +328,171 @@ fn glam_perspective(fov_y: f32, aspect: f32, near: f32, far: f32) -> [f32; 16] {
 pub fn view(vm: &mut V) {
     bind(vm, &["GetViewPort__Q23Ren5SceneFi"], scene_viewport);
     bind(vm, &["GetViewProjectionMatrix__Q24EAGL8ViewPortFv"], viewport_view_projection);
+}
+
+
+/// Arguments of a `...Handlers` / `FEManager` call from its mangled signature (`Name__16MinigameHandlersFiif` = int, int,
+/// float).  `this` is r3, integer arguments follow in r4.., floats in f1.., `char*` arguments are read as strings.
+pub fn decode_args(vm: &mut V, name: &str) -> Vec<super::FeArg> {
+    use super::FeArg;
+    let Some(pos) = name.rfind('F') else { return vec![] };
+    // the signature starts after the class token: "...Handlers" + 'F' ('CF' for const methods)
+    let sig = &name[pos + 1..];
+    let (mut gi, mut gf) = (1usize, 0usize);
+    let mut out = vec![];
+    let b = sig.as_bytes();
+    let mut i = 0;
+    while i < b.len() {
+        match b[i] {
+            b'i' | b'l' | b'b' | b'c' | b's' => {
+                let v = vm.a(gi) as i32;
+                out.push(FeArg::Int(if b[i] == b'b' { (v & 0xff) as i32 } else { v }));
+                gi += 1;
+                i += 1;
+            }
+            b'U' => {
+                out.push(FeArg::Int(vm.a(gi) as i32));
+                gi += 1;
+                i += 2;
+            }
+            b'f' => {
+                out.push(FeArg::Float(vm.fa(gf)));
+                gf += 1;
+                i += 1;
+            }
+            b'P' | b'R' => {
+                // pointers: `PCc` / `Pc` are C strings, anything else is passed through as an address
+                let rest = &sig[i..];
+                let ptr = vm.a(gi);
+                gi += 1;
+                if rest.starts_with("PCc") || rest.starts_with("Pc") {
+                    let s = vm.st.mem.cstr(ptr, 128);
+                    out.push(FeArg::Str(s));
+                } else {
+                    out.push(FeArg::Int(ptr as i32));
+                }
+                // skip the pointee type tokens up to the next argument boundary (simple types only)
+                i += 1;
+                while i < b.len() && matches!(b[i], b'C' | b'P' | b'R') {
+                    i += 1;
+                }
+                if i < b.len() && b[i].is_ascii_digit() {
+                    let mut n = 0usize;
+                    while i < b.len() && b[i].is_ascii_digit() {
+                        n = n * 10 + (b[i] - b'0') as usize;
+                        i += 1;
+                    }
+                    i += n;
+                } else if i < b.len() && b[i] == b'Q' {
+                    // qualified name: Q2 5Enums 5Foo
+                    let parts = (b[i + 1] - b'0') as usize;
+                    i += 2;
+                    for _ in 0..parts {
+                        let mut n = 0usize;
+                        while i < b.len() && b[i].is_ascii_digit() {
+                            n = n * 10 + (b[i] - b'0') as usize;
+                            i += 1;
+                        }
+                        i += n;
+                    }
+                } else {
+                    i += 1;
+                }
+            }
+            b'Q' => {
+                // enum / struct by value: pass as int
+                let parts = (b[i + 1] - b'0') as usize;
+                i += 2;
+                for _ in 0..parts {
+                    let mut n = 0usize;
+                    while i < b.len() && b[i].is_ascii_digit() {
+                        n = n * 10 + (b[i] - b'0') as usize;
+                        i += 1;
+                    }
+                    i += n;
+                }
+                out.push(FeArg::Int(vm.a(gi) as i32));
+                gi += 1;
+            }
+            b'v' => i += 1,
+            c if c.is_ascii_digit() => {
+                // class-typed argument (e.g. 15RCCarsHintTypes): enum -> int
+                let mut n = 0usize;
+                while i < b.len() && b[i].is_ascii_digit() {
+                    n = n * 10 + (b[i] - b'0') as usize;
+                    i += 1;
+                }
+                i += n;
+                out.push(FeArg::Int(vm.a(gi) as i32));
+                gi += 1;
+            }
+            _ => i += 1,
+        }
+    }
+    out
+}
+
+// --- FEManager screens --------------------------------------------------------------------------------------------------
+
+fn fe_screen_call(h: &mut MgHost, vm: &mut V) -> R {
+    let name = vm.name_of(vm.st.cpu.pc);
+    let arg = if name.contains("FPc") { vm.st.mem.cstr(vm.a(1), 64) } else { String::new() };
+    let call = name.split("__").next().unwrap_or("").to_string();
+    h.events.push(super::FeEvent { name: format!("FEManager::{call}"), ints: [0; 4], floats: [0.; 2], args: vec![super::FeArg::Str(arg)] });
+    Ok(())
+}
+
+pub fn fe_screens(vm: &mut V) {
+    bind(
+        vm,
+        &[
+            "OpenAptScreen__9FEManagerFPc",
+            "CloseAptScreen__9FEManagerFv",
+            "OpenAptOverlay__9FEManagerFPc",
+            "CloseAptOverlay__9FEManagerFv",
+            "ReplaceAptScreen__9FEManagerFPc",
+            "ClearScreenStack__9FEManagerFv",
+        ],
+        fe_screen_call,
+    );
+}
+
+/// `AptCallFunction(const char* function, char* result, const char* path, int count, ...)`: the executable's call into the
+/// running front-end movie.  The variadic arguments are C strings (printf-formatted numbers or text).
+fn apt_call_function(h: &mut MgHost, vm: &mut V) -> R {
+    let name = vm.st.mem.cstr(vm.a(0), 96);
+    let path = vm.st.mem.cstr(vm.a(2), 96);
+    let count = vm.a(3).min(12) as usize;
+    let sp = vm.st.cpu.r[1];
+    let mut args = vec![];
+    for k in 0..count {
+        let p = if k < 4 { vm.a(4 + k) } else { vm.r32(sp + 8 + 4 * (k as u32 - 4)) };
+        args.push(super::FeArg::Str(vm.st.mem.cstr(p, 256)));
+    }
+    h.events.push(super::FeEvent { name: format!("Apt::{name}"), ints: [0; 4], floats: [0.; 2], args });
+    let _ = path;
+    vm.ret(0);
+    Ok(())
+}
+
+pub fn apt_calls(vm: &mut V) {
+    bind(vm, &["AptCallFunction__FPCcPcPCcie"], apt_call_function);
+}
+
+/// `PreGameHandlers::SetupPreGameHandlers(this, MinigameType, int, PreGameInfo*)`: note the info words for the
+/// front end's `PreGame_*` queries, then run the original.
+fn setup_pregame(h: &mut MgHost, vm: &mut V) -> R {
+    let (ty, flag, info) = (vm.a(1), vm.a(2), vm.a(3));
+    let mut args = vec![super::FeArg::Int(ty as i32), super::FeArg::Int(flag as i32)];
+    for k in 0..4 {
+        args.push(super::FeArg::Int(vm.r32(info + 4 * k) as i32));
+    }
+    h.events.push(super::FeEvent { name: "PreGameInfo".into(), ints: [0; 4], floats: [0.; 2], args });
+    Ok(())
+}
+
+pub fn pregame(vm: &mut V) {
+    if !vm.observe("SetupPreGameHandlers__15PreGameHandlersFQ25Enums12MinigameTypeiP11PreGameInfo", setup_pregame) {
+        vm.log_missing_symbol("SetupPreGameHandlers");
+    }
 }

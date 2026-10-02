@@ -109,7 +109,6 @@ const SERVICE_CLASSES: &[&str] = &[
     "PhysicsManager", "PhysicsRigidBody", "PhysicsCharacter", "PhysicsUserData", "PhysicsCharacterListener",
     "PhysicsRigidBodyListener", "Audio", "AuAEMSManager", "AuCharacterSoundObject", "AuEnvironmentManager", "AuHelpers", "FEManager",
     "MemMgr", "PartFxManager", "PartFx", "AreaManager",
-    "WorldHudHandlers", "MinigameHandlers", "MinigameLVHandlers", "MinigameFSHandlers",
 ];
 
 /// Services that are rendering / audio / effects only: when nothing hooks them they do nothing and return 0 (logged).
@@ -123,7 +122,7 @@ pub fn is_soft_stub(name: &str) -> bool {
     match class_of(name) {
         Some(c) => {
             let q = qualified(c);
-            (q.ends_with("Handlers") && !q.ends_with("LVHandlers") && !q.ends_with("FSHandlers")) || q.starts_with("Physics") || q.ends_with("RenderEntity") || q.starts_with("Ren::") || q.starts_with("nw4") || q.starts_with("EAGL::Model") || q.starts_with("EAGL::Draw") || q.starts_with("EAGL::Device") || q.starts_with("EAGL::RenderContext") || q.starts_with("EAGL::Geo") || q.starts_with("EAGLInternal::RenderContext") || q.starts_with("Csis::") || ["AreaManager", "PhysicsManager", "PhysicsRigidBody", "PhysicsDynamicCharacter", "PhysicsStaticCharacter", "Audio", "AuAEMSManager", "AuCharacterSoundObject", "AuEnvironmentManager", "AuHelpers", "PartFxManager", "PartFx", "FEManager", "WorldHudHandlers", "MinigameHandlers", "TRC"].contains(&q.as_str())
+q.starts_with("Physics") || q.ends_with("RenderEntity") || q.starts_with("Ren::") || q.starts_with("AIP::") || q.starts_with("nw4") || q.starts_with("EAGL::Model") || q.starts_with("EAGL::Draw") || q.starts_with("EAGL::Device") || q.starts_with("EAGL::RenderContext") || q.starts_with("EAGL::Geo") || q.starts_with("EAGLInternal::RenderContext") || q.starts_with("Csis::") || ["AIP", "AreaManager", "PhysicsManager", "PhysicsRigidBody", "PhysicsDynamicCharacter", "PhysicsStaticCharacter", "Audio", "AuAEMSManager", "AuCharacterSoundObject", "AuEnvironmentManager", "AuHelpers", "PartFxManager", "PartFx", "FEManager", "TRC"].contains(&q.as_str())
         }
         None => false,
     }
@@ -184,6 +183,15 @@ pub struct FeEvent {
     pub name: String,
     pub ints: [u32; 4],
     pub floats: [f32; 2],
+    /// Arguments decoded from the mangled signature (ints / floats in declaration order, C strings read through).
+    pub args: Vec<FeArg>,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum FeArg {
+    Int(i32),
+    Float(f32),
+    Str(String),
 }
 
 pub type MgVm = Vm<MgHost>;
@@ -220,6 +228,13 @@ fn team_layout(ty: i32, humans: usize) -> Vec<(u32, usize, u32)> {
             out.push((0x58, 4, 6));
             out.push((0x68, 5, 6));
         }
+        // 2 v 2
+        4 => {
+            out.push((8, 0, 1));
+            out.push((0x18, 2, 6));
+            out.push((0x48, 1, if humans > 1 { 2 } else { 6 }));
+            out.push((0x58, 3, 6));
+        }
         // 1 v 1 default
         _ => {
             out.push((8, 0, 1));
@@ -254,6 +269,19 @@ pub fn launch(vm: &mut MgVm, host: &mut MgHost, ty: i32, humans: usize) -> Resul
     vm.call_by_name(host, "StartMinigame__8WorldManF4MGIDiQ25Enums23MiniGameDifficultyLevelRC5TeamsPCi", &[wm, mg_id, 1, 1, teams, 0], &[])?;
     vm.call_by_name(host, "StartMinigameFadeComplete__8WorldManFv", &[wm], &[])?;
     Ok(())
+}
+
+/// Call a per-game callback (`OnHudLoadComplete`, `OnGameStartAnimComplete`, `OnPauseContinue`, `OnPauseReset`, ...) of the running
+/// minigame; games without that method are skipped.
+pub fn game_callback(vm: &mut MgVm, host: &mut MgHost, name: &str) -> Result<bool, String> {
+    let Some((_, class)) = world::MINIGAME_CLASSES.iter().find(|(t, _)| *t == host.minigame_type) else { return Ok(false) };
+    let sym = format!("{name}__{}{}Fv", class.len(), class);
+    let mg = vm.r32(world::WORLD_MAN + 0x90);
+    if mg == 0 || vm.img.addr(&sym).is_none() {
+        return Ok(false);
+    }
+    vm.call_by_name(host, &sym, &[mg], &[])?;
+    Ok(true)
 }
 
 /// One game frame: pads -> guest, `WorldMan::Update(ms)`, then the minigame's draw pass.
@@ -332,7 +360,7 @@ pub fn probe(ty: i32) {
             break;
         }
         for e in host.events.drain(..) {
-            println!("  [{f}] {} {:x?} {:?}", e.name, e.ints, e.floats);
+            println!("  [{f}] {} {:?}", e.name, e.args);
         }
     }
     let snap = snapshot::snapshot(&mut vm, &mut host);

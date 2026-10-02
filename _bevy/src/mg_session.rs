@@ -60,6 +60,7 @@ pub struct Session {
     default_upload: Option<assets::Uploaded>,
     pub t: f64,
     pub frames: i32,
+    skip_close: i32,
     pub last_events: Vec<mgvm::FeEvent>,
 }
 
@@ -154,6 +155,7 @@ impl Session {
             default_upload: None,
             t: 0.,
             frames: 0,
+            skip_close: 0,
             last_events: vec![],
         }
     }
@@ -171,6 +173,9 @@ fn launch_or_teardown(world: &mut World) {
     }
     let quit = world.get_non_send_resource::<Session>().is_some() && world.resource::<ButtonInput<KeyCode>>().just_pressed(KeyCode::F10);
     if quit {
+        if let Some(mut v) = world.get_non_send_resource_mut::<crate::apt_view::AptViewNs>() {
+            v.0.vm.fe.vm_session = false;
+        }
         world.remove_non_send_resource::<Session>();
         world.remove_resource::<MgActive>();
         world.remove_resource::<crate::tb_session::TbActive>();
@@ -227,6 +232,7 @@ fn build(mut commands: Commands, s: Option<NonSendMut<Session>>, game: Option<Re
             commands.insert_resource(crate::tb_session::TbActive);
         }
         Err(e) => {
+            eprintln!("[mg] VM failed: {e}");
             s.log.push(format!("VM failed: {e}"));
             s.state = SessionState::Failed(e);
         }
@@ -287,7 +293,7 @@ fn scripted_pad(frame: i32) -> u16 {
 #[derive(Resource, Default)]
 pub struct MgSnapshot(pub Option<mgvm::snapshot::Snapshot>);
 
-fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<ButtonInput<KeyCode>>, time: Res<Time<Real>>, mut backdrop: Option<ResMut<game::Backdrop>>, snap: Option<ResMut<MgSnapshot>>) {
+fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<ButtonInput<KeyCode>>, time: Res<Time<Real>>, mut backdrop: Option<ResMut<game::Backdrop>>, snap: Option<ResMut<MgSnapshot>>, mut fe: Option<NonSendMut<crate::apt_view::AptViewNs>>) {
     let Some(mut s) = s else { return };
     if s.state != SessionState::Running {
         return;
@@ -304,11 +310,49 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
     }
     host.pads[0].buttons = pad_buttons(&keys) | scripted_pad(s.frames);
     if let Err(e) = mgvm::frame(vm, host, ms) {
+        eprintln!("[mg] frame failed: {e}");
         s.log.push(format!("frame failed: {e}"));
         s.state = SessionState::Failed(e);
         return;
     }
-    s.last_events.extend(host.events.drain(..));
+    let events: Vec<mgvm::FeEvent> = host.events.drain(..).collect();
+    if let Some(v) = fe.as_mut() {
+        forward_events(&mut v.0.vm, &events, s);
+    }
+    // front-end button presses become guest callbacks
+    let cmds: Vec<String> = fe.as_mut().map(|v| std::mem::take(&mut v.0.vm.fe.mg_cmds)).unwrap_or_default();
+    let mut pause_req = fe.as_mut().and_then(|v| v.0.vm.fe.pause_req.take());
+    let (vm, host) = s.vm.as_mut().unwrap();
+    for c in &cmds {
+        let r = match c.as_str() {
+            "OnPlay" => {
+                let mg = vm.r32(mgvm::snapshot::WORLD_MAN + 0x90);
+                vm.call_by_name(host, "OnPlay__8MinigameFv", &[mg], &[]).map(|_| true)
+            }
+            other => mgvm::game_callback(vm, host, other),
+        };
+        if let Err(e) = r {
+            s.log.push(format!("callback {c} failed: {e}"));
+        }
+    }
+    if let Some(req) = pause_req.take() {
+        use crate::fe_host::PauseReq;
+        let name = match req {
+            PauseReq::Resume => "OnPauseContinue",
+            PauseReq::Restart => "OnPauseReset",
+            PauseReq::Quit => "OnPauseQuit",
+        };
+        let r = if matches!(req, PauseReq::Quit) {
+            let mg = vm.r32(mgvm::snapshot::WORLD_MAN + 0x90);
+            vm.call_by_name(host, "OnPauseQuit__8MinigameFv", &[mg], &[]).map(|_| true)
+        } else {
+            mgvm::game_callback(vm, host, name)
+        };
+        if let Err(e) = r {
+            s.log.push(format!("{name} failed: {e}"));
+        }
+    }
+    let (vm, host) = s.vm.as_mut().unwrap();
     let snapshot = mgvm::snapshot::snapshot(vm, host);
     if let (Some(bd), Some((eye, target, _))) = (backdrop.as_mut(), snapshot.camera) {
         bd.set_now(Vec3::from(eye), Vec3::from(target));
@@ -318,6 +362,74 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
         None => {
             commands.insert_resource(MgSnapshot(Some(snapshot)));
         }
+    }
+}
+
+/// Guest front-end calls -> the APT front end: `Apt::Name(args)` are `AptCallFunction`s of the running movie,
+/// `FEManager::*` open / close screens and overlays, `PreGameInfo` carries the pre-game / pause screen data.
+fn forward_events(vm: &mut crate::apt_vm::Vm, events: &[mgvm::FeEvent], s: &mut Session) {
+    use crate::apt_vm::V;
+    vm.fe.vm_session = true;
+    for e in events {
+        if std::env::var("EAGL_MG_DEBUG").is_ok() {
+            eprintln!("[mg] event {} {:?}", e.name, e.args);
+        }
+        let str_arg = |i: usize| match e.args.get(i) {
+            Some(mgvm::FeArg::Str(t)) => t.clone(),
+            _ => String::new(),
+        };
+        match e.name.as_str() {
+            "FEManager::OpenAptScreen" if str_arg(0) == "WorldHud" => s.skip_close += 1,
+            "FEManager::CloseAptScreen" if s.skip_close > 0 => s.skip_close -= 1,
+            n if n.starts_with("Apt::WorldHud_") => {}
+            "FEManager::OpenAptScreen" => {
+                if str_arg(0).ends_with("Hud") {
+                    vm.fe.hud_loaded = false;
+                }
+                vm.call_exposed("OpenScreen", vec![V::Str(str_arg(0).as_str().into())]);
+            }
+            "FEManager::CloseAptScreen" => {
+                vm.call_exposed("CloseScreen", vec![]);
+            }
+            "FEManager::OpenAptOverlay" => {
+                vm.fe.paused = true;
+                vm.fe.pause_req = None;
+                vm.fe.todo.push(("OpenOverlay".into(), vec![V::Str(str_arg(0).as_str().into())]));
+            }
+            "FEManager::CloseAptOverlay" => vm.fe.todo.push(("CloseOverlay".into(), vec![])),
+            "FEManager::ReplaceAptScreen" => {
+                vm.call_exposed("ReplaceScreen", vec![V::Str(str_arg(0).as_str().into())]);
+            }
+            "FEManager::ClearScreenStack" => {
+                vm.call_exposed("ClearScreenStack", vec![]);
+            }
+            "PreGameInfo" => {
+                let w = |i: usize| match e.args.get(2 + i) {
+                    Some(mgvm::FeArg::Int(n)) => *n as u32,
+                    _ => 0,
+                };
+                // [pause?, controller, multiplayer, game type]
+                vm.fe.pause_words = if w(0) != 0 { Some([w(0), w(1), w(2), w(3)]) } else { None };
+                if let Some(mgvm::FeArg::Int(t)) = e.args.first() {
+                    vm.fe.mp.minigame = *t;
+                }
+            }
+            n => {
+                if let Some(f) = n.strip_prefix("Apt::") {
+                    let args: Vec<V> = e.args.iter().map(|a| match a {
+                        mgvm::FeArg::Str(t) => V::Str(t.as_str().into()),
+                        mgvm::FeArg::Int(i) => V::Num(*i as f64),
+                        mgvm::FeArg::Float(x) => V::Num(*x as f64),
+                    }).collect();
+                    vm.call_exposed(f, args);
+                }
+            }
+        }
+    }
+    s.last_events.extend(events.iter().cloned());
+    if s.last_events.len() > 200 {
+        let n = s.last_events.len() - 200;
+        s.last_events.drain(..n);
     }
 }
 
