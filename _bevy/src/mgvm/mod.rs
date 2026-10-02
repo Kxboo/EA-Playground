@@ -24,6 +24,7 @@ pub struct MgHost {
     pub model_names: std::collections::HashMap<u32, String>,
     /// The camera whose position was set last.
     pub camera: u32,
+    pub kid_keys: Vec<u64>,
     pub pads: [hooks::Pad; 4],
     pub phys: physics::Physics,
     pub pending_contacts: Vec<physics::Contact>,
@@ -201,7 +202,65 @@ pub fn boot() -> Result<(MgVm, MgHost), String> {
     Ok((vm, host))
 }
 
-/// Run `WorldMan::StartMinigameFadeComplete` for minigame `ty` and report where the machine stops (development aid).
+/// Team layout (record offsets in the `Teams` image) for a quick match: (offset, kid slot, control code).
+/// Control 1 = controller 1 (human), 2..4 further humans, 6 = computer.
+fn team_layout(ty: i32, humans: usize) -> Vec<(u32, usize, u32)> {
+    let mut out = vec![];
+    match ty {
+        // 3 v 3
+        3 => {
+            out.push((8, 0, 1));
+            out.push((0x18, 2, 6));
+            out.push((0x28, 3, 6));
+            out.push((0x48, 1, if humans > 1 { 2 } else { 6 }));
+            out.push((0x58, 4, 6));
+            out.push((0x68, 5, 6));
+        }
+        // 1 v 1 default
+        _ => {
+            out.push((8, 0, 1));
+            out.push((0x48, 1, if humans > 1 { 2 } else { 6 }));
+        }
+    }
+    out
+}
+
+/// Start minigame `ty` (0 Dart, 1 RcCars, 2 Tetherball, 3 Dodgeball, 4 Footie, 5 Paper, 6 Wall, 8 FreeThrow) with the
+/// first `humans` pads active: `WorldMan::StartMinigame` followed by the fade-complete step that creates it.
+pub fn launch(vm: &mut MgVm, host: &mut MgHost, ty: i32, humans: usize) -> Result<(), String> {
+    host.minigame_type = ty;
+    let wm = world::WORLD_MAN;
+    let ids = vm.img.addr("MinigameIDs").ok_or("MinigameIDs")?;
+    let mgid = vm.r32(ids + 4 * ty as u32);
+    let mg_id = vm.alloc_zeroed(8, 8);
+    vm.w32(mg_id, mgid);
+    let teams = vm.alloc_zeroed(0x100, 8);
+    let kids = world::kid_keys(vm, host)?;
+    host.kid_keys = kids.clone();
+    vm.w32(teams, 1);
+    for (off, slot, control) in team_layout(ty, humans) {
+        let key = kids[slot % kids.len()];
+        vm.w32(teams + off, (key >> 32) as u32);
+        vm.w32(teams + off + 4, key as u32);
+        vm.w32(teams + off + 8, control);
+    }
+    for i in 0..humans.min(4) {
+        host.pads[i].active = true;
+    }
+    vm.call_by_name(host, "StartMinigame__8WorldManF4MGIDiQ25Enums23MiniGameDifficultyLevelRC5TeamsPCi", &[wm, mg_id, 1, 1, teams, 0], &[])?;
+    vm.call_by_name(host, "StartMinigameFadeComplete__8WorldManFv", &[wm], &[])?;
+    Ok(())
+}
+
+/// One game frame: pads -> guest, `WorldMan::Update(ms)`, then the minigame's draw pass.
+pub fn frame(vm: &mut MgVm, host: &mut MgHost, ms: i32) -> Result<(), String> {
+    hooks::write_pads(vm, &host.pads);
+    vm.call_by_name(host, "Update__8WorldManFi", &[world::WORLD_MAN, ms as u32], &[])?;
+    host.draws.clear();
+    world::draw_minigame(vm, host, host.minigame_type)
+}
+
+/// Launch minigame `ty`, run `EAGL_MG_FRAMES` frames and report events / the final snapshot (development aid).
 pub fn probe(ty: i32) {
     let (mut vm, mut host) = match boot() {
         Ok(v) => v,
@@ -210,146 +269,41 @@ pub fn probe(ty: i32) {
     for m in &vm.missing_symbols {
         println!("missing symbol {m}");
     }
-    host.minigame_type = ty;
-    let wm = 0x805e8320u32;
-    let ids = vm.img.addr("MinigameIDs").unwrap();
-    let mgid = vm.r32(ids + 4 * ty as u32);
-    println!("MinigameIDs[{ty}] = {mgid:#x}");
-    // WorldMan::StartMinigame(MGID, players, difficulty, Teams, rules) then the fade-complete step that creates it
-    let mg_id = vm.alloc_zeroed(8, 8);
-    vm.w32(mg_id, mgid);
-    let teams = vm.alloc_zeroed(0x100, 8);
-    let kids_dbg;
-    let kids = world::kid_keys(&mut vm, &mut host).unwrap_or_else(|e| { println!("kid_keys: {e}"); vec![] });
-    println!("kids {kids:x?}");
-    kids_dbg = kids.clone();
-    if kids.len() >= 2 {
-        vm.w32(teams, 1);
-        let mut rec = |off: u32, key: u64, control: u32| {
-            vm.w32(teams + off, (key >> 32) as u32);
-            vm.w32(teams + off + 4, key as u32);
-            vm.w32(teams + off + 8, control);
-        };
-        rec(8, kids[0], 1);
-        rec(0x18, kids[2], 6);
-        rec(0x28, kids[3], 6);
-        rec(0x48, kids[1], 6);
-        rec(0x58, kids[4], 6);
-        rec(0x68, kids[5], 6);
+    if let Err(e) = launch(&mut vm, &mut host, ty, 1) {
+        println!("launch failed: {e}");
+        return;
     }
-    let req = vm.call_by_name(&mut host, "StartMinigame__8WorldManF4MGIDiQ25Enums23MiniGameDifficultyLevelRC5TeamsPCi", &[wm, mg_id, 1, 1, teams, 0], &[]);
-    println!("StartMinigame {req:?}");
-    let r = vm.call_by_name(&mut host, "StartMinigameFadeComplete__8WorldManFv", &[wm], &[]);
-    println!("RESULT {r:?}");
-    if r.is_ok() {
-        let wm = 0x805e8320u32;
-        let (cur, mg) = (vm.r32(wm + 0x8c), vm.r32(wm + 0x90));
-        let vt = |vm: &mut MgVm, p: u32| {
-            let v = vm.r32(p);
-            vm.name_of(v)
-        };
-        let (a, b) = (vt(&mut vm, cur), vt(&mut vm, mg));
-        println!("world {cur:#x} (vtable {a})  minigame {mg:#x} (vtable {b})");
-        let nteams = vm.r32(mg + 0x15c);
-        println!("teams {nteams} counts {} {}", vm.r32(mg + 0x148), vm.r32(mg + 0x14c));
-        for i in 0..8 {
-            let c = vm.r32(mg + 0x11c + 4 * i);
-            let m = if c != 0 { vm.r32(c + 0x88) } else { 0 };
-            println!("  slot {i}: char {c:#x} meter {m:#x}");
+    println!("launched {ty}");
+    let frames: i32 = std::env::var("EAGL_MG_FRAMES").ok().and_then(|v| v.parse().ok()).unwrap_or(5);
+    let mg = vm.r32(world::WORLD_MAN + 0x90);
+    for f in 0..frames {
+        if f == 10 {
+            let r = vm.call_by_name(&mut host, "OnPlay__8MinigameFv", &[mg], &[]);
+            println!("OnPlay {r:?}");
         }
-        let frames = std::env::var("EAGL_MG_FRAMES").ok().and_then(|v| v.parse().ok()).unwrap_or(5);
-        for f in 0..frames {
-            if f == 10 {
-                let r = vm.call_by_name(&mut host, "OnPlay__8MinigameFv", &[mg], &[]);
-                println!("OnPlay {r:?}");
-            }
-            for e in host.events.drain(..) {
-                println!("  [{f}] {} {:x?} {:?}", e.name, e.ints, e.floats);
-            }
-            if f % 100 == 0 {
-                let c = vm.r32(mg + 0x11c);
-                let ch = vm.r32(c + 0x4);
-                let pos = [vm.st.mem.rf32(ch + 0x180), vm.st.mem.rf32(ch + 0x184), vm.st.mem.rf32(ch + 0x188)];
-                println!("frame {f}: state {} player0 {:?}", vm.r32(mg + 0x34), pos);
-            }
-            host.pads[0].active = true;
-            // tap A every 40 frames once the match is running
-            host.pads[0].buttons = if f > 650 && (f / 8) % 5 == 0 { 0x0008 } else { 0 };
-            hooks::write_pads(&mut vm, &host.pads);
-            let r = vm.call_by_name(&mut host, "Update__8WorldManFi", &[0x805e8320, 33], &[]);
-            if let Err(e) = r {
-                println!("frame {f}: {e}");
-                break;
-            }
+        host.pads[0].buttons = if f > 650 && (f / 8) % 5 == 0 { 0x0008 } else { 0 };
+        if let Err(e) = frame(&mut vm, &mut host, 33) {
+            println!("frame {f}: {e}");
+            break;
         }
-    }
-    if let Err(e) = world::draw_minigame(&mut vm, &mut host, ty) {
-        println!("draw: {e}");
+        for e in host.events.drain(..) {
+            println!("  [{f}] {} {:x?} {:?}", e.name, e.ints, e.floats);
+        }
     }
     let snap = snapshot::snapshot(&mut vm, &mut host);
-    println!("snapshot: {} chars, draws {:?}, camera {:?}", snap.chars.len(), snap.draws.iter().map(|d| d.0.clone()).collect::<Vec<_>>(), snap.camera);
-    for c in &snap.chars {
+    println!("snapshot: {} chars, camera {:?}", snap.chars.len(), snap.camera);
+    for c in snap.chars.iter().take(8) {
         println!("  char key {:x} pos {:?} angle {} anim {} bones {}", c.key, c.pos, c.angle, c.anim_state, c.pose.len());
     }
+    println!("draws {:?}", snap.draws.iter().map(|d| d.0.clone()).collect::<Vec<_>>());
+    println!("physics chars {} bodies {} colliders {}", host.phys.chars.len(), host.phys.bodies.len(), host.phys.world.colliders.len());
     for l in &host.phys.log {
         println!("  phys: {l}");
     }
-    {
-        let mut y = 60.0f32;
-        for _ in 0..12 {
-            match host.phys.cast_ray([88.527, y, 3.034], [0., -1., 0.], 200.) {
-                Some(t) => {
-                    println!("  ground hit at y={}", y - t);
-                    y = y - t - 0.01;
-                }
-                None => break,
-            }
+    if std::env::var("EAGL_MG_LOG").is_ok() {
+        for l in &host.log {
+            println!("  log: {l}");
         }
-    }
-    for (h, c) in host.phys.world.colliders.iter() {
-        let a = c.compute_aabb();
-        if a.mins.x <= 88.527 && a.maxs.x >= 88.527 && a.mins.z <= 3.034 && a.maxs.z >= 3.034 {
-            println!("  collider {:?} shape {:?} aabb {:?}..{:?}", h, c.shape().shape_type(), a.mins, a.maxs);
-        }
-    }
-    {
-        let mgp = vm.r32(0x805e8320 + 0x90);
-        let dc = vm.r32(mgp + 0x11c);
-        let c = vm.r32(dc + 4);
-        let a = vm.r32(c + 0x18);
-        let pose = vm.r32(a + 0x30);
-        println!("char {c:#x} animstate {a:#x} state {} bones {} pose {pose:#x}", vm.r32(a + 0x54), vm.r32(a + 0x40) / 12);
-        for b in 0..3 {
-            let f: Vec<f32> = (0..12).map(|i| vm.st.mem.rf32(pose + 48 * b + 4 * i)).collect();
-            println!("  pose bone {b}: {f:?}");
-        }
-        let skin = vm.r32(a + 0x1674);
-        for b in 0..3 {
-            let f: Vec<f32> = (0..16).map(|i| vm.st.mem.rf32(skin + 64 * b + 4 * i)).collect();
-            println!("  skin bone {b}: {f:?}");
-        }
-    }
-    {
-        let mgp = vm.r32(0x805e8320 + 0x90);
-        for slot in 0..8u32 {
-            let dc = vm.r32(mgp + 0x11c + 4 * slot);
-            let c = vm.r32(dc + 4);
-            if c == 0 {
-                continue;
-            }
-            for off in (0..0x400u32).step_by(4) {
-                let hi = vm.r32(c + off);
-                let lo = vm.r32(c + off + 4);
-                let v = ((hi as u64) << 32) | lo as u64;
-                if let Some(i) = kids_dbg.iter().position(|k| *k == v) {
-                    println!("slot {slot} char {c:#x}: kid {i} key found at +{off:#x}");
-                }
-            }
-        }
-    }
-    println!("physics chars {} bodies {} colliders {}", host.phys.chars.len(), host.phys.bodies.len(), host.phys.world.colliders.len());
-    for l in host.log.iter().rev().take(40).rev() {
-        println!("  log: {l}");
     }
 }
 

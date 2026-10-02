@@ -49,6 +49,7 @@ mod fx;
 mod fe_postgame;
 mod gekko;
 mod mgvm;
+mod mg_session;
 mod sfx;
 mod apt;
 mod apt_player;
@@ -195,7 +196,7 @@ fn main(){
             .set(AssetPlugin{file_path:bridge::root().join("assets").to_string_lossy().into_owned(),..default()}))
         .add_plugins(EguiPlugin::default())
         .add_systems(Startup,viewer::setup)
-        .add_plugins(game::plugin).add_plugins(tetherball_play::plugin).add_plugins(tb_session::plugin).add_plugins(fx::plugin).add_plugins(apt_view::plugin).add_plugins(kid_pick::plugin).insert_resource(menu::AptStart(arg("--apt").unwrap_or_else(||"main".into()))).add_systems(Update,(shot,flow))
+        .add_plugins(game::plugin).add_plugins(tetherball_play::plugin).add_plugins(tb_session::plugin).add_plugins(mg_session::plugin).add_plugins(fx::plugin).add_plugins(apt_view::plugin).add_plugins(kid_pick::plugin).insert_resource(menu::AptStart(arg("--apt").unwrap_or_else(||"main".into()))).add_systems(Update,(shot,flow))
         .add_systems(Update,(menu::on_mode_change,(viewer::receive,viewer::animate).chain().run_if(in_mode(menu::AppMode::Viewer))).chain())
         .add_systems(EguiPrimaryContextPass,(viewer::ui.run_if(in_mode(menu::AppMode::Viewer)),menu::ui.run_if(in_mode(menu::AppMode::Menu).or(in_mode(menu::AppMode::Proof)))))
         .add_systems(PostUpdate,(viewer::bones.run_if(in_mode(menu::AppMode::Viewer)),capture).after(TransformSystems::Propagate))

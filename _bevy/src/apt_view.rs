@@ -158,6 +158,9 @@ pub fn view_step(mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option
             }else if let Some(n)=c.strip_prefix("tb").and_then(|n|n.parse::<i32>().ok()){
                 // `tbN` starts a tetherball match for N human players straight away (testing aid).
                 v.vm.fe.mp.players=n;v.vm.fe.mp.minigame=2;v.vm.fe.mp.quick=n==1;v.vm.fe.launch=Some("tetherball".into());
+            }else if let Some(n)=c.strip_prefix("gm").and_then(|n|n.parse::<i32>().ok()){
+                // `gmN` starts minigame type N (0 Dart 1 RcCars 3 Dodgeball 4 Footie 5 Paper 6 Wall 8 FreeThrow) in the VM (testing aid).
+                v.vm.fe.launch=Some(format!("mg:{n}"));
             }else if matches!(c,"pr"|"ps"|"pq"){
                 // pause-menu button presses without the pointer (testing aid): resume / start over / quit
                 use crate::fe_host::PauseReq;
@@ -268,6 +271,7 @@ pub fn view_step(mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option
             v.vm.fe.later.push((120,"Stickerbook_SetVisible".into(),vec![crate::apt_vm::V::Num(1.)]));
             v.vm.fe.later.push((120,"ReportCard_SetVisible".into(),vec![crate::apt_vm::V::Num(1.)]));
         }
+        if let Some(n)=g.strip_prefix("mg:").and_then(|n|n.parse::<i32>().ok()){commands.insert_resource(crate::mg_session::MgLaunch{ty:n,humans:1});}
         if g=="tetherball"&&tbres.is_none(){let fe=&v.vm.fe;
             let kid=|i:usize|fe.mp.avatars.get(i).and_then(|&k|fe.roster.get(k as usize)).map(|k|k.asset.clone());
             let female=|i:usize|fe.mp.avatars.get(i).and_then(|&k|fe.roster.get(k as usize)).map(|k|!k.boy).unwrap_or(false);
