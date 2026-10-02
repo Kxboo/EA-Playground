@@ -31,10 +31,31 @@ fn bind(vm: &mut V, names: &[&str], f: fn(&mut MgHost, &mut V) -> R) {
 
 // --- memory -----------------------------------------------------------------------------------------------------------
 
-fn alloc_size(_h: &mut MgHost, vm: &mut V) -> R {
-    let size = vm.a(0);
-    let p = vm.alloc_zeroed(size.max(4), 32);
+fn alloc_size(h: &mut MgHost, vm: &mut V) -> R {
+    // power-of-two size classes so freed blocks can be reused (the games allocate and free every frame)
+    let cap = vm.a(0).max(32).next_power_of_two();
+    let p = match h.free_blocks.get_mut(&cap).and_then(|v| v.pop()) {
+        Some(p) => {
+            vm.st.mem.fill(p, cap as usize, 0);
+            p
+        }
+        None => {
+            let p = vm.alloc_zeroed(cap, 32);
+            h.blocks.insert(p, cap);
+            p
+        }
+    };
     vm.ret(p);
+    Ok(())
+}
+fn mem_free(h: &mut MgHost, vm: &mut V) -> R {
+    let p = vm.a(0);
+    if let Some(&cap) = h.blocks.get(&p) {
+        let list = h.free_blocks.entry(cap).or_default();
+        if !list.contains(&p) {
+            list.push(p);
+        }
+    }
     Ok(())
 }
 /// `MemMgr::Alloc(size, pool, type, name)`: size is the first argument.
@@ -59,7 +80,8 @@ fn memory(vm: &mut V) {
         ],
         mem_alloc,
     );
-    bind(vm, &["Free__6MemMgrFPv", "__dl__FPv", "__dla__FPv", "free", "MemFill__6MemMgrFPvUii"], nothing);
+    bind(vm, &["Free__6MemMgrFPv", "__dl__FPv", "__dla__FPv", "free"], mem_free);
+    bind(vm, &["MemFill__6MemMgrFPvUii"], nothing);
 }
 
 // --- world ------------------------------------------------------------------------------------------------------------

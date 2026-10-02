@@ -36,6 +36,9 @@ pub struct MgHost {
     pub stubbed: std::collections::BTreeSet<String>,
     /// Scratch record handed out for every `PartFx` (particles are not simulated; the game only pokes flags in it).
     pub dummy_partfx: u32,
+    /// Guest heap blocks by start address -> capacity, and freed ones by capacity.
+    pub blocks: std::collections::HashMap<u32, u32>,
+    pub free_blocks: std::collections::HashMap<u32, Vec<u32>>,
     /// RcCars: (position, target, up) the chase camera last set.
     pub view: Option<[[f32; 3]; 3]>,
     /// Reused `Ren::SceneContext` handed to `Draw`.
@@ -396,6 +399,9 @@ pub fn probe(ty: i32) {
             let c = host.camera;
             let fl: Vec<String> = (0..24).map(|i| format!("{:.2}", vm.st.mem.rf32(c + 0x8 + 4 * i))).collect();
             println!("  cam {:x}: {}", c, fl.join(" "));
+        }
+        if f % 30 == 29 && std::env::var("EAGL_DBG_HEAP").is_ok() {
+            println!("  heap {:#x} / {:#x}", vm.heap, vm.heap_end);
         }
         if f % 100 == 99 {
             let sn = snapshot::snapshot(&mut vm, &mut host);

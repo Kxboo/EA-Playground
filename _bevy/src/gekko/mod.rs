@@ -34,8 +34,8 @@ pub struct Vm<H> {
     hooks: Vec<HookEntry<H>>,
     hook_at: HashMap<u32, usize>,
     hook_bits: Vec<u64>,
-    heap: u32,
-    heap_end: u32,
+    pub heap: u32,
+    pub heap_end: u32,
     /// Per-hook-name call counters (for diagnostics).
     pub trace: bool,
     pub depth: u32,
