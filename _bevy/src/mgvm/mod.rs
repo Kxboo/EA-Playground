@@ -29,7 +29,10 @@ pub struct MgHost {
     pub vp_matrix: u32,
     /// Pointer (Wii Remote IR) position in -0.5..0.5 with +y up, when the remote is aimed at the screen.
     pub pointer: Option<[f32; 2]>,
+    /// Vertical field of view (radians) of the minigame's viewport.
     pub fov: f32,
+    /// The viewport's own field of view (`SceneOptions` +0x1c): degrees across a 4:3 screen.
+    pub fov_h43: Option<f32>,
     pub aspect: f32,
     pub pads: [hooks::Pad; 4],
     pub phys: physics::Physics,
@@ -47,6 +50,25 @@ pub struct MgHost {
     pub sounds: Vec<(String, usize)>,
     /// Answer for `AIP::CmdDecomposer::GetIntArrayByName` when the host calls a front-end handler itself.
     pub int_array: Vec<i32>,
+    /// `TarManager`s initialised so far: (object, texture bank path).
+    pub tar_managers: Vec<(u32, String)>,
+    /// `EAGL::TAR` -> (bank path, shape name), filled from the managers' tables.
+    pub tars: std::collections::HashMap<u32, (String, String)>,
+    /// Texture banks behind those managers, copied out of guest memory (they may live inside in-place-loaded archives).
+    pub tar_banks: std::collections::HashMap<String, std::sync::Arc<Vec<u8>>>,
+    /// Open `EAGL::DrawTextured` objects.
+    pub draw_textured: std::collections::HashMap<u32, DrawTexturedState>,
+    /// Batches finished this frame.
+    pub imm: Vec<ImmDraw>,
+    /// Particle effects requested since the last frame.
+    pub fx: Vec<FxEvent>,
+    /// GUID -> stand-in `PartFx` object (and back), so `GetPartFx(guid)->SetPos(..)` reaches the right effect.
+    pub partfx_objs: std::collections::HashMap<u32, u32>,
+    pub partfx_ids: std::collections::HashMap<u32, u32>,
+    pub next_fx: u32,
+    /// Music the game asked for since the last frame: `Some("")` = stop, `Some("world")` = the area's world music,
+    /// otherwise a file of `audio/music` (`kMusicFilenames`).
+    pub music: Option<String>,
     /// Stand-in `AuAEMSManager` (+4 = enabled) handed to the original `PlaySFX` switch.
     pub aems_mgr: u32,
     /// `g<Class>Handle__4Csis` address -> class name.
@@ -57,6 +79,36 @@ pub struct MgHost {
     pub dbg_objs: Vec<u32>,
     /// Reused `Ren::SceneContext` handed to `Draw`.
     pub scene_ctx: u32,
+}
+
+/// Particle-effect requests of a frame (`PartFxManager` / `PartFx`), keyed by the GUID the game holds.
+#[derive(Clone, Debug)]
+pub enum FxEvent {
+    Spawn { id: u32, name: String, pos: [f32; 3] },
+    Move { id: u32, pos: [f32; 3] },
+    /// Stop emitting; the effect is removed after `delay` seconds (or when its particles die).
+    Stop { id: u32, delay: f32 },
+}
+
+/// One `EAGL::DrawTextured` batch (Begin .. End) the game drew this frame: indicators, cursors, rings.
+#[derive(Clone, Debug, Default)]
+pub struct ImmDraw {
+    /// (texture bank path, shape name) of the `EAGL::TAR` set with `SetTexture`.
+    pub tex: Option<(String, String)>,
+    /// `SetModelMatrix` (engine row-vector convention, translation at 12..14).
+    pub model: [f32; 16],
+    /// GX primitive: 0x80 quads, 0x90 triangles, 0x98 strip, 0xa0 fan.
+    pub prim: u32,
+    /// Position, RGBA, texture coordinate (as passed; see `uv_scale`).
+    pub verts: Vec<([f32; 3], [u8; 4], [f32; 2])>,
+}
+
+#[derive(Default)]
+pub struct DrawTexturedState {
+    pub tex: u32,
+    pub model: [f32; 16],
+    pub prim: u32,
+    pub verts: Vec<([f32; 3], [u8; 4], [f32; 2])>,
 }
 
 /// The mangled-name class of a symbol: `Update__11MGDodgeballFi` -> `MGDodgeball`.
@@ -372,12 +424,23 @@ pub fn launch_fe(vm: &mut MgVm, host: &mut MgHost, l: &FeLaunch) -> Result<(), S
     // SetTeams closes the team-select screen itself; the front end has already moved on
     host.events.retain(|e| e.name != "FEManager::CloseAptScreen");
     let mp = vm.r32(vm.img.addr("mInstance__15MultiplayerMode").ok_or("MultiplayerMode")?);
-    if let Some(r) = l.rules {
-        let p = vm.alloc_zeroed(0x20, 8);
-        for (i, v) in r.iter().enumerate() {
-            vm.w32(p + 4 * i as u32, *v as u32);
+    // the game's rules: the front end's, or the database defaults (`MultiPlayerFSHandlers::RetrieveDefaultRules` fills
+    // sDefaultRules[5] for sMinigameType) - all-zero rules leave e.g. Dodgeball with two-kid teams and no balls
+    let rules = match l.rules {
+        Some(r) => r,
+        None => {
+            vm.call_by_name(host, "RetrieveDefaultRules__21MultiPlayerFSHandlersFv", &[], &[])?;
+            let d = vm.img.addr("sDefaultRules").ok_or("sDefaultRules")?;
+            std::array::from_fn(|i| vm.r32(d + 4 * i as u32) as i32)
         }
-        vm.call_by_name(host, "SetRules__15MultiplayerModeFPCi", &[mp, p], &[])?;
+    };
+    let p = vm.alloc_zeroed(0x20, 8);
+    for (i, v) in rules.iter().enumerate() {
+        vm.w32(p + 4 * i as u32, *v as u32);
+    }
+    vm.call_by_name(host, "SetRules__15MultiplayerModeFPCi", &[mp, p], &[])?;
+    if std::env::var("EAGL_MG_LOG").is_ok() {
+        eprintln!("rules {rules:?}");
     }
     for i in 0..4 {
         host.pads[i].active = i < n;
@@ -437,6 +500,7 @@ pub fn frame(vm: &mut MgVm, host: &mut MgHost, ms: i32) -> Result<(), String> {
         vm.call_by_name(host, "Update__13CameraManagerFi", &[cm, ms as u32], &[])?;
     }
     host.draws.clear();
+    host.imm.clear();
     world::draw_minigame(vm, host, host.minigame_type)
 }
 
@@ -481,6 +545,12 @@ pub fn probe(ty: i32) {
             let r = vm.call_by_name(&mut host, "AIRand__Fii", &[100, 750], &[]);
             let j = vm.call_by_name(&mut host, "ChooseRandomJuggleTiming__14FootieAIEntityCFv", &[vm.heap], &[]);
             println!("AIRand(100,750) = {:?} juggle timing {:?}", r.map(|v| v as i32), j);
+        }
+        if let Some(a) = vm.img.addr("EAGLMalloc__12EAGLInternal") {
+            let f = vm.r32(a);
+            let r1 = vm.call(&mut host, f, &[0x5c, 0], &[]);
+            let r2 = vm.call(&mut host, f, &[0x5c, 0], &[]);
+            println!("EAGLMalloc -> {} : {:x?} {:x?}", vm.name_of(f), r1, r2);
         }
         for x in [4.0f64, 2.0, 0.25, 1.5, 100.0, 0.0001] {
             let r = vm.call_by_name(&mut host, "sqrt", &[], &[x]);
@@ -531,6 +601,16 @@ pub fn probe(ty: i32) {
                             host.pads[0].acc = [v[0], v[1], v[2]];
                         }
                     }
+                }
+            }
+        }
+        // EAGL_DBG_EV="6c,63": controller 0 action events (hex ids) whenever one is active
+        if let Ok(spec) = std::env::var("EAGL_DBG_EV") {
+            let c = vm.call_by_name(&mut host, "Get__10ControllerFi", &[0], &[]).unwrap_or(0);
+            let tbl = vm.r32(c + 0x268);
+            for id in spec.split(',').filter_map(|v| u32::from_str_radix(v, 16).ok()) {
+                if vm.st.mem.r8(tbl + 8 * id) != 0 {
+                    println!("  [{f}] event {id:#x} active");
                 }
             }
         }
@@ -612,6 +692,14 @@ pub fn probe(ty: i32) {
         }
         follow.retain(|x| x.2 > 0);
         host.dbg_throws.extend(follow);
+        if let Some(m) = host.music.take() {
+            println!("  [{f}] music {m:?}");
+        }
+        for e in std::mem::take(&mut host.fx) {
+            if std::env::var("EAGL_MG_FX").is_ok() {
+                println!("  [{f}] fx {e:?}");
+            }
+        }
         let sounds = std::mem::take(&mut host.sounds);
         if std::env::var("EAGL_MG_SOUNDS").is_ok() {
             for (c, v) in &sounds {
@@ -647,6 +735,29 @@ pub fn probe(ty: i32) {
             for (i, b) in c.pose.iter().enumerate().take(24) {
                 println!("     bone {i} q {:?}", b.0);
             }
+        }
+    }
+    if std::env::var("EAGL_DBG_IMM").is_ok() {
+        println!("  tar managers {:?}", host.tar_managers);
+        for (m, _) in host.tar_managers.clone() {
+            println!("    mgr {m:#x} count {} first {:#x} {}", vm.r32(m + 0x4200), vm.r32(m), vm.st.mem.cstr(m + 4, 64));
+        }
+        let am = vm.r32(vm.img.addr("sAssetManagerInstance__12AssetManager").unwrap_or(0));
+        for (_, path) in host.tar_managers.clone() {
+            let name = vm.alloc_cstr(&path);
+            let d = vm.call_by_name(&mut host, "CheckForTexture__12AssetManagerFPCcPiPi", &[am, name, 0, 0], &[]).unwrap_or(0);
+            let w: Vec<String> = (0..6).map(|i| format!("{:08x}", vm.r32(d + 4 * i))).collect();
+            println!("    asset {path}: data {d:#x} {}", w.join(" "));
+        }
+        for (k, v) in &host.tar_banks {
+            println!("    bank {k}: {} bytes {:?}", v.len(), &v[..8]);
+        }
+        for (_, path) in &host.tar_managers {
+            println!("    vfs {path}: {:?}", host.vfs.read(path).map(|d| (d.len(), d[..16.min(d.len())].to_vec())));
+        }
+        println!("  draw_textured {:?}", host.draw_textured.iter().map(|(k, v)| (*k, v.tex)).collect::<Vec<_>>());
+        for d in &host.imm {
+            println!("  imm {:?} prim {:#x} verts {} first {:?} model t {:?}", d.tex, d.prim, d.verts.len(), d.verts.first(), &d.model[12..15]);
         }
     }
     println!("draws {:?}", snap.draws.iter().map(|d| (d.0.clone(), [d.1[12], d.1[13], d.1[14]])).collect::<Vec<_>>());

@@ -387,11 +387,55 @@ fn in_view(_h: &mut MgHost, vm: &mut V) -> R {
     vm.ret(1);
     Ok(())
 }
+/// `PartFxManager::GetPartFx(this, GUID*)`: a small stand-in object per effect (the game pokes flags in it and calls
+/// `PartFx` methods on it).
 fn get_partfx(h: &mut MgHost, vm: &mut V) -> R {
-    if h.dummy_partfx == 0 {
-        h.dummy_partfx = vm.alloc_zeroed(0x400, 16);
+    let id = vm.r32(vm.a(1));
+    let obj = match h.partfx_objs.get(&id) {
+        Some(&o) => o,
+        None => {
+            let o = vm.alloc_zeroed(0x400, 16);
+            h.partfx_objs.insert(id, o);
+            h.partfx_ids.insert(o, id);
+            o
+        }
+    };
+    vm.ret(obj);
+    Ok(())
+}
+
+/// `PartFxManager::CreatePartFx(this, const char* name, const rmVector3& pos[, dir])` -> GUID
+fn create_partfx(h: &mut MgHost, vm: &mut V) -> R {
+    let (name, pos) = (vm.st.mem.cstr(vm.a(1), 64), read_v3(vm, vm.a(2)));
+    h.next_fx += 1;
+    let id = 0x4000_0000 | h.next_fx;
+    h.fx.push(super::FxEvent::Spawn { id, name, pos });
+    vm.ret(id);
+    Ok(())
+}
+
+/// `DestroyPartFx` / `DisableAndDestroyPartFx(this, GUID*, int ms)`
+fn destroy_partfx(h: &mut MgHost, vm: &mut V) -> R {
+    let (id, ms) = (vm.r32(vm.a(1)), vm.a(2) as i32);
+    h.fx.push(super::FxEvent::Stop { id, delay: ms.max(0) as f32 / 1000. });
+    Ok(())
+}
+
+fn partfx_set_pos(h: &mut MgHost, vm: &mut V) -> R {
+    if let Some(&id) = h.partfx_ids.get(&vm.a(0)) {
+        let pos = read_v3(vm, vm.a(1));
+        h.fx.push(super::FxEvent::Move { id, pos });
     }
-    vm.ret(h.dummy_partfx);
+    Ok(())
+}
+
+/// `PartFx::EnableEmitters(this, bool[, int])`: switching emitters off ends the effect once its particles are gone.
+fn partfx_enable(h: &mut MgHost, vm: &mut V) -> R {
+    if let Some(&id) = h.partfx_ids.get(&vm.a(0)) {
+        if vm.a(1) & 0xff == 0 {
+            h.fx.push(super::FxEvent::Stop { id, delay: 2. });
+        }
+    }
     Ok(())
 }
 
@@ -665,7 +709,11 @@ pub fn install(vm: &mut V) {
     bind(vm, &["Update__14PhysicsVehicleFi"], veh_update);
     bind(vm, &["UnInitialize__14PhysicsVehicleFv", "__dt__14PhysicsVehicleFv"], veh_uninit);
     bind(vm, &["GetGeometry__Q24EAGL5ModelFPCc"], model_geometry);
-    bind(vm, &["GetPartFx__13PartFxManagerF4GUID"], get_partfx);
+    bind(vm, &["GetPartFx__13PartFxManagerF4GUID", "FindPartFx__13PartFxManagerF4GUID"], get_partfx);
+    bind(vm, &["CreatePartFx__13PartFxManagerFPCcRC9rmVector3", "CreatePartFx__13PartFxManagerFPCcRC9rmVector3RC9rmVector3"], create_partfx);
+    bind(vm, &["DestroyPartFx__13PartFxManagerF4GUIDi", "DisableAndDestroyPartFx__13PartFxManagerF4GUIDi"], destroy_partfx);
+    bind(vm, &["SetPos__6PartFxFRC9rmVector3"], partfx_set_pos);
+    bind(vm, &["EnableEmitters__6PartFxFb", "EnableEmitters__6PartFxFbi"], partfx_enable);
     // Havok entity bookkeeping the vehicle stand-in has no use for
     bind(vm, &["addCollisionListener__8hkEntityFP19hkCollisionListener", "removeCollisionListener__8hkEntityFP19hkCollisionListener", "activate__8hkEntityFv"], nothing);
     bind(vm, &["IsBoundingBoxInView__Q23Ren11FrustumTestFRCQ23Ren11BoundingBoxRC9rmMatrix4"], in_view);

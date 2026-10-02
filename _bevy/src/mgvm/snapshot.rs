@@ -22,6 +22,11 @@ pub struct Snapshot {
     pub chars: Vec<CharSnap>,
     pub draws: Vec<(String, [f32; 16])>,
     pub camera: Option<([f32; 3], [f32; 3], [f32; 3])>,
+    /// Vertical field of view (radians) of the camera above.
+    pub fov: f32,
+    /// `EAGL::DrawTextured` batches of this frame and the texture banks they name.
+    pub imm: Vec<super::ImmDraw>,
+    pub banks: std::collections::HashMap<String, std::sync::Arc<Vec<u8>>>,
 }
 
 pub fn snapshot(vm: &mut MgVm, host: &mut MgHost) -> Snapshot {
@@ -61,6 +66,9 @@ pub fn snapshot(vm: &mut MgVm, host: &mut MgHost) -> Snapshot {
         }
     }
     out.draws = std::mem::take(&mut host.draws);
+    out.imm = std::mem::take(&mut host.imm);
+    out.fov = host.fov;
+    out.banks = host.tar_banks.clone();
     if host.camera != 0 {
         let c = host.camera;
         let v = |vm: &mut MgVm, o: u32| [vm.st.mem.rf32(c + o), vm.st.mem.rf32(c + o + 4), vm.st.mem.rf32(c + o + 8)];

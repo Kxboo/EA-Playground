@@ -210,8 +210,32 @@ fn scene_options(h: &mut MgHost, vm: &mut V) -> R {
     Ok(())
 }
 
+/// `Ren::Scene::SetViewPort(this, int, const SceneOptions&)`: keep the options (later `GetSceneOptions` return them) and
+/// note the field of view (+0x1c, degrees across a 4:3 screen; `CalcWidescreenFOV` widens it for 16:9).
+fn set_viewport(h: &mut MgHost, vm: &mut V) -> R {
+    let opts = vm.a(2);
+    if opts == 0 {
+        return Ok(());
+    }
+    if h.scene_options == 0 {
+        h.scene_options = vm.alloc_zeroed(0x40, 16);
+    }
+    for k in 0..12 {
+        let w = vm.r32(opts + 4 * k);
+        vm.w32(h.scene_options + 4 * k, w);
+    }
+    let fov = vm.st.mem.rf32(opts + 0x1c);
+    if fov > 1. && fov < 170. {
+        h.fov_h43 = Some(fov);
+        // vertical field of view (radians) for the pointer ray
+        h.fov = 2. * ((fov.to_radians() * 0.5).tan() * 0.75).atan();
+    }
+    Ok(())
+}
+
 pub fn scene(vm: &mut V) {
     bind(vm, &["GetSceneOptions__Q23Ren5SceneCFi"], scene_options);
+    bind(vm, &["SetViewPort__Q23Ren5SceneFiRCQ23Ren12SceneOptions"], set_viewport);
 }
 
 // --- input ------------------------------------------------------------------------------------------------------------
@@ -758,7 +782,126 @@ fn csis_ctor(h: &mut MgHost, vm: &mut V) -> R {
     Ok(())
 }
 
+/// `Audio::PlayMusic(this, AUDIOMUSICTYPES)`: `AuMusicManager::Update` streams `kMusicFilenames[type]`, or for type 1
+/// the current area's world track.
+fn play_music(h: &mut MgHost, vm: &mut V) -> R {
+    let ty = vm.a(1);
+    let name = if ty == 1 {
+        "world".to_string()
+    } else {
+        let table = vm.img.addr("kMusicFilenames").unwrap_or(0);
+        if table == 0 || ty >= 10 {
+            return Ok(());
+        }
+        let p = vm.r32(table + 4 * ty);
+        vm.st.mem.cstr(p, 64)
+    };
+    h.music = Some(name);
+    Ok(())
+}
+
+// --- immediate-mode textured drawing ------------------------------------------------------------------------------
+
+/// `TarManager::Initialize(this, CString& bank)`: remember the bank; its table (count +0x4200, 0x84-byte entries
+/// {TAR*, name}) is read lazily once the original has filled it.
+fn tar_manager_init(h: &mut MgHost, vm: &mut V) -> R {
+    let (this, cstr) = (vm.a(0), vm.a(1));
+    let p = vm.call_by_name(h, "c_str__7CStringCFv", &[cstr], &[])?;
+    let path = vm.st.mem.cstr(p, 256);
+    h.tar_managers.retain(|t| t.0 != this);
+    h.tar_managers.push((this, path));
+    Ok(())
+}
+
+fn tar_name(h: &mut MgHost, vm: &mut V, tar: u32) -> Result<Option<(String, String)>, String> {
+    if let Some(t) = h.tars.get(&tar) {
+        return Ok(Some(t.clone()));
+    }
+    for (mgr, path) in h.tar_managers.clone() {
+        if !h.tar_banks.contains_key(&path) {
+            // `AssetManager::CheckForTexture(name, int* size, int* index)` -> the loaded bank
+            let am = vm.r32(vm.img.addr("sAssetManagerInstance__12AssetManager").unwrap_or(0));
+            let (name, size) = (vm.alloc_cstr(&path), vm.alloc_zeroed(8, 4));
+            let data = vm.call_by_name(h, "CheckForTexture__12AssetManagerFPCcPiPi", &[am, name, size, 0], &[])?;
+            let len = vm.r32(size).min(16 << 20) as usize;
+            if data != 0 && len > 0 {
+                let bytes: Vec<u8> = (0..len as u32).map(|i| vm.st.mem.r8(data + i)).collect();
+                h.tar_banks.insert(path.clone(), std::sync::Arc::new(bytes));
+            }
+        }
+        let n = vm.r32(mgr + 0x4200).min(128);
+        for i in 0..n {
+            let e = mgr + 0x84 * i;
+            let t = vm.r32(e);
+            let name = vm.st.mem.cstr(e + 4, 128);
+            h.tars.insert(t, (path.clone(), name));
+        }
+    }
+    Ok(h.tars.get(&tar).cloned())
+}
+
+fn dt_set_texture(h: &mut MgHost, vm: &mut V) -> R {
+    let (this, tar) = (vm.a(0), vm.a(1));
+    h.draw_textured.entry(this).or_default().tex = tar;
+    Ok(())
+}
+
+fn dt_set_model(h: &mut MgHost, vm: &mut V) -> R {
+    let (this, m) = (vm.a(0), vm.a(1));
+    let mut mat = [0f32; 16];
+    for (i, v) in mat.iter_mut().enumerate() {
+        *v = vm.st.mem.rf32(m + 4 * i as u32);
+    }
+    h.draw_textured.entry(this).or_default().model = mat;
+    Ok(())
+}
+
+fn dt_begin(h: &mut MgHost, vm: &mut V) -> R {
+    let (this, prim) = (vm.a(0), vm.a(1));
+    let st = h.draw_textured.entry(this).or_default();
+    st.prim = prim;
+    st.verts.clear();
+    Ok(())
+}
+
+/// `AddVertex(this, const COORD3&, const Colour& (GX RGBA8), const COORD2&)`
+fn dt_add_vertex(h: &mut MgHost, vm: &mut V) -> R {
+    let (this, p, c, t) = (vm.a(0), vm.a(1), vm.a(2), vm.a(3));
+    let pos = [vm.st.mem.rf32(p), vm.st.mem.rf32(p + 4), vm.st.mem.rf32(p + 8)];
+    let rgba = vm.r32(c).to_be_bytes();
+    let uv = [vm.st.mem.rf32(t), vm.st.mem.rf32(t + 4)];
+    h.draw_textured.entry(this).or_default().verts.push((pos, rgba, uv));
+    Ok(())
+}
+
+fn dt_end(h: &mut MgHost, vm: &mut V) -> R {
+    let this = vm.a(0);
+    let Some(st) = h.draw_textured.get_mut(&this) else { return Ok(()) };
+    let (tex, model, prim, verts) = (st.tex, st.model, st.prim, std::mem::take(&mut st.verts));
+    let tex = if tex != 0 { tar_name(h, vm, tex)? } else { None };
+    h.imm.push(super::ImmDraw { tex, model, prim, verts });
+    Ok(())
+}
+
 pub fn pregame(vm: &mut V) {
+    vm.observe("Initialize__10TarManagerFR7CString", tar_manager_init);
+    if std::env::var("EAGL_DBG_IMM").is_ok() {
+        vm.observe("GetTar__10TarManagerFPCc", |_h, vm| {
+            let this = vm.a(0);
+            eprintln!("[tar] GetTar this {this:#x} count {} name {}", vm.r32(this + 0x4200), vm.st.mem.cstr(vm.a(1), 64));
+            Ok(())
+        });
+    }
+    bind(vm, &["SetTexture__Q24EAGL12DrawTexturedFPQ24EAGL3TAR"], dt_set_texture);
+    bind(vm, &["SetModelMatrix__Q24EAGL12DrawTexturedFRC7MATRIX4", "SetModelMatrix__Q24EAGL12DrawTexturedFR7MATRIX4"], dt_set_model);
+    bind(vm, &["Begin__Q24EAGL12DrawTexturedFQ24EAGL13PrimitiveType"], dt_begin);
+    bind(vm, &["AddVertex__Q24EAGL12DrawTexturedFRC6COORD3RCQ24EAGL6ColourRC6COORD2"], dt_add_vertex);
+    bind(vm, &["End__Q24EAGL12DrawTexturedFv"], dt_end);
+    bind(vm, &["PlayMusic__5AudioF15AUDIOMUSICTYPES"], play_music);
+    bind(vm, &["StopMusic__5AudioFv"], |h, _vm| {
+        h.music = Some(String::new());
+        Ok(())
+    });
     vm.hook_matching(|n| n.starts_with("__ct__Q24Csis") && ["MGSFX_", "WSFX_", "FESFX_"].iter().any(|p| n.contains(p)), csis_ctor);
     bind(vm, &["IsBoundingBoxInView__Q23Ren11FrustumTestFRCQ23Ren11BoundingBoxRC9rmMatrix4", "IsPointVisible__11AreaManagerFRC9rmVector3RC9rmVector3"], visible);
     // `AnimationState::Update(this, dt, bool on_screen, bool)`: the character's on-screen flag comes from its (absent)

@@ -38,6 +38,8 @@ struct Loaded {
     player: character::CharacterData,
     kids: Vec<Option<assets::BuiltModel>>,
     kid_assets: Vec<String>,
+    /// Character database key -> model asset name (`bestiary/*/asset_name`).
+    asset_by_key: HashMap<u64, String>,
     /// Model name -> loaded model for the props the game draws.
     props: HashMap<String, assets::BuiltModel>,
 }
@@ -60,6 +62,8 @@ pub struct Session {
     prop_models: HashMap<String, assets::Uploaded>,
     kid_uploads: Vec<Option<assets::Uploaded>>,
     default_upload: Option<assets::Uploaded>,
+    /// Models of kids outside the eight-kid list, loaded when they first appear.
+    extra_uploads: HashMap<u64, Option<assets::Uploaded>>,
     pub t: f64,
     pub frames: i32,
     skip_close: i32,
@@ -68,6 +72,10 @@ pub struct Session {
     gesture: [std::collections::VecDeque<[i16; 3]>; 4],
     /// `EAGL_MG_POSTGAME=done|replay`: frame at which the post-game button is pressed (testing aid).
     auto_postgame: Option<i32>,
+    /// `EAGL_MG_PAUSEBTN=resume|restart|quit`: frame at which that pause-menu button is pressed (testing aid).
+    auto_pause: Option<i32>,
+    /// The minigame's music track (`Audio::PlayMusic`), playing while the session lives.
+    music: Option<crate::playback::Music>,
     pub fe: Option<mgvm::FeLaunch>,
 }
 
@@ -133,9 +141,22 @@ fn loader(tx: mpsc::Sender<Msg>) {
             }
             kid_assets.push(asset.ok_or("asset_name")?);
         }
+        // every bestiary entry's model: the multiplayer handlers fill teams from a longer kid list than the eight above
+        let bestiary = crate::vlt::string_hash64("bestiary");
+        let mut asset_by_key = HashMap::new();
+        for c in db.collections.iter().filter(|c| c.class_key == bestiary) {
+            let mut cur = Some(c);
+            while let Some(col) = cur {
+                if let Some(a) = db.attribute(col, "asset_name").and_then(|v| v.as_str().map(String::from)) {
+                    asset_by_key.insert(c.key, a);
+                    break;
+                }
+                cur = db.collections.iter().find(|x| x.class_key == col.class_key && x.key == col.parent_key && col.parent_key != 0);
+            }
+        }
         let player = character::load(&data_dir("characters"), &schemas)?;
         let kids = kid_assets.iter().map(|a| if a == "alicia" { None } else { character::load_kid_model(&data_dir("characters"), a, &schemas).ok() }).collect();
-        Ok(Loaded { player, kids, kid_assets, props: HashMap::new() })
+        Ok(Loaded { player, kids, kid_assets, asset_by_key, props: HashMap::new() })
     };
     let _ = tx.send(match run() {
         Ok(l) => Msg::Loaded(Box::new(l)),
@@ -160,19 +181,22 @@ impl Session {
             prop_models: HashMap::new(),
             kid_uploads: vec![],
             default_upload: None,
+            extra_uploads: HashMap::new(),
             t: 0.,
             frames: 0,
             skip_close: 0,
             last_events: vec![],
             gesture: Default::default(),
             auto_postgame: None,
+            music: None,
+            auto_pause: None,
             fe: None,
         }
     }
 }
 
 pub fn plugin(app: &mut App) {
-    app.add_systems(Update, (launch_or_teardown, pump, build, step, present).chain());
+    app.add_systems(Update, (launch_or_teardown, pump, build, step, present, crate::mg_draw::render).chain());
 }
 
 /// The minigame has ended (or F10): remove the session and everything it spawned.
@@ -194,6 +218,20 @@ fn launch_or_teardown(world: &mut World) {
         }
         world.remove_non_send_resource::<Session>();
         world.remove_resource::<MgSnapshot>();
+        if let Some(mut fx) = world.get_resource_mut::<crate::fx::FxWorld>() {
+            fx.instances.clear();
+        }
+        // the world camera's lens back to Bevy's default
+        let mut cams = world.query_filtered::<&mut Projection, With<game::GameCamera>>();
+        for mut p in cams.iter_mut(world) {
+            if let Projection::Perspective(pp) = &mut *p {
+                pp.fov = std::f32::consts::FRAC_PI_4;
+            }
+        }
+        // the minigame's track stopped with the session; the menus / playground get theirs back
+        if let Some(mut g) = world.get_resource_mut::<game::Game>() {
+            g.start_music();
+        }
         world.remove_resource::<MgActive>();
         world.remove_resource::<crate::tb_session::TbActive>();
         let ents: Vec<Entity> = world.query_filtered::<Entity, With<MgEntity>>().iter(world).collect();
@@ -374,7 +412,7 @@ fn scripted_pad(frame: i32) -> u16 {
 #[derive(Resource, Default)]
 pub struct MgSnapshot(pub Option<mgvm::snapshot::Snapshot>);
 
-fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<ButtonInput<KeyCode>>, mouse: Res<ButtonInput<MouseButton>>, windows: Query<&Window, With<bevy::window::PrimaryWindow>>, time: Res<Time<Real>>, mut backdrop: Option<ResMut<game::Backdrop>>, snap: Option<ResMut<MgSnapshot>>, mut fe: Option<NonSendMut<crate::apt_view::AptViewNs>>) {
+fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<ButtonInput<KeyCode>>, mouse: Res<ButtonInput<MouseButton>>, windows: Query<&Window, With<bevy::window::PrimaryWindow>>, time: Res<Time<Real>>, mut backdrop: Option<ResMut<game::Backdrop>>, snap: Option<ResMut<MgSnapshot>>, mut fe: Option<NonSendMut<crate::apt_view::AptViewNs>>, mut world_game: Option<ResMut<game::Game>>, mut projection: Query<&mut Projection, With<game::GameCamera>>, mut fxw: Option<ResMut<crate::fx::FxWorld>>) {
     let Some(mut s) = s else { return };
     if s.state != SessionState::Running {
         return;
@@ -426,6 +464,37 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
         s.state = SessionState::Failed(e);
         return;
     }
+    // music: the minigame's track replaces the world's; "world" (EndMinigame) hands back to it
+    if let Some(track) = host.music.take() {
+        s.music = None;
+        match track.as_str() {
+            "" => {}
+            "world" => {
+                if let Some(g) = world_game.as_mut() {
+                    g.start_music();
+                }
+            }
+            file => {
+                if let Some(g) = world_game.as_mut() {
+                    g.stop_music();
+                }
+                if !std::env::args().any(|a| a == "--mute") {
+                    s.music = Some(crate::playback::Music::start(bridge::data_root().join("files").join("data").join("audio").join("music").join(file), 0.4));
+                }
+            }
+        }
+    }
+    // particle effects (`PartFxManager`), simulated and drawn by `fx`
+    if let Some(fx) = fxw.as_mut() {
+        for e in std::mem::take(&mut host.fx) {
+            match e {
+                mgvm::FxEvent::Spawn { id, name, pos } => fx.spawn(id, &name, pos),
+                mgvm::FxEvent::Move { id, pos } => fx.move_to(id, pos),
+                mgvm::FxEvent::Stop { id, delay } => fx.stop(id, delay),
+            }
+        }
+        fx.update(ms as f32 / 1000.);
+    }
     // sounds the original picked (`AuAEMSManager::PlaySFX` id switch -> Csis class + variant)
     for (class, variant) in std::mem::take(&mut host.sounds) {
         crate::sfx::play_class(&class, variant, 1.);
@@ -436,6 +505,16 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
     }
     // front-end button presses become guest callbacks
     let cmds: Vec<String> = fe.as_mut().map(|v| std::mem::take(&mut v.0.vm.fe.mg_cmds)).unwrap_or_default();
+    if s.auto_pause == Some(s.frames) {
+        if let Some(v) = fe.as_mut() {
+            use crate::fe_host::PauseReq;
+            v.0.vm.fe.pause_req = Some(match std::env::var("EAGL_MG_PAUSEBTN").as_deref() {
+                Ok("quit") => PauseReq::Quit,
+                Ok("restart") => PauseReq::Restart,
+                _ => PauseReq::Resume,
+            });
+        }
+    }
     let mut pause_req = fe.as_mut().and_then(|v| v.0.vm.fe.pause_req.take());
     if s.auto_postgame == Some(s.frames) {
         if let Some(v) = fe.as_mut() {
@@ -520,6 +599,11 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
     if let (Some(bd), Some((eye, target, _))) = (backdrop.as_mut(), snapshot.camera) {
         bd.set_now(Vec3::from(eye), Vec3::from(target));
     }
+    for mut p in &mut projection {
+        if let Projection::Perspective(pp) = &mut *p {
+            pp.fov = snapshot.fov;
+        }
+    }
     match snap {
         Some(mut r) => r.0 = Some(snapshot),
         None => {
@@ -562,6 +646,9 @@ fn forward_events(vm: &mut crate::apt_vm::Vm, events: &[mgvm::FeEvent], s: &mut 
             "FEManager::OpenAptOverlay" => {
                 vm.fe.paused = true;
                 vm.fe.pause_req = None;
+                if std::env::var("EAGL_MG_PAUSEBTN").is_ok() {
+                    s.auto_pause = Some(s.frames + 90);
+                }
                 vm.fe.todo.push(("OpenOverlay".into(), vec![V::Str(str_arg(0).as_str().into())]));
             }
             "FEManager::CloseAptOverlay" => vm.fe.todo.push(("CloseOverlay".into(), vec![])),
@@ -615,7 +702,7 @@ fn forward_events(vm: &mut crate::apt_vm::Vm, events: &[mgvm::FeEvent], s: &mut 
     }
 }
 
-fn mat_to_transform(radius: f32, m: &[f32; 16]) -> Transform {
+pub(crate) fn mat_to_transform(radius: f32, m: &[f32; 16]) -> Transform {
     let rot = Mat4::from_cols(Vec4::new(m[0], m[1], m[2], 0.), Vec4::new(m[4], m[5], m[6], 0.), Vec4::new(m[8], m[9], m[10], 0.), Vec4::W);
     let p = Vec3::new(m[12], m[13], m[14]);
     Transform::from_matrix(game::display_matrix(radius, p) * rot)
@@ -647,7 +734,17 @@ fn present(
     for c in &snapshot.chars {
         if !s.chars.contains_key(&c.ptr) {
             let kid = s.vm.as_ref().and_then(|(_, h)| h.kid_keys.iter().position(|k| *k == c.key));
-            let up = kid.and_then(|k| s.kid_uploads.get(k).and_then(|u| u.as_ref())).or(s.default_upload.as_ref()).unwrap();
+            if kid.is_none() && !s.extra_uploads.contains_key(&c.key) {
+                let model = loaded.asset_by_key.get(&c.key).filter(|a| *a != "alicia").and_then(|a| character::load_kid_model(&data_dir("characters"), a, &crate::model::Schemas::embedded()).ok());
+                let up = model.map(|m| assets::upload_skinned(&m, &mut meshes, &mut materials, &mut images));
+                s.extra_uploads.insert(c.key, up);
+            }
+            let up = match kid {
+                Some(k) => s.kid_uploads.get(k).and_then(|u| u.as_ref()),
+                None => s.extra_uploads.get(&c.key).and_then(|u| u.as_ref()),
+            }
+            .or(s.default_upload.as_ref())
+            .unwrap();
             let root = commands.spawn((MgEntity, MgChar(c.ptr), Transform::default(), Visibility::default())).id();
             let js = character::spawn_rig(&mut commands, &mut ibp, &loaded.player.skeleton, up, root, root);
             for (bone, j) in js.iter().enumerate() {

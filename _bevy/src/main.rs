@@ -50,6 +50,7 @@ mod fe_postgame;
 mod gekko;
 mod mgvm;
 mod mg_session;
+mod mg_draw;
 mod sfx;
 mod minigame_session;
 mod wallball_rules;

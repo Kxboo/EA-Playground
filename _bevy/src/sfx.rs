@@ -222,6 +222,19 @@ pub fn play(file: &'static str, class: &'static str, index: usize, volume: f32) 
 #[cfg(test)]
 mod tests {
     use super::*;
+    /// Every class Dodgeball plays in the VM (`EAGL_MG_SOUNDS=1 mglab probe 3`) is a sample table of some bank.
+    #[test]
+    fn dodgeball_sound_classes_resolve() {
+        if bank("common sfx.abk").is_none() {
+            return;
+        }
+        for (class, max_variant) in [("MGSFX_Dodgeball_Actions", 21), ("MGSFX_HUD_DB", 1), ("MGSFX_Damage_Male", 3), ("MGSFX_Damage_Female", 3), ("MGSFX_Grunts_Male", 5), ("MGSFX_Grunts_Female", 7), ("MGSFX_CommonHUD", 9)] {
+            let file = bank_of(class).unwrap_or_else(|| panic!("{class}: no bank"));
+            let table = bank(file).unwrap().class(class).unwrap().to_vec();
+            assert!(table.len() > max_variant, "{class} in {file}: {} entries", table.len());
+        }
+    }
+
     #[test]
     fn tetherball_and_common_tables_follow_the_banks() {
         let Some(tb) = bank("mg_tetherball.abk") else { return };

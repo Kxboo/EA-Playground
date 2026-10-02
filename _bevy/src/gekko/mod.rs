@@ -39,6 +39,8 @@ pub struct Vm<H> {
     /// Per-hook-name call counters (for diagnostics).
     pub trace: bool,
     pub depth: u32,
+    /// Host-initiated guest calls so far (lets observers detect that they clobbered r3 / f1).
+    pub calls: u64,
     /// Discovery mode: unhandled functions are recorded in `missing` and return 0 instead of stopping the machine.
     pub soft_traps: bool,
     pub missing: std::collections::BTreeMap<String, u32>,
@@ -71,6 +73,7 @@ impl<H> Vm<H> {
             heap_end: MEM2_BASE + mem::MEM2_SIZE as u32,
             trace: std::env::var("EAGL_PPC_TRACE").is_ok(),
             depth: 0,
+            calls: 0,
             soft_traps: false,
             missing: Default::default(),
             missing_symbols: vec![],
@@ -210,6 +213,7 @@ impl<H> Vm<H> {
     /// Call the guest function at `addr` with integer arguments `args` (r3..) and float arguments `fargs` (f1..).
     /// Callee-saved state is preserved so hooks may call back into the guest.
     pub fn call(&mut self, host: &mut H, addr: u32, args: &[u32], fargs: &[f64]) -> Result<u32, String> {
+        self.calls += 1;
         let saved = self.st.cpu.clone();
         let sp = (saved.r[1].wrapping_sub(0x200)) & !0xf;
         self.st.cpu.r[1] = sp;
@@ -259,7 +263,14 @@ impl<H> Vm<H> {
                     let f = self.hooks[idx].f;
                     if self.hooks[idx].observe {
                         if let Some(f) = f {
+                            // an observer may call into the guest itself, which leaves that call's return value in r3 / f1:
+                            // the original must still see its own arguments (deliberate edits to other registers stay)
+                            let (r3, f1, n0) = (self.st.cpu.r[3], self.st.cpu.f[1], self.calls);
                             f(host, self).map_err(|e| format!("{}: {e}", self.hooks[idx].name))?;
+                            if self.calls != n0 {
+                                self.st.cpu.r[3] = r3;
+                                self.st.cpu.f[1] = f1;
+                            }
                         }
                         // fall through: execute the first instruction of the original function
                         let w = self.st.mem.r32(pc);
