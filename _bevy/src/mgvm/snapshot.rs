@@ -27,6 +27,26 @@ pub struct Snapshot {
     /// `EAGL::DrawTextured` batches of this frame and the texture banks they name.
     pub imm: Vec<super::ImmDraw>,
     pub banks: std::collections::HashMap<String, std::sync::Arc<Vec<u8>>>,
+    /// World placeables whose visibility (`Placeable+0xa8`) the minigame changed since launch: (name, visible now).
+    pub placeables: Vec<(String, bool)>,
+}
+
+/// `PlaceableManager` (AreaManager +0x1b0): entries of 0x120 bytes at +8, count +0xc; name CString +4, visible flag +0xa8.
+pub fn placeable_flags(vm: &mut MgVm, host: &mut MgHost) -> Vec<(String, bool)> {
+    let world = vm.r32(WORLD_MAN + 0x88);
+    let am = if world != 0 { vm.r32(world + 8) } else { 0 };
+    if am == 0 {
+        return vec![];
+    }
+    let pm = am + 0x1b0;
+    let (base, n) = (vm.r32(pm + 8), vm.r32(pm + 0xc).min(4096));
+    let mut out = vec![];
+    for i in 0..n {
+        let e = base + 0x120 * i;
+        let p = vm.call_by_name(host, "c_str__7CStringCFv", &[e + 4], &[]).unwrap_or(0);
+        out.push((vm.st.mem.cstr(p, 96), vm.st.mem.r8(e + 0xa8) != 0));
+    }
+    out
 }
 
 pub fn snapshot(vm: &mut MgVm, host: &mut MgHost) -> Snapshot {
@@ -68,6 +88,10 @@ pub fn snapshot(vm: &mut MgVm, host: &mut MgHost) -> Snapshot {
     out.draws = std::mem::take(&mut host.draws);
     out.imm = std::mem::take(&mut host.imm);
     out.fov = host.fov;
+    if !host.placeables_at_launch.is_empty() && vm.r32(WORLD_MAN + 0x90) != 0 {
+        let now = placeable_flags(vm, host);
+        out.placeables = now.into_iter().zip(host.placeables_at_launch.iter()).filter(|(a, b)| a.1 != b.1).map(|(a, _)| a).collect();
+    }
     out.banks = host.tar_banks.clone();
     if host.camera != 0 {
         let c = host.camera;

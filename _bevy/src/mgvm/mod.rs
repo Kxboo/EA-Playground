@@ -60,6 +60,8 @@ pub struct MgHost {
     pub draw_textured: std::collections::HashMap<u32, DrawTexturedState>,
     /// Batches finished this frame.
     pub imm: Vec<ImmDraw>,
+    /// Placeable visibility flags when the minigame started (the first snapshot).
+    pub placeables_at_launch: Vec<(String, bool)>,
     /// Particle effects requested since the last frame.
     pub fx: Vec<FxEvent>,
     /// GUID -> stand-in `PartFx` object (and back), so `GetPartFx(guid)->SetPos(..)` reaches the right effect.
@@ -341,6 +343,7 @@ fn team_layout(ty: i32, humans: usize) -> Vec<(u32, usize, u32)> {
 /// first `humans` pads active: `WorldMan::StartMinigame` followed by the fade-complete step that creates it.
 pub fn launch(vm: &mut MgVm, host: &mut MgHost, ty: i32, humans: usize) -> Result<(), String> {
     host.minigame_type = ty;
+    host.placeables_at_launch = snapshot::placeable_flags(vm, host);
     let wm = world::WORLD_MAN;
     let ids = vm.img.addr("MinigameIDs").ok_or("MinigameIDs")?;
     let mgid = vm.r32(ids + 4 * ty as u32);
@@ -397,6 +400,7 @@ const FE_MINIGAME_TYPE: u32 = 0x805f_f144;
 /// `GameState::STATEFN_UPDATE_FE2MP` starts the game with `StartMinigame(MP+4, 0, 0, MP+8, MP+0xec)`.
 pub fn launch_fe(vm: &mut MgVm, host: &mut MgHost, l: &FeLaunch) -> Result<(), String> {
     host.minigame_type = l.ty;
+    host.placeables_at_launch = snapshot::placeable_flags(vm, host);
     host.kid_keys = world::kid_keys(vm, host)?;
     // the original comes here from the front end with no playground loaded; our boot spawned the area's kids, whose
     // asset bundles would fill CharacterManager's 16 slots
@@ -728,6 +732,7 @@ pub fn probe(ty: i32) {
         }
     }
     let snap = snapshot::snapshot(&mut vm, &mut host);
+    println!("placeables changed: {:?}", snap.placeables);
     println!("snapshot: {} chars, camera {:?}", snap.chars.len(), snap.camera);
     for c in snap.chars.iter().take(8) {
         println!("  char key {:x} pos {:?} angle {} anim {} bones {}", c.key, c.pos, c.angle, c.anim_state, c.pose.len());

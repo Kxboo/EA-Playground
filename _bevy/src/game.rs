@@ -41,8 +41,9 @@ pub fn display_matrix(radius:f32,position:Vec3)->Mat4{
 #[derive(Component)] pub struct Player{loco:Locomotion,physics_input:CharacterInputState,movement:CharacterMovementState,physics_frames:u64,velocity:Vec3,support_normal:Vec3,grounded:bool,speed:f32,facing:Vec3,weights:[f32;3],anim_ready:bool}
 #[derive(Component)] struct WorldLayer(String);
 #[derive(Component)] struct PlayerModel;
-#[derive(Clone,Debug)] pub struct Placeable{pub id:String,pub asset:String,pub pos:Vec3,pub orientation_deg:f32,pub physics:Option<String>}
-#[derive(Component)] struct PlaceableProp;
+#[derive(Clone,Debug)] pub struct Placeable{pub id:String,pub asset:String,pub pos:Vec3,pub orientation_deg:f32,pub physics:Option<String>,/// `default_visible` (hidden ones are spawned invisible).
+    pub visible:bool}
+#[derive(Component)] pub struct PlaceableProp;
 /// SkyDome layers (`SkyDome::LoadGeometry` 0x803c6578): skybox, mountain/city ring, clouds; only the clouds turn.
 #[derive(Component)] struct SkyLayer{clouds:bool}
 #[derive(Component)] struct SkyCamera;
@@ -201,7 +202,7 @@ impl Game{
         if let Some(list)=r.get("placeables").and_then(|v|v.as_array()){
             for p in list{
                 let a=p["pos"].as_array().unwrap();
-                self.placeables.push(Placeable{id:p["id"].as_str().unwrap_or("").into(),asset:p["asset"].as_str().unwrap_or("").into(),pos:Vec3::new(a[0].as_f64().unwrap() as f32,a[1].as_f64().unwrap() as f32,a[2].as_f64().unwrap() as f32),orientation_deg:p["orient"].as_f64().unwrap_or(0.) as f32,physics:p["physics"].as_str().map(String::from)});
+                self.placeables.push(Placeable{id:p["id"].as_str().unwrap_or("").into(),asset:p["asset"].as_str().unwrap_or("").into(),pos:Vec3::new(a[0].as_f64().unwrap() as f32,a[1].as_f64().unwrap() as f32,a[2].as_f64().unwrap() as f32),orientation_deg:p["orient"].as_f64().unwrap_or(0.) as f32,physics:p["physics"].as_str().map(String::from),visible:p["visible"].as_bool().unwrap_or(true)});
             }
         }
         if let Some(l)=r.get("start_location").and_then(v3){self.results.insert("db_start".into(),json!([l.x,l.y,l.z]));self.spawn_from_db=true;}
@@ -219,10 +220,20 @@ impl Game{
                     log.push(format!("db.vlt: {} types, {} classes, {} collections",db.types.len(),db.classes.len(),db.collections.len()));
                     db_results.insert("summary".to_string(),json!(format!("{} types / {} classes / {} collections",db.types.len(),db.classes.len(),db.collections.len())));
                     let pk=crate::vlt::string_hash64("placeables");
+                    // attributes are inherited from parent collections (the plain tetherball poles take their model that way)
+                    let inherited=|c:&crate::vlt::Collection,name:&str|->Option<Value>{
+                        let mut cur=Some(c);
+                        while let Some(col)=cur{
+                            if let Some(v)=db.attribute(col,name){return Some(v)}
+                            cur=db.collections.iter().find(|x|x.class_key==col.class_key&&x.key==col.parent_key&&col.parent_key!=0);
+                        }
+                        None
+                    };
                     let list:Vec<Value>=db.collections.iter().filter(|c|c.class_key==pk).filter_map(|c|{
-                        let pos=db.attribute(c,"position")?;let asset=db.attribute(c,"asset_name")?;
-                        if db.attribute(c,"default_visible").and_then(|v|v.as_bool())==Some(false){return None}
-                        Some(json!({"id":db.attribute(c,"id").unwrap_or(json!("")),"asset":asset,"pos":pos,"orient":db.attribute(c,"orientation").unwrap_or(json!(0)),"physics":db.attribute(c,"physics_name").unwrap_or(Value::Null)}))
+                        let pos=inherited(c,"position")?;let asset=inherited(c,"asset_name")?;
+                        // default-invisible placeables are spawned hidden: minigames switch some on (tetherball's plain pole)
+                        let visible=inherited(c,"default_visible").and_then(|v|v.as_bool())!=Some(false);
+                        Some(json!({"id":db.attribute(c,"id").unwrap_or(json!("")),"asset":asset,"pos":pos,"visible":visible,"orient":inherited(c,"orientation").unwrap_or(json!(0)),"physics":inherited(c,"physics_name").unwrap_or(Value::Null)}))
                     }).collect();
                     db_results.insert("placeables".into(),Value::Array(list));
                     if let Some(l)=loc{db_results.insert("start_location".into(),l);}
@@ -365,7 +376,8 @@ fn pump(backdrop:Option<Res<Backdrop>>,mut commands:Commands,mut g:Option<ResMut
                         let radius=g.world_radius;
                         for q in g.placeables.clone().into_iter().filter(|q|q.asset==asset){
                             let t=Transform::from_matrix(display_matrix(radius,q.pos)*Mat4::from_quat(Quat::from_rotation_y(q.orientation_deg.to_radians())));
-                            assets::spawn(&mut commands,&up,(GameEntity,PlaceableProp,Name::new(q.id.clone()),t,OriginalAsset{evidence:EvidenceLevel::AssetDerived,source:asset.clone(),decoder_version:"rust-model-1".into()}),None);
+                            let e=assets::spawn(&mut commands,&up,(GameEntity,PlaceableProp,Name::new(q.id.clone()),t,OriginalAsset{evidence:EvidenceLevel::AssetDerived,source:asset.clone(),decoder_version:"rust-model-1".into()}),None);
+                            if !q.visible{commands.entity(e).insert(Visibility::Hidden);}
                             g.props_spawned+=1;
                         }
                     }
@@ -422,7 +434,7 @@ fn build(backdrop:Option<Res<Backdrop>>,mut commands:Commands,mut g:Option<ResMu
         }
     }
     // Placeables that name their own Havok file (gates): place its collision at the database position/orientation.
-    for q in g.placeables.clone(){
+    for q in g.placeables.clone().into_iter().filter(|q|q.visible){
         let Some(name)=q.physics.as_deref() else{continue};
         let Ok(bytes)=std::fs::read(dir.join(format!("{name}.hkx"))) else{continue};
         let Ok(pf)=crate::havok::Packfile::parse(&bytes,&classes) else{continue};

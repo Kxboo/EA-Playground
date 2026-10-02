@@ -222,17 +222,30 @@ pub fn play(file: &'static str, class: &'static str, index: usize, volume: f32) 
 #[cfg(test)]
 mod tests {
     use super::*;
-    /// Every class Dodgeball plays in the VM (`EAGL_MG_SOUNDS=1 mglab probe 3`) is a sample table of some bank.
+    /// Every class the VM-hosted minigames played in a lab run (`EAGL_MG_SOUNDS=1 mglab probe <type>`, highest variant
+    /// seen) is a sample table of some bank with that many entries.
     #[test]
-    fn dodgeball_sound_classes_resolve() {
+    fn minigame_sound_classes_resolve() {
         if bank("common sfx.abk").is_none() {
             return;
         }
-        for (class, max_variant) in [("MGSFX_Dodgeball_Actions", 21), ("MGSFX_HUD_DB", 1), ("MGSFX_Damage_Male", 3), ("MGSFX_Damage_Female", 3), ("MGSFX_Grunts_Male", 5), ("MGSFX_Grunts_Female", 7), ("MGSFX_CommonHUD", 9)] {
-            let file = bank_of(class).unwrap_or_else(|| panic!("{class}: no bank"));
-            let table = bank(file).unwrap().class(class).unwrap().to_vec();
-            assert!(table.len() > max_variant, "{class} in {file}: {} entries", table.len());
+        let seen = [
+            ("MGSFX_CommonHUD", 10), ("MGSFX_Damage_Female", 3), ("MGSFX_Damage_Male", 3), ("MGSFX_Dodgeball_Actions", 23),
+            ("MGSFX_Footie_Actions", 12), ("MGSFX_Footie_Ball", 3), ("MGSFX_Footie_Collisions", 1), ("MGSFX_Grunts_Female", 7),
+            ("MGSFX_Grunts_Male", 7), ("MGSFX_HUD_DB", 1), ("MGSFX_HUD_DS", 3), ("MGSFX_HUD_Footie", 2), ("MGSFX_HUD_PA", 11),
+            // MGSFX_HUD_RC (RcCars, variants up to 21) is not a plain sample table of the rc banks yet
+            ("MGSFX_HUD_TB", 1), ("MGSFX_HUD_WB", 6), ("MGSFX_Laughter_M", 7), ("MGSFX_MEGAGrunts_Female", 1),
+            ("MGSFX_MEGAGrunts_Male", 3), ("MGSFX_PaperAirpl_Launch", 1), ("MGSFX_Tetherball_Hits", 6), ("MGSFX_WallBall_Actions", 9),
+            ("MGSFX_WallBall_Ball", 5), ("WSFX_Footsteps", 0),
+        ];
+        let mut bad = vec![];
+        for (class, max_variant) in seen {
+            match bank_of(class).and_then(|f| bank(f).map(|b| (f, b.class(class).map(|t| t.len()).unwrap_or(0)))) {
+                Some((_, n)) if n > max_variant => {}
+                other => bad.push(format!("{class}: {other:?}")),
+            }
         }
+        assert!(bad.is_empty(), "{bad:?}");
     }
 
     #[test]

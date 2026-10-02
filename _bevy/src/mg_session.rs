@@ -24,6 +24,9 @@ pub struct MgActive;
 
 #[derive(Component)]
 pub struct MgEntity;
+/// A world placeable whose visibility the running minigame changed (`Placeable+0xa8`); restored at teardown.
+#[derive(Component)]
+pub struct MgPlaceable(Visibility);
 #[derive(Component)]
 struct MgChar(u32);
 #[derive(Component)]
@@ -220,6 +223,13 @@ fn launch_or_teardown(world: &mut World) {
         world.remove_resource::<MgSnapshot>();
         if let Some(mut fx) = world.get_resource_mut::<crate::fx::FxWorld>() {
             fx.instances.clear();
+        }
+        let mut swapped = world.query::<(Entity, &MgPlaceable)>();
+        let back: Vec<(Entity, Visibility)> = swapped.iter(world).map(|(e, p)| (e, p.0)).collect();
+        for (e, v) in back {
+            if let Ok(mut em) = world.get_entity_mut(e) {
+                em.insert(v).remove::<MgPlaceable>();
+            }
         }
         // the world camera's lens back to Bevy's default
         let mut cams = world.query_filtered::<&mut Projection, With<game::GameCamera>>();
@@ -721,6 +731,7 @@ fn present(
     mut roots: Query<(&MgChar, &mut Transform), (Without<MgJoint>, Without<MgProp>)>,
     mut joints: Query<(&MgJoint, &mut Transform), (Without<MgChar>, Without<MgProp>)>,
     mut props: Query<(&MgProp, &mut Transform, &mut Visibility), (Without<MgChar>, Without<MgJoint>)>,
+    mut placeables: Query<(Entity, &Name, &mut Visibility, Option<&MgPlaceable>), (With<game::PlaceableProp>, Without<MgProp>)>,
 ) {
     let (Some(mut s), Some(snap), Some(game)) = (s, snap, game) else { return };
     if s.state != SessionState::Running {
@@ -730,6 +741,21 @@ fn present(
     let s = &mut *s;
     let radius = game.world_radius;
     let Some(loaded) = s.loaded.as_ref() else { return };
+    // world placeables the minigame swapped (tetherball: plain pole in, pole-with-ball out)
+    for (name, visible) in &snapshot.placeables {
+        if std::env::var("EAGL_MG_DEBUG").is_ok() && s.frames % 300 == 1 {
+            let similar: Vec<String> = placeables.iter().map(|(_, n, _, _)| n.as_str().to_string()).filter(|n| n.contains("tetherball")).collect();
+            eprintln!("[mg] placeable {name} -> {visible}; world has {similar:?}");
+        }
+        for (e, n, mut v, mark) in &mut placeables {
+            if n.as_str() == name {
+                if mark.is_none() {
+                    commands.entity(e).insert(MgPlaceable(*v));
+                }
+                *v = if *visible { Visibility::Inherited } else { Visibility::Hidden };
+            }
+        }
+    }
     // characters
     for c in &snapshot.chars {
         if !s.chars.contains_key(&c.ptr) {

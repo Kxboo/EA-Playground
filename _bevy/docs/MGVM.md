@@ -35,6 +35,7 @@ Found with a Ghidra decompilation of the executable (`D:/tools/decomp.c`, see th
 * **Front end** – launches go through the original `MultiPlayerFSHandlers` (`LaunchNonTeamMiniGame` / `SetTeams`,
   `RetrieveDefaultRules`) and `StartMinigame(MP+4, 0, 0, MP+8, MP+0xec)`; PostGame info -> `fe_postgame::setup`,
   Replay/Done -> `Minigame::OnReplay/OnDone`; pause buttons -> `OnPause*`; `EndMinigame` tears the session down.
+* **World placeables** – the guest's `Placeable+0xa8` visibility changes since launch are mirrored onto the Bevy world entities of the same name (default-hidden placeables are spawned hidden; attributes are inherited from parent collections).
 * **Presentation** – the viewport FOV (`SceneOptions+0x1c`, degrees across 4:3) drives the Bevy camera;
   `EAGL::DrawTextured` batches (indicators, cursors) are drawn by `mg_draw.rs` with textures from the `TarManager` banks;
   `PartFxManager` effects feed `fx.rs`; `Audio::PlaySFX` runs the original id switch and `Csis` instances play through
@@ -48,4 +49,5 @@ Found with a Ghidra decompilation of the executable (`D:/tools/decomp.c`, see th
 | Game | Status |
 | --- | --- |
 | Dodgeball | Complete: FE quick play / multiplayer teams, 3v3 with AI (hits, catches, dodges), keyboard controls (move, A ready/catch, J throw, Q/E dodge), HUD + round banners, indicators, effects, sound + music, pause (resume/restart/quit), PostGame -> replay/done -> menus. |
+| Tetherball | Complete: FE launch, AI serve/rally, J toss / K strike / L reverse strike (overhand strike needs the mega-hit ability flag `MGTetherball+0x424`), plain pole swapped in for the world's pole-with-ball (guest `Placeable+0xa8` mirrored onto the Bevy world), HUD, effects, sound, music, PostGame -> menus. |
 | others | Run start -> PostGame -> exit in the lab under AI; per-game polish pending (one game at a time). |
