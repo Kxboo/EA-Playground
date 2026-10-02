@@ -246,7 +246,31 @@ fn camera_set_pos(h: &mut MgHost, vm: &mut V) -> R {
     Ok(())
 }
 
+fn dbg_reach(h: &mut MgHost, vm: &mut V) -> R {
+    if h.log.len() < 400 {
+        let p = vm.a(1);
+        let (x, y, z) = (vm.st.mem.rf32(p), vm.st.mem.rf32(p + 4), vm.st.mem.rf32(p + 8));
+        h.log.push(format!("IsBallReachable this={:x} pos=({x:.2},{y:.2},{z:.2}) i={}", vm.a(0), vm.a(2)));
+    }
+    Ok(())
+}
+
+fn dbg_move(h: &mut MgHost, vm: &mut V) -> R {
+    let p = vm.a(1);
+    if p != 0 {
+        let (x, y, z) = (vm.st.mem.rf32(p), vm.st.mem.rf32(p + 4), vm.st.mem.rf32(p + 8));
+        eprintln!("AddMove this={:x} dir=({x:.3},{y:.3},{z:.3}) f={}", vm.a(0), vm.fa(0));
+    }
+    Ok(())
+}
+
 pub fn drawing(vm: &mut V) {
+    if std::env::var("EAGL_DBG_MOVE").is_ok() {
+        vm.observe("AddMoveInputEvent__18DodgeballCharacterFPC9rmVector3f", dbg_move);
+    }
+    if std::env::var("EAGL_DBG_REACH").is_ok() {
+        vm.observe("IsBallReachable__14DodgeballCourtCFPC9rmVector3i", dbg_reach);
+    }
     bind(vm, &["Draw__Q23Ren11CachedModelFRC9rmMatrix4b"], cached_model_draw);
     if !vm.observe("SetPos__6CameraFRC9rmVector3", camera_set_pos) {
         vm.log_missing_symbol("SetPos__6CameraFRC9rmVector3");

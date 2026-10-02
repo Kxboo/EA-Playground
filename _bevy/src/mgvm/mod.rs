@@ -301,6 +301,7 @@ pub fn frame(vm: &mut MgVm, host: &mut MgHost, ms: i32) -> Result<(), String> {
         vm.call_by_name(host, "Update__11AncientEvilFi", &[ae, ms as u32], &[])?;
     }
     vm.call_by_name(host, "Update__8WorldManFi", &[world::WORLD_MAN, ms as u32], &[])?;
+    physhooks::dispatch_contacts(host, vm)?;
     let cm = vm.r32(0x8060_214c);
     if cm != 0 {
         vm.call_by_name(host, "Update__13CameraManagerFi", &[cm, ms as u32], &[])?;
@@ -323,6 +324,12 @@ pub fn probe(ty: i32) {
         return;
     }
     println!("launched {ty}");
+    if std::env::var("EAGL_MG_SELFTEST").is_ok() {
+        for x in [4.0f64, 2.0, 0.25, 1.5, 100.0, 0.0001] {
+            let r = vm.call_by_name(&mut host, "sqrt", &[], &[x]);
+            println!("sqrt({x}) = {:?} f1={}", r, vm.st.cpu.f[1]);
+        }
+    }
     let frames: i32 = std::env::var("EAGL_MG_FRAMES").ok().and_then(|v| v.parse().ok()).unwrap_or(5);
     let mg = vm.r32(world::WORLD_MAN + 0x90);
     for f in 0..frames {

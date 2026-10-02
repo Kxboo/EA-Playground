@@ -21,24 +21,24 @@ fn quat_from_rows(m: &Mat) -> Rotation {
     if tr > 0. {
         let s = (tr + 1.).sqrt() * 2.;
         w = 0.25 * s;
-        x = (zy - yz) / s;
-        y = (xz - zx) / s;
-        z = (yx - xy) / s;
+        x = (yz - zy) / s;
+        y = (zx - xz) / s;
+        z = (xy - yx) / s;
     } else if xx > yy && xx > zz {
         let s = (1. + xx - yy - zz).sqrt() * 2.;
-        w = (zy - yz) / s;
+        w = (yz - zy) / s;
         x = 0.25 * s;
         y = (xy + yx) / s;
         z = (xz + zx) / s;
     } else if yy > zz {
         let s = (1. + yy - xx - zz).sqrt() * 2.;
-        w = (xz - zx) / s;
+        w = (zx - xz) / s;
         x = (xy + yx) / s;
         y = 0.25 * s;
         z = (yz + zy) / s;
     } else {
         let s = (1. + zz - xx - yy).sqrt() * 2.;
-        w = (yx - xy) / s;
+        w = (xy - yx) / s;
         x = (xz + zx) / s;
         y = (yz + zy) / s;
         z = 0.25 * s;
@@ -79,6 +79,8 @@ pub struct CharBody {
     pub orientation: f32,
     pub listener: u32,
     pub guest_character: u32,
+    /// Guest `PhysicsUserData` (type 4) describing this character to rigid-body listeners.
+    pub user_data: u32,
 }
 
 /// A contact that began (or ended) this step, for the guest listeners.
@@ -311,7 +313,7 @@ impl Physics {
         let h = self.world.insert_body(body);
         self.world.insert_collider(ColliderBuilder::capsule_y(0.45, 0.3), Some(h));
         self.by_handle.insert(h, guest);
-        self.chars.insert(guest, CharBody { handle: h, position: pos, destination: None, speed: 0., orientation: 0., listener: 0, guest_character: character });
+        self.chars.insert(guest, CharBody { handle: h, position: pos, destination: None, speed: 0., orientation: 0., listener: 0, guest_character: character, user_data: 0 });
     }
 
     pub fn remove_character(&mut self, guest: u32) {
@@ -343,7 +345,11 @@ impl Physics {
             opts.stop_at_penetration = false;
             let filter = QueryFilter::only_fixed();
             match self.world.cast_shape(&pose, rest, &ball, opts, filter) {
-                Some((_, hit)) => {
+                Some((col, hit)) => {
+                    if std::env::var("EAGL_PHYS_MOVE").is_ok() {
+                        let c = &self.world.colliders[col];
+                        eprintln!("[hit] toi {} n {:?} aabb {:?} parent {:?} fixed {}", hit.time_of_impact, hit.normal2, c.compute_aabb(), c.parent(), c.parent().map(|b| self.world.bodies[b].is_fixed()).unwrap_or(true));
+                    }
                     let t = (hit.time_of_impact - 0.02).max(0.);
                     p += rest * t;
                     let n = hit.normal2;
@@ -391,6 +397,9 @@ impl Physics {
             }
             if delta != [0.; 2] {
                 p = self.slide(p, delta);
+                if std::env::var("EAGL_PHYS_MOVE").is_ok() {
+                    eprintln!("[move] {id:#x} {pos:?} delta {delta:?} -> {p:?} orient {orient} dest {dest:?}");
+                }
             }
             if let Some(g) = self.ground_height(p, 1.0, 3.0) {
                 p[1] = g;

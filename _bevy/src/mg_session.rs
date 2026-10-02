@@ -323,6 +323,10 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
     let cmds: Vec<String> = fe.as_mut().map(|v| std::mem::take(&mut v.0.vm.fe.mg_cmds)).unwrap_or_default();
     let mut pause_req = fe.as_mut().and_then(|v| v.0.vm.fe.pause_req.take());
     let (vm, host) = s.vm.as_mut().unwrap();
+    if std::env::var("EAGL_MG_DEBUG").is_ok() && s.frames % 300 == 0 {
+        let mg = vm.r32(mgvm::snapshot::WORLD_MAN + 0x90);
+        eprintln!("[mg] frame {} state {} ms {}", s.frames, vm.r32(mg + 0x34), ms);
+    }
     for c in &cmds {
         let r = match c.as_str() {
             "OnPlay" => {

@@ -207,6 +207,85 @@ fn char_ct(h: &mut MgHost, vm: &mut V) -> R {
         vm.w32(this, vt);
     }
     h.phys.add_character(this, character, p);
+    // rigid-body listeners reach the game character through `PhysicsUserData{type 4, ptr}` -> `+0x30` = Character*
+    vm.w32(this + 0x30, character);
+    let ud = vm.alloc_zeroed(0x10, 16);
+    vm.w32(ud + 4, 4);
+    vm.w32(ud + 0xc, this);
+    if let Some(c) = h.phys.chars.get_mut(&this) {
+        c.user_data = ud;
+    }
+    Ok(())
+}
+/// `PhysicsCharacterListener(this, PhysicsCharacter*)`: remember which listener belongs to the character.
+fn char_listener_ct(h: &mut MgHost, vm: &mut V) -> R {
+    let (this, ch) = (vm.a(0), vm.a(1));
+    if let Some(vt) = vm.img.addr("__vt__24PhysicsCharacterListener") {
+        vm.w32(this, vt);
+    }
+    vm.w32(this + 4, ch);
+    vm.st.mem.w8(this + 8, 1);
+    vm.w32(this + 0xc, 0);
+    if let Some(c) = h.phys.chars.get_mut(&ch) {
+        c.listener = this;
+    }
+    Ok(())
+}
+
+/// The virtual `<base>__...` method found in the vtable at `vt` (entries are `{s16 delta, s16 pad, ptr}`).
+fn listener_method(vm: &mut V, vt: u32, base: &str) -> Option<u32> {
+    let prefix = format!("{base}__");
+    let words: Vec<u32> = (0..24u32).map(|i| vm.r32(vt + 4 * i)).collect();
+    words.into_iter().find(|&w| w >= 0x8000_0000 && vm.img.func_at(w).is_some_and(|s| s.addr == w && s.name.starts_with(&prefix)))
+}
+
+/// Deliver the contacts that began during the last physics step to the guest listeners
+/// (`ContactAddedCallback`/`ContactConfirmedCallback` on the body, `ObjectInteractionCallback` on the character).
+pub fn dispatch_contacts(h: &mut MgHost, vm: &mut V) -> Result<(), String> {
+    let contacts = std::mem::take(&mut h.pending_contacts);
+    if std::env::var("EAGL_PHYS_TRACE").is_ok() {
+        for c in contacts.iter().filter(|c| c.added) {
+            eprintln!("[phys] contact {:#x} {:#x} bodies {:?} chars {:?}", c.a, c.b, h.phys.bodies.contains_key(&c.a), h.phys.chars.contains_key(&c.a));
+        }
+    }
+    if contacts.iter().all(|c| !c.added) {
+        return Ok(());
+    }
+    let cp = vm.alloc_zeroed(0x40, 16);
+    for c in contacts.iter().filter(|c| c.added) {
+        let (body, ch) = if h.phys.bodies.contains_key(&c.a) && h.phys.chars.contains_key(&c.b) {
+            (c.a, c.b)
+        } else if h.phys.bodies.contains_key(&c.b) && h.phys.chars.contains_key(&c.a) {
+            (c.b, c.a)
+        } else {
+            continue;
+        };
+        let (b_ud, b_listener) = {
+            let b = &h.phys.bodies[&body];
+            (b.user_data, b.listener)
+        };
+        let (c_ud, c_listener) = {
+            let c = &h.phys.chars[&ch];
+            (c.user_data, c.listener)
+        };
+        for (i, v) in c.point.iter().chain(c.normal.iter()).enumerate() {
+            vm.st.mem.wf32(cp + 4 * i as u32, *v);
+        }
+        if b_listener != 0 {
+            let vt = vm.r32(b_listener);
+            for slot_name in ["ContactAddedCallback", "ContactConfirmedCallback"] {
+                if let Some(f) = listener_method(vm, vt, slot_name) {
+                    vm.call(h, f, &[b_listener, c_ud, 3, cp], &[0.])?;
+                }
+            }
+        }
+        if c_listener != 0 {
+            let vt = vm.r32(c_listener);
+            if let Some(f) = listener_method(vm, vt, "ObjectInteractionCallback") {
+                vm.call(h, f, &[c_listener, b_ud, cp], &[])?;
+            }
+        }
+    }
     Ok(())
 }
 fn char_dt(h: &mut MgHost, vm: &mut V) -> R {
@@ -282,6 +361,7 @@ pub fn install(vm: &mut V) {
     bind(vm, &["GetMass__16PhysicsRigidBodyFv"], get_mass);
     bind(vm, &["SetUserData__16PhysicsRigidBodyFPC15PhysicsUserData"], set_user_data);
     bind(vm, &["__ct__24PhysicsRigidBodyListenerFP16PhysicsRigidBody"], rb_listener_ct);
+    bind(vm, &["__ct__24PhysicsCharacterListenerFP16PhysicsCharacter"], char_listener_ct);
     bind(vm, &["__ct__23PhysicsDynamicCharacterFP9CharacterPC9rmVector3P14PhysicsManager", "__ct__22PhysicsStaticCharacterFP9CharacterPC9rmVector3P14PhysicsManager"], char_ct);
     bind(vm, &["__dt__23PhysicsDynamicCharacterFv", "__dt__22PhysicsStaticCharacterFv"], char_dt);
     bind(vm, &["SetPosition__23PhysicsDynamicCharacterFPC9rmVector3", "SetPosition__22PhysicsStaticCharacterFPC9rmVector3"], char_set_position);
