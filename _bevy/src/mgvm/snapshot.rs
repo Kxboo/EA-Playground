@@ -24,6 +24,10 @@ pub struct Snapshot {
     pub camera: Option<([f32; 3], [f32; 3], [f32; 3])>,
     /// Vertical field of view (radians) of the camera above.
     pub fov: f32,
+    /// Near clip plane of the game's viewport (`SceneOptions+0x14`; the default options use 1.0).
+    pub near: f32,
+    /// `gRenderWorld`: false while a game draws its own environment instead of the playground (RcCars' track).
+    pub render_world: bool,
     /// `EAGL::DrawTextured` batches of this frame and the texture banks they name.
     pub imm: Vec<super::ImmDraw>,
     pub banks: std::collections::HashMap<String, std::sync::Arc<Vec<u8>>>,
@@ -88,27 +92,21 @@ pub fn snapshot(vm: &mut MgVm, host: &mut MgHost) -> Snapshot {
     out.draws = std::mem::take(&mut host.draws);
     out.imm = std::mem::take(&mut host.imm);
     out.fov = host.fov;
+    out.near = host.near.unwrap_or(1.0);
+    out.render_world = vm.img.addr("gRenderWorld").is_none_or(|a| vm.st.mem.r8(a) != 0);
     if !host.placeables_at_launch.is_empty() && vm.r32(WORLD_MAN + 0x90) != 0 {
         let now = placeable_flags(vm, host);
         out.placeables = now.into_iter().zip(host.placeables_at_launch.iter()).filter(|(a, b)| a.1 != b.1).map(|(a, _)| a).collect();
     }
     out.banks = host.tar_banks.clone();
-    if host.camera != 0 {
-        let c = host.camera;
+    // viewport 0's camera (`CameraManager` slot 0, what the renderer draws with) in its final pose
+    // (`Camera::GetPos/GetTarget(true)`, after transitions and shake); else the camera the game last placed
+    let manager = vm.img.addr("sCameraManagerInstance__13CameraManager").map(|a| vm.r32(a)).unwrap_or(0);
+    let c = if manager != 0 && vm.r32(manager) != 0 { vm.r32(manager) } else { host.camera };
+    if c != 0 {
         let v = |vm: &mut MgVm, o: u32| [vm.st.mem.rf32(c + o), vm.st.mem.rf32(c + o + 4), vm.st.mem.rf32(c + o + 8)];
-        out.camera = Some((v(vm, 0x10), v(vm, 0x20), v(vm, 0x30)));
-    }
-    if host.minigame_type == 1 {
-        // RcCars: follow the first car's body (the player's) from behind; its local +X is forward
-        if let Some((_, m)) = out.draws.iter().find(|(n, _)| n.contains("body") || n.starts_with("model@")) {
-            let f = [m[0], 0., m[2]];
-            let l = (f[0] * f[0] + f[2] * f[2]).sqrt().max(1e-4);
-            let f = [f[0] / l, 0., f[2] / l];
-            let p = [m[12], m[13], m[14]];
-            let eye = [p[0] - f[0] * 3.2, p[1] + 1.5, p[2] - f[2] * 3.2];
-            let tgt = [p[0] + f[0] * 4., p[1] + 0.3, p[2] + f[2] * 4.];
-            out.camera = Some((eye, tgt, [0., 1., 0.]));
-        }
+        let (eye, target) = (v(vm, 0x70), v(vm, 0x80));
+        out.camera = if eye != target { Some((eye, target, [0., 1., 0.])) } else { Some((v(vm, 0x10), v(vm, 0x20), v(vm, 0x30))) };
     }
     out
 }

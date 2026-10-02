@@ -76,6 +76,10 @@ pub struct MgHost {
     /// `g<Class>Handle__4Csis` address -> class name.
     pub csis_handles: std::collections::HashMap<u32, String>,
     /// Debug: thrown balls being followed (physics body, target DodgeballCharacter, frames left).
+    /// Near clip plane the game set with `Ren::Scene::SetViewPort` (none: the default `SceneOptions`, 1.0).
+    pub near: Option<f32>,
+    /// Frame counter for periodic development logs.
+    pub dbg_frames: u64,
     pub dbg_throws: Vec<(u32, u32, i32)>,
     /// Debug: objects whose constructor `EAGL_DBG_CT` names (their `this`), dumped with `EAGL_DBG_CTWORDS`.
     pub dbg_objs: Vec<u32>,
@@ -481,6 +485,15 @@ pub fn game_callback(vm: &mut MgVm, host: &mut MgHost, name: &str) -> Result<boo
 pub fn frame(vm: &mut MgVm, host: &mut MgHost, ms: i32) -> Result<(), String> {
     // GameState::Update -> STATEFN_UPDATE_Playground order: pads, controllers, conga, AI, world, cameras
     hooks::write_pads(vm, &host.pads);
+    if std::env::var("EAGL_DBG_RCCAM").is_ok() {
+        host.dbg_frames += 1;
+        let mg = vm.r32(snapshot::WORLD_MAN + 0x90);
+        if mg != 0 && host.dbg_frames % 60 == 0 {
+            let snap = snapshot::snapshot(vm, host);
+            let car = snap.draws.iter().find(|d| d.0.contains("body")).map(|d| [d.1[12], d.1[13], d.1[14]]);
+            eprintln!("[rccam] {} camera {:?} first body {car:?}", host.dbg_frames, snap.camera);
+        }
+    }
     for i in 0..4u32 {
         if host.pads[i as usize].active {
             let c = vm.call_by_name(host, "Get__10ControllerFi", &[i], &[])?;
@@ -767,6 +780,25 @@ pub fn probe(ty: i32) {
         println!("  draw_textured {:?}", host.draw_textured.iter().map(|(k, v)| (*k, v.tex)).collect::<Vec<_>>());
         for d in &host.imm {
             println!("  imm {:?} prim {:#x} verts {} first {:?} model t {:?}", d.tex, d.prim, d.verts.len(), d.verts.first(), &d.model[12..15]);
+        }
+    }
+    if let Some(a) = vm.img.addr("sCameraManagerInstance__13CameraManager") {
+        let cm = vm.r32(a);
+        let cam = if cm != 0 { vm.r32(cm) } else { 0 };
+        if cam != 0 {
+            let v = |vm: &mut Vm<MgHost>, o: u32| [vm.st.mem.rf32(cam + o), vm.st.mem.rf32(cam + o + 4), vm.st.mem.rf32(cam + o + 8)];
+            println!("guest camera {cam:#x} (host {:#x}) pos {:?} target {:?} base {:?} {:?}", host.camera, v(&mut vm, 0x70), v(&mut vm, 0x80), v(&mut vm, 0x10), v(&mut vm, 0x20));
+        }
+    }
+    if let Some(a) = vm.img.addr("gDisableCurvedWorld") {
+        println!("gDisableCurvedWorld {}", vm.st.mem.r8(a));
+    }
+    if std::env::var("EAGL_DBG_RCMODELS").is_ok() {
+        // RcCar's CachedModel table (13 per vehicle type: bodies by paint, wheels, ...)
+        for i in 0..39u32 {
+            let cm = vm.r32(0x805e_3394 + 4 * i);
+            let m = if cm != 0 { vm.r32(cm + 0x44) } else { 0 };
+            println!("rc slot {i}: cached {cm:#x} model {m:#x} {:?}", host.model_names.get(&m));
         }
     }
     if let Ok(k) = std::env::var("EAGL_DBG_DRAW") {

@@ -39,7 +39,7 @@ pub fn display_matrix(radius:f32,position:Vec3)->Mat4{
 #[derive(Component)] pub struct GameEntity;
 #[derive(Component)] pub struct GameCamera{pub yaw:f32,pub pitch:f32,pub distance:f32}
 #[derive(Component)] pub struct Player{loco:Locomotion,physics_input:CharacterInputState,movement:CharacterMovementState,physics_frames:u64,velocity:Vec3,support_normal:Vec3,grounded:bool,speed:f32,facing:Vec3,weights:[f32;3],anim_ready:bool}
-#[derive(Component)] struct WorldLayer(String);
+#[derive(Component)] pub struct WorldLayer(pub String);
 #[derive(Component)] struct PlayerModel;
 #[derive(Clone,Debug)] pub struct Placeable{pub id:String,pub asset:String,pub pos:Vec3,pub orientation_deg:f32,pub physics:Option<String>,/// `default_visible` (hidden ones are spawned invisible).
     pub visible:bool}

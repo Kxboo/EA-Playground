@@ -136,7 +136,10 @@ fn resolve_model(h: &mut MgHost, vm: &mut V) -> R {
     // the asset slot's name sits at +0xc of the 0xb8-byte entry that `models` (+0x90) points into
     let name = vm.st.mem.cstr(models - 0x90 + 0xc, 64);
     // RcCars' car files hold one model per paint job
-    let n: u32 = if name.starts_with("rc_") { 6 } else { 1 };
+    let n: u32 = if name.to_lowercase().starts_with("rc_") { 6 } else { 1 };
+    if std::env::var("EAGL_DBG_MODELS").is_ok() {
+        eprintln!("[model] ResolveModel {name} x{n}");
+    }
     for k in 0..n {
         let dummy = vm.alloc_zeroed(0x200, 32);
         // +0x44 -> geometry record whose bounding box (+0x6c min, +0x7c max) some games read when drawing
@@ -225,6 +228,14 @@ fn set_viewport(h: &mut MgHost, vm: &mut V) -> R {
         vm.w32(h.scene_options + 4 * k, w);
     }
     let fov = vm.st.mem.rf32(opts + 0x1c);
+    let near = vm.st.mem.rf32(opts + 0x14);
+    if near > 0.01 && near < 10. {
+        h.near = Some(near);
+    }
+    if std::env::var("EAGL_DBG_SCENE").is_ok() {
+        let w: Vec<f32> = (0..12).map(|k| vm.st.mem.rf32(opts + 4 * k)).collect();
+        eprintln!("[scene] SetViewPort options {w:?}");
+    }
     if fov > 1. && fov < 170. {
         h.fov_h43 = Some(fov);
         // vertical field of view (radians) for the pointer ray
@@ -295,7 +306,8 @@ fn cached_model_draw(h: &mut MgHost, vm: &mut V) -> R {
         return Ok(());
     }
     let model = vm.r32(this + 0x44);
-    let name = h.model_names.get(&model).cloned().unwrap_or_else(|| format!("model@{model:#x}"));
+    // usually a CachedModel around a resolved model (+0x44); some tables (RcCars' paint jobs) hold the model itself
+    let name = h.model_names.get(&model).or_else(|| h.model_names.get(&this)).cloned().unwrap_or_else(|| format!("model@{model:#x}"));
     let mut mat = [0f32; 16];
     for (i, v) in mat.iter_mut().enumerate() {
         *v = vm.st.mem.rf32(m + 4 * i as u32);
@@ -893,6 +905,38 @@ fn dt_end(h: &mut MgHost, vm: &mut V) -> R {
 
 pub fn pregame(vm: &mut V) {
     vm.observe("Initialize__10TarManagerFR7CString", tar_manager_init);
+    if std::env::var("EAGL_DBG_RC").is_ok() {
+        vm.observe("Render__5RcCarFRQ23Ren12SceneContext", |_h, vm| {
+            let c = vm.a(0);
+            let mg = vm.r32(super::snapshot::WORLD_MAN + 0x90);
+            let player = if mg != 0 { vm.r32(mg + 0x12c) } else { 0 };
+            let track = if mg != 0 { vm.r32(mg + 0x114) } else { 0 };
+            let lanes = if track != 0 { vm.r32(track + 0x25370) } else { 0 };
+            let f = |vm: &mut V, o: u32| vm.st.mem.rf32(c + o);
+            if c == player && track != 0 && std::env::var("EAGL_DBG_RCLANES").is_ok() {
+                let buf = vm.alloc_zeroed(0x80, 16);
+                let mut pts = vec![];
+                for lane in 0..lanes.min(8) {
+                    for k in 0..7u32 {
+                        let w = vm.r32(c + 0x370 + 4 * k);
+                        vm.w32(buf + 4 * k, w);
+                    }
+                    vm.w32(buf, lane);
+                    vm.call_by_name(_h, "GetLanePos__7RcTrackF9RcLanePosf", &[buf + 0x40, track, buf], &[0.])?;
+                    pts.push([vm.st.mem.rf32(buf + 0x50), vm.st.mem.rf32(buf + 0x54), vm.st.mem.rf32(buf + 0x58)]);
+                }
+                eprintln!("[rc] lanes at player: {pts:?}");
+            }
+            eprintln!("[rc] car {c:#x} player {} lane {} of {lanes} lanepos {:?} pos {:?} target {:?}", c == player, vm.r32(c + 0x370) as i32, [f(vm, 0x374), f(vm, 0x378), f(vm, 0x37c)], [f(vm, 0), f(vm, 4), f(vm, 8)], [f(vm, 0x380), f(vm, 0x384), f(vm, 0x388)]);
+            Ok(())
+        });
+        vm.observe("SwitchLanes__5RcCarFb", |_h, vm| {
+            let mg = vm.r32(super::snapshot::WORLD_MAN + 0x90);
+            let player = if mg != 0 { vm.r32(mg + 0x12c) } else { 0 };
+            eprintln!("[rc] SwitchLanes car {:#x} player {} right {} lane {}", vm.a(0), vm.a(0) == player, vm.a(1), vm.r32(vm.a(0) + 0x370) as i32);
+            Ok(())
+        });
+    }
     if std::env::var("EAGL_DBG_DART").is_ok() {
         vm.observe("StickDart__6DSDartF9rmVector39rmVector3", |h, vm| {
             let v = |vm: &mut V, p: u32| [vm.st.mem.rf32(p), vm.st.mem.rf32(p + 4), vm.st.mem.rf32(p + 8)];

@@ -25,6 +25,8 @@ pub struct Fe{
     pub vm_session:bool,
     /// `MinigameLVHandlers::GetNumberOfHuds` answer of the VM-hosted game (published by `mg_session` every frame).
     pub mg_num_huds:i32,
+    /// Other `MinigameLVHandlers` answers of the VM-hosted game by query name (`Counter_GetText`, `GetGameRules`, ...).
+    pub mg_lv:std::collections::HashMap<String,Vec<(String,String)>>,
     pub mg_cmds:Vec<String>,
     pub start_anim_done:bool,
     pub serve_bubble:bool,
@@ -202,6 +204,9 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
         if let Some(r)=crate::fe_postgame::query(vm,name,player){return r}
         let sel=arg("iSelected").or_else(||arg("iButton")).and_then(|v|v.parse().ok()).unwrap_or(0);
         if crate::fe_postgame::command(vm,name,sel){return vec![]}
+    }
+    if vm.fe.vm_session{
+        if let Some(r)=vm.fe.mg_lv.get(name){return r.clone()}
     }
     match name{
         // `MinigameLVHandlers::GetNumberOfHuds` (0x80319520): Dart / Paper `GetNumHuds`, RcCars +0x16c, else 0

@@ -10,11 +10,14 @@ pub struct Mem {
     mem1: Vec<u8>,
     mem2: Vec<u8>,
     pub fault: Option<String>,
+    /// Development aid (`EAGL_PPC_WATCH=<hex address>`): writes touching this address are noted for the run loop.
+    pub watch: Option<u32>,
+    pub watch_hit: Option<(u32, Vec<u8>)>,
 }
 
 impl Default for Mem {
     fn default() -> Self {
-        Mem { mem1: vec![0; MEM1_SIZE], mem2: vec![0; MEM2_SIZE], fault: None }
+        Mem { mem1: vec![0; MEM1_SIZE], mem2: vec![0; MEM2_SIZE], fault: None, watch: std::env::var("EAGL_PPC_WATCH").ok().and_then(|v| u32::from_str_radix(v.trim_start_matches("0x"), 16).ok()), watch_hit: None }
     }
 }
 
@@ -57,6 +60,11 @@ impl Mem {
         }
     }
     pub fn write(&mut self, addr: u32, data: &[u8]) {
+        if let Some(w) = self.watch {
+            if w >= addr && w < addr + data.len() as u32 {
+                self.watch_hit = Some((addr, data.to_vec()));
+            }
+        }
         match self.region_mut(addr, data.len()) {
             Some(s) => s.copy_from_slice(data),
             None => self.bad("bad write", addr),

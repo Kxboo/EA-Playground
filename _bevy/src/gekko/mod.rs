@@ -319,6 +319,9 @@ impl<H> Vm<H> {
             if let Some(e) = self.st.mem.fault.take() {
                 return Err(format!("{e} ({})", self.backtrace()));
             }
+            if let Some((a, d)) = self.st.mem.watch_hit.take() {
+                eprintln!("[watch] write {a:#x} {d:02x?} at {pc:#x} ({})", self.backtrace());
+            }
         }
     }
 }

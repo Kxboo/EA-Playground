@@ -40,7 +40,8 @@ impl SfxBank {
                 let Some(count) = be32(d, t).map(|c| c as usize).filter(|&c| (1..=64).contains(&c)) else { continue };
                 let entries: Vec<(f32, u32)> = (0..count)
                     .filter_map(|k| Some((be32(d, t + 4 + 12 * k)? as f32 / 65536., be32(d, t + 8 + 12 * k)?)))
-                    .filter(|(v, s)| *v > 0. && *v <= 200. && (1..=4096).contains(s))
+                    // sound 0 is a silent slot (MGSFX_HUD_RC's variant 1, volume 255)
+                    .filter(|(v, s)| *v >= 0. && *v <= 256. && *s <= 4096)
                     .collect();
                 if entries.len() == count {
                     table = entries;
@@ -193,6 +194,9 @@ pub fn play_class(class: &str, index: usize, volume: f32) {
 }
 
 fn pcm(file: &str, sound: u32) -> Option<audio::Pcm> {
+    if sound == 0 {
+        return None;
+    }
     let cache = PCM.get_or_init(|| Mutex::new(HashMap::new()));
     let key = (file.to_string(), sound);
     if let Some(p) = cache.lock().ok()?.get(&key) {
@@ -233,7 +237,7 @@ mod tests {
             ("MGSFX_CommonHUD", 10), ("MGSFX_Damage_Female", 3), ("MGSFX_Damage_Male", 3), ("MGSFX_Dodgeball_Actions", 23),
             ("MGSFX_Footie_Actions", 12), ("MGSFX_Footie_Ball", 3), ("MGSFX_Footie_Collisions", 1), ("MGSFX_Grunts_Female", 7),
             ("MGSFX_Grunts_Male", 7), ("MGSFX_HUD_DB", 1), ("MGSFX_HUD_DS", 3), ("MGSFX_HUD_Footie", 2), ("MGSFX_HUD_PA", 11),
-            // MGSFX_HUD_RC (RcCars, variants up to 21) is not a plain sample table of the rc banks yet
+            ("MGSFX_HUD_RC", 21),
             ("MGSFX_HUD_TB", 1), ("MGSFX_HUD_WB", 6), ("MGSFX_Laughter_M", 7), ("MGSFX_MEGAGrunts_Female", 1),
             ("MGSFX_MEGAGrunts_Male", 3), ("MGSFX_PaperAirpl_Launch", 1), ("MGSFX_Tetherball_Hits", 6), ("MGSFX_WallBall_Actions", 9),
             ("MGSFX_WallBall_Ball", 5), ("WSFX_Footsteps", 0),
@@ -293,5 +297,35 @@ mod anim_tests {
         for (k, v) in n {
             println!("FS {k}: {v:?}");
         }
+    }
+}
+
+#[cfg(test)]
+mod rc_tests {
+    /// Raw layout of one class of a bank (`EAGL_SFX_BANK`, `EAGL_SFX_CLASS`).
+    #[test]
+    #[ignore]
+    fn dump_class() {
+        let (Ok(file), Ok(class)) = (std::env::var("EAGL_SFX_BANK"), std::env::var("EAGL_SFX_CLASS")) else { return };
+        let dir = crate::bridge::data_root().join("files").join("data").join("audio").join("aems");
+        let d = std::fs::read(dir.join(&file)).unwrap();
+        let csi = std::fs::read(dir.join("playground_aems.csi")).unwrap();
+        let names: std::collections::BTreeMap<u16, String> = crate::formats2::csi(&csi).ok().map(|v| {
+            ["table1", "table2", "table3"].iter().flat_map(|t| v[*t].as_array().cloned().unwrap_or_default())
+                .filter_map(|e| Some((u16::from_str_radix(e["id"].as_str()?, 16).ok()?, e["name"].as_str()?.to_string()))).collect()
+        }).unwrap_or_default();
+        let bank = crate::aems::decode(&d, &names).unwrap();
+        let class_names: Vec<String> = bank.json["csis_bindings"].as_array().unwrap().iter().filter(|b| b["kind"] == "class").map(|b| b["name"].as_str().unwrap_or("?").to_string()).collect();
+        println!("classes {class_names:?}");
+        let data: Vec<usize> = bank.json["classes"].as_array().unwrap().iter().map(|c| c["data"].as_u64().unwrap_or(0) as usize).collect();
+        let fixups: Vec<usize> = bank.json["pointer_fixups"].as_array().unwrap().iter().map(|f| f["offset"].as_u64().unwrap_or(0) as usize).collect();
+        let Some(i) = class_names.iter().position(|n| *n == class) else { return };
+        let (start, end) = (data[i], data.get(i + 1).copied().unwrap_or(d.len()).min(data[i] + 0x400));
+        println!("class {class} data {start:#x}..{end:#x} fixups {:?}", fixups.iter().filter(|&&f| f >= start && f < end).collect::<Vec<_>>());
+        for o in (start..end).step_by(16) {
+            let w: Vec<String> = (0..4).map(|k| d.get(o + 4 * k..o + 4 * k + 4).map(|b| format!("{:08x}", u32::from_be_bytes(b.try_into().unwrap()))).unwrap_or_default()).collect();
+            println!("{o:#06x}: {}", w.join(" "));
+        }
+        println!("json class: {}", bank.json["classes"][i]);
     }
 }

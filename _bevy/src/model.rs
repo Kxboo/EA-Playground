@@ -103,7 +103,15 @@ fn pcode(raw:&[u8],start:usize,local:&HashMap<usize,usize>)->Result<PCode,String
 #[derive(Debug,Clone,Default)]
 pub struct Vertex{pub pos:[f64;3],pub nrm:Option<[f32;3]>,pub clr:Option<[u8;4]>,pub uv:Option<[f64;2]>,pub weight:Option<([f32;3],[u8;3])>,pub pos_index:u32}
 #[derive(Debug,Clone)]
-pub struct Prim{pub anchor:usize,pub family:String,pub verts:Vec<Vertex>,pub tris:Vec<[u32;3]>,pub textures:BTreeMap<String,String>,pub texture_symbols:BTreeMap<String,String>,pub color:Option<[u8;4]>}
+pub struct Prim{pub anchor:usize,pub family:String,pub verts:Vec<Vertex>,pub tris:Vec<[u32;3]>,pub textures:BTreeMap<String,String>,pub texture_symbols:BTreeMap<String,String>,pub color:Option<[u8;4]>,
+    /// Back-face culling from the primitive's `EAGL::GeoPrimState` (+0x44): property 50 (`SetCullEnable`); the default
+    /// state (0x2e050000) leaves culling off.  `None` when the primitive names no state.
+    pub cull:Option<bool>}
+
+/// Cull enable of a `__EAGL::GeoPrimState:::RUNTIME_ALLOC::0=642;50=1;48=152;` symbol.
+fn state_cull(sym:&str)->bool{
+    sym.split(';').filter_map(|p|p.strip_prefix("50=")).any(|v|v.trim().parse::<i64>().map(|n|n!=0).unwrap_or(false))
+}
 #[derive(Debug,Clone)]
 pub struct ModelInfo{pub name:String,pub offset:usize,pub bounds:[[f32;3];2],pub scale:[f32;3],pub center:[f32;3],pub prims:Vec<usize>}
 pub struct ModelFile{pub models:Vec<ModelInfo>,pub prims:Vec<Prim>}
@@ -138,6 +146,7 @@ pub fn parse(data:&[u8],schemas:&Schemas)->Result<ModelFile,String>{
         if sym.shndx as usize==di{local.insert(off,rd32(raw,off,elf.le)? as usize+sym.value as usize);}
         else if sym.shndx==0{external.insert(off,sym.name.clone());}
     }
+    if std::env::var("EAGL_MODEL_SYMS").is_ok(){let mut n:Vec<&String>=external.values().collect();n.sort();n.dedup();for s in n{if !s.contains("TAR:::"){eprintln!("[sym] {s}");}}}
     let mut model_syms:Vec<(&Symbol,usize)>=elf.symbols.iter().filter(|(_,s)|s.name.starts_with("__Model:::")).map(|((_,i),s)|(s,*i)).collect();
     model_syms.sort_by_key(|(s,i)|(s.value,*i));
     let mut prims:Vec<Prim>=vec![];let mut models=vec![];let mut seen:HashMap<usize,usize>=HashMap::new();
@@ -232,7 +241,8 @@ fn decode_primitive(raw:&[u8],local:&HashMap<usize,usize>,external:&HashMap<usiz
     for name in ["Texture","Texture1","Texture2","Texture3"]{
         if let Some(&(_,po,_))=fields.get(name){if let Some(sym)=external.get(&(anchor+po)){textures.insert(name.to_string(),read_texture_name(sym));texture_symbols.insert(name.to_string(),sym.clone());}}
     }
-    Ok(Prim{anchor,family,verts,tris,textures,texture_symbols,color})
+    let cull=external.get(&(anchor+0x44)).filter(|n|n.contains("GeoPrimState")).map(|n|state_cull(n));
+    Ok(Prim{anchor,family,verts,tris,textures,texture_symbols,color,cull})
 }
 
 /// Content hash used by the golden data: first 16 hex chars of SHA-256 over vertex attributes then triangles.

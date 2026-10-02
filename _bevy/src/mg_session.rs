@@ -95,14 +95,26 @@ fn data_dir(rel: &str) -> String {
 
 /// Find `name` (e.g. `dodgeball.o`) in the minigame archives.
 fn find_model_source(name: &str) -> Option<String> {
+    // name -> "archive::entry" (misses too: the search reads every archive)
+    static CACHE: std::sync::Mutex<Option<HashMap<String, Option<String>>>> = std::sync::Mutex::new(None);
+    let key = name.to_lowercase();
+    if let Some(hit) = CACHE.lock().unwrap().get_or_insert_with(HashMap::new).get(&key) {
+        return hit.clone();
+    }
     let root = bridge::data_root().join("files").join("data");
+    // every archive under minigames/ (tracks sit in minigames/rccars/tracks), then world props and microgames
     let mut dirs = vec![root.join("minigames")];
-    if let Ok(rd) = std::fs::read_dir(root.join("minigames")) {
-        dirs.extend(rd.flatten().map(|e| e.path()).filter(|p| p.is_dir()));
+    let mut i = 0;
+    while i < dirs.len() {
+        if let Ok(rd) = std::fs::read_dir(&dirs[i]) {
+            dirs.extend(rd.flatten().map(|e| e.path()).filter(|p| p.is_dir()));
+        }
+        i += 1;
     }
     dirs.push(root.join("worldprops"));
     dirs.push(root.join("microgames"));
-    for d in dirs {
+    let mut found = None;
+    'search: for d in dirs {
         let Ok(rd) = std::fs::read_dir(&d) else { continue };
         for f in rd.flatten() {
             let p = f.path();
@@ -113,13 +125,14 @@ fn find_model_source(name: &str) -> Option<String> {
             let Ok(bytes) = std::fs::read(&p) else { continue };
             let Ok(data) = crate::archive::decompress(&bytes) else { continue };
             let Ok(entries) = crate::archive::big_entries(&data) else { continue };
-            if entries.iter().any(|e| e.name.eq_ignore_ascii_case(name)) {
-                let real = entries.iter().find(|e| e.name.eq_ignore_ascii_case(name)).unwrap().name.clone();
-                return Some(format!("{}::{}", p.to_string_lossy(), real));
+            if let Some(e) = entries.iter().find(|e| e.name.eq_ignore_ascii_case(name)) {
+                found = Some(format!("{}::{}", p.to_string_lossy(), e.name));
+                break 'search;
             }
         }
     }
-    None
+    CACHE.lock().unwrap().get_or_insert_with(HashMap::new).insert(key, found.clone());
+    found
 }
 
 fn loader(tx: mpsc::Sender<Msg>) {
@@ -206,6 +219,14 @@ pub fn plugin(app: &mut App) {
 #[derive(Resource)]
 struct MgTeardown;
 
+/// A playground entity hidden while the minigame draws its own environment, with its visibility before.
+#[derive(Component)]
+struct MgHiddenWorld(Visibility);
+
+fn snapshot_hides_world(snap: Option<&MgSnapshot>) -> bool {
+    snap.and_then(|s| s.0.as_ref()).is_some_and(|s| !s.render_world)
+}
+
 fn launch_or_teardown(world: &mut World) {
     if let Some(l) = world.remove_resource::<MgLaunch>() {
         if world.get_non_send_resource::<Session>().is_none() {
@@ -224,6 +245,13 @@ fn launch_or_teardown(world: &mut World) {
         if let Some(mut fx) = world.get_resource_mut::<crate::fx::FxWorld>() {
             fx.instances.clear();
         }
+        let mut hidden = world.query::<(Entity, &MgHiddenWorld)>();
+        let back: Vec<(Entity, Visibility)> = hidden.iter(world).map(|(e, h)| (e, h.0)).collect();
+        for (e, v) in back {
+            if let Ok(mut em) = world.get_entity_mut(e) {
+                em.insert(v).remove::<MgHiddenWorld>();
+            }
+        }
         let mut swapped = world.query::<(Entity, &MgPlaceable)>();
         let back: Vec<(Entity, Visibility)> = swapped.iter(world).map(|(e, p)| (e, p.0)).collect();
         for (e, v) in back {
@@ -236,6 +264,7 @@ fn launch_or_teardown(world: &mut World) {
         for mut p in cams.iter_mut(world) {
             if let Projection::Perspective(pp) = &mut *p {
                 pp.fov = std::f32::consts::FRAC_PI_4;
+                pp.near = PerspectiveProjection::default().near;
             }
         }
         // the minigame's track stopped with the session; the menus / playground get theirs back
@@ -402,6 +431,23 @@ fn gesture_for(keys: &ButtonInput<KeyCode>, k: &SeatKeys) -> Option<Vec<[i16; 3]
     }
 }
 
+/// `EAGL_MG_TILT="from-to:dx;..."` adds an accelerometer x offset by frame number (testing aid).
+fn scripted_tilt(frame: i32) -> i16 {
+    let mut dx = 0;
+    for part in std::env::var("EAGL_MG_TILT").unwrap_or_default().split(';') {
+        if let Some((range, v)) = part.split_once(':') {
+            if let (Some((a, z)), Ok(v)) = (range.split_once('-'), v.trim().parse::<i16>()) {
+                if let (Ok(a), Ok(z)) = (a.parse::<i32>(), z.parse::<i32>()) {
+                    if frame >= a && frame < z {
+                        dx += v;
+                    }
+                }
+            }
+        }
+    }
+    dx
+}
+
 /// `EAGL_MG_PADS="from-to:hexbits,..."` scripts the pad by frame number (testing aid).
 fn scripted_pad(frame: i32) -> u16 {
     let mut bits = 0u16;
@@ -465,6 +511,9 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
         if s.ty == 1 {
             // RcCars steers by tilting the remote
             d[0] += if held(k.left) { -150 } else if held(k.right) { 150 } else { 0 };
+            if seat == 0 {
+                d[0] += scripted_tilt(s.frames);
+            }
         }
         host.pads[seat].acc = [rest[0] + d[0], rest[1] + d[1], rest[2] + d[2]];
     }
@@ -520,6 +569,7 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
             (1, _) => vm.r32(mg + 0x16c) as i32,
             _ => 0,
         };
+        v.0.vm.fe.mg_lv = minigame_lv(vm, host, s.ty, mg);
         forward_events(&mut v.0.vm, &events, s);
     }
     // front-end button presses become guest callbacks
@@ -624,6 +674,7 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
     for mut p in &mut projection {
         if let Projection::Perspective(pp) = &mut *p {
             pp.fov = snapshot.fov;
+            pp.near = snapshot.near;
         }
     }
     match snap {
@@ -632,6 +683,27 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
             commands.insert_resource(MgSnapshot(Some(snapshot)));
         }
     }
+}
+
+/// The rest of `MinigameLVHandlers::DoJobLV` (0x803194ac): what the HUD movies query from the running game.
+fn minigame_lv(vm: &mut mgvm::MgVm, host: &mut mgvm::MgHost, ty: i32, mg: u32) -> HashMap<String, Vec<(String, String)>> {
+    let mut out = HashMap::new();
+    // `Counter_GetText`: `lapCounterText`, the wide string `LapCounter_SetValue` last stored
+    if let Some(a) = vm.img.addr("lapCounterText") {
+        let text: String = char::decode_utf16((0..64).map(|i| vm.st.mem.r16(a + 2 * i)).take_while(|&c| c != 0)).map(|c| c.unwrap_or('?')).collect();
+        out.insert("Counter_GetText".to_string(), vec![("strText".to_string(), text)]);
+    }
+    if mg != 0 && ty == 4 {
+        let hits = vm.call_by_name(host, "GetMaxJuggleHits__8MGFootieCFv", &[mg], &[]).unwrap_or(4);
+        out.insert("GetGameRules".to_string(), vec![("iMaxHits".to_string(), hits.to_string())]);
+        out.insert("Footie_IsSaveDare".to_string(), vec![("iIsSaveDare".to_string(), ((vm.st.mem.r8(mg + 0x244) != 0) as i32).to_string())]);
+    }
+    if let (Some(n), Some(p)) = (vm.img.addr("sNumCheckPoints"), vm.img.addr("sCheckPointsPositions")) {
+        let n = (vm.r32(n) as i32).clamp(0, 64) as u32;
+        let list: Vec<String> = (0..n).map(|i| vm.st.mem.rf32(p + 4 * i).to_string()).collect();
+        out.insert("PaperAirPlanes_GetCheckPoints".to_string(), vec![("aiCheckPoints".to_string(), list.join(crate::fe_host::DELIM))]);
+    }
+    out
 }
 
 /// Guest front-end calls -> the APT front end: `Apt::Name(args)` are `AptCallFunction`s of the running movie,
@@ -745,7 +817,20 @@ fn present(
     mut props: Query<(&MgProp, &mut Transform, &mut Visibility), (Without<MgChar>, Without<MgJoint>)>,
     mut placeables: Query<(Entity, &Name, &mut Visibility, Option<&MgPlaceable>), (With<game::PlaceableProp>, Without<MgProp>)>,
     cams: Query<&GlobalTransform, With<game::GameCamera>>,
+    layers: Query<(Entity, &Visibility), (With<game::WorldLayer>, Without<MgProp>, Without<game::PlaceableProp>, Without<MgHiddenWorld>)>,
+    already_hidden: Query<(), With<MgHiddenWorld>>,
 ) {
+    // `gRenderWorld` off (RcCars): the game's own model replaces the playground (terrain and props; restored at teardown)
+    if snapshot_hides_world(snap.as_deref()) {
+        for (e, v) in &layers {
+            commands.entity(e).insert((MgHiddenWorld(*v), Visibility::Hidden));
+        }
+        for (e, _, v, _) in &placeables {
+            if !already_hidden.contains(e) {
+                commands.entity(e).insert((MgHiddenWorld(*v), Visibility::Hidden));
+            }
+        }
+    }
     let (Some(mut s), Some(snap), Some(game)) = (s, snap, game) else { return };
     if s.state != SessionState::Running {
         return;
@@ -840,7 +925,7 @@ fn present(
         }
     }
     if std::env::var("EAGL_MG_DEBUG").is_ok() && s.frames % 120 == 0 {
-        eprintln!("[mg] frame {} camera {:?} fov {}", s.frames, snapshot.camera, snapshot.fov);
+        eprintln!("[mg] frame {} camera {:?} fov {} radius {radius}", s.frames, snapshot.camera, snapshot.fov);
         eprintln!("[mg] frame {} draws {:?}", s.frames, snapshot.draws.iter().map(|(n, m)| (n.as_str(), [m[12], m[13], m[14]])).collect::<Vec<_>>());
     }
     for (p, mut t, mut v) in &mut props {
@@ -881,9 +966,80 @@ mod model_bounds_tests {
                         hi[i] = hi[i].max(p[i]);
                     }
                 }
-                println!("{n}: vertices {lo:?}..{hi:?} prims {} skinned {:?} materials {:?}", m.prims.len(), m.prims.iter().map(|p| p.joints.is_some()).collect::<Vec<_>>(), m.materials.iter().map(|x| (x.alpha, x.unlit, x.double_sided)).collect::<Vec<_>>());
+                println!("{n}: vertices {lo:?}..{hi:?} prims {} skinned {}", m.prims.len(), m.prims.iter().any(|p| p.joints.is_some()));
+                println!("  warnings {:?}", m.warnings);
+                for (i, mt) in m.materials.iter().enumerate() {
+                    let tex = mt.texture.and_then(|t| m.textures.get(t)).map(|t| (t.name.clone(), t.alpha));
+                    let tris: usize = m.prims.iter().filter(|p| p.material == i).map(|p| p.indices.len() / 3).sum();
+                    println!("  material {i}: {tex:?} alpha {:?} colour {:?} tris {tris}", mt.alpha, mt.base_color);
+                }
             }
             println!("{n}: {src:?} bounds {:?}", m.map(|m| m.bounds));
+        }
+    }
+}
+
+#[cfg(test)]
+mod track_lane_tests {
+    /// Which surface of the RcCars track model lies under (or over) each lane point (`EAGL_RC_POINTS="x,y,z;x,y,z"`).
+    #[test]
+    #[ignore]
+    fn lane_points_on_track() {
+        let Ok(spec) = std::env::var("EAGL_RC_POINTS") else { return };
+        let src = super::find_model_source("rccartrack23.o").unwrap();
+        let m = crate::assets::build(&src, &crate::model::Schemas::embedded()).unwrap();
+        if let Ok(dir) = std::env::var("EAGL_RC_TEXDUMP") {
+            for t in &m.textures {
+                let Ok(f) = std::fs::File::create(std::path::Path::new(&dir).join(format!("{}.png", t.name))) else { continue };
+                let mut enc = png::Encoder::new(std::io::BufWriter::new(f), t.width as u32, t.height as u32);
+                enc.set_color(png::ColorType::Rgba);
+                if let Ok(mut w) = enc.write_header() {
+                    let _ = w.write_image_data(&t.rgba);
+                }
+            }
+        }
+        // facing of each material's triangles (+y up / -y down) per prim
+        for (pi, prim) in m.prims.iter().enumerate() {
+            let tex = m.materials[prim.material].texture.and_then(|t| m.textures.get(t)).map(|t| t.name.clone()).unwrap_or_default();
+            if !tex.contains("Ashphalt") && !tex.contains("asphalt") {
+                continue;
+            }
+            let (mut up, mut down) = (0, 0);
+            for t in prim.indices.chunks(3) {
+                let [a, b, c] = [t[0], t[1], t[2]].map(|i| bevy::prelude::Vec3::from(prim.positions[i as usize]));
+                let n = (b - a).cross(c - a);
+                if n.y > 0.7 * n.length() { up += 1 } else if n.y < -0.7 * n.length() { down += 1 }
+            }
+            println!("prim {pi} {tex} {} family {} up {up} down {down}", prim.indices.len() / 3, prim.family);
+        }
+        for pt in spec.split(';') {
+            let v: Vec<f32> = pt.split(',').filter_map(|t| t.trim().parse().ok()).collect();
+            let logical = bevy::prelude::Vec3::new(v[0], v[1], v[2]);
+            let p = crate::game::display_matrix(250., logical).w_axis.truncate();
+            let mut best: Option<(f32, String)> = None;
+            for prim in &m.prims {
+                for t in prim.indices.chunks(3) {
+                    let [a, b, c] = [t[0], t[1], t[2]].map(|i| bevy::prelude::Vec3::from(prim.positions[i as usize]));
+                    // vertical line through p against the triangle (barycentric in xz)
+                    let d = (b.z - c.z) * (a.x - c.x) + (c.x - b.x) * (a.z - c.z);
+                    if d.abs() < 1e-9 {
+                        continue;
+                    }
+                    let l1 = ((b.z - c.z) * (p.x - c.x) + (c.x - b.x) * (p.z - c.z)) / d;
+                    let l2 = ((c.z - a.z) * (p.x - c.x) + (a.x - c.x) * (p.z - c.z)) / d;
+                    let l3 = 1. - l1 - l2;
+                    if l1 < 0. || l2 < 0. || l3 < 0. {
+                        continue;
+                    }
+                    let y = l1 * a.y + l2 * b.y + l3 * c.y;
+                    let dy = (y - p.y).abs();
+                    if dy < 2. && best.as_ref().is_none_or(|b| dy < b.0) {
+                        let tex = m.materials[prim.material].texture.and_then(|t| m.textures.get(t)).map(|t| t.name.clone()).unwrap_or_default();
+                        best = Some((y - p.y, tex));
+                    }
+                }
+            }
+            println!("{logical:?} -> display {p:?}: {best:?}");
         }
     }
 }

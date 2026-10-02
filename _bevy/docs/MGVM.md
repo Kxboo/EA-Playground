@@ -40,6 +40,12 @@ Found with a Ghidra decompilation of the executable (`D:/tools/decomp.c`, see th
   `EAGL::DrawTextured` batches (indicators, cursors) are drawn by `mg_draw.rs` with textures from the `TarManager` banks;
   `PartFxManager` effects feed `fx.rs`; `Audio::PlaySFX` runs the original id switch and `Csis` instances play through
   `sfx::play_class`; `Audio::PlayMusic` picks `kMusicFilenames`.
+* **Rendering state** – the snapshot camera is `CameraManager` slot 0 in its final pose (`GetPos/GetTarget(true)`); the
+  Bevy camera takes the game's near plane (`SceneOptions+0x14`, default 1.0) and field of view; primitives cull back
+  faces only when their `EAGL::GeoPrimState` sets property 50 (`SetCullEnable`; the default state does not cull);
+  the guest renders flat (`gDisableCurvedWorld` set at boot) and the host bends by the world radius (250).
+* **HUD queries** – `MinigameLVHandlers` answers (`GetNumberOfHuds`, `Counter_GetText`, `GetGameRules`,
+  `Footie_IsSaveDare`, `PaperAirPlanes_GetCheckPoints`) are published from the guest every frame (`fe.mg_lv`).
 * **Contacts** – a body listener gets `ContactAddedCallback` (its return value accepts the contact), then
   `ContactConfirmedCallback` and `ContactProcessCallback` (where e.g. Dart Shootout scores).
 * **Lab** – `tools/mgbattery.sh` runs every game to PostGame and exit under AI (`EAGL_MG_ALLAI`); `EAGL_MG_FE="kids;teams"`
@@ -57,4 +63,5 @@ Found with a Ghidra decompilation of the executable (`D:/tools/decomp.c`, see th
 | Wallball | Complete: FE launch, AI rallies, J toss / K backhand / L forehand (overhand serve is ability-gated, `MGWallball+0x1d3/+0x1d5`), power-ups and ball trail drawn, HUD hit counter / serve bubble, sound, music, PostGame -> menus. |
 | Footie | Complete: FE launch, 2v2 AI (serves, juggles, shots, dive saves, goals via net phantoms), J serve / O juggle / I shot / Q,E dive, power-ring indicators (textures by bank index), HUD, sound, music, PostGame -> menus. |
 | Dart Shootout | Complete: FE launch (course from the level argument), rail camera, mouse = remote pointer (reticle effect, blaster aims via `Controller::GetWorldVectorFromDPDRotationallyCorrected`), left button B fires, right button A reloads / raises the shield, pin-up and character targets score through `DSDartCollisionListener::ContactProcessCallback`, hostile darts stick to the screen plane and drain health, single-player HUD (`GetNumberOfHuds`), PostGame -> menus. |
+| RcCars | Complete: FE launch, 4-car race with AI, the game's own chase camera (viewport 0 of `CameraManager`), Space/A accelerate, arrows tilt the remote to switch lanes (`atan2(x, z)` beyond 45 degrees), B power-ups, boost, track model drawn as the game's replacement environment (`gRenderWorld` 0 hides the playground terrain and props), lap / position / power-up HUD (`Counter_GetText`), `MGSFX_HUD_RC` sounds, PostGame -> menus. Engine loop sounds (`StartSFX`/`UpdateSFX`) are not modelled yet. |
 | others | Run start -> PostGame -> exit in the lab under AI; per-game polish pending (one game at a time). |
