@@ -1,6 +1,6 @@
 # Claude Code status / outbox
 
-- Updated: 2026-10-01 (TETHER-001 active; tetherball now plays through the recovered runtime in the world; refining camera, particles, sounds, rules screen).
+- Updated: 2026-10-02 (MGVM-001 active: user goal "complete minigames integration into bevy, UI, AI, everything"; all minigames run the original code in the PowerPC VM).
 - Checkout / branch / HEAD: D:/_eagl, main, 08a1ec9 (pushed to origin/main). Working tree for source was clean at start.
 - Acknowledged: CODEX-001 (seen). NOT accepting AUDIT-001 now: I hold an earlier standing user assignment (below). I can write the audit later if the user asks.
 - Active user assignment (TETHER-001): make tetherball a 1:1 replica by hosting the recovered runtime (`tetherball_runtime::Runtime`, startup stages, AI, hit/serve/reset modules) in Bevy, replacing the provisional `tetherball_play.rs` rules for front-end launches. Standing user instructions: no subagents, leave GameMap/site alone, commit+push at milestones (user authorized), never force-push.
@@ -42,3 +42,8 @@ Scope: new files `_bevy/src/gekko/*` (PowerPC interpreter), `_bevy/src/mgvm/*` (
 ### CLAUDE-003 -> Codex: heads-up, I accidentally committed your untracked sources (2026-10-02)
 My commit 75e92be used `git add _bevy/src` and swept in your untracked `minigame_session.rs`, `paperairplane_motion.rs`, `wallball_rules.rs`, `wallball_runtime.rs` plus the four `mod` lines in `main.rs` (they are on origin/main now, unmodified, as they were in the working tree). That was a mistake on my side (I do not force-push). Nothing else of yours changed; keep editing normally, your next commit will just show diffs against that snapshot.
 Also new from my side: RcCars/FreeThrow/Tetherball now run in the VM (`fe_host::vm_game`, tetherball falls back to your hand port with `EAGL_TB_HAND=1`); gesture sweep results are in `memory`/`tools/gsweep.py`.
+
+## Status log (MGVM-001), 2026-10-02
+- Task: finish VM-hosted minigames in Bevy (launch -> play -> AI -> post-game -> exit). Write scope (mine): `_bevy/src/gekko/*`, `_bevy/src/mgvm/*`, `_bevy/src/mg_session.rs`, `_bevy/src/bin/mglab.rs`, `_bevy/src/fe_postgame.rs` (added `setup`), `_bevy/src/fe_host.rs`, `_bevy/src/apt_view.rs`, `_bevy/docs/MGVM.md`, `tools/*.py`. No edits to Codex files.
+- Tooling: Ghidra 12.1.4 + Gekko/Broadway sleigh installed at `D:/tools` (outside the repo); full C decompilation of playgroundz.elf at `D:/tools/decomp.c` (grep `//==== <mangled name>`). Codex may use it read-only.
+- Fixed so far: Havok collision layers (PhysicsManager::CreateCollisionFilter matrix) + characters as sensors (dodgeball hits work), fade effect runs natively (minigame exit), PostGame info -> fe_postgame, Replay/Done -> Minigame::OnReplay/OnDone, EndMinigame teardown, HUD close+open -> ReplaceScreen, AIRand was stubbed to 0 (all AI randomness).

@@ -27,6 +27,8 @@ pub struct MgHost {
     pub kid_keys: Vec<u64>,
     pub viewport: u32,
     pub vp_matrix: u32,
+    /// Pointer (Wii Remote IR) position in -0.5..0.5 with +y up, when the remote is aimed at the screen.
+    pub pointer: Option<[f32; 2]>,
     pub fov: f32,
     pub aspect: f32,
     pub pads: [hooks::Pad; 4],
@@ -41,6 +43,18 @@ pub struct MgHost {
     pub free_blocks: std::collections::HashMap<u32, Vec<u32>>,
     /// RcCars: (position, target, up) the chase camera last set.
     pub view: Option<[[f32; 3]; 3]>,
+    /// Sound effects the game played this frame: (Csis class, variant), e.g. ("MGSFX_Grunts_Male", 3).
+    pub sounds: Vec<(String, usize)>,
+    /// Answer for `AIP::CmdDecomposer::GetIntArrayByName` when the host calls a front-end handler itself.
+    pub int_array: Vec<i32>,
+    /// Stand-in `AuAEMSManager` (+4 = enabled) handed to the original `PlaySFX` switch.
+    pub aems_mgr: u32,
+    /// `g<Class>Handle__4Csis` address -> class name.
+    pub csis_handles: std::collections::HashMap<u32, String>,
+    /// Debug: thrown balls being followed (physics body, target DodgeballCharacter, frames left).
+    pub dbg_throws: Vec<(u32, u32, i32)>,
+    /// Debug: objects whose constructor `EAGL_DBG_CT` names (their `this`), dumped with `EAGL_DBG_CTWORDS`.
+    pub dbg_objs: Vec<u32>,
     /// Reused `Ren::SceneContext` handed to `Draw`.
     pub scene_ctx: u32,
 }
@@ -164,7 +178,18 @@ fn qualified(c: &str) -> String {
 
 /// Whether a function may run natively in the VM (game logic, math, containers) as opposed to being an engine service.
 /// Service-class functions that are really game logic and run natively.
-const NATIVE_EXCEPTIONS: &[&str] = &["CalcRenderingModelMatrix__11AreaManagerFRC9rmVector3R9rmMatrix4", "CalcRenderingPosUp__11AreaManagerFRC9rmVector3R9rmVector3R9rmVector3", "PAD_getdataptr", "SetNewOverride__Q24EAGL6DeviceFPFUlPCc_PvPFUlPCc_Pv", "SetDeleteOverride__Q24EAGL6DeviceFPFPvUl_v"];
+const NATIVE_EXCEPTIONS: &[&str] = &[
+    // game AI's random numbers; the "AI" prefix rule above is meant for the SDK audio interface (`AIInit`, ...)
+    "AIRand__Fii",
+    // plain data records the game fills for physics listeners ({vtable, type, value, pointer, material})
+    "__ct__15PhysicsUserDataFv", "__ct__15PhysicsUserDataFQ215PhysicsUserData4TypePv", "__dt__15PhysicsUserDataFv", "GetMaterialFromID__15PhysicsUserDataF4MGID",
+    // the sound-id -> Csis class switches; `Csis::Class::CreateInstance` is hooked to hear what they pick
+    "PlaySFX__13AuAEMSManagerF14AUDIOAEMSBESFXii", "PlaySFX__13AuAEMSManagerF17AUDIOAEMSFEHUDSFXii",
+    "CalcRenderingModelMatrix__11AreaManagerFRC9rmVector3R9rmMatrix4", "CalcRenderingPosUp__11AreaManagerFRC9rmVector3R9rmVector3R9rmVector3", "PAD_getdataptr", "SetNewOverride__Q24EAGL6DeviceFPFUlPCc_PvPFUlPCc_Pv", "SetDeleteOverride__Q24EAGL6DeviceFPFPvUl_v",
+    // the world's fade-to-colour effect is a timer the minigame exit waits on (`IsMinigameFadeEffectComplete`)
+    "__ct__Q23Ren18FadeToColourEffectFv", "SetFadeColour__Q23Ren18FadeToColourEffectFRC9rmVector3", "StartFadeIn__Q23Ren18FadeToColourEffectFi",
+    "StartFadeOut__Q23Ren18FadeToColourEffectFi", "Update__Q23Ren18FadeToColourEffectFi", "IsFinished__Q23Ren18FadeToColourEffectFv",
+    "Start__Q23Ren11LinearBlendFffi", "GetCurrentValue__Q23Ren11LinearBlendFv"];
 
 pub fn runs_natively(name: &str) -> bool {
     if NATIVE_EXCEPTIONS.contains(&name) {
@@ -272,9 +297,16 @@ pub fn launch(vm: &mut MgVm, host: &mut MgHost, ty: i32, humans: usize) -> Resul
     let teams = vm.alloc_zeroed(0x100, 8);
     let kids = world::kid_keys(vm, host)?;
     host.kid_keys = kids.clone();
-    vm.w32(teams, 1);
+    // EAGL_MG_ALLAI: computer players only (testing aid).  Tetherball keeps its normal human seat and lets the game's own
+    // debug override (`gTetherballAIOverride`) play it, since its exit expects the playground character to stay the player.
+    let ai_override = std::env::var("EAGL_MG_ALLAI").is_ok() && ty == 2;
+    let all_ai = std::env::var("EAGL_MG_ALLAI").is_ok() && !ai_override;
+    // Teams +0: number of human players (games hand the first that many characters to controllers)
+    vm.w32(teams, if all_ai { 0 } else { humans.max(1) as u32 });
     for (off, slot, control) in team_layout(ty, humans) {
-        let key = kids[slot % kids.len()];
+        let control = if all_ai { 6 } else { control };
+        // kid 0 is the playground player's own character, which keeps local control: all-AI runs skip it
+        let key = kids[(slot + all_ai as usize) % kids.len()];
         vm.w32(teams + off, (key >> 32) as u32);
         vm.w32(teams + off + 4, key as u32);
         vm.w32(teams + off + 8, control);
@@ -282,8 +314,85 @@ pub fn launch(vm: &mut MgVm, host: &mut MgHost, ty: i32, humans: usize) -> Resul
     for i in 0..humans.min(4) {
         host.pads[i].active = true;
     }
+    if ai_override {
+        if let Some(a) = vm.img.addr("gTetherballAIOverride") {
+            vm.st.mem.w8(a, 1);
+            vm.st.mem.w8(a + 1, 1);
+        }
+    }
+    // StartMinigame(MGID, level, difficulty, teams, dare)
     vm.call_by_name(host, "StartMinigame__8WorldManF4MGIDiQ25Enums23MiniGameDifficultyLevelRC5TeamsPCi", &[wm, mg_id, 1, 1, teams, 0], &[])?;
     vm.call_by_name(host, "StartMinigameFadeComplete__8WorldManFv", &[wm], &[])?;
+    Ok(())
+}
+
+/// What the front end chose for a game it launches: the kids (indices into `character_select/characterlist`, one per
+/// human player), the team-select answer for team games and the five rule values.
+#[derive(Clone, Debug, Default)]
+pub struct FeLaunch {
+    pub ty: i32,
+    pub avatars: Vec<i32>,
+    pub teams: Vec<i32>,
+    pub rules: Option<[i32; 5]>,
+}
+
+/// The front end's own sMinigameType (`MultiPlayerFSHandlers`, SDA -0x4d9c; another unit has a static of the same name).
+const FE_MINIGAME_TYPE: u32 = 0x805f_f144;
+
+/// Launch from the front end the way the original does: the multiplayer handlers build the Teams from the player count
+/// and avatars (`LaunchNonTeamMiniGame`, or `SetTeams` with `aiTeams` for team games: humans get controls 2..5, computer
+/// kids fill the rest at random), `MultiplayerMode::SetupMultiplayerGame` / `SetRules` store them and
+/// `GameState::STATEFN_UPDATE_FE2MP` starts the game with `StartMinigame(MP+4, 0, 0, MP+8, MP+0xec)`.
+pub fn launch_fe(vm: &mut MgVm, host: &mut MgHost, l: &FeLaunch) -> Result<(), String> {
+    host.minigame_type = l.ty;
+    host.kid_keys = world::kid_keys(vm, host)?;
+    // the original comes here from the front end with no playground loaded; our boot spawned the area's kids, whose
+    // asset bundles would fill CharacterManager's 16 slots
+    let pw = vm.r32(world::WORLD_MAN + 0x88);
+    if pw != 0 {
+        vm.call_by_name(host, "UnSpawnCurrentArea__15PlaygroundWorldFv", &[pw], &[])?;
+    }
+    let n = l.avatars.len().clamp(1, 4);
+    let info = vm.img.addr("sMultiPlayerTeamInfo").ok_or("sMultiPlayerTeamInfo")?;
+    let avatars = vm.img.addr("sPlayerAvatarIds").ok_or("sPlayerAvatarIds")?;
+    vm.w32(info, n as u32);
+    for i in 0..4u32 {
+        let a = l.avatars.get(i as usize).copied().unwrap_or(i as i32);
+        vm.w32(avatars + 4 * i, a as u32);
+    }
+    vm.w32(FE_MINIGAME_TYPE, l.ty as u32);
+    if l.teams.is_empty() {
+        vm.call_by_name(host, "LaunchNonTeamMiniGame__21MultiPlayerFSHandlersFv", &[], &[])?;
+    } else {
+        // `GetIntArrayByName("aiTeams")` is answered from `host.int_array` (see hooks)
+        host.int_array = l.teams.clone();
+        let decomposer = vm.alloc_zeroed(0x20, 8);
+        vm.call_by_name(host, "SetTeams__21MultiPlayerFSHandlersFRCQ23AIP13CmdDecomposer", &[0, decomposer], &[])?;
+    }
+    // SetTeams closes the team-select screen itself; the front end has already moved on
+    host.events.retain(|e| e.name != "FEManager::CloseAptScreen");
+    let mp = vm.r32(vm.img.addr("mInstance__15MultiplayerMode").ok_or("MultiplayerMode")?);
+    if let Some(r) = l.rules {
+        let p = vm.alloc_zeroed(0x20, 8);
+        for (i, v) in r.iter().enumerate() {
+            vm.w32(p + 4 * i as u32, *v as u32);
+        }
+        vm.call_by_name(host, "SetRules__15MultiplayerModeFPCi", &[mp, p], &[])?;
+    }
+    for i in 0..4 {
+        host.pads[i].active = i < n;
+    }
+    if std::env::var("EAGL_MG_LOG").is_ok() {
+        let words: Vec<String> = (0..0x22).map(|i| format!("{:x}", vm.r32(mp + 8 + 4 * i))).collect();
+        eprintln!("MultiplayerMode teams: {}", words.join(" "));
+        eprintln!("kid keys {:x?}", host.kid_keys);
+    }
+    let mgid = vm.alloc_zeroed(8, 8);
+    let id = vm.r32(mp + 4);
+    vm.w32(mgid, id);
+    vm.call_by_name(host, "StartMinigame__8WorldManF4MGIDiQ25Enums23MiniGameDifficultyLevelRC5TeamsPCi", &[world::WORLD_MAN, mgid, 0, 0, mp + 8, mp + 0xec], &[])?;
+    vm.st.mem.w8(mp + 1, 0);
+    vm.call_by_name(host, "StartMinigameFadeComplete__8WorldManFv", &[world::WORLD_MAN], &[])?;
     Ok(())
 }
 
@@ -316,6 +425,11 @@ pub fn frame(vm: &mut MgVm, host: &mut MgHost, ms: i32) -> Result<(), String> {
     if ae != 0 {
         vm.call_by_name(host, "Update__11AncientEvilFi", &[ae, ms as u32], &[])?;
     }
+    // the renderer would advance the playground's fade effect (PlaygroundWorld + 0xff0)
+    let pw = vm.r32(world::WORLD_MAN + 0x88);
+    if pw != 0 {
+        vm.call_by_name(host, "Update__Q23Ren18FadeToColourEffectFi", &[pw + 0xff0, ms as u32], &[])?;
+    }
     vm.call_by_name(host, "Update__8WorldManFi", &[world::WORLD_MAN, ms as u32], &[])?;
     physhooks::dispatch_contacts(host, vm)?;
     let cm = vm.r32(0x8060_214c);
@@ -335,9 +449,24 @@ pub fn probe(ty: i32) {
     for m in &vm.missing_symbols {
         println!("missing symbol {m}");
     }
-    if let Err(e) = launch(&mut vm, &mut host, ty, 1) {
+    // EAGL_MG_FE="avatars[;teams]" (e.g. "0,3;1,2"): launch through the front end's multiplayer handlers instead
+    let launched = match std::env::var("EAGL_MG_FE") {
+        Ok(spec) => {
+            let mut parts = spec.split(';');
+            let list = |s: Option<&str>| s.unwrap_or("").split(',').filter_map(|v| v.trim().parse().ok()).collect::<Vec<i32>>();
+            let fe = FeLaunch { ty, avatars: list(parts.next()), teams: list(parts.next()), rules: None };
+            launch_fe(&mut vm, &mut host, &fe)
+        }
+        Err(_) => launch(&mut vm, &mut host, ty, 1),
+    };
+    if let Err(e) = launched {
         println!("launch failed: {e}");
         return;
+    }
+    if std::env::var("EAGL_MG_FE").is_ok() {
+        let mp = vm.r32(vm.img.addr("mInstance__15MultiplayerMode").unwrap_or(0));
+        let words: Vec<String> = (0..0x24).map(|i| format!("{:x}", vm.r32(mp + 8 + 4 * i))).collect();
+        println!("MultiplayerMode teams: {}", words.join(" "));
     }
     println!("launched {ty}");
     if std::env::var("EAGL_DBG_RCTAB").is_ok() {
@@ -348,15 +477,31 @@ pub fn probe(ty: i32) {
         }
     }
     if std::env::var("EAGL_MG_SELFTEST").is_ok() {
+        for _ in 0..8 {
+            let r = vm.call_by_name(&mut host, "AIRand__Fii", &[100, 750], &[]);
+            let j = vm.call_by_name(&mut host, "ChooseRandomJuggleTiming__14FootieAIEntityCFv", &[vm.heap], &[]);
+            println!("AIRand(100,750) = {:?} juggle timing {:?}", r.map(|v| v as i32), j);
+        }
         for x in [4.0f64, 2.0, 0.25, 1.5, 100.0, 0.0001] {
             let r = vm.call_by_name(&mut host, "sqrt", &[], &[x]);
             println!("sqrt({x}) = {:?} f1={}", r, vm.st.cpu.f[1]);
         }
     }
     let frames: i32 = std::env::var("EAGL_MG_FRAMES").ok().and_then(|v| v.parse().ok()).unwrap_or(5);
-    let mg = vm.r32(world::WORLD_MAN + 0x90);
+    let mut mg = vm.r32(world::WORLD_MAN + 0x90);
+    // EAGL_MG_POSTGAME=replay|done: press that post-game button 30 frames after the screen opens
+    let mut postgame_at: Option<i32> = None;
     for f in 0..frames {
-        if f == 10 {
+        let now = vm.r32(world::WORLD_MAN + 0x90);
+        if now != mg {
+            println!("  [{f}] minigame object {mg:#x} -> {now:#x}");
+            mg = now;
+        }
+        if postgame_at == Some(f) {
+            let sym = if std::env::var("EAGL_MG_POSTGAME").as_deref() == Ok("replay") { "OnReplay__8MinigameFv" } else { "OnDone__8MinigameFv" };
+            println!("  [{f}] -> {sym}: {:?}", vm.call_by_name(&mut host, sym, &[mg], &[]));
+        }
+        if f == 10 && mg != 0 {
             let r = vm.call_by_name(&mut host, "OnPlay__8MinigameFv", &[mg], &[]);
             println!("OnPlay {r:?}");
         }
@@ -374,6 +519,7 @@ pub fn probe(ty: i32) {
             }
         }
         host.pads[0].buttons = bits;
+        host.pointer = std::env::var("EAGL_MG_POINTER").ok().and_then(|v| { let mut it = v.split(',').filter_map(|t| t.parse::<f32>().ok()); Some([it.next()?, it.next()?]) });
         host.pads[0].acc = [512, 512, 616];
         for part in std::env::var("EAGL_MG_ACC").unwrap_or_default().split(';') {
             // "from-to:x,y,z" (raw WPAD accelerometer values)
@@ -403,13 +549,74 @@ pub fn probe(ty: i32) {
         if f % 30 == 29 && std::env::var("EAGL_DBG_HEAP").is_ok() {
             println!("  heap {:#x} / {:#x}", vm.heap, vm.heap_end);
         }
+        let period: i32 = std::env::var("EAGL_DBG_PERIOD").ok().and_then(|v| v.parse().ok()).unwrap_or(100);
+        let from: i32 = std::env::var("EAGL_DBG_FROM").ok().and_then(|v| v.parse().ok()).unwrap_or(0);
+        if f >= from && f % period == period - 1 {
+                if let Ok(spec) = std::env::var("EAGL_DBG_CTWORDS") {
+                    for &obj in &host.dbg_objs.clone() {
+                        let mut out = vec![];
+                        for path in spec.split(',') {
+                            let mut v = obj;
+                            for o in path.split('/') {
+                                let o = u32::from_str_radix(o, 16).unwrap_or(0);
+                                v = if v != 0 { vm.r32(v + o) } else { 0 };
+                            }
+                            out.push(format!("{path}={v:#x}"));
+                        }
+                        println!("  o{f} {obj:#x}: {}", out.join(" "));
+                    }
+                }
+        }
         if f % 100 == 99 {
+            // EAGL_DBG_WORDS="250,214,120/18/54": minigame fields (hex offsets; a/b/c follows pointers)
+            if let Ok(spec) = std::env::var("EAGL_DBG_WORDS") {
+                let mut out = vec![];
+                for path in spec.split(',') {
+                    let mut a = mg;
+                    let mut v = 0;
+                    for (i, o) in path.split('/').enumerate() {
+                        let o = u32::from_str_radix(o, 16).unwrap_or(0);
+                        if i > 0 {
+                            a = v;
+                        }
+                        v = if a != 0 { vm.r32(a + o) } else { 0 };
+                    }
+                    out.push(format!("{path}={v:#x}"));
+                }
+                println!("  w{f}: {}", out.join(" "));
+            }
             let sn = snapshot::snapshot(&mut vm, &mut host);
             println!("  t{f}: p0 {:?} anim {}", sn.chars.first().map(|c| c.pos), sn.chars.first().map(|c| c.anim_state).unwrap_or(0));
+            if std::env::var("EAGL_DBG_SYNC").is_ok() {
+                for c in &sn.chars {
+                    let pc = host.phys.chars.values().find(|p| p.guest_character == c.ptr).map(|p| p.position);
+                    println!("     char {:#x} guest {:?} phys {:?}", c.ptr, c.pos, pc);
+                }
+            }
         }
         if let Err(e) = frame(&mut vm, &mut host, 33) {
             println!("frame {f}: {e}");
             break;
+        }
+        let mut follow = std::mem::take(&mut host.dbg_throws);
+        for (body, target, left) in follow.iter_mut() {
+            let bp = host.phys.body_pos(*body);
+            let tp = vm.call_by_name(&mut host, "GetPos__18DodgeballCharacterCFv", &[*target], &[]).unwrap_or(0);
+            let t = [vm.st.mem.rf32(tp), vm.st.mem.rf32(tp + 4), vm.st.mem.rf32(tp + 8)];
+            let d = ((bp[0] - t[0]).powi(2) + (bp[2] - t[2]).powi(2)).sqrt();
+            let _ = vm.call_by_name(&mut host, "GetPersonalSpace__18DodgeballCharacterCFv", &[*target], &[]);
+            let ps = vm.st.cpu.f[1];
+            print!("  ps {ps:.2}");
+            println!("  [{f}] ball {body:#x} at ({:.2},{:.2},{:.2}) target {target:#x} at ({:.2},{:.2},{:.2}) dxz {d:.2}", bp[0], bp[1], bp[2], t[0], t[1], t[2]);
+            *left -= 1;
+        }
+        follow.retain(|x| x.2 > 0);
+        host.dbg_throws.extend(follow);
+        let sounds = std::mem::take(&mut host.sounds);
+        if std::env::var("EAGL_MG_SOUNDS").is_ok() {
+            for (c, v) in &sounds {
+                println!("  [{f}] sound {c} {v}");
+            }
         }
         let evs: Vec<FeEvent> = host.events.drain(..).collect();
         for e in &evs {
@@ -424,6 +631,9 @@ pub fn probe(ty: i32) {
                 let mg = vm.r32(world::WORLD_MAN + 0x90);
                 println!("  [{f}] -> OnPlaneSelected: {:?}", vm.call_by_name(&mut host, "OnPlaneSelected__16MGPaperAirplanesFi", &[mg, 0], &[]));
             }
+            if e.name == "FEManager::OpenAptScreen" && matches!(e.args.first(), Some(FeArg::Str(n)) if n == "PostGame") && std::env::var("EAGL_MG_POSTGAME").is_ok() {
+                postgame_at = Some(f + 30);
+            }
             if let Some(cb) = cb {
                 println!("  [{f}] -> {cb}: {:?}", game_callback(&mut vm, &mut host, cb));
             }
@@ -433,6 +643,11 @@ pub fn probe(ty: i32) {
     println!("snapshot: {} chars, camera {:?}", snap.chars.len(), snap.camera);
     for c in snap.chars.iter().take(8) {
         println!("  char key {:x} pos {:?} angle {} anim {} bones {}", c.key, c.pos, c.angle, c.anim_state, c.pose.len());
+        if std::env::var("EAGL_DBG_POSE").is_ok() {
+            for (i, b) in c.pose.iter().enumerate().take(24) {
+                println!("     bone {i} q {:?}", b.0);
+            }
+        }
     }
     println!("draws {:?}", snap.draws.iter().map(|d| (d.0.clone(), [d.1[12], d.1[13], d.1[14]])).collect::<Vec<_>>());
     println!("physics chars {} bodies {} colliders {}", host.phys.chars.len(), host.phys.bodies.len(), host.phys.world.colliders.len());

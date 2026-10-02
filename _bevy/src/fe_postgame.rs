@@ -131,6 +131,23 @@ pub fn open(vm: &mut Vm, kind: i32, words: &[u32]) {
     }
 }
 
+/// The post-game data of a minigame running in the VM (`PostGameHandlers::SetupPostGameHandlers` observed): the guest
+/// opens the `PostGame` screen itself, so only the front end's copy of the info / tournament state is prepared here.
+pub fn setup(vm: &mut Vm, kind: i32, words: &[u32]) {
+    let mut bytes = [0u8; 0x118];
+    for (i, w) in words.iter().take(70).enumerate() {
+        bytes[4 * i..4 * i + 4].copy_from_slice(&w.to_be_bytes());
+    }
+    let pg = &mut vm.fe.pg;
+    pg.kind = kind;
+    let mut info = PostGameInfo(bytes);
+    let mut sink = Sink(vec![]);
+    if let Err(e) = pg.session.open_postgame(kind, &mut info, &pg.ctx, &mut pg.tournament, &mut sink) {
+        vm.log.push(format!("OpenPostGameScreen rejected the payload: {e:?}"));
+    }
+    pg.info = info;
+}
+
 /// `PostGameLVHandlers::DoJobLV` for a handler name; `None` if the name is not a post-game query.
 pub fn query(vm: &mut Vm, name: &str, player: i32) -> Option<Vec<(String, String)>> {
     if name == "EndTourney_OnLoad" {

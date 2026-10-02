@@ -267,6 +267,9 @@ pub fn input(vm: &mut V) {
 /// `Ren::CachedModel::Draw(this, const rmMatrix4&, bool)`: remember what the game asked to draw.
 fn cached_model_draw(h: &mut MgHost, vm: &mut V) -> R {
     let (this, m) = (vm.a(0), vm.a(1));
+    if this == 0 || m == 0 {
+        return Ok(());
+    }
     let model = vm.r32(this + 0x44);
     let name = h.model_names.get(&model).cloned().unwrap_or_else(|| format!("model@{model:#x}"));
     let mut mat = [0f32; 16];
@@ -274,6 +277,33 @@ fn cached_model_draw(h: &mut MgHost, vm: &mut V) -> R {
         *v = vm.st.mem.rf32(m + 4 * i as u32);
     }
     h.draws.push((name, mat));
+    Ok(())
+}
+/// `Controller::GetWorldVectorFromDPDRotationallyCorrected(this, ViewPort*, Camera*, int, rmVector3* out)`: the direction
+/// from the camera through the pointer; returns 0 when the remote is not pointing at the screen.
+fn dpd_world_vector(h: &mut MgHost, vm: &mut V) -> R {
+    let (cam, out) = (vm.a(2), vm.a(4));
+    let Some(p) = h.pointer else {
+        vm.ret(0);
+        return Ok(());
+    };
+    let v = |vm: &mut V, o: u32| [vm.st.mem.rf32(cam + o), vm.st.mem.rf32(cam + o + 4), vm.st.mem.rf32(cam + o + 8)];
+    let (pos, tgt) = (v(vm, 0x10), v(vm, 0x20));
+    let norm = |a: [f32; 3]| {
+        let l = (a[0] * a[0] + a[1] * a[1] + a[2] * a[2]).sqrt().max(1e-6);
+        [a[0] / l, a[1] / l, a[2] / l]
+    };
+    let cross = |a: [f32; 3], b: [f32; 3]| [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+    let fwd = norm([tgt[0] - pos[0], tgt[1] - pos[1], tgt[2] - pos[2]]);
+    let right = norm(cross(fwd, [0., 1., 0.]));
+    let up = cross(right, fwd);
+    let th = (h.fov * 0.5).tan();
+    let (sx, sy) = (2. * p[0] * th * h.aspect, 2. * p[1] * th);
+    let d = norm([fwd[0] + right[0] * sx + up[0] * sy, fwd[1] + right[1] * sx + up[1] * sy, fwd[2] + right[2] * sx + up[2] * sy]);
+    for i in 0..3 {
+        vm.st.mem.wf32(out + 4 * i as u32, d[i]);
+    }
+    vm.ret(1);
     Ok(())
 }
 fn camera_set_pos(h: &mut MgHost, vm: &mut V) -> R {
@@ -339,7 +369,40 @@ fn camera_set_base(h: &mut MgHost, vm: &mut V) -> R {
 }
 
 pub fn drawing(vm: &mut V) {
+    bind(vm, &["GetWorldVectorFromDPDRotationallyCorrected__10ControllerFPQ24EAGL8ViewPortP6CameraiP9rmVector3"], dpd_world_vector);
     vm.observe("SetBase__6CameraFRC9rmVector3RC9rmVector3RC9rmVector3R9rmVector3R9rmVector3R9rmVector3", camera_set_base);
+    if let Ok(ct) = std::env::var("EAGL_DBG_CT") {
+        vm.observe(&ct, |h, vm| {
+            let this = vm.a(0);
+            if !h.dbg_objs.contains(&this) {
+                h.dbg_objs.push(this);
+            }
+            Ok(())
+        });
+    }
+    if std::env::var("EAGL_DBG_THROW").is_ok() {
+        vm.observe("Throw__9DodgeballFP18DodgeballCharacterP18DodgeballCharacter19DodgeballThrowSpeed", |h, vm| {
+            let (ball, target) = (vm.a(0), vm.a(2));
+            if target != 0 {
+                let body = vm.r32(ball + 0xc4);
+                h.dbg_throws.retain(|t| t.0 != body);
+                h.dbg_throws.push((body, target, 25));
+            }
+            Ok(())
+        });
+        vm.observe("ProcessBallMiss__18DodgeballCharacterFP9Dodgeball", |h, vm| {
+            let (ch, ball) = (vm.a(0), vm.a(1));
+            let body = vm.r32(ball + 0xc4);
+            println!("    [miss] char {ch:#x} ball body {body:#x} at {:?}", h.phys.body_pos(body));
+            Ok(())
+        });
+        vm.observe("ProcessBallCollision__18DodgeballCharacterFP9Dodgeball", |h, vm| {
+            let (ch, ball) = (vm.a(0), vm.a(1));
+            let body = vm.r32(ball + 0xc4);
+            println!("    [coll] char {ch:#x} ball body {body:#x} at {:?} thrown {}", h.phys.body_pos(body), vm.st.mem.r8(ball + 0x61));
+            Ok(())
+        });
+    }
     if std::env::var("EAGL_DBG_RC").is_ok() {
         vm.observe("Render__5RcCarFRQ23Ren12SceneContext", dbg_rccar);
     }
@@ -597,7 +660,120 @@ fn setup_pregame(h: &mut MgHost, vm: &mut V) -> R {
     Ok(())
 }
 
+/// `PostGameHandlers::SetupPostGameHandlers(this, MinigameType, PostGameInfo*)`: hand the 70 info words (0x118 bytes) to
+/// the front end's post-game port, then run the original.
+fn setup_postgame(h: &mut MgHost, vm: &mut V) -> R {
+    let (ty, info) = (vm.a(1), vm.a(2));
+    let mut args = vec![super::FeArg::Int(ty as i32)];
+    for k in 0..70 {
+        args.push(super::FeArg::Int(vm.r32(info + 4 * k) as i32));
+    }
+    h.events.push(super::FeEvent { name: "PostGameInfo".into(), ints: [0; 4], floats: [0.; 2], args });
+    Ok(())
+}
+
+/// `GameState::UpdateHomeMenuIcon`: the loading-screen render task EndMinigame queues around its teardown; nothing to draw.
+fn home_menu_icon(_h: &mut MgHost, vm: &mut V) -> R {
+    vm.ret(0);
+    Ok(())
+}
+
+// --- audio ------------------------------------------------------------------------------------------------------------
+
+/// `Audio::PlaySFX(this, AUDIOAEMSBESFX | AUDIOAEMSFEHUDSFX id, azimuth, volume)`: run the original id switch of
+/// `AuAEMSManager::PlaySFX` against an enabled stand-in manager; the class it instantiates is caught below.
+fn audio_play_sfx(h: &mut MgHost, vm: &mut V) -> R {
+    let name = vm.name_of(vm.st.cpu.pc);
+    if h.aems_mgr == 0 {
+        h.aems_mgr = vm.alloc_zeroed(0x40, 16);
+        vm.st.mem.w8(h.aems_mgr + 4, 1);
+    }
+    let target = if name.contains("AUDIOAEMSBESFX") { "PlaySFX__13AuAEMSManagerF14AUDIOAEMSBESFXii" } else { "PlaySFX__13AuAEMSManagerF17AUDIOAEMSFEHUDSFXii" };
+    let (mgr, id, az, vol) = (h.aems_mgr, vm.a(1), vm.a(2), vm.a(3));
+    vm.call_by_name(h, target, &[mgr, id, az, vol], &[])?;
+    Ok(())
+}
+
+/// `Csis::Class::CreateInstance(ClassHandle*, void* inputs, Class** out)`: a sound starts; the handle's symbol names the
+/// class and the first input is the variant (an index into the class's sample table).
+fn csis_create_instance(h: &mut MgHost, vm: &mut V) -> R {
+    let (handle, inputs, out) = (vm.a(0), vm.a(1), vm.a(2));
+    if h.csis_handles.is_empty() {
+        for sym in &vm.img.symbols {
+            if let Some(c) = sym.name.strip_prefix('g').and_then(|n| n.strip_suffix("Handle__4Csis")) {
+                h.csis_handles.insert(sym.addr, c.to_string());
+            }
+        }
+    }
+    if let Some(class) = h.csis_handles.get(&handle).cloned() {
+        let variant = if inputs != 0 { vm.r32(inputs) as i32 } else { 0 };
+        h.sounds.push((class, variant.max(0) as usize));
+    }
+    if out != 0 {
+        vm.w32(out, 0);
+    }
+    vm.ret(0);
+    Ok(())
+}
+
+/// `AIP::CmdDecomposer::GetIntArrayByName(this, name, int* out, count)` for handlers the host calls directly.
+fn int_array_by_name(h: &mut MgHost, vm: &mut V) -> R {
+    let (out, count) = (vm.a(2), vm.a(3));
+    for i in 0..count.min(16) {
+        let v = h.int_array.get(i as usize).copied().unwrap_or(0);
+        vm.w32(out + 4 * i, v as u32);
+    }
+    vm.ret(1);
+    Ok(())
+}
+
+/// Renderer visibility queries (`Ren::FrustumTest::IsBoundingBoxInView`, `AreaManager::IsPointVisible`): Bevy culls on
+/// its own, so everything counts as on screen.  Characters only evaluate their animation pose while visible
+/// (`Character::Update` -> `Character+0x215` -> `AnimationState::Update`).
+fn visible(_h: &mut MgHost, vm: &mut V) -> R {
+    vm.ret(1);
+    Ok(())
+}
+
+/// `Csis::<Class>::<Class>(this, int variant, ...)`: sound classes the game constructs directly (most `PlaySFX` ids do);
+/// the mangled name gives the class.  Behaves like the null constructor otherwise (vtable, returns `this`).
+fn csis_ctor(h: &mut MgHost, vm: &mut V) -> R {
+    let name = vm.name_of(vm.st.cpu.pc);
+    let this = vm.a(0);
+    if let Some(class) = name.strip_prefix("__ct__").and_then(super::mangled_class) {
+        // `Q24Csis23MGSFX_Dodgeball_Actions` -> `MGSFX_Dodgeball_Actions`
+        let short = class.trim_start_matches("Q24Csis").trim_start_matches(|c: char| c.is_ascii_digit()).to_string();
+        if let Some(vt) = vm.img.addr(&format!("__vt__{class}")) {
+            if this != 0 {
+                vm.w32(this, vt);
+            }
+        }
+        // `...Fii`: the first int input is the variant
+        if name.contains("Fi") {
+            let variant = vm.a(1) as i32;
+            h.sounds.push((short, variant.max(0) as usize));
+        }
+    }
+    vm.ret(this);
+    Ok(())
+}
+
 pub fn pregame(vm: &mut V) {
+    vm.hook_matching(|n| n.starts_with("__ct__Q24Csis") && ["MGSFX_", "WSFX_", "FESFX_"].iter().any(|p| n.contains(p)), csis_ctor);
+    bind(vm, &["IsBoundingBoxInView__Q23Ren11FrustumTestFRCQ23Ren11BoundingBoxRC9rmMatrix4", "IsPointVisible__11AreaManagerFRC9rmVector3RC9rmVector3"], visible);
+    // `AnimationState::Update(this, dt, bool on_screen, bool)`: the character's on-screen flag comes from its (absent)
+    // render geometry, so always evaluate the pose
+    vm.observe("Update__14AnimationStateFfbb", |_h, vm| {
+        vm.st.cpu.r[4] = 1;
+        Ok(())
+    });
+    bind(vm, &["GetIntArrayByName__Q23AIP13CmdDecomposerCFPCcPii"], int_array_by_name);
+    bind(vm, &["PlaySFX__5AudioF14AUDIOAEMSBESFXii", "PlaySFX__5AudioF17AUDIOAEMSFEHUDSFXii"], audio_play_sfx);
+    bind(vm, &["CreateInstance__Q24Csis5ClassFPQ24Csis11ClassHandlePvPPQ24Csis5Class"], csis_create_instance);
+    bind(vm, &["UpdateHomeMenuIcon__9GameStateFii"], home_menu_icon);
+    if !vm.observe("SetupPostGameHandlers__16PostGameHandlersFQ25Enums12MinigameTypeP12PostGameInfo", setup_postgame) {
+        vm.log_missing_symbol("SetupPostGameHandlers");
+    }
     if !vm.observe("SetupPreGameHandlers__15PreGameHandlersFQ25Enums12MinigameTypeiP11PreGameInfo", setup_pregame) {
         vm.log_missing_symbol("SetupPreGameHandlers");
     }

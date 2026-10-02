@@ -71,6 +71,8 @@ pub struct MpResult{pub winner:i32,pub scores:[i32;2],pub hits:[i32;2],pub power
 pub struct Mp{
     pub active:bool,pub quick:bool,pub players:i32,pub avatars:Vec<i32>,pub minigame:i32,pub rounds:i32,pub style:i32,pub rules:Vec<i32>,
     pub results:Option<MpResult>,
+    /// `aiTeams` of the team-select screen (one entry per player; `SetTeams` reads < 2 as team 0); empty = not a team game.
+    pub teams:Vec<i32>,
 }
 
 #[derive(Clone,Debug,Default,serde::Serialize,serde::Deserialize)]
@@ -232,7 +234,7 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
         "MultiPlayer_NumPlayersBack"=>{vm.fe.mp.active=false;vec![]}
         "MultiPlayer_SetNumberPlayers"=>{
             let n=arg("iNumberPlayers").and_then(|v|v.parse::<i32>().ok()).unwrap_or(2).clamp(2,4);
-            let mp=&mut vm.fe.mp;mp.active=true;mp.players=n;mp.avatars=(0..n).map(|i|i).collect();vec![]
+            let mp=&mut vm.fe.mp;mp.active=true;mp.players=n;mp.avatars=(0..n).map(|i|i).collect();mp.teams.clear();vec![]
         }
         "MultiPlayer_SetUpOnLoad"=>{
             vm.fe.kid_mode=2;
@@ -338,7 +340,11 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
             let av:Vec<String>=(0..mp.players.max(2)).map(|i|mp.avatars.get(i as usize).copied().unwrap_or(i).to_string()).collect();
             vec![("iIsTeamGame".into(),((mp.players>=4) as i32).to_string()),("iIsCoop".into(),"0".into()),("iNumPlayers".into(),mp.players.to_string()),("aiPlayerAvatar".into(),av.join(DELIM))]
         }
-        "MultiPlayer_SetTeams"=>vec![],
+        "MultiPlayer_SetTeams"=>{
+            // `MultiPlayerFSHandlers::SetTeams` (0x8031a684): the VM-hosted game builds its Teams from these
+            if let Some(a)=arg("aiTeams"){vm.fe.mp.teams=a.split(DELIM).filter_map(|x|x.parse().ok()).collect();}
+            vec![]
+        }
         "MultiPlayer_SetRulesType"=>{
             // "Play" (0): the rules screen stack is cleared and the game opens its pre-game instructions.
             let t=arg("iMultiPlayerRulesType").and_then(|v|v.parse::<i32>().ok()).unwrap_or(0);

@@ -40,8 +40,10 @@ fn load_physics(h: &mut MgHost, vm: &mut V) -> R {
     let mp = vm.a(2);
     let matrix = if mp != 0 { Some(read_mat(vm, mp)) } else { None };
     let (flags, add) = (vm.a(3), vm.a(4) & 0xff != 0);
-    // flag 8 = camera collision, which never blocks characters or balls
-    let id = h.phys.load_system(&name, matrix, add, flags & 8 != 0);
+    if std::env::var("EAGL_PHYS_FILTER").is_ok() {
+        h.log.push(format!("LoadPhysics {name} filter {flags:#x}"));
+    }
+    let id = h.phys.load_system(&name, matrix, add, flags);
     vm.ret(id as u32);
     Ok(())
 }
@@ -51,11 +53,20 @@ fn unload_physics(h: &mut MgHost, vm: &mut V) -> R {
 }
 fn generate_body(h: &mut MgHost, vm: &mut V) -> R {
     let (system, index) = (vm.a(1) as usize, vm.a(3) as usize);
+    if std::env::var("EAGL_PHYS_FILTER").is_ok() {
+        h.log.push(format!("GenerateRigidBody system {system} index {index} filter {:#x}", vm.a(2)));
+    }
     let obj = vm.alloc_zeroed(0x60, 16);
     if let Some(vt) = vm.img.addr("__vt__16PhysicsRigidBody") {
         vm.w32(obj, vt);
     }
-    if h.phys.generate_body(obj, system, index) {
+    // `PhysicsRigidBody::Initialize`: embedded user data {type 2, body} at +8
+    vm.w32(obj + 0xc, 2);
+    vm.w32(obj + 0x14, obj);
+    if h.phys.generate_body(obj, system, index, vm.a(2)) {
+        if let Some(b) = h.phys.bodies.get_mut(&obj) {
+            b.user_data = obj + 8;
+        }
         vm.ret(obj);
     } else {
         h.log.push(format!("GenerateRigidBodyFromPhysicsSystem: no body {index} in system {system}"));
@@ -67,6 +78,22 @@ fn destroy_body(h: &mut MgHost, vm: &mut V) -> R {
     h.phys.destroy_body(vm.a(1));
     Ok(())
 }
+/// `GeneratePhantomFromPhysicsSystem(this, system, PhysicsPhantomListener*, filter, index)`
+fn generate_phantom(h: &mut MgHost, vm: &mut V) -> R {
+    let (system, listener, filter, index) = (vm.a(1) as usize, vm.a(2), vm.a(3), vm.a(4) as usize);
+    let obj = vm.alloc_zeroed(0x40, 16);
+    if let Some(vt) = vm.img.addr("__vt__14PhysicsPhantom") {
+        vm.w32(obj, vt);
+    }
+    if h.phys.add_phantom(obj, system, index, filter, listener) {
+        vm.ret(obj);
+    } else {
+        h.log.push(format!("GeneratePhantomFromPhysicsSystem: no body {index} in system {system}"));
+        vm.ret(0);
+    }
+    Ok(())
+}
+
 fn nothing(_h: &mut MgHost, _vm: &mut V) -> R {
     Ok(())
 }
@@ -182,10 +209,25 @@ fn get_mass(h: &mut MgHost, vm: &mut V) -> R {
     vm.fret(m);
     Ok(())
 }
+/// `PhysicsRigidBody::SetUserData(this, const PhysicsUserData*)` (0x803b9e04): the body embeds its user data at +8 and
+/// copies the caller's (often a temporary) into it; listeners receive `body + 8`.
 fn set_user_data(h: &mut MgHost, vm: &mut V) -> R {
     let (b, ud) = (vm.a(0), vm.a(1));
+    if std::env::var("EAGL_PHYS_BODY").is_ok() {
+        let w: Vec<u32> = (0..5).map(|k| vm.r32(ud + 4 * k)).collect();
+        eprintln!("[body] SetUserData {b:#x} <- {ud:#x} {w:x?}");
+    }
+    if b == 0 {
+        return Ok(());
+    }
+    if ud != 0 {
+        for k in 0..4 {
+            let w = vm.r32(ud + 4 + 4 * k);
+            vm.w32(b + 0xc + 4 * k, w);
+        }
+    }
     if let Some(body) = h.phys.bodies.get_mut(&b) {
-        body.user_data = ud;
+        body.user_data = b + 8;
     }
     Ok(())
 }
@@ -363,7 +405,11 @@ fn char_ct(h: &mut MgHost, vm: &mut V) -> R {
     if let Some(vt) = vt {
         vm.w32(this, vt);
     }
-    h.phys.add_character(this, character, p);
+    let (radius, height) = if character != 0 { (vm.st.mem.rf32(character + 0x140), vm.st.mem.rf32(character + 0x144)) } else { (0., 0.) };
+    if std::env::var("EAGL_PHYS_FILTER").is_ok() {
+        h.log.push(format!("PhysicsDynamicCharacter {this:#x} radius {radius} height {height}"));
+    }
+    h.phys.add_character(this, character, p, radius, height);
     // rigid-body listeners reach the game character through `PhysicsUserData{type 4, ptr}` -> `+0x30` = Character*
     vm.w32(this + 0x30, character);
     let ud = vm.alloc_zeroed(0x10, 16);
@@ -400,6 +446,22 @@ fn listener_method(vm: &mut V, vt: u32, base: &str) -> Option<u32> {
 /// (`ContactAddedCallback`/`ContactConfirmedCallback` on the body, `ObjectInteractionCallback` on the character).
 pub fn dispatch_contacts(h: &mut MgHost, vm: &mut V) -> Result<(), String> {
     let contacts = std::mem::take(&mut h.pending_contacts);
+    // phantoms: `PhysicsPhantomListener::OverlapAdded/RemovedCallback(this, PhysicsUserData* of the body)`
+    for c in &contacts {
+        let (ph, other) = if h.phys.phantoms.contains_key(&c.a) { (c.a, c.b) } else if h.phys.phantoms.contains_key(&c.b) { (c.b, c.a) } else { continue };
+        let listener = h.phys.phantoms[&ph].listener;
+        let ud = h.phys.bodies.get(&other).map(|b| b.user_data).or_else(|| h.phys.chars.get(&other).map(|c| c.user_data)).unwrap_or(0);
+        if std::env::var("EAGL_PHYS_TRACE").is_ok() {
+            eprintln!("[phantom] {ph:#x} {} {other:#x} ud {ud:#x} type {}", if c.added { "added" } else { "removed" }, if ud != 0 { vm.r32(ud + 4) } else { 0 });
+        }
+        if listener == 0 || ud == 0 {
+            continue;
+        }
+        let vt = vm.r32(listener);
+        if let Some(f) = listener_method(vm, vt, if c.added { "OverlapAddedCallback" } else { "OverlapRemovedCallback" }) {
+            vm.call(h, f, &[listener, ud], &[])?;
+        }
+    }
     if std::env::var("EAGL_PHYS_TRACE").is_ok() {
         for c in contacts.iter().filter(|c| c.added) {
             eprintln!("[phys] contact {:#x} {:#x} bodies {:?} chars {:?}", c.a, c.b, h.phys.bodies.contains_key(&c.a), h.phys.chars.contains_key(&c.a));
@@ -410,6 +472,29 @@ pub fn dispatch_contacts(h: &mut MgHost, vm: &mut V) -> Result<(), String> {
     }
     let cp = vm.alloc_zeroed(0x40, 16);
     for c in contacts.iter().filter(|c| c.added) {
+        // body against the static world (type 1) or another body (type 2)
+        let kind = |h: &MgHost, g: u32| (h.phys.bodies.contains_key(&g), h.phys.chars.contains_key(&g));
+        let ((a_body, _), (b_body, _)) = (kind(h, c.a), kind(h, c.b));
+        if (a_body && (c.b == 0 || b_body)) || (b_body && c.a == 0) {
+            let pairs: Vec<(u32, u32)> = if a_body && b_body { vec![(c.a, c.b), (c.b, c.a)] } else if a_body { vec![(c.a, 0)] } else { vec![(c.b, 0)] };
+            for (me, other) in pairs {
+                let (listener, _) = { let b = &h.phys.bodies[&me]; (b.listener, b.user_data) };
+                if listener == 0 {
+                    continue;
+                }
+                let (other_ud, ty) = if other == 0 { (0, 1) } else { (h.phys.bodies[&other].user_data, 2) };
+                for (i, v) in c.point.iter().chain(c.normal.iter()).enumerate() {
+                    vm.st.mem.wf32(cp + 4 * i as u32, *v);
+                }
+                let vt = vm.r32(listener);
+                for slot_name in ["ContactAddedCallback", "ContactConfirmedCallback"] {
+                    if let Some(f) = listener_method(vm, vt, slot_name) {
+                        vm.call(h, f, &[listener, other_ud, ty, cp], &[0.])?;
+                    }
+                }
+            }
+            continue;
+        }
         let (body, ch) = if h.phys.bodies.contains_key(&c.a) && h.phys.chars.contains_key(&c.b) {
             (c.a, c.b)
         } else if h.phys.bodies.contains_key(&c.b) && h.phys.chars.contains_key(&c.a) {
@@ -498,9 +583,52 @@ pub fn install(vm: &mut V) {
     bind(vm, &["DestroyPhysicsRigidBody__14PhysicsManagerFP16PhysicsRigidBody"], destroy_body);
     bind(
         vm,
-        &["AddPhysicsRigidBodyToWorld__14PhysicsManagerFP16PhysicsRigidBody", "RemovePhysicsRigidBodyFromWorld__14PhysicsManagerFP16PhysicsRigidBody", "InitializeSim__14PhysicsManagerFPCcPC9rmMatrix4", "EnableCharacterCharacterCollisions__14PhysicsManagerFv", "DisableCharacterCharacterCollisions__14PhysicsManagerFv", "SetQualityType__16PhysicsRigidBodyF18PhysicsQualityType", "SetMotionType__16PhysicsRigidBodyF17PhysicsMotionType"],
+        &["InitializeSim__14PhysicsManagerFPCcPC9rmMatrix4", "EnableCharacterCharacterCollisions__14PhysicsManagerFv", "DisableCharacterCharacterCollisions__14PhysicsManagerFv", "SetQualityType__16PhysicsRigidBodyF18PhysicsQualityType", "SetMotionType__16PhysicsRigidBodyF17PhysicsMotionType"],
         nothing,
     );
+    bind(vm, &["GeneratePhantomFromPhysicsSystem__14PhysicsManagerFiP22PhysicsPhantomListenerUii"], generate_phantom);
+    bind(vm, &["GetUserData__16PhysicsRigidBodyCFv"], |_h, vm| {
+        let this = vm.a(0);
+        vm.ret(this + 8);
+        Ok(())
+    });
+    bind(vm, &["SetMat__14PhysicsPhantomFRC9rmMatrix4"], |h, vm| {
+        let m = read_mat(vm, vm.a(1));
+        h.phys.set_phantom_mat(vm.a(0), &m);
+        Ok(())
+    });
+    bind(vm, &["SetPos__14PhysicsPhantomFRC9rmVector3"], |h, vm| {
+        let p = read_v3(vm, vm.a(1));
+        h.phys.set_phantom_pos(vm.a(0), p);
+        Ok(())
+    });
+    bind(vm, &["GetPos__14PhysicsPhantomCFv"], |h, vm| {
+        let (out, this) = (vm.a(0), vm.a(1));
+        let p = h.phys.phantom_pos(this);
+        write_v3(vm, out, p);
+        Ok(())
+    });
+    bind(vm, &["AddPhysicsPhantomToWorld__14PhysicsManagerFP14PhysicsPhantom"], |h, vm| {
+        h.phys.set_phantom_enabled(vm.a(1), true);
+        Ok(())
+    });
+    bind(vm, &["RemovePhysicsPhantomFromWorld__14PhysicsManagerFP14PhysicsPhantom"], |h, vm| {
+        h.phys.set_phantom_enabled(vm.a(1), false);
+        Ok(())
+    });
+    bind(vm, &["DestroyPhysicsPhantom__14PhysicsManagerFP14PhysicsPhantom"], |h, vm| {
+        h.phys.remove_phantom(vm.a(1));
+        Ok(())
+    });
+    bind(vm, &["AddPhysicsRigidBodyToWorld__14PhysicsManagerFP16PhysicsRigidBody"], |h, vm| {
+        h.phys.set_in_world(vm.a(1), true);
+        Ok(())
+    });
+    // a held dodgeball / football leaves the simulation; the game positions it by hand until it is thrown
+    bind(vm, &["RemovePhysicsRigidBodyFromWorld__14PhysicsManagerFP16PhysicsRigidBody"], |h, vm| {
+        h.phys.set_in_world(vm.a(1), false);
+        Ok(())
+    });
     bind(vm, &["GetGravity__14PhysicsManagerCFv"], get_gravity);
     bind(vm, &["GetGroundHeight__14PhysicsManagerCFPC9rmVector3f"], get_ground_height);
     bind(vm, &["GetGroundType__14PhysicsManagerCFPC9rmVector3f"], get_ground_type);

@@ -151,6 +151,47 @@ pub fn anim(state: i32, female: bool) -> Option<(&'static str, &'static str, usi
     })
 }
 
+/// The AEMS bank that defines sound class `class` as a sample table (`MGSFX_*`, `WSFX_*`, ... across every non-ambience
+/// bank), found by loading the banks once.
+pub fn bank_of(class: &str) -> Option<&'static str> {
+    static INDEX: OnceLock<HashMap<String, &'static str>> = OnceLock::new();
+    let index = INDEX.get_or_init(|| {
+        let mut out = HashMap::new();
+        let dir = bridge::data_root().join("files").join("data").join("audio").join("aems");
+        let mut files: Vec<String> = std::fs::read_dir(&dir)
+            .map(|rd| rd.flatten().map(|e| e.file_name().to_string_lossy().into_owned()).filter(|n| n.ends_with(".abk") && !n.starts_with("amb_")).collect())
+            .unwrap_or_default();
+        files.sort();
+        for f in files {
+            let name: &'static str = Box::leak(f.into_boxed_str());
+            if let Some(b) = bank(name) {
+                for c in b.classes.keys() {
+                    out.entry(c.clone()).or_insert(name);
+                }
+            }
+        }
+        out
+    });
+    index.get(class).copied()
+}
+
+/// Play variant `index` of sound class `class` from whichever bank defines it; unknown classes are ignored.
+pub fn play_class(class: &str, index: usize, volume: f32) {
+    let class = class.to_string();
+    std::thread::spawn(move || {
+        let Some(file) = bank_of(&class) else { return };
+        let Some(b) = bank(file) else { return };
+        let Some(table) = b.class(&class) else { return };
+        let Some(&(vol, sound)) = table.get(index.min(table.len().saturating_sub(1))) else { return };
+        if std::env::args().any(|a| a == "--mute") {
+            return;
+        }
+        if let Some(p) = pcm(file, sound) {
+            crate::playback::play_once(&p, (vol / 100.) * volume);
+        }
+    });
+}
+
 fn pcm(file: &str, sound: u32) -> Option<audio::Pcm> {
     let cache = PCM.get_or_init(|| Mutex::new(HashMap::new()));
     let key = (file.to_string(), sound);

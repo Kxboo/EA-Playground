@@ -271,7 +271,15 @@ pub fn view_step(mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option
             v.vm.fe.later.push((120,"Stickerbook_SetVisible".into(),vec![crate::apt_vm::V::Num(1.)]));
             v.vm.fe.later.push((120,"ReportCard_SetVisible".into(),vec![crate::apt_vm::V::Num(1.)]));
         }
-        if let Some(n)=g.strip_prefix("mg:").and_then(|n|n.parse::<i32>().ok()){commands.insert_resource(crate::mg_session::MgLaunch{ty:n,humans:1});}
+        if let Some(n)=g.strip_prefix("mg:").and_then(|n|n.parse::<i32>().ok()){
+            // the front end's picks: multiplayer kids / teams / rules, or the single kid of quick play
+            let mp=&v.vm.fe.mp;
+            let avatars:Vec<i32>=if mp.active&&mp.players>=1{(0..mp.players.min(4)).map(|i|mp.avatars.get(i as usize).copied().unwrap_or(i)).collect()}else{vec![mp.avatars.first().copied().unwrap_or(v.vm.fe.profiles.kid)]};
+            let teams=if mp.active{mp.teams.clone()}else{vec![]};
+            let rules=(mp.rules.len()>=5&&n==2).then(||[mp.rules[0],mp.rules[1],mp.rules[2],mp.rules[3],mp.rules[4]]);
+            let humans=avatars.len();
+            commands.insert_resource(crate::mg_session::MgLaunch{ty:n,humans,fe:Some(crate::mgvm::FeLaunch{ty:n,avatars,teams,rules})});
+        }
         if g=="tetherball"&&tbres.is_none(){let fe=&v.vm.fe;
             let kid=|i:usize|fe.mp.avatars.get(i).and_then(|&k|fe.roster.get(k as usize)).map(|k|k.asset.clone());
             let female=|i:usize|fe.mp.avatars.get(i).and_then(|&k|fe.roster.get(k as usize)).map(|k|!k.boy).unwrap_or(false);

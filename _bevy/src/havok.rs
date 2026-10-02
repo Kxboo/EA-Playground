@@ -244,6 +244,14 @@ impl Collision{
                 for sx in [-1.,1.]{for sy in [-1.,1.]{for sz in [-1.,1.]{pts.push(f([sx*h[0],sy*h[1],sz*h[2]]))}}}
                 out.push(Prim::Hull(pts));
             }
+            "hkCylinderShape"=>{
+                // a 12-sided prism around the axis vertexA..vertexB (perpendicular1/2 span the cross-section)
+                let (a,b)=(v3(&o["vertexA"]),v3(&o["vertexB"]));let r=o["cylRadius"].as_f64().unwrap_or(0.5);
+                let (p1,p2)=(v3(&o["perpendicular1"]),v3(&o["perpendicular2"]));let mut pts=vec![];
+                for k in 0..12{let t=k as f64*std::f64::consts::TAU/12.;let (c,sn)=(t.cos()*r,t.sin()*r);
+                    for e in [a,b]{pts.push(f([e[0]+p1[0]*c+p2[0]*sn,e[1]+p1[1]*c+p2[1]*sn,e[2]+p1[2]*c+p2[2]*sn]))}}
+                out.push(Prim::Hull(pts));
+            }
             "hkConvexTransformShape"|"hkTransformShape"=>{if let Some(c)=self.child(pf,&o,"childShape"){let t=mul(local,&mat_from(&o["transform"]));self.prims(pf,c,&t,out)}}
             "hkConvexTranslateShape"=>{if let Some(c)=self.child(pf,&o,"childShape"){let mut t=ident();let v=v3(&o["translation"]);for i in 0..3{t[i][3]=v[i]}let t=mul(local,&t);self.prims(pf,c,&t,out)}}
             "hkListShape"=>{

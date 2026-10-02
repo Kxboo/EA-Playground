@@ -71,6 +71,11 @@ pub struct DynBody {
     pub in_world: bool,
 }
 
+pub struct PhantomBody {
+    pub handle: RigidBodyHandle,
+    pub listener: u32,
+}
+
 pub struct CharBody {
     pub handle: RigidBodyHandle,
     pub position: [f32; 3],
@@ -81,6 +86,8 @@ pub struct CharBody {
     pub guest_character: u32,
     /// Guest `PhysicsUserData` (type 4) describing this character to rigid-body listeners.
     pub user_data: u32,
+    /// Half the capsule height: the body centre sits this far above the feet.
+    pub mid: f32,
 }
 
 /// A `PhysicsVehicle`: RcCars computes the driving model itself (SetVel/SetDir every frame), so this only integrates,
@@ -136,9 +143,13 @@ pub struct Physics {
     systems: Vec<Option<Vec<BodyInfo>>>,
     /// Static colliders added by each loaded system.
     system_bodies: Vec<Vec<RigidBodyHandle>>,
+    /// Collision filter info each system was loaded with (`LoadPhysics`' filter argument).
+    system_filters: Vec<u32>,
     pub bodies: HashMap<u32, DynBody>,
     pub chars: HashMap<u32, CharBody>,
     pub vehicles: HashMap<u32, Vehicle>,
+    /// `PhysicsPhantom`s: overlap volumes (football goals, paper-airplane obstacles) reporting to a phantom listener.
+    pub phantoms: HashMap<u32, PhantomBody>,
     by_handle: HashMap<RigidBodyHandle, u32>,
     prev_pairs: std::collections::HashSet<(u32, u32)>,
     pub log: Vec<String>,
@@ -159,15 +170,60 @@ fn tri_mesh(tris: &[[[f32; 3]; 3]]) -> Option<ColliderBuilder> {
     ColliderBuilder::trimesh(verts, idx).ok()
 }
 
-fn collider_for(prim: &Prim, info: &BodyInfo) -> Option<ColliderBuilder> {
+/// Havok collision layer of the characters (the `Character_*` walls of layer 18 only stop layer 3).
+pub const CHARACTER_LAYER: u32 = 3;
+
+/// The layer matrix `PhysicsManager::CreateCollisionFilter` (0x803b8d44) builds into the hkGroupFilter: row `layer` is the
+/// set of layers it collides with.
+pub fn layer_mask(layer: u32) -> u32 {
+    let mut m = [u32::MAX; 32];
+    let enable_bits = |m: &mut [u32; 32], a: u32, b: u32| {
+        for i in 0..32 {
+            if a >> i & 1 != 0 {
+                m[i] |= b;
+            }
+            if b >> i & 1 != 0 {
+                m[i] |= a;
+            }
+        }
+    };
+    let disable_bits = |m: &mut [u32; 32], a: u32, b: u32| {
+        for i in 0..32 {
+            if a >> i & 1 != 0 {
+                m[i] &= !b;
+            }
+            if b >> i & 1 != 0 {
+                m[i] &= !a;
+            }
+        }
+    };
+    enable_bits(&mut m, 0xffff_fffe, 0xffff_fffe);
+    for a in [0x10000, 0x20000, 0x40000, 0x200000, 0x10, 0x80000, 0x20, 0x100000, 0x8000, 0x100, 0x400000] {
+        disable_bits(&mut m, a, 0xffff_fffe);
+    }
+    for (a, b) in [(0x10, 1), (0x11, 2), (0x12, 3), (0x15, 6), (4, 5), (4, 1), (4, 2), (0x13, 4), (5, 4), (5, 1), (5, 2), (0x14, 5), (0x14, 1), (0x14, 2), (0xf, 2), (0xf, 1), (8, 8), (0x16, 2), (0x16, 1), (0x16, 0x16)] {
+        enable_bits(&mut m, 1 << a, 1 << b);
+    }
+    disable_bits(&mut m, 1 << 6, 1 << 3);
+    m[(layer & 0x1f) as usize]
+}
+
+pub fn layer_groups(layer: u32) -> InteractionGroups {
+    InteractionGroups::new(Group::from_bits_retain(1 << (layer & 0x1f)), Group::from_bits_retain(layer_mask(layer)), InteractionTestMode::And)
+}
+
+/// Collider user data marking terrain meshes (the ground probe only looks at those).
+const MESH_TAG: u128 = 1;
+
+fn collider_for(prim: &Prim, info: &BodyInfo, layer: u32) -> Option<ColliderBuilder> {
     let b = match prim {
         Prim::Sphere { c, r } => ColliderBuilder::ball(*r).translation(Vector::new(c[0], c[1], c[2])),
         Prim::Capsule { a, b, r } => ColliderBuilder::capsule_from_endpoints(Vector::new(a[0], a[1], a[2]), Vector::new(b[0], b[1], b[2]), *r),
         Prim::Hull(pts) => ColliderBuilder::convex_hull(&pts.iter().map(|p| Vector::new(p[0], p[1], p[2])).collect::<Vec<_>>())?,
         Prim::Mesh(tris) => tri_mesh(tris)?,
     };
-    let group = if matches!(prim, Prim::Mesh(_)) { Group::GROUP_2 } else { Group::GROUP_1 };
-    Some(b.friction(info.friction).restitution(info.restitution).collision_groups(InteractionGroups::new(group, Group::ALL, InteractionTestMode::And)))
+    let tag = if matches!(prim, Prim::Mesh(_)) { MESH_TAG } else { 0 };
+    Some(b.friction(info.friction).restitution(info.restitution).user_data(tag).collision_groups(layer_groups(layer)))
 }
 
 impl Physics {
@@ -179,9 +235,11 @@ impl Physics {
             gravity: [0., -9.81, 0.],
             systems: vec![],
             system_bodies: vec![],
+            system_filters: vec![],
             bodies: HashMap::new(),
             chars: HashMap::new(),
             vehicles: HashMap::new(),
+            phantoms: HashMap::new(),
             by_handle: HashMap::new(),
             prev_pairs: Default::default(),
             log: vec![],
@@ -189,7 +247,9 @@ impl Physics {
     }
 
     /// `PhysicsManager::LoadPhysics`: parse `data/physics/<name>.hkx`; with `add_to_world` its bodies exist immediately.
-    pub fn load_system(&mut self, name: &str, matrix: Option<Mat>, add_to_world: bool, camera_only: bool) -> i32 {
+    pub fn load_system(&mut self, name: &str, matrix: Option<Mat>, add_to_world: bool, filter: u32) -> i32 {
+        // layer 8 (camera collision) only ever meets itself; its bodies are not simulated here
+        let camera_only = filter & 0x1f == 8;
         let path = crate::bridge::data_root().join("files/data/physics").join(format!("{}.hkx", name.trim_end_matches(".hkx")));
         let Ok(bytes) = std::fs::read(&path) else {
             self.log.push(format!("LoadPhysics: missing {}", path.display()));
@@ -202,15 +262,21 @@ impl Physics {
         };
         let infos = havok::rigid_bodies(&pf);
         self.log.push(format!("LoadPhysics {name}: {} bodies, matrix {:?}, add {add_to_world}", infos.len(), matrix));
+        if std::env::var("EAGL_PHYS_FILTER").is_ok() && infos.len() < 40 {
+            for i in &infos {
+                self.log.push(format!("    body {} filter {:#x} layer {} inv_mass {}", i.name, i.filter, i.filter & 0x1f, i.mass_inv));
+            }
+        }
         let id = self.systems.len();
         self.systems.push(Some(infos));
         self.system_bodies.push(vec![]);
+        self.system_filters.push(filter);
         if add_to_world && !camera_only {
             let n = self.systems[id].as_ref().map(|v| v.len()).unwrap_or(0);
             for i in 0..n {
                 let infos = self.systems[id].as_ref().unwrap();
                 if infos[i].mass_inv == 0. {
-                    let h = self.insert_body(id, i, matrix.as_ref(), None);
+                    let h = self.insert_body(id, i, matrix.as_ref(), None, filter);
                     self.system_bodies[id].push(h);
                 }
             }
@@ -229,7 +295,8 @@ impl Physics {
         }
     }
 
-    fn insert_body(&mut self, system: usize, index: usize, matrix: Option<&Mat>, pose: Option<Mat>) -> RigidBodyHandle {
+    fn insert_body(&mut self, system: usize, index: usize, matrix: Option<&Mat>, pose: Option<Mat>, filter: u32) -> RigidBodyHandle {
+        let layer = if filter != 0 { filter } else { self.systems[system].as_ref().unwrap()[index].filter } & 0x1f;
         let info = self.systems[system].as_ref().unwrap()[index].clone();
         let local = {
             let r = info.rotation;
@@ -244,7 +311,7 @@ impl Physics {
         let mass = if info.mass_inv > 0. { 1. / info.mass_inv } else { 0. };
         let total_prims = info.prims.len().max(1) as f32;
         for prim in &info.prims {
-            if let Some(mut c) = collider_for(prim, &info) {
+            if let Some(mut c) = collider_for(prim, &info, layer) {
                 if mass > 0. {
                     c = c.mass(mass / total_prims);
                 }
@@ -255,17 +322,84 @@ impl Physics {
     }
 
     /// `GenerateRigidBodyFromPhysicsSystem`: instantiate dynamic body `index` of a loaded system.
-    pub fn generate_body(&mut self, guest: u32, system: usize, index: usize) -> bool {
+    pub fn generate_body(&mut self, guest: u32, system: usize, index: usize, filter: u32) -> bool {
         let count = self.systems.get(system).and_then(|s| s.as_ref()).map(|s| s.len()).unwrap_or(0);
         if count == 0 {
             return false;
         }
         let dynamic: Vec<usize> = self.systems[system].as_ref().unwrap().iter().enumerate().filter(|(_, b)| b.mass_inv > 0.).map(|(i, _)| i).collect();
         let pick = dynamic.get(index).copied().or_else(|| dynamic.first().copied()).unwrap_or(index.min(count - 1));
-        let h = self.insert_body(system, pick, None, None);
+        let filter = if filter != 0 { filter } else { self.system_filters.get(system).copied().unwrap_or(0) };
+        let h = self.insert_body(system, pick, None, None, filter);
         self.by_handle.insert(h, guest);
         self.bodies.insert(guest, DynBody { handle: h, system, user_data: 0, listener: 0, in_world: true });
         true
+    }
+
+    /// `GeneratePhantomFromPhysicsSystem(system, listener, filter, index)`: the shape of body `index` as a sensor volume
+    /// (placed later with `SetMat` / `SetPos`), on the given collision layer (0 = the body's own).
+    pub fn add_phantom(&mut self, guest: u32, system: usize, index: usize, filter: u32, listener: u32) -> bool {
+        let Some(infos) = self.systems.get(system).and_then(|s| s.as_ref()) else { return false };
+        let Some(info) = infos.get(index.min(infos.len().saturating_sub(1))).cloned() else { return false };
+        let layer = if filter != 0 { filter } else if info.filter != 0 { info.filter } else { self.system_filters.get(system).copied().unwrap_or(0) } & 0x1f;
+        let h = self.world.insert_body(RigidBodyBuilder::kinematic_position_based());
+        for prim in &info.prims {
+            if let Some(c) = collider_for(prim, &info, layer) {
+                self.world.insert_collider(c.sensor(true), Some(h));
+            }
+        }
+        if std::env::var("EAGL_PHYS_FILTER").is_ok() {
+            self.log.push(format!("phantom {guest:#x} from {} layer {layer} prims {:?}", info.name, info.prims.iter().map(|p| match p { Prim::Hull(v) => format!("hull {v:?}"), Prim::Mesh(t) => format!("mesh {}", t.len()), Prim::Sphere { c, r } => format!("sphere {c:?} {r}"), Prim::Capsule { .. } => "capsule".into() }).collect::<Vec<_>>()));
+        }
+        self.by_handle.insert(h, guest);
+        self.phantoms.insert(guest, PhantomBody { handle: h, listener });
+        true
+    }
+
+    pub fn set_phantom_mat(&mut self, guest: u32, m: &Mat) {
+        if std::env::var("EAGL_PHYS_FILTER").is_ok() {
+            self.log.push(format!("phantom {guest:#x} SetMat {m:?}"));
+        }
+        if let Some(p) = self.phantoms.get(&guest) {
+            let rb = &mut self.world.bodies[p.handle];
+            rb.set_translation(Vector::new(m[12], m[13], m[14]), true);
+            rb.set_rotation(quat_from_rows(m), true);
+        }
+    }
+
+    pub fn set_phantom_pos(&mut self, guest: u32, p: [f32; 3]) {
+        if let Some(ph) = self.phantoms.get(&guest) {
+            self.world.bodies[ph.handle].set_translation(Vector::new(p[0], p[1], p[2]), true);
+        }
+    }
+
+    pub fn phantom_pos(&self, guest: u32) -> [f32; 3] {
+        self.phantoms.get(&guest).map(|p| self.world.bodies[p.handle].translation()).map(|t| [t.x, t.y, t.z]).unwrap_or([0.; 3])
+    }
+
+    pub fn set_phantom_enabled(&mut self, guest: u32, on: bool) {
+        if let Some(p) = self.phantoms.get(&guest) {
+            self.world.bodies[p.handle].set_enabled(on);
+        }
+    }
+
+    pub fn remove_phantom(&mut self, guest: u32) {
+        if let Some(p) = self.phantoms.remove(&guest) {
+            self.by_handle.remove(&p.handle);
+            self.world.remove_body(p.handle);
+        }
+    }
+
+    /// `Add/RemovePhysicsRigidBodyToWorld`: a removed body keeps its pose but is neither simulated nor collides.
+    pub fn set_in_world(&mut self, guest: u32, on: bool) {
+        if let Some(b) = self.bodies.get_mut(&guest) {
+            b.in_world = on;
+            let rb = &mut self.world.bodies[b.handle];
+            rb.set_enabled(on);
+            if on {
+                rb.wake_up(true);
+            }
+        }
     }
 
     pub fn destroy_body(&mut self, guest: u32) {
@@ -335,7 +469,8 @@ impl Physics {
     /// Ray against the terrain meshes only (walls and props are separate colliders).
     pub fn cast_ground_ray(&self, from: [f32; 3], max: f32) -> Option<f32> {
         let ray = Ray::new(Vector::new(from[0], from[1], from[2]), Vector::new(0., -1., 0.));
-        let filter = QueryFilter::only_fixed().groups(InteractionGroups::new(Group::ALL, Group::GROUP_2, InteractionTestMode::And));
+        let is_mesh = |_h, c: &Collider| c.user_data == MESH_TAG;
+        let filter = QueryFilter::only_fixed().predicate(&is_mesh);
         self.world.cast_ray(&ray, max, true, filter).map(|(_, t)| t)
     }
 
@@ -347,12 +482,18 @@ impl Physics {
 
     // --- characters ---------------------------------------------------------------------------------------------------
 
-    pub fn add_character(&mut self, guest: u32, character: u32, pos: [f32; 3]) {
-        let body = RigidBodyBuilder::kinematic_position_based().translation(Vector::new(pos[0], pos[1] + 0.75, pos[2]));
+    /// `PhysicsDynamicCharacter`: a capsule of the character's radius (`Character+0x140`) and height (`+0x144`) standing on
+    /// `pos`, on the character layer (`CalculateFilterInfo(3)`).
+    pub fn add_character(&mut self, guest: u32, character: u32, pos: [f32; 3], radius: f32, height: f32) {
+        let radius = if radius > 0.05 && radius < 2. { radius } else { 0.3 };
+        let height = if height > radius * 2. && height < 5. { height } else { 1.5 };
+        let mid = height * 0.5;
+        let body = RigidBodyBuilder::kinematic_position_based().translation(Vector::new(pos[0], pos[1] + mid, pos[2]));
         let h = self.world.insert_body(body);
-        self.world.insert_collider(ColliderBuilder::capsule_y(0.45, 0.3), Some(h));
+        // a Havok character proxy does not push dynamic bodies around, it only reports them (ObjectInteractionCallback)
+        self.world.insert_collider(ColliderBuilder::capsule_y((mid - radius).max(0.01), radius).sensor(true).collision_groups(layer_groups(CHARACTER_LAYER)), Some(h));
         self.by_handle.insert(h, guest);
-        self.chars.insert(guest, CharBody { handle: h, position: pos, destination: None, speed: 0., orientation: 0., listener: 0, guest_character: character, user_data: 0 });
+        self.chars.insert(guest, CharBody { handle: h, position: pos, destination: None, speed: 0., orientation: 0., listener: 0, guest_character: character, user_data: 0, mid });
     }
 
     pub fn remove_character(&mut self, guest: u32) {
@@ -382,7 +523,7 @@ impl Physics {
             let pose = Pose::from_parts(p, Rotation::IDENTITY);
             let mut opts = rapier3d::parry::query::ShapeCastOptions::with_max_time_of_impact(1.0);
             opts.stop_at_penetration = false;
-            let filter = QueryFilter::only_fixed();
+            let filter = QueryFilter::only_fixed().groups(layer_groups(CHARACTER_LAYER));
             match self.world.cast_shape(&pose, rest, &ball, opts, filter) {
                 Some((col, hit)) => {
                     if std::env::var("EAGL_PHYS_MOVE").is_ok() {
@@ -483,12 +624,24 @@ impl Physics {
             }
             let c = self.chars.get_mut(&id).unwrap();
             c.position = p;
+            let mid = c.mid;
             let rb = &mut self.world.bodies[c.handle];
-            rb.set_next_kinematic_translation(Vector::new(p[0], p[1] + 0.75, p[2]));
+            rb.set_next_kinematic_translation(Vector::new(p[0], p[1] + mid, p[2]));
         }
         self.world.gravity = Vector::new(self.gravity[0], self.gravity[1], self.gravity[2]);
         self.world.integration_parameters.dt = dt;
+        let before: Vec<(u32, Vector)> = self.bodies.iter().filter(|(_, b)| b.in_world).map(|(g, b)| (*g, self.world.bodies[b.handle].translation())).collect();
         self.world.step();
+        if std::env::var("EAGL_DBG_BALL").is_ok() {
+            for (g, b) in &self.bodies {
+                let rb = &self.world.bodies[b.handle];
+                let (t, v) = (rb.translation(), rb.linvel());
+                if v.length() > 3. {
+                    let near = self.chars.values().map(|c| { let dx = c.position[0] - t.x; let dz = c.position[2] - t.z; ((dx * dx + dz * dz).sqrt(), c.position[1]) }).fold((f32::MAX, 0.), |a, b| if b.0 < a.0 { b } else { a });
+                    eprintln!("[ball] {g:#x} pos ({:.2},{:.2},{:.2}) v {:.1} near char xz {:.2} (ground {:.2})", t.x, t.y, t.z, v.length(), near.0, near.1);
+                }
+            }
+        }
         // contacts between bodies the guest knows about
         let mut now = std::collections::HashSet::new();
         let mut out = vec![];
@@ -498,7 +651,12 @@ impl Physics {
             }
             let (Some(c1), Some(c2)) = (self.world.colliders.get(pair.collider1), self.world.colliders.get(pair.collider2)) else { continue };
             let (Some(b1), Some(b2)) = (c1.parent(), c2.parent()) else { continue };
-            let (Some(&g1), Some(&g2)) = (self.by_handle.get(&b1), self.by_handle.get(&b2)) else { continue };
+            // a body the guest does not know is the static world (guest id 0)
+            let g1 = self.by_handle.get(&b1).copied().unwrap_or(0);
+            let g2 = self.by_handle.get(&b2).copied().unwrap_or(0);
+            if g1 == 0 && g2 == 0 {
+                continue;
+            }
             let key = (g1.min(g2), g1.max(g2));
             now.insert(key);
             if !self.prev_pairs.contains(&key) {
@@ -507,6 +665,50 @@ impl Physics {
                     ([p.x, p.y, p.z], [m.data.normal.x, m.data.normal.y, m.data.normal.z])
                 }).unwrap_or(([0.; 3], [0., 1., 0.]));
                 out.push(Contact { a: g1, b: g2, point, normal, added: true });
+            }
+        }
+        // characters are sensors: their overlaps with bodies come from the intersection graph
+        let mut overlaps = vec![];
+        for (_, c1, _, c2, hit) in self.world.intersection_pairs() {
+            if !hit {
+                continue;
+            }
+            let (Some(b1), Some(b2)) = (c1.parent(), c2.parent()) else { continue };
+            let (Some(&g1), Some(&g2)) = (self.by_handle.get(&b1), self.by_handle.get(&b2)) else { continue };
+            // report the point on the body (the non-character / non-phantom side)
+            let p = if self.chars.contains_key(&g1) || self.phantoms.contains_key(&g1) { c2.position().translation } else { c1.position().translation };
+            overlaps.push((g1, g2, [p.x, p.y, p.z]));
+        }
+        // sensors get no CCD: sweep fast bodies against the character capsules so a thrown ball cannot step over one
+        let char_bodies: std::collections::HashMap<RigidBodyHandle, u32> = self.chars.iter().map(|(g, c)| (c.handle, *g)).chain(self.phantoms.iter().filter(|(_, p)| self.world.bodies[p.handle].is_enabled()).map(|(g, p)| (p.handle, *g))).collect();
+        for (g, p0) in before {
+            let Some(b) = self.bodies.get(&g) else { continue };
+            let rb = &self.world.bodies[b.handle];
+            let delta = rb.translation() - p0;
+            if delta.length() < 0.1 {
+                continue;
+            }
+            let Some(col) = rb.colliders().first().and_then(|h| self.world.colliders.get(*h)) else { continue };
+            let radius = col.shape().compute_local_bounding_sphere().radius();
+            let groups = col.collision_groups();
+            let is_char = |_h, c: &Collider| c.parent().is_some_and(|p| char_bodies.contains_key(&p));
+            let filter = QueryFilter::default().groups(groups).predicate(&is_char);
+            let mut opts = rapier3d::parry::query::ShapeCastOptions::with_max_time_of_impact(1.0);
+            // a ball leaving the thrower's hand starts inside that capsule: only report what it runs into
+            opts.stop_at_penetration = false;
+            let ball = rapier3d::parry::shape::Ball::new(radius);
+            if let Some((hit, _)) = self.world.cast_shape(&Pose::from_parts(p0, Rotation::IDENTITY), delta, &ball, opts, filter) {
+                if let Some(&ch) = self.world.colliders[hit].parent().and_then(|p| char_bodies.get(&p)) {
+                    let p = p0 + delta * 0.5;
+                    overlaps.push((g, ch, [p.x, p.y, p.z]));
+                }
+            }
+        }
+        for (g1, g2, point) in overlaps {
+            let key = (g1.min(g2), g1.max(g2));
+            now.insert(key);
+            if !self.prev_pairs.contains(&key) {
+                out.push(Contact { a: g1, b: g2, point, normal: [0., 1., 0.], added: true });
             }
         }
         for k in &self.prev_pairs {

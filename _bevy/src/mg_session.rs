@@ -15,6 +15,8 @@ use std::{
 pub struct MgLaunch {
     pub ty: i32,
     pub humans: usize,
+    /// The front end's choices (kids, teams, rules); `None` = a quick test launch (`gmN`, `EAGL_MG_ALLAI`).
+    pub fe: Option<mgvm::FeLaunch>,
 }
 
 #[derive(Resource)]
@@ -63,7 +65,10 @@ pub struct Session {
     skip_close: i32,
     pub last_events: Vec<mgvm::FeEvent>,
     /// Accelerometer offsets still to play out (one entry per frame): the keyboard's stand-in for swinging the Wii Remote.
-    gesture: std::collections::VecDeque<[i16; 3]>,
+    gesture: [std::collections::VecDeque<[i16; 3]>; 4],
+    /// `EAGL_MG_POSTGAME=done|replay`: frame at which the post-game button is pressed (testing aid).
+    auto_postgame: Option<i32>,
+    pub fe: Option<mgvm::FeLaunch>,
 }
 
 #[derive(PartialEq, Eq, Clone, Debug)]
@@ -160,6 +165,8 @@ impl Session {
             skip_close: 0,
             last_events: vec![],
             gesture: Default::default(),
+            auto_postgame: None,
+            fe: None,
         }
     }
 }
@@ -168,18 +175,25 @@ pub fn plugin(app: &mut App) {
     app.add_systems(Update, (launch_or_teardown, pump, build, step, present).chain());
 }
 
+/// The minigame has ended (or F10): remove the session and everything it spawned.
+#[derive(Resource)]
+struct MgTeardown;
+
 fn launch_or_teardown(world: &mut World) {
     if let Some(l) = world.remove_resource::<MgLaunch>() {
         if world.get_non_send_resource::<Session>().is_none() {
-            world.insert_non_send_resource(Session::new(l.ty, l.humans));
+            let mut s = Session::new(l.ty, l.humans);
+            s.fe = l.fe;
+            world.insert_non_send_resource(s);
         }
     }
     let quit = world.get_non_send_resource::<Session>().is_some() && world.resource::<ButtonInput<KeyCode>>().just_pressed(KeyCode::F10);
-    if quit {
+    if quit || world.remove_resource::<MgTeardown>().is_some() {
         if let Some(mut v) = world.get_non_send_resource_mut::<crate::apt_view::AptViewNs>() {
             v.0.vm.fe.vm_session = false;
         }
         world.remove_non_send_resource::<Session>();
+        world.remove_resource::<MgSnapshot>();
         world.remove_resource::<MgActive>();
         world.remove_resource::<crate::tb_session::TbActive>();
         let ents: Vec<Entity> = world.query_filtered::<Entity, With<MgEntity>>().iter(world).collect();
@@ -224,8 +238,12 @@ fn build(mut commands: Commands, s: Option<NonSendMut<Session>>, game: Option<Re
     s.default_upload = Some(default_up);
     s.kid_uploads = kid_uploads;
     let t0 = std::time::Instant::now();
-    let (ty, humans) = (s.ty, s.humans);
-    match mgvm::boot().and_then(|(mut vm, mut host)| mgvm::launch(&mut vm, &mut host, ty, humans).map(|_| (vm, host))) {
+    let (ty, humans, fe) = (s.ty, s.humans, s.fe.clone());
+    let start = |vm: &mut mgvm::MgVm, host: &mut mgvm::MgHost| match &fe {
+        Some(l) if std::env::var("EAGL_MG_ALLAI").is_err() => mgvm::launch_fe(vm, host, l),
+        _ => mgvm::launch(vm, host, ty, humans),
+    };
+    match mgvm::boot().and_then(|(mut vm, mut host)| start(&mut vm, &mut host).map(|_| (vm, host))) {
         Ok(v) => {
             s.log.push(format!("VM ready in {:?}", t0.elapsed()));
             s.vm = Some(v);
@@ -242,61 +260,94 @@ fn build(mut commands: Commands, s: Option<NonSendMut<Session>>, game: Option<Re
     }
 }
 
-/// Keyboard -> Wii Remote buttons for seat 0 (WPAD bit values).
-fn pad_buttons(keys: &ButtonInput<KeyCode>) -> u16 {
+/// Keyboard layout of a seat.  Alone, player 1 may also use the arrow keys; with two players, player 2 takes the arrows,
+/// Enter / right Shift and the numeric keypad.
+struct SeatKeys {
+    up: &'static [KeyCode],
+    down: &'static [KeyCode],
+    left: &'static [KeyCode],
+    right: &'static [KeyCode],
+    a: &'static [KeyCode],
+    b: &'static [KeyCode],
+    one: &'static [KeyCode],
+    two: &'static [KeyCode],
+    plus: &'static [KeyCode],
+    /// toss, strike left, strike right, boost, shot, juggle, dodge left, dodge right
+    gestures: [KeyCode; 8],
+}
+
+const P1_SOLO: SeatKeys = SeatKeys {
+    up: &[KeyCode::ArrowUp, KeyCode::KeyW],
+    down: &[KeyCode::ArrowDown, KeyCode::KeyS],
+    left: &[KeyCode::ArrowLeft, KeyCode::KeyA],
+    right: &[KeyCode::ArrowRight, KeyCode::KeyD],
+    a: &[KeyCode::Space, KeyCode::KeyZ],
+    b: &[KeyCode::KeyX, KeyCode::ControlLeft],
+    one: &[KeyCode::Digit1],
+    two: &[KeyCode::Digit2],
+    plus: &[KeyCode::KeyP, KeyCode::Escape],
+    gestures: [KeyCode::KeyJ, KeyCode::KeyK, KeyCode::KeyL, KeyCode::KeyB, KeyCode::KeyI, KeyCode::KeyO, KeyCode::KeyQ, KeyCode::KeyE],
+};
+const P1_SHARED: SeatKeys = SeatKeys { up: &[KeyCode::KeyW], down: &[KeyCode::KeyS], left: &[KeyCode::KeyA], right: &[KeyCode::KeyD], ..P1_SOLO };
+const P2: SeatKeys = SeatKeys {
+    up: &[KeyCode::ArrowUp],
+    down: &[KeyCode::ArrowDown],
+    left: &[KeyCode::ArrowLeft],
+    right: &[KeyCode::ArrowRight],
+    a: &[KeyCode::Enter, KeyCode::NumpadEnter],
+    b: &[KeyCode::ShiftRight],
+    one: &[KeyCode::NumpadDivide],
+    two: &[KeyCode::NumpadMultiply],
+    plus: &[KeyCode::Backspace],
+    gestures: [KeyCode::Numpad7, KeyCode::Numpad8, KeyCode::Numpad9, KeyCode::NumpadAdd, KeyCode::Numpad5, KeyCode::Numpad0, KeyCode::Numpad4, KeyCode::Numpad6],
+};
+
+fn seat_keys(seat: usize, humans: usize) -> Option<&'static SeatKeys> {
+    if seat >= humans.max(1) {
+        return None;
+    }
+    match (seat, humans) {
+        (0, h) if h <= 1 => Some(&P1_SOLO),
+        (0, _) => Some(&P1_SHARED),
+        (1, _) => Some(&P2),
+        _ => None,
+    }
+}
+
+/// Keyboard -> Wii Remote buttons for a seat (WPAD bit values).
+fn pad_buttons(keys: &ButtonInput<KeyCode>, k: &SeatKeys) -> u16 {
+    let any = |ks: &[KeyCode]| ks.iter().any(|c| keys.pressed(*c));
     let mut b = 0u16;
-    let any = |ks: &[KeyCode]| ks.iter().any(|k| keys.pressed(*k));
-    if any(&[KeyCode::ArrowUp, KeyCode::KeyW]) {
-        b |= 0x0008;
-    }
-    if any(&[KeyCode::ArrowDown, KeyCode::KeyS]) {
-        b |= 0x0004;
-    }
-    if any(&[KeyCode::ArrowLeft, KeyCode::KeyA]) {
-        b |= 0x0001;
-    }
-    if any(&[KeyCode::ArrowRight, KeyCode::KeyD]) {
-        b |= 0x0002;
-    }
-    if any(&[KeyCode::Space, KeyCode::KeyZ]) {
-        b |= 0x0800;
-    }
-    if any(&[KeyCode::KeyX, KeyCode::ControlLeft]) {
-        b |= 0x0400;
-    }
-    if any(&[KeyCode::Digit1]) {
-        b |= 0x0200;
-    }
-    if any(&[KeyCode::Digit2]) {
-        b |= 0x0100;
-    }
-    if any(&[KeyCode::KeyP, KeyCode::Escape]) {
-        b |= 0x0010;
+    for (set, bit) in [(k.up, 0x0008), (k.down, 0x0004), (k.left, 0x0001), (k.right, 0x0002), (k.a, 0x0800), (k.b, 0x0400), (k.one, 0x0200), (k.two, 0x0100), (k.plus, 0x0010)] {
+        if any(set) {
+            b |= bit;
+        }
     }
     b
 }
 
 /// Wii Remote swings as accelerometer pulses (offsets from rest; 1 g is about 100 counts). Waveforms found by sweeping the
 /// original Conga state machines (`tools/gsweep.py`).
-fn gesture_for(keys: &ButtonInput<KeyCode>) -> Option<Vec<[i16; 3]>> {
+fn gesture_for(keys: &ButtonInput<KeyCode>, k: &SeatKeys) -> Option<Vec<[i16; 3]>> {
     let pulse = |axis: usize, v: i16, n: usize| vec![{ let mut a = [0i16; 3]; a[axis] = v; a }; n];
     let cat = |a: Vec<[i16; 3]>, b: Vec<[i16; 3]>| a.into_iter().chain(b).collect::<Vec<_>>();
-    let j = |k| keys.just_pressed(k);
-    if j(KeyCode::KeyJ) {
+    let g = k.gestures;
+    let j = |i: usize| keys.just_pressed(g[i]);
+    if j(0) {
         Some(pulse(1, 450, 3)) // toss / throw / shoot
-    } else if j(KeyCode::KeyK) {
+    } else if j(1) {
         Some(cat(pulse(1, 450, 3), pulse(0, -450, 3))) // wind up, swing left (regular strike)
-    } else if j(KeyCode::KeyL) {
+    } else if j(2) {
         Some(cat(pulse(1, 450, 3), pulse(0, 450, 3))) // wind up, swing right (reverse strike)
-    } else if j(KeyCode::KeyB) {
+    } else if j(3) {
         Some(cat(pulse(1, -450, 3), pulse(1, 450, 3))) // paper plane boost
-    } else if j(KeyCode::KeyI) {
+    } else if j(4) {
         Some(pulse(0, 450, 3)) // football shot
-    } else if j(KeyCode::KeyO) {
+    } else if j(5) {
         Some(pulse(2, 450, 3)) // juggle
-    } else if j(KeyCode::KeyQ) {
+    } else if j(6) {
         Some(cat(pulse(0, 450, 3), pulse(0, -450, 3))) // dodge left
-    } else if j(KeyCode::KeyE) {
+    } else if j(7) {
         Some(cat(pulse(0, -450, 3), pulse(0, 450, 3))) // dodge right
     } else {
         None
@@ -323,7 +374,7 @@ fn scripted_pad(frame: i32) -> u16 {
 #[derive(Resource, Default)]
 pub struct MgSnapshot(pub Option<mgvm::snapshot::Snapshot>);
 
-fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<ButtonInput<KeyCode>>, time: Res<Time<Real>>, mut backdrop: Option<ResMut<game::Backdrop>>, snap: Option<ResMut<MgSnapshot>>, mut fe: Option<NonSendMut<crate::apt_view::AptViewNs>>) {
+fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<ButtonInput<KeyCode>>, mouse: Res<ButtonInput<MouseButton>>, windows: Query<&Window, With<bevy::window::PrimaryWindow>>, time: Res<Time<Real>>, mut backdrop: Option<ResMut<game::Backdrop>>, snap: Option<ResMut<MgSnapshot>>, mut fe: Option<NonSendMut<crate::apt_view::AptViewNs>>) {
     let Some(mut s) = s else { return };
     if s.state != SessionState::Running {
         return;
@@ -338,30 +389,46 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
         let r = vm.call_by_name(host, "OnPlay__8MinigameFv", &[mg], &[]);
         s.log.push(format!("autoplay OnPlay {r:?}"));
     }
-    host.pads[0].buttons = pad_buttons(&keys) | scripted_pad(s.frames);
-    if let Some(g) = gesture_for(&keys) {
-        s.gesture = g.into();
-    }
+    // the mouse stands in for pointing the remote at the screen
+    let scripted_pointer = std::env::var("EAGL_MG_POINTER").ok().and_then(|v| { let mut it = v.split(',').filter_map(|t| t.parse::<f32>().ok()); Some([it.next()?, it.next()?]) });
+    host.pointer = scripted_pointer.or_else(|| windows.iter().next().and_then(|w| w.cursor_position().map(|c| [c.x / w.width() - 0.5, 0.5 - c.y / w.height()])));
     let rest = [512i16, 512, 616];
-    let mut d = s.gesture.pop_front().unwrap_or([0; 3]);
-    if s.ty == 5 {
-        // paper airplane: pitch and bank by tilting the remote
-        let k = |a: KeyCode, b: KeyCode| keys.pressed(a) || keys.pressed(b);
-        d[1] += if k(KeyCode::ArrowUp, KeyCode::KeyW) { -100 } else if k(KeyCode::ArrowDown, KeyCode::KeyS) { 100 } else { 0 };
-        d[0] += if k(KeyCode::ArrowLeft, KeyCode::KeyA) { -150 } else if k(KeyCode::ArrowRight, KeyCode::KeyD) { 150 } else { 0 };
+    for seat in 0..4 {
+        let Some(k) = seat_keys(seat, s.humans) else {
+            host.pads[seat].buttons = 0;
+            host.pads[seat].acc = rest;
+            continue;
+        };
+        let mut buttons = pad_buttons(&keys, k);
+        if seat == 0 {
+            buttons |= scripted_pad(s.frames) | if mouse.pressed(MouseButton::Left) { 0x0400 } else { 0 } | if mouse.pressed(MouseButton::Right) { 0x0800 } else { 0 };
+        }
+        host.pads[seat].buttons = buttons;
+        if let Some(g) = gesture_for(&keys, k) {
+            s.gesture[seat] = g.into();
+        }
+        let mut d = s.gesture[seat].pop_front().unwrap_or([0; 3]);
+        let held = |set: &[KeyCode]| set.iter().any(|c| keys.pressed(*c));
+        if s.ty == 5 {
+            // paper airplane: pitch and bank by tilting the remote
+            d[1] += if held(k.up) { -100 } else if held(k.down) { 100 } else { 0 };
+            d[0] += if held(k.left) { -150 } else if held(k.right) { 150 } else { 0 };
+        }
+        if s.ty == 1 {
+            // RcCars steers by tilting the remote
+            d[0] += if held(k.left) { -150 } else if held(k.right) { 150 } else { 0 };
+        }
+        host.pads[seat].acc = [rest[0] + d[0], rest[1] + d[1], rest[2] + d[2]];
     }
-    if s.ty == 1 {
-        // RcCars steers by tilting the remote
-        let left = keys.pressed(KeyCode::ArrowLeft) || keys.pressed(KeyCode::KeyA);
-        let right = keys.pressed(KeyCode::ArrowRight) || keys.pressed(KeyCode::KeyD);
-        d[0] += if left { -150 } else if right { 150 } else { 0 };
-    }
-    host.pads[0].acc = [rest[0] + d[0], rest[1] + d[1], rest[2] + d[2]];
     if let Err(e) = mgvm::frame(vm, host, ms) {
         eprintln!("[mg] frame failed: {e}");
         s.log.push(format!("frame failed: {e}"));
         s.state = SessionState::Failed(e);
         return;
+    }
+    // sounds the original picked (`AuAEMSManager::PlaySFX` id switch -> Csis class + variant)
+    for (class, variant) in std::mem::take(&mut host.sounds) {
+        crate::sfx::play_class(&class, variant, 1.);
     }
     let events: Vec<mgvm::FeEvent> = host.events.drain(..).collect();
     if let Some(v) = fe.as_mut() {
@@ -370,6 +437,14 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
     // front-end button presses become guest callbacks
     let cmds: Vec<String> = fe.as_mut().map(|v| std::mem::take(&mut v.0.vm.fe.mg_cmds)).unwrap_or_default();
     let mut pause_req = fe.as_mut().and_then(|v| v.0.vm.fe.pause_req.take());
+    if s.auto_postgame == Some(s.frames) {
+        if let Some(v) = fe.as_mut() {
+            let button = if std::env::var("EAGL_MG_POSTGAME").as_deref() == Ok("replay") { "PostGame_OnReplay" } else { "PostGame_OnDone" };
+            crate::fe_postgame::command(&mut v.0.vm, button, 0);
+        }
+    }
+    // post-game buttons: `Minigame::OnReplay` / `OnDone`; the minigame's UpdatePostGame acts on the choice
+    let postgame_choice = fe.as_mut().and_then(|v| v.0.vm.fe.postgame_choice.take());
     let (vm, host) = s.vm.as_mut().unwrap();
     if std::env::var("EAGL_MG_DEBUG").is_ok() && s.frames % 300 == 0 {
         let mg = vm.r32(mgvm::snapshot::WORLD_MAN + 0x90);
@@ -392,8 +467,25 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
             s.log.push(format!("callback {c} failed: {e}"));
         }
     }
+    if let Some(choice) = postgame_choice {
+        let mg = vm.r32(mgvm::snapshot::WORLD_MAN + 0x90);
+        let sym = if choice == 0 { "OnReplay__8MinigameFv" } else { "OnDone__8MinigameFv" };
+        if mg != 0 {
+            if let Err(e) = vm.call_by_name(host, sym, &[mg], &[]) {
+                s.log.push(format!("{sym} failed: {e}"));
+            }
+        }
+    }
     if let Some(req) = pause_req.take() {
         use crate::fe_host::PauseReq;
+        if matches!(req, PauseReq::Quit) {
+            if let Some(v) = fe.as_mut() {
+                if v.0.vm.fe.after_exit.is_empty() {
+                    v.0.vm.fe.mp.active = false;
+                    v.0.vm.fe.after_exit = vec![(0, "ClearScreenStack".into(), vec![]), (10, "OpenScreen".into(), vec![crate::apt_vm::V::Str("MainMenu".into())])];
+                }
+            }
+        }
         let name = match req {
             PauseReq::Resume => "OnPauseContinue",
             PauseReq::Restart => "OnPauseReset",
@@ -410,6 +502,20 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
         }
     }
     let (vm, host) = s.vm.as_mut().unwrap();
+    // `WorldMan::EndMinigame` destroyed the minigame: hand the screen back to the front end and leave
+    if vm.r32(mgvm::snapshot::WORLD_MAN + 0x90) == 0 {
+        if let Some(v) = fe.as_mut() {
+            let fe = &mut v.0.vm.fe;
+            for (delay, name, args) in std::mem::take(&mut fe.after_exit) {
+                if delay == 0 { fe.todo.push((name, args)) } else { fe.later.push((delay, name, args)) }
+            }
+            fe.launch_done = true;
+            fe.vm_session = false;
+        }
+        s.log.push("minigame ended".into());
+        commands.insert_resource(MgTeardown);
+        return;
+    }
     let snapshot = mgvm::snapshot::snapshot(vm, host);
     if let (Some(bd), Some((eye, target, _))) = (backdrop.as_mut(), snapshot.camera) {
         bd.set_now(Vec3::from(eye), Vec3::from(target));
@@ -427,7 +533,8 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
 fn forward_events(vm: &mut crate::apt_vm::Vm, events: &[mgvm::FeEvent], s: &mut Session) {
     use crate::apt_vm::V;
     vm.fe.vm_session = true;
-    for e in events {
+    let mut replace_next = false;
+    for (i, e) in events.iter().enumerate() {
         if std::env::var("EAGL_MG_DEBUG").is_ok() {
             eprintln!("[mg] event {} {:?}", e.name, e.args);
         }
@@ -443,8 +550,12 @@ fn forward_events(vm: &mut crate::apt_vm::Vm, events: &[mgvm::FeEvent], s: &mut 
                 if str_arg(0).ends_with("Hud") {
                     vm.fe.hud_loaded = false;
                 }
-                vm.call_exposed("OpenScreen", vec![V::Str(str_arg(0).as_str().into())]);
+                let f = if std::mem::take(&mut replace_next) { "ReplaceScreen" } else { "OpenScreen" };
+                vm.call_exposed(f, vec![V::Str(str_arg(0).as_str().into())]);
             }
+            // closing a screen and opening the next in the same frame swaps them; popping first would briefly
+            // reveal (and start reloading) whatever screen lies below
+            "FEManager::CloseAptScreen" if events[i + 1..].iter().find(|n| n.name.starts_with("FEManager::")).is_some_and(|n| n.name == "FEManager::OpenAptScreen") => replace_next = true,
             "FEManager::CloseAptScreen" => {
                 vm.call_exposed("CloseScreen", vec![]);
             }
@@ -459,6 +570,20 @@ fn forward_events(vm: &mut crate::apt_vm::Vm, events: &[mgvm::FeEvent], s: &mut 
             }
             "FEManager::ClearScreenStack" => {
                 vm.call_exposed("ClearScreenStack", vec![]);
+            }
+            "PostGameInfo" => {
+                let words: Vec<u32> = e.args.iter().skip(1).map(|a| match a {
+                    mgvm::FeArg::Int(n) => *n as u32,
+                    _ => 0,
+                }).collect();
+                let kind = match e.args.first() {
+                    Some(mgvm::FeArg::Int(k)) => *k,
+                    _ => s.ty,
+                };
+                crate::fe_postgame::setup(vm, kind, &words);
+                if std::env::var("EAGL_MG_POSTGAME").is_ok() {
+                    s.auto_postgame = Some(s.frames + 90);
+                }
             }
             "PreGameInfo" => {
                 let w = |i: usize| match e.args.get(2 + i) {
@@ -536,6 +661,12 @@ fn present(
             let p = Vec3::new(c.pos[0], c.pos[1], c.pos[2]);
             *t = Transform::from_matrix(game::display_matrix(radius, p) * Mat4::from_rotation_y(c.angle));
         }
+    }
+    if std::env::var("EAGL_MG_DEBUG").is_ok() && s.frames % 120 == 0 {
+        for c in &snapshot.chars {
+            eprintln!("[mg] char {:#x} key {:x} anim {} bones {} spawned {} q1 {:?}", c.ptr, c.key, c.anim_state, c.pose.len(), s.chars.contains_key(&c.ptr), c.pose.get(1).map(|b| b.0));
+        }
+        eprintln!("[mg] joints {}", joints.iter().count());
     }
     for (j, mut t) in &mut joints {
         if let Some(c) = snapshot.chars.iter().find(|c| c.ptr == j.ptr) {
