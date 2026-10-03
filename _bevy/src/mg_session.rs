@@ -985,8 +985,15 @@ fn present(
     cams: Query<&GlobalTransform, With<game::GameCamera>>,
     layers: Query<(Entity, &Visibility), (With<game::WorldLayer>, Without<MgProp>, Without<game::PlaceableProp>, Without<MgHiddenWorld>)>,
     already_hidden: Query<(), With<MgHiddenWorld>>,
+    hidden_world: Query<(Entity, &MgHiddenWorld)>,
 ) {
-    // `gRenderWorld` off (RcCars): the game's own model replaces the playground (terrain and props; restored at teardown)
+    // `gRenderWorld` off (RcCars): the game's own model replaces the playground (terrain and props; restored at teardown,
+    // or as soon as the hosted world draws itself again)
+    if snap.as_deref().and_then(|s| s.0.as_ref()).is_some_and(|s| s.render_world) {
+        for (e, h) in &hidden_world {
+            commands.entity(e).insert(h.0).remove::<MgHiddenWorld>();
+        }
+    }
     if snapshot_hides_world(snap.as_deref()) {
         for (e, v) in &layers {
             commands.entity(e).insert((MgHiddenWorld(*v), Visibility::Hidden));

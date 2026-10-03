@@ -849,7 +849,8 @@ pub fn probe(ty: i32) {
                 for c in &snap.chars {
                     let ind = vm.r32(c.ptr + 0x228);
                     let beacon = ind != 0 && vm.st.mem.r8(ind + 0x14) != 0;
-                    println!("  [{f}] char {:#x} key {:x} pos {:?} beacon {beacon}", c.ptr, c.key, c.pos);
+                    let w: Vec<u32> = if ind != 0 { (0..8).map(|k| vm.r32(ind + 4 * k)).collect() } else { vec![] };
+                    println!("  [{f}] char {:#x} key {:x} pos {:?} beacon {beacon} ind {w:x?}", c.ptr, c.key, c.pos);
                 }
             }
             if f == at {
@@ -951,7 +952,7 @@ pub fn probe(ty: i32) {
             println!("    vfs {path}: {:?}", host.vfs.read(path).map(|d| (d.len(), d[..16.min(d.len())].to_vec())));
         }
         println!("  draw_textured {:?}", host.draw_textured.iter().map(|(k, v)| (*k, v.tex)).collect::<Vec<_>>());
-        for d in &host.imm {
+        for d in &snap.imm {
             println!("  imm {:?} prim {:#x} verts {} first {:?} model t {:?}", d.tex, d.prim, d.verts.len(), d.verts.first(), &d.model[12..15]);
         }
     }

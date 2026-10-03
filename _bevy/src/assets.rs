@@ -134,7 +134,7 @@ pub fn build_with(source:&str,schemas:&model::Schemas,extra_banks:&[String])->Re
         let alpha=tex.map(|i|textures[i].alpha).unwrap_or(AlphaKind::Opaque);
         let base=if apt{p.color.map(|c|[c[0] as f32/255.,c[1] as f32/255.,c[2] as f32/255.,c[3] as f32/255.]).unwrap_or([1.;4])}else{[1.;4]};
         // both sides unless the primitive's state enables culling (cut-outs are always two-sided)
-        let (alpha,double_sided)=if apt{(if base[3]<1.{AlphaKind::Blend}else{alpha},true)}else if alpha==AlphaKind::Mask{(alpha,true)}else{(alpha,p.cull==Some(false))};
+        let (alpha,double_sided)=if apt{(if base[3]<1.{AlphaKind::Blend}else{alpha},true)}else if alpha==AlphaKind::Mask{(alpha,true)}else{(alpha,p.cull==Some(false)||std::env::var("EAGL_NO_CULL").is_ok())};
         let mat=BuiltMaterial{texture:tex,wrap,unlit,alpha,double_sided,base_color:base};
         let mi=materials.iter().position(|m|*m==mat).unwrap_or_else(||{materials.push(mat);materials.len()-1});
         let flip=|y:f64|if apt{-y}else{y};

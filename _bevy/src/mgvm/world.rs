@@ -118,12 +118,44 @@ pub const MINIGAME_CLASSES: [(i32, &str); 8] = [(0, "MGDartShootout"), (1, "MGRc
 
 /// `Minigame::Draw(SceneContext&)` of the running game: fills `host.draws`.
 pub fn draw_minigame(vm: &mut MgVm, host: &mut MgHost, ty: i32) -> Result<(), String> {
+    if host.world_mode && ty == super::WORLD {
+        return draw_world(vm, host);
+    }
     let Some((_, class)) = MINIGAME_CLASSES.iter().find(|(t, _)| *t == ty) else { return Ok(()) };
     let mg = vm.r32(WORLD_MAN + 0x90);
     if mg == 0 {
         return Ok(());
     }
     let name = format!("Draw__{}{}FRQ23Ren12SceneContext", class.len(), class);
+    let ctx = scene_ctx(vm, host);
+    vm.call_by_name(host, &name, &[mg, ctx], &[]).map(|_| ())
+}
+
+/// The playground's own draws while no minigame runs: `PlaygroundWorld::Draw` (Bug Hunt bugs, the dribbling course)
+/// and every kid's beacon (`NpcIndicator::Draw`, `Character + 0x228`, immediate-mode quads).
+fn draw_world(vm: &mut MgVm, host: &mut MgHost) -> Result<(), String> {
+    let pw = vm.r32(WORLD_MAN + 0x88);
+    if pw == 0 {
+        return Ok(());
+    }
+    let ctx = scene_ctx(vm, host);
+    vm.call_by_name(host, "Draw__15PlaygroundWorldFRQ23Ren12SceneContext", &[pw, ctx], &[])?;
+    let cm = vm.r32(pw + 0x18);
+    if cm != 0 {
+        let count = vm.r32(cm + 0x74).min(64);
+        for i in 0..count {
+            let c = vm.r32(cm + 4 * i);
+            let ind = if c != 0 { vm.r32(c + 0x228) } else { 0 };
+            if ind != 0 {
+                vm.call_by_name(host, "Draw__12NpcIndicatorFRQ23Ren12SceneContext", &[ind, ctx], &[])?;
+            }
+        }
+    }
+    Ok(())
+}
+
+/// The `Ren::SceneContext` handed to `Draw` functions (created once).
+fn scene_ctx(vm: &mut MgVm, host: &mut MgHost) -> u32 {
     if host.scene_ctx == 0 {
         // views list (+0, with a frustum at +0x18 and a count at +0x2e8) the games cull against; the view index at +0x10 is -1 (all)
         let ctx = vm.alloc_zeroed(0x100, 16);
@@ -135,8 +167,7 @@ pub fn draw_minigame(vm: &mut MgVm, host: &mut MgHost, ty: i32) -> Result<(), St
         vm.w32(ctx + 0x10, u32::MAX);
         host.scene_ctx = ctx;
     }
-    let ctx = host.scene_ctx;
-    vm.call_by_name(host, &name, &[mg, ctx], &[]).map(|_| ())
+    host.scene_ctx
 }
 
 /// `AIP::Initialize` with `FEManager::SetupInitStruct`'s values, minus the Apt player: allocator and debug callbacks,

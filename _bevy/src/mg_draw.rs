@@ -85,14 +85,19 @@ pub fn render(
     let radius = game.as_ref().map(|g| g.world_radius).unwrap_or(0.);
     let draws: &Vec<mgvm::ImmDraw> = &snapshot.imm;
     for (i, d) in draws.iter().enumerate() {
+        // the batch's own position (its centroid) carries the world's curvature; vertices are given relative to it
+        // (world-space quads such as the kids' beacons come with an identity model matrix)
+        let n = d.verts.len().max(1) as f32;
+        let c = d.verts.iter().fold(Vec3::ZERO, |a, v| a + Vec3::from(v.0)) / n;
+        let model = Mat4::from_cols_array(&d.model) * Mat4::from_translation(c);
         let mut mesh = Mesh::new(PrimitiveTopology::TriangleList, RenderAssetUsages::default());
-        mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, d.verts.iter().map(|v| v.0).collect::<Vec<_>>());
+        mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, d.verts.iter().map(|v| (Vec3::from(v.0) - c).to_array()).collect::<Vec<_>>());
         mesh.insert_attribute(Mesh::ATTRIBUTE_NORMAL, vec![[0f32, 1., 0.]; d.verts.len()]);
         mesh.insert_attribute(Mesh::ATTRIBUTE_UV_0, d.verts.iter().map(|v| v.2).collect::<Vec<_>>());
         mesh.insert_attribute(Mesh::ATTRIBUTE_COLOR, d.verts.iter().map(|v| v.1.map(|c| c as f32 / 255.)).collect::<Vec<_>>());
         mesh.insert_indices(Indices::U32(triangles(d.prim, d.verts.len())));
         let mat = material(&mut cache, &d.tex, &snapshot.banks, &mut images, &mut materials);
-        let t = mg_session::mat_to_transform(radius, &d.model);
+        let t = mg_session::mat_to_transform(radius, &model.to_cols_array());
         if i < cache.pool.len() {
             let (_, h) = &cache.pool[i];
             meshes.insert(h.id(), mesh);
