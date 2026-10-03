@@ -6,6 +6,7 @@ pub mod physics;
 pub mod snapshot;
 pub mod physhooks;
 pub mod world;
+pub mod ports;
 use crate::gekko::Vm;
 
 /// Engine state the hooks share.  Guest objects live in VM memory; this holds what only the host knows.
@@ -337,6 +338,7 @@ pub fn boot_as(kid: u32) -> Result<(MgVm, MgHost), String> {
     hooks::install(&mut vm);
     physhooks::install(&mut vm);
     hooks::install_stubs(&mut vm);
+    ports::install(&mut vm);
     let mut host = MgHost { fov: 0.8, aspect: 16. / 9., player_kid: kid, ..MgHost::default() };
     if let Err(e) = world::boot(&mut vm, &mut host) {
         if std::env::var("EAGL_MG_LOG").is_ok() {
@@ -991,6 +993,7 @@ pub fn probe(ty: i32) {
         }
     }
     write_coverage(&vm);
+    ports::write_report(&vm);
     let snap = snapshot::snapshot(&mut vm, &mut host);
     println!("placeables changed: {:?}", snap.placeables);
     println!("snapshot: {} chars, camera {:?}", snap.chars.len(), snap.camera);

@@ -8,6 +8,7 @@
 pub mod cpu;
 pub mod elf;
 pub mod mem;
+pub mod verify;
 
 use cpu::{Cpu, SENTINEL};
 use elf::Image;
@@ -26,6 +27,8 @@ struct HookEntry<H> {
     f: Option<HookFn<H>>,
     /// Observer hooks run `f` and then execute the original function instead of returning.
     observe: bool,
+    /// Port verification: the original runs, then this Rust port runs on the same state and both are compared.
+    port: Option<(HookFn<H>, verify::Ret)>,
 }
 
 pub struct Vm<H> {
@@ -52,6 +55,8 @@ pub struct Vm<H> {
     /// Function-entry coverage (`enable_coverage`): bit per function start, and entry counts by address.
     cover_bits: Vec<u64>,
     pub covered: HashMap<u32, u64>,
+    /// Port verification state (`verify.rs`).
+    pub ver: verify::State,
 }
 
 /// What a hooked function does instead of its original code.
@@ -94,6 +99,7 @@ impl<H> Vm<H> {
             call_filter: std::env::var("EAGL_PPC_CALLS").ok(),
             cover_bits: vec![],
             covered: HashMap::new(),
+            ver: verify::State::default(),
         })
     }
 
@@ -154,12 +160,12 @@ impl<H> Vm<H> {
     pub fn hook_addr(&mut self, addr: u32, name: &str, f: Option<HookFn<H>>) {
         if let Some(&i) = self.hook_at.get(&addr) {
             if f.is_some() || self.hooks[i].f.is_none() {
-                self.hooks[i] = HookEntry { name: name.to_string(), f, observe: false };
+                self.hooks[i] = HookEntry { name: name.to_string(), f, observe: false, port: None };
             }
             return;
         }
         self.hook_at.insert(addr, self.hooks.len());
-        self.hooks.push(HookEntry { name: name.to_string(), f, observe: false });
+        self.hooks.push(HookEntry { name: name.to_string(), f, observe: false, port: None });
         self.set_bit(addr);
     }
 
@@ -290,6 +296,54 @@ impl<H> Vm<H> {
         self.call(host, a, args, fargs)
     }
 
+    /// Run hook `idx` (entered at `pc`) as installed: host function, observer (then the original continues), or trap.
+    /// Returns true when the hook handled the call (the caller continues at the new pc).
+    fn dispatch_hook(&mut self, host: &mut H, idx: usize, pc: u32) -> Result<bool, String> {
+        let f = self.hooks[idx].f;
+        if self.hooks[idx].observe {
+            if let Some(f) = f {
+                // an observer may call into the guest itself, which leaves that call's return value in r3 / f1:
+                // the original must still see its own arguments (deliberate edits to other registers stay)
+                let (r3, f1, n0) = (self.st.cpu.r[3], self.st.cpu.f[1], self.calls);
+                f(host, self).map_err(|e| format!("{}: {e}", self.hooks[idx].name))?;
+                if self.calls != n0 {
+                    self.st.cpu.r[3] = r3;
+                    self.st.cpu.f[1] = f1;
+                }
+            }
+            // execute the first instruction of the original function
+            let w = self.st.mem.r32(pc);
+            if let Err(e) = self.st.cpu.step(&mut self.st.mem, w) {
+                return Err(format!("{e} ({})", self.backtrace()));
+            }
+            return Ok(true);
+        }
+        match f {
+            Some(f) => {
+                if self.trace {
+                    eprintln!("[ppc] hook {}", self.hooks[idx].name);
+                }
+                f(host, self).map_err(|e| format!("{}: {e}", self.hooks[idx].name))?;
+                self.st.cpu.pc = self.st.cpu.lr;
+                if let Some(e) = self.st.mem.fault.take() {
+                    return Err(format!("{e} in hook {}", self.hooks[idx].name));
+                }
+                Ok(true)
+            }
+            None => {
+                let name = self.hooks[idx].name.clone();
+                if self.soft_traps {
+                    *self.missing.entry(name).or_insert(0) += 1;
+                    self.st.cpu.r[3] = 0;
+                    self.st.cpu.f[1] = 0.;
+                    self.st.cpu.pc = self.st.cpu.lr;
+                    return Ok(true);
+                }
+                Err(format!("unhandled engine function {name} ({})", self.backtrace()))
+            }
+        }
+    }
+
     fn run(&mut self, host: &mut H) -> Result<(), String> {
         let mut budget: u64 = 400_000_000;
         loop {
@@ -308,48 +362,26 @@ impl<H> Vm<H> {
                 }
                 if i >> 6 < self.hook_bits.len() && (self.hook_bits[i >> 6] >> (i & 63)) & 1 != 0 {
                     let idx = self.hook_at[&pc];
-                    let f = self.hooks[idx].f;
-                    if self.hooks[idx].observe {
-                        if let Some(f) = f {
-                            // an observer may call into the guest itself, which leaves that call's return value in r3 / f1:
-                            // the original must still see its own arguments (deliberate edits to other registers stay)
-                            let (r3, f1, n0) = (self.st.cpu.r[3], self.st.cpu.f[1], self.calls);
-                            f(host, self).map_err(|e| format!("{}: {e}", self.hooks[idx].name))?;
-                            if self.calls != n0 {
-                                self.st.cpu.r[3] = r3;
-                                self.st.cpu.f[1] = f1;
-                            }
-                        }
-                        // fall through: execute the first instruction of the original function
-                        let w = self.st.mem.r32(pc);
-                        if let Err(e) = self.st.cpu.step(&mut self.st.mem, w) {
-                            return Err(format!("{e} ({})", self.backtrace()));
-                        }
-                        continue;
-                    }
-                    match f {
-                        Some(f) => {
-                            if self.trace {
-                                eprintln!("[ppc] hook {}", self.hooks[idx].name);
-                            }
-                            f(host, self).map_err(|e| format!("{}: {e}", self.hooks[idx].name))?;
-                            self.st.cpu.pc = self.st.cpu.lr;
-                            if let Some(e) = self.st.mem.fault.take() {
-                                return Err(format!("{e} in hook {}", self.hooks[idx].name));
-                            }
+                    if let Some((port, ret)) = self.hooks[idx].port {
+                        if self.ver.depth == 0 {
+                            self.verify_call(host, idx, port, ret)?;
                             continue;
                         }
-                        None => {
-                            let name = self.hooks[idx].name.clone();
-                            if self.soft_traps {
-                                *self.missing.entry(name).or_insert(0) += 1;
-                                self.st.cpu.r[3] = 0;
-                                self.st.cpu.f[1] = 0.;
-                                self.st.cpu.pc = self.st.cpu.lr;
-                                continue;
-                            }
-                            return Err(format!("unhandled engine function {name} ({})", self.backtrace()));
+                        // inside a verification the original code runs: fall through to the interpreter
+                    } else if self.ver.replaying() {
+                        // the port's run: engine calls are answered from the original's record
+                        if self.replay_hook(idx)? {
+                            continue;
                         }
+                    } else if let Some(k) = self.ver.record_start(idx, &self.st.cpu, self.st.mem.journal.as_ref().map_or(0, |j| j.len())) {
+                        let r = self.dispatch_hook(host, idx, pc);
+                        self.ver.record_end(k, &self.st.cpu, self.st.mem.journal.as_ref().map_or(0, |j| j.len()));
+                        match r? {
+                            true => continue,
+                            false => {}
+                        }
+                    } else if self.dispatch_hook(host, idx, pc)? {
+                        continue;
                     }
                 }
             }
