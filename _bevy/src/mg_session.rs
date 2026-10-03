@@ -621,6 +621,12 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
                 mgvm::debug_teleport(vm, host, &v);
             }
         }
+        // EAGL_MG_AREA="frame:gate": go through that playground gate (testing aid)
+        if let Some((at, gate)) = std::env::var("EAGL_MG_AREA").ok().and_then(|v| v.split_once(':').and_then(|(a, b)| Some((a.parse::<i32>().ok()?, b.parse::<u32>().ok()?)))) {
+            if at == s.frames {
+                s.log.push(format!("gate {gate}: {:?}", mgvm::debug_gate(vm, host, gate)));
+            }
+        }
         s.ty = host.minigame_type;
         if std::env::var("EAGL_MG_DEBUG").is_ok() && s.frames % 60 == 0 {
             let pw = vm.r32(mgvm::snapshot::WORLD_MAN + 0x88);

@@ -76,6 +76,12 @@ pub fn boot(vm: &mut MgVm, host: &mut MgHost) -> Result<(), String> {
     let profile = vm.r32(0x8060_2064);
     let data = vm.r32(profile + 4);
     vm.w32(data + 0x10, host.player_kid);
+    // EAGL_MG_STICKERS=N: N Golden Stickers already won (testing aid: area gates unlock by sticker count)
+    if let Some(n) = std::env::var("EAGL_MG_STICKERS").ok().and_then(|v| v.parse::<u32>().ok()) {
+        for i in 0..9u32 {
+            vm.w32(data + 0x668 + 0x84 * i, n / 9 + (i < n % 9) as u32);
+        }
+    }
     vm.call_by_name(host, "Create__15MultiplayerModeFv", &[], &[])?;
     // WorldMan::Initialize(scene), then (characters)
     vm.call_by_name(host, "Create__11AncientEvilFv", &[], &[])?;
@@ -88,7 +94,7 @@ pub fn boot(vm: &mut MgVm, host: &mut MgHost) -> Result<(), String> {
     // AreaManager is a null service, so build the placeable list (positions of the games' props) ourselves
     let world = vm.r32(WORLD_MAN + 0x88);
     let areas = vm.r32(world + 8);
-    if areas != 0 {
+    if areas != 0 && vm.r32(areas + 0x1b0 + 0xc) == 0 {
         vm.call_by_name(host, "Initialize__16PlaceableManagerFv", &[areas + 0x1b0], &[])?;
     }
     Ok(())

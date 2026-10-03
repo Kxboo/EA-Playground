@@ -890,6 +890,23 @@ pub fn probe(ty: i32) {
                 println!("  [{f}] bug hunt at {:?} active {} | dribbling at {:?} running {}", v(&mut vm, bh + 0x30), vm.st.mem.r8(bh + 0x95), v(&mut vm, dr + 0x10), vm.r32(dr + 0xe0));
             }
         }
+        // EAGL_MG_AREA="frame:gate": go through that playground gate (PlaygroundWorld::StartAreaTransition), listing the
+        // gates (from area, target area, unlocked) the frame before
+        if let Some((at, gate)) = std::env::var("EAGL_MG_AREA").ok().and_then(|v| v.split_once(':').and_then(|(a, b)| Some((a.parse::<i32>().ok()?, b.parse::<u32>().ok()?)))) {
+            let pw = vm.r32(world::WORLD_MAN + 0x88);
+            if pw != 0 && f == at - 1 {
+                println!("  [{f}] current area {} stickers {}", vm.r32(pw + 0x5c), { let a = vm.img.addr("mInstance__16CharacterProfile").unwrap_or(0); let cp = vm.r32(a); vm.call_by_name(&mut host, "GetTotalStickerCount__16CharacterProfileFb", &[cp, 1], &[]).unwrap_or(0) });
+                for i in 0..12u32 {
+                    let g = pw + 0x70 + 0xb0 * i;
+                    let to = vm.call_by_name(&mut host, "GetTargetArea__14PlaygroundGateFv", &[g], &[]).unwrap_or(0) as i32;
+                    let words: Vec<u32> = (0..8).map(|k| vm.r32(g + 4 * k)).collect();
+                    println!("  [{f}] gate {i}: from {} to {to} words {words:x?}", vm.r32(g) as i32);
+                }
+            }
+            if f == at {
+                println!("  [{f}] area transition: {:?}", debug_gate(&mut vm, &mut host, gate));
+            }
+        }
         // stand in for the World HUD's info dialogue: show it, then press its button
         if popup_at == Some(f) {
             popup_at = None;
@@ -1166,4 +1183,18 @@ fn decode_lv(raw: &[u8]) -> Vec<(String, String)> {
         Some(e) => (unescape(&p[..e]), unescape(&p[e + 1..])),
         None => (unescape(p), String::new()),
     }).collect()
+}
+
+/// Development aid (`EAGL_MG_AREA="frame:gate"`): go through playground gate `gate` (`PlaygroundWorld::StartAreaTransition`
+/// from its area to its target). Returns (from, to).
+pub fn debug_gate(vm: &mut MgVm, host: &mut MgHost, gate: u32) -> Result<(u32, u32), String> {
+    let pw = vm.r32(world::WORLD_MAN + 0x88);
+    if pw == 0 || gate > 11 {
+        return Err("no world / gate".into());
+    }
+    let g = pw + 0x70 + 0xb0 * gate;
+    let from = vm.r32(g);
+    let to = vm.call_by_name(host, "GetTargetArea__14PlaygroundGateFv", &[g], &[])?;
+    vm.call_by_name(host, "StartAreaTransition__15PlaygroundWorldFQ25Enums8AreaTypeQ25Enums8AreaTypei", &[pw, from, to, gate], &[])?;
+    Ok((from, to))
 }

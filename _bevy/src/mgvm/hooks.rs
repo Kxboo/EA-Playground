@@ -982,6 +982,32 @@ pub fn pregame(vm: &mut V) {
         h.hide_area_model = vm.a(1) & 0xff == 0;
         Ok(())
     });
+    // AreaManager is a null service: the placeable list (props, gate doors) is built here, before the characters (and the
+    // gates a profile's stickers unlock) are set up, as the original area load has it ready by then
+    vm.observe("InitializeCharacters__15PlaygroundWorldFv", |h, vm| {
+        let areas = vm.r32(vm.a(0) + 8);
+        if areas != 0 && vm.r32(areas + 0x1b0 + 0xc) == 0 {
+            vm.call_by_name(h, "Initialize__16PlaceableManagerFv", &[areas + 0x1b0], &[])?;
+        }
+        Ok(())
+    });
+    if std::env::var("EAGL_DBG_PLACE").is_ok() {
+        vm.observe("GetPlaceable__16PlaceableManagerFPCc", |h, vm| {
+            let name = vm.st.mem.cstr(vm.a(1), 96);
+            let pm = vm.a(0);
+            let (base, n) = (vm.r32(pm + 8), vm.r32(pm + 0xc).min(4096));
+            let mut gates = vec![];
+            for i in 0..n {
+                let p = vm.call_by_name(h, "c_str__7CStringCFv", &[base + 0x120 * i + 4], &[]).unwrap_or(0);
+                let s = vm.st.mem.cstr(p, 96);
+                if s.contains("gate") {
+                    gates.push(s);
+                }
+            }
+            eprintln!("[place] GetPlaceable({name}) of {n} placeables; gates {gates:?}");
+            Ok(())
+        });
+    }
     if std::env::var("EAGL_DBG_RC").is_ok() {
         vm.observe("Render__5RcCarFRQ23Ren12SceneContext", |_h, vm| {
             let c = vm.a(0);
