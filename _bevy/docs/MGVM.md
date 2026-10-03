@@ -73,3 +73,34 @@ Found with a Ghidra decompilation of the executable (`D:/tools/decomp.c`, see th
 | RcCars | Complete: FE launch, 4-car race with AI, the game's own chase camera (viewport 0 of `CameraManager`), Space/A accelerate, arrows tilt the remote to switch lanes (`atan2(x, z)` beyond 45 degrees), B power-ups, boost, track model drawn as the game's replacement environment (`gRenderWorld` 0 hides the playground terrain and props), lap / position / power-up HUD (`Counter_GetText`), `MGSFX_HUD_RC` sounds, engine / fuse loops (`Audio::StartSFX` / `UpdateSFX` / `StopSFX` run the manager's native switch; one looping voice per class, pitched by the instance's speed input - an approximation of the AEMS engine programs), PostGame -> menus. |
 | Paper Airplanes | Complete: FE launch, hallway courses drawn with the game's own curvature (`SetCurvedWorldRadius` 75, area model hidden), zero-gravity Havok world from `pa_world` (`InitializeSim`), J throws, arrows pitch / bank (centred accelerometer), B boost, crashes and respawns, checkpoints / points / timer HUD, Times Up -> PostGame -> menus. |
 | Free Throw | Complete as the playground microgame: in world play, standing at one of the three hoops (`kFreeThrowPosition`) shows the World HUD's press-A, A (Space) starts it with the game's first-person camera, J shoots with the swing strength as power, shot meter / counter / timer HUD, the world resumes afterwards. The aim sweeps left and right by itself (`UpdateAimOffset`); a throw released as it crosses the middle goes straight in, at all three hoops. |
+
+## Single-player world (2026-10-03)
+
+Main-menu Single Player (and the `wp` / `gm99` script codes) starts `mgvm::launch` type 99 (`WORLD`): the playground
+itself runs in the VM as one session, and `minigame_type` follows whatever the world starts (`WorldMan + 0x90` by vtable).
+
+* **Intro** - `PlaygroundWorld + 0x44` state machine (fade 0xd -> pan camera 0xe -> 0xf -> area NIS 0xb -> Sticker King
+  4/5 -> free roam 0); needs both `FadeToColourEffect`s (+0x8b0, +0xff0) ticked each frame.
+* **Front end** - the game's AIP broker runs natively (`world::init_aip`; Broker, CmdComposer/Decomposer and handler
+  registration exempt from stubs). `mgvm::aip_call(name, params)` = `Broker::LoadVariables` (reply `k=v&..`, escapes
+  `%25 %26 %3D %2B`, arrays 0x7f) else `FSCommand`. In a world session every front-end call goes there first
+  (`mg_session::guest_lv`, via a thread-local guest scope during the APT tick): conversations, info dialogues, pre/post
+  game, HUD queries, sticker book, gauntlet select. Screen calls from the guest are deferred into the APT tick.
+* **Talking** - facing a beacon kid (`NpcIndicator`, drawn from `world-misc.gsh`) and A (event 0xae) starts
+  `CharacterProfile::StartInitialConversation`; dares start the minigame inside the session (pre-game, game, post-game,
+  back to the world, `StickerBookGame` award).
+* **Microgames** - Dribbling and Bug Hunt start from their press-A spots (World HUD loaded flag FEManager + 0x130).
+* **Areas** - gates unlock from the profile's stickers (placeables are built before `InitializeCharacters`);
+  `StartAreaTransition` runs the area title / NIS / intro conversation; Bug Hunt is placed in areas 2 and 3.
+* **Sticker King** - store / gauntlet conversation; gauntlet -> `BossGameSelect` -> boss battle.
+* **Rendering** - scenes with `gRenderWorld` off render unbent; immediate-mode batches bend at their centroid; prop
+  entities pooled per model.
+
+Testing aids: `EAGL_MG_TP="frame:x,z[,fx,fz]"`, `EAGL_MG_AREA="frame:gate"`, `EAGL_MG_STICKERS=N`,
+`EAGL_MG_GAUNTLET=1`, `EAGL_MG_KID`, lab `EAGL_MG_CONV="text~n"`, `EAGL_MG_BOSS`, `EAGL_DBG_MICRO`, `EAGL_DBG_PLACE`;
+app scripts `--apt-script file:PATH` with `@Screen+N~step` guards and `iPATH` inspections.
+
+Open: post-game DONE clicks and placing an award sticker fail in the app because the front-end player computes wrong
+global bounds for some animated clips (game logic verified in the lab: placing + `StickerBook_Exit` resumes the world
+with 1/24); the sky dome looks plain blue towards the north of the school plaza; saving; bug sprites (`pg_bughunt_*`
+effects) not yet checked on screen.
