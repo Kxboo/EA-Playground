@@ -267,7 +267,12 @@ pub fn view_step(mut mgs:Option<NonSendMut<crate::mg_session::Session>>,mut play
         }
     }
     if let Some(g)=v.vm.fe.launch.take(){
-        if g=="world"&&play.is_none(){
+        if g=="world"&&play.is_none()&&std::env::var("EAGL_WORLD_NATIVE").is_err(){
+            // Single Player: the original game's playground, hosted in the VM (intro, conversations, dares, minigames)
+            let kid=v.vm.fe.profiles.slots.get(v.vm.fe.profiles.loaded.max(0) as usize).and_then(|s|s.as_ref()).map(|s|s.image).unwrap_or(v.vm.fe.profiles.kid);
+            v.vm.fe.todo.push(("ClearScreenStack".into(),vec![]));
+            commands.insert_resource(crate::mg_session::MgLaunch{ty:crate::mgvm::WORLD,humans:1,fe:Some(crate::mgvm::FeLaunch{ty:crate::mgvm::WORLD,avatars:vec![kid],teams:vec![],rules:None})});
+        }else if g=="world"&&play.is_none(){
             // Single Player: the world the menus were drawn over becomes playable; the front end keeps drawing the HUD.
             commands.remove_resource::<crate::game::Backdrop>();
             commands.insert_resource(crate::game::WorldPlay::default());

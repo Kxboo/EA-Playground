@@ -16,6 +16,8 @@ pub struct MgHost {
     pub minigame_type: i32,
     /// The whole single-player game runs (`launch` type 99): `minigame_type` follows the minigame the world started.
     pub world_mode: bool,
+    /// The player's kid, set in the profile before the world creates its characters.
+    pub player_kid: u32,
     pub vfs: vfs::Vfs,
     pub fe_manager: u32,
     pub scene_options: u32,
@@ -318,12 +320,17 @@ pub enum FeArg {
 pub type MgVm = Vm<MgHost>;
 
 pub fn boot() -> Result<(MgVm, MgHost), String> {
+    boot_as(std::env::var("EAGL_MG_KID").ok().and_then(|v| v.parse().ok()).unwrap_or(0))
+}
+
+/// `boot` with the player's kid (index into the character list, as the profile stores it).
+pub fn boot_as(kid: u32) -> Result<(MgVm, MgHost), String> {
     let mut vm = MgVm::load()?;
     vm.trap_unless(runs_natively);
     hooks::install(&mut vm);
     physhooks::install(&mut vm);
     hooks::install_stubs(&mut vm);
-    let mut host = MgHost { fov: 0.8, aspect: 16. / 9., ..MgHost::default() };
+    let mut host = MgHost { fov: 0.8, aspect: 16. / 9., player_kid: kid, ..MgHost::default() };
     if let Err(e) = world::boot(&mut vm, &mut host) {
         if std::env::var("EAGL_MG_LOG").is_ok() {
             for l in &host.log {
@@ -734,7 +741,7 @@ pub fn probe(ty: i32) {
             let rows_state: Vec<(u32, u32, u32)> = (0..rows.min(400)).map(|i| { let r = c + 100 * i; (vm.r32(r + 0x2b0), vm.r32(r + 0x2cc), vm.r32(r + 0x26c)) }).take(60).collect();
             let pw = vm.r32(world::WORLD_MAN + 0x88);
             if pw != 0 {
-                println!("  pw {pw:#x} state {:#x} fade {} / {} paused {} sp-state {}", vm.r32(pw + 0x44), vm.r32(pw + 0x8b0 + 0x1c), vm.r32(pw + 0x8b0 + 0x20), vm.st.mem.r8(pw + 0x24), { let a = vm.img.addr("mInstance__16CharacterProfile").unwrap_or(0); let cp = vm.r32(a); vm.r32(cp + 0x54) });
+                println!("  pw {pw:#x} hide_area {} gRenderWorld {} state {:#x} fade {} / {} paused {} sp-state {}", host.hide_area_model, vm.st.mem.r8(0x805f_fb80), vm.r32(pw + 0x44), vm.r32(pw + 0x8b0 + 0x1c), vm.r32(pw + 0x8b0 + 0x20), vm.st.mem.r8(pw + 0x24), { let a = vm.img.addr("mInstance__16CharacterProfile").unwrap_or(0); let cp = vm.r32(a); vm.r32(cp + 0x54) });
             }
             println!("  ctl f{f}: sp {sp} stack {st:x?} rows {rows} held {:#x} port {} state31 rows {rows_state:x?}", vm.r32(c + 0x264), vm.r32(c + 0x254));
         }

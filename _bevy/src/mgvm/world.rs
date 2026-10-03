@@ -75,7 +75,7 @@ pub fn boot(vm: &mut MgVm, host: &mut MgHost) -> Result<(), String> {
     // the kid the player picked (index into the character list)
     let profile = vm.r32(0x8060_2064);
     let data = vm.r32(profile + 4);
-    vm.w32(data + 0x10, 0);
+    vm.w32(data + 0x10, host.player_kid);
     vm.call_by_name(host, "Create__15MultiplayerModeFv", &[], &[])?;
     // WorldMan::Initialize(scene), then (characters)
     vm.call_by_name(host, "Create__11AncientEvilFv", &[], &[])?;

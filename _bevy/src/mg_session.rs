@@ -404,7 +404,13 @@ fn build(mut commands: Commands, s: Option<NonSendMut<Session>>, game: Option<Re
         Some(l) if std::env::var("EAGL_MG_ALLAI").is_err() && ty != mgvm::WORLD => mgvm::launch_fe(vm, host, l),
         _ => mgvm::launch(vm, host, ty, humans),
     };
-    match mgvm::boot().and_then(|(mut vm, mut host)| start(&mut vm, &mut host).map(|_| (vm, host))) {
+    // the hosted world plays as the profile's kid
+    let kid = fe.as_ref().filter(|_| ty == mgvm::WORLD).and_then(|l| l.avatars.first()).map(|&k| k as u32);
+    let booted = match kid {
+        Some(k) => mgvm::boot_as(k),
+        None => mgvm::boot(),
+    };
+    match booted.and_then(|(mut vm, mut host)| start(&mut vm, &mut host).map(|_| (vm, host))) {
         Ok(v) => {
             s.log.push(format!("VM ready in {:?}", t0.elapsed()));
             s.vm = Some(v);
