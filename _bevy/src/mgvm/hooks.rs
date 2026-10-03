@@ -678,6 +678,12 @@ fn fe_screen_call(h: &mut MgHost, vm: &mut V) -> R {
     let name = vm.name_of(vm.st.cpu.pc);
     let arg = if name.contains("FPc") { vm.st.mem.cstr(vm.a(1), 64) } else { String::new() };
     let call = name.split("__").next().unwrap_or("").to_string();
+    // the front end's `ScreenReady("WorldHud")` -> `FEManager::SetWorldHudLoaded` (+0x130), which the world's "press A"
+    // microgames (Bug Hunt, Dribbling) wait for; here the HUD counts as loaded once opened
+    if call == "OpenAptScreen" && arg == "WorldHud" {
+        let fe = vm.a(0);
+        vm.st.mem.w8(fe + 0x130, 1);
+    }
     h.events.push(super::FeEvent { name: format!("FEManager::{call}"), ints: [0; 4], floats: [0.; 2], args: vec![super::FeArg::Str(arg)] });
     Ok(())
 }

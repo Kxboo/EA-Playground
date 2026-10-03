@@ -270,7 +270,9 @@ const NATIVE_EXCEPTIONS: &[&str] = &[
     // the world's fade-to-colour effect is a timer the minigame exit waits on (`IsMinigameFadeEffectComplete`)
     "__ct__Q23Ren18FadeToColourEffectFv", "SetFadeColour__Q23Ren18FadeToColourEffectFRC9rmVector3", "StartFadeIn__Q23Ren18FadeToColourEffectFi",
     "StartFadeOut__Q23Ren18FadeToColourEffectFi", "Update__Q23Ren18FadeToColourEffectFi", "IsFinished__Q23Ren18FadeToColourEffectFv",
-    "Start__Q23Ren11LinearBlendFffi", "GetCurrentValue__Q23Ren11LinearBlendFv"];
+    "Start__Q23Ren11LinearBlendFffi", "GetCurrentValue__Q23Ren11LinearBlendFv",
+    // the World HUD's loaded flag (FEManager + 0x130)
+    "WaitForWorldHud__9FEManagerFv", "ClearWaitForWorldHud__9FEManagerFv", "SetWorldHudLoaded__9FEManagerFv", "IsWorldHudLoaded__9FEManagerCFv"];
 
 /// The Csis instance setters only clamp and store a field (`SetSpeed`, `SetAzimuth`, ...); looping sounds are read back.
 fn is_csis_setter(name: &str) -> bool {
@@ -868,6 +870,15 @@ pub fn probe(ty: i32) {
         if play_at == Some(f) {
             play_at = None;
             println!("  [{f}] PreGame_OnPlay {:?}", aip_call(&mut vm, &mut host, "PreGame_OnPlay", ""));
+        }
+        // EAGL_DBG_MICRO: where the world's "press A" microgames start (Bug Hunt manager + 0x30, Dribbling + 0x10)
+        if std::env::var("EAGL_DBG_MICRO").is_ok() && f % 100 == 0 {
+            let pw = vm.r32(world::WORLD_MAN + 0x88);
+            if pw != 0 {
+                let (bh, dr) = (vm.r32(pw + 0xfb4), vm.r32(pw + 0xfbc));
+                let v = |vm: &mut MgVm, a: u32| [vm.st.mem.rf32(a), vm.st.mem.rf32(a + 4), vm.st.mem.rf32(a + 8)];
+                println!("  [{f}] bug hunt at {:?} active {} | dribbling at {:?} running {}", v(&mut vm, bh + 0x30), vm.st.mem.r8(bh + 0x95), v(&mut vm, dr + 0x10), vm.r32(dr + 0xe0));
+            }
         }
         // stand in for the World HUD's info dialogue: show it, then press its button
         if popup_at == Some(f) {
