@@ -670,6 +670,7 @@ pub fn probe(ty: i32) {
     let mut conv_at: Option<i32> = None;
     let mut popup_at: Option<i32> = None;
     let mut play_at: Option<i32> = None;
+    let mut sticker_at: Option<i32> = None;
     for f in 0..frames {
         let now = vm.r32(world::WORLD_MAN + 0x90);
         if now != mg {
@@ -867,6 +868,15 @@ pub fn probe(ty: i32) {
                 debug_teleport(&mut vm, &mut host, &v);
             }
         }
+        if sticker_at == Some(f) {
+            sticker_at = None;
+            for (n, p) in [("StickerBook_RewardLoad", ""), ("StickerBook_RewardGetStickers", ""), ("StickerBook_LayoutLoad", "iMinigameType=1"),
+                ("StickerBook_LayoutSave", "iNumStickers=1&aiStickerID=0&aiStickerPositionX=300&aiStickerPositionY=200&aiStickerOrientation=0&aiStickerTypes=0&iMinigameType=1"),
+                ("StickerBook_Exit", "iSelected=0")] {
+                let r = aip_call(&mut vm, &mut host, n, p);
+                println!("  [{f}] {n} -> {}", format!("{r:?}").chars().take(200).collect::<String>());
+            }
+        }
         if play_at == Some(f) {
             play_at = None;
             println!("  [{f}] PreGame_OnPlay {:?}", aip_call(&mut vm, &mut host, "PreGame_OnPlay", ""));
@@ -927,6 +937,10 @@ pub fn probe(ty: i32) {
             }
             if e.name == "Apt::InfoDialogue_SetVisible" && matches!(e.args.first(), Some(FeArg::Str(n)) if n == "1") {
                 popup_at = Some(f + 20);
+            }
+            // the sticker award: place the first reward sticker and go back to the world (StickerBookGame's own calls)
+            if host.world_mode && e.name == "FEManager::OpenAptScreen" && matches!(e.args.first(), Some(FeArg::Str(n)) if n == "StickerBookGame") {
+                sticker_at = Some(f + 20);
             }
             // the world's own pre-game screen: PLAY through the game's handlers
             if host.world_mode && e.name == "FEManager::OpenAptScreen" && matches!(e.args.first(), Some(FeArg::Str(n)) if n == "PreGameInstructions") {
