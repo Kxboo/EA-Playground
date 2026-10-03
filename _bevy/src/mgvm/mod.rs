@@ -329,6 +329,10 @@ pub fn boot() -> Result<(MgVm, MgHost), String> {
 /// `boot` with the player's kid (index into the character list, as the profile stores it).
 pub fn boot_as(kid: u32) -> Result<(MgVm, MgHost), String> {
     let mut vm = MgVm::load()?;
+    // EAGL_PPC_COVER=path: count entries into every function, boot included (written by `write_coverage`)
+    if std::env::var("EAGL_PPC_COVER").is_ok() {
+        vm.enable_coverage();
+    }
     vm.trap_unless(runs_natively);
     hooks::install(&mut vm);
     physhooks::install(&mut vm);
@@ -986,6 +990,7 @@ pub fn probe(ty: i32) {
             }
         }
     }
+    write_coverage(&vm);
     let snap = snapshot::snapshot(&mut vm, &mut host);
     println!("placeables changed: {:?}", snap.placeables);
     println!("snapshot: {} chars, camera {:?}", snap.chars.len(), snap.camera);
@@ -1215,4 +1220,42 @@ pub fn debug_gate(vm: &mut MgVm, host: &mut MgHost, gate: u32) -> Result<(u32, u
     let to = vm.call_by_name(host, "GetTargetArea__14PlaygroundGateFv", &[g], &[])?;
     vm.call_by_name(host, "StartAreaTransition__15PlaygroundWorldFQ25Enums8AreaTypeQ25Enums8AreaTypei", &[pw, from, to, gate], &[])?;
     Ok((from, to))
+}
+
+/// `EAGL_PPC_COVER=path`: append `address	entries` for every function entered so far (decompilation progress map).
+pub fn write_coverage(vm: &MgVm) {
+    let Ok(path) = std::env::var("EAGL_PPC_COVER") else { return };
+    use std::io::Write;
+    if let Ok(mut f) = std::fs::OpenOptions::new().create(true).append(true).open(&path) {
+        let mut v: Vec<(&u32, &u64)> = vm.covered.iter().collect();
+        v.sort();
+        for (a, n) in v {
+            let _ = writeln!(f, "{a:08x}	{n}");
+        }
+    }
+}
+
+/// `mglab classify OUT`: what the VM does with every function of the executable once booted, one
+/// `address	name	kind` line each: `host` (a Rust hook replaces it), `observe` (Rust runs first, then the original),
+/// `stub` (does nothing, returns 0), `trap` (an unimplemented service), `native` (the original code runs).
+pub fn classify(out: &str) -> Result<(), String> {
+    let (vm, _host) = boot()?;
+    let stub_fn = hooks::stub_fn();
+    let table: std::collections::HashMap<u32, (String, &'static str)> = vm.hook_table().into_iter().map(|(a, n, k)| {
+        let kind = match k {
+            crate::gekko::HookKind::Host(f) if f as usize == stub_fn as usize => "stub",
+            crate::gekko::HookKind::Host(_) => "host",
+            crate::gekko::HookKind::Observe(_) => "observe",
+            crate::gekko::HookKind::Trap => "trap",
+        };
+        (a, (n, kind))
+    }).collect();
+    let mut text = String::new();
+    for &i in &vm.img.funcs {
+        let s = &vm.img.symbols[i];
+        let kind = table.get(&s.addr).map(|t| t.1).unwrap_or("native");
+        text.push_str(&format!("{:08x}	{}	{kind}
+", s.addr, s.name));
+    }
+    std::fs::write(out, text).map_err(|e| e.to_string())
 }

@@ -104,3 +104,24 @@ Open: post-game DONE clicks and placing an award sticker fail in the app because
 global bounds for some animated clips (game logic verified in the lab: placing + `StickerBook_Exit` resumes the world
 with 1/24); the sky dome looks plain blue towards the north of the school plaza; saving; bug sprites (`pg_bughunt_*`
 effects) not yet checked on screen.
+
+## Decompilation progress map
+
+`_bevy/tools/decomp_progress.py` builds a decomp.dev-style map of every function in `playgroundz.elf`, showing the
+original PowerPC, Ghidra's C, the Rust that ports, hooks or drives it, and what the VM does with it. To build it:
+
+1. `cargo run --release --bin mglab -- classify scratch_progress/classify.tsv` records every hook the VM installs as
+   host, observe, stub or trap. Everything else counts as native.
+2. Run scenarios with `EAGL_PPC_COVER=scratch_progress/cov_<name>.tsv` set. `boot_as` turns on per-function entry
+   counting in gekko, and `mgvm::write_coverage` appends `addr\tentries` lines when the probe finishes.
+3. `python _bevy/tools/decomp_progress.py OUT_DIR` writes `index.json` and `chunks/NNN.json`. Copy
+   `_bevy/tools/decomp-map.html` next to them and serve the directory.
+
+Each function gets one status:
+
+- **port**: Rust code names its address.
+- **host**: replaced by a Rust hook, or watched by an observe hook.
+- **run**: original code, executed under coverage.
+- **native**: original code, not yet reached.
+- **stub**: soft-stubbed.
+- **trap**: trap hook.

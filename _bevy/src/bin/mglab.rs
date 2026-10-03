@@ -37,6 +37,12 @@ mod bridge {
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     match args.get(1).map(String::as_str) {
+        Some("classify") => {
+            let out = args.get(2).cloned().unwrap_or_else(|| "classify.tsv".into());
+            if let Err(e) = mgvm::classify(&out) {
+                eprintln!("classify failed: {e}");
+            }
+        }
         Some("probe") => {
             let ty = args.get(2).and_then(|v| v.parse().ok()).unwrap_or(3);
             mgvm::probe(ty);

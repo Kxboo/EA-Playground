@@ -49,6 +49,19 @@ pub struct Vm<H> {
     pub ret_hi_lo: u32,
     /// Log entries into functions whose name contains this text (development aid, env `EAGL_PPC_CALLS`).
     pub call_filter: Option<String>,
+    /// Function-entry coverage (`enable_coverage`): bit per function start, and entry counts by address.
+    cover_bits: Vec<u64>,
+    pub covered: HashMap<u32, u64>,
+}
+
+/// What a hooked function does instead of its original code.
+pub enum HookKind<H> {
+    /// A Rust host function replaces it.
+    Host(HookFn<H>),
+    /// A Rust function runs first, then the original code.
+    Observe(HookFn<H>),
+    /// Not allowed to run: stops the machine (an engine service nobody has implemented).
+    Trap,
 }
 
 pub const STACK_TOP: u32 = 0x817f_0000;
@@ -79,6 +92,8 @@ impl<H> Vm<H> {
             missing_symbols: vec![],
             ret_hi_lo: 0,
             call_filter: std::env::var("EAGL_PPC_CALLS").ok(),
+            cover_bits: vec![],
+            covered: HashMap::new(),
         })
     }
 
@@ -106,6 +121,36 @@ impl<H> Vm<H> {
     pub fn log_missing_symbol(&mut self, name: &str) {
         self.missing_symbols.push(name.to_string());
     }
+    /// Every hook: address, symbol name and what runs there.
+    pub fn hook_table(&self) -> Vec<(u32, String, HookKind<H>)> {
+        let mut out: Vec<(u32, String, HookKind<H>)> = self.hook_at.iter().map(|(&a, &i)| {
+            let h = &self.hooks[i];
+            let k = match (h.f, h.observe) {
+                (Some(f), false) => HookKind::Host(f),
+                (Some(f), true) => HookKind::Observe(f),
+                (None, _) => HookKind::Trap,
+            };
+            (a, h.name.clone(), k)
+        }).collect();
+        out.sort_by_key(|e| e.0);
+        out
+    }
+
+    /// Count entries into every function from now on (`covered`).
+    pub fn enable_coverage(&mut self) {
+        let n = self.hook_bits.len();
+        self.cover_bits = vec![0; n];
+        for &i in &self.img.funcs {
+            let a = self.img.symbols[i].addr;
+            if a >= MEM1_BASE {
+                let k = ((a - MEM1_BASE) >> 2) as usize;
+                if k >> 6 < n {
+                    self.cover_bits[k >> 6] |= 1 << (k & 63);
+                }
+            }
+        }
+    }
+
     pub fn hook_addr(&mut self, addr: u32, name: &str, f: Option<HookFn<H>>) {
         if let Some(&i) = self.hook_at.get(&addr) {
             if f.is_some() || self.hooks[i].f.is_none() {
@@ -258,6 +303,9 @@ impl<H> Vm<H> {
             budget -= 1;
             if pc >= MEM1_BASE {
                 let i = ((pc - MEM1_BASE) >> 2) as usize;
+                if i >> 6 < self.cover_bits.len() && (self.cover_bits[i >> 6] >> (i & 63)) & 1 != 0 {
+                    *self.covered.entry(pc).or_insert(0) += 1;
+                }
                 if i >> 6 < self.hook_bits.len() && (self.hook_bits[i >> 6] >> (i & 63)) & 1 != 0 {
                     let idx = self.hook_at[&pc];
                     let f = self.hooks[idx].f;

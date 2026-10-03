@@ -123,6 +123,11 @@ fn stub(h: &mut MgHost, vm: &mut V) -> R {
     Ok(())
 }
 
+/// The soft-stub hook (lets the progress map tell stubs from real host functions).
+pub fn stub_fn() -> crate::gekko::HookFn<MgHost> {
+    stub
+}
+
 pub fn install_stubs(vm: &mut V) {
     vm.hook_matching(super::is_soft_stub, stub);
 }
