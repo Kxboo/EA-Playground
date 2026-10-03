@@ -39,7 +39,7 @@ fn stub_ren_singletons(vm: &mut MgVm) {
 pub fn boot(vm: &mut MgVm, host: &mut MgHost) -> Result<(), String> {
     run_static_constructors(vm, host);
     // render space == world space: the host applies the world's curvature when presenting
-    vm.st.mem.w8(0x8060_22ec, 1);
+    vm.st.mem.w8(CURVED_WORLD_OFF, 1);
     stub_ren_singletons(vm);
     // opaque engine objects the game only passes around
     let scene = vm.alloc_zeroed(0x2000, 32);
@@ -58,6 +58,9 @@ pub fn boot(vm: &mut MgVm, host: &mut MgHost) -> Result<(), String> {
     vm.call_by_name(host, "InitialiseDatabase__11pgIDatabaseFv", &[], &[])?;
     // the nine MGIDs are database keys: rebuild them now that the database exists
     vm.call_by_name(host, r"__sinit_\conversationmanager_cpp", &[], &[])?;
+    // the front end's LoadVariables / FS command broker (the `AIP::Initialize` subset handler registration needs), so the
+    // handler singletons below register natively and `aip_call` can ask them
+    init_aip(vm, host)?;
     // front-end handler singletons the games talk to (FEManager::InitializeAip creates them)
     for name in ["Create__15PreGameHandlersFv", "Create__16MinigameHandlersFv", "Create__16WorldHudHandlersFv", "Create__16PostGameHandlersFv", "Create__17PauseMenuHandlersFv", "Create__21PaperAirplaneHandlersFv", "Create__18EndTourneyHandlersFv", "Create__19MultiPlayerHandlersFv", "Create__20ConversationHandlersFv", "Create__19StickerBookHandlersFv", "Create__20StickerStoreHandlersFv", "Create__18ReportCardHandlersFv", "Create__19BossEndGameHandlersFv"] {
         vm.call_by_name(host, name, &[], &[])?;
@@ -135,3 +138,30 @@ pub fn draw_minigame(vm: &mut MgVm, host: &mut MgHost, ty: i32) -> Result<(), St
     let ctx = host.scene_ctx;
     vm.call_by_name(host, &name, &[mg, ctx], &[]).map(|_| ())
 }
+
+/// `AIP::Initialize` with `FEManager::SetupInitStruct`'s values, minus the Apt player: allocator and debug callbacks,
+/// composer buffer sizes, the 0x7f array delimiters and the handler broker.
+fn init_aip(vm: &mut MgVm, host: &mut MgHost) -> Result<(), String> {
+    let sym = |vm: &MgVm, n: &str| vm.img.addr(n).ok_or_else(|| format!("missing {n}"));
+    let alloc = sym(vm, "Alloc__6MemMgrFUlQ26MemMgr8PoolTypeQ26MemMgr9AllocTypePCc")?;
+    let free = sym(vm, "Free__6MemMgrFPv")?;
+    let quiet = sym(vm, "AptDbgShutup__3AIPFPCce")?;
+    for (n, v) in [("g_pfnMemAlloc__3AIP", alloc), ("g_pfnMemFree__3AIP", free), ("g_pfnDebugPrint__3AIP", quiet), ("g_pfnAssert__3AIP", quiet), ("s_nComposerMainBufferBytes__3AIP", 0x1000), ("s_nComposerArrayBufferBytes__3AIP", 0x200)] {
+        let a = sym(vm, n)?;
+        vm.w32(a, v);
+    }
+    for n in ["g_nComposerArrayDelimiter__3AIP", "g_nDecomposerArrayDelimiter__3AIP"] {
+        let a = sym(vm, n)?;
+        vm.st.mem.w8(a, 0x7f);
+    }
+    let broker = vm.alloc_zeroed(0x10, 8);
+    vm.call_by_name(host, "__ct__Q23AIP6BrokerFv", &[broker], &[])?;
+    let a = sym(vm, "s_pBroker__3AIP")?;
+    vm.w32(a, broker);
+    let a = sym(vm, "s_isInitialized__3AIP")?;
+    vm.st.mem.w8(a, 1);
+    Ok(())
+}
+
+/// `gDisableCurvedWorld`.
+pub const CURVED_WORLD_OFF: u32 = 0x8060_22ec;

@@ -95,6 +95,8 @@ pub struct MgHost {
     pub dbg_objs: Vec<u32>,
     /// Reused `Ren::SceneContext` handed to `Draw`.
     pub scene_ctx: u32,
+    /// `aip_call`'s guest scratch: the query string (0x2000 bytes) and the `AIP::CmdComposer` (0x100).
+    pub aip_scratch: u32,
 }
 
 /// Particle-effect requests of a frame (`PartFxManager` / `PartFx`), keyed by the GUID the game holds.
@@ -202,9 +204,16 @@ const SERVICE_CLASSES: &[&str] = &[
     "MemMgr", "PartFxManager", "PartFx", "AreaManager",
 ];
 
+/// The front end's handler broker runs natively (`aip_call`): `AIP::Broker`, its trees, the command composer /
+/// decomposer and the registration / text-conversion functions; the rest of AIP (the Apt player) stays a service.
+fn is_aip_broker(name: &str) -> bool {
+    ["Q23AIP6Broker", "Q23AIP11CmdComposer", "Q23AIP13CmdDecomposer", "BinaryTree", "_unnamed_broker_cpp_"].iter().any(|c| name.contains(c))
+        || ["RegisterLVHandler__3AIPF", "UnregisterLVHandler__3AIPF", "RegisterFSHandler__3AIPF", "UnregisterFSHandler__3AIPF", "ConvertUCS2TOUTF8__3AIPF", "ConvertUTF8TOUCS2__3AIPF", "HexDigitToInt__3AIPF", "AptAllocHelper__3AIPF"].iter().any(|p| name.starts_with(p))
+}
+
 /// Services that are rendering / audio / effects only: when nothing hooks them they do nothing and return 0 (logged).
 pub fn is_soft_stub(name: &str) -> bool {
-    if NATIVE_EXCEPTIONS.contains(&name) || is_csis_setter(name) {
+    if NATIVE_EXCEPTIONS.contains(&name) || is_csis_setter(name) || is_aip_broker(name) {
         return false;
     }
     if class_of(name).is_none() && ["DC", "IC", "L2", "LC", "OS", "DVD", "VI", "GX", "PAD", "WPAD", "KPAD", "AX", "AI", "EXI", "SI", "IPC", "NAND", "CARD", "WENC", "TRC"].iter().any(|p| name.starts_with(p) && name[p.len()..].chars().next().map_or(false, |c| c.is_ascii_uppercase() || c == '_')) {
@@ -522,6 +531,8 @@ pub fn running_minigame(vm: &mut MgVm) -> i32 {
 }
 
 pub fn frame(vm: &mut MgVm, host: &mut MgHost, ms: i32) -> Result<(), String> {
+    // the guest renders flat and the host bends (`gDisableCurvedWorld`, set at boot); RcCars / Paper Airplanes clear it on exit
+    vm.st.mem.w8(world::CURVED_WORLD_OFF, 1);
     if host.world_mode {
         let ty = running_minigame(vm);
         if ty != host.minigame_type {
@@ -536,7 +547,7 @@ pub fn frame(vm: &mut MgVm, host: &mut MgHost, ms: i32) -> Result<(), String> {
     hooks::write_pads(vm, &host.pads);
     if std::env::var("EAGL_DBG_DRAWS").is_ok() {
         host.dbg_frames += 1;
-        if host.dbg_frames % 30 == 0 {
+        if host.dbg_frames % std::env::var("EAGL_DBG_DRAWS_EVERY").ok().and_then(|v| v.parse::<u64>().ok()).unwrap_or(30) == 0 {
             let k = std::env::var("EAGL_DBG_DRAWS").unwrap_or_default();
             let cam = snapshot::snapshot(vm, host).camera.map(|c| c.0);
             let d: Vec<(String, [f32; 3])> = host.last_draws.iter().filter(|d| d.0.contains(&k)).map(|d| (d.0.clone(), [d.1[12], d.1[13], d.1[14]])).collect();
@@ -648,7 +659,8 @@ pub fn probe(ty: i32) {
     // EAGL_MG_POSTGAME=replay|done: press that post-game button 30 frames after the screen opens
     let mut postgame_at: Option<i32> = None;
     let mut conv_at: Option<i32> = None;
-    let mut conv_buf = 0u32;
+    let mut popup_at: Option<i32> = None;
+    let mut play_at: Option<i32> = None;
     for f in 0..frames {
         let now = vm.r32(world::WORLD_MAN + 0x90);
         if now != mg {
@@ -828,13 +840,42 @@ pub fn probe(ty: i32) {
                 println!("  [{f}] sound {c} {v}");
             }
         }
+        // EAGL_MG_TP="frame:x,z": put the world's player there (`CharacterState` position + teleport flag, as
+        // `ConversationManager::ExitConversation` does); the frame before, list the kids with a visible beacon
+        if let Some((at, xz)) = std::env::var("EAGL_MG_TP").ok().and_then(|v| v.split_once(':').map(|(a, b)| (a.to_string(), b.to_string()))) {
+            let at: i32 = at.parse().unwrap_or(-1);
+            if f == at - 1 {
+                let snap = snapshot::snapshot(&mut vm, &mut host);
+                for c in &snap.chars {
+                    let ind = vm.r32(c.ptr + 0x228);
+                    let beacon = ind != 0 && vm.st.mem.r8(ind + 0x14) != 0;
+                    println!("  [{f}] char {:#x} key {:x} pos {:?} beacon {beacon}", c.ptr, c.key, c.pos);
+                }
+            }
+            if f == at {
+                let v: Vec<f32> = xz.split(',').filter_map(|t| t.parse().ok()).collect();
+                debug_teleport(&mut vm, &mut host, &v);
+            }
+        }
+        if play_at == Some(f) {
+            play_at = None;
+            println!("  [{f}] PreGame_OnPlay {:?}", aip_call(&mut vm, &mut host, "PreGame_OnPlay", ""));
+        }
+        // stand in for the World HUD's info dialogue: show it, then press its button
+        if popup_at == Some(f) {
+            popup_at = None;
+            let text = aip_call(&mut vm, &mut host, "InfoDialogue_GetText", "");
+            println!("  [{f}] info dialogue {text:?}");
+            println!("  [{f}] close {:?}", aip_call(&mut vm, &mut host, "InfoDialogue_OnButtonClick", ""));
+        }
         // stand in for the conversation screen: show each node, pick response `EAGL_MG_CONV` (default 0)
         if conv_at == Some(f) {
             conv_at = None;
-            if conv_buf == 0 {
-                conv_buf = vm.alloc_zeroed(0x1000, 4);
-            }
-            let q = |vm: &mut MgVm, host: &mut MgHost, n: &str, p: &[(String, String)]| conversation_query(vm, host, conv_buf, n, p).unwrap_or_default();
+            // through the game's own handler broker, as the conversation screen asks
+            let q = |vm: &mut MgVm, host: &mut MgHost, n: &str, p: &[(String, String)]| {
+                let params: Vec<String> = p.iter().map(|(k, v)| format!("{k}={v}")).collect();
+                aip_call(vm, host, n, &params.join("&")).unwrap_or_default()
+            };
             let name = q(&mut vm, &mut host, "Conversation_GetName", &[]);
             let text = q(&mut vm, &mut host, "Conversation_GetDialogueText", &[]);
             let resp = q(&mut vm, &mut host, "Conversation_GetResponses", &[]);
@@ -864,6 +905,13 @@ pub fn probe(ty: i32) {
             }
             if e.name == "FEManager::OpenAptOverlay" && matches!(e.args.first(), Some(FeArg::Str(n)) if n == "Conversation") {
                 conv_at = Some(f + 20);
+            }
+            if e.name == "Apt::InfoDialogue_SetVisible" && matches!(e.args.first(), Some(FeArg::Str(n)) if n == "1") {
+                popup_at = Some(f + 20);
+            }
+            // the world's own pre-game screen: PLAY through the game's handlers
+            if host.world_mode && e.name == "FEManager::OpenAptScreen" && matches!(e.args.first(), Some(FeArg::Str(n)) if n == "PreGameInstructions") {
+                play_at = Some(f + 20);
             }
             if let Some(cb) = cb {
                 println!("  [{f}] -> {cb}: {:?}", game_callback(&mut vm, &mut host, cb));
@@ -918,6 +966,9 @@ pub fn probe(ty: i32) {
     println!("loops {:?}", snap.loops);
     if let Some(a) = vm.img.addr("gDisableCurvedWorld") {
         println!("gDisableCurvedWorld {}", vm.st.mem.r8(a));
+        if let Some(r) = vm.img.addr("gRenderWorld") {
+            println!("gRenderWorld {}", vm.st.mem.r8(r));
+        }
     }
     if std::env::var("EAGL_DBG_RCMODELS").is_ok() {
         // RcCar's CachedModel table (13 per vehicle type: bodies by paint, wheels, ...)
@@ -1004,52 +1055,82 @@ mod tests {
     }
 }
 
-/// Read a guest wide string.
-fn guest_wide(vm: &mut MgVm, a: u32, max: u32) -> String {
-    char::decode_utf16((0..max).map(|i| vm.st.mem.r16(a + 2 * i)).take_while(|&c| c != 0)).map(|c| c.unwrap_or('?')).collect()
+/// Development aid (`EAGL_MG_TP`): put the world's player at `[x, z]` (`CharacterState` position + teleport flag, as
+/// `ConversationManager::ExitConversation` does), with `[x, z, fx, fz]` also facing the point (fx, fz).
+pub fn debug_teleport(vm: &mut MgVm, host: &mut MgHost, v: &[f32]) {
+    let p = vm.call_by_name(host, "GetPlayerCharacter__8WorldManFi", &[world::WORLD_MAN, 0], &[]).unwrap_or(0);
+    if p == 0 || v.len() < 2 {
+        return;
+    }
+    vm.st.mem.wf32(p + 0x180, v[0]);
+    vm.st.mem.wf32(p + 0x188, v[1]);
+    vm.st.mem.w8(p + 0x190, 1);
+    if v.len() == 4 {
+        let a = (v[2] - v[0]).atan2(v[3] - v[1]);
+        vm.call_by_name(host, "Set__7rmAngleFf", &[p + 0x1b0], &[a as f64]).ok();
+        vm.call_by_name(host, "AsDir__7rmAngleCFv", &[p + 0x1a0, p + 0x1b0], &[]).ok();
+    }
 }
 
-/// The conversation screen's queries, answered by the guest's handlers: `ConversationLVHandlers::DoJobLV` (0x8031592c:
-/// 0 name, 1 dialogue text, 2 responses, 3 player select) and `ConversationFSHandlers` (`ConversationOnButtonNext` ->
-/// `ConversationManager::DoNextText`). `buf` is a 0x1000-byte guest scratch buffer. The name comes back as its locale key.
-pub fn conversation_query(vm: &mut MgVm, host: &mut MgHost, buf: u32, name: &str, params: &[(String, String)]) -> Option<Vec<(String, String)>> {
-    let cm = vm.call_by_name(host, "Get__19ConversationManagerFv", &[], &[]).ok()?;
-    if cm == 0 {
+/// Ask the game's own front-end handlers (registered with its `AIP::Broker`): `name?params` goes to the LoadVariables
+/// handler of that name (`Broker::LoadVariables`, the reply decoded from the composer's `name=value&..` text with its
+/// `%25 %26 %3D %2B` escapes; arrays keep their 0x7f delimiters), else to the FS command handler (`Broker::FSCommand`).
+/// `None`: no handler of that name.
+pub fn aip_call(vm: &mut MgVm, host: &mut MgHost, name: &str, params: &str) -> Option<Vec<(String, String)>> {
+    let broker = vm.img.addr("s_pBroker__3AIP").map(|a| vm.r32(a)).unwrap_or(0);
+    if broker == 0 {
         return None;
     }
-    let arg = |k: &str| params.iter().find(|(a, _)| a == k).map(|(_, v)| v.clone());
-    Some(match name {
-        "Conversation_GetName" => {
-            // `BeginConversation` copies the speaker's locale key into the LV handler (+4)
-            let hs = vm.call_by_name(host, "GetInstance__20ConversationHandlersFv", &[], &[]).ok()?;
-            let lv = if hs != 0 { vm.r32(hs + 4) } else { 0 };
-            let key: String = if lv != 0 { (0..64).map(|i| vm.st.mem.r8(lv + 4 + i)).take_while(|&b| b != 0).map(|b| b as char).collect() } else { String::new() };
-            vec![("iCharacterName".to_string(), key)]
+    if host.aip_scratch == 0 {
+        host.aip_scratch = vm.alloc_zeroed(0x2100, 8);
+    }
+    let (q, composer) = (host.aip_scratch, host.aip_scratch + 0x2000);
+    let text = if params.is_empty() { name.to_string() } else { format!("{name}?{params}") };
+    let bytes = text.as_bytes();
+    let n = bytes.len().min(0x1fff);
+    for (i, b) in bytes[..n].iter().enumerate() {
+        vm.st.mem.w8(q + i as u32, *b);
+    }
+    vm.st.mem.w8(q + n as u32, 0);
+    vm.call_by_name(host, "__ct__Q23AIP11CmdComposerFii", &[composer, 0x1000, 0x200], &[]).ok()?;
+    let reply = vm.call_by_name(host, "LoadVariables__Q23AIP6BrokerFPCcRQ23AIP11CmdComposer", &[broker, q, composer], &[]).ok();
+    let out = match reply {
+        Some(p) if p != 0 => {
+            let raw: Vec<u8> = (0..0x10000).map(|i| vm.st.mem.r8(p + i)).take_while(|&b| b != 0).collect();
+            Some(decode_lv(&raw))
         }
-        "Conversation_GetDialogueText" => {
-            vm.st.mem.w16(buf, 0);
-            vm.call_by_name(host, "GetText__19ConversationManagerFPwi", &[cm, buf, 0x800], &[]).ok()?;
-            vec![("iDialogueText".to_string(), guest_wide(vm, buf, 0x800))]
-        }
-        "Conversation_GetResponses" => {
-            let n = vm.call_by_name(host, "GetNumResponses__19ConversationManagerFv", &[cm], &[]).ok()? as i32;
-            let mut list = vec![];
-            for i in 0..n.clamp(0, 8) {
-                vm.st.mem.w16(buf, 0);
-                vm.call_by_name(host, "GetResponse__19ConversationManagerFiPwi", &[cm, i as u32, buf, 0x800], &[]).ok()?;
-                list.push(guest_wide(vm, buf, 0x800));
+        _ => None,
+    };
+    vm.call_by_name(host, "__dt__Q23AIP11CmdComposerFv", &[composer, u32::MAX], &[]).ok();
+    if out.is_some() {
+        return out;
+    }
+    match vm.call_by_name(host, "FSCommand__Q23AIP6BrokerFPCc", &[broker, q], &[]) {
+        Ok(found) if found != 0 => Some(vec![]),
+        _ => None,
+    }
+}
+
+/// `a=1&b=x%26y` -> [(a, 1), (b, x&y)] (UTF-8 text).
+fn decode_lv(raw: &[u8]) -> Vec<(String, String)> {
+    let unescape = |s: &[u8]| {
+        let mut o = Vec::with_capacity(s.len());
+        let mut i = 0;
+        while i < s.len() {
+            if s[i] == b'%' && i + 2 < s.len() {
+                if let Ok(v) = u8::from_str_radix(std::str::from_utf8(&s[i + 1..i + 3]).unwrap_or("zz"), 16) {
+                    o.push(v);
+                    i += 3;
+                    continue;
+                }
             }
-            vec![("iResponse".to_string(), list.join("\u{7f}"))] // the front end's array delimiter (`fe_host::DELIM`)
+            o.push(s[i]);
+            i += 1;
         }
-        "Conversation_OnPlayerSelect" => {
-            let i: u32 = arg("iIndexSelected").and_then(|v| v.parse().ok()).unwrap_or(0);
-            let next = vm.call_by_name(host, "ProcessPlayerResponse__19ConversationManagerFi", &[cm, i], &[]).ok()?;
-            vec![("iHasNextNode".to_string(), next.to_string())]
-        }
-        "ConversationOnButtonNext" => {
-            vm.call_by_name(host, "DoNextText__19ConversationManagerFv", &[cm], &[]).ok()?;
-            vec![]
-        }
-        _ => return None,
-    })
+        String::from_utf8_lossy(&o).into_owned()
+    };
+    raw.split(|&b| b == b'&').filter(|p| !p.is_empty()).map(|p| match p.iter().position(|&b| b == b'=') {
+        Some(e) => (unescape(&p[..e]), unescape(&p[e + 1..])),
+        None => (unescape(p), String::new()),
+    }).collect()
 }

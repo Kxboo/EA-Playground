@@ -200,6 +200,8 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
     let args=parse_params(params);
     let arg=|k:&str|args.iter().find(|(a,_)|a==k).map(|(_,v)|v.clone());
     vm.fe.calls.push(format!("{name}?{params}"));
+    // the hosted game's own handlers first (`mg_session::guest_lv`)
+    if let Some(r)=crate::mg_session::guest_lv(name,params){return r}
     // Post-game screen: the verified shared port answers the queries and the button commands.
     if name.starts_with("PostGame_")||name.starts_with("EndTourney_")||name=="MultiPlayer_PostGameOnSelect"{
         let player=arg("iPlayerId").and_then(|v|v.parse().ok()).unwrap_or(0);
@@ -210,11 +212,7 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
     if vm.fe.vm_session{
         if let Some(r)=vm.fe.mg_lv.get(name){return r.clone()}
     }
-    // queries the hosted game answers itself (the conversation screen); the speaker's name comes back as a locale key
-    if let Some(mut r)=crate::mg_session::guest_lv(name,&args){
-        for (k,v) in r.iter_mut(){if k=="iCharacterName"{*v=vm.locale_string(v);}}
-        return r
-    }
+
     match name{
         // `MinigameLVHandlers::GetNumberOfHuds` (0x80319520): Dart / Paper `GetNumHuds`, RcCars +0x16c, else 0
         "GetNumberOfHuds"=>vec![("iNumHuds".into(),vm.fe.mg_num_huds.to_string())],

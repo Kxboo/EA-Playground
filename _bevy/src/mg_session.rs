@@ -34,8 +34,9 @@ struct MgJoint {
     ptr: u32,
     bone: usize,
 }
+/// A pooled model-draw entity: the `.1`-th draw of model `.0` this frame.
 #[derive(Component)]
-struct MgProp(usize);
+struct MgProp(String, usize);
 
 struct Loaded {
     player: character::CharacterData,
@@ -69,7 +70,8 @@ pub struct Session {
     pub state: SessionState,
     pub log: Vec<String>,
     chars: HashMap<u32, (Entity, Vec<Entity>)>,
-    props: Vec<(Entity, String)>,
+    /// Entities per drawn model, reused frame to frame (the k-th draw of a model takes the k-th entity).
+    props: HashMap<String, Vec<Entity>>,
     prop_models: HashMap<String, assets::Uploaded>,
     kid_uploads: Vec<Option<assets::Uploaded>>,
     default_upload: Option<assets::Uploaded>,
@@ -88,8 +90,6 @@ pub struct Session {
     /// The minigame's music track (`Audio::PlayMusic`), playing while the session lives.
     music: Option<crate::playback::Music>,
     pub fe: Option<mgvm::FeLaunch>,
-    /// Guest scratch buffer for the conversation screen's wide strings (`guest_lv`).
-    conv_buf: u32,
 }
 
 #[derive(PartialEq, Eq, Clone, Debug)]
@@ -207,7 +207,7 @@ impl Session {
             state: SessionState::Loading,
             log: vec![],
             chars: HashMap::new(),
-            props: vec![],
+            props: HashMap::new(),
             prop_models: HashMap::new(),
             kid_uploads: vec![],
             default_upload: None,
@@ -219,7 +219,6 @@ impl Session {
             gesture: Default::default(),
             auto_postgame: None,
             music: None,
-            conv_buf: 0,
             auto_pause: None,
             fe: None,
         }
@@ -610,6 +609,12 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
     }
     // the hosted world starts and ends its own minigames
     if host.world_mode {
+        // EAGL_MG_TP="frame:x,z[,fx,fz]": put the player there (testing aid)
+        if let Some((at, v)) = std::env::var("EAGL_MG_TP").ok().and_then(|v| v.split_once(':').map(|(a, b)| (a.parse::<i32>().unwrap_or(-1), b.split(',').filter_map(|t| t.parse::<f32>().ok()).collect::<Vec<_>>()))) {
+            if at == s.frames {
+                mgvm::debug_teleport(vm, host, &v);
+            }
+        }
         s.ty = host.minigame_type;
         if std::env::var("EAGL_MG_DEBUG").is_ok() && s.frames % 60 == 0 {
             let pw = vm.r32(mgvm::snapshot::WORLD_MAN + 0x88);
@@ -780,13 +785,23 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
         return;
     }
     let snapshot = mgvm::snapshot::snapshot(vm, host);
-    // the minigame's own curvature (restored at teardown)
-    if let (Some(r), Some(g)) = (snapshot.curved_radius, world_game.as_mut()) {
-        if g.world_radius != r {
-            if s.world_radius.is_none() {
-                s.world_radius = Some(g.world_radius);
+    // the minigame's own curvature (restored at teardown, or when the hosted world's minigame ends); a game that turns
+    // the world off (`gRenderWorld`, RcCars) draws its own scene - track, cars, camera - unbent
+    let want = if !snapshot.render_world { Some(0.) } else { snapshot.curved_radius };
+    if let Some(g) = world_game.as_mut() {
+        match want {
+            Some(r) if g.world_radius != r => {
+                if s.world_radius.is_none() {
+                    s.world_radius = Some(g.world_radius);
+                }
+                g.world_radius = r;
             }
-            g.world_radius = r;
+            None => {
+                if let Some(r) = s.world_radius.take() {
+                    g.world_radius = r;
+                }
+            }
+            _ => {}
         }
     }
     if let (Some(bd), Some((eye, target, _))) = (backdrop.as_mut(), snapshot.camera) {
@@ -835,6 +850,30 @@ fn minigame_lv(vm: &mut mgvm::MgVm, host: &mut mgvm::MgHost, ty: i32, mg: u32) -
 fn forward_events(vm: &mut crate::apt_vm::Vm, events: &[mgvm::FeEvent], s: &mut Session) {
     use crate::apt_vm::V;
     vm.fe.vm_session = true;
+    // the hosted world's screens query the game while they run, which they can only do from the front end's own tick
+    // (`guest_scope`): defer the calls there, in order
+    // A screen opened right after another (the world reopening its HUD, then the sticker award) waits until the first
+    // has loaded, and everything after it with it.
+    let defer = s.world;
+    let wait = std::cell::Cell::new(0u32);
+    let opened = std::cell::Cell::new(false);
+    let call = |vm: &mut crate::apt_vm::Vm, f: &str, args: Vec<V>| {
+        if !defer {
+            vm.call_exposed(f, args);
+            return;
+        }
+        if matches!(f, "OpenScreen" | "ReplaceScreen" | "CloseScreen" | "ClearScreenStack") {
+            if opened.get() {
+                wait.set(wait.get() + 30);
+            }
+            opened.set(opened.get() || f != "CloseScreen");
+        }
+        if wait.get() == 0 {
+            vm.fe.todo.push((f.to_string(), args));
+        } else {
+            vm.fe.later.push((wait.get(), f.to_string(), args));
+        }
+    };
     let mut replace_next = false;
     for (i, e) in events.iter().enumerate() {
         if std::env::var("EAGL_MG_DEBUG").is_ok() {
@@ -854,13 +893,13 @@ fn forward_events(vm: &mut crate::apt_vm::Vm, events: &[mgvm::FeEvent], s: &mut 
                     vm.fe.hud_loaded = false;
                 }
                 let f = if std::mem::take(&mut replace_next) { "ReplaceScreen" } else { "OpenScreen" };
-                vm.call_exposed(f, vec![V::Str(str_arg(0).as_str().into())]);
+                call(vm, f, vec![V::Str(str_arg(0).as_str().into())]);
             }
             // closing a screen and opening the next in the same frame swaps them; popping first would briefly
             // reveal (and start reloading) whatever screen lies below
             "FEManager::CloseAptScreen" if events[i + 1..].iter().find(|n| n.name.starts_with("FEManager::")).is_some_and(|n| n.name == "FEManager::OpenAptScreen") => replace_next = true,
             "FEManager::CloseAptScreen" => {
-                vm.call_exposed("CloseScreen", vec![]);
+                call(vm, "CloseScreen", vec![]);
             }
             // the world's own overlays (the conversation box) are plain overlays; the pause menu pauses
             "FEManager::OpenAptOverlay" if str_arg(0) != "PauseMenu" => vm.fe.todo.push(("OpenOverlay".into(), vec![V::Str(str_arg(0).as_str().into())])),
@@ -874,10 +913,10 @@ fn forward_events(vm: &mut crate::apt_vm::Vm, events: &[mgvm::FeEvent], s: &mut 
             }
             "FEManager::CloseAptOverlay" => vm.fe.todo.push(("CloseOverlay".into(), vec![])),
             "FEManager::ReplaceAptScreen" => {
-                vm.call_exposed("ReplaceScreen", vec![V::Str(str_arg(0).as_str().into())]);
+                call(vm, "ReplaceScreen", vec![V::Str(str_arg(0).as_str().into())]);
             }
             "FEManager::ClearScreenStack" => {
-                vm.call_exposed("ClearScreenStack", vec![]);
+                call(vm, "ClearScreenStack", vec![]);
             }
             "PostGameInfo" => {
                 let words: Vec<u32> = e.args.iter().skip(1).map(|a| match a {
@@ -911,7 +950,7 @@ fn forward_events(vm: &mut crate::apt_vm::Vm, events: &[mgvm::FeEvent], s: &mut 
                         mgvm::FeArg::Int(i) => V::Num(*i as f64),
                         mgvm::FeArg::Float(x) => V::Num(*x as f64),
                     }).collect();
-                    vm.call_exposed(f, args);
+                    call(vm, f, args);
                 }
             }
         }
@@ -1025,38 +1064,43 @@ fn present(
             }
         }
     }
-    // model draws (balls, props): one pooled entity per draw call
-    for (i, (name, m)) in snapshot.draws.iter().enumerate() {
-        if i >= s.props.len() || s.props[i].1 != *name {
-            // the pool from here on no longer matches: drop all of it (a stale entity would keep its old model and take
-            // the pose of whatever draw now has its index)
-            for (old, _) in s.props.drain(i.min(s.props.len())..) {
-                commands.entity(old).despawn();
-            }
-            if !s.prop_models.contains_key(name) {
-                if let Some(src) = find_model_source(name) {
-                    if let Ok(model) = assets::build(&src, &crate::model::Schemas::embedded()) {
-                        let up = assets::upload(&model, &mut meshes, &mut materials, &mut images, false);
-                        s.prop_models.insert(name.clone(), up);
-                    }
+    // model draws (balls, props): pooled entities per model, so draws that come and go (blinking power-ups) never make
+    // the others respawn, and an entity only ever shows its own model
+    let mut seen: HashMap<&str, usize> = HashMap::new();
+    for (name, m) in snapshot.draws.iter() {
+        let k = seen.entry(name.as_str()).or_insert(0);
+        *k += 1;
+        if s.props.get(name).map_or(0, |v| v.len()) >= *k {
+            continue;
+        }
+        if !s.prop_models.contains_key(name) {
+            if let Some(src) = find_model_source(name) {
+                if let Ok(model) = assets::build(&src, &crate::model::Schemas::embedded()) {
+                    let up = assets::upload(&model, &mut meshes, &mut materials, &mut images, false);
+                    s.prop_models.insert(name.clone(), up);
                 }
             }
-            if std::env::var("EAGL_MG_DEBUG").is_ok() {
-                eprintln!("[mg] prop {i} {name} found={} pos {:?}", s.prop_models.contains_key(name), &m[12..15]);
-            }
-            let e = match s.prop_models.get(name) {
-                Some(up) => assets::spawn(&mut commands, up, (MgEntity, MgProp(i), mat_to_transform(radius, m)), None),
-                None => commands.spawn((MgEntity, MgProp(i), Transform::default(), Visibility::Hidden)).id(),
-            };
-            s.props.push((e, name.clone()));
         }
+        if std::env::var("EAGL_MG_DEBUG").is_ok() {
+            eprintln!("[mg] prop {name} #{} found={} pos {:?}", *k - 1, s.prop_models.contains_key(name), &m[12..15]);
+        }
+        let tag = (MgEntity, MgProp(name.clone(), *k - 1));
+        let e = match s.prop_models.get(name) {
+            Some(up) => assets::spawn(&mut commands, up, (tag, mat_to_transform(radius, m)), None),
+            None => commands.spawn((tag, Transform::default(), Visibility::Hidden)).id(),
+        };
+        s.props.entry(name.clone()).or_default().push(e);
+    }
+    let mut by_name: HashMap<&str, Vec<&[f32; 16]>> = HashMap::new();
+    for (name, m) in snapshot.draws.iter() {
+        by_name.entry(name.as_str()).or_default().push(m);
     }
     if std::env::var("EAGL_MG_DEBUG").is_ok() && s.frames % 120 == 0 {
         eprintln!("[mg] frame {} camera {:?} fov {} radius {radius}", s.frames, snapshot.camera, snapshot.fov);
         eprintln!("[mg] frame {} draws {:?}", s.frames, snapshot.draws.iter().map(|(n, m)| (n.as_str(), [m[12], m[13], m[14]])).collect::<Vec<_>>());
     }
     for (p, mut t, mut v) in &mut props {
-        if let Some((name, m)) = snapshot.draws.get(p.0) {
+        if let Some((name, m)) = by_name.get(p.0.as_str()).and_then(|l| l.get(p.1)).map(|m| (&p.0, *m)) {
             *t = mat_to_transform(radius, m);
             // development aid: leave out models whose name contains this text
             let hidden = std::env::var("EAGL_MG_HIDE").is_ok_and(|k| name.contains(&k));
@@ -1191,21 +1235,19 @@ pub fn guest_scope(s: Option<&mut Session>) -> GuestScope {
     GuestScope
 }
 
-/// Front-end LoadVariables / FS commands the guest's own handlers answer synchronously (`mgvm::conversation_query`).
-/// `None`: not a guest query (or no guest running).
-pub fn guest_lv(name: &str, params: &[(String, String)]) -> Option<Vec<(String, String)>> {
-    if !name.starts_with("Conversation") {
-        return None;
-    }
+/// Front-end LoadVariables / FS commands the hosted game answers itself, through its own handler broker
+/// (`mgvm::aip_call`): everything while the single-player world runs, the conversation box and the World HUD's info
+/// dialogue otherwise. `None`: not the game's (or no game running).
+pub fn guest_lv(name: &str, params: &str) -> Option<Vec<(String, String)>> {
     let ptr = GUEST.with(|g| g.get());
     if ptr.is_null() {
         return None;
     }
     // SAFETY: set by `guest_scope` from a live `&mut Session` for the duration of the front end's tick (same thread).
     let s = unsafe { &mut *ptr };
-    let (vm, host) = s.vm.as_mut()?;
-    if s.conv_buf == 0 {
-        s.conv_buf = vm.alloc_zeroed(0x1000, 4);
+    if !s.world && !name.starts_with("Conversation") && !name.starts_with("InfoDialogue_") {
+        return None;
     }
-    mgvm::conversation_query(vm, host, s.conv_buf, name, params)
+    let (vm, host) = s.vm.as_mut()?;
+    mgvm::aip_call(vm, host, name, params)
 }
