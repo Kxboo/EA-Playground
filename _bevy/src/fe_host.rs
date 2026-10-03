@@ -210,6 +210,11 @@ pub fn game_call(vm:&mut Vm,name:&str,params:&str)->Vec<(String,String)>{
     if vm.fe.vm_session{
         if let Some(r)=vm.fe.mg_lv.get(name){return r.clone()}
     }
+    // queries the hosted game answers itself (the conversation screen); the speaker's name comes back as a locale key
+    if let Some(mut r)=crate::mg_session::guest_lv(name,&args){
+        for (k,v) in r.iter_mut(){if k=="iCharacterName"{*v=vm.locale_string(v);}}
+        return r
+    }
     match name{
         // `MinigameLVHandlers::GetNumberOfHuds` (0x80319520): Dart / Paper `GetNumHuds`, RcCars +0x16c, else 0
         "GetNumberOfHuds"=>vec![("iNumHuds".into(),vm.fe.mg_num_huds.to_string())],

@@ -57,6 +57,8 @@ pub struct Session {
     world_radius: Option<f32>,
     /// Launched from world play (Free Throw at a hoop) rather than the front end.
     from_world: bool,
+    /// The whole single-player game is hosted (`mgvm::WORLD`): the world, its conversations and the minigames it starts.
+    pub world: bool,
     /// Looping sounds playing for the guest's loop instances (RcCars engines, the firecracker fuse).
     voices: HashMap<String, crate::playback::Loop>,
     pub ty: i32,
@@ -86,6 +88,8 @@ pub struct Session {
     /// The minigame's music track (`Audio::PlayMusic`), playing while the session lives.
     music: Option<crate::playback::Music>,
     pub fe: Option<mgvm::FeLaunch>,
+    /// Guest scratch buffer for the conversation screen's wide strings (`guest_lv`).
+    conv_buf: u32,
 }
 
 #[derive(PartialEq, Eq, Clone, Debug)]
@@ -193,6 +197,7 @@ impl Session {
         Session {
             world_radius: None,
             from_world: false,
+            world: ty == mgvm::WORLD,
             voices: HashMap::new(),
             ty,
             humans,
@@ -214,6 +219,7 @@ impl Session {
             gesture: Default::default(),
             auto_postgame: None,
             music: None,
+            conv_buf: 0,
             auto_pause: None,
             fe: None,
         }
@@ -396,7 +402,7 @@ fn build(mut commands: Commands, s: Option<NonSendMut<Session>>, game: Option<Re
     let t0 = std::time::Instant::now();
     let (ty, humans, fe) = (s.ty, s.humans, s.fe.clone());
     let start = |vm: &mut mgvm::MgVm, host: &mut mgvm::MgHost| match &fe {
-        Some(l) if std::env::var("EAGL_MG_ALLAI").is_err() => mgvm::launch_fe(vm, host, l),
+        Some(l) if std::env::var("EAGL_MG_ALLAI").is_err() && ty != mgvm::WORLD => mgvm::launch_fe(vm, host, l),
         _ => mgvm::launch(vm, host, ty, humans),
     };
     match mgvm::boot().and_then(|(mut vm, mut host)| start(&mut vm, &mut host).map(|_| (vm, host))) {
@@ -602,6 +608,15 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
         s.state = SessionState::Failed(e);
         return;
     }
+    // the hosted world starts and ends its own minigames
+    if host.world_mode {
+        s.ty = host.minigame_type;
+        if std::env::var("EAGL_MG_DEBUG").is_ok() && s.frames % 60 == 0 {
+            let pw = vm.r32(mgvm::snapshot::WORLD_MAN + 0x88);
+            let state = if pw != 0 { vm.r32(pw + 0x44) } else { 0 };
+            eprintln!("[mg] world f{} ms {ms} state {state:#x} minigame {} log {:?}", s.frames, s.ty, host.log.drain(..).collect::<Vec<_>>());
+        }
+    }
     // music: the minigame's track replaces the world's; "world" (EndMinigame) hands back to it
     if let Some(track) = host.music.take() {
         s.music = None;
@@ -693,7 +708,9 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
     let (vm, host) = s.vm.as_mut().unwrap();
     if std::env::var("EAGL_MG_DEBUG").is_ok() && s.frames % 300 == 0 {
         let mg = vm.r32(mgvm::snapshot::WORLD_MAN + 0x90);
-        eprintln!("[mg] frame {} state {} ms {}", s.frames, vm.r32(mg + 0x34), ms);
+        if mg != 0 {
+            eprintln!("[mg] frame {} state {} ms {}", s.frames, vm.r32(mg + 0x34), ms);
+        }
     }
     for c in &cmds {
         let r = match c.as_str() {
@@ -747,8 +764,9 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
         }
     }
     let (vm, host) = s.vm.as_mut().unwrap();
-    // `WorldMan::EndMinigame` destroyed the minigame: hand the screen back to the front end and leave
-    if vm.r32(mgvm::snapshot::WORLD_MAN + 0x90) == 0 {
+    // `WorldMan::EndMinigame` destroyed the minigame: hand the screen back to the front end and leave (the hosted
+    // world carries on by itself)
+    if !host.world_mode && vm.r32(mgvm::snapshot::WORLD_MAN + 0x90) == 0 {
         if let Some(v) = fe.as_mut() {
             let fe = &mut v.0.vm.fe;
             for (delay, name, args) in std::mem::take(&mut fe.after_exit) {
@@ -827,9 +845,10 @@ fn forward_events(vm: &mut crate::apt_vm::Vm, events: &[mgvm::FeEvent], s: &mut 
             _ => String::new(),
         };
         match e.name.as_str() {
-            "FEManager::OpenAptScreen" if str_arg(0) == "WorldHud" => s.skip_close += 1,
+            // a minigame started from the world front end keeps that front end's own World HUD; the hosted world drives its own
+            "FEManager::OpenAptScreen" if str_arg(0) == "WorldHud" && !s.world => s.skip_close += 1,
             "FEManager::CloseAptScreen" if s.skip_close > 0 => s.skip_close -= 1,
-            n if n.starts_with("Apt::WorldHud_") => {}
+            n if n.starts_with("Apt::WorldHud_") && !s.world => {}
             "FEManager::OpenAptScreen" => {
                 if str_arg(0).ends_with("Hud") {
                     vm.fe.hud_loaded = false;
@@ -843,6 +862,8 @@ fn forward_events(vm: &mut crate::apt_vm::Vm, events: &[mgvm::FeEvent], s: &mut 
             "FEManager::CloseAptScreen" => {
                 vm.call_exposed("CloseScreen", vec![]);
             }
+            // the world's own overlays (the conversation box) are plain overlays; the pause menu pauses
+            "FEManager::OpenAptOverlay" if str_arg(0) != "PauseMenu" => vm.fe.todo.push(("OpenOverlay".into(), vec![V::Str(str_arg(0).as_str().into())])),
             "FEManager::OpenAptOverlay" => {
                 vm.fe.paused = true;
                 vm.fe.pause_req = None;
@@ -1148,4 +1169,43 @@ mod track_lane_tests {
             println!("{logical:?} -> display {p:?}: {best:?}");
         }
     }
+}
+
+thread_local! {
+    /// The running session while the APT front end ticks (`guest_scope`), for queries answered by the guest itself.
+    static GUEST: std::cell::Cell<*mut Session> = const { std::cell::Cell::new(std::ptr::null_mut()) };
+}
+
+/// Clears the guest slot when the front end's tick ends.
+pub struct GuestScope;
+
+impl Drop for GuestScope {
+    fn drop(&mut self) {
+        GUEST.with(|g| g.set(std::ptr::null_mut()));
+    }
+}
+
+/// Make the session's guest reachable from front-end calls (`guest_lv`) until the returned scope drops.
+pub fn guest_scope(s: Option<&mut Session>) -> GuestScope {
+    GUEST.with(|g| g.set(s.map_or(std::ptr::null_mut(), |s| s as *mut Session)));
+    GuestScope
+}
+
+/// Front-end LoadVariables / FS commands the guest's own handlers answer synchronously (`mgvm::conversation_query`).
+/// `None`: not a guest query (or no guest running).
+pub fn guest_lv(name: &str, params: &[(String, String)]) -> Option<Vec<(String, String)>> {
+    if !name.starts_with("Conversation") {
+        return None;
+    }
+    let ptr = GUEST.with(|g| g.get());
+    if ptr.is_null() {
+        return None;
+    }
+    // SAFETY: set by `guest_scope` from a live `&mut Session` for the duration of the front end's tick (same thread).
+    let s = unsafe { &mut *ptr };
+    let (vm, host) = s.vm.as_mut()?;
+    if s.conv_buf == 0 {
+        s.conv_buf = vm.alloc_zeroed(0x1000, 4);
+    }
+    mgvm::conversation_query(vm, host, s.conv_buf, name, params)
 }

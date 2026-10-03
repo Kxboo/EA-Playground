@@ -109,8 +109,10 @@ pub fn leave(world:&mut World){
     world.remove_non_send_resource::<AptViewNs>();
 }
 
-pub fn view_step(mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option<ResMut<crate::game::Game>>,mut mode:ResMut<AppMode>,mut backdrop:Option<ResMut<crate::game::Backdrop>>,mut commands:Commands,tbres:Option<Res<crate::tb_session::TbActive>>,v:Option<NonSendMut<AptViewNs>>,time:Res<Time<Real>>,keys:Res<ButtonInput<KeyCode>>,mouse:Res<ButtonInput<MouseButton>>,windows:Query<&Window>,mut settings:ResMut<WinitSettings>,mut redraw:MessageWriter<RequestRedraw>){
+pub fn view_step(mut mgs:Option<NonSendMut<crate::mg_session::Session>>,mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option<ResMut<crate::game::Game>>,mut mode:ResMut<AppMode>,mut backdrop:Option<ResMut<crate::game::Backdrop>>,mut commands:Commands,tbres:Option<Res<crate::tb_session::TbActive>>,v:Option<NonSendMut<AptViewNs>>,time:Res<Time<Real>>,keys:Res<ButtonInput<KeyCode>>,mouse:Res<ButtonInput<MouseButton>>,windows:Query<&Window>,mut settings:ResMut<WinitSettings>,mut redraw:MessageWriter<RequestRedraw>){
     let Some(mut v)=v else{return};let v=&mut v.0;
+    // the hosted game answers some of the screens' queries while they run
+    let _guest=crate::mg_session::guest_scope(mgs.as_deref_mut());
     settings.focused_mode=UpdateMode::Continuous;settings.unfocused_mode=UpdateMode::Continuous;redraw.write(RequestRedraw);
     if v.error.is_some(){return}
     if keys.just_pressed(KeyCode::F2){v.paused=!v.paused;}

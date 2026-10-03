@@ -259,11 +259,13 @@ pub struct Pad {
     /// WPAD button bits: LEFT 0x1, RIGHT 0x2, DOWN 0x4, UP 0x8, PLUS 0x10, TWO 0x100, ONE 0x200, B 0x400, A 0x800, MINUS 0x1000, Z 0x2000, C 0x4000, HOME 0x8000.
     pub buttons: u16,
     pub acc: [i16; 3],
+    /// Nunchuk stick (x, y; -128..127) when the Nunchuk is plugged in (the playground walks with it).
+    pub stick: Option<[i8; 2]>,
 }
 
 impl Default for Pad {
     fn default() -> Self {
-        Pad { active: false, buttons: 0, acc: [512, 512, 616] }
+        Pad { active: false, buttons: 0, acc: [512, 512, 616], stick: None }
     }
 }
 
@@ -285,6 +287,16 @@ pub fn write_pads(vm: &mut V, pads: &[Pad; 4]) {
         }
         vm.st.mem.w8(a + 0x2c, 0);
         vm.st.mem.w8(a + 0x2d, 0);
+        // `CFreeStylePadModeHandler::Sample`: mode 3, extension flag +0x2c, Nunchuk acceleration +0x2e, stick +0x34 / +0x35
+        if let (true, Some(st)) = (p.active, p.stick) {
+            vm.w32(a, 3);
+            vm.st.mem.w8(a + 0x2c, 1);
+            for (k, v) in [0i16, 0, 104].iter().enumerate() {
+                vm.st.mem.w16(a + 0x2e + 2 * k as u32, *v as u16);
+            }
+            vm.st.mem.w8(a + 0x34, st[0] as u8);
+            vm.st.mem.w8(a + 0x35, st[1] as u8);
+        }
     }
 }
 

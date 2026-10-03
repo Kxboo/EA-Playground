@@ -14,6 +14,8 @@ pub struct MgHost {
     pub log: Vec<String>,
     /// `MGID` -> minigame type: 0 DartShootout, 1 RcCars, 2 Tetherball, 3 Dodgeball, 4 Footie, 5 PaperAirplanes, 6 Wallball, 8 FreeThrow.
     pub minigame_type: i32,
+    /// The whole single-player game runs (`launch` type 99): `minigame_type` follows the minigame the world started.
+    pub world_mode: bool,
     pub vfs: vfs::Vfs,
     pub fe_manager: u32,
     pub scene_options: u32,
@@ -366,6 +368,12 @@ fn team_layout(ty: i32, humans: usize) -> Vec<(u32, usize, u32)> {
 pub fn launch(vm: &mut MgVm, host: &mut MgHost, ty: i32, humans: usize) -> Result<(), String> {
     host.minigame_type = ty;
     host.placeables_at_launch = snapshot::placeable_flags(vm, host);
+    if ty == WORLD {
+        // no minigame: the playground itself, player 1 on the Wii Remote; the world's own conversations start the games
+        host.world_mode = true;
+        host.pads[0].active = true;
+        return Ok(());
+    }
     let wm = world::WORLD_MAN;
     let ids = vm.img.addr("MinigameIDs").ok_or("MinigameIDs")?;
     let mgid = vm.r32(ids + 4 * ty as u32);
@@ -500,7 +508,30 @@ pub fn game_callback(vm: &mut MgVm, host: &mut MgHost, name: &str) -> Result<boo
 }
 
 /// One game frame: pads -> guest, `WorldMan::Update(ms)`, then the minigame's draw pass.
+/// `launch` type for the playground itself (world play, single player).
+pub const WORLD: i32 = 99;
+
+/// The type of the minigame the world is running (`WorldMan + 0x90`, by its vtable), or `WORLD`.
+pub fn running_minigame(vm: &mut MgVm) -> i32 {
+    let mg = vm.r32(world::WORLD_MAN + 0x90);
+    if mg == 0 {
+        return WORLD;
+    }
+    let vt = vm.r32(mg);
+    world::MINIGAME_CLASSES.iter().find(|(_, c)| vm.img.addr(&format!("__vt__{}{}", c.len(), c)) == Some(vt)).map_or(WORLD, |(t, _)| *t)
+}
+
 pub fn frame(vm: &mut MgVm, host: &mut MgHost, ms: i32) -> Result<(), String> {
+    if host.world_mode {
+        let ty = running_minigame(vm);
+        if ty != host.minigame_type {
+            host.log.push(format!("world: minigame {} -> {ty}", host.minigame_type));
+            if ty != WORLD {
+                host.placeables_at_launch = snapshot::placeable_flags(vm, host);
+            }
+            host.minigame_type = ty;
+        }
+    }
     // GameState::Update -> STATEFN_UPDATE_Playground order: pads, controllers, conga, AI, world, cameras
     hooks::write_pads(vm, &host.pads);
     if std::env::var("EAGL_DBG_DRAWS").is_ok() {
@@ -535,10 +566,13 @@ pub fn frame(vm: &mut MgVm, host: &mut MgHost, ms: i32) -> Result<(), String> {
     if ae != 0 {
         vm.call_by_name(host, "Update__11AncientEvilFi", &[ae, ms as u32], &[])?;
     }
-    // the renderer would advance the playground's fade effect (PlaygroundWorld + 0xff0)
+    // the renderer's FullScreenEffectsManager (an opaque stand-in here) would advance the playground's fades:
+    // the intro / area fade (PlaygroundWorld + 0x8b0) and the minigame fade (+ 0xff0)
     let pw = vm.r32(world::WORLD_MAN + 0x88);
     if pw != 0 {
-        vm.call_by_name(host, "Update__Q23Ren18FadeToColourEffectFi", &[pw + 0xff0, ms as u32], &[])?;
+        for fade in [0x8b0, 0xff0] {
+            vm.call_by_name(host, "Update__Q23Ren18FadeToColourEffectFi", &[pw + fade, ms as u32], &[])?;
+        }
     }
     vm.call_by_name(host, "Update__8WorldManFi", &[world::WORLD_MAN, ms as u32], &[])?;
     physhooks::dispatch_contacts(host, vm)?;
@@ -567,6 +601,11 @@ pub fn probe(ty: i32) {
             let list = |s: Option<&str>| s.unwrap_or("").split(',').filter_map(|v| v.trim().parse().ok()).collect::<Vec<i32>>();
             let fe = FeLaunch { ty, avatars: list(parts.next()), teams: list(parts.next()), rules: None };
             launch_fe(&mut vm, &mut host, &fe)
+        }
+        // type 99: no minigame - the playground itself (world play), walking with the Nunchuk (`EAGL_MG_STICK="from-to:x,y;.."`)
+        Err(_) if ty == WORLD => {
+            host.pads[0].stick = std::env::var("EAGL_MG_STICK").ok().map(|_| [0, 0]);
+            launch(&mut vm, &mut host, ty, 1)
         }
         Err(_) => launch(&mut vm, &mut host, ty, 1),
     };
@@ -608,6 +647,8 @@ pub fn probe(ty: i32) {
     let mut mg = vm.r32(world::WORLD_MAN + 0x90);
     // EAGL_MG_POSTGAME=replay|done: press that post-game button 30 frames after the screen opens
     let mut postgame_at: Option<i32> = None;
+    let mut conv_at: Option<i32> = None;
+    let mut conv_buf = 0u32;
     for f in 0..frames {
         let now = vm.r32(world::WORLD_MAN + 0x90);
         if now != mg {
@@ -650,6 +691,40 @@ pub fn probe(ty: i32) {
                     }
                 }
             }
+        }
+        if host.pads[0].stick.is_some() {
+            let mut st = [0i8; 2];
+            for part in std::env::var("EAGL_MG_STICK").unwrap_or_default().split(';') {
+                if let Some((range, v)) = part.split_once(':') {
+                    if let Some((a, z)) = range.split_once('-') {
+                        if let (Ok(a), Ok(z)) = (a.parse::<i32>(), z.parse::<i32>()) {
+                            let v: Vec<i8> = v.split(',').filter_map(|t| t.parse().ok()).collect();
+                            if f >= a && f < z && v.len() == 2 {
+                                st = [v[0], v[1]];
+                            }
+                        }
+                    }
+                }
+            }
+            host.pads[0].stick = Some(st);
+            if std::env::var("EAGL_DBG_WORLD").is_ok() && f % 50 == 0 {
+                let wm = vm.r32(0x805e_83ac);
+                let cm = if wm != 0 { vm.r32(wm + 0x18) } else { 0 };
+                let c = vm.call_by_name(&mut host, "Get__10ControllerFi", &[0], &[]).unwrap_or(0);
+                println!("  world f{f}: wm {wm:#x} paused {} control {:#x} stick {:#x},{:#x} state {}", if wm != 0 { vm.st.mem.r8(wm + 0x24) } else { 0 }, if cm != 0 { vm.r32(cm + 0xc0) } else { 0 }, vm.st.mem.r8(c + 0x250), vm.st.mem.r8(c + 0x251), vm.call_by_name(&mut host, "GetCurrentControllerState__10ControllerCFv", &[c], &[]).unwrap_or(0));
+            }
+        }
+        if std::env::var("EAGL_DBG_CTL").is_ok() && f % 50 == 0 {
+            let c = vm.call_by_name(&mut host, "Get__10ControllerFi", &[0], &[]).unwrap_or(0);
+            let sp = vm.r32(c + 0x244);
+            let rows = vm.r32(c + 0xca6c);
+            let st: Vec<u32> = (0..4).map(|i| vm.r32(c + 0x144 + 4 * i)).collect();
+            let rows_state: Vec<(u32, u32, u32)> = (0..rows.min(400)).map(|i| { let r = c + 100 * i; (vm.r32(r + 0x2b0), vm.r32(r + 0x2cc), vm.r32(r + 0x26c)) }).take(60).collect();
+            let pw = vm.r32(world::WORLD_MAN + 0x88);
+            if pw != 0 {
+                println!("  pw {pw:#x} state {:#x} fade {} / {} paused {} sp-state {}", vm.r32(pw + 0x44), vm.r32(pw + 0x8b0 + 0x1c), vm.r32(pw + 0x8b0 + 0x20), vm.st.mem.r8(pw + 0x24), { let a = vm.img.addr("mInstance__16CharacterProfile").unwrap_or(0); let cp = vm.r32(a); vm.r32(cp + 0x54) });
+            }
+            println!("  ctl f{f}: sp {sp} stack {st:x?} rows {rows} held {:#x} port {} state31 rows {rows_state:x?}", vm.r32(c + 0x264), vm.r32(c + 0x254));
         }
         // EAGL_DBG_EV="6c,63": controller 0 action events (hex ids) whenever one is active
         if let Ok(spec) = std::env::var("EAGL_DBG_EV") {
@@ -753,6 +828,24 @@ pub fn probe(ty: i32) {
                 println!("  [{f}] sound {c} {v}");
             }
         }
+        // stand in for the conversation screen: show each node, pick response `EAGL_MG_CONV` (default 0)
+        if conv_at == Some(f) {
+            conv_at = None;
+            if conv_buf == 0 {
+                conv_buf = vm.alloc_zeroed(0x1000, 4);
+            }
+            let q = |vm: &mut MgVm, host: &mut MgHost, n: &str, p: &[(String, String)]| conversation_query(vm, host, conv_buf, n, p).unwrap_or_default();
+            let name = q(&mut vm, &mut host, "Conversation_GetName", &[]);
+            let text = q(&mut vm, &mut host, "Conversation_GetDialogueText", &[]);
+            let resp = q(&mut vm, &mut host, "Conversation_GetResponses", &[]);
+            println!("  [{f}] conversation {name:?} {text:?} {resp:?}");
+            let pick = std::env::var("EAGL_MG_CONV").ok().and_then(|v| v.parse::<u32>().ok()).unwrap_or(0);
+            let next = q(&mut vm, &mut host, "Conversation_OnPlayerSelect", &[("iIndexSelected".to_string(), pick.to_string())]);
+            println!("  [{f}] conversation pick {pick} -> {next:?}");
+            if next.first().is_some_and(|(_, v)| v == "1") {
+                conv_at = Some(f + 20);
+            }
+        }
         let evs: Vec<FeEvent> = host.events.drain(..).collect();
         for e in &evs {
             println!("  [{f}] {} {:?}", e.name, e.args);
@@ -768,6 +861,9 @@ pub fn probe(ty: i32) {
             }
             if e.name == "FEManager::OpenAptScreen" && matches!(e.args.first(), Some(FeArg::Str(n)) if n == "PostGame") && std::env::var("EAGL_MG_POSTGAME").is_ok() {
                 postgame_at = Some(f + 30);
+            }
+            if e.name == "FEManager::OpenAptOverlay" && matches!(e.args.first(), Some(FeArg::Str(n)) if n == "Conversation") {
+                conv_at = Some(f + 20);
             }
             if let Some(cb) = cb {
                 println!("  [{f}] -> {cb}: {:?}", game_callback(&mut vm, &mut host, cb));
@@ -906,4 +1002,54 @@ mod tests {
             println!("  MISSING {c} {n}");
         }
     }
+}
+
+/// Read a guest wide string.
+fn guest_wide(vm: &mut MgVm, a: u32, max: u32) -> String {
+    char::decode_utf16((0..max).map(|i| vm.st.mem.r16(a + 2 * i)).take_while(|&c| c != 0)).map(|c| c.unwrap_or('?')).collect()
+}
+
+/// The conversation screen's queries, answered by the guest's handlers: `ConversationLVHandlers::DoJobLV` (0x8031592c:
+/// 0 name, 1 dialogue text, 2 responses, 3 player select) and `ConversationFSHandlers` (`ConversationOnButtonNext` ->
+/// `ConversationManager::DoNextText`). `buf` is a 0x1000-byte guest scratch buffer. The name comes back as its locale key.
+pub fn conversation_query(vm: &mut MgVm, host: &mut MgHost, buf: u32, name: &str, params: &[(String, String)]) -> Option<Vec<(String, String)>> {
+    let cm = vm.call_by_name(host, "Get__19ConversationManagerFv", &[], &[]).ok()?;
+    if cm == 0 {
+        return None;
+    }
+    let arg = |k: &str| params.iter().find(|(a, _)| a == k).map(|(_, v)| v.clone());
+    Some(match name {
+        "Conversation_GetName" => {
+            // `BeginConversation` copies the speaker's locale key into the LV handler (+4)
+            let hs = vm.call_by_name(host, "GetInstance__20ConversationHandlersFv", &[], &[]).ok()?;
+            let lv = if hs != 0 { vm.r32(hs + 4) } else { 0 };
+            let key: String = if lv != 0 { (0..64).map(|i| vm.st.mem.r8(lv + 4 + i)).take_while(|&b| b != 0).map(|b| b as char).collect() } else { String::new() };
+            vec![("iCharacterName".to_string(), key)]
+        }
+        "Conversation_GetDialogueText" => {
+            vm.st.mem.w16(buf, 0);
+            vm.call_by_name(host, "GetText__19ConversationManagerFPwi", &[cm, buf, 0x800], &[]).ok()?;
+            vec![("iDialogueText".to_string(), guest_wide(vm, buf, 0x800))]
+        }
+        "Conversation_GetResponses" => {
+            let n = vm.call_by_name(host, "GetNumResponses__19ConversationManagerFv", &[cm], &[]).ok()? as i32;
+            let mut list = vec![];
+            for i in 0..n.clamp(0, 8) {
+                vm.st.mem.w16(buf, 0);
+                vm.call_by_name(host, "GetResponse__19ConversationManagerFiPwi", &[cm, i as u32, buf, 0x800], &[]).ok()?;
+                list.push(guest_wide(vm, buf, 0x800));
+            }
+            vec![("iResponse".to_string(), list.join("\u{7f}"))] // the front end's array delimiter (`fe_host::DELIM`)
+        }
+        "Conversation_OnPlayerSelect" => {
+            let i: u32 = arg("iIndexSelected").and_then(|v| v.parse().ok()).unwrap_or(0);
+            let next = vm.call_by_name(host, "ProcessPlayerResponse__19ConversationManagerFi", &[cm, i], &[]).ok()?;
+            vec![("iHasNextNode".to_string(), next.to_string())]
+        }
+        "ConversationOnButtonNext" => {
+            vm.call_by_name(host, "DoNextText__19ConversationManagerFv", &[cm], &[]).ok()?;
+            vec![]
+        }
+        _ => return None,
+    })
 }
