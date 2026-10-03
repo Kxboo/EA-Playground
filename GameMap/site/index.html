@@ -4,26 +4,108 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EA Playground Decomp Progress</title>
-<link rel="stylesheet" href="style.css?v=588fdda578ee">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css?v=d68312f90a0e">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
 <body>
-<header class="top">
-  <div class="brand"><span class="logo">◧</span> EA Playground <em>decomp progress</em></div>
-  <nav id="nav">
-    <a href="#/overview" data-t="overview">Overview</a>
-    <a href="#/subsystems" data-t="subsystems">Subsystems</a>
-    <a href="#/units" data-t="units">Units</a>
-    <a href="#/functions" data-t="functions">Functions</a>
-    <a href="#/next" data-t="next">Next up</a>
-    <a href="#/method" data-t="method">How it's measured</a>
-  </nav>
-  <div class="meta" id="meta"></div>
-</header>
-<main id="main"><p class="loading">Loading…</p></main>
-<aside id="drawer" class="drawer" hidden></aside>
-<div id="scrim" class="scrim" hidden></div>
-<footer>Reference map of the Wii executable <code>playgroundz.elf</code> · progress is measured, never estimated — see <a href="#/method">how it's measured</a>.</footer>
-<script src="data.js?v=588fdda578ee"></script>
-<script src="app.js?v=588fdda578ee"></script>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>EA Playground decomp progress</h1>
+      <p class="sub">Every function in <span class="mono">playgroundz.elf</span>, the Wii executable, measured two ways:
+        how far it has been <b>decoded</b> (decompiled, lifted, proven), and what the Rust remake does with it at
+        <b>runtime</b> (ported, hooked, or run as original code in its PowerPC VM).</p>
+    </div>
+    <div class="meta" id="meta"></div>
+  </header>
+
+  <div class="switches" role="group" aria-label="View settings">
+    <span><span class="lab">Code</span><span class="seg" id="scope">
+      <button type="button" data-v="ge">Game + engine</button><button type="button" data-v="mw">Middleware</button><button type="button" data-v="all">Whole executable</button>
+    </span></span>
+    <span><span class="lab">Colour by</span><span class="seg" id="axis">
+      <button type="button" data-v="d">Decoding</button><button type="button" data-v="r">Runtime</button>
+    </span></span>
+  </div>
+
+  <section aria-labelledby="h-prog">
+    <h2 id="h-prog">Progress</h2>
+    <div class="axes">
+      <div class="panel axis" id="axD"></div>
+      <div class="panel axis" id="axR"></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-recon" id="recon" hidden></section>
+
+  <section aria-labelledby="h-hist">
+    <h2 id="h-hist">History</h2>
+    <div class="panel chart" id="hist"></div>
+  </section>
+
+  <section aria-labelledby="h-map">
+    <h2 id="h-map">Function map</h2>
+    <div class="panel mapbox">
+      <canvas id="map" aria-label="Treemap of every function, grouped by source file and sized by code bytes"></canvas>
+      <div class="tip" id="tip" hidden></div>
+    </div>
+    <p class="maphint" id="maphint"></p>
+  </section>
+
+  <section aria-labelledby="h-units">
+    <h2 id="h-units">Source files</h2>
+    <div class="controls" style="grid-template-columns:minmax(0,1fr) 220px">
+      <input type="search" id="unitq" placeholder="Filter files or subsystems, e.g. MGDodgeball.cpp" aria-label="Filter source files">
+      <select id="unitsort" aria-label="Sort source files">
+        <option value="size">Largest first</option>
+        <option value="done">Most progress first</option>
+        <option value="todo">Least progress first</option>
+        <option value="addr">Link order</option>
+      </select>
+    </div>
+    <div class="units" id="units"></div>
+  </section>
+
+  <section aria-labelledby="h-fn">
+    <h2 id="h-fn">Functions</h2>
+    <div class="explore">
+      <div class="controls">
+        <input type="search" id="q" placeholder="Search name, class, address or summary" aria-label="Search functions">
+        <div class="chips" id="chipsD"></div>
+        <div class="chips" id="chipsR"></div>
+        <div class="two">
+          <select id="subsel" aria-label="Subsystem"></select>
+          <select id="unitsel" aria-label="Source file"></select>
+        </div>
+        <select id="sort" aria-label="Sort functions">
+          <option value="addr">Address order</option>
+          <option value="size">Largest first</option>
+          <option value="fi">Most called</option>
+          <option value="entries">Most executed in the VM</option>
+          <option value="refs">Most Rust references</option>
+        </select>
+        <div class="count" id="count"></div>
+        <div class="list" id="list" role="listbox" aria-label="Functions"></div>
+      </div>
+      <div class="detail" id="detail"><div class="panel empty">Pick a function from the map or the list.</div></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-next">
+    <h2 id="h-next">Next up</h2>
+    <div class="grid2" id="next"></div>
+  </section>
+
+  <section aria-labelledby="h-method">
+    <h2 id="h-method">How it's measured</h2>
+    <div class="panel method" id="method"></div>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+<script src="data.js?v=d68312f90a0e"></script>
+<script src="app.js?v=d68312f90a0e"></script>
 </body>
 </html>

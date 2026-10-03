@@ -1,353 +1,502 @@
 (function () {
 "use strict";
 const GM = window.GM;
-const $ = (s, r) => (r || document).querySelector(s);
-const main = $("#main"), drawer = $("#drawer"), scrim = $("#scrim");
-const ST = GM.states;
-const LABEL = {reviewed: "Reviewed", proven: "Proven", partial: "Partial", decompiled: "Decompiled", flagged: "Flagged", mapped: "Mapped"};
-const HELP = {
-  reviewed: "Annotated by a person with evidence (verified against the original by emulation, or read and cross-checked).",
-  proven: "Lifted pseudo-C proven equivalent to the machine code by randomized emulation.",
-  partial: "Lifter produced code, but not every path could be exercised or verified.",
-  decompiled: "Ghidra decompiles it cleanly. Readable, but not proven correct.",
-  flagged: "Ghidra output has bad instructions/warnings; needs manual work.",
-  mapped: "Only name / unit / class facts exist."
-};
+const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
 const fmt = n => n.toLocaleString("en-US");
-const kb = n => n >= 1048576 ? (n / 1048576).toFixed(2) + " MB" : n >= 1024 ? (n / 1024).toFixed(1) + " KB" : n + " B";
-const pct = (a, b) => b ? (100 * a / b) : 0;
+const kb = b => b >= 1048576 ? (b / 1048576).toFixed(2) + " MB" : b >= 1024 ? (b / 1024).toFixed(1) + " KB" : b + " B";
+const pct = (a, b) => b ? 100 * a / b : 0;
 const pf = (a, b, d) => pct(a, b).toFixed(d == null ? 1 : d) + "%";
 const hex = a => a.toString(16).padStart(8, "0");
-const col = s => "var(--" + s + ")";
-const DONE = ["reviewed", "proven"];
-const sum = (o, keys) => keys.reduce((t, k) => t + (o[k] || 0), 0);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const store = {get(k) { try { return localStorage.getItem("gm." + k); } catch (e) { return null; } },
+               set(k, v) { try { localStorage.setItem("gm." + k, v); } catch (e) { /* private mode */ } }};
 
-const byAddr = new Map(GM.functions.map(f => [f.a, f]));
-const subsystems = [...new Set(GM.functions.map(f => f.y))].sort();
-const kinds = [...new Set(GM.functions.map(f => f.k))].sort();
+// ---- the two measurements ------------------------------------------------------------------------------------------
+const DEC = [
+  {k: "reviewed", label: "Reviewed", desc: "A person annotated it with evidence: verified against the original by emulation, or read and cross-checked."},
+  {k: "proven", label: "Proven", desc: "Lifted pseudo-C proven equivalent to the machine code by randomized emulation."},
+  {k: "partial", label: "Partial", desc: "The lifter produced code, but not every path could be exercised or verified."},
+  {k: "decompiled", label: "Decompiled", desc: "Ghidra decompiles it cleanly. Readable, but not proven correct."},
+  {k: "flagged", label: "Flagged", desc: "Ghidra output has bad instructions or warnings; needs manual work."},
+  {k: "mapped", label: "Mapped", desc: "Only name, unit, class and call facts exist."},
+  {k: "untracked", label: "Not tracked", desc: "Middleware (Wii SDK, Havok, nw4r, Lua, APT runtime, EA libraries): listed for size only."},
+];
+const RUN = [
+  {k: "port", label: "Hand-ported Rust", desc: "Rewritten by hand in the remake; the Rust cites this function by address or name."},
+  {k: "host", label: "Rust hook", desc: "A Rust host function runs in its place inside the PowerPC VM (physics, assets, sound, front end)."},
+  {k: "run", label: "Ran original code", desc: "The original PowerPC executed in the VM during the recorded scenarios."},
+  {k: "native", label: "Not reached yet", desc: "Allowed to run as original code, but no recorded scenario has entered it."},
+  {k: "stub", label: "Stubbed", desc: "Rendering or audio detail the VM skips: returns 0 and does nothing."},
+  {k: "trap", label: "Unimplemented service", desc: "Engine service with no Rust version yet; entering it stops the VM."},
+];
+const DI = Object.fromEntries(DEC.map((s, i) => [s.k, i])), RI = Object.fromEntries(RUN.map((s, i) => [s.k, i]));
+const DONE_D = ["reviewed", "proven"], READ_D = ["reviewed", "proven", "partial", "decompiled"];
+const LIVE_R = ["port", "host", "run"], RUST_R = ["port", "host"];
+const KIND = {hook: "Rust hook", observe: "Rust observer", port: "Hand-written Rust", vm: "VM host code", drive: "Rust calls the original"};
+const VMTXT = {native: "Runs as original code", host: "Rust hook replaces it", observe: "Rust observer, then original", stub: "Stub (returns 0)", trap: "Trap (unimplemented)"};
+const varD = k => "var(--d-" + k + ")", varR = k => "var(--s-" + k + ")";
 
-function bar(counts, total, cls) {
-  return '<div class="bar ' + (cls || "") + '">' + ST.map(s => counts[s] ? '<i class="s-' + s + '" style="width:' + pct(counts[s], total) + '%" title="' + LABEL[s] + ': ' + fmt(counts[s]) + '"></i>' : "").join("") + "</div>";
-}
-function legend(counts, total, unit) {
-  return '<div class="legend">' + ST.map(s => '<span title="' + esc(HELP[s]) + '"><span class="dot s-' + s + '"></span> ' + LABEL[s] + " " + (unit === "b" ? kb(counts[s]) : fmt(counts[s])) + " (" + pf(counts[s], total) + ")</span>").join("") + "</div>";
-}
-const pill = s => '<span class="pill s-' + s + '">' + LABEL[s] + "</span>";
+// ---- data ----------------------------------------------------------------------------------------------------------
+const C = Object.fromEntries(GM.cols.map((c, i) => [c, i]));
+const F = GM.funcs.map((r, i) => {
+  const g = GM.groups[r[C.group]];
+  const f = {i, a: r[C.a], s: r[C.s], unit: r[C.unit], grp: r[C.group], t: g.t, y: g.y,
+    st: r[C.st] >= 0 ? GM.states[r[C.st]] : "untracked", why: r[C.why] >= 0 ? GM.whys[r[C.why]] : "",
+    kind: r[C.kind] >= 0 ? GM.kinds[r[C.kind]] : "", fi: r[C.fi], fo: r[C.fo], gh: r[C.gh] || null, lf: r[C.lf] || null, ls: r[C.ls],
+    rst: GM.rstates[r[C.rst]], vm: GM.vmkinds[r[C.vm]], scen: r[C.scen], entries: r[C.entries], refs: r[C.refs],
+    n: r[C.n], g: r[C.g], m: r[C.m] || r[C.n], sum: r[C.sum], ev: r[C.ev] || null};
+  f.l = (f.n + " " + f.m + " " + f.sum).toLowerCase();
+  return f;
+});
+const byAddr = new Map(F.map(f => [f.a, f]));
+const UNITS = GM.units.map((u, i) => ({i, name: u.u, t: u.t, y: u.y, a: u.a}));
 
-// ---------- routing ---------------------------------------------------------
-function parse() {
-  const h = location.hash.replace(/^#\/?/, "");
-  const [path, qs] = h.split("?");
-  const q = {};
-  (qs || "").split("&").filter(Boolean).forEach(p => { const [k, v] = p.split("="); q[k] = decodeURIComponent(v || ""); });
-  return {path: path || "overview", q};
-}
-function go(path, q) {
-  const qs = Object.entries(q || {}).filter(([, v]) => v !== "" && v != null).map(([k, v]) => k + "=" + encodeURIComponent(v)).join("&");
-  location.hash = "#/" + path + (qs ? "?" + qs : "");
-}
-function route() {
-  const {path, q} = parse();
-  const [p, arg] = path.split("/");
-  document.querySelectorAll("#nav a").forEach(a => a.classList.toggle("on", a.dataset.t === (p === "fn" ? "functions" : p)));
-  if (p === "fn") { if (!main.dataset.view) { main.dataset.view = "functions"; views.functions(q); } openFn(parseInt(arg, 16)); return; }
-  closeDrawer(true);
-  main.dataset.view = p;
-  (views[p] || views.overview)(q);
-  window.scrollTo(0, 0);
-}
-window.addEventListener("hashchange", route);
+// ---- view state ----------------------------------------------------------------------------------------------------
+const view = {scope: store.get("scope") || "ge", axis: store.get("axis") || "d"};
+const filter = {q: "", d: new Set(), r: new Set(), grp: -1, unit: -1, sort: "addr"};
+let selected = -1, shown = 300;
+const inScope = f => view.scope === "all" || (view.scope === "mw" ? f.t === "middleware" : f.t !== "middleware");
+const colOf = f => view.axis === "d" ? varD(f.st) : varR(f.rst);
+let SF = [];   // functions in scope
+let SU = [];   // units in scope with stats
 
-// ---------- overview --------------------------------------------------------
-function reconstructionPanel() {
+function rebuild() {
+  SF = F.filter(inScope);
+  const per = new Map();
+  for (const f of SF) {
+    let u = per.get(f.unit);
+    if (!u) { u = Object.assign({}, UNITS[f.unit], {funcs: [], bytes: 0, bd: {}, br: {}}); per.set(f.unit, u); }
+    u.funcs.push(f); u.bytes += f.s;
+    u.bd[f.st] = (u.bd[f.st] || 0) + f.s; u.br[f.rst] = (u.br[f.rst] || 0) + f.s;
+  }
+  SU = [...per.values()];
+  for (const u of SU) {
+    const sum = (o, ks) => ks.reduce((t, k) => t + (o[k] || 0), 0);
+    u.doneD = sum(u.bd, DONE_D) / u.bytes; u.doneR = sum(u.br, LIVE_R) / u.bytes;
+  }
+}
+
+// ---- progress panels -----------------------------------------------------------------------------------------------
+function tally(list, key, states) {
+  const b = Object.fromEntries(states.map(s => [s.k, 0])), n = Object.fromEntries(states.map(s => [s.k, 0]));
+  for (const f of list) { b[f[key]] += f.s; n[f[key]]++; }
+  return {b, n, bytes: list.reduce((t, f) => t + f.s, 0), count: list.length};
+}
+const hl = (big, cap) => '<div class="hl"><span class="big num">' + big + '</span><span class="cap">' + cap + "</span></div>";
+function bar(states, vals, total, colour) {
+  return states.filter(s => vals[s.k]).map(s => '<span style="flex:' + vals[s.k] + ";background:" + colour(s.k) + '" title="' + esc(s.label) + ": " + pf(vals[s.k], total, 2) + '"></span>').join("");
+}
+function legend(states, T, set, colour, which) {
+  return '<div class="legend">' + states.filter(s => T.n[s.k] || s.k !== "untracked").map(s =>
+    '<button type="button" class="lg' + (set.has(s.k) ? " on" : "") + '" data-w="' + which + '" data-k="' + s.k + '"><span class="sw" style="background:' + colour(s.k) + '"></span><b>' + esc(s.label) +
+    '</b><span class="v num">' + fmt(T.n[s.k]) + " fn · " + kb(T.b[s.k]) + " · " + pf(T.b[s.k], T.bytes) + '</span><span class="d">' + esc(s.desc) + "</span></button>").join("") + "</div>";
+}
+function bars(states, T, colour, label) {
+  return '<div class="barrow"><span class="lab">By code size</span><div class="bar" role="img" aria-label="' + esc(label) + ' by bytes">' + bar(states, T.b, T.bytes, colour) + "</div></div>" +
+    '<div class="barrow"><span class="lab">By function</span><div class="bar" role="img" aria-label="' + esc(label) + ' by function count">' + bar(states, T.n, T.count, colour) + "</div></div>";
+}
+function progress() {
+  const sumB = (T, ks) => ks.reduce((t, k) => t + T.b[k], 0), sumN = (T, ks) => ks.reduce((t, k) => t + T.n[k], 0);
+  const TD = tally(SF, "st", DEC), TR = tally(SF, "rst", RUN);
+  const tracked = SF.filter(f => f.st !== "untracked"), TT = tally(tracked, "st", DEC);
+  let d = '<h3>Decoding</h3><p class="what">How much of the original code has been turned into something readable, and how much of that is proven to behave identically.</p>';
+  if (!tracked.length) d += '<p class="note">Middleware is not tracked for decoding: the Wii SDK, Havok, nw4r, Lua, the APT runtime and EA libraries are listed for size only. Switch to <b>Game + engine</b> to see decoding progress.</p>';
+  else d += '<div class="headline">' + hl(pf(sumB(TT, DONE_D), TT.bytes), "of game + engine code proven or reviewed (" + fmt(sumN(TT, DONE_D)) + " functions)") +
+    hl(pf(sumB(TT, READ_D), TT.bytes), "has readable decompiled code") + "</div>" + bars(DEC, TD, varD, "Decoding");
+  if (tracked.length) d += legend(DEC, TD, filter.d, varD, "d");
+  let r = '<h3>Runtime</h3><p class="what">What the Rust/Bevy remake does with each function: Rust that replaces it, or the original PowerPC run in the remake\'s VM.</p>';
+  if (!GM.runtime) r += '<p class="note">No runtime data yet: run <code>tools/ingest_runtime.py</code>.</p>';
+  r += '<div class="headline">' + hl(pf(sumB(TR, LIVE_R), TR.bytes), "of the code runs in the remake, as Rust or as original code the VM has executed") +
+    hl(pf(sumB(TR, RUST_R), TR.bytes), "is replaced by Rust (" + fmt(sumN(TR, RUST_R)) + " functions)") + "</div>" + bars(RUN, TR, varR, "Runtime") + legend(RUN, TR, filter.r, varR, "r");
+  $("axD").innerHTML = d; $("axR").innerHTML = r;
+  document.querySelectorAll(".lg").forEach(b => b.onclick = () => { toggle(b.dataset.w, b.dataset.k); $("h-fn").scrollIntoView({behavior: "smooth", block: "start"}); });
+}
+function toggle(w, k) {
+  const set = w === "d" ? filter.d : filter.r;
+  set.has(k) ? set.delete(k) : set.add(k);
+  if (w !== view.axis) setAxis(w);
+  shown = 300; progress(); syncChips(); renderList(); drawMap();
+}
+
+// ---- reconstruction ------------------------------------------------------------------------------------------------
+function recon() {
   const R = GM.reconstruction;
-  if (!R) return "";
-  const proof = R.proof;
-  const report = proof ? `<p class="sub">Latest proof report: <b>${esc(proof.passed_count)} / ${esc(proof.total)}</b> checks passed · ${esc(proof.generated)}${proof.passed ? " · all checks passed" : " · full validation not yet complete"}.</p>` : "";
-  return `<section class="reconstruction" aria-label="Rust and Bevy reconstruction update">
-    <h2>Rust / Bevy reconstruction <span class="badge">${esc(R.updated)}</span></h2>
-    <p>${esc(R.summary)}</p>
-    <div class="grid">${R.metrics.map(m => `<div class="card"><div class="k">${esc(m.label)}</div><div class="v">${esc(m.value)}</div><div class="d">${esc(m.detail)}</div></div>`).join("")}</div>
-    <ul>${R.details.map(d => `<li>${esc(d)}</li>`).join("")}</ul>
-    ${report}<p class="note">${esc(R.scope)}</p>
-    <p>${R.links.map(l => `<a href="${esc(l.url)}">${esc(l.label)}</a>`).join(" · ")}</p>
-  </section>`;
-}
-const views = {};
-views.overview = function () {
-  const T = GM.total;
-  const doneB = sum(T.bc, DONE), doneF = sum(T.fc, DONE);
-  const decB = doneB + sum(T.bc, ["partial", "decompiled"]);
-  main.innerHTML = `
-  <h1>EA Playground — decompilation progress</h1>
-  <p class="sub">Game + engine code of the Wii executable (${fmt(T.n)} functions, ${kb(T.s)}). Middleware (${fmt(GM.middleware.n)} functions, ${kb(GM.middleware.s)}: Wii SDK, Havok, Lua, APT runtime…) is excluded from the percentages.</p>
-  ${reconstructionPanel()}
-  <div class="hero">
-    <div><div class="big" style="color:var(--proven)">${pf(doneB, T.s)}</div><div class="lab">of code <b>proven</b> (bytes)</div></div>
-    <div><div class="big" style="color:var(--decompiled)">${pf(decB, T.s)}</div><div class="lab">has readable decompiled code</div></div>
-    <div style="flex:1;min-width:260px">
-      <div class="lab" style="margin-bottom:4px">By code size · ${kb(T.s)}</div>${bar(T.bc, T.s)}
-      <div class="lab" style="margin:12px 0 4px">By function count · ${fmt(T.n)}</div>${bar(T.fc, T.n)}
-    </div>
-  </div>
-  ${legend(T.bc, T.s, "b")}
-  <div class="grid" style="margin-top:8px">
-    ${ST.map(s => `<a class="card" href="#/functions?state=${s}" style="color:inherit;text-decoration:none"><div class="k"><span class="dot s-${s}"></span> ${LABEL[s]}</div><div class="v">${fmt(T.fc[s])}</div><div class="d">${kb(T.bc[s])} · ${pf(T.bc[s], T.s)}</div></a>`).join("")}
-  </div>
-  <h2>History</h2>${historyChart()}
-  <h2>By subsystem</h2>${subsystemBars(6)}
-  <p><a href="#/subsystems">All subsystems →</a></p>
-  <h2>Map of the code</h2>
-  <p class="sub">Each rectangle is a compilation unit sized by code bytes; its colour bands show the state of its functions. Click to explore.</p>
-  <div class="treemap" id="tm"></div>`;
-  requestAnimationFrame(treemap);
-};
-
-function subsystemBars(limit) {
-  const rows = GM.subsystems.filter(s => s.t !== "middleware").sort((a, b) => b.s - a.s).slice(0, limit || 999);
-  return '<table><thead><tr><th>Subsystem</th><th class="num">Funcs</th><th class="num">Size</th><th>Progress (bytes)</th><th class="num">Proven</th></tr></thead><tbody>' +
-    rows.map(s => `<tr class="click" onclick="location.hash='#/functions?sub=${s.y}&tier=${s.t}'"><td>${esc(s.y)} <span class="badge">${s.t}</span></td><td class="num">${fmt(s.n)}</td><td class="num">${kb(s.s)}</td><td class="bar-cell">${bar(s.bc, s.s, "sm")}</td><td class="num">${pf(sum(s.bc, DONE), s.s)}</td></tr>`).join("") + "</tbody></table>";
-}
-views.subsystems = function () {
-  main.innerHTML = `<h1>Subsystems</h1><p class="sub">Grouped by what the code does. Click a row to list its functions.</p>` + subsystemBars();
-};
-
-function historyChart() {
-  const H = GM.history;
-  if (!H || H.length < 2) return '<div class="note">History appears here once at least two snapshots exist (<code>python3 GameMap/tools/build_site.py --snapshot "label"</code>).</div>';
-  const W = 900, Hh = 220, pl = 40, pr = 10, pt = 10, pb = 30;
-  const x = i => pl + (W - pl - pr) * i / (H.length - 1);
-  const y = v => pt + (Hh - pt - pb) * (1 - v);
-  let g = "";
-  for (let t = 0; t <= 4; t++) g += `<line x1="${pl}" x2="${W - pr}" y1="${y(t / 4)}" y2="${y(t / 4)}" stroke="var(--line)"/><text x="${pl - 6}" y="${y(t / 4) + 4}" text-anchor="end" font-size="11" fill="var(--mute)">${t * 25}%</text>`;
-  const acc = H.map(() => 0);
-  const paths = [];
-  ST.slice().reverse().forEach(s => {
-    const lo = acc.slice();
-    H.forEach((h, i) => acc[i] += (h.bc[s] || 0) / h.s);
-    const top = H.map((h, i) => x(i) + "," + y(acc[i])).join(" L");
-    const bot = H.map((h, i) => x(H.length - 1 - i) + "," + y(lo[H.length - 1 - i])).join(" L");
-    paths.push(`<path d="M${top} L${bot} Z" fill="${col(s)}" opacity=".9"><title>${LABEL[s]}</title></path>`);
-  });
-  const lab = H.map((h, i) => `<text x="${x(i)}" y="${Hh - 8}" font-size="11" text-anchor="middle" fill="var(--mute)">${esc(h.label)}</text>`).join("");
-  return `<div class="chart"><svg viewBox="0 0 ${W} ${Hh}">${g}${paths.join("")}${lab}</svg></div>`;
+  if (!R) return;
+  const p = R.proof;
+  const el = $("recon"); el.hidden = false;
+  el.innerHTML = '<h2 id="h-recon">Rust / Bevy reconstruction <span class="meta">· ' + esc(R.updated) + "</span></h2>" +
+    '<div class="panel recon"><p class="sub" style="margin:0 0 12px">' + esc(R.summary) + "</p>" +
+    '<div class="cards">' + R.metrics.map(m => '<div class="card"><div class="k">' + esc(m.label) + '</div><div class="v num">' + esc(m.value) + '</div><div class="d">' + esc(m.detail) + "</div></div>").join("") + "</div>" +
+    (p ? '<p class="note">Latest proof report: <b>' + esc(p.passed_count) + " / " + esc(p.total) + "</b> checks passed · " + esc(p.generated) + (p.passed ? " · all checks passed" : " · full validation not yet complete") + ".</p>" : "") +
+    "<details><summary>Details and evidence</summary><ul>" + R.details.map(x => "<li>" + esc(x) + "</li>").join("") + '</ul><p class="note">' + esc(R.scope) + "</p><p>" +
+    R.links.map(l => '<a href="' + esc(l.url) + '">' + esc(l.label) + "</a>").join(" · ") + "</p></details></div>";
 }
 
-// ---------- treemap (squarified) ---------------------------------------------
-function squarify(items, x, y, w, h) {
-  const out = [];
-  const total = items.reduce((t, i) => t + i.v, 0);
-  if (!total) return out;
-  const scale = w * h / total;
-  items = items.map(i => Object.assign({}, i, {a: i.v * scale}));
-  let rest = items.slice();
-  while (rest.length) {
-    const side = Math.min(w, h);
-    let row = [], best = Infinity, sumA = 0;
-    for (const it of rest) {
-      const trial = row.concat(it), s = sumA + it.a;
-      const mx = Math.max(...trial.map(t => t.a)), mn = Math.min(...trial.map(t => t.a));
-      const worst = Math.max(side * side * mx / (s * s), s * s / (side * side * mn));
-      if (worst > best && row.length) break;
-      row = trial; sumA = s; best = worst;
-    }
-    rest = rest.slice(row.length);
-    const thick = sumA / side;
-    let off = 0;
-    for (const it of row) {
-      const len = it.a / thick;
-      if (w >= h) out.push({it, x, y: y + off, w: thick, h: len}); else out.push({it, x: x + off, y, w: len, h: thick});
-      off += len;
-    }
-    if (w >= h) { x += thick; w -= thick; } else { y += thick; h -= thick; }
-  }
-  return out;
-}
-function treemap() {
-  const el = $("#tm"); if (!el) return;
-  const W = el.clientWidth, H = el.clientHeight;
-  const items = GM.units.filter(u => u.t !== "middleware").map(u => ({v: u.s, u})).sort((a, b) => b.v - a.v);
-  el.innerHTML = squarify(items, 0, 0, W, H).map(r => {
-    const u = r.it.u;
-    let acc = 0;
-    const stops = ST.filter(s => u.bc[s]).map(s => { const a = acc; acc += 100 * u.bc[s] / u.s; return `${col(s)} ${a}% ${acc}%`; });
-    const label = r.w > 46 && r.h > 16 ? esc(u.u) : "";
-    return `<div class="cell" style="left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px;background:linear-gradient(90deg,${stops.join(",")})" title="${esc(u.u)} · ${kb(u.s)} · ${u.n} functions · ${pf(sum(u.bc, DONE), u.s)} proven" onclick="location.hash='#/functions?unit=${encodeURIComponent(u.u)}'">${label}</div>`;
-  }).join("");
-}
-window.addEventListener("resize", treemap);
-
-// ---------- units -----------------------------------------------------------
-views.units = function (q) {
-  const tier = q.tier || "", text = (q.q || "").toLowerCase();
-  const sort = q.sort || "a", dir = q.dir === "asc" ? 1 : -1;
-  let rows = GM.units.filter(u => (!tier || u.t === tier) && (!text || u.u.toLowerCase().includes(text) || u.y.includes(text)));
-  const val = {a: u => u.a, u: u => u.u, s: u => u.s, n: u => u.n, p: u => pct(sum(u.bc, DONE), u.s), d: u => pct(u.bc.decompiled + u.bc.partial + sum(u.bc, DONE), u.s)}[sort];
-  rows.sort((a, b) => (val(a) > val(b) ? 1 : val(a) < val(b) ? -1 : 0) * (sort === "a" || sort === "u" ? (q.dir === "desc" ? -1 : 1) : dir));
-  const th = (k, t, c) => `<th class="${c || ""}" data-sort="${k}">${t}${sort === k ? (q.dir === "asc" ? " ▲" : " ▼") : ""}</th>`;
-  main.innerHTML = `<h1>Units</h1><p class="sub">One row per compilation unit (link order), like a decomp.dev "report" — but with proof state rather than match percentage.</p>
-  <div class="tools"><input type="search" id="uq" placeholder="Filter units…" value="${esc(q.q || "")}">
-  <select id="ut"><option value="">game + engine</option><option value="game">game</option><option value="engine">engine</option></select>
-  <span class="count">${rows.length} units</span></div>
-  <table><thead><tr>${th("u", "Unit")}<th>Subsystem</th>${th("n", "Funcs", "num")}${th("s", "Size", "num")}<th>Progress (bytes)</th>${th("p", "Proven", "num")}${th("d", "Decoded", "num")}</tr></thead><tbody>` +
-    rows.map(u => `<tr class="click" data-u="${esc(u.u)}"><td class="mono">${esc(u.u)}</td><td>${esc(u.y)} <span class="badge">${u.t}</span></td><td class="num">${u.n}</td><td class="num">${kb(u.s)}</td><td class="bar-cell">${bar(u.bc, u.s, "sm")}</td><td class="num">${pf(sum(u.bc, DONE), u.s, 0)}</td><td class="num">${pf(u.bc.decompiled + u.bc.partial + sum(u.bc, DONE), u.s, 0)}</td></tr>`).join("") + "</tbody></table>";
-  $("#ut").value = tier;
-  let tmr; $("#uq").oninput = e => { clearTimeout(tmr); tmr = setTimeout(() => go("units", Object.assign({}, q, {q: e.target.value})), 250); };
-  $("#ut").onchange = e => go("units", Object.assign({}, q, {tier: e.target.value}));
-  main.querySelectorAll("th[data-sort]").forEach(t => t.onclick = () => go("units", Object.assign({}, q, {sort: t.dataset.sort, dir: sort === t.dataset.sort && q.dir !== "asc" ? "asc" : "desc"})));
-  main.querySelectorAll("tr[data-u]").forEach(r => r.onclick = () => go("functions", {unit: r.dataset.u}));
-  if (q.q) { const i = $("#uq"); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }
-};
-
-// ---------- functions -------------------------------------------------------
-let shown = 300;
-views.functions = function (q) {
-  const on = new Set((q.state || "").split(",").filter(Boolean));
-  const opt = (arr, v, all) => `<option value="">${all}</option>` + arr.map(x => `<option ${x === v ? "selected" : ""}>${x}</option>`).join("");
-  main.innerHTML = `<h1>Functions</h1><p class="sub">Every game/engine function. Click one for its facts and — if you have built the local code pack — compiled code next to the decoded version.</p>
-  <div class="tools">
-    <input type="search" id="fq" placeholder="Search name, class, address, summary…" value="${esc(q.q || "")}">
-    ${ST.map(s => `<button class="chip ${on.has(s) ? "on" : ""}" data-s="${s}"><span class="dot s-${s}"></span> ${LABEL[s]}</button>`).join("")}
-    <button class="chip ${q.dec ? "on" : ""}" id="decodedOnly" title="Only functions with decoded/decompiled code (everything except flagged and mapped)">Decoded only</button>
-  </div>
-  <div class="tools">
-    <select id="ftier">${opt(["game", "engine"], q.tier, "all tiers")}</select>
-    <select id="fsub">${opt(subsystems, q.sub, "all subsystems")}</select>
-    <select id="fkind">${opt(kinds, q.kind, "all kinds")}</select>
-    <select id="fsort">${[["a", "address"], ["s", "size ↓"], ["ss", "size ↑"], ["fi", "most called"]].map(([v, t]) => `<option value="${v}" ${q.sort === v ? "selected" : ""}>sort: ${t}</option>`).join("")}</select>
-    ${q.unit ? `<span class="badge">unit: ${esc(q.unit)} <a href="#/functions">✕</a></span>` : ""}
-    <span class="count" id="fcount"></span>
-  </div>
-  <div id="fnlist"></div>`;
-  const apply = patch => { shown = 300; go("functions", Object.assign({}, q, patch)); };
-  let tmr; $("#fq").oninput = e => { clearTimeout(tmr); tmr = setTimeout(() => apply({q: e.target.value}), 250); };
-  main.querySelectorAll(".chip[data-s]").forEach(c => c.onclick = () => { const n = new Set(on); n.has(c.dataset.s) ? n.delete(c.dataset.s) : n.add(c.dataset.s); apply({state: [...n].join(",")}); });
-  $("#decodedOnly").onclick = () => apply({dec: q.dec ? "" : "1"});
-  $("#ftier").onchange = e => apply({tier: e.target.value});
-  $("#fsub").onchange = e => apply({sub: e.target.value});
-  $("#fkind").onchange = e => apply({kind: e.target.value});
-  $("#fsort").onchange = e => apply({sort: e.target.value});
-  if (q.q) { const i = $("#fq"); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }
-  renderFns(q, on);
-};
-function renderFns(q, on) {
-  const text = (q.q || "").toLowerCase();
-  let rows = GM.functions.filter(f =>
-    (!on.size || on.has(f.st)) && (!q.dec || (f.st !== "flagged" && f.st !== "mapped")) &&
-    (!q.tier || f.t === q.tier) && (!q.sub || f.y === q.sub) && (!q.kind || f.k === q.kind) && (!q.unit || f.u === q.unit) &&
-    (!text || f.n.toLowerCase().includes(text) || hex(f.a).includes(text.replace(/^0x/, "")) || f.sum.toLowerCase().includes(text) || f.u.toLowerCase().includes(text)));
-  const s = q.sort;
-  if (s === "s") rows.sort((a, b) => b.s - a.s); else if (s === "ss") rows.sort((a, b) => a.s - b.s); else if (s === "fi") rows.sort((a, b) => b.fi - a.fi);
-  $("#fcount").textContent = fmt(rows.length) + " functions · " + kb(rows.reduce((t, f) => t + f.s, 0));
-  const part = rows.slice(0, shown);
-  $("#fnlist").innerHTML = rows.length ? `<table id="fntable"><thead><tr><th>Address</th><th>Function</th><th>Unit</th><th class="num">Size</th><th>Kind</th><th>State</th><th>What it does</th></tr></thead><tbody>` +
-    part.map(f => `<tr class="click" data-a="${hex(f.a)}"><td class="mono">${hex(f.a)}</td><td class="mono">${esc(f.n)}<span style="color:var(--mute)">(${esc(f.g)})</span></td><td>${esc(f.u)}</td><td class="num">${f.s}</td><td>${f.k}</td><td>${pill(f.st)}</td><td>${esc(f.sum)}</td></tr>`).join("") + "</tbody></table>" +
-    (rows.length > shown ? `<p><button class="chip" id="more">Show ${Math.min(300, rows.length - shown)} more</button></p>` : "") : '<div class="empty">No functions match.</div>';
-  main.querySelectorAll("tr[data-a]").forEach(r => r.onclick = () => { location.hash = "#/fn/" + r.dataset.a; });
-  const m = $("#more"); if (m) m.onclick = () => { shown += 300; renderFns(q, on); };
-}
-
-// ---------- function drawer -------------------------------------------------
-const codeCache = {};
-const safe = u => u.replace(/[^A-Za-z0-9._-]/g, "_");
-async function codeFor(f) {
-  const key = safe(f.u);
-  if (!(key in codeCache)) {
-    codeCache[key] = fetch("code/" + key + ".json").then(r => r.ok ? r.json() : null).catch(() => null);
-  }
-  const shard = await codeCache[key];
-  return shard ? shard[hex(f.a)] || null : null;
-}
-function closeDrawer(quiet) { drawer.hidden = true; scrim.hidden = true; document.body.style.overflow = ""; }
-scrim.onclick = () => { closeDrawer(); if (location.hash.startsWith("#/fn/")) history.back(); };
-document.addEventListener("keydown", e => { if (e.key === "Escape" && !drawer.hidden) scrim.onclick(); });
-
-async function openFn(addr) {
-  const f = byAddr.get(addr);
-  if (!f) return;
-  drawer.hidden = false; scrim.hidden = false; document.body.style.overflow = "hidden";
-  const pack = await codeFor(f);
-  let tab = "overview";
-  const render = () => {
-    const have = pack || {};
-    const tabs = [["overview", "Overview"], ["compare", "Compare"], ["asm", "Compiled"], ["ghidra", "Ghidra C"], ["lifted", "Lifted C"], ["evidence", "Evidence"]];
-    drawer.innerHTML = `<button class="x" title="Close (Esc)">×</button>
-    <h3 class="mono">${esc(f.n)}</h3><div>${pill(f.st)} <span class="badge">${f.t}/${esc(f.y)}</span> <span class="badge">${esc(f.k)}</span> <span class="mono" style="color:var(--mute)">0x${hex(f.a)}</span></div>
-    <div class="tabs">${tabs.map(([k, t]) => `<button data-t="${k}" class="${tab === k ? "on" : ""}">${t}</button>`).join("")}</div><div id="tabbody"></div>`;
-    $(".x", drawer).onclick = scrim.onclick;
-    drawer.querySelectorAll(".tabs button").forEach(b => b.onclick = () => { tab = b.dataset.t; render(); });
-    const body = $("#tabbody");
-    const nopack = '<div class="note">Code is not part of this site. Build the local <b>code pack</b> from your own copy of the executable to see it here:<br><code>python3 GameMap/tools/build_code_pack.py --elf path/to/playgroundz.elf</code>, then serve <code>GameMap/site</code> (e.g. <code>python3 -m http.server -d GameMap/site</code>). The pack is git-ignored because it contains EA code.</div>';
-    const code = (t, label) => t ? `<pre class="code">${esc(t)}</pre>` : `<div class="note">${pack ? "No " + label + " for this function (" + esc(f.why || f.ls || "not produced") + ")." : ""}</div>` + (pack ? "" : nopack);
-    if (tab === "overview") body.innerHTML = overview(f);
-    else if (tab === "asm") body.innerHTML = code(have.asm, "compiled listing");
-    else if (tab === "ghidra") body.innerHTML = code(have.ghidra, "Ghidra output");
-    else if (tab === "lifted") body.innerHTML = code(have.lifted, "lifted code");
-    else if (tab === "evidence") body.innerHTML = evidence(f);
-    else if (tab === "compare") {
-      if (!pack) { body.innerHTML = nopack; return; }
-      const opts = [["lifted", "Lifted C (proven)"], ["ghidra", "Ghidra C"]].filter(([k]) => have[k]);
-      const right = window.__cmp && have[window.__cmp] ? window.__cmp : (opts[0] || ["ghidra"])[0];
-      body.innerHTML = `<div class="tools"><span>Compare compiled code with:</span><select id="cmp">${opts.map(([k, t]) => `<option value="${k}" ${k === right ? "selected" : ""}>${t}</option>`).join("")}</select>${f.st === "proven" || f.st === "reviewed" ? '<span class="diff-ok">✔ decoded version proven equivalent to the compiled one</span>' : '<span class="badge">not proven — treat the right side as a reading aid</span>'}</div>
-      <div class="split"><div><h4>Compiled (PowerPC)</h4><pre class="code">${esc(have.asm || "")}</pre></div><div><h4>${right === "lifted" ? "Lifted C" : "Ghidra C"}</h4><pre class="code">${esc(have[right] || "(none)")}</pre></div></div>`;
-      const sel = $("#cmp"); if (sel) sel.onchange = e => { window.__cmp = e.target.value; render(); };
-    }
+// ---- history -------------------------------------------------------------------------------------------------------
+function drawHistory() {
+  const H = GM.history || [];
+  const dec = view.axis === "d";
+  const pick = h => {
+    if (dec) return view.scope === "mw" || !h.bc ? null : {b: h.bc, s: h.s};
+    if (!h.rbc) return null;
+    if (view.scope === "ge") return {b: h.rbc, s: h.s};
+    if (view.scope === "all") return {b: h.all.rbc, s: h.all.s};
+    return {b: Object.fromEntries(RUN.map(s => [s.k, h.all.rbc[s.k] - h.rbc[s.k]])), s: h.all.s - h.s};
   };
-  render();
-}
-function overview(f) {
-  const g = f.gh, l = f.lf;
-  const lk = (label, val) => val ? `<dt>${label}</dt><dd>${val}</dd>` : "";
-  return `<dl class="kv">
-    ${lk("Summary", esc(f.sum))}
-    ${lk("Signature", '<span class="mono">' + esc(f.n) + "(" + esc(f.g) + ")</span>")}
-    <dt>Address / size</dt><dd class="mono">0x${hex(f.a)} · ${f.s} bytes · ${f.ni} instructions</dd>
-    <dt>Unit</dt><dd><a href="#/functions?unit=${encodeURIComponent(f.u)}">${esc(f.u)}</a></dd>
-    <dt>Called by / calls</dt><dd>${f.fi} direct callers · ${f.fo} direct callees</dd>
-    ${g ? `<dt>Ghidra</dt><dd>${g[0]} lines · ${g[1]} loops · ${g[2]} gotos · ${g[3]} switches · ${g[4]} warnings</dd>` : ""}
-    ${l ? `<dt>Lift verification</dt><dd>${l[0]} randomized trials matched · ${l[2]}/${l[1]} basic blocks exercised · ${l[3]} statements</dd>` : ""}
-    ${f.why ? `<dt>Blocker</dt><dd>${esc(f.why)}</dd>` : ""}
-    <dt>State</dt><dd>${pill(f.st)} — ${esc(HELP[f.st])}</dd>
-    <dt>Mangled</dt><dd class="mono">${esc(f.m)}</dd></dl>`;
-}
-function evidence(f) {
-  if (!f.ev && f.st !== "proven") return '<div class="note">No human-written evidence yet. Machine-derived facts are on the Overview tab.</div>';
-  const e = f.ev || {};
-  return `<dl class="kv">${f.st === "proven" ? "<dt>Proof</dt><dd>Lifted to a guarded IR by symbolic execution; the IR was run against the original code under a PowerPC 750 emulator on randomized inputs (registers, memory, FP) and every trial matched, including memory writes, return values and call arguments. See <a href='#/method'>how it's measured</a>.</dd>" : ""}
-  ${e.verified_by ? `<dt>Verified by</dt><dd>${esc(e.verified_by)}</dd>` : ""}${e.doc ? `<dt>Documented in</dt><dd class="mono">GameMap/${esc(e.doc)}</dd>` : ""}</dl>`;
+  const pts = H.map(h => ({h, v: pick(h)})).filter(p => p.v);
+  const el = $("hist");
+  if (pts.length < 2) {
+    el.innerHTML = '<p class="note">' + (dec && view.scope === "mw" ? "Middleware is not tracked for decoding." :
+      "History of this measurement appears once at least two snapshots include it (<code>python3 GameMap/tools/build_site.py --snapshot \"label\"</code>)." +
+      (dec ? "" : " Runtime snapshots start with the merged site.")) + "</p>";
+    return;
+  }
+  const states = dec ? DEC.slice(0, 6) : RUN, colour = dec ? varD : varR;
+  const W = 900, Hh = 230, pl = 44, pr = 12, pt = 10, pb = 34;
+  const x = i => pl + (W - pl - pr) * i / (pts.length - 1), y = v => pt + (Hh - pt - pb) * (1 - v);
+  let g = "";
+  for (let t = 0; t <= 4; t++) g += '<line x1="' + pl + '" x2="' + (W - pr) + '" y1="' + y(t / 4) + '" y2="' + y(t / 4) + '" stroke="var(--rule)"/><text x="' + (pl - 6) + '" y="' + (y(t / 4) + 4) + '" text-anchor="end">' + t * 25 + "%</text>";
+  const acc = pts.map(() => 0), paths = [];
+  states.forEach(s => {
+    const lo = acc.slice();
+    pts.forEach((p, i) => acc[i] += (p.v.b[s.k] || 0) / p.v.s);
+    const top = pts.map((p, i) => x(i) + "," + y(acc[i])).join(" L"), bot = pts.map((p, i) => x(pts.length - 1 - i) + "," + y(lo[pts.length - 1 - i])).join(" L");
+    paths.push('<path d="M' + top + " L" + bot + ' Z" fill="' + colour(s.k) + '" stroke="var(--panel)" stroke-width="1"><title>' + esc(s.label) + "</title></path>");
+  });
+  const hits = pts.map((p, i) => {
+    const w = (W - pl - pr) / (pts.length - 1);
+    return '<rect x="' + (x(i) - w / 2) + '" y="' + pt + '" width="' + w + '" height="' + (Hh - pt - pb) + '" fill="transparent"><title>' + esc(p.h.label) + " (" + esc(p.h.date.slice(0, 10)) + ")\n" +
+      states.map(s => s.label + ": " + pf(p.v.b[s.k] || 0, p.v.s)).join("\n") + "</title></rect>" +
+      '<text x="' + x(i) + '" y="' + (Hh - 12) + '" text-anchor="' + (i === 0 ? "start" : i === pts.length - 1 ? "end" : "middle") + '">' + esc(p.h.date.slice(5, 10) + " " + p.h.date.slice(11, 16)) + "</text>";
+  }).join("");
+  el.innerHTML = '<svg viewBox="0 0 ' + W + " " + Hh + '" role="img" aria-label="Share of code by ' + (dec ? "decoding" : "runtime") + ' state over time">' + g + paths.join("") + hits + "</svg>" +
+    '<p class="note" style="margin:6px 0 0">' + (dec ? "Decoding of game + engine code" : "Runtime") + ", share of bytes per snapshot. Hover a column for its label.</p>";
 }
 
-// ---------- next up ---------------------------------------------------------
-views.next = function () {
-  const T = GM.total;
-  const notDone = GM.functions.filter(f => !DONE.includes(f.st));
-  const quick = notDone.filter(f => f.st === "decompiled" && f.k !== "loop" && f.s <= 160 && !f.why.startsWith("lift: loop")).sort((a, b) => b.fi - a.fi).slice(0, 25);
-  const big = GM.functions.filter(f => f.st === "flagged").sort((a, b) => b.s - a.s).slice(0, 25);
-  const hot = notDone.sort((a, b) => b.fi - a.fi).slice(0, 25);
-  const tbl = rows => `<table><thead><tr><th>Function</th><th>Unit</th><th class="num">Size</th><th class="num">Callers</th><th>Blocker</th></tr></thead><tbody>` + rows.map(f => `<tr class="click" data-a="${hex(f.a)}"><td class="mono">${esc(f.n)}</td><td>${esc(f.u)}</td><td class="num">${f.s}</td><td class="num">${f.fi}</td><td>${esc(f.why || f.st)}</td></tr>`).join("") + "</tbody></table>";
-  main.innerHTML = `<h1>Next up</h1><p class="sub">What stands between the current state and "everything proven". Blockers are counted from the last verification run.</p>
-  <h2>Why functions are not proven yet</h2>
-  <table><thead><tr><th>Blocker</th><th class="num">Functions</th><th class="num">Code</th><th>Share of remaining bytes</th></tr></thead><tbody>${GM.blockers.map(b => `<tr><td>${esc(b.why)}</td><td class="num">${fmt(b.n)}</td><td class="num">${kb(b.s)}</td><td class="bar-cell"><div class="bar sm"><i class="s-flagged" style="width:${pct(b.s, T.s - sum(T.bc, DONE))}%"></i></div></td></tr>`).join("")}</tbody></table>
-  <h2>Quick wins</h2><p class="sub">Small, loop-free, already decompiled, most-called first — the cheapest to push to "proven".</p>${tbl(quick)}
-  <h2>Most-called functions not yet proven</h2>${tbl(hot)}
-  <h2>Biggest flagged functions</h2><p class="sub">Ghidra hit bad instructions (mostly paired-single float ops); these need a lifter extension or manual reading.</p>${tbl(big)}`;
-  main.querySelectorAll("tr[data-a]").forEach(r => r.onclick = () => { location.hash = "#/fn/" + r.dataset.a; });
-};
+// ---- units grid ----------------------------------------------------------------------------------------------------
+function renderUnits() {
+  const q = $("unitq").value.toLowerCase(), sort = $("unitsort").value, dec = view.axis === "d";
+  const done = u => dec ? u.doneD : u.doneR;
+  let us = SU.filter(u => !q || u.name.toLowerCase().includes(q) || u.y.includes(q));
+  us.sort(sort === "size" ? (a, b) => b.bytes - a.bytes : sort === "done" ? (a, b) => done(b) - done(a) || b.bytes - a.bytes :
+    sort === "todo" ? (a, b) => done(a) - done(b) || b.bytes - a.bytes : (a, b) => a.a - b.a);
+  const el = $("units"); el.innerHTML = "";
+  for (const u of us.slice(0, 400)) {
+    const d = document.createElement("button"); d.className = "unit"; d.type = "button";
+    const vals = dec ? u.bd : u.br, states = dec ? DEC : RUN;
+    d.innerHTML = '<span class="t" title="' + esc(u.name) + '">' + esc(u.name) + '</span><span class="bar">' + bar(states, vals, u.bytes, dec ? varD : varR) +
+      '</span><span class="p num">' + esc(u.y) + " · " + u.funcs.length + " fn · " + kb(u.bytes) + " · " + (done(u) * 100).toFixed(0) + (dec ? "% proven" : "% running") + "</span>";
+    d.onclick = () => { filter.unit = u.i; $("unitsel").value = u.i; shown = 300; renderList(); drawMap(); $("h-fn").scrollIntoView({behavior: "smooth"}); };
+    el.appendChild(d);
+  }
+  if (!us.length) el.innerHTML = '<p class="note">No source files match.</p>';
+}
+$("unitq").oninput = renderUnits;
+$("unitsort").onchange = renderUnits;
 
-// ---------- method ----------------------------------------------------------
-views.method = function () {
-  main.innerHTML = `<div class="method"><h1>How progress is measured</h1>
-  <p>Matching-decompilation sites like decomp.dev count bytes of C that recompile to identical machine code. This project has no compiler-matching goal: the executable is being <em>mapped and decoded</em> for a clean-room reconstruction in Rust/Bevy. So progress is measured by <b>how much of the code has been turned into something readable, and how much of that has been proven to behave identically</b>.</p>
-  <table><thead><tr><th>State</th><th>Meaning</th></tr></thead><tbody>${ST.map(s => `<tr><td>${pill(s)}</td><td>${esc(HELP[s])}</td></tr>`).join("")}</tbody></table>
-  <h2>Proof</h2><p>A function is <b>proven</b> when its lifted pseudo-C — produced by symbolic execution of the PowerPC into a guarded IR — behaves identically to the original machine code on randomized inputs run under a PowerPC 750 emulator (Unicorn). Compared: return registers, every memory write, every call target and argument, and FP results (NaN-canonicalised). Every block must be exercised; otherwise the function stays <b>partial</b>. Functions with loops, indirect branches or paired-single instructions are not yet supported by the lifter.</p>
-  <p class="note">Verification coverage: the lifter/verifier run reached ${fmt(GM.lift_tested||0)} of ${fmt(GM.total.n)} functions when this snapshot was taken; the rest are shown by their Ghidra state only and are not yet attempted (not failed). The loop-support lifter was added after that run, so loop functions are under-counted.</p>
-  <h2>Scope</h2><p>Only game and engine code count in the percentages. Compilation units are attributed to tiers from the original link order (<code>STT_FILE</code> symbols) and refined by dynamic programming over unanchored runs. Middleware — Wii SDK, Havok, nw4r, Lua, the APT UI runtime, EA libraries — is listed for size but not tracked.</p>
-  <h2>Caveats</h2><ul><li>"Decompiled" comes from Ghidra 11.3 and may be wrong; only <b>proven</b> and <b>reviewed</b> mean checked.</li><li>Percentages are by function <em>size in bytes</em> unless stated.</li><li>Indirect/virtual calls are not in the call graph.</li></ul>
-  <h2>Viewing code</h2><p>This site contains no game code. If you own the game, run <code>tools/build_code_pack.py</code> against your own ELF; a local <code>site/code/</code> folder then lights up the <b>Compare</b>, <b>Compiled</b>, <b>Ghidra C</b> and <b>Lifted C</b> tabs on every function.</p>
-  <p class="sub">Data generated ${esc(GM.generated)} · ELF sha256 <span class="mono">${esc(GM.elf_sha256 || "")}</span></p></div>`;
-};
+// ---- treemap -------------------------------------------------------------------------------------------------------
+let rects = [], mapW = 0, mapH = 0;
+function squarify(items, x, y, w, h, out) {
+  const total = items.reduce((a, b) => a + b.v, 0);
+  if (!total || w <= 0 || h <= 0) return;
+  let i = 0;
+  while (i < items.length) {
+    const remaining = items.slice(i).reduce((a, b) => a + b.v, 0);
+    const horiz = w >= h, side = horiz ? h : w, scale = (w * h) / remaining;
+    let row = [], best = Infinity, sum = 0;
+    for (let j = i; j < items.length; j++) {
+      const v = items[j].v * scale, ns = sum + v, rr = row.concat(v);
+      const len = ns / side, worst = Math.max(...rr.map(a => Math.max(len * len / a, a / (len * len))));
+      if (worst > best && row.length) break;
+      row = rr; sum = ns; best = worst;
+    }
+    const len = sum / side;
+    let off = 0;
+    for (let k = 0; k < row.length; k++) {
+      const it = items[i + k], l = row[k] / len;
+      if (horiz) out.push({it, x, y: y + off, w: len, h: l}); else out.push({it, x: x + off, y, w: l, h: len});
+      off += l;
+    }
+    i += row.length;
+    if (horiz) { x += len; w -= len; } else { y += len; h -= len; }
+  }
+}
+function layoutMap() {
+  const cv = $("map"), r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  mapW = r.width; mapH = r.height; cv.width = Math.round(mapW * dpr); cv.height = Math.round(mapH * dpr);
+  const urs = [];
+  squarify(SU.slice().sort((a, b) => b.bytes - a.bytes).map(u => ({v: u.bytes, u})), 0, 0, mapW, mapH, urs);
+  rects = urs.map(ur => {
+    const pad = ur.w > 12 && ur.h > 12 ? 1.5 : 0, fr = [];
+    squarify(ur.it.u.funcs.slice().sort((a, b) => b.s - a.s).map(f => ({v: f.s, f})), ur.x + pad, ur.y + pad, ur.w - 2 * pad, ur.h - 2 * pad, fr);
+    return {unit: ur.it.u, x: ur.x, y: ur.y, w: ur.w, h: ur.h, funcs: fr};
+  });
+  $("maphint").textContent = "Source files as blocks, largest first; each function is a cell sized by its code bytes and coloured by its " +
+    (view.axis === "d" ? "decoding" : "runtime") + " state. Hover to identify a function; click to open it below.";
+}
+function matches(f) {
+  if (filter.d.size && !filter.d.has(f.st)) return false;
+  if (filter.r.size && !filter.r.has(f.rst)) return false;
+  if (filter.grp >= 0 && f.grp !== filter.grp) return false;
+  if (filter.unit >= 0 && f.unit !== filter.unit) return false;
+  if (filter.q) { const q = filter.q; if (!f.l.includes(q) && !hex(f.a).includes(q.replace(/^0x/, ""))) return false; }
+  return true;
+}
+const filtering = () => filter.d.size || filter.r.size || filter.grp >= 0 || filter.unit >= 0 || filter.q;
+function drawMap() {
+  const cv = $("map"), g = cv.getContext("2d"), dpr = window.devicePixelRatio || 1;
+  g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, mapW, mapH);
+  const dec = view.axis === "d";
+  const col = Object.fromEntries((dec ? DEC : RUN).map(s => [s.k, css((dec ? "--d-" : "--s-") + s.k)]));
+  const dim = filtering();
+  g.fillStyle = css("--rule"); g.fillRect(0, 0, mapW, mapH);
+  for (const ur of rects) for (const fr of ur.funcs) {
+    const f = fr.it.f;
+    g.globalAlpha = !dim || matches(f) ? 1 : 0.16;
+    g.fillStyle = col[dec ? f.st : f.rst];
+    g.fillRect(fr.x, fr.y, Math.max(fr.w - (fr.w > 3 ? 0.5 : 0), 0.3), Math.max(fr.h - (fr.h > 3 ? 0.5 : 0), 0.3));
+  }
+  g.globalAlpha = 1; g.strokeStyle = css("--panel"); g.lineWidth = 1.5;
+  for (const ur of rects) g.strokeRect(ur.x + .75, ur.y + .75, ur.w - 1.5, ur.h - 1.5);
+  if (selected >= 0) for (const ur of rects) for (const fr of ur.funcs) if (fr.it.f.i === selected) {
+    g.strokeStyle = css("--ink"); g.lineWidth = 2; g.strokeRect(fr.x - 1, fr.y - 1, Math.max(fr.w + 2, 6), Math.max(fr.h + 2, 6));
+  }
+}
+function hit(x, y) {
+  for (const ur of rects) {
+    if (x < ur.x || y < ur.y || x > ur.x + ur.w || y > ur.y + ur.h) continue;
+    for (const fr of ur.funcs) if (x >= fr.x && y >= fr.y && x <= fr.x + fr.w && y <= fr.y + fr.h) return {ur, fr};
+    return {ur, fr: null};
+  }
+  return null;
+}
+const cvs = $("map"), tip = $("tip");
+cvs.addEventListener("mousemove", e => {
+  const r = cvs.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, h = hit(x, y);
+  if (!h) { tip.hidden = true; return; }
+  const u = h.ur.unit, f = h.fr && h.fr.it.f;
+  tip.innerHTML = (f ? "<div><b>" + esc(f.n) + '</b></div><div class="m">0x' + hex(f.a) + " · " + f.s + " bytes · " + DEC[DI[f.st]].label + " · " + RUN[RI[f.rst]].label +
+    (f.entries ? " · entered " + fmt(f.entries) + "×" : "") + "</div>" : "") +
+    '<div class="m">' + esc(u.name) + " — " + (u.doneD * 100).toFixed(0) + "% proven · " + (u.doneR * 100).toFixed(0) + "% running · " + kb(u.bytes) + "</div>";
+  tip.hidden = false;
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  tip.style.left = Math.max(4, Math.min(x + 14, mapW - tw - 4)) + "px"; tip.style.top = (y + 18 + th > mapH ? y - th - 10 : y + 18) + "px";
+});
+cvs.addEventListener("mouseleave", () => tip.hidden = true);
+cvs.addEventListener("click", e => { const r = cvs.getBoundingClientRect(), h = hit(e.clientX - r.left, e.clientY - r.top); if (h && h.fr) select(h.fr.it.f.i, true); });
+let rt;
+try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => drawMap()); } catch (e) { /* old browsers */ }
+window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { layoutMap(); drawMap(); }, 150); });
 
-$("#meta").textContent = fmt(GM.total.n) + " functions · " + kb(GM.total.s) + " · " + GM.generated.slice(0, 10);
-route();
+// ---- filters and list ----------------------------------------------------------------------------------------------
+function buildChips() {
+  const mk = (id, title, states, w, colour) => {
+    const el = $(id);
+    el.innerHTML = '<span class="t">' + title + "</span>" + states.map(s => '<button type="button" class="chip" data-w="' + w + '" data-k="' + s.k + '"><i style="background:' + colour(s.k) + '"></i>' + esc(s.label) + "</button>").join("");
+  };
+  mk("chipsD", "Decoding", DEC, "d", varD); mk("chipsR", "Runtime", RUN, "r", varR);
+  document.querySelectorAll(".chip").forEach(b => b.onclick = () => toggle(b.dataset.w, b.dataset.k));
+}
+function syncChips() {
+  document.querySelectorAll(".chip").forEach(b => b.classList.toggle("on", (b.dataset.w === "d" ? filter.d : filter.r).has(b.dataset.k)));
+  document.querySelectorAll(".lg").forEach(b => b.classList.toggle("on", (b.dataset.w === "d" ? filter.d : filter.r).has(b.dataset.k)));
+  $("chipsD").hidden = view.scope === "mw";
+}
+function buildSelects() {
+  const grps = [...new Set(SF.map(f => f.grp))].map(i => ({i, label: GM.groups[i].t + " / " + GM.groups[i].y})).sort((a, b) => a.label.localeCompare(b.label));
+  $("subsel").innerHTML = '<option value="-1">All subsystems</option>' + grps.map(g => '<option value="' + g.i + '">' + esc(g.label) + "</option>").join("");
+  $("unitsel").innerHTML = '<option value="-1">All source files</option>' + SU.slice().sort((a, b) => a.name.localeCompare(b.name)).map(u => '<option value="' + u.i + '">' + esc(u.name) + " (" + u.funcs.length + ")</option>").join("");
+  if (!grps.some(g => g.i === filter.grp)) filter.grp = -1;
+  if (!SU.some(u => u.i === filter.unit)) filter.unit = -1;
+  $("subsel").value = filter.grp; $("unitsel").value = filter.unit;
+}
+$("subsel").onchange = e => { filter.grp = +e.target.value; shown = 300; renderList(); drawMap(); };
+$("unitsel").onchange = e => { filter.unit = +e.target.value; shown = 300; renderList(); drawMap(); };
+$("q").oninput = e => { filter.q = e.target.value.trim().toLowerCase(); shown = 300; renderList(); drawMap(); };
+$("sort").onchange = e => { filter.sort = e.target.value; shown = 300; renderList(); };
+function renderList() {
+  const fs = SF.filter(matches), s = filter.sort;
+  if (s === "size") fs.sort((a, b) => b.s - a.s); else if (s === "fi") fs.sort((a, b) => b.fi - a.fi || b.s - a.s);
+  else if (s === "entries") fs.sort((a, b) => b.entries - a.entries); else if (s === "refs") fs.sort((a, b) => b.refs - a.refs || b.s - a.s);
+  $("count").textContent = fmt(fs.length) + " functions · " + kb(fs.reduce((a, f) => a + f.s, 0));
+  const el = $("list"); el.innerHTML = "";
+  const frag = document.createDocumentFragment();
+  for (const f of fs.slice(0, shown)) {
+    const d = document.createElement("div"); d.className = "row" + (f.i === selected ? " sel" : ""); d.tabIndex = 0; d.setAttribute("role", "option");
+    d.innerHTML = '<span class="st" style="background:' + varD(f.st) + '" title="Decoding: ' + DEC[DI[f.st]].label + '"></span><span class="st" style="background:' + varR(f.rst) + '" title="Runtime: ' + RUN[RI[f.rst]].label +
+      '"></span><span style="min-width:0"><div class="n">' + esc(f.n) + '</div><div class="u">' + esc(UNITS[f.unit].name) + " · " + DEC[DI[f.st]].label + " · " + RUN[RI[f.rst]].label +
+      '</div></span><span class="z">' + hex(f.a) + "<br>" + f.s + " B</span>";
+    d.onclick = () => select(f.i, false); d.onkeydown = e => { if (e.key === "Enter") select(f.i, false); };
+    frag.appendChild(d);
+  }
+  el.appendChild(frag);
+  if (fs.length > shown) {
+    const b = document.createElement("button"); b.className = "more"; b.type = "button"; b.textContent = "Show " + Math.min(300, fs.length - shown) + " more";
+    b.onclick = () => { shown += 300; renderList(); }; el.appendChild(b);
+  }
+  if (!fs.length) el.innerHTML = '<div class="empty">No functions match.</div>';
+}
+
+// ---- detail --------------------------------------------------------------------------------------------------------
+const cache = new Map();
+function getJSON(url) {
+  if (!cache.has(url)) cache.set(url, fetch(url).then(r => r.ok ? r.json() : null).catch(() => null));
+  return cache.get(url);
+}
+const codeFor = f => getJSON("code/" + (f.a >>> 14).toString(16).padStart(5, "0") + ".json").then(p => p ? (p[hex(f.a)] || {}) : null);
+const rustFor = f => f.refs ? getJSON("rust/" + (f.a >>> 16).toString(16).padStart(4, "0") + ".json").then(p => (p && p[hex(f.a)]) || []) : Promise.resolve([]);
+const NOPACK = '<div class="empty">Code is not part of this site: it is EA\'s. If you own the game, build the local <b>code pack</b> from your copy of the executable, then serve the site folder:<br>' +
+  "<code>python3 GameMap/tools/build_code_pack.py --elf path/to/playgroundz.elf --ghidra-c path/to/decomp.c</code><br><code>python3 -m http.server -d GameMap/site</code></div>";
+let cMode = null;
+
+async function select(i, scroll) {
+  selected = i; drawMap();
+  document.querySelectorAll(".row").forEach(r => r.classList.remove("sel"));
+  const f = F[i], u = UNITS[f.unit], d = DEC[DI[f.st]], r = RUN[RI[f.rst]];
+  try { history.replaceState(null, "", "#f" + hex(f.a)); } catch (e) { /* file:// */ }
+  const scen = (GM.scenarios || []).map((n, k) => (f.scen >> k) & 1 ? "<span>" + esc(n) + "</span>" : "").join("");
+  const fact = (k, v) => '<span class="fact">' + k + " <b>" + v + "</b></span>";
+  const facts = [fact("Address", '<span class="mono">0x' + hex(f.a) + "</span>"), fact("Size", f.s + " B") + "", fact("File", esc(u.name)), fact("Subsystem", esc(f.t + " / " + f.y))];
+  if (f.kind) facts.push(fact("Kind", esc(f.kind)));
+  if (f.st !== "untracked") facts.push(fact("Callers / callees", f.fi + " / " + f.fo));
+  facts.push(fact("VM", VMTXT[f.vm] || esc(f.vm)), fact("Entered", fmt(f.entries) + "×"));
+  if (f.gh) facts.push(fact("Ghidra", f.gh[0] + " lines · " + f.gh[1] + " loops · " + f.gh[2] + " gotos · " + f.gh[4] + " warnings"));
+  if (f.lf) facts.push(fact("Lift check", fmt(f.lf[0]) + " trials matched · " + f.lf[2] + "/" + f.lf[1] + " blocks"));
+  if (f.why) facts.push(fact("Blocker", esc(f.why)));
+  if (f.ev && f.ev.verified_by) facts.push(fact("Verified by", esc(f.ev.verified_by)));
+  if (f.ev && f.ev.doc) facts.push(fact("Documented in", '<span class="mono">GameMap/' + esc(f.ev.doc) + "</span>"));
+  const det = $("detail");
+  det.innerHTML = '<div class="panel dh"><div class="name">' + esc(f.n) + "<span>(" + esc(f.g) + ")</span></div>" + (f.m !== f.n ? '<div class="mg">' + esc(f.m) + "</div>" : "") +
+    (f.sum ? '<p class="sum">' + esc(f.sum) + "</p>" : "") +
+    '<div class="facts"><span class="badge" title="' + esc(d.desc) + '"><i style="background:' + varD(f.st) + '"></i><small>Decoding</small> ' + d.label + "</span>" +
+    '<span class="badge" title="' + esc(r.desc) + '"><i style="background:' + varR(f.rst) + '"></i><small>Runtime</small> ' + r.label + "</span></div>" +
+    '<div class="facts">' + facts.join("") + "</div>" + (scen ? '<div class="scen" aria-label="Scenarios that entered it">' + scen + "</div>" : "") + "</div>" +
+    '<div class="panes"><div class="pane"><h3>PowerPC (original)<span>' + f.s / 4 + ' instr</span></h3><div id="pAsm" class="empty">Loading…</div></div>' +
+    '<div class="pane"><h3 id="cHead">Decompiled C</h3><div id="pC" class="empty">Loading…</div></div>' +
+    '<div class="pane rust"><h3>Rust<span>' + f.refs + " reference" + (f.refs === 1 ? "" : "s") + '</span></h3><div id="pR" class="empty">Loading…</div></div></div>';
+  if (scroll) det.scrollIntoView({behavior: "smooth", block: "start"});
+  const [code, rust] = await Promise.all([codeFor(f), rustFor(f)]);
+  if (selected !== i) return;
+  // PowerPC
+  const pa = $("pAsm");
+  if (!code) { pa.outerHTML = NOPACK; } else if (code.asm) {
+    const pre = document.createElement("pre"); pre.className = "asm";
+    pre.innerHTML = code.asm.split("\n").map(l => {
+      const m = l.match(/^([0-9a-f]{8}) {2}([0-9a-f]{8}) {2}(\S+)\s*(.*)$/); if (!m) return esc(l);
+      const ops = esc(m[4]).replace(/(\.L_[0-9a-f]{8}|[A-Za-z_][A-Za-z0-9_]*__[A-Za-z0-9_]+)/g, '<span class="lb">$1</span>');
+      return '<span class="ad">' + m[1] + '</span>  <span class="wd">' + m[2] + '</span>  <span class="mn">' + m[3].padEnd(8) + "</span> " + ops;
+    }).join("\n");
+    pa.replaceWith(pre);
+  }
+  // C: Ghidra or lifted
+  const showC = () => {
+    const have = code || {}, opts = [["lifted", "Lifted C"], ["ghidra", "Ghidra C"]].filter(([k]) => have[k]);
+    const prefer = ["reviewed", "proven", "partial"].includes(f.st) ? "lifted" : "ghidra";
+    const mode = opts.some(o => o[0] === cMode) ? cMode : opts.some(o => o[0] === prefer) ? prefer : (opts[0] || [null])[0];
+    $("cHead").innerHTML = (opts.length > 1 ? '<span class="seg">' + opts.map(([k, t]) => '<button type="button" data-c="' + k + '" class="' + (k === mode ? "on" : "") + '">' + t + "</button>").join("") + "</span>" : (mode === "lifted" ? "Lifted C" : "Ghidra C")) +
+      (mode === "lifted" && (f.st === "proven" || f.st === "reviewed") ? '<span class="proofok">✓ proven equivalent</span>' : mode ? "<span>" + (mode === "ghidra" ? esc(have.gsrc || "decompiled") + " · reading aid" : "not proven") + "</span>" : "");
+    $("cHead").querySelectorAll("button").forEach(b => b.onclick = () => { cMode = b.dataset.c; showC(); });
+    const box = $("pC");
+    if (!code) { box.outerHTML = '<div id="pC">' + NOPACK + "</div>"; return; }
+    if (!mode) { box.className = "empty"; box.innerHTML = "No decompiled C for this function in the code pack."; return; }
+    const pre = document.createElement("pre"), c = document.createElement("code"); c.className = "language-c"; c.textContent = have[mode];
+    pre.appendChild(c); box.className = ""; box.innerHTML = ""; box.appendChild(pre);
+    if (window.hljs && have[mode].length < 80000) window.hljs.highlightElement(c);
+  };
+  showC();
+  // Rust
+  const pr = $("pR");
+  if (!rust.length) {
+    pr.className = "empty";
+    pr.textContent = {run: "No Rust is written for this function: the remake runs the original PowerPC in its VM.",
+      native: "No Rust yet, and no recorded scenario has reached it. It would run as original code in the VM.",
+      stub: "No Rust needed: the VM skips it (rendering or audio detail) and returns 0.",
+      trap: "No Rust yet: an engine service the VM cannot run. A run that needs it stops here."}[f.rst] || "Bound to Rust by a general rule rather than by name.";
+    return;
+  }
+  pr.className = ""; pr.innerHTML = "";
+  for (const ref of rust) {
+    const box = document.createElement("div"); box.className = "ref";
+    box.innerHTML = '<div class="refh"><span class="kind">' + esc(KIND[ref.kind] || ref.kind) + '</span><a href="' + GM.repo + esc(ref.file) + "#L" + ref.start + '" target="_blank" rel="noopener">' + esc(ref.file) + ":" + ref.line + "</a>" +
+      (ref.fn ? '<span class="mono" style="font-size:12px;color:var(--muted)">fn ' + esc(ref.fn) + "</span>" : "") + "</div>";
+    const pre = document.createElement("pre"), c = document.createElement("code"); c.className = "language-rust"; c.textContent = ref.code;
+    pre.appendChild(c); box.appendChild(pre); pr.appendChild(box);
+    if (window.hljs) window.hljs.highlightElement(c);
+  }
+}
+
+// ---- next up -------------------------------------------------------------------------------------------------------
+function nextUp() {
+  const tracked = SF.filter(f => f.st !== "untracked");
+  const notDone = tracked.filter(f => !DONE_D.includes(f.st));
+  const tbl = (title, sub, rows, cols) => '<div class="panel"><h3>' + title + "</h3>" + (sub ? '<p class="note" style="margin:4px 0 8px">' + sub + "</p>" : "") +
+    (rows.length ? '<div class="tblwrap"><table><thead><tr><th>Function</th>' + cols.map(c => '<th class="' + (c[2] || "") + '">' + c[0] + "</th>").join("") + "</tr></thead><tbody>" +
+      rows.map(f => '<tr class="click" data-i="' + f.i + '"><td class="mono">' + esc(f.n) + "</td>" + cols.map(c => '<td class="' + (c[2] || "") + '">' + c[1](f) + "</td>").join("") + "</tr>").join("") + "</tbody></table></div>"
+      : '<p class="note">Nothing in this scope.</p>') + "</div>";
+  const blk = new Map();
+  for (const f of tracked) if (["decompiled", "flagged", "mapped"].includes(f.st) && f.why) { const b = blk.get(f.why) || {n: 0, s: 0}; b.n++; b.s += f.s; blk.set(f.why, b); }
+  const rest = notDone.reduce((t, f) => t + f.s, 0);
+  const blockers = '<div class="panel"><h3>Why functions are not proven yet</h3><p class="note" style="margin:4px 0 8px">Blockers from the last lifter and Ghidra run, game + engine code.</p>' +
+    (blk.size ? '<div class="tblwrap"><table><thead><tr><th>Blocker</th><th class="num">Functions</th><th class="num">Code</th><th class="num">Share of the rest</th></tr></thead><tbody>' +
+      [...blk].sort((a, b) => b[1].s - a[1].s).map(([w, b]) => "<tr><td>" + esc(w) + '</td><td class="num">' + fmt(b.n) + '</td><td class="num">' + kb(b.s) + '</td><td class="num">' + pf(b.s, rest) + "</td></tr>").join("") + "</tbody></table></div>"
+      : '<p class="note">Nothing in this scope.</p>') + "</div>";
+  const quick = notDone.filter(f => f.st === "decompiled" && f.kind !== "loop" && f.s <= 160 && !f.why.startsWith("lift: loop")).sort((a, b) => b.fi - a.fi).slice(0, 25);
+  const hot = notDone.slice().sort((a, b) => b.fi - a.fi).slice(0, 25);
+  const gaps = SF.filter(f => f.rst === "trap").sort((a, b) => b.entries - a.entries || b.s - a.s).slice(0, 25);
+  $("next").innerHTML = blockers +
+    tbl("Quick wins", "Small, loop-free, already decompiled, most-called first: the cheapest to push to proven.", quick, [["Callers", f => f.fi, "num"], ["Size", f => f.s, "num"]]) +
+    tbl("Most-called functions not proven yet", "", hot, [["Callers", f => f.fi, "num"], ["State", f => DEC[DI[f.st]].label], ["Blocker", f => esc(f.why)]]) +
+    tbl("Runtime gaps: unimplemented services", "Functions the remake's VM traps on. A scenario that needs one stops there; each needs a Rust hook or a port.", gaps,
+      [["Size", f => f.s, "num"], ["File", f => esc(UNITS[f.unit].name)]]);
+  $("next").querySelectorAll("tr[data-i]").forEach(r => r.onclick = () => select(+r.dataset.i, true));
+}
+
+// ---- method --------------------------------------------------------------------------------------------------------
+function method() {
+  const rows = (states, colour) => "<table><tbody>" + states.map(s => '<tr><td style="white-space:nowrap"><span class="badge"><i style="background:' + colour(s.k) + '"></i>' + esc(s.label) + "</span></td><td>" + esc(s.desc) + "</td></tr>").join("") + "</tbody></table>";
+  $("method").innerHTML = "<p>Matching-decompilation sites like decomp.dev count bytes of C that recompile to identical machine code. This project has no compiler-matching goal: the executable is " +
+    "<em>mapped and decoded</em> for a clean-room reconstruction in Rust/Bevy. So each function gets two independent measurements.</p>" +
+    '<div class="grid2"><div><h3>Decoding</h3><p class="note">Highest applicable state wins. Game + engine code only.</p>' + rows(DEC, varD) +
+    '</div><div><h3>Runtime</h3><p class="note">One state per function, first match in this order.</p>' + rows(RUN, varR) + "</div></div>" +
+    "<h3>Proof</h3><p>A function is <b>proven</b> when its lifted pseudo-C, produced by symbolic execution of the PowerPC into a guarded IR, behaves identically to the original machine code on randomized inputs run under a PowerPC 750 emulator (Unicorn). " +
+    "Compared: return registers, every memory write, every call target and argument, and FP results. Every block must be exercised; otherwise the function stays <b>partial</b>. " +
+    "The lifter/verifier run reached " + fmt(GM.lift_tested || 0) + " functions in the last snapshot; the rest are shown by their Ghidra state only (not attempted, not failed).</p>" +
+    "<h3>Runtime</h3><p>The remake runs the original executable in its own PowerPC VM (<span class=\"mono\">_bevy/src/gekko</span>, <span class=\"mono\">mgvm</span>) and replaces engine services with Rust. " +
+    "<span class=\"mono\">mglab classify</span> lists every hook the VM installs; runs with <span class=\"mono\">EAGL_PPC_COVER</span> record which functions were entered. Scenarios recorded: " +
+    ((GM.scenarios || []).map(esc).join(", ") || "none") + ". Rust references are found in <span class=\"mono\">_bevy/src</span> by hook bindings, cited addresses and names.</p>" +
+    "<h3>Scope</h3><p>Compilation units come from the original link order (<span class=\"mono\">STT_FILE</span> symbols). Decoding percentages cover game and engine code; middleware (Wii SDK, Havok, nw4r, Lua, the APT UI runtime, EA libraries) is listed for size. " +
+    "The runtime measurement covers every function. Percentages are by function size in bytes unless stated.</p>" +
+    "<h3>Caveats</h3><ul><li>\"Decompiled\" comes from Ghidra and may be wrong; only <b>proven</b> and <b>reviewed</b> mean checked.</li>" +
+    "<li>\"Ran original code\" means entered at least once in a recorded scenario, not that every path ran.</li><li>Indirect and virtual calls are not in the call graph.</li></ul>" +
+    "<h3>Viewing code</h3><p>This site contains no game code. If you own the game, build the local code pack (<span class=\"mono\">tools/build_code_pack.py</span>) against your own ELF; a local <span class=\"mono\">site/code/</span> folder then fills the PowerPC and C panes. The Rust panes always work: that code is the remake's own.</p>" +
+    '<p class="note">Data generated ' + esc(GM.generated) + ' · ELF sha256 <span class="mono">' + esc(GM.elf_sha256 || "") + "</span></p>";
+}
+
+// ---- switches ------------------------------------------------------------------------------------------------------
+function syncSeg() {
+  document.querySelectorAll("#scope button").forEach(b => b.classList.toggle("on", b.dataset.v === view.scope));
+  document.querySelectorAll("#axis button").forEach(b => b.classList.toggle("on", b.dataset.v === view.axis));
+}
+function setAxis(v) { view.axis = v; store.set("axis", v); syncSeg(); drawHistory(); renderUnits(); layoutMap(); drawMap(); }
+function setScope(v) {
+  view.scope = v; store.set("scope", v);
+  if (v === "mw") { filter.d.clear(); if (view.axis === "d") view.axis = "r"; }
+  rebuild(); syncSeg(); progress(); syncChips(); buildSelects(); drawHistory(); renderUnits(); layoutMap(); drawMap(); shown = 300; renderList(); nextUp();
+  $("meta").textContent = fmt(SF.length) + " functions · " + kb(SF.reduce((t, f) => t + f.s, 0)) + " · data " + GM.generated.slice(0, 10);
+}
+document.querySelectorAll("#scope button").forEach(b => b.onclick = () => setScope(b.dataset.v));
+document.querySelectorAll("#axis button").forEach(b => b.onclick = () => setAxis(b.dataset.v));
+
+// ---- boot ----------------------------------------------------------------------------------------------------------
+buildChips(); recon(); method();
+setScope(view.scope);
+$("foot").innerHTML = "Reference map of the Wii executable <span class=\"mono\">playgroundz.elf</span> (" + fmt(F.length) + " functions in " + fmt(UNITS.length) + " source files). " +
+  "Progress is measured, never estimated: decoding from GameMap's Ghidra, lifter and annotation data; runtime from the remake's VM hook table and coverage of " + (GM.scenarios || []).length + " recorded scenarios.";
+function fromHash() {
+  const h = location.hash.match(/^#(?:f|\/fn\/)([0-9a-f]{8})$/i), f = h && byAddr.get(parseInt(h[1], 16));
+  if (f && f.i !== selected) { if (!inScope(f)) setScope("all"); select(f.i, true); }
+}
+window.addEventListener("hashchange", fromHash);
+fromHash();
 })();

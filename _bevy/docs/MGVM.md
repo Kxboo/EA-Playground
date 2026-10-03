@@ -107,21 +107,23 @@ effects) not yet checked on screen.
 
 ## Decompilation progress map
 
-`_bevy/tools/decomp_progress.py` builds a decomp.dev-style map of every function in `playgroundz.elf`, showing the
-original PowerPC, Ghidra's C, the Rust that ports, hooks or drives it, and what the VM does with it. To build it:
+The decomp.dev-style map lives in GameMap: [`GameMap/site`](../../GameMap/site), published to GitHub Pages. See
+[`GameMap/docs/11-progress-site.md`](../../GameMap/docs/11-progress-site.md). Its **runtime** measurement comes from this VM:
 
-1. `cargo run --release --bin mglab -- classify scratch_progress/classify.tsv` records every hook the VM installs as
-   host, observe, stub or trap. Everything else counts as native.
-2. Run scenarios with `EAGL_PPC_COVER=scratch_progress/cov_<name>.tsv` set. `boot_as` turns on per-function entry
-   counting in gekko, and `mgvm::write_coverage` appends `addr\tentries` lines when the probe finishes.
-3. `python _bevy/tools/decomp_progress.py OUT_DIR` writes `index.json` and `chunks/NNN.json`. Copy
-   `_bevy/tools/decomp-map.html` next to them and serve the directory.
+1. Record every hook the VM installs:
 
-Each function gets one status:
+   ```bash
+   cargo run --release --bin mglab -- classify scratch_progress/classify.tsv
+   ```
 
-- **port**: Rust code names its address.
-- **host**: replaced by a Rust hook, or watched by an observe hook.
-- **run**: original code, executed under coverage.
-- **native**: original code, not yet reached.
-- **stub**: soft-stubbed.
-- **trap**: trap hook.
+   Each hook is classified as host, observe, stub or trap; everything else is native.
+2. Run scenarios with `EAGL_PPC_COVER=scratch_progress/cov_<id>.tsv`. `boot_as` turns on per-function entry counting in
+   gekko, and `mgvm::write_coverage` appends `addr\tentries` lines when the probe finishes.
+3. Import both, then rebuild the site:
+
+   ```bash
+   python GameMap/tools/ingest_runtime.py --elf Remaster/reference/playgroundz.elf --classify scratch_progress/classify.tsv --cover 'scratch_progress/cov_*.tsv'
+   python GameMap/tools/build_site.py
+   ```
+
+   `build_site.py` also scans `_bevy/src` for the Rust that ports, hooks or drives each function.
