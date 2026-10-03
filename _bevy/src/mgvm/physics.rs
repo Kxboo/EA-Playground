@@ -223,7 +223,16 @@ fn collider_for(prim: &Prim, info: &BodyInfo, layer: u32) -> Option<ColliderBuil
         Prim::Mesh(tris) => tri_mesh(tris)?,
     };
     let tag = if matches!(prim, Prim::Mesh(_)) { MESH_TAG } else { 0 };
-    Some(b.friction(info.friction).restitution(info.restitution).user_data(tag).collision_groups(layer_groups(layer)))
+    // Havok's contact material is the geometric mean of the two bodies' friction / restitution: stored as square roots and
+    // multiplied per pair (a zero-restitution backboard deadens any ball)
+    Some(
+        b.friction(info.friction.max(0.).sqrt())
+            .friction_combine_rule(CoefficientCombineRule::Multiply)
+            .restitution(info.restitution.max(0.).sqrt())
+            .restitution_combine_rule(CoefficientCombineRule::Multiply)
+            .user_data(tag)
+            .collision_groups(layer_groups(layer)),
+    )
 }
 
 impl Physics {
