@@ -101,6 +101,8 @@ pub struct Vehicle {
     pub angvel: [f32; 3],
     pub fixed: bool,
     pub grounded: bool,
+    /// Wheel centres in the chassis frame (the vehicle info's suspension hardpoints, lowered by the suspension length).
+    pub wheels: [[f32; 3]; 4],
 }
 
 pub const WHEEL_OFFSETS: [[f32; 3]; 4] = [[0.22, -0.06, 0.13], [0.22, -0.06, -0.13], [-0.22, -0.06, 0.13], [-0.22, -0.06, -0.13]];
@@ -123,7 +125,7 @@ impl Vehicle {
     }
     pub fn wheel_pos(&self, i: usize) -> [f32; 3] {
         let m = self.mat();
-        apply(&m, WHEEL_OFFSETS[i % 4])
+        apply(&m, self.wheels[i % 4])
     }
 }
 
@@ -139,6 +141,8 @@ pub struct Contact {
 
 pub struct Physics {
     pub world: PhysicsWorld,
+    /// Collider count when the broad phase last ran for queries (see `refresh_queries`).
+    queried_colliders: usize,
     pub gravity: [f32; 3],
     systems: Vec<Option<Vec<BodyInfo>>>,
     /// Static colliders added by each loaded system.
@@ -241,6 +245,7 @@ impl Physics {
         world.gravity = Vector::new(0., -9.81, 0.);
         Physics {
             world,
+            queried_colliders: usize::MAX,
             gravity: [0., -9.81, 0.],
             systems: vec![],
             system_bodies: vec![],
@@ -496,6 +501,16 @@ impl Physics {
     }
 
     /// Ray cast against the world: distance to the first hit.
+    /// Rapier's queries go through the broad phase, which learns about new colliders only when it runs: bring it up to
+    /// date before a query if colliders were added since (the game casts rays right after loading its track).
+    pub fn refresh_queries(&mut self) {
+        let n = self.world.colliders.len();
+        if n != self.queried_colliders {
+            self.queried_colliders = n;
+            self.world.detect_collisions(&(), &());
+        }
+    }
+
     pub fn cast_ray(&self, from: [f32; 3], dir: [f32; 3], max: f32) -> Option<f32> {
         let ray = Ray::new(Vector::new(from[0], from[1], from[2]), Vector::new(dir[0], dir[1], dir[2]));
         self.world.cast_ray(&ray, max, true, QueryFilter::only_fixed()).map(|(_, t)| t)
@@ -584,8 +599,8 @@ impl Physics {
 
     // --- vehicles -----------------------------------------------------------------------------------------------------
 
-    pub fn add_vehicle(&mut self, guest: u32, pos: [f32; 3]) {
-        self.vehicles.insert(guest, Vehicle { pos, vel: [0.; 3], dir: [1., 0., 0.], angvel: [0.; 3], fixed: false, grounded: false });
+    pub fn add_vehicle(&mut self, guest: u32, pos: [f32; 3], wheels: [[f32; 3]; 4]) {
+        self.vehicles.insert(guest, Vehicle { pos, vel: [0.; 3], dir: [1., 0., 0.], angvel: [0.; 3], fixed: false, grounded: false, wheels });
     }
 
     pub fn step_vehicles(&mut self, guest: u32, ms: i32) {

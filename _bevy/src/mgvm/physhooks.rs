@@ -110,6 +110,7 @@ fn get_gravity(h: &mut MgHost, vm: &mut V) -> R {
 }
 /// `GetGroundHeight(this, const rmVector3*, float)` -> float
 fn get_ground_height(h: &mut MgHost, vm: &mut V) -> R {
+    h.phys.refresh_queries();
     let p = read_v3(vm, vm.a(1));
     let reach = vm.fa(0).abs().max(1.);
     let g = h.phys.ground_height(p, reach.min(4.), reach + 5.);
@@ -123,6 +124,7 @@ fn get_ground_type(_h: &mut MgHost, vm: &mut V) -> R {
 }
 /// `CastRay(this, from*, to*, mask, float* out)` -> hit
 fn cast_ray(h: &mut MgHost, vm: &mut V) -> R {
+    h.phys.refresh_queries();
     let (from, to) = (read_v3(vm, vm.a(1)), read_v3(vm, vm.a(2)));
     let d = [to[0] - from[0], to[1] - from[1], to[2] - from[2]];
     let len = (d[0] * d[0] + d[1] * d[1] + d[2] * d[2]).sqrt();
@@ -131,6 +133,9 @@ fn cast_ray(h: &mut MgHost, vm: &mut V) -> R {
         return Ok(());
     }
     let dir = [d[0] / len, d[1] / len, d[2] / len];
+    if std::env::var("EAGL_DBG_RAY").is_ok() {
+        eprintln!("[ray] {from:?} -> {to:?} filter {:#x} hit {:?}", vm.a(3), h.phys.cast_ray(from, dir, len));
+    }
     match h.phys.cast_ray(from, dir, len) {
         Some(t) => {
             let out = vm.a(4);
@@ -255,7 +260,23 @@ fn rb_listener_ct(h: &mut MgHost, vm: &mut V) -> R {
 fn generate_vehicle(h: &mut MgHost, vm: &mut V) -> R {
     let pos = read_v3(vm, vm.a(2));
     let obj = vm.alloc_zeroed(0x100, 16);
-    h.phys.add_vehicle(obj, pos);
+    if std::env::var("EAGL_DBG_VEH").is_ok() {
+        let info = vm.a(3);
+        let f: Vec<f32> = (0x50..0xa0).step_by(4).map(|o| vm.st.mem.rf32(info + o)).collect();
+        eprintln!("[veh] GenerateVehicle {obj:#x} at {pos:?} info+0x50.. {f:?}");
+    }
+    // `PhysicsVehicle::setupComponent(.., hkVehicleDefaultSuspension&)`: hardpoints front (+0x84 x, +0x8c y, -/+ +0x94 z)
+    // and rear (+0x88, +0x90, -/+ +0x98), suspension lengths +0x68..+0x74 straight down
+    let info = vm.a(3);
+    let f = |vm: &mut V, o: u32| if info != 0 { vm.st.mem.rf32(info + o) } else { 0. };
+    let (fx, rx, fy, ry, fz, rz) = (f(vm, 0x84), f(vm, 0x88), f(vm, 0x8c), f(vm, 0x90), f(vm, 0x94), f(vm, 0x98));
+    let len = [f(vm, 0x68), f(vm, 0x6c), f(vm, 0x70), f(vm, 0x74)];
+    let wheels = if fx != 0. || rx != 0. {
+        [[fx, fy - len[0], -fz], [fx, fy - len[1], fz], [rx, ry - len[2], -rz], [rx, ry - len[3], rz]]
+    } else {
+        super::physics::WHEEL_OFFSETS
+    };
+    h.phys.add_vehicle(obj, pos, wheels);
     // RcCar pokes the chassis through the Havok vehicle instance (+4): give it a motion whose virtual methods do nothing
     let inst = vm.alloc_zeroed(0x400, 16);
     let vt = vm.alloc_zeroed(0x200, 16);
@@ -325,6 +346,9 @@ fn veh_get_wheel_mat(h: &mut MgHost, vm: &mut V) -> R {
 }
 fn veh_set_pos(h: &mut MgHost, vm: &mut V) -> R {
     let p = read_v3(vm, vm.a(1));
+    if std::env::var("EAGL_DBG_VEH").is_ok() {
+        eprintln!("[veh] SetPos {:#x} {p:?} from {:#x}", vm.a(0), vm.st.cpu.lr);
+    }
     if let Some(v) = h.phys.vehicles.get_mut(&vm.a(0)) {
         v.pos = p;
     }
@@ -332,6 +356,9 @@ fn veh_set_pos(h: &mut MgHost, vm: &mut V) -> R {
 }
 fn veh_set_vel(h: &mut MgHost, vm: &mut V) -> R {
     let p = read_v3(vm, vm.a(1));
+    if std::env::var("EAGL_DBG_VEH").is_ok() {
+        eprintln!("[veh] SetVel {:#x} {p:?} from {:#x}", vm.a(0), vm.st.cpu.lr);
+    }
     if let Some(v) = h.phys.vehicles.get_mut(&vm.a(0)) {
         v.vel = p;
     }
