@@ -57,6 +57,8 @@ pub struct Session {
     world_radius: Option<f32>,
     /// Launched from world play (Free Throw at a hoop) rather than the front end.
     from_world: bool,
+    /// Looping sounds playing for the guest's loop instances (RcCars engines, the firecracker fuse).
+    voices: HashMap<String, crate::playback::Loop>,
     pub ty: i32,
     pub humans: usize,
     rx: Mutex<mpsc::Receiver<Msg>>,
@@ -191,6 +193,7 @@ impl Session {
         Session {
             world_radius: None,
             from_world: false,
+            voices: HashMap::new(),
             ty,
             humans,
             rx: Mutex::new(rx),
@@ -629,6 +632,24 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
             }
         }
         fx.update(ms as f32 / 1000.);
+    }
+    // looping sounds: one voice per class with a live instance (the game re-creates instances), pitched by speed
+    {
+        // inputs: +8 speed 0..1000, +0xc distance 0..100, +0x14 volume (0 = unset)
+        let mut live: HashMap<String, (i32, i32, i32)> = HashMap::new();
+        for (&w, c) in &host.loops {
+            live.insert(c.clone(), (vm.r32(w + 8) as i32, vm.r32(w + 0xc) as i32, vm.r32(w + 0x14) as i32));
+        }
+        s.voices.retain(|c, _| live.contains_key(c));
+        for (class, (speed, distance, volume)) in live {
+            let rate = 0.7 + speed.clamp(0, 1000) as f32 / 1000. * 1.1;
+            let gain = if volume > 0 { volume.min(100) as f32 / 100. } else { 1. } * (1. - distance.clamp(0, 100) as f32 / 125.);
+            if let Some(v) = s.voices.get(&class) {
+                v.set(rate, gain * 0.5);
+            } else if let Some((pcm, table_vol)) = crate::sfx::class_sample(&class) {
+                s.voices.insert(class, crate::playback::play_loop(pcm, rate, gain * table_vol * 0.5));
+            }
+        }
     }
     // sounds the original picked (`AuAEMSManager::PlaySFX` id switch -> Csis class + variant)
     for (class, variant) in std::mem::take(&mut host.sounds) {

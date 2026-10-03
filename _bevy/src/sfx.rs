@@ -193,6 +193,23 @@ pub fn play_class(class: &str, index: usize, volume: f32) {
     });
 }
 
+/// The (first) sample of `class` and its table volume (0..1), for sounds the host loops itself (RcCars engines).
+pub fn class_sample(class: &str) -> Option<(Arc<audio::Pcm>, f32)> {
+    static SAMPLES: OnceLock<Mutex<HashMap<String, Option<(Arc<audio::Pcm>, f32)>>>> = OnceLock::new();
+    let cache = SAMPLES.get_or_init(|| Mutex::new(HashMap::new()));
+    if let Some(hit) = cache.lock().ok()?.get(class) {
+        return hit.clone();
+    }
+    let found = (|| {
+        let file = bank_of(class)?;
+        let b = bank(file)?;
+        let &(vol, sound) = b.class(class)?.first()?;
+        Some((Arc::new(pcm(file, sound)?), vol / 100.))
+    })();
+    cache.lock().ok()?.insert(class.to_string(), found.clone());
+    found
+}
+
 fn pcm(file: &str, sound: u32) -> Option<audio::Pcm> {
     if sound == 0 {
         return None;
@@ -327,5 +344,20 @@ mod rc_tests {
             println!("{o:#06x}: {}", w.join(" "));
         }
         println!("json class: {}", bank.json["classes"][i]);
+    }
+}
+
+#[cfg(test)]
+mod loop_class_tests {
+    /// Sample tables found for the looping classes (engines, wind, fuse).
+    #[test]
+    fn loop_classes_have_samples() {
+        if super::bank("mg_rc_cars_touring.abk").is_none() {
+            return;
+        }
+        for c in ["MGSFX_RCCars_Engine_1", "MGSFX_RCCars_Engine_2", "MGSFX_RCCars_Engine_3", "MGSFX_RCCars_Engine_4", "MGSFX_RCCars_FireCrkrWick_LP", "MGSFX_PaperAirp_WindEngine"] {
+            let t = super::bank_of(c).and_then(|f| super::bank(f).map(|b| (f, b.class(c).map(|t| t.to_vec()))));
+            println!("{c}: {t:?}");
+        }
     }
 }

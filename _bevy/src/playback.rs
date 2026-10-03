@@ -112,3 +112,65 @@ pub fn play_once(_pcm:&crate::audio::Pcm,_volume:f32){}
 
 #[cfg(not(windows))]
 fn run(_path:std::path::PathBuf,_volume:f32,_stop:Arc<AtomicBool>,status:Arc<Status>){status.state.store(Status::NO_DEVICE,Ordering::Relaxed);}
+
+/// A sound looping until dropped; its playback rate (pitch) and volume can change while it plays.
+pub struct Loop{stop:std::sync::Arc<std::sync::atomic::AtomicBool>,rate:std::sync::Arc<std::sync::atomic::AtomicU32>,volume:std::sync::Arc<std::sync::atomic::AtomicU32>}
+impl Loop{
+    pub fn set(&self,rate:f32,volume:f32){
+        use std::sync::atomic::Ordering;
+        self.rate.store(rate.clamp(0.25,4.).to_bits(),Ordering::Relaxed);self.volume.store(volume.clamp(0.,2.).to_bits(),Ordering::Relaxed);
+    }
+}
+impl Drop for Loop{fn drop(&mut self){self.stop.store(true,std::sync::atomic::Ordering::Relaxed);}}
+
+/// Start looping `pcm` (resampled in software in short chunks, so rate and volume follow [`Loop::set`]).
+pub fn play_loop(pcm:std::sync::Arc<crate::audio::Pcm>,rate:f32,volume:f32)->Loop{
+    use std::sync::{Arc,atomic::{AtomicBool,AtomicU32}};
+    let l=Loop{stop:Arc::new(AtomicBool::new(false)),rate:Arc::new(AtomicU32::new(rate.to_bits())),volume:Arc::new(AtomicU32::new(volume.to_bits()))};
+    let (stop,r,v)=(l.stop.clone(),l.rate.clone(),l.volume.clone());
+    std::thread::spawn(move||loop_thread(&pcm,&stop,&r,&v));
+    l
+}
+#[cfg(windows)]
+fn loop_thread(pcm:&crate::audio::Pcm,stop:&std::sync::atomic::AtomicBool,rate:&std::sync::atomic::AtomicU32,volume:&std::sync::atomic::AtomicU32){
+    use std::{ffi::c_void,sync::atomic::Ordering,time::Duration};
+    let ch=pcm.channels.max(1);
+    let frames=pcm.samples.len()/ch;
+    if frames==0||std::env::args().any(|a|a=="--mute"){return}
+    let fmt=sys::WaveFormatEx{tag:1,channels:ch as u16,rate:pcm.sample_rate,bytes_per_sec:pcm.sample_rate*ch as u32*2,block_align:(ch*2) as u16,bits:16,size:0};
+    let mut h:*mut c_void=std::ptr::null_mut();
+    if unsafe{sys::waveOutOpen(&mut h,sys::WAVE_MAPPER,&fmt,0,0,0)}!=0{return}
+    let chunk=(pcm.sample_rate as usize/20).max(64); // 50 ms
+    let hs=std::mem::size_of::<sys::WaveHdr>() as u32;
+    let mut bufs=[vec![0i16;chunk*ch],vec![0i16;chunk*ch]];
+    let mut hdrs:[sys::WaveHdr;2]=[sys::WaveHdr{data:std::ptr::null_mut(),len:0,recorded:0,user:0,flags:sys::WHDR_DONE,loops:0,next:std::ptr::null_mut(),reserved:0},sys::WaveHdr{data:std::ptr::null_mut(),len:0,recorded:0,user:0,flags:sys::WHDR_DONE,loops:0,next:std::ptr::null_mut(),reserved:0}];
+    let mut pos=0f64;
+    let mut prepared=[false;2];
+    'outer: while !stop.load(Ordering::Relaxed){
+        for i in 0..2{
+            if hdrs[i].flags&sys::WHDR_DONE==0{continue}
+            if prepared[i]{unsafe{sys::waveOutUnprepareHeader(h,&mut hdrs[i],hs);}prepared[i]=false;}
+            if stop.load(Ordering::Relaxed){break 'outer}
+            let (r,vol)=(f32::from_bits(rate.load(Ordering::Relaxed)) as f64,f32::from_bits(volume.load(Ordering::Relaxed)));
+            for f in 0..chunk{
+                let k=pos as usize%frames;
+                for c in 0..ch{bufs[i][f*ch+c]=(pcm.samples[k*ch+c] as f32*vol).clamp(-32768.,32767.) as i16;}
+                pos=(pos+r)%frames as f64;
+            }
+            hdrs[i]=sys::WaveHdr{data:bufs[i].as_mut_ptr() as *mut u8,len:(chunk*ch*2) as u32,recorded:0,user:0,flags:0,loops:0,next:std::ptr::null_mut(),reserved:0};
+            unsafe{
+                if sys::waveOutPrepareHeader(h,&mut hdrs[i],hs)!=0{break 'outer}
+                prepared[i]=true;
+                if sys::waveOutWrite(h,&mut hdrs[i],hs)!=0{break 'outer}
+            }
+        }
+        std::thread::sleep(Duration::from_millis(10));
+    }
+    unsafe{
+        sys::waveOutReset(h);
+        for i in 0..2{if prepared[i]{sys::waveOutUnprepareHeader(h,&mut hdrs[i],hs);}}
+        sys::waveOutClose(h);
+    }
+}
+#[cfg(not(windows))]
+fn loop_thread(_pcm:&crate::audio::Pcm,_stop:&std::sync::atomic::AtomicBool,_rate:&std::sync::atomic::AtomicU32,_volume:&std::sync::atomic::AtomicU32){}

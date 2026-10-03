@@ -84,6 +84,8 @@ pub struct MgHost {
     pub near: Option<f32>,
     /// The previous frame's model draws (development logs).
     pub last_draws: Vec<(String, [f32; 16])>,
+    /// Looping Csis instances alive (wrapper object -> class): RcCars engines, the firecracker fuse.
+    pub loops: std::collections::HashMap<u32, String>,
     /// Frame counter for periodic development logs.
     pub dbg_frames: u64,
     pub dbg_throws: Vec<(u32, u32, i32)>,
@@ -200,7 +202,7 @@ const SERVICE_CLASSES: &[&str] = &[
 
 /// Services that are rendering / audio / effects only: when nothing hooks them they do nothing and return 0 (logged).
 pub fn is_soft_stub(name: &str) -> bool {
-    if NATIVE_EXCEPTIONS.contains(&name) {
+    if NATIVE_EXCEPTIONS.contains(&name) || is_csis_setter(name) {
         return false;
     }
     if class_of(name).is_none() && ["DC", "IC", "L2", "LC", "OS", "DVD", "VI", "GX", "PAD", "WPAD", "KPAD", "AX", "AI", "EXI", "SI", "IPC", "NAND", "CARD", "WENC", "TRC"].iter().any(|p| name.starts_with(p) && name[p.len()..].chars().next().map_or(false, |c| c.is_ascii_uppercase() || c == '_')) {
@@ -249,17 +251,27 @@ const NATIVE_EXCEPTIONS: &[&str] = &[
     "__ct__15PhysicsUserDataFv", "__ct__15PhysicsUserDataFQ215PhysicsUserData4TypePv", "__dt__15PhysicsUserDataFv", "GetMaterialFromID__15PhysicsUserDataF4MGID",
     // the sound-id -> Csis class switches; `Csis::Class::CreateInstance` is hooked to hear what they pick
     "PlaySFX__13AuAEMSManagerF14AUDIOAEMSBESFXii", "PlaySFX__13AuAEMSManagerF17AUDIOAEMSFEHUDSFXii",
+    // looping sounds (engines, fuse): their instances are tracked through `Csis::Class::CreateInstance` and the class dtor
+    "StartSFX__13AuAEMSManagerF14AUDIOAEMSBESFXii", "UpdateSFX__13AuAEMSManagerF14AUDIOAEMSBESFXiii", "StopSFX__13AuAEMSManagerF14AUDIOAEMSBESFX",
     "CalcRenderingModelMatrix__11AreaManagerFRC9rmVector3R9rmMatrix4", "CalcRenderingPosUp__11AreaManagerFRC9rmVector3R9rmVector3R9rmVector3", "PAD_getdataptr", "SetNewOverride__Q24EAGL6DeviceFPFUlPCc_PvPFUlPCc_Pv", "SetDeleteOverride__Q24EAGL6DeviceFPFPvUl_v",
     // the world's fade-to-colour effect is a timer the minigame exit waits on (`IsMinigameFadeEffectComplete`)
     "__ct__Q23Ren18FadeToColourEffectFv", "SetFadeColour__Q23Ren18FadeToColourEffectFRC9rmVector3", "StartFadeIn__Q23Ren18FadeToColourEffectFi",
     "StartFadeOut__Q23Ren18FadeToColourEffectFi", "Update__Q23Ren18FadeToColourEffectFi", "IsFinished__Q23Ren18FadeToColourEffectFv",
     "Start__Q23Ren11LinearBlendFffi", "GetCurrentValue__Q23Ren11LinearBlendFv"];
 
+/// The Csis instance setters only clamp and store a field (`SetSpeed`, `SetAzimuth`, ...); looping sounds are read back.
+fn is_csis_setter(name: &str) -> bool {
+    name.starts_with("Set") && name.contains("__Q24Csis")
+}
+
 pub fn runs_natively(name: &str) -> bool {
     if NATIVE_EXCEPTIONS.contains(&name) {
         return true;
     }
     if name.starts_with("__sinit_") {
+        return true;
+    }
+    if is_csis_setter(name) {
         return true;
     }
     if is_soft_stub(name) {
@@ -807,6 +819,7 @@ pub fn probe(ty: i32) {
             println!("guest camera {cam:#x} (host {:#x}) pos {:?} target {:?} base {:?} {:?}", host.camera, v(&mut vm, 0x70), v(&mut vm, 0x80), v(&mut vm, 0x10), v(&mut vm, 0x20));
         }
     }
+    println!("loops {:?}", snap.loops);
     if let Some(a) = vm.img.addr("gDisableCurvedWorld") {
         println!("gDisableCurvedWorld {}", vm.st.mem.r8(a));
     }

@@ -77,10 +77,11 @@ fn memory(vm: &mut V) {
             "__nw__FUlPCcQ26MemMgr8PoolTypeQ26MemMgr9AllocType",
             "__nwa__FUlPCcQ26MemMgr8PoolTypeQ26MemMgr9AllocType",
             "malloc",
+            "Alloc__Q24Csis6SystemFUl",
         ],
         mem_alloc,
     );
-    bind(vm, &["Free__6MemMgrFPv", "__dl__FPv", "__dla__FPv", "free"], mem_free);
+    bind(vm, &["Free__6MemMgrFPv", "__dl__FPv", "__dla__FPv", "free", "Free__Q24Csis6SystemFPv"], mem_free);
     bind(vm, &["MemFill__6MemMgrFPvUii"], nothing);
 }
 
@@ -740,12 +741,31 @@ fn home_menu_icon(_h: &mut MgHost, vm: &mut V) -> R {
 
 /// `Audio::PlaySFX(this, AUDIOAEMSBESFX | AUDIOAEMSFEHUDSFX id, azimuth, volume)`: run the original id switch of
 /// `AuAEMSManager::PlaySFX` against an enabled stand-in manager; the class it instantiates is caught below.
-fn audio_play_sfx(h: &mut MgHost, vm: &mut V) -> R {
-    let name = vm.name_of(vm.st.cpu.pc);
+/// The `AuAEMSManager` the native sound switches run on (enabled flag +4; loop instances at +0x2e4..+0x300).
+fn aems_manager(h: &mut MgHost, vm: &mut V) -> u32 {
     if h.aems_mgr == 0 {
-        h.aems_mgr = vm.alloc_zeroed(0x40, 16);
+        h.aems_mgr = vm.alloc_zeroed(0x400, 16);
         vm.st.mem.w8(h.aems_mgr + 4, 1);
     }
+    h.aems_mgr
+}
+/// `Audio::StartSFX / UpdateSFX / StopSFX(this, AUDIOAEMSBESFX id, ..)`: looping sounds through the manager's native switch.
+fn audio_loop_sfx(h: &mut MgHost, vm: &mut V) -> R {
+    let name = vm.name_of(vm.st.cpu.pc);
+    let mgr = aems_manager(h, vm);
+    let (a1, a2, a3, a4) = (vm.a(1), vm.a(2), vm.a(3), vm.a(4));
+    if name.starts_with("StartSFX") {
+        vm.call_by_name(h, "StartSFX__13AuAEMSManagerF14AUDIOAEMSBESFXii", &[mgr, a1, a2, a3], &[])?;
+    } else if name.starts_with("UpdateSFX") {
+        vm.call_by_name(h, "UpdateSFX__13AuAEMSManagerF14AUDIOAEMSBESFXiii", &[mgr, a1, a2, a3, a4], &[])?;
+    } else {
+        vm.call_by_name(h, "StopSFX__13AuAEMSManagerF14AUDIOAEMSBESFX", &[mgr, a1], &[])?;
+    }
+    Ok(())
+}
+fn audio_play_sfx(h: &mut MgHost, vm: &mut V) -> R {
+    let name = vm.name_of(vm.st.cpu.pc);
+    aems_manager(h, vm);
     let target = if name.contains("AUDIOAEMSBESFX") { "PlaySFX__13AuAEMSManagerF14AUDIOAEMSBESFXii" } else { "PlaySFX__13AuAEMSManagerF17AUDIOAEMSFEHUDSFXii" };
     let (mgr, id, az, vol) = (h.aems_mgr, vm.a(1), vm.a(2), vm.a(3));
     vm.call_by_name(h, target, &[mgr, id, az, vol], &[])?;
@@ -764,13 +784,29 @@ fn csis_create_instance(h: &mut MgHost, vm: &mut V) -> R {
         }
     }
     if let Some(class) = h.csis_handles.get(&handle).cloned() {
-        let variant = if inputs != 0 { vm.r32(inputs) as i32 } else { 0 };
-        h.sounds.push((class, variant.max(0) as usize));
+        if is_loop_class(&class) {
+            // the wrapper object (`out`) carries the inputs the game updates every frame; its destructor ends the loop
+            h.loops.insert(out, class);
+        } else {
+            let variant = if inputs != 0 { vm.r32(inputs) as i32 } else { 0 };
+            h.sounds.push((class, variant.max(0) as usize));
+        }
     }
     if out != 0 {
         vm.w32(out, 0);
     }
     vm.ret(0);
+    Ok(())
+}
+
+/// Csis classes that loop until their instance is destroyed (`AuAEMSManager::StartSFX` / `StopSFX`).
+pub fn is_loop_class(class: &str) -> bool {
+    class.contains("Engine") || class.ends_with("_LP")
+}
+
+/// `Csis::<loop class>::~<class>(this, flags)`: the loop stops.
+fn csis_loop_dt(h: &mut MgHost, vm: &mut V) -> R {
+    h.loops.remove(&vm.a(0));
     Ok(())
 }
 
@@ -1026,6 +1062,8 @@ pub fn pregame(vm: &mut V) {
     bind(vm, &["GetIntArrayByName__Q23AIP13CmdDecomposerCFPCcPii"], int_array_by_name);
     bind(vm, &["PlaySFX__5AudioF14AUDIOAEMSBESFXii", "PlaySFX__5AudioF17AUDIOAEMSFEHUDSFXii"], audio_play_sfx);
     bind(vm, &["CreateInstance__Q24Csis5ClassFPQ24Csis11ClassHandlePvPPQ24Csis5Class"], csis_create_instance);
+    bind(vm, &["StartSFX__5AudioF14AUDIOAEMSBESFXii", "UpdateSFX__5AudioF14AUDIOAEMSBESFXiii", "StopSFX__5AudioF14AUDIOAEMSBESFX"], audio_loop_sfx);
+    vm.hook_matching(|n| n.starts_with("__dt__Q24Csis") && is_loop_class(n), csis_loop_dt);
     bind(vm, &["UpdateHomeMenuIcon__9GameStateFii"], home_menu_icon);
     if !vm.observe("SetupPostGameHandlers__16PostGameHandlersFQ25Enums12MinigameTypeP12PostGameInfo", setup_postgame) {
         vm.log_missing_symbol("SetupPostGameHandlers");
