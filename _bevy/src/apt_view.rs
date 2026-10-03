@@ -145,12 +145,27 @@ pub fn view_step(mut mgs:Option<NonSendMut<crate::mg_session::Session>>,mut play
     if keys.just_pressed(KeyCode::F3){steps+=1;}
     for _ in 0..steps{let ms=v.frame_ms as f64;let t0=std::time::Instant::now();v.vm.tick(ms);v.ticks+=1;let el=t0.elapsed().as_millis();if el>100{v.vm.log.push(format!("slow tick {} ms",el));}if v.ticks%100==0{let m=format!("tick {} at {:.1}s",v.ticks,time.elapsed_secs());v.vm.log.push(m);}}
     // Scripted input for headless checks: --apt-script "tick:code,tick:code" (code per fw.datatypes.KeyCode; +1000 = release).
-    if let Some(list)=std::env::args().skip_while(|a|a!="--apt-script").nth(1){
+    // `--apt-script file:PATH` reads the script from a file (long scripted runs)
+    static SCRIPT:std::sync::OnceLock<Option<String>>=std::sync::OnceLock::new();
+    let script=SCRIPT.get_or_init(||std::env::args().skip_while(|a|a!="--apt-script").nth(1).map(|s|match s.strip_prefix("file:"){Some(p)=>std::fs::read_to_string(p).unwrap_or_default(),None=>s}));
+    if let Some(list)=script.clone(){
         for item in list.split(','){
             let Some((t,c))=item.split_once(':') else{continue};
             let Ok(t)=t.trim().parse::<u64>() else{continue};
             if !(t>v.script_last&&t<=v.ticks){continue}
-            let c=c.trim();
+            let mut c=c.trim();
+            // `@Screen~step`: the step only while a window of that class is open (screen depth 425 or overlay 450)
+            // `@Screen+N~step`: only once it has been open N ticks (lets its intro animation finish)
+            if let Some((want,step))=c.strip_prefix('@').and_then(|r|r.split_once('~')){
+                static SINCE:std::sync::Mutex<Option<HashMap<String,u64>>>=std::sync::Mutex::new(None);
+                let (want,settle)=match want.split_once('+'){Some((w,n))=>(w,n.parse::<u64>().unwrap_or(0)),None=>(want,0)};
+                let open=[425,450].iter().any(|d|{let o=v.vm.resolve_path_object(&format!("_root.window{d}.window"));let n=v.vm.get_member(&o,"m_strClassName");v.vm.to_str(&n).as_ref()==want});
+                let mut since=SINCE.lock().unwrap();let since=since.get_or_insert_with(HashMap::new);
+                if !open{since.remove(want);continue}
+                let t0=*since.entry(want.to_string()).or_insert(v.ticks);
+                if v.ticks<t0+settle{continue}
+                c=step;
+            }
             // `mX_Y` moves the pointer, `d`/`u` press/release the pointer button; numbers are Wii key codes (+1000 = release).
             if let Some(xy)=c.strip_prefix('m'){
                 if let Some((x,y))=xy.split_once('_'){if let (Ok(x),Ok(y))=(x.parse::<f32>(),y.parse::<f32>()){v.vm.pointer_move(x,y);}}
@@ -187,6 +202,8 @@ pub fn view_step(mut mgs:Option<NonSendMut<crate::mg_session::Session>>,mut play
                 else{v.vm.log.push(format!("script: no clip at {path}"));}
             }else if c=="d"{v.vm.pointer_button(true);v.vm.key_event(302,0,true);}
             else if c=="u"{v.vm.pointer_button(false);v.vm.key_event(302,0,false);}
+            // `iPATH` logs the object at PATH (members and values)
+            else if let Some(path)=c.strip_prefix('i'){let d=v.vm.inspect(path);v.vm.log.push(format!("INSPECT {path} = {d}"));}
             else if let Ok(c)=c.parse::<i32>(){ if c>=1000{v.vm.key_event(c-1000,0,false);}else{v.vm.key_event(c,0,true);} }
         }
     }
@@ -212,6 +229,7 @@ pub fn view_step(mut mgs:Option<NonSendMut<crate::mg_session::Session>>,mut play
         let o=v.vm.resolve_path_object("_root.window425.window");
         let name=v.vm.get_member(&o,"m_strClassName");let name=v.vm.to_str(&name).to_string();
         if name!=v.vm.fe.screen{
+            v.vm.log.push(format!("screen class {name}"));
             v.vm.fe.screen=name.clone();
             match name.as_str(){
                 "MainMenu"|"Title"=>v.vm.fe.nis=Some("general".into()),

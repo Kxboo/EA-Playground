@@ -413,6 +413,7 @@ fn install_movieclip(vm:&mut Vm,cp:&O){
     vm.native(cp,"hitTest",|vm,t,a|{
         let Some(n)=clip_of(vm,t) else{return Ok(V::Bool(false))};
         let b=vm.world_bounds(n);
+        if std::env::var("EAGL_APT_HIT").is_ok_and(|k|vm.player.nodes[n].name.contains(&k)){let nm=vm.player.nodes[n].name.clone();let args:Vec<String>=a.iter().map(|x|vm.to_str(x).to_string()).collect();let m=format!("hitTest {nm} bounds {b:?} args {}",args.join(","));vm.log.push(m);}
         let r=if a.len()>=2{let (x,y)=(num(a,0) as f32,num(a,1) as f32);b.map(|b|x>=b[0]&&x<=b[2]&&y>=b[1]&&y<=b[3]).unwrap_or(false)}
               else if let Some(o)=clip_of(vm,&arg(a,0)){let b2=vm.world_bounds(o);match (b,b2){(Some(p),Some(q))=>p[0]<=q[2]&&q[0]<=p[2]&&p[1]<=q[3]&&q[1]<=p[3],_=>false}}else{false};
         Ok(V::Bool(r))
@@ -453,6 +454,7 @@ fn goto(vm:&mut Vm,t:&V,a:&[V],play:bool){
         V::Str(s)=>{let s=s.to_string();vm.player.label_frame(n,&s).or_else(||s.parse::<f64>().ok().map(|x|(x as i64-1).max(0) as usize))}
         _=>None,
     };
+    if std::env::var("EAGL_APT_GOTO").is_ok(){let l=vm.to_str(&arg(a,0)).to_string();let m=format!("goto{} node {n} {l} -> {frame:?}",if play{"AndPlay"}else{"AndStop"});vm.log.push(m);}
     if let Some(f)=frame{vm.player.goto_frame(n,f);}
     if let NodeKind::Sprite{playing,..}=&mut vm.player.nodes[n].kind{*playing=play;}
 }
