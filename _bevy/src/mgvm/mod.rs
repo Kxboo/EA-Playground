@@ -272,7 +272,8 @@ const NATIVE_EXCEPTIONS: &[&str] = &[
     "StartFadeOut__Q23Ren18FadeToColourEffectFi", "Update__Q23Ren18FadeToColourEffectFi", "IsFinished__Q23Ren18FadeToColourEffectFv",
     "Start__Q23Ren11LinearBlendFffi", "GetCurrentValue__Q23Ren11LinearBlendFv",
     // the World HUD's loaded flag (FEManager + 0x130)
-    "WaitForWorldHud__9FEManagerFv", "ClearWaitForWorldHud__9FEManagerFv", "SetWorldHudLoaded__9FEManagerFv", "IsWorldHudLoaded__9FEManagerCFv"];
+    "WaitForWorldHud__9FEManagerFv", "ClearWaitForWorldHud__9FEManagerFv", "SetWorldHudLoaded__9FEManagerFv", "IsWorldHudLoaded__9FEManagerCFv",
+    "IsWorldHudLoadedAfterDiscEject__9FEManagerCFv"];
 
 /// The Csis instance setters only clamp and store a field (`SetSpeed`, `SetAzimuth`, ...); looping sounds are read back.
 fn is_csis_setter(name: &str) -> bool {
@@ -581,6 +582,10 @@ pub fn frame(vm: &mut MgVm, host: &mut MgHost, ms: i32) -> Result<(), String> {
                 vm.call_by_name(host, "Update__10ControllerFi", &[c, ms as u32], &[])?;
             }
         }
+    }
+    // the world's own buttons: sticker book (+, event 0xaf), report card (-, 0xb1), camera keys (GameState::Update order)
+    if host.world_mode && host.minigame_type == WORLD {
+        vm.call_by_name(host, "HandleActions__9GameStateFi", &[ms as u32], &[])?;
     }
     let ae = vm.r32(0x8060_12ac);
     if ae != 0 {

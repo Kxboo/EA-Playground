@@ -439,6 +439,7 @@ struct SeatKeys {
     one: &'static [KeyCode],
     two: &'static [KeyCode],
     plus: &'static [KeyCode],
+    minus: &'static [KeyCode],
     /// toss, strike left, strike right, boost, shot, juggle, dodge left, dodge right
     gestures: [KeyCode; 8],
 }
@@ -453,6 +454,7 @@ const P1_SOLO: SeatKeys = SeatKeys {
     one: &[KeyCode::Digit1],
     two: &[KeyCode::Digit2],
     plus: &[KeyCode::KeyP, KeyCode::Escape],
+    minus: &[KeyCode::KeyM, KeyCode::Minus],
     gestures: [KeyCode::KeyJ, KeyCode::KeyK, KeyCode::KeyL, KeyCode::KeyB, KeyCode::KeyI, KeyCode::KeyO, KeyCode::KeyQ, KeyCode::KeyE],
 };
 const P1_SHARED: SeatKeys = SeatKeys { up: &[KeyCode::KeyW], down: &[KeyCode::KeyS], left: &[KeyCode::KeyA], right: &[KeyCode::KeyD], ..P1_SOLO };
@@ -466,6 +468,7 @@ const P2: SeatKeys = SeatKeys {
     one: &[KeyCode::NumpadDivide],
     two: &[KeyCode::NumpadMultiply],
     plus: &[KeyCode::Backspace],
+    minus: &[KeyCode::NumpadSubtract],
     gestures: [KeyCode::Numpad7, KeyCode::Numpad8, KeyCode::Numpad9, KeyCode::NumpadAdd, KeyCode::Numpad5, KeyCode::Numpad0, KeyCode::Numpad4, KeyCode::Numpad6],
 };
 
@@ -485,7 +488,7 @@ fn seat_keys(seat: usize, humans: usize) -> Option<&'static SeatKeys> {
 fn pad_buttons(keys: &ButtonInput<KeyCode>, k: &SeatKeys) -> u16 {
     let any = |ks: &[KeyCode]| ks.iter().any(|c| keys.pressed(*c));
     let mut b = 0u16;
-    for (set, bit) in [(k.up, 0x0008), (k.down, 0x0004), (k.left, 0x0001), (k.right, 0x0002), (k.a, 0x0800), (k.b, 0x0400), (k.one, 0x0200), (k.two, 0x0100), (k.plus, 0x0010)] {
+    for (set, bit) in [(k.up, 0x0008), (k.down, 0x0004), (k.left, 0x0001), (k.right, 0x0002), (k.a, 0x0800), (k.b, 0x0400), (k.one, 0x0200), (k.two, 0x0100), (k.plus, 0x0010), (k.minus, 0x1000)] {
         if any(set) {
             b |= bit;
         }
