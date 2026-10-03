@@ -76,8 +76,14 @@ pub struct MgHost {
     /// `g<Class>Handle__4Csis` address -> class name.
     pub csis_handles: std::collections::HashMap<u32, String>,
     /// Debug: thrown balls being followed (physics body, target DodgeballCharacter, frames left).
+    /// `AreaManager::SetCurvedWorldRadius` while the minigame runs (Paper Airplanes bends its course with 75).
+    pub curved_radius: Option<f32>,
+    /// `WorldMan::SetDrawCurrentAreaModel` (false: the minigame draws its own environment).
+    pub hide_area_model: bool,
     /// Near clip plane the game set with `Ren::Scene::SetViewPort` (none: the default `SceneOptions`, 1.0).
     pub near: Option<f32>,
+    /// The previous frame's model draws (development logs).
+    pub last_draws: Vec<(String, [f32; 16])>,
     /// Frame counter for periodic development logs.
     pub dbg_frames: u64,
     pub dbg_throws: Vec<(u32, u32, i32)>,
@@ -485,6 +491,17 @@ pub fn game_callback(vm: &mut MgVm, host: &mut MgHost, name: &str) -> Result<boo
 pub fn frame(vm: &mut MgVm, host: &mut MgHost, ms: i32) -> Result<(), String> {
     // GameState::Update -> STATEFN_UPDATE_Playground order: pads, controllers, conga, AI, world, cameras
     hooks::write_pads(vm, &host.pads);
+    if std::env::var("EAGL_DBG_DRAWS").is_ok() {
+        host.dbg_frames += 1;
+        if host.dbg_frames % 30 == 0 {
+            let k = std::env::var("EAGL_DBG_DRAWS").unwrap_or_default();
+            let cam = snapshot::snapshot(vm, host).camera.map(|c| c.0);
+            let d: Vec<(String, [f32; 3])> = host.last_draws.iter().filter(|d| d.0.contains(&k)).map(|d| (d.0.clone(), [d.1[12], d.1[13], d.1[14]])).collect();
+            let c = vm.call_by_name(host, "Get__10ControllerFi", &[0], &[]).unwrap_or(0);
+            let acc = if c != 0 { [vm.st.mem.rf32(c + 0x20), vm.st.mem.rf32(c + 0x24), vm.st.mem.rf32(c + 0x28)] } else { [0.; 3] };
+            eprintln!("[draws] {} camera {cam:?} acc {acc:?} {d:?}", host.dbg_frames);
+        }
+    }
     if std::env::var("EAGL_DBG_RCCAM").is_ok() {
         host.dbg_frames += 1;
         let mg = vm.r32(snapshot::WORLD_MAN + 0x90);

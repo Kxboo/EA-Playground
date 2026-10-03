@@ -274,8 +274,10 @@ pub fn write_pads(vm: &mut V, pads: &[Pad; 4]) {
         let a = PAD_STATUS + 0x60 * i as u32;
         vm.w32(a, if p.active { 2 } else { 0 });
         vm.st.mem.w16(a + 4, p.buttons);
+        // `WPADStatus` acceleration is signed and centred (-512..511, about 100 counts per g); `Pad::acc` keeps the
+        // raw 10-bit form (rest 512, 512, 616)
         for k in 0..3 {
-            vm.st.mem.w16(a + 6 + 2 * k as u32, p.acc[k] as u16);
+            vm.st.mem.w16(a + 6 + 2 * k as u32, (p.acc[k] - 512) as u16);
         }
         for k in 0..16 {
             vm.st.mem.w16(a + 0xc + 2 * k, 1023);
@@ -444,6 +446,18 @@ pub fn drawing(vm: &mut V) {
             let (ch, ball) = (vm.a(0), vm.a(1));
             let body = vm.r32(ball + 0xc4);
             println!("    [coll] char {ch:#x} ball body {body:#x} at {:?} thrown {}", h.phys.body_pos(body), vm.st.mem.r8(ball + 0x61));
+            Ok(())
+        });
+    }
+    if std::env::var("EAGL_DBG_FT").is_ok() {
+        vm.observe("HasBallEnteredHoop__11MGFreeThrowFi", |_h, vm| {
+            let (this, i) = (vm.a(0), vm.a(1));
+            let v = |vm: &mut V, p: u32| [vm.st.mem.rf32(p), vm.st.mem.rf32(p + 4), vm.st.mem.rf32(p + 8)];
+            let court = vm.r32(this + 0x220);
+            let ball = vm.r32(this + 0x198 + 4 * i);
+            if ball != 0 && vm.st.mem.r8(ball + 0x24) != 0 {
+                eprintln!("[ft] court {:?} ball {:?} prev {:?}", v(vm, court), v(vm, ball + 0x50), v(vm, this + 0x230 + 0x10 * i));
+            }
             Ok(())
         });
     }
@@ -905,6 +919,15 @@ fn dt_end(h: &mut MgHost, vm: &mut V) -> R {
 
 pub fn pregame(vm: &mut V) {
     vm.observe("Initialize__10TarManagerFR7CString", tar_manager_init);
+    // world rendering the minigame changes (radius of the curved world, the area model on or off)
+    vm.observe("SetCurvedWorldRadius__11AreaManagerFUi", |h, vm| {
+        h.curved_radius = Some(vm.a(1) as f32);
+        Ok(())
+    });
+    vm.observe("SetDrawCurrentAreaModel__8WorldManFb", |h, vm| {
+        h.hide_area_model = vm.a(1) & 0xff == 0;
+        Ok(())
+    });
     if std::env::var("EAGL_DBG_RC").is_ok() {
         vm.observe("Render__5RcCarFRQ23Ren12SceneContext", |_h, vm| {
             let c = vm.a(0);

@@ -28,6 +28,8 @@ pub struct Snapshot {
     pub near: f32,
     /// `gRenderWorld`: false while a game draws its own environment instead of the playground (RcCars' track).
     pub render_world: bool,
+    /// Radius of the curved world the minigame set (`AreaManager::SetCurvedWorldRadius`), if any.
+    pub curved_radius: Option<f32>,
     /// `EAGL::DrawTextured` batches of this frame and the texture banks they name.
     pub imm: Vec<super::ImmDraw>,
     pub banks: std::collections::HashMap<String, std::sync::Arc<Vec<u8>>>,
@@ -90,10 +92,14 @@ pub fn snapshot(vm: &mut MgVm, host: &mut MgHost) -> Snapshot {
         }
     }
     out.draws = std::mem::take(&mut host.draws);
+    if std::env::var("EAGL_DBG_DRAWS").is_ok() {
+        host.last_draws = out.draws.clone();
+    }
     out.imm = std::mem::take(&mut host.imm);
     out.fov = host.fov;
     out.near = host.near.unwrap_or(1.0);
-    out.render_world = vm.img.addr("gRenderWorld").is_none_or(|a| vm.st.mem.r8(a) != 0);
+    out.render_world = !host.hide_area_model && vm.img.addr("gRenderWorld").is_none_or(|a| vm.st.mem.r8(a) != 0);
+    out.curved_radius = host.curved_radius.filter(|r| *r > 1.);
     if !host.placeables_at_launch.is_empty() && vm.r32(WORLD_MAN + 0x90) != 0 {
         let now = placeable_flags(vm, host);
         out.placeables = now.into_iter().zip(host.placeables_at_launch.iter()).filter(|(a, b)| a.1 != b.1).map(|(a, _)| a).collect();

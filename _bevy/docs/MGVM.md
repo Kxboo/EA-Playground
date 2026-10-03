@@ -46,6 +46,11 @@ Found with a Ghidra decompilation of the executable (`D:/tools/decomp.c`, see th
   the guest renders flat (`gDisableCurvedWorld` set at boot) and the host bends by the world radius (250).
 * **HUD queries** – `MinigameLVHandlers` answers (`GetNumberOfHuds`, `Counter_GetText`, `GetGameRules`,
   `Footie_IsSaveDare`, `PaperAirPlanes_GetCheckPoints`) are published from the guest every frame (`fe.mg_lv`).
+* **World physics** – `PhysicsManager::InitializeSim(name)` loads `name`'s world: its `hkWorldCinfo` gravity and its
+  bodies on layer 1 (`LoadPhysicsData(.., 1)`); the playground's (`playground.hkx`, the school area) and Paper
+  Airplanes' (`pa_world`, no gravity).
+* **Input** – `WPADStatus` acceleration is signed and centred (rest 0, 0, ~104); Conga gestures read changes, the games'
+  tilt controls (RcCars lanes, Paper pitch / bank, Free Throw aim) read the values themselves.
 * **Contacts** – a body listener gets `ContactAddedCallback` (its return value accepts the contact), then
   `ContactConfirmedCallback` and `ContactProcessCallback` (where e.g. Dart Shootout scores).
 * **Lab** – `tools/mgbattery.sh` runs every game to PostGame and exit under AI (`EAGL_MG_ALLAI`); `EAGL_MG_FE="kids;teams"`
@@ -64,4 +69,5 @@ Found with a Ghidra decompilation of the executable (`D:/tools/decomp.c`, see th
 | Footie | Complete: FE launch, 2v2 AI (serves, juggles, shots, dive saves, goals via net phantoms), J serve / O juggle / I shot / Q,E dive, power-ring indicators (textures by bank index), HUD, sound, music, PostGame -> menus. |
 | Dart Shootout | Complete: FE launch (course from the level argument), rail camera, mouse = remote pointer (reticle effect, blaster aims via `Controller::GetWorldVectorFromDPDRotationallyCorrected`), left button B fires, right button A reloads / raises the shield, pin-up and character targets score through `DSDartCollisionListener::ContactProcessCallback`, hostile darts stick to the screen plane and drain health, single-player HUD (`GetNumberOfHuds`), PostGame -> menus. |
 | RcCars | Complete: FE launch, 4-car race with AI, the game's own chase camera (viewport 0 of `CameraManager`), Space/A accelerate, arrows tilt the remote to switch lanes (`atan2(x, z)` beyond 45 degrees), B power-ups, boost, track model drawn as the game's replacement environment (`gRenderWorld` 0 hides the playground terrain and props), lap / position / power-up HUD (`Counter_GetText`), `MGSFX_HUD_RC` sounds, PostGame -> menus. Engine loop sounds (`StartSFX`/`UpdateSFX`) are not modelled yet. |
-| others | Run start -> PostGame -> exit in the lab under AI; per-game polish pending (one game at a time). |
+| Paper Airplanes | Complete: FE launch, hallway courses drawn with the game's own curvature (`SetCurvedWorldRadius` 75, area model hidden), zero-gravity Havok world from `pa_world` (`InitializeSim`), J throws, arrows pitch / bank (centred accelerometer), B boost, crashes and respawns, checkpoints / points / timer HUD, Times Up -> PostGame -> menus. |
+| Free Throw | Complete as the playground microgame: in world play, standing at one of the three hoops (`kFreeThrowPosition`) shows the World HUD's press-A, A (Space) starts it with the game's first-person camera, J shoots with the swing strength as power, shot meter / counter / timer HUD, the world resumes afterwards. Known gap: at the school hoop the ball leaves the hand slightly off the release point the throw was computed for and clips the backboard collider, so it does not score there yet (park and stadium do). |

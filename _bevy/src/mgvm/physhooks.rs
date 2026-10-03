@@ -47,6 +47,11 @@ fn load_physics(h: &mut MgHost, vm: &mut V) -> R {
     vm.ret(id as u32);
     Ok(())
 }
+fn initialize_sim(h: &mut MgHost, vm: &mut V) -> R {
+    let name = vm.st.mem.cstr(vm.a(1), 128);
+    h.phys.initialize_sim(&name);
+    Ok(())
+}
 fn unload_physics(h: &mut MgHost, vm: &mut V) -> R {
     h.phys.unload_system(vm.a(1) as usize);
     Ok(())
@@ -636,7 +641,7 @@ pub fn install(vm: &mut V) {
     bind(vm, &["DestroyPhysicsRigidBody__14PhysicsManagerFP16PhysicsRigidBody"], destroy_body);
     bind(
         vm,
-        &["InitializeSim__14PhysicsManagerFPCcPC9rmMatrix4", "EnableCharacterCharacterCollisions__14PhysicsManagerFv", "DisableCharacterCharacterCollisions__14PhysicsManagerFv", "SetQualityType__16PhysicsRigidBodyF18PhysicsQualityType", "SetMotionType__16PhysicsRigidBodyF17PhysicsMotionType"],
+        &["EnableCharacterCharacterCollisions__14PhysicsManagerFv", "DisableCharacterCharacterCollisions__14PhysicsManagerFv", "SetQualityType__16PhysicsRigidBodyF18PhysicsQualityType", "SetMotionType__16PhysicsRigidBodyF17PhysicsMotionType"],
         nothing,
     );
     bind(vm, &["GeneratePhantomFromPhysicsSystem__14PhysicsManagerFiP22PhysicsPhantomListenerUii"], generate_phantom);
@@ -683,6 +688,7 @@ pub fn install(vm: &mut V) {
         Ok(())
     });
     bind(vm, &["GetGravity__14PhysicsManagerCFv"], get_gravity);
+    bind(vm, &["InitializeSim__14PhysicsManagerFPCcPC9rmMatrix4"], initialize_sim);
     bind(vm, &["GetGroundHeight__14PhysicsManagerCFPC9rmVector3f"], get_ground_height);
     bind(vm, &["GetGroundType__14PhysicsManagerCFPC9rmVector3f"], get_ground_type);
     bind(vm, &["CastRay__14PhysicsManagerCFPC9rmVector3PC9rmVector3UiPf"], cast_ray);

@@ -168,6 +168,12 @@ pub fn view_step(mut play:Option<ResMut<crate::game::WorldPlay>>,mut game:Option
             }else if c=="g2"{v.vm.fe.mp.minigame=2;v.vm.fe.mp.players=2;
             }else if c=="wr"||c=="ws"{v.vm.fe.script_world=Some(if c=="wr"{"ReportCard"}else{"StickerBookCover"});
             }else if c=="pause"{v.vm.fe.script_pause=true;
+            }else if c=="wp"{
+                // `wp` enters Single Player world play straight away (testing aid).
+                v.vm.fe.launch=Some("world".into());v.vm.fe.todo.push(("ClearScreenStack".into(),vec![]));
+            }else if let Some((x,z))=c.strip_prefix("tp").and_then(|r|r.split_once('_')).and_then(|(x,z)|Some((x.parse::<f32>().ok()?,z.parse::<f32>().ok()?))){
+                // `tpX_Z` puts the world player at (X, Z) (testing aid).
+                v.vm.fe.script_teleport=Some((x,z));
             }else if let Some(path)=c.strip_prefix('x'){
                 // `xPATH` hides a clip (debugging aid for bisecting a bad draw).
                 let o=v.vm.resolve_path_object(path);

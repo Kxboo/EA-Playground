@@ -53,6 +53,10 @@ enum Msg {
 }
 
 pub struct Session {
+    /// The playground's curvature radius while a minigame bends its world differently.
+    world_radius: Option<f32>,
+    /// Launched from world play (Free Throw at a hoop) rather than the front end.
+    from_world: bool,
     pub ty: i32,
     pub humans: usize,
     rx: Mutex<mpsc::Receiver<Msg>>,
@@ -185,6 +189,8 @@ impl Session {
         let (tx, rx) = mpsc::channel();
         std::thread::spawn(move || loader(tx));
         Session {
+            world_radius: None,
+            from_world: false,
             ty,
             humans,
             rx: Mutex::new(rx),
@@ -213,11 +219,52 @@ impl Session {
 
 pub fn plugin(app: &mut App) {
     app.add_systems(Update, (launch_or_teardown, pump, build, step, present, crate::mg_draw::render).chain());
+    app.add_systems(Update, world_microgames);
 }
 
 /// The minigame has ended (or F10): remove the session and everything it spawned.
 #[derive(Resource)]
 struct MgTeardown;
+
+/// Free-throw hoops of the playground (school, park, stadium): `kFreeThrowPosition` (set up by `__sinit_mgfreethrow_cpp`;
+/// the stadium spot's z as its `pg_starburst` marker shows it) with the reach `UpdateMicroGameFreeThrow` tests (0x803ddbd8,
+/// squared XZ distance 4).
+const FREE_THROW_SPOTS: [[f32; 2]; 3] = [[45.63, -54.87], [27.04, -13.26], [-54.7745, 12.539]];
+
+/// `PlaygroundWorld::UpdateMicroGameFreeThrow`: in world play, standing at a hoop shows the World HUD's "press A" and A
+/// starts Free Throw (the original asks through an accessibility popup first).
+fn world_microgames(
+    play: Option<Res<game::WorldPlay>>,
+    session: Option<NonSend<Session>>,
+    keys: Res<ButtonInput<KeyCode>>,
+    mut players: Query<&mut Transform, With<game::Player>>,
+    mut fe: Option<NonSendMut<crate::apt_view::AptViewNs>>,
+    mut shown: Local<bool>,
+    mut scripted_press: Local<bool>,
+) {
+    let Some(fe) = fe.as_mut() else { return };
+    let vm = &mut fe.0.vm;
+    if let Some((x, z)) = vm.fe.script_teleport.take() {
+        for mut t in &mut players {
+            t.translation.x = x;
+            t.translation.z = z;
+        }
+    }
+    let active = play.as_ref().is_some_and(|p| !p.paused) && session.is_none();
+    let near = active && players.iter().any(|t| FREE_THROW_SPOTS.iter().any(|s| (t.translation.x - s[0]).powi(2) + (t.translation.z - s[1]).powi(2) <= 4.));
+    if near != *shown {
+        vm.call_exposed("PressA_SetVisible", vec![crate::apt_vm::V::Num(near as i32 as f64)]);
+        *shown = near;
+    }
+    // `EAGL_WORLD_PRESS_A` presses A once at the first hoop reached (testing aid)
+    let a = [KeyCode::Space, KeyCode::KeyZ].iter().any(|k| keys.just_pressed(*k)) || (std::env::var("EAGL_WORLD_PRESS_A").is_ok() && !*scripted_press);
+    if near && a && vm.fe.launch.is_none() {
+        *scripted_press = true;
+        vm.call_exposed("PressA_SetVisible", vec![crate::apt_vm::V::Num(0.)]);
+        *shown = false;
+        vm.fe.launch = Some("mg:8".into());
+    }
+}
 
 /// A playground entity hidden while the minigame draws its own environment, with its visibility before.
 #[derive(Component)]
@@ -232,6 +279,19 @@ fn launch_or_teardown(world: &mut World) {
         if world.get_non_send_resource::<Session>().is_none() {
             let mut s = Session::new(l.ty, l.humans);
             s.fe = l.fe;
+            // started from world play (Free Throw): the world waits, the session's camera rig takes over, the kid steps aside
+            if let Some(mut p) = world.get_resource_mut::<game::WorldPlay>() {
+                p.minigame = true;
+                s.from_world = true;
+                if world.get_resource::<game::Backdrop>().is_none() {
+                    world.insert_resource(game::Backdrop::new(Vec3::new(0., 2., 0.), Vec3::new(0., 0., 1.)));
+                }
+                if let Some(pl) = world.get_resource::<game::Game>().and_then(|g| g.player_entity()) {
+                    if let Ok(mut em) = world.get_entity_mut(pl) {
+                        em.insert(Visibility::Hidden);
+                    }
+                }
+            }
             world.insert_non_send_resource(s);
         }
     }
@@ -239,6 +299,22 @@ fn launch_or_teardown(world: &mut World) {
     if quit || world.remove_resource::<MgTeardown>().is_some() {
         if let Some(mut v) = world.get_non_send_resource_mut::<crate::apt_view::AptViewNs>() {
             v.0.vm.fe.vm_session = false;
+        }
+        if world.get_non_send_resource::<Session>().is_some_and(|s| s.from_world) {
+            world.remove_resource::<game::Backdrop>();
+            if let Some(mut p) = world.get_resource_mut::<game::WorldPlay>() {
+                p.minigame = false;
+            }
+            if let Some(pl) = world.get_resource::<game::Game>().and_then(|g| g.player_entity()) {
+                if let Ok(mut em) = world.get_entity_mut(pl) {
+                    em.insert(Visibility::Inherited);
+                }
+            }
+        }
+        if let Some(r) = world.get_non_send_resource::<Session>().and_then(|s| s.world_radius) {
+            if let Some(mut g) = world.get_resource_mut::<game::Game>() {
+                g.world_radius = r;
+            }
         }
         world.remove_non_send_resource::<Session>();
         world.remove_resource::<MgSnapshot>();
@@ -431,21 +507,20 @@ fn gesture_for(keys: &ButtonInput<KeyCode>, k: &SeatKeys) -> Option<Vec<[i16; 3]
     }
 }
 
-/// `EAGL_MG_TILT="from-to:dx;..."` adds an accelerometer x offset by frame number (testing aid).
-fn scripted_tilt(frame: i32) -> i16 {
-    let mut dx = 0;
+/// `EAGL_MG_TILT="from-to:dx[,dy,dz];..."` adds accelerometer offsets by frame number (testing aid).
+fn scripted_tilt(frame: i32) -> [i16; 3] {
+    let mut d = [0i16; 3];
     for part in std::env::var("EAGL_MG_TILT").unwrap_or_default().split(';') {
-        if let Some((range, v)) = part.split_once(':') {
-            if let (Some((a, z)), Ok(v)) = (range.split_once('-'), v.trim().parse::<i16>()) {
-                if let (Ok(a), Ok(z)) = (a.parse::<i32>(), z.parse::<i32>()) {
-                    if frame >= a && frame < z {
-                        dx += v;
-                    }
-                }
+        let Some((range, v)) = part.split_once(':') else { continue };
+        let Some((a, z)) = range.split_once('-') else { continue };
+        let (Ok(a), Ok(z)) = (a.parse::<i32>(), z.parse::<i32>()) else { continue };
+        if frame >= a && frame < z {
+            for (i, t) in v.split(',').enumerate().take(3) {
+                d[i] += t.trim().parse::<i16>().unwrap_or(0);
             }
         }
     }
-    dx
+    d
 }
 
 /// `EAGL_MG_PADS="from-to:hexbits,..."` scripts the pad by frame number (testing aid).
@@ -511,9 +586,10 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
         if s.ty == 1 {
             // RcCars steers by tilting the remote
             d[0] += if held(k.left) { -150 } else if held(k.right) { 150 } else { 0 };
-            if seat == 0 {
-                d[0] += scripted_tilt(s.frames);
-            }
+        }
+        if seat == 0 {
+            let t = scripted_tilt(s.frames);
+            d = [d[0] + t[0], d[1] + t[1], d[2] + t[2]];
         }
         host.pads[seat].acc = [rest[0] + d[0], rest[1] + d[1], rest[2] + d[2]];
     }
@@ -665,6 +741,15 @@ fn step(mut commands: Commands, s: Option<NonSendMut<Session>>, keys: Res<Button
         return;
     }
     let snapshot = mgvm::snapshot::snapshot(vm, host);
+    // the minigame's own curvature (restored at teardown)
+    if let (Some(r), Some(g)) = (snapshot.curved_radius, world_game.as_mut()) {
+        if g.world_radius != r {
+            if s.world_radius.is_none() {
+                s.world_radius = Some(g.world_radius);
+            }
+            g.world_radius = r;
+        }
+    }
     if let (Some(bd), Some((eye, target, _))) = (backdrop.as_mut(), snapshot.camera) {
         // development aid: watch from this many units behind the game's camera
         let back = std::env::var("EAGL_MG_CAMBACK").ok().and_then(|v| v.parse::<f32>().ok()).unwrap_or(0.);

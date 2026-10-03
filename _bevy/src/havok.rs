@@ -360,3 +360,48 @@ mod tests{
         }
     }
 }
+
+#[cfg(test)]
+mod world_cinfo_tests{
+    /// `hkWorldCinfo` gravity of every physics packfile (the guest builds its Havok world from one of them).
+    #[test]
+    #[ignore]
+    fn world_gravity(){
+        let dir=crate::bridge::data_root().join("files").join("data").join("physics");
+        let ct=super::ClassTable::embedded();
+        let Ok(rd)=std::fs::read_dir(&dir) else{return};
+        for f in rd.flatten(){
+            let Ok(d)=std::fs::read(f.path()) else{continue};
+            let Ok(pf)=super::Packfile::parse(&d,&ct) else{continue};
+            for (&(si,off),cn) in &pf.virt{
+                if cn=="hkWorldCinfo"{
+                    let o=pf.decode_object(si,off,cn,0);
+                    println!("{:?}: gravity {}",f.file_name(),o["gravity"]);
+                }
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod body_lookup_tests{
+    /// Bodies of `EAGL_HK_FILE` whose bounds come within 0.5 of the point `EAGL_HK_POINT` ("x,y,z").
+    #[test]
+    #[ignore]
+    fn bodies_near_point(){
+        let (Ok(file),Ok(pt))=(std::env::var("EAGL_HK_FILE"),std::env::var("EAGL_HK_POINT")) else{return};
+        let p:Vec<f32>=pt.split(',').filter_map(|v|v.parse().ok()).collect();
+        let d=std::fs::read(crate::bridge::data_root().join("files/data/physics").join(format!("{file}.hkx"))).unwrap();
+        let ct=super::ClassTable::embedded();let pf=super::Packfile::parse(&d,&ct).unwrap();
+        for b in super::rigid_bodies(&pf){
+            let r=b.rotation;let t=b.translation;
+            let world=|q:[f32;3]|[r[0][0]*q[0]+r[0][1]*q[1]+r[0][2]*q[2]+t[0],r[1][0]*q[0]+r[1][1]*q[1]+r[1][2]*q[2]+t[1],r[2][0]*q[0]+r[2][1]*q[1]+r[2][2]*q[2]+t[2]];
+            let mut pts=vec![];
+            for prim in &b.prims{match prim{super::Prim::Hull(v)=>pts.extend(v.iter().map(|q|world(*q))),super::Prim::Mesh(ts)=>for tri in ts{pts.extend(tri.iter().map(|q|world(*q)))},super::Prim::Sphere{c,..}=>pts.push(world(*c)),super::Prim::Capsule{a,b,..}=>{pts.push(world(*a));pts.push(world(*b))}}}
+            if pts.is_empty(){continue}
+            let (mut lo,mut hi)=([f32::MAX;3],[f32::MIN;3]);
+            for q in &pts{for i in 0..3{lo[i]=lo[i].min(q[i]);hi[i]=hi[i].max(q[i]);}}
+            if (0..3).all(|i|p[i]>=lo[i]-0.5&&p[i]<=hi[i]+0.5){println!("{} filter {:#x} bounds {lo:?}..{hi:?} prims {:?}",b.name,b.filter,b.prims.iter().map(|q|match q{super::Prim::Hull(v)=>format!("hull{}",v.len()),super::Prim::Mesh(t)=>format!("mesh{}",t.len()),super::Prim::Sphere{..}=>"sphere".into(),super::Prim::Capsule{..}=>"capsule".into()}).collect::<Vec<_>>());}
+        }
+    }
+}

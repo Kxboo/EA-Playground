@@ -252,3 +252,30 @@ mod tests{
         assert_eq!(m.prims.iter().map(|p|p.indices.len()/3).sum::<usize>(),100576);
     }
 }
+
+#[cfg(test)]
+mod hoop_geometry_tests{
+    use super::*;
+    /// Bounds per texture of the world geometry within 1.5 (XZ) of `EAGL_NEAR` ("x,z").
+    #[test]
+    #[ignore]
+    fn world_geometry_near(){
+        let Ok(near)=std::env::var("EAGL_NEAR") else{return};
+        let c:Vec<f32>=near.split(',').filter_map(|v|v.parse().ok()).collect();
+        // the world mesh is stored curved (radius 250): look around the curved image of the point
+        let d=crate::game::display_matrix(250.,bevy::prelude::Vec3::new(c[0],0.,c[1])).w_axis;
+        let c=[d.x,d.z,d.y];
+        let src=crate::bridge::data_root().join("files/data/world/world.big").to_string_lossy().into_owned()+"::world-low-all.o";
+        let m=build(&src,&model::Schemas::embedded()).unwrap();
+        let mut out:BTreeMap<String,([f32;3],[f32;3])>=BTreeMap::new();
+        for p in &m.prims{
+            let tex=m.materials[p.material].texture.and_then(|t|m.textures.get(t)).map(|t|t.name.clone()).unwrap_or_default();
+            for q in &p.positions{
+                if (q[0]-c[0]).powi(2)+(q[2]-c[1]).powi(2)>2.25||q[1]<c[2]+0.5{continue}
+                let e=out.entry(tex.clone()).or_insert(([f32::MAX;3],[f32::MIN;3]));
+                for i in 0..3{e.0[i]=e.0[i].min(q[i]);e.1[i]=e.1[i].max(q[i]);}
+            }
+        }
+        for (k,(lo,hi)) in out{println!("{k}: {lo:?}..{hi:?}");}
+    }
+}

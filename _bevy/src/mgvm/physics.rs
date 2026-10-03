@@ -247,6 +247,28 @@ impl Physics {
     }
 
     /// `PhysicsManager::LoadPhysics`: parse `data/physics/<name>.hkx`; with `add_to_world` its bodies exist immediately.
+    /// `PhysicsManager::InitializeSim(name, matrix)`: the Havok world is built from `name`'s `hkWorldCinfo`; its gravity
+    /// differs per game (Paper Airplanes' `pa_world` has none).
+    pub fn initialize_sim(&mut self, name: &str) {
+        let path = crate::bridge::data_root().join("files/data/physics").join(format!("{}.hkx", name.trim_end_matches(".hkx")));
+        let Ok(bytes) = std::fs::read(&path) else { return };
+        let ct = havok::ClassTable::embedded();
+        let Ok(pf) = havok::Packfile::parse(&bytes, &ct) else { return };
+        for (&(si, off), cn) in &pf.virt {
+            if cn == "hkWorldCinfo" {
+                let o = pf.decode_object(si, off, cn, 0);
+                if let Some(g) = o["gravity"].as_array() {
+                    let v = |i: usize| g.get(i).and_then(|x| x.as_f64()).unwrap_or(0.) as f32;
+                    self.gravity = [v(0), v(1), v(2)];
+                    self.world.gravity = Vector::new(v(0), v(1), v(2));
+                    self.log.push(format!("InitializeSim {name}: gravity {:?}", self.gravity));
+                }
+            }
+        }
+        // the world's own static bodies: the school area of `playground` (its hoop, floor), Paper Airplanes' floor and walls
+        self.load_system(name, None, true, 0);
+    }
+
     pub fn load_system(&mut self, name: &str, matrix: Option<Mat>, add_to_world: bool, filter: u32) -> i32 {
         // layer 8 (camera collision) only ever meets itself; its bodies are not simulated here
         let camera_only = filter & 0x1f == 8;
@@ -262,7 +284,7 @@ impl Physics {
         };
         let infos = havok::rigid_bodies(&pf);
         self.log.push(format!("LoadPhysics {name}: {} bodies, matrix {:?}, add {add_to_world}", infos.len(), matrix));
-        if std::env::var("EAGL_PHYS_FILTER").is_ok() && infos.len() < 40 {
+        if std::env::var("EAGL_PHYS_FILTER").is_ok() && (infos.len() < 40 || std::env::var("EAGL_PHYS_ALL").is_ok()) {
             for i in &infos {
                 self.log.push(format!("    body {} filter {:#x} layer {} inv_mass {}", i.name, i.filter, i.filter & 0x1f, i.mass_inv));
             }

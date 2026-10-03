@@ -200,6 +200,7 @@ impl Game{
         let v3=|v:&Value|v.as_array().filter(|a|a.len()==3).map(|a|Vec3::new(a[0].as_f64().unwrap_or(0.) as f32,a[1].as_f64().unwrap_or(0.) as f32,a[2].as_f64().unwrap_or(0.) as f32));
         if let Some(d)=r.get("start_direction").and_then(v3){self.start_dir=d;}
         if let Some(list)=r.get("placeables").and_then(|v|v.as_array()){
+            if let Ok(k)=std::env::var("EAGL_DBG_PLACEABLES"){for p in list{if p["asset"].as_str().unwrap_or("").contains(k.as_str())||p["id"].as_str().unwrap_or("").contains(k.as_str()){eprintln!("[placeable] {p}");}}}
             for p in list{
                 let a=p["pos"].as_array().unwrap();
                 self.placeables.push(Placeable{id:p["id"].as_str().unwrap_or("").into(),asset:p["asset"].as_str().unwrap_or("").into(),pos:Vec3::new(a[0].as_f64().unwrap() as f32,a[1].as_f64().unwrap() as f32,a[2].as_f64().unwrap() as f32),orientation_deg:p["orient"].as_f64().unwrap_or(0.) as f32,physics:p["physics"].as_str().map(String::from),visible:p["visible"].as_bool().unwrap_or(true)});
@@ -254,11 +255,12 @@ impl Game{
     }
 }
 
-fn in_game(mode:Res<AppMode>,play:Option<Res<WorldPlay>>)->bool{*mode==AppMode::Game||(*mode==AppMode::Apt&&play.is_some_and(|p|!p.paused))}
+fn in_game(mode:Res<AppMode>,play:Option<Res<WorldPlay>>)->bool{*mode==AppMode::Game||(*mode==AppMode::Apt&&play.is_some_and(|p|!p.paused&&!p.minigame))}
 fn game_mode(mode:Res<AppMode>)->bool{*mode==AppMode::Game}
 /// The world is being played underneath the frontend (Single Player): the front end draws the HUD and menus on top.
 #[derive(Resource,Default)]
-pub struct WorldPlay{pub paused:bool,/// Paused by a full-screen front-end screen (report card, sticker book) rather than the pause overlay.
+pub struct WorldPlay{pub paused:bool,/// A minigame started from the world (Free Throw) has the screen; the world waits.
+    pub minigame:bool,/// Paused by a full-screen front-end screen (report card, sticker book) rather than the pause overlay.
     pub screen_pause:bool,pub seen_other:bool}
 /// The world is also loaded behind the front end (menu cameras from the `main_menu_nis` collections).
 fn world_active(mode:Res<AppMode>,backdrop:Option<Res<Backdrop>>,play:Option<Res<WorldPlay>>)->bool{*mode==AppMode::Game||backdrop.is_some()||play.is_some()}

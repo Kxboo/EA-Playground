@@ -48,6 +48,8 @@ pub struct Fe{
     pub screen_changed:bool,
     /// Test hook: the `pause` script command requests the pause menu.
     pub script_pause:bool,
+    /// Scripted teleport of the world player (`tpX_Z`, testing aid), consumed by `mg_session::world_microgames`.
+    pub script_teleport:Option<(f32,f32)>,
     /// Test hook: `wr` / `ws` open the report card / sticker book from the world.
     pub script_world:Option<&'static str>,
     /// Selectable-kid scene (see `kid_pick`): roster from the vault, hovered kid, click awaiting a pick, chosen kids (per player).
