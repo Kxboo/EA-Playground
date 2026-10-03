@@ -671,6 +671,7 @@ pub fn probe(ty: i32) {
     let mut popup_at: Option<i32> = None;
     let mut play_at: Option<i32> = None;
     let mut sticker_at: Option<i32> = None;
+    let mut boss_at: Option<i32> = None;
     for f in 0..frames {
         let now = vm.r32(world::WORLD_MAN + 0x90);
         if now != mg {
@@ -860,13 +861,19 @@ pub fn probe(ty: i32) {
                     let ind = vm.r32(c.ptr + 0x228);
                     let beacon = ind != 0 && vm.st.mem.r8(ind + 0x14) != 0;
                     let w: Vec<u32> = if ind != 0 { (0..8).map(|k| vm.r32(ind + 4 * k)).collect() } else { vec![] };
-                    println!("  [{f}] char {:#x} key {:x} pos {:?} beacon {beacon} ind {w:x?}", c.ptr, c.key, c.pos);
+                    println!("  [{f}] char {:#x} key {:x} pos {:?} angle {} beacon {beacon} ind {w:x?}", c.ptr, c.key, c.pos, c.angle);
                 }
             }
             if f == at {
                 let v: Vec<f32> = xz.split(',').filter_map(|t| t.parse().ok()).collect();
                 debug_teleport(&mut vm, &mut host, &v);
             }
+        }
+        if boss_at == Some(f) {
+            boss_at = None;
+            let game = std::env::var("EAGL_MG_BOSS").unwrap_or_else(|_| "3".into());
+            println!("  [{f}] EndGame_OnLoad -> {:?}", aip_call(&mut vm, &mut host, "EndGame_OnLoad", ""));
+            println!("  [{f}] EndGame_OnStickerSelect({game}) -> {:?}", aip_call(&mut vm, &mut host, "EndGame_OnStickerSelect", &format!("iMinigame={game}")));
         }
         if sticker_at == Some(f) {
             sticker_at = None;
@@ -926,7 +933,9 @@ pub fn probe(ty: i32) {
             let text = q(&mut vm, &mut host, "Conversation_GetDialogueText", &[]);
             let resp = q(&mut vm, &mut host, "Conversation_GetResponses", &[]);
             println!("  [{f}] conversation {name:?} {text:?} {resp:?}");
-            let pick = std::env::var("EAGL_MG_CONV").ok().and_then(|v| v.parse::<u32>().ok()).unwrap_or(0);
+            // EAGL_MG_CONV="text~n,..": pick response n at a node whose dialogue contains text (default 0)
+            let said = text.first().map(|(_, t)| t.clone()).unwrap_or_default();
+            let pick = std::env::var("EAGL_MG_CONV").unwrap_or_default().split(',').filter_map(|r| r.split_once('~')).find(|(t, _)| said.contains(t)).and_then(|(_, n)| n.trim().parse().ok()).unwrap_or(0u32);
             let next = q(&mut vm, &mut host, "Conversation_OnPlayerSelect", &[("iIndexSelected".to_string(), pick.to_string())]);
             println!("  [{f}] conversation pick {pick} -> {next:?}");
             if next.first().is_some_and(|(_, v)| v == "1") {
@@ -958,6 +967,10 @@ pub fn probe(ty: i32) {
             // the sticker award: place the first reward sticker and go back to the world (StickerBookGame's own calls)
             if host.world_mode && e.name == "FEManager::OpenAptScreen" && matches!(e.args.first(), Some(FeArg::Str(n)) if n == "StickerBookGame") {
                 sticker_at = Some(f + 20);
+            }
+            // the gauntlet's game select: pick the boss game `EAGL_MG_BOSS` (minigame type, default 3 Dodgeball)
+            if host.world_mode && e.name == "FEManager::OpenAptScreen" && matches!(e.args.first(), Some(FeArg::Str(n)) if n == "BossGameSelect") {
+                boss_at = Some(f + 20);
             }
             // the world's own pre-game screen: PLAY through the game's handlers
             if host.world_mode && e.name == "FEManager::OpenAptScreen" && matches!(e.args.first(), Some(FeArg::Str(n)) if n == "PreGameInstructions") {

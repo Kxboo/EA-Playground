@@ -76,6 +76,12 @@ pub fn boot(vm: &mut MgVm, host: &mut MgHost) -> Result<(), String> {
     let profile = vm.r32(0x8060_2064);
     let data = vm.r32(profile + 4);
     vm.w32(data + 0x10, host.player_kid);
+    // EAGL_MG_GAUNTLET=1: the game's own debug switch that opens the Sticker King's gauntlet (testing aid)
+    if std::env::var("EAGL_MG_GAUNTLET").is_ok() {
+        if let Some(a) = vm.img.addr("gGauntletAvailable") {
+            vm.st.mem.w8(a, 1);
+        }
+    }
     // EAGL_MG_STICKERS=N: N Golden Stickers already won (testing aid: area gates unlock by sticker count)
     if let Some(n) = std::env::var("EAGL_MG_STICKERS").ok().and_then(|v| v.parse::<u32>().ok()) {
         for i in 0..9u32 {
